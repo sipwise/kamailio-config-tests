@@ -60,6 +60,7 @@ function run_sipp
   # we dont want to remove "/*" don't we?
   if [ -z ${LOG_DIR} ]; then
           echo "LOG_DIR empty"
+          delete_voip ${DOMAIN}
           exit 1
   fi
   rm -rf ${LOG_DIR}
@@ -75,6 +76,7 @@ function run_sipp
   if [[ $status -ne 0 ]]; then
     echo "error in sipp"
     find ${SCEN_CHECK_DIR}/ -type f -name 'sipp_scenario*errors.log' -exec mv {} ${LOG_DIR} \;
+    delete_voip ${DOMAIN}
     exit 2
   fi
 
@@ -95,7 +97,7 @@ if [[ $# != 1 ]]; then
 fi
 
 NAME_CHECK="$1"
-BASE_DIR="/usr/local/src/log_parser"
+BASE_DIR="/usr/local/src/kamailio-config-tests"
 LOG_DIR="${BASE_DIR}/log/${NAME_CHECK}"
 RESULT_DIR="${BASE_DIR}/result/${NAME_CHECK}"
 KAM_LOG="/var/log/ngcp/kamailio-proxy.log"

@@ -1,5 +1,7 @@
 #!/bin/bash
-BASE_DIR="/usr/local/src/log_parser"
+BASE_DIR="/usr/local/src/kamailio-config-tests"
+LOG_DIR="${BASE_DIR}/log"
+RESULT_DIR="${BASE_DIR}/result"
 
 while getopts 'ct' opt; do
   case $opt in
@@ -13,7 +15,9 @@ if [ -z $SKIP ]; then
   ngcpcfg apply
 fi
 
-rm -rf ${BASE_DIR}/result/*
+for i in ${LOG_DIR} ${RESULT_DIR}; do
+  rm -rf $i
+done
 
 for t in $(find ${BASE_DIR}/scenarios/ -depth -maxdepth 1 -mindepth 1 -type d ); do
   echo "Run: $(basename $t)"
