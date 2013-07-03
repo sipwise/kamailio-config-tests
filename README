@@ -1,0 +1,36 @@
+Kamailio configuration tests
+----------------------------
+
+Requeriments:
+ - A working NGCP
+ - sipp with ssl enabled ( needed for auth ).
+   We provide a version backported to wheezy
+ - python-yaml
+ - libgraphviz-perl
+
+
+Installation:
+  
+  You can install the scripts in 
+
+
+  #cd /usr/local/src
+  #git clone git@git.mgm.sipwise.com:kamailio-config-tests
+  #apt-get install python-yaml sip-tester libgraphviz-perl
+
+Usage:
+
+  #bash /usr/local/src/kamailio-config-tests/run_tests.sh
+
+  This will create 2 directories:
+    - /usr/local/src/kamailio-config-tests/log
+      with a directory per test with:
+      - kamailio.log
+      - parsed messages
+      - sipp error logs
+    - /usr/local/src/kamailio-config-tests/result
+      with a directory per test with:
+      - a tap file ( test results )
+      - a png file ( routes flow )
+--
+Victor Seva <vseva@sipwise.com>
