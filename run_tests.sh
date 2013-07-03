@@ -19,7 +19,7 @@ for i in ${LOG_DIR} ${RESULT_DIR}; do
   rm -rf $i
 done
 
-for t in $(find ${BASE_DIR}/scenarios/ -depth -maxdepth 1 -mindepth 1 -type d ); do
+for t in $(find ${BASE_DIR}/scenarios/ -depth -maxdepth 1 -mindepth 1 -type d | sort); do
   echo "Run: $(basename $t)"
   if [ -z $TEST ]; then
     bash ${BASE_DIR}/scenarios/check.sh $(basename $t)
