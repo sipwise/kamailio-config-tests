@@ -116,9 +116,11 @@ fi
 # let's check the results
 mkdir -p ${RESULT_DIR}
 for t in ${SCEN_CHECK_DIR}/*_test.yml; do
-  msg=$(echo $t|sed 's/_test\.yml/\.yml/')
-  check_test $t ${LOG_DIR}/$(basename $msg) ${RESULT_DIR}/$(basename $t .yml).tap
-  graph $msg ${RESULT_DIR}/$(basename $msg .yml).png
+  msg_name=$(echo $t|sed 's/_test\.yml/\.yml/')
+  msg=${LOG_DIR}/$(basename $msg_name)
+  dest=${RESULT_DIR}/$(basename $t .yml)
+  check_test $t $msg ${dest}.tap
+  graph $msg ${dest}.png
 done
 
 #EOF
