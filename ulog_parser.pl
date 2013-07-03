@@ -1,0 +1,106 @@
+#!/usr/bin/env perl
+use 5.014;
+use strict;
+use warnings;
+use JSON;
+use YAML;
+use File::Spec;
+use Cwd 'abs_path';
+use Data::Dumper;
+
+my $filename = "/var/log/ngcp/kamailio-proxy.log";
+my $output_dir = "log";
+my $path;
+my $data = {
+  msgid => '',
+  callid => '',
+  flow => [],
+  sip_in => '',
+  sip_out => [],
+};
+
+sub save_data
+{
+  if(!$data->{'msgid'})
+  {
+    print "data with no msgid\n";
+    print Dumper $data;
+    exit;
+  }
+  else
+  {
+    if (!$data->{'sip_out'}) { print "no sip_out\n"; }
+    $path = File::Spec->catfile( $output_dir, (sprintf "%04i", $data->{'msgid'}).".yml");
+    YAML::DumpFile($path, $data);
+    #print "$data->{'msgid'} saved\n";
+  }
+  $data = {
+    msgid => '',
+    callid => '',
+    flow => [],
+    sip_in => '',
+    sip_out => [],
+  };
+}
+
+if($#ARGV>=2)
+{
+  die "usage: $#ARGV log_parser.pl [kamailio_log] [dest_dir]\n";
+}
+given($#ARGV)
+{
+  when (1) { $filename = $ARGV[0]; $output_dir = $ARGV[1]; }
+  when (0) { $filename = $ARGV[0]; }
+}
+$filename = abs_path($filename);
+$output_dir = abs_path($output_dir);
+my $log;
+my $line;
+my $out;
+open($log, "<$filename") or die "Couldn't open kamailio log, $!";
+
+while($line = <$log>)
+{
+  my ($pid, $mode, $route, $msgid, $msgid_t, $pid_t, $json, $msg, $pjson, $callid, $method);
+  # Jun 25 14:52:16 spce proxy[11248]: DEBUG: debugger [debugger_api.c:427]: dbg_cfg_dump(): msg out:{
+  if(($msg) = ($line =~ m/.+msg out:{(.+)}$/))
+  {
+    do
+    {
+      $msg =~ s/#015#012/\n/g;
+      push($data->{'sip_out'}, $msg);
+      $line = <$log>;
+      if(!$line) { $line = '' }
+    }while(($msg) = ($line =~ m/.+msg out:{(.+)}$/));
+    #print "msg_out\n";
+  }
+
+  if(($pid, $mode, $route, $msgid, $method) = ($line =~ m/.+proxy\[(\d+)\]: DEBUG: <script>: (\w+) of route (\w+) - (\d+) (.*)$/))
+  {
+    if($route eq "MAIN")
+    {
+      #if ($mode eq "start") { print "$msgid start MAIN\n"; }
+      if(($data->{'msgid'}) && ($data->{'msgid'} ne $msgid)) {
+        #print "$msgid!=$data->{'msgid'} MAIN->save\n";
+        save_data();
+      }
+      $data->{'msgid'} = $msgid;
+    }
+    $line = <$log>;
+    if(($pid_t, $json) = ($line =~ m/.+proxy\[(\d+)\]: DEBUG: debugger \[debugger_api\.c:\w+\]: dbg_dump_json\(\): (\{.*\})$/))
+    {
+      $pjson = from_json($json);
+      push($data->{'flow'}, { $mode."|".$route => $pjson });
+      if ($route eq "MAIN" && $mode eq "start")
+      {
+        ($msg) = $method;
+        if(($callid) = ($msg =~ m/.+Call-ID: ([^#]+)#015#012.+$/si)) { $data->{'callid'} = $callid; }
+        $msg =~ s/#015#012/\n/g;
+        if($mode eq "start") { $data->{'sip_in'} = $msg; }
+      }
+    }
+  }
+} #while
+if($data->{'msgid'} ne '') { save_data(); }
+close($log);
+#EOF

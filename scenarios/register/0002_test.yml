@@ -1,0 +1,30 @@
+# REGISTER scenario
+flow:
+  - start|MAIN:
+      $fU: testuser1003
+      $tU: testuser1003
+  - start|ROUTE_NET_INFO:
+      $fU: testuser1003
+      $tU: testuser1003
+  - end|ROUTE_NET_INFO:
+  - start|ROUTE_AUTH:
+  - start|ROUTE_ADD_CALLINFO_REPLY:
+  - return|ROUTE_ADD_CALLINFO_REPLY:
+  - end|ROUTE_AUTH:
+sip_in:
+  - '^REGISTER'
+  - 'Contact: sip:testuser1003@'
+  - 'Content-Length: 0'
+  - 'Expires: 600'
+  - 'Authorization: Digest username="testuser1003"'
+sip_out:
+  - [
+      '^SIP/2.0 100 Trying',
+      'Content-Length: 0'
+    ]
+  - [
+      '^SIP/2.0 200 OK',
+      'Content-Length: 0',
+      'P-NGCP-Authorization: testuser1003@',
+      'P-NGCP-Authorized: 1'
+    ]

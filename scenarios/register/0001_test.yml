@@ -1,0 +1,25 @@
+# REGISTER scenario
+flow:
+  - start|MAIN:
+      $fU: testuser1003
+      $tU: testuser1003
+  - start|ROUTE_NET_INFO:
+      $fU: testuser1003
+      $tU: testuser1003
+  - end|ROUTE_NET_INFO:
+  - start|ROUTE_AUTH:
+  - exit|ROUTE_AUTH:
+sip_in:
+  - '^REGISTER'
+  - 'Contact: sip:testuser1003@'
+  - 'Content-Length: 0'
+  - 'Expires: 600'
+sip_out:
+  - [
+      '^SIP/2.0 100 Trying',
+      'Content-Length: 0'
+    ]
+  - [
+      '^SIP/2.0 401 Unauthorized',
+      'Content-Length: 0'
+    ]

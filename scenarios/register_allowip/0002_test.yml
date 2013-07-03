@@ -1,0 +1,84 @@
+# REGISTER scenario
+flow:
+  - start|MAIN:
+      $fU: testuser1003
+      $tU: testuser1003
+  - start|ROUTE_NET_INFO:
+      $fU: testuser1003
+      $tU: testuser1003
+  - end|ROUTE_NET_INFO:
+  - start|ROUTE_REG_REQUEST:
+  - start|ROUTE_REG_HANDLE:
+  - start|ROUTE_AUTH:
+  - start|ROUTE_ADD_CALLINFO_REPLY:
+  - return|ROUTE_ADD_CALLINFO_REPLY:
+  - end|ROUTE_AUTH:
+  - start|ROUTE_PREFERENCES:
+  - exit|ROUTE_PREFERENCES:
+      $xavp(callee_dom_prefs):
+        - dummy:
+            - callee
+      $xavp(callee_peer_prefs):
+        - dummy:
+            - callee
+      $xavp(callee_real_prefs):
+        - dummy:
+            - callee
+      $xavp(callee_usr_prefs):
+        - dummy:
+            - callee
+      $xavp(caller_dom):
+        - dummy:
+            - caller
+      $xavp(caller_dom_prefs):
+        - dummy:
+            - caller
+      $xavp(caller_peer_prefs):
+        - dummy:
+            - caller
+      $xavp(caller_real_prefs):
+        - ac:
+            - 1
+          account_id:
+            - 43
+          allowed_ips_grp:
+            - 1
+            - 2
+          cc:
+            - 43
+          cli:
+            - 4311003
+          dummy:
+            - caller
+          man_allowed_ips_grp:
+            - 0
+      $xavp(caller_usr_prefs):
+        - ac:
+            - 1
+          account_id:
+            - 43
+          allowed_ips_grp:
+            - 1
+          cc:
+            - 43
+          cli:
+            - 4311003
+          dummy:
+            - caller
+sip_in:
+  - '^REGISTER'
+  - 'Contact: sip:testuser1003@'
+  - 'Content-Length: 0'
+  - 'Expires: 600'
+  - 'Authorization: Digest username="testuser1003"'
+sip_out:
+  - [
+      '^SIP/2.0 100 Trying',
+      'Content-Length: 0'
+    ]
+  - [
+      '^SIP/2.0 403 Unauthorized IP detected',
+      'Content-Length: 0',
+      'P-NGCP-Authorization: testuser1003@',
+      'P-NGCP-Authorized: 1'
+    ]
