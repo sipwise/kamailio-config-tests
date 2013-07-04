@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from check import XAvp
+from check import XAvp, Test, check_flow, check_flow_vars
 import unittest
 
 class TestXAvp(unittest.TestCase):
@@ -49,6 +49,7 @@ class TestXAvp(unittest.TestCase):
 class TestCheckFlowVars(unittest.TestCase):
 
   def setUp(self):
+    self.ctest = Test()
     self.check_ok = [
       { 'R0': { '$xavp(v0)':
                  [{
@@ -65,9 +66,13 @@ class TestCheckFlowVars(unittest.TestCase):
       },
       { 'R1': { '$xavp(v0)': [{'k0': [1,2]}] }},
     ]
-    self.scen = [
+    self.scen_noxavp = [
       { 'R0': {'fU': 'testpep'} },
-      { 'R1': {'$xavp(v0[0]=>k0[0]': 1} },
+      { 'R1': {} },
+    ]
+    self.scen = [
+      { 'R0': {'$xavp(v0[0]=>k0[0])': 1, '$xavp(v0[0]=>k1[0])': 'a'} },
+      { 'R1': {'$xavp(v0[1]=>k0[0])': 1} },
     ]
 
   def testXAvp(self):
@@ -79,8 +84,19 @@ class TestCheckFlowVars(unittest.TestCase):
     self.assertEqual(xavp.get('$xavp(v0[1]=>k0[1])'), 2)
     self.assertEqual(xavp.get('$xavp(v0[1]=>k1[*])'), ['a'])
 
-  def testFlow(self):
-    pass
+  def testFlow_noxavp(self):
+    check_flow(self.scen_noxavp, self.check_ok, self.ctest)
+    self.assertFalse(self.ctest.isError())
+
+  def testFlowVars_noxavp(self):
+    check_flow_vars('RO', self.scen_noxavp[0]['R0'], self.check_ok[0]['R0'], self.ctest)
+    print self.ctest
+    self.assertFalse(self.ctest.isError())
+
+  def testFlowVars_xavp(self):
+    check_flow_vars('RO', self.scen[0]['R0'], self.check_ok[0]['R0'], self.ctest)
+    print self.ctest
+    self.assertFalse(self.ctest.isError())
 
 if __name__ == '__main__':
     unittest.main()

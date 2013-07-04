@@ -9,9 +9,6 @@ except:
 
 class XAvp:
   """ Class to simulate the xavp """
-  _data = []
-  _name = ""
-
   def __init__(self, name, data):
     result = re.match('\$xavp\((\w+)\)', name)
     try:
@@ -70,8 +67,9 @@ class XAvp:
 
 class Test:
   """ Class to create TAP output """
-  _step = []
-  _errflag = False
+  def __init__(self):
+    self._step = []
+    self._errflag = False
 
   def comment(self, msg):
     """ Add a comment """
@@ -122,11 +120,23 @@ class Test:
       test = test + 1
     return output
 
-def check_flow_vars(sk, sv, ck, cv, test):
+def check_flow_vars(sk, sv, cv, test):
   """ check the vars on a flow level"""
   for k in sv.iterkeys():
     if(not cv.has_key(k)):
-      test.error('Expected var %d on flow[%s]' % (k,sk))
+      try:
+        info = XAvp.parse(k)
+        search_key = '$xavp(%s)' % info['name']
+        if(not cv.has_key(search_key)):
+          raise Exception("search_key: %s info:%s" % (search_key, info))
+        xavp = XAvp(search_key, cv[search_key])
+        val = xavp.get(k)
+        #print "testing %s == %s" % (sv[k], val)
+        test.test(sv[k], val, 'flow[%s] expected %s == %s but is %s' % (sk, k, sv[k], val), 'flow[%s] %s' % (sk, k))
+      except LookupError as err:
+        test.error('LookupError with %s. Error:%s' % (k, err))
+      except Exception as err:
+        test.error('Expected var %s on flow[%s]' % (k,sk))
     else:
       test.test(sv[k], cv[k], 'flow[%s] expected %s == %s but is %s' % (sk, k, sv[k], cv[k]), 'flow[%s] %s' % (sk, k))
 
@@ -147,7 +157,7 @@ def check_flow(scen, check, test):
       continue
     else:
       test.ok('flow[%s]' % sk)
-    check_flow_vars(sk, sv, ck, cv, test)
+    check_flow_vars(sk, sv, cv, test)
   if(len(check)>len(scen)):
     l = []
     for i in check:
