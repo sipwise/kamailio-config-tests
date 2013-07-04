@@ -106,26 +106,27 @@ def check_sip_out(scen, msgs, test):
     else:
       test.error("sip_out[%d] does not exist" % i)
 
-if(len(sys.argv)!=3):
-  print 'Usage: check.py scenario.yml test.yml'
-  sys.exit(1)
+if __name__ == '__main__':
+  if(len(sys.argv)!=3):
+    print 'Usage: check.py scenario.yml test.yml'
+    sys.exit(1)
 
-with io.open(sys.argv[1], 'r') as file:
-  scen = load(file, Loader=Loader)
-file.close()
+  with io.open(sys.argv[1], 'r') as file:
+    scen = load(file, Loader=Loader)
+  file.close()
 
-with io.open(sys.argv[2], 'r') as file:
-  check = load(file, Loader=Loader)
-file.close()
+  with io.open(sys.argv[2], 'r') as file:
+    check = load(file, Loader=Loader)
+  file.close()
 
-test = Test()
+  test = Test()
 
-test.comment('check flow')
-check_flow(scen['flow'], check['flow'], test)
-test.comment('check sip_in')
-check_sip(scen['sip_in'], check['sip_in'], test)
-test.comment('check sip_out')
-check_sip_out(scen['sip_out'], check['sip_out'], test)
-print test
-if test.isError():
-  sys.exit(1)
+  test.comment('check flow')
+  check_flow(scen['flow'], check['flow'], test)
+  test.comment('check sip_in')
+  check_sip(scen['sip_in'], check['sip_in'], test)
+  test.comment('check sip_out')
+  check_sip_out(scen['sip_out'], check['sip_out'], test)
+  print test
+  if test.isError():
+    sys.exit(1)
