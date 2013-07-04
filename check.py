@@ -21,39 +21,52 @@ class XAvp:
     self._data = data
 
   def get(self, str):
+    info = XAvp.parse(str)
+
+    if self._name != info['name']:
+      raise KeyError(
+        'diferent name. name:%s != %s' % (self._name, info['name'])
+      )
+
+    nsize = len(self._data)
+    if  nsize <= info['nindx']:
+      raise IndexError('%s has %d elements' % (self._name, nsize))
+
+    if self._data[info['nindx']].has_key(info['key']):
+      values = self._data[info['nindx']][info['key']]
+    else:
+      raise KeyError('no %s key found' % info['key'] )
+
+    if info['kindx'] == '*':
+      return values;
+
+    ksize = len(values)
+    if ksize <= info['kindx']:
+      raise IndexError('%s has %d elements not %s' % (info['key'], ksize, info['kindx']))
+
+    return values[info['kindx']]
+
+  @classmethod
+  def parse(cls, str):
     pattern_nindx = '(\[(?P<%s>\d+)\])?' % 'nindx'
     pattern_kindx = '(\[(?P<%s>\d+|\*+)\])?' % 'kindx'
-    pattern = '\$xavp\((?P<name>\w+)%s=>(?P<key>\w+)%s\)'  % (pattern_nindx, pattern_kindx)
+    pattern = '\$xavp\((?P<name>\w+)%s(=>(?P<key>\w+)%s)?\)'  % (pattern_nindx, pattern_kindx)
     result = re.match(pattern, str)
     if result is not None:
-      if self._name != result.group('name'):
-        raise KeyError(
-          'diferent name. name:%s != %s' % (self._name, result.group(1))
-        )
       try:
         nindx = int(result.group('nindx'))
       except:
         nindx = 0
-      if self._data[nindx].has_key(result.group('key')):
-        values = self._data[nindx][result.group('key')]
-      else:
-        raise KeyError('no %s key found' % result.group('key') )
-      nsize = len(self._data)
-      if  nsize <= nindx:
-        raise IndexError('%s has %d elements' % (self._name, nsize))
       try:
         kindx = int(result.group('kindx'))
       except:
-        if ( result.group('kindx') == '*' ):
-          return values
-        kindx = 0
-      ksize = len(values)
-      if  ksize <= kindx:
-        raise IndexError('%s has %d elements' % (result.group('key'), ksize))
-      #print "name: %s nindx:%d key: %s kindx: %d" % (result.group('name'), nindx, result.group('key'), kindx)
-      return values[kindx]
+        if result.group('kindx') == '*':
+          kindx = '*'
+        else:
+          kindx = 0
+      return {'name': result.group('name'), 'nindx': nindx, 'key': result.group('key'), 'kindx': kindx }
     else:
-      raise KeyError('no key found')
+      raise Exception('no xavp')
 
 class Test:
   """ Class to create TAP output """
@@ -109,6 +122,14 @@ class Test:
       test = test + 1
     return output
 
+def check_flow_vars(sk, sv, ck, cv, test):
+  """ check the vars on a flow level"""
+  for k in sv.iterkeys():
+    if(not cv.has_key(k)):
+      test.error('Expected var %d on flow[%s]' % (k,sk))
+    else:
+      test.test(sv[k], cv[k], 'flow[%s] expected %s == %s but is %s' % (sk, k, sv[k], cv[k]), 'flow[%s] %s' % (sk, k))
+
 def check_flow(scen, check, test):
   """ checks the flow and the vars inside"""
   for i in range(len(scen)):
@@ -126,11 +147,7 @@ def check_flow(scen, check, test):
       continue
     else:
       test.ok('flow[%s]' % sk)
-    for k in sv.iterkeys():
-      if(not cv.has_key(k)):
-        test.error('Expected var %d on flow[%s]' % (k,sk))
-      else:
-        test.test(sv[k], cv[k], 'flow[%s] expected %s == %s but is %s' % (sk, k, sv[k], cv[k]), 'flow[%s] %s' % (sk, k))
+    check_flow_vars(sk, sv, ck, cv, test)
   if(len(check)>len(scen)):
     l = []
     for i in check:
