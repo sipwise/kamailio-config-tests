@@ -7,6 +7,54 @@ try:
 except:
   from yaml import Loader
 
+class XAvp:
+  """ Class to simulate the xavp """
+  _data = []
+  _name = ""
+
+  def __init__(self, name, data):
+    result = re.match('\$xavp\((\w+)\)', name)
+    try:
+      self._name = result.group(1)
+    except:
+      raise Exception('not a xavp')
+    self._data = data
+
+  def get(self, str):
+    pattern_nindx = '(\[(?P<%s>\d+)\])?' % 'nindx'
+    pattern_kindx = '(\[(?P<%s>\d+|\*+)\])?' % 'kindx'
+    pattern = '\$xavp\((?P<name>\w+)%s=>(?P<key>\w+)%s\)'  % (pattern_nindx, pattern_kindx)
+    result = re.match(pattern, str)
+    if result is not None:
+      if self._name != result.group('name'):
+        raise KeyError(
+          'diferent name. name:%s != %s' % (self._name, result.group(1))
+        )
+      try:
+        nindx = int(result.group('nindx'))
+      except:
+        nindx = 0
+      if self._data[nindx].has_key(result.group('key')):
+        values = self._data[nindx][result.group('key')]
+      else:
+        raise KeyError('no %s key found' % result.group('key') )
+      nsize = len(self._data)
+      if  nsize <= nindx:
+        raise IndexError('%s has %d elements' % (self._name, nsize))
+      try:
+        kindx = int(result.group('kindx'))
+      except:
+        if ( result.group('kindx') == '*' ):
+          return values
+        kindx = 0
+      ksize = len(values)
+      if  ksize <= kindx:
+        raise IndexError('%s has %d elements' % (result.group('key'), ksize))
+      #print "name: %s nindx:%d key: %s kindx: %d" % (result.group('name'), nindx, result.group('key'), kindx)
+      return values[kindx]
+    else:
+      raise KeyError('no key found')
+
 class Test:
   """ Class to create TAP output """
   _step = []
