@@ -27,6 +27,7 @@ function check_test
   ${BASE_DIR}/check.py $1 $2 > $3
   if [[ $? -ne "0" ]]; then
     echo " not ok"
+    ERR_FLAG=1
   else
     echo " ok"
   fi
@@ -53,6 +54,8 @@ function delete_voip
   ${BASE_DIR}/delete_domain.pl $1
 }
 
+# $1 msg to echo
+# $2 exit value
 function error_sipp
 {
   echo $1
@@ -124,6 +127,7 @@ if [ -z $SKIP ]; then
 fi
 
 # let's check the results
+ERR_FLAG=0
 mkdir -p ${RESULT_DIR}
 for t in ${SCEN_CHECK_DIR}/*_test.yml; do
   msg_name=$(echo $t|sed 's/_test\.yml/\.yml/')
@@ -133,4 +137,5 @@ for t in ${SCEN_CHECK_DIR}/*_test.yml; do
   graph $msg ${dest}.png
 done
 
+exit ${ERR_FLAG}
 #EOF
