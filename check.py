@@ -86,8 +86,8 @@ class Test:
 
   @classmethod
   def compare(cls, val0, val1):
-    if isinstance(val1, basestring):
-      result = re.search(val0, val1)
+    if isinstance(val0, basestring):
+      result = re.search(val0, str(val1))
     else:
       result = (val0 == val1)
     return result
@@ -150,7 +150,7 @@ def check_flow_vars(sk, sv, cv, test):
         if(sv[k] == 'None'):
           test.ok('flow[%s] %s is not there' % (sk, k))
         else:
-          test.error('Expected var %s on flow[%s]' % (k,sk))
+          test.error('Expected var %s on flow[%s]. %s' % (k,sk, err))
     else:
       test.test(sv[k], cv[k], 'flow[%s] expected %s == %s but is %s' % (sk, k, sv[k], cv[k]), 'flow[%s] %s' % (sk, k))
 
