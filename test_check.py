@@ -73,7 +73,10 @@ class TestCheckFlowVars(unittest.TestCase):
     self.scen = [
       { 'R0': { '$xavp(v0[0]=>k0[0])': 1,
                 '$xavp(v0[0]=>k1[0])': 'a',
-                '$xavp(v0[0]=>k1[2])': '^f'}
+                '$xavp(v0[0]=>k1[2])': '^f',
+                '$var(no)': 'None',
+                '$xavp(nono=>koko)': 'None',
+                '$xavp(v0=>k10)': 'None'}
               },
       { 'R1': {'$xavp(v0[1]=>k0[0])': 1} },
     ]

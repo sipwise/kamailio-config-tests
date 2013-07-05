@@ -142,9 +142,15 @@ def check_flow_vars(sk, sv, cv, test):
         #print "testing %s == %s" % (sv[k], val)
         test.test(sv[k], val, 'flow[%s] expected %s == %s but is %s' % (sk, k, sv[k], val), 'flow[%s] %s' % (sk, k))
       except LookupError as err:
-        test.error('LookupError with %s. Error:%s' % (k, err))
+        if(sv[k] == 'None'):
+          test.ok('flow[%s] %s is not there' % (sk, k))
+        else:
+          test.error('LookupError with %s. Error:%s' % (k, err))
       except Exception as err:
-        test.error('Expected var %s on flow[%s]' % (k,sk))
+        if(sv[k] == 'None'):
+          test.ok('flow[%s] %s is not there' % (sk, k))
+        else:
+          test.error('Expected var %s on flow[%s]' % (k,sk))
     else:
       test.test(sv[k], cv[k], 'flow[%s] expected %s == %s but is %s' % (sk, k, sv[k], cv[k]), 'flow[%s] %s' % (sk, k))
 
