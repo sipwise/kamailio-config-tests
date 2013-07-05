@@ -15,59 +15,36 @@ flow:
   - end|ROUTE_AUTH:
   - start|ROUTE_PREFERENCES:
   - exit|ROUTE_PREFERENCES:
-      $xavp(callee_dom_prefs):
-        - dummy:
-            - callee
-      $xavp(callee_peer_prefs):
-        - dummy:
-            - callee
-      $xavp(callee_real_prefs):
-        - dummy:
-            - callee
-      $xavp(callee_usr_prefs):
-        - dummy:
-            - callee
-      $xavp(caller_dom):
-        - dummy:
-            - caller
-      $xavp(caller_dom_prefs):
-        - dummy:
-            - caller
-      $xavp(caller_peer_prefs):
-        - dummy:
-            - caller
-      $xavp(caller_real_prefs):
-        - ac:
-            - 1
-          account_id:
-            - 43
-          allowed_ips_grp:
-            - 1
-          cc:
-            - 43
-          cli:
-            - 4311003
-          dummy:
-            - caller
-          man_allowed_ips_grp:
-            - 0
-          ringtimeout:
-            - 180
-      $xavp(caller_usr_prefs):
-        - ac:
-            - 1
-          account_id:
-            - 43
-          allowed_ips_grp:
-            - 1
-          cc:
-            - 43
-          cli:
-            - 4311003
-          dummy:
-            - caller
-          ringtimeout:
-            - 180
+      $xavp(callee_dom_prefs[0]=>dummy[*]):
+        - callee
+      $xavp(callee_peer_prefs[0]=>dummy[*]):
+        - callee
+      $xavp(callee_real_prefs[0]=>dummy[*]):
+        - callee
+      $xavp(callee_usr_prefs[0]=>dummy[*]):
+        - callee
+      $xavp(caller_dom_prefs[0]=>dummy[*]):
+        - caller
+      $xavp(caller_peer_prefs[0]=>dummy[*]):
+        - caller
+      $xavp(caller_real_prefs[0]=>ac): 1
+# this is autonumeric id FIXME. We need regex
+#     $xavp(caller_real_prefs[0]=>account_id): 43
+      $xavp(caller_real_prefs[0]=>allowed_ips_grp): 1
+      $xavp(caller_real_prefs[0]=>cc): 43
+      $xavp(caller_real_prefs[0]=>cli): 4311003
+      $xavp(caller_real_prefs[0]=>dummy[*]):
+        - caller
+      $xavp(caller_real_prefs[0]=>man_allowed_ips_grp): 0
+      $xavp(caller_usr_prefs[0]=>ac): 1
+# this is autonumeric id FIXME. We need regex
+#     $xavp(caller_usr_prefs[0]=>account_id): 43
+      $xavp(caller_usr_prefs[0]=>allowed_ips_grp): 1
+      $xavp(caller_usr_prefs[0]=>cc): 43
+      $xavp(caller_usr_prefs[0]=>cli): 4311003
+      $xavp(caller_usr_prefs[0]=>dummy[*]):
+        - caller
+      $xavp(caller_usr_prefs[0]=>allowed_ips_grp): 1
 sip_in:
   - '^REGISTER'
   - 'Contact: sip:testuser1003@'
