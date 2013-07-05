@@ -53,40 +53,50 @@ function delete_voip
   ${BASE_DIR}/delete_domain.pl $1
 }
 
+function error_sipp
+{
+  echo $1
+  delete_voip ${DOMAIN}
+  find ${SCEN_CHECK_DIR}/ -type f -name 'sipp_scenario*errors.log' -exec mv {} ${LOG_DIR} \;
+  if [ -f ${SCEN_CHECK_DIR}/sipp_scenario_responder.xml ]; then
+    find ${SCEN_DIR}/register/ -type f -name 'sipp_scenario*errors.log' -exec mv {} ${LOG_DIR} \;
+  fi
+  exit $2
+}
+
 # $1 sipp xml scenario file
 function run_sipp
 {
   # test LOG_DIR
   # we dont want to remove "/*" don't we?
   if [ -z ${LOG_DIR} ]; then
-          echo "LOG_DIR empty"
-          delete_voip ${DOMAIN}
-          exit 1
+    error_sipp "LOG_DIR empty" 1
   fi
   rm -rf ${LOG_DIR}
   mkdir -p ${LOG_DIR}
 
   ${BASE_DIR}/restart_log.sh
+  if [ -f ${SCEN_CHECK_DIR}/sipp_scenario_responder.xml ]; then
+    ${BASE_DIR}/sipp.sh -d ${DOMAIN} -r ${SCEN_CHECK_DIR}/sipp_scenario_responder.xml &
+  fi
   # let's fire sipp scenario
-  ${BASE_DIR}/sipp.sh $1
+  ${BASE_DIR}/sipp.sh -d ${DOMAIN} $1
   status=$?
   # copy the kamailio log
   cp ${KAM_LOG} ${LOG_FILE} ${LOG_DIR}/kamailio.log
 
   if [[ $status -ne 0 ]]; then
-    echo "error in sipp"
-    find ${SCEN_CHECK_DIR}/ -type f -name 'sipp_scenario*errors.log' -exec mv {} ${LOG_DIR} \;
-    delete_voip ${DOMAIN}
-    exit 2
+    error_sipp "error in sipp" 2
   fi
 
   echo "Parsing ${LOG_DIR}/kamailio.log"
   ${BASE_DIR}/ulog_parser.pl ${LOG_DIR}/kamailio.log ${LOG_DIR}
 }
 
-while getopts 'c' opt; do
+while getopts 'cd:' opt; do
   case $opt in
     c) SKIP=1;;
+    d) DOMAIN=$OPTARG
   esac
 done
 shift $(($OPTIND - 1))
@@ -103,7 +113,7 @@ RESULT_DIR="${BASE_DIR}/result/${NAME_CHECK}"
 KAM_LOG="/var/log/ngcp/kamailio-proxy.log"
 SCEN_DIR="${BASE_DIR}/scenarios"
 SCEN_CHECK_DIR="${SCEN_DIR}/${NAME_CHECK}"
-DOMAIN="127.0.0.1"
+DOMAIN=${DOMAIN:-"spce.test"}
 
 if [ -z $SKIP ]; then
   delete_voip ${DOMAIN} # just to be sure nothing is there

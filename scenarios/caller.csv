@@ -1,2 +1,2 @@
 SEQUENTIAL
-testuser1002;[authentication username=testuser1002 password=testuser];127.0.0.1
+testuser1002;[authentication username=testuser1002 password=testuser];DOMAIN
