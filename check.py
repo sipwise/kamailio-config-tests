@@ -84,9 +84,17 @@ class Test:
     self._step.append({'result': False, 'msg_err': msg_err})
     self._errflag = True
 
+  @classmethod
+  def compare(cls, val0, val1):
+    if isinstance(val1, basestring):
+      result = re.search(val0, val1)
+    else:
+      result = (val0 == val1)
+    return result
+
   def test(self, value_expected, value, msg_err, msg_ok = None):
     """ Test two values and add the result"""
-    result = (value_expected == value)
+    result = Test.compare(value_expected, value)
     self._step.append({'result': result, 'msg_err': msg_err, 'msg_ok': msg_ok})
     if not result:
       self._errflag = True

@@ -54,7 +54,7 @@ class TestCheckFlowVars(unittest.TestCase):
       { 'R0': { '$xavp(v0)':
                  [{
                    'k0': [1],
-                   'k1': ['a', 'b']
+                   'k1': ['a', 'b', 'fuckthisshit']
                   },
                   {
                    'k0': [1,2],
@@ -71,7 +71,10 @@ class TestCheckFlowVars(unittest.TestCase):
       { 'R1': {} },
     ]
     self.scen = [
-      { 'R0': {'$xavp(v0[0]=>k0[0])': 1, '$xavp(v0[0]=>k1[0])': 'a'} },
+      { 'R0': { '$xavp(v0[0]=>k0[0])': 1,
+                '$xavp(v0[0]=>k1[0])': 'a',
+                '$xavp(v0[0]=>k1[2])': '^f'}
+              },
       { 'R1': {'$xavp(v0[1]=>k0[0])': 1} },
     ]
 
@@ -80,7 +83,7 @@ class TestCheckFlowVars(unittest.TestCase):
     xavp = XAvp('$xavp(v0)', data)
 
     self.assertEqual(xavp.get('$xavp(v0=>k0)'), 1)
-    self.assertEqual(xavp.get('$xavp(v0=>k1[*])'), ['a','b'])
+    self.assertEqual(xavp.get('$xavp(v0=>k1[*])'), ['a','b', 'fuckthisshit'])
     self.assertEqual(xavp.get('$xavp(v0[1]=>k0[1])'), 2)
     self.assertEqual(xavp.get('$xavp(v0[1]=>k1[*])'), ['a'])
 
