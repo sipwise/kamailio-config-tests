@@ -20,7 +20,7 @@ flow:
   - start|ROUTE_GET_CALLER_CLI:
   - end|ROUTE_GET_CALLER_CLI:
   - start|ROUTE_GET_FORWARDER_CLI:
-  - return|ROUTE_GET_FORWARDER_CLI:
+  - end|ROUTE_GET_FORWARDER_CLI:
   - start|ROUTE_CHECK_USERPROV_CLI:
   - start|ROUTE_CHECK_CLI_ALLOWED:
   - end|ROUTE_CHECK_CLI_ALLOWED:
@@ -53,24 +53,24 @@ flow:
   - exit|ROUTE_EARLY_REJECT:
 sip_in:
   - '^INVITE'
-  - 'Contact: sip:testuser2@'
+  - 'Contact: sip:testuser1002@'
   - 'CSeq: 2 INVITE'
   - 'Max-Forwards: 16'
   - 'Content-Type: application/sdp'
-  - 'Proxy-Authorization: Digest username="testuser2"'
+  - 'Proxy-Authorization: Digest username="testuser1002"'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: 2 INVITE',
-      'From: <sip:testuser2@'
+      'From: <sip:testuser1002@'
     ]
   - [
       '^SIP/2.0 101 Connecting',
       'CSeq: 2 INVITE',
-      'From: <sip:testuser2@'
+      'From: <sip:testuser1002@'
     ]
   - [
       '^SIP/2.0 480 Offline',
       'CSeq: 2 INVITE',
-      'From: <sip:testuser2@'
+      'From: <sip:testuser1002@'
     ]

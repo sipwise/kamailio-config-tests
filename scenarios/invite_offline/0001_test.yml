@@ -12,7 +12,7 @@ flow:
   - exit|ROUTE_AUTH:
 sip_in:
   - '^INVITE'
-  - 'Contact: sip:testuser2@'
+  - 'Contact: sip:testuser1002@'
   - 'CSeq: 1 INVITE'
   - 'Max-Forwards: 16'
   - 'Content-Type: application/sdp'
