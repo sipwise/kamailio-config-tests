@@ -81,11 +81,16 @@ function run_sipp
   ${BASE_DIR}/restart_log.sh
   if [ -f ${SCEN_CHECK_DIR}/sipp_scenario_responder.xml ]; then
     ${BASE_DIR}/sipp.sh -d ${DOMAIN} -r ${SCEN_CHECK_DIR}/sipp_scenario_responder_reg.xml
-    ${BASE_DIR}/sipp.sh -d ${DOMAIN} -r ${SCEN_CHECK_DIR}/sipp_scenario_responder.xml
+    ${BASE_DIR}/sipp.sh -d ${DOMAIN} -r ${SCEN_CHECK_DIR}/sipp_scenario_responder.xml &> /dev/null
   fi
   # let's fire sipp scenario
   ${BASE_DIR}/sipp.sh -d ${DOMAIN} $1
   status=$?
+
+  if [ -f ${SCEN_CHECK_DIR}/sipp_scenario_responder.xml ]; then
+    ${BASE_DIR}/sipp.sh -d ${DOMAIN} -r ${SCEN_CHECK_DIR}/sipp_scenario_responder_unreg.xml
+  fi
+
   # copy the kamailio log
   cp ${KAM_LOG} ${LOG_FILE} ${LOG_DIR}/kamailio.log
   find ${SCEN_CHECK_DIR}/ -type f -name 'sipp_scenario*errors.log' -exec mv {} ${LOG_DIR} \;
