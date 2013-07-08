@@ -7,6 +7,7 @@ Requeriments:
  - sipp with ssl enabled ( needed for auth ).
    We provide a version backported to wheezy
  - python-yaml
+ - libyaml-syck-perl
  - libgraphviz-perl
 
 Installation:
@@ -17,7 +18,7 @@ Installation:
 
   #cd /usr/local/src
   #git clone git@git.mgm.sipwise.com:kamailio-config-tests
-  #apt-get install python-yaml sip-tester libgraphviz-perl
+  #apt-get install python-yaml sip-tester libgraphviz-perl libyaml-syck-perl
 
 Usage:
 ------
