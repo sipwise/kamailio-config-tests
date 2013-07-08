@@ -94,16 +94,25 @@ function run_sipp
   ${BASE_DIR}/ulog_parser.pl ${LOG_DIR}/kamailio.log ${LOG_DIR}
 }
 
-while getopts 'cd:' opt; do
+while getopts 'SRDTd:' opt; do
   case $opt in
-    c) SKIP=1;;
-    d) DOMAIN=$OPTARG
+    S) SKIP=1;;
+    d) DOMAIN=$OPTARG;;
+    R) SKIP_RUNSIPP=1;;
+    D) SKIP_DELDOMAIN=1;;
+    T) SKIP_TESTS=1;;
   esac
 done
 shift $(($OPTIND - 1))
 
 if [[ $# != 1 ]]; then
-  echo "usage: $0 check_name"
+  echo "Usage: $0 [-sDr] [-d DOMAIN] check_name"
+  echo "Options:"
+  echo "-C: skip creation of domain and subscribers"
+  echo "-R: skip run sipp"
+  echo "-D: skip deletion of domain and subscribers as final step"
+  echo "-T: skip checks"
+  echo "-d: DOMAIN"
   exit 1
 fi
 
@@ -120,20 +129,27 @@ if [ -z $SKIP ]; then
   delete_voip ${DOMAIN} # just to be sure nothing is there
   create_voip ${DOMAIN}
   create_voip_prefs ${SCEN_CHECK_DIR}/prefs.yml
+fi
+
+if [ -z $SKIP_RUNSIPP ]; then
   run_sipp ${SCEN_CHECK_DIR}/sipp_scenario.xml
+fi
+
+if [ -z ${SKIP} ] && [ -z ${SKIP_DELDOMAIN} ]; then
   delete_voip ${DOMAIN}
 fi
 
 # let's check the results
 ERR_FLAG=0
-mkdir -p ${RESULT_DIR}
-for t in ${SCEN_CHECK_DIR}/*_test.yml; do
-  msg_name=$(echo $t|sed 's/_test\.yml/\.yml/')
-  msg=${LOG_DIR}/$(basename $msg_name)
-  dest=${RESULT_DIR}/$(basename $t .yml)
-  check_test $t $msg ${dest}.tap
-  graph $msg ${dest}.png
-done
-
+if [ -z ${SKIP_TESTS} ]; then
+  mkdir -p ${RESULT_DIR}
+  for t in ${SCEN_CHECK_DIR}/*_test.yml; do
+    msg_name=$(echo $t|sed 's/_test\.yml/\.yml/')
+    msg=${LOG_DIR}/$(basename $msg_name)
+    dest=${RESULT_DIR}/$(basename $t .yml)
+    check_test $t $msg ${dest}.tap
+    graph $msg ${dest}.png
+  done
+fi
 exit ${ERR_FLAG}
 #EOF
