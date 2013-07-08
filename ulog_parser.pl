@@ -3,12 +3,10 @@ use 5.014;
 use strict;
 use warnings;
 use JSON;
-use YAML::Syck;
+use YAML;
 use File::Spec;
 use Cwd 'abs_path';
 use Data::Dumper;
-
-local $YAML::Syck::SingleQuote = 1 ;
 
 my $filename = "/var/log/ngcp/kamailio-proxy.log";
 my $output_dir = "log";
@@ -33,7 +31,7 @@ sub save_data
   {
     if (!$data->{'sip_out'}) { print "no sip_out\n"; }
     $path = File::Spec->catfile( $output_dir, (sprintf "%04i", $data->{'msgid'}).".yml");
-    YAML::Syck::DumpFile($path, $data);
+    YAML::DumpFile($path, $data);
     #print "$data->{'msgid'} saved\n";
   }
   $data = {
