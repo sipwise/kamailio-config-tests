@@ -59,7 +59,10 @@ function delete_voip
 function error_sipp
 {
   echo $1
-  delete_voip ${DOMAIN}
+  if [ -z ${SKIP} ] || [ -z ${SKIP_DELDOMAIN} ]; then
+    echo "Deleting domain:${DOMAIN}"
+    delete_voip ${DOMAIN}
+  fi
   find ${SCEN_CHECK_DIR}/ -type f -name 'sipp_scenario*errors.log' -exec mv {} ${LOG_DIR} \;
   exit $2
 }
@@ -94,9 +97,9 @@ function run_sipp
   ${BASE_DIR}/ulog_parser.pl ${LOG_DIR}/kamailio.log ${LOG_DIR}
 }
 
-while getopts 'SRDTd:' opt; do
+while getopts 'CRDTd:' opt; do
   case $opt in
-    S) SKIP=1;;
+    C) SKIP=1;;
     d) DOMAIN=$OPTARG;;
     R) SKIP_RUNSIPP=1;;
     D) SKIP_DELDOMAIN=1;;
@@ -129,14 +132,15 @@ if [ -z $SKIP ]; then
   delete_voip ${DOMAIN} # just to be sure nothing is there
   create_voip ${DOMAIN}
   create_voip_prefs ${SCEN_CHECK_DIR}/prefs.yml
-fi
 
-if [ -z $SKIP_RUNSIPP ]; then
-  run_sipp ${SCEN_CHECK_DIR}/sipp_scenario.xml
-fi
+  if [ -z $SKIP_RUNSIPP ]; then
+    run_sipp ${SCEN_CHECK_DIR}/sipp_scenario.xml
+  fi
 
-if [ -z ${SKIP} ] && [ -z ${SKIP_DELDOMAIN} ]; then
-  delete_voip ${DOMAIN}
+  if [ -z ${SKIP_DELDOMAIN} ]; then
+    echo "Deleting domain:${DOMAIN}"
+    delete_voip ${DOMAIN}
+  fi
 fi
 
 # let's check the results
