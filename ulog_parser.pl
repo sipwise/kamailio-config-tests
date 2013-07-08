@@ -61,7 +61,7 @@ open($log, "<$filename") or die "Couldn't open kamailio log, $!";
 
 while($line = <$log>)
 {
-  my ($pid, $mode, $route, $msgid, $msgid_t, $pid_t, $json, $msg, $pjson, $callid, $method);
+  my ($mode, $route, $msgid, $msgid_t, $json, $msg, $pjson, $callid, $method);
   # Jun 25 14:52:16 spce proxy[11248]: DEBUG: debugger [debugger_api.c:427]: dbg_cfg_dump(): msg out:{
   if(($msg) = ($line =~ m/.+msg out:{(.+)}$/))
   {
@@ -70,12 +70,13 @@ while($line = <$log>)
       $msg =~ s/#015#012/\n/g;
       push($data->{'sip_out'}, $msg);
       $line = <$log>;
+      #print substr($line, 34, 25)."\n";
       if(!$line) { $line = '' }
     }while(($msg) = ($line =~ m/.+msg out:{(.+)}$/));
     #print "msg_out\n";
   }
 
-  if(($pid, $mode, $route, $msgid, $method) = ($line =~ m/.+proxy\[(\d+)\]: DEBUG: <script>: (\w+) of route (\w+) - (\d+) (.*)$/))
+  if(($mode, $route, $msgid, $method) = ($line =~ m/.+DEBUG: <script>: (\w+) of route (\w+) - (\d+) (.*)$/))
   {
     if($route eq "MAIN")
     {
@@ -87,7 +88,7 @@ while($line = <$log>)
       $data->{'msgid'} = $msgid;
     }
     $line = <$log>;
-    if(($pid_t, $json) = ($line =~ m/.+proxy\[(\d+)\]: DEBUG: debugger \[debugger_api\.c:\w+\]: dbg_dump_json\(\): (\{.*\})$/))
+    if(($json) = ($line =~ m/.+dbg_dump_json\(\): (\{.*\})$/))
     {
       $pjson = from_json($json);
       push($data->{'flow'}, { $mode."|".$route => $pjson });
@@ -98,6 +99,7 @@ while($line = <$log>)
         $msg =~ s/#015#012/\n/g;
         if($mode eq "start") { $data->{'sip_in'} = $msg; }
       }
+      #print $mode."|".$route."\n";
     }
   }
 } #while
