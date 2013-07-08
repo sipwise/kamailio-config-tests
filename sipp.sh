@@ -36,16 +36,16 @@ fi
 BASE_DIR=$(dirname $1)
 IP="127.0.0.1"
 DOMAIN=${DOMAIN:-"spce.test"}
-
+MAX="5000"
 set_domain 1
 
 if [ -z ${RESP} ]; then
   PORT="50603"
-  sipp -inf ${BASE_DIR}/../callee.csv -inf ${BASE_DIR}/../caller.csv -sf $1 -i $IP \
+  sipp -max_socket $MAX -inf ${BASE_DIR}/../callee.csv -inf ${BASE_DIR}/../caller.csv -sf $1 -i $IP \
     -nd -t ul -p $PORT $IP -m 1 -mp 6003 -timeout 10 -timeout_error -trace_err
 else
   PORT="50602"
-  sipp -bg -inf ${BASE_DIR}/../callee.csv -sf $1 -i $IP \
+  sipp -max_socket $MAX -inf ${BASE_DIR}/../callee.csv -sf $1 -i $IP \
     -nd -t ul -p $PORT $IP -m 1 -rtp_echo -mp 6002 -timeout 25 -timeout_error -trace_err
 fi
 
