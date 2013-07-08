@@ -1,4 +1,4 @@
-# REGISTER scenario
+# INVITE_OFFLINE scenario
 flow:
   - start|MAIN:
   - start|ROUTE_NET_INFO:
@@ -53,24 +53,34 @@ flow:
   - exit|ROUTE_EARLY_REJECT:
 sip_in:
   - '^INVITE'
-  - 'Contact: sip:testuser2@'
+  - 'Contact: sip:testuser1002@'
   - 'CSeq: 2 INVITE'
   - 'Max-Forwards: 16'
   - 'Content-Type: application/sdp'
-  - 'Proxy-Authorization: Digest username="testuser2"'
+  - 'Proxy-Authorization: Digest username="testuser1002"'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: 2 INVITE',
-      'From: <sip:testuser2@'
+      'From: <sip:testuser1002@',
+      'To: <sip:testuser1003@'
     ]
   - [
       '^SIP/2.0 101 Connecting',
       'CSeq: 2 INVITE',
-      'From: <sip:testuser2@'
+      'From: <sip:testuser1002@',
+      'To: <sip:testuser1003@'
     ]
   - [
-      '^SIP/2.0 480 Offline',
+      '^INVITE sip:testuser1003@',
       'CSeq: 2 INVITE',
-      'From: <sip:testuser2@'
+      'From: <sip:4311002@',
+      'To: <sip:testuser1003@',
+      'Content-Type: application/sdp',
+      'P-Caller-UUID: \w+',
+      'P-Callee-UUID: \w+',
+      'P-Asserted-Identity: <sip:4311002@',
+      'P-Called-Party-ID: <sip:testuser1003@',
+      'P-App-Param: ;aleg_sst_enable=no;sst_enable=no',
+      'P-App-Name: sbc'
     ]
