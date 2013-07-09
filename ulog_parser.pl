@@ -7,6 +7,7 @@ use YAML;
 use File::Spec;
 use Cwd 'abs_path';
 use Data::Dumper;
+use Tie::File;
 
 my $filename = "/var/log/ngcp/kamailio-proxy.log";
 my $output_dir = "log";
@@ -33,6 +34,14 @@ sub save_data
     $path = File::Spec->catfile( $output_dir, (sprintf "%04i", $data->{'msgid'}).".yml");
     YAML::DumpFile($path, $data);
     #print "$data->{'msgid'} saved\n";
+    # This tries to fix problems with string values '-' being saved
+    # without quotes. 
+    tie my @array, 'Tie::File', $path or die ('Can not open $path');
+    for (@array)
+    {
+      s/(.*\$\w+\(\w+\):) -/$1 '-'/g
+    }
+    untie @array;
   }
   $data = {
     msgid => '',
