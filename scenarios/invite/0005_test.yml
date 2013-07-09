@@ -20,7 +20,7 @@ flow:
   - start|ROUTE_GET_CALLER_CLI:
   - end|ROUTE_GET_CALLER_CLI:
   - start|ROUTE_GET_FORWARDER_CLI:
-  - return|ROUTE_GET_FORWARDER_CLI:
+  - end|ROUTE_GET_FORWARDER_CLI:
   - start|ROUTE_CHECK_USERPROV_CLI:
   - start|ROUTE_CHECK_CLI_ALLOWED:
   - end|ROUTE_CHECK_CLI_ALLOWED:
@@ -41,16 +41,45 @@ flow:
   - end|ROUTE_BLOCK_IN:
   - end|ROUTE_LOAD_CALLEE_PREF:
   - start|ROUTE_INVITE_TO_INT:
-  - start|ROUTE_ACC_FAILURE:
+  - start|ROUTE_SET_RUSER:
+  - end|ROUTE_SET_RUSER:
+  - start|ROUTE_OUTBOUND:
   - start|ROUTE_ACC_CALLER:
   - end|ROUTE_ACC_CALLER:
   - start|ROUTE_ACC_CALLEE:
   - end|ROUTE_ACC_CALLEE:
-  - end|ROUTE_ACC_FAILURE:
-  - start|ROUTE_EARLY_REJECT: 
-  - start|ROUTE_ADD_CALLINFO_REPLY:
-  - end|ROUTE_ADD_CALLINFO_REPLY:
-  - exit|ROUTE_EARLY_REJECT:
+  - start|BRANCH_ROUTE_SBC:
+  - start|ROUTE_BRANCH_ACC_RTP:
+  - end|ROUTE_BRANCH_ACC_RTP:
+  - start|ROUTE_PREPARE_SST:
+  - end|ROUTE_PREPARE_SST:
+  - start|ROUTE_SET_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - end|ROUTE_PREPARE_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - end|ROUTE_PREPARE_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - end|ROUTE_PREPARE_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - end|ROUTE_PREPARE_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - end|ROUTE_PREPARE_CALLER_CLI:
+  - end|ROUTE_SET_CALLER_CLI:
+  - start|ROUTE_SET_CALLEE:
+  - end|ROUTE_SET_CALLEE:
+  - start|ROUTE_ADD_CALLINFO:
+  - end|ROUTE_ADD_CALLINFO:
+  - end|BRANCH_ROUTE_SBC:
+  - exit|ROUTE_OUTBOUND:
+  # 101 Connecting
+  - start|REPLY_ROUTE_NAT:
+  - exit|REPLY_ROUTE_NAT:
+  # 180 Ringing
+  - start|REPLY_ROUTE_NAT:
+  - exit|REPLY_ROUTE_NAT:
+  # 200 OK
+  - start|REPLY_ROUTE_NAT:
+  - exit|REPLY_ROUTE_NAT:
 sip_in:
   - '^INVITE'
   - 'Contact: sip:testuser1002@'
@@ -84,3 +113,16 @@ sip_out:
       'P-App-Param: ;aleg_sst_enable=no;sst_enable=no',
       'P-App-Name: sbc'
     ]
+  - [
+      '^SIP/2.0 180 Ringing',
+      'CSeq: 2 INVITE',
+      'From: <sip:testuser1002@',
+      'To: <sip:testuser1003@'
+    ]
+  - [
+      '^SIP/2.0 200 OK',
+      'CSeq: 2 INVITE',
+      'From: <sip:testuser1002@',
+      'To: <sip:testuser1003@'
+    ]
+
