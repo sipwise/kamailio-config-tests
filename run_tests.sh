@@ -2,7 +2,7 @@
 BASE_DIR="/usr/local/src/kamailio-config-tests"
 LOG_DIR="${BASE_DIR}/log"
 RESULT_DIR="${BASE_DIR}/result"
-DOMAIN="scpe.test"
+DOMAIN="spce.test"
 error_flag=0
 
 while getopts 'ct' opt; do
