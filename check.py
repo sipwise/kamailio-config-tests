@@ -189,11 +189,14 @@ def check_sip(scen, msg, test):
 
 def check_sip_out(scen, msgs, test):
   num_msgs = len(msgs)
-  for i in (range(len(scen))):
+  num_scen = len(scen)
+  for i in (range(num_scen)):
     if(i<num_msgs):
       check_sip(scen[i], msgs[i], test)
     else:
       test.error("sip_out[%d] does not exist" % i)
+  if ( num_scen != num_msgs ):
+    test.error("we expected %d out messages but we have %d" % ( num_scen, num_msgs ))
 
 if __name__ == '__main__':
   if(len(sys.argv)!=3):
