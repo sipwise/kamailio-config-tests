@@ -102,13 +102,14 @@ function run_sipp
   ${BASE_DIR}/ulog_parser.pl ${LOG_DIR}/kamailio.log ${LOG_DIR}
 }
 
-while getopts 'CRDTd:' opt; do
+while getopts 'CRDTGd:' opt; do
   case $opt in
     C) SKIP=1;;
     d) DOMAIN=$OPTARG;;
     R) SKIP_RUNSIPP=1;;
     D) SKIP_DELDOMAIN=1;;
     T) SKIP_TESTS=1;;
+    G) SKIP_GRAPH=1;;
   esac
 done
 shift $(($OPTIND - 1))
@@ -120,6 +121,7 @@ if [[ $# != 1 ]]; then
   echo "-R: skip run sipp"
   echo "-D: skip deletion of domain and subscribers as final step"
   echo "-T: skip checks"
+  echo "-G: skip creation of graphviz image"
   echo "-d: DOMAIN"
   exit 1
 fi
@@ -157,7 +159,10 @@ if [ -z ${SKIP_TESTS} ]; then
     msg=${LOG_DIR}/$(basename $msg_name)
     dest=${RESULT_DIR}/$(basename $t .yml)
     check_test $t $msg ${dest}.tap
-    graph $msg ${dest}.png
+    if [ -z ${SKIP_GRAPH} ]; then
+      echo "Generating flow image: ${dest}.png"
+      graph $msg ${dest}.png
+    fi
   done
 fi
 exit ${ERR_FLAG}
