@@ -8,6 +8,7 @@ Requeriments:
    We provide a version backported to wheezy
  - python-yaml
  - libgraphviz-perl
+ - libtemplate-perl
 
 Installation:
 -------------
@@ -17,11 +18,14 @@ Installation:
 
   #cd /usr/local/src
   #git clone git@git.mgm.sipwise.com:kamailio-config-tests
-  #apt-get install python-yaml sip-tester libgraphviz-perl
+  #apt-get install python-yaml sip-tester \
+                   libgraphviz-perl libtemplate-perl
 
 Usage:
 ------
-  #bash /usr/local/src/kamailio-config-tests/run_tests.sh
+  PROFILE: "CE" the default
+           "PRO"
+  #bash /usr/local/src/kamailio-config-tests/run_tests.sh [-p PROFILE ]
 
   This will create 2 directories:
     - /usr/local/src/kamailio-config-tests/log
