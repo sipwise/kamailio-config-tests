@@ -1,0 +1,2 @@
+testuser1002@spce.test:
+  allowed_ips: [ "1.2.3.4" ]
