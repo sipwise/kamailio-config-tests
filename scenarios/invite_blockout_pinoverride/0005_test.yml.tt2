@@ -90,19 +90,19 @@ sip_out:
       '^SIP/2.0 100 Trying',
       'CSeq: 2 INVITE',
       'From: <sip:testuser1002@',
-      'To: <sip:*80*4444311003@'
+      'To: <sip:\*80\*4444311003@'
     ]
   - [
       '^SIP/2.0 101 Connecting',
       'CSeq: 2 INVITE',
       'From: <sip:testuser1002@',
-      'To: <sip:*80*4444311003@'
+      'To: <sip:\*80\*4444311003@'
     ]
   - [
       '^INVITE sip:testuser1003@',
       'CSeq: 2 INVITE',
       'From: <sip:4311002@',
-      'To: <sip:*80*4444311003@',
+      'To: <sip:\*80\*4444311003@',
       'Content-Type: application/sdp',
       'P-Caller-UUID: \w+',
       'P-Callee-UUID: \w+',
@@ -115,12 +115,12 @@ sip_out:
       '^SIP/2.0 180 Ringing',
       'CSeq: 2 INVITE',
       'From: <sip:testuser1002@',
-      'To: <sip:*80*4444311003@'
+      'To: <sip:\*80\*4444311003@'
     ]
   - [
       '^SIP/2.0 200 OK',
       'CSeq: 2 INVITE',
       'From: <sip:testuser1002@',
-      'To: <sip:*80*4444311003@'
+      'To: <sip:\*80\*4444311003@'
     ]
 

@@ -18,7 +18,7 @@ sip_in:
   - 'Max-Forwards: 16'
   - 'Content-Length: 0'
   - 'From: <sip:testuser1002@'
-  - 'To: <sip:*80*4444311003@'
+  - 'To: <sip:\*80\*4444311003@'
 
 sip_out:
   - [
@@ -26,7 +26,7 @@ sip_out:
       'CSeq: 3 BYE',
       'Content-Length: 0',
       'From: <sip:testuser1002@',
-      'To: <sip:*80*4444311003@'
+      'To: <sip:\*80\*4444311003@'
     ]
   - [
       '^BYE sip:127.0.0.1:5080 SIP/2.0',
@@ -35,12 +35,12 @@ sip_out:
       'Max-Forwards: 15',
       'Content-Length: 0',
       'From: <sip:4311002@',
-      'To: <sip:*80*4444311003@'
+      'To: <sip:\*80\*4444311003@'
     ]
   - [
       '^SIP/2.0 200 OK',
       'CSeq: 3 BYE',
       'Content-Length: 0',
       'From: <sip:testuser1002@',
-      'To: <sip:*80*4444311003@'
+      'To: <sip:\*80\*4444311003@'
     ]
