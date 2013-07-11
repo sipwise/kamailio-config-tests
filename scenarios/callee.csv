@@ -1,2 +1,3 @@
 SEQUENTIAL
 testuser1003;4311003;[authentication username=testuser1003 password=testuser];DOMAIN
+testuser1001;4311001;[authentication username=testuser1001 password=testuser];DOMAIN
