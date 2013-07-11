@@ -79,7 +79,7 @@ function run_sipp
   mkdir -p ${LOG_DIR}
 
   ${BASE_DIR}/restart_log.sh
-  for res in $(find ${SCEN_CHECK_DIR} -type f -name 'sipp_scenario_responder[0-9][0-9].xml'); do
+  for res in $(find ${SCEN_CHECK_DIR} -type f -name 'sipp_scenario_responder[0-9][0-9].xml'| sort); do
     base=$(basename $res .xml)
     ${BASE_DIR}/sipp.sh -d ${DOMAIN} -r ${SCEN_CHECK_DIR}/${base}_reg.xml &> /dev/null
     ${BASE_DIR}/sipp.sh -d ${DOMAIN} -r ${SCEN_CHECK_DIR}/${base}.xml &> /dev/null &
