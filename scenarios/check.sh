@@ -79,24 +79,27 @@ function run_sipp
   mkdir -p ${LOG_DIR}
 
   ${BASE_DIR}/restart_log.sh
-  if [ -f ${SCEN_CHECK_DIR}/sipp_scenario_responder.xml ]; then
-    ${BASE_DIR}/sipp.sh -d ${DOMAIN} -r ${SCEN_CHECK_DIR}/sipp_scenario_responder_reg.xml &> /dev/null
-    ${BASE_DIR}/sipp.sh -d ${DOMAIN} -r ${SCEN_CHECK_DIR}/sipp_scenario_responder.xml &> /dev/null &
-    responder_pid=$!
-  fi
+  for res in $(find ${SCEN_CHECK_DIR} -type f -name 'sipp_scenario_responder[0-9][0-9].xml'); do
+    base=$(basename $res .xml)
+    ${BASE_DIR}/sipp.sh -d ${DOMAIN} -r ${SCEN_CHECK_DIR}/${base}_reg.xml &> /dev/null
+    ${BASE_DIR}/sipp.sh -d ${DOMAIN} -r ${SCEN_CHECK_DIR}/${base}.xml &> /dev/null &
+    responder_pid="${responder_pid} ${base}:$!"
+  done
   # let's fire sipp scenario
   ${BASE_DIR}/sipp.sh -d ${DOMAIN} $1
   status=$?
 
-  if [ -f ${SCEN_CHECK_DIR}/sipp_scenario_responder.xml ]; then
-    ps -p${responder_pid} &> /dev/null
+  for res in ${responder_pid}; do
+    base=$(echo $res| cut -d: -f1)
+    pid=$(echo $res| cut -d: -f2)
+    ps -p${pid} &> /dev/null
     ps_status=$?
     if [ ${ps_status} -eq 0 ]; then
-      echo "sipp responder not finished yet. Waiting 5 secs"
+      echo "sipp responder $base pid $pid not finished yet. Waiting 5 secs"
       sleep 5
     fi
-    ${BASE_DIR}/sipp.sh -d ${DOMAIN} -r ${SCEN_CHECK_DIR}/sipp_scenario_responder_unreg.xml &> /dev/null
-  fi
+    ${BASE_DIR}/sipp.sh -d ${DOMAIN} -r ${SCEN_CHECK_DIR}/${base}_unreg.xml &> /dev/null
+  done
 
   # copy the kamailio log
   cp ${KAM_LOG} ${LOG_FILE} ${LOG_DIR}/kamailio.log
