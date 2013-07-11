@@ -7,13 +7,22 @@ use Cwd 'abs_path';
 use Data::Dumper;
 use Getopt::Long;
 
-my $yml = '';
-GetOptions ("y|yml+" => \$yml)
-  or die("Error in command line arguments\n");
-                                      
-if($#ARGV!=0)
+sub usage
 {
-  die "usage: show_flow.pl file.yml\n";
+  my $output = "usage: show_flow.pl [-h] file.yml\n";
+  $output .= "\tOptions:\n";
+  $output .= "-h: this help\n";
+  return $output
+}
+
+my $yml = '';
+my $help = 0;
+GetOptions ("y|yml+" => \$yml, "h|help" => \$help)
+  or die("Error in command line arguments\n".usage());
+
+if($#ARGV!=0 || $help)
+{
+  die(usage())
 }
 my $filename = abs_path($ARGV[0]);
 my $ylog = YAML::LoadFile($filename);

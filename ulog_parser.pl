@@ -8,9 +8,30 @@ use File::Spec;
 use Cwd 'abs_path';
 use Data::Dumper;
 use Tie::File;
+use Getopt::Long;
 
 my $filename = "/var/log/ngcp/kamailio-proxy.log";
 my $output_dir = "log";
+
+sub usage
+{
+  my $output = "usage: ulog_parser.pl [-h] [kamailio_log] [dest_dir]\n";
+  $output .= "Options:\n";
+  $output .= "\t-h: this help\n";
+  $output .= "\tkamailio_log default:$filename\n";
+  $output .= "\tdest_dir default:$output_dir\n";
+  return $output
+}
+
+my $help = 0;
+GetOptions ("h|help" => \$help)
+  or die("Error in command line arguments\n".usage());
+
+if($#ARGV>=2 || $help)
+{
+  die(usage())
+}
+
 my $path;
 my $data = {
   msgid => '',
@@ -52,10 +73,6 @@ sub save_data
   };
 }
 
-if($#ARGV>=2)
-{
-  die "usage: $#ARGV log_parser.pl [kamailio_log] [dest_dir]\n";
-}
 given($#ARGV)
 {
   when (1) { $filename = $ARGV[0]; $output_dir = $ARGV[1]; }

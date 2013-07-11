@@ -6,13 +6,26 @@ use YAML;
 use Cwd 'abs_path';
 use Data::Dumper;
 use GraphViz;
+use Getopt::Long;
 
-my $g = GraphViz->new();
+sub usage
+{
+  my $output = "usage: graph_flow.pl [-h] file_in.yml file_out.png\n";
+  $output .= "Options:\n";
+  $output .= "\t-h: this help\n";
+  return $output
+}
+
+my $help = 0;
+GetOptions ("h|help" => \$help)
+  or die("Error in command line arguments\n".usage());
 
 if($#ARGV!=1)
 {
-  die "usage: show_flow.pl file.yml destfile.png\n";
+  die(usage());
 }
+
+my $g = GraphViz->new();
 my $filename = abs_path($ARGV[0]);
 my $outfilename = $ARGV[1];
 my $ylog = YAML::LoadFile($filename);

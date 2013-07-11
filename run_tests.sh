@@ -12,10 +12,12 @@ function usage
   echo "-p CE|PRO default is CE"
   echo "-c skips configuration of the environment"
   echo "-t skips tests"
+  echo "-h this help"
 }
 
-while getopts 'ctp:' opt; do
+while getopts 'hctp:' opt; do
   case $opt in
+    h) usage; exit 0;;
     c) SKIP=1;;
     t) TEST=1;;
     p) PROFILE=$OPTARG;;

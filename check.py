@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import io, sys, re
+import io, sys, re, getopt
 from yaml import load
 from pprint import pprint
 try:
@@ -198,16 +198,36 @@ def check_sip_out(scen, msgs, test):
   if ( num_scen != num_msgs ):
     test.error("we expected %d out messages but we have %d" % ( num_scen, num_msgs ))
 
-if __name__ == '__main__':
-  if(len(sys.argv)!=3):
-    print 'Usage: check.py scenario.yml test.yml'
+def usage():
+    print 'Usage: check.py [-h] scenario.yml test.yml'
+    print '-h: this help'
+
+def main():
+  try:
+    opts, args = getopt.getopt(sys.argv[1:], "h", ["help"])
+  except getopt.GetoptError as err:
+    # print help information and exit:
+    print str(err) # will print something like "option -a not recognized"
+    usage()
+    sys.exit(2)
+  for o, a in opts:
+    if o in ("-h", "--help"):
+      usage()
+      sys.exit()
+    else:
+      assert False, "unhandled option"
+
+  print "args:%s" % args
+
+  if(len(args)!=2):
+    usage()
     sys.exit(1)
 
-  with io.open(sys.argv[1], 'r') as file:
+  with io.open(args[0], 'r') as file:
     scen = load(file, Loader=Loader)
   file.close()
 
-  with io.open(sys.argv[2], 'r') as file:
+  with io.open(args[1], 'r') as file:
     check = load(file, Loader=Loader)
   file.close()
 
@@ -222,3 +242,6 @@ if __name__ == '__main__':
   print test
   if test.isError():
     sys.exit(1)
+
+if __name__ == "__main__":
+  main()

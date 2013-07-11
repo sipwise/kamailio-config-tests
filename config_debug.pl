@@ -3,6 +3,26 @@ use Tie::File;
 use strict;
 use warnings;
 use YAML::Tiny;
+use Getopt::Long;
+
+sub usage
+{
+  my $output = "usage: config_debug.pl [-h] MODE DOMAIN\n";
+  $output .= "Options:\n";
+  $output .= "\t-h: this help\n";
+  $output .= "\tMODE: on|off\tdefault: off\n";
+  $output .= "\tDOMAIN: default: spce.test\n";
+  return $output
+}
+
+my $help = 0;
+GetOptions ("h|help" => \$help)
+  or die("Error in command line arguments\n".usage());
+
+if($#ARGV>1 || $help)
+{
+  die(usage())
+}
 
 my $yaml = YAML::Tiny->new;
 my $file  = "/etc/ngcp-config/config.yml";
