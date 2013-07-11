@@ -1,5 +1,6 @@
 #!/bin/bash
 BASE_DIR="/usr/local/src/kamailio-config-tests"
+BIN_DIR="${BASE_DIR}/bin"
 LOG_DIR="${BASE_DIR}/log"
 RESULT_DIR="${BASE_DIR}/result"
 PROFILE="CE"
@@ -38,7 +39,7 @@ if [ "${PROFILE}" != "CE" ] && [ "${PROFILE}" != "PRO" ]; then
 fi
 
 if [ -z $SKIP ]; then
-  ${BASE_DIR}/config_debug.pl on ${DOMAIN}
+  ${BIN_DIR}/config_debug.pl on ${DOMAIN}
   ngcpcfg apply
 fi
 
@@ -46,7 +47,7 @@ for i in ${LOG_DIR} ${RESULT_DIR}; do
   rm -rf $i
 done
 
-${BASE_DIR}/generate_tests.sh ${PROFILE}
+${BIN_DIR}/generate_tests.sh ${PROFILE}
 if [ $? -ne 0 ]; then
   echo "Generating tests error"
   exit 3
@@ -55,7 +56,7 @@ fi
 for t in $(find ${BASE_DIR}/scenarios/ -depth -maxdepth 1 -mindepth 1 -type d | sort); do
   echo "Run: $(basename $t)"
   if [ -z $TEST ]; then
-    ${BASE_DIR}/scenarios/check.sh -d ${DOMAIN} $(basename $t)
+    ${BIN_DIR}/check.sh -d ${DOMAIN} $(basename $t)
     if [ $? -ne 0 ]; then
     	error_flag=1
     fi
@@ -63,7 +64,7 @@ for t in $(find ${BASE_DIR}/scenarios/ -depth -maxdepth 1 -mindepth 1 -type d | 
 done
 
 if [ -z $SKIP ]; then
-  ${BASE_DIR}/config_debug.pl off ${DOMAIN}
+  ${BIN_DIR}/config_debug.pl off ${DOMAIN}
   ngcpcfg apply
 fi
 

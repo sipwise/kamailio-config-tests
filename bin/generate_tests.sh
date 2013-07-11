@@ -1,5 +1,6 @@
 #!/bin/bash
 BASE_DIR="/usr/local/src/kamailio-config-tests"
+BIN_DIR="${BASE_DIR}/bin"
 LOG_DIR="${BASE_DIR}/log"
 RESULT_DIR="${BASE_DIR}/result"
 DOMAIN="spce.test"

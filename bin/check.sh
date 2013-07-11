@@ -5,7 +5,7 @@
 function graph
 {
   if [ -f $1 ]; then
-    ${BASE_DIR}/graph_flow.pl $1 $2
+    ${BIN_DIR}/graph_flow.pl $1 $2
   fi
 }
 
@@ -24,7 +24,7 @@ function check_test
   fi
 
   echo -n "Testing $1 againts $2 -> $3"
-  ${BASE_DIR}/check.py $1 $2 > $3
+  ${BIN_DIR}/check.py $1 $2 > $3
   if [[ $? -ne "0" ]]; then
     echo " not ok"
     ERR_FLAG=1
@@ -36,22 +36,22 @@ function check_test
 # $1 domain
 function create_voip
 {
-  ${BASE_DIR}/create_domain.pl $1
-  ${BASE_DIR}/create_subscribers.pl -v 1 -s 3 -d $1 -u testuser -c 43  -a 1 -n 1001 -p testuser
+  ${BIN_DIR}/create_domain.pl $1
+  ${BIN_DIR}/create_subscribers.pl -v 1 -s 3 -d $1 -u testuser -c 43  -a 1 -n 1001 -p testuser
 }
 
 # $1 prefs yml file
 function create_voip_prefs
 {
   if [ -f $1 ]; then
-    ${BASE_DIR}/set_subscribers_preferences.pl $1
+    ${BIN_DIR}/set_subscribers_preferences.pl $1
   fi
 }
 
 # $1 domain
 function delete_voip
 {
-  ${BASE_DIR}/delete_domain.pl $1
+  ${BIN_DIR}/delete_domain.pl $1
 }
 
 # $1 msg to echo
@@ -78,15 +78,15 @@ function run_sipp
   rm -rf ${LOG_DIR}
   mkdir -p ${LOG_DIR}
 
-  ${BASE_DIR}/restart_log.sh
+  ${BIN_DIR}/restart_log.sh
   for res in $(find ${SCEN_CHECK_DIR} -type f -name 'sipp_scenario_responder[0-9][0-9].xml'| sort); do
     base=$(basename $res .xml)
-    ${BASE_DIR}/sipp.sh -d ${DOMAIN} -r ${SCEN_CHECK_DIR}/${base}_reg.xml &> /dev/null
-    ${BASE_DIR}/sipp.sh -d ${DOMAIN} -r ${SCEN_CHECK_DIR}/${base}.xml &> /dev/null &
+    ${BIN_DIR}/sipp.sh -d ${DOMAIN} -r ${SCEN_CHECK_DIR}/${base}_reg.xml &> /dev/null
+    ${BIN_DIR}/sipp.sh -d ${DOMAIN} -r ${SCEN_CHECK_DIR}/${base}.xml &> /dev/null &
     responder_pid="${responder_pid} ${base}:$!"
   done
   # let's fire sipp scenario
-  ${BASE_DIR}/sipp.sh -d ${DOMAIN} $1
+  ${BIN_DIR}/sipp.sh -d ${DOMAIN} $1
   status=$?
 
   for res in ${responder_pid}; do
@@ -98,7 +98,7 @@ function run_sipp
       echo "sipp responder $base pid $pid not finished yet. Waiting 5 secs"
       sleep 5
     fi
-    ${BASE_DIR}/sipp.sh -d ${DOMAIN} -r ${SCEN_CHECK_DIR}/${base}_unreg.xml &> /dev/null
+    ${BIN_DIR}/sipp.sh -d ${DOMAIN} -r ${SCEN_CHECK_DIR}/${base}_unreg.xml &> /dev/null
   done
 
   # copy the kamailio log
@@ -109,7 +109,7 @@ function run_sipp
   fi
 
   echo "Parsing ${LOG_DIR}/kamailio.log"
-  ${BASE_DIR}/ulog_parser.pl ${LOG_DIR}/kamailio.log ${LOG_DIR}
+  ${BIN_DIR}/ulog_parser.pl ${LOG_DIR}/kamailio.log ${LOG_DIR}
 }
 
 while getopts 'CRDTGd:' opt; do
@@ -138,6 +138,7 @@ fi
 
 NAME_CHECK="$1"
 BASE_DIR="/usr/local/src/kamailio-config-tests"
+BIN_DIR="${BASE_DIR}/bin"
 LOG_DIR="${BASE_DIR}/log/${NAME_CHECK}"
 RESULT_DIR="${BASE_DIR}/result/${NAME_CHECK}"
 KAM_LOG="/var/log/ngcp/kamailio-proxy.log"
