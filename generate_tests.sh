@@ -7,11 +7,28 @@ PROFILE="$1"
 TPAGE="/usr/bin/tpage"
 error_flag=0
 
+function clean
+{
+  find ${BASE_DIR}/scenarios/ -type f -name '*test.yml'  -exec rm {} \;
+}
+
 function usage
 {
-  echo "Usage: generate_tests.sh profile"
-  echo "profile: CE|PRO"
+  echo "Usage: generate_tests.sh [-h] [-c] profile"
+  echo "Options:"
+  echo -e "\tc: clean. Removes all generated test files"
+  echo -e "\th: this help"
+  echo "Args:"
+  echo -e "\tprofile: CE|PRO"
 }
+
+while getopts 'hc' opt; do
+  case $opt in
+    h) usage; exit 0;;
+    c) clean; exit 0;;
+  esac
+done
+shift $(($OPTIND - 1))
 
 if [[ $# -ne 1 ]]; then
   echo "Wrong number or arguments"
