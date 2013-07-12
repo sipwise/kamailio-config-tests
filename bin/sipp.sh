@@ -62,13 +62,13 @@ if [ -z ${RESP} ]; then
   PORT=${PORT:-"50602"}
   TIMEOUT=${TIMEOUT:-"10"}
   sipp -max_socket $MAX -inf ${BASE_DIR}/../callee.csv -inf ${BASE_DIR}/../caller.csv -sf $1 -i $IP \
-    -nd -t ul -p $PORT $IP -m 1 -mp ${MPORT} -timeout ${TIMEOUT} -timeout_error -trace_err
+    -nd -t ul -p $PORT $IP -m 1 -mp ${MPORT} -timeout ${TIMEOUT} -timeout_error -trace_err &> /dev/null
 else
   MPORT=${PORT:-"6003"}
   PORT=${PORT:-"50603"}
   TIMEOUT=${TIMEOUT:-"25"}
   sipp -max_socket $MAX -inf ${BASE_DIR}/../callee.csv -sf $1 -i $IP \
-    -nd -t ul -p $PORT $IP -m 1 -rtp_echo -mp ${MPORT} -timeout ${TIMEOUT} -timeout_error -trace_err
+    -nd -t ul -p $PORT $IP -m 1 -rtp_echo -mp ${MPORT} -timeout ${TIMEOUT} -timeout_error -trace_err &> /dev/null
 fi
 
 set_domain 0

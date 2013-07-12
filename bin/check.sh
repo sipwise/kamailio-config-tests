@@ -85,8 +85,8 @@ function run_sipp
   ${BIN_DIR}/restart_log.sh
   for res in $(find ${SCEN_CHECK_DIR} -type f -name 'sipp_scenario_responder[0-9][0-9].xml'| sort); do
     base=$(basename $res .xml)
-    ${BIN_DIR}/sipp.sh -d ${DOMAIN} -r ${SCEN_CHECK_DIR}/${base}_reg.xml &> /dev/null
-    ${BIN_DIR}/sipp.sh -d ${DOMAIN} -r ${SCEN_CHECK_DIR}/${base}.xml &> /dev/null &
+    ${BIN_DIR}/sipp.sh -d ${DOMAIN} -r ${SCEN_CHECK_DIR}/${base}_reg.xml
+    ${BIN_DIR}/sipp.sh -d ${DOMAIN} -r ${SCEN_CHECK_DIR}/${base}.xml &
     responder_pid="${responder_pid} ${base}:$!"
   done
   status=0
@@ -108,7 +108,7 @@ function run_sipp
       echo "sipp responder $base pid $pid not finished yet. Waiting 5 secs"
       sleep 5
     fi
-    ${BIN_DIR}/sipp.sh -d ${DOMAIN} -r ${SCEN_CHECK_DIR}/${base}_unreg.xml &> /dev/null
+    ${BIN_DIR}/sipp.sh -d ${DOMAIN} -r ${SCEN_CHECK_DIR}/${base}_unreg.xml
   done
 
   # copy the kamailio log
