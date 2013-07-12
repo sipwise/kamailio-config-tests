@@ -1,0 +1,35 @@
+---
+testuser1001@spce.test:
+  destination_set:
+    - destinations:
+        - destination: sip:4311002@spce.test
+          priority: 0
+          timeout: 2
+        - destination: sip:testuser1002@spce.test
+          priority: 1
+          timeout: 2
+      name: cf_set_1001_00
+    - destinations:
+        - destination: sip:4311002@spce.test
+          priority: 1
+          timeout: 2
+        - destination: sip:testuser1002@spce.test
+          priority: 0
+          timeout: 2
+      name: cf_set_1001_01
+  map:
+    - destination_set_id: cf_set_1001_00
+      type: cfu
+    - destination_set_id: cf_set_1001_01
+      type: cfb
+      time_set_id: time_set_00
+  time_set:
+    - name : time_set_00
+      periods:
+        - id: 0
+          year: 20013-2020
+          mount: 01-12
+          mday: 01-20
+          wday: 1-5
+          hour: 00-24
+          minute: 00-59
