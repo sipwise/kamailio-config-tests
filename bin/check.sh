@@ -44,15 +44,18 @@ function create_voip
 function create_voip_prefs
 {
   if [ -f ${SCEN_CHECK_DIR}/callforward.yml ]; then
+   echo "Setting callforward config"
    ${BIN_DIR}/set_subscribers_callforward.pl ${SCEN_CHECK_DIR}/callforward.yml
   fi
 
   if [ -f ${SCEN_CHECK_DIR}/speeddial.yml ]; then
-   ${BIN_DIR}/set_subscribers_callforward.pl ${SCEN_CHECK_DIR}/speeddial.yml
+   echo "Setting speeddial config"
+   ${BIN_DIR}/set_subscribers_speeddial.pl ${SCEN_CHECK_DIR}/speeddial.yml
   fi
 
-  if [ -f $1 ]; then
-    ${BIN_DIR}/set_subscribers_preferences.pl $1
+  if [ -f ${SCEN_CHECK_DIR}/prefs.yml ]; then
+    echo "Setting subcribers preferences"
+    ${BIN_DIR}/set_subscribers_preferences.pl ${SCEN_CHECK_DIR}/prefs.yml
   fi
 }
 
@@ -163,7 +166,7 @@ DOMAIN=${DOMAIN:-"spce.test"}
 if [ -z $SKIP ]; then
   delete_voip ${DOMAIN} # just to be sure nothing is there
   create_voip ${DOMAIN}
-  create_voip_prefs ${SCEN_CHECK_DIR}/prefs.yml
+  create_voip_prefs
 
   if [ -z $SKIP_RUNSIPP ]; then
     run_sipp
