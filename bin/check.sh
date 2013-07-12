@@ -47,6 +47,10 @@ function create_voip_prefs
    ${BIN_DIR}/set_subscribers_callforward.pl ${SCEN_CHECK_DIR}/callforward.yml
   fi
 
+  if [ -f ${SCEN_CHECK_DIR}/speeddial.yml ]; then
+   ${BIN_DIR}/set_subscribers_callforward.pl ${SCEN_CHECK_DIR}/speeddial.yml
+  fi
+
   if [ -f $1 ]; then
     ${BIN_DIR}/set_subscribers_preferences.pl $1
   fi
