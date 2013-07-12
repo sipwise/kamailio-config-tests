@@ -4,8 +4,8 @@ BIN_DIR="${BASE_DIR}/bin"
 LOG_DIR="${BASE_DIR}/log"
 RESULT_DIR="${BASE_DIR}/result"
 DOMAIN="spce.test"
-PROFILE="$1"
 TPAGE="/usr/bin/tpage"
+DIR="${BASE_DIR}/scenarios"
 error_flag=0
 
 function clean
@@ -15,21 +15,24 @@ function clean
 
 function usage
 {
-  echo "Usage: generate_tests.sh [-h] [-c] profile"
+  echo "Usage: generate_tests.sh [-h] [-c] [-d directory] profile"
   echo "Options:"
   echo -e "\tc: clean. Removes all generated test files"
+  echo -e "\td: directory"
   echo -e "\th: this help"
   echo "Args:"
   echo -e "\tprofile: CE|PRO"
 }
 
-while getopts 'hc' opt; do
+while getopts 'hcd:' opt; do
   case $opt in
     h) usage; exit 0;;
     c) clean; exit 0;;
+    d) DIR=$OPTARG;;
   esac
 done
 shift $(($OPTIND - 1))
+PROFILE="$1"
 
 if [[ $# -ne 1 ]]; then
   echo "Wrong number or arguments"
@@ -53,7 +56,7 @@ if [ ! -x ${TPAGE} ]; then
   exit 3
 fi
 
-for t in $(find ${BASE_DIR}/scenarios/ -not -regex '.+customtt.tt2' -type f -name '*.tt2' | sort); do
+for t in $(find ${DIR} -not -regex '.+customtt.tt2' -type f -name '*.tt2' | sort); do
   template="$(basename $t)"
   destdir="$(dirname $t)"
   destfile="$(basename $t .tt2)"
