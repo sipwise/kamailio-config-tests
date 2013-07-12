@@ -89,9 +89,15 @@ function run_sipp
     ${BIN_DIR}/sipp.sh -d ${DOMAIN} -r ${SCEN_CHECK_DIR}/${base}.xml &> /dev/null &
     responder_pid="${responder_pid} ${base}:$!"
   done
-  # let's fire sipp scenario
-  ${BIN_DIR}/sipp.sh -d ${DOMAIN} $1
-  status=$?
+  status=0
+  # let's fire sipp scenarios
+  for send in $(find ${SCEN_CHECK_DIR} -type f -name 'sipp_scenario[0-9][0-9].xml'| sort); do
+    echo "Run sipp with $send"
+    ${BIN_DIR}/sipp.sh -d ${DOMAIN} $send
+    if [[ $? -ne 0 ]]; then
+      status=1
+    fi
+  done
 
   for res in ${responder_pid}; do
     base=$(echo $res| cut -d: -f1)
@@ -156,7 +162,7 @@ if [ -z $SKIP ]; then
   create_voip_prefs ${SCEN_CHECK_DIR}/prefs.yml
 
   if [ -z $SKIP_RUNSIPP ]; then
-    run_sipp ${SCEN_CHECK_DIR}/sipp_scenario.xml
+    run_sipp
   fi
 
   if [ -z ${SKIP_DELDOMAIN} ]; then
