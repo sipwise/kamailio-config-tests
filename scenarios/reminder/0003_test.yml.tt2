@@ -1,0 +1,89 @@
+# INVITE_OFFLINE scenario
+flow:
+  - start|MAIN:
+  - start|ROUTE_NET_INFO:
+  - end|ROUTE_NET_INFO:
+  - start|ROUTE_PRX_REQUEST:
+  - start|ROUTE_INVITE:
+  - start|ROUTE_LOAD_CALLEE_DOMAIN_PREF:
+  - end|ROUTE_LOAD_CALLEE_DOMAIN_PREF:
+  - start|ROUTE_FIND_CALLER:
+  - start|ROUTE_AUTH:
+  - start|ROUTE_ADD_CALLINFO_REPLY:
+  - end|ROUTE_ADD_CALLINFO_REPLY:
+  - end|ROUTE_AUTH:
+  - end|ROUTE_FIND_CALLER:
+  - start|ROUTE_LOAD_CALLER_PREF:
+  - start|ROUTE_CLEAR_CALLER_PREF:
+  - end|ROUTE_CLEAR_CALLER_PREF:
+  - end|ROUTE_LOAD_CALLER_PREF:
+  - start|ROUTE_GET_CALLER_CLI:
+  - end|ROUTE_GET_CALLER_CLI:
+  - start|ROUTE_GET_FORWARDER_CLI:
+  - end|ROUTE_GET_FORWARDER_CLI:
+  - start|ROUTE_CHECK_USERPROV_CLI:
+  - start|ROUTE_CHECK_CLI_ALLOWED:
+  - end|ROUTE_CHECK_CLI_ALLOWED:
+  - end|ROUTE_CHECK_USERPROV_CLI:
+  - start|ROUTE_CLIR:
+  - end|ROUTE_CLIR:
+  - start|ROUTE_FIND_CALLEE:
+  - start|ROUTE_TO_APPSRV:
+  - start|ROUTE_LOAD_APPSRV:
+  - end|ROUTE_LOAD_APPSRV:
+  - start|ROUTE_OUTBOUND:
+  - start|ROUTE_ACC_CALLER:
+  - end|ROUTE_ACC_CALLER:
+  - start|ROUTE_ACC_CALLEE:
+  - end|ROUTE_ACC_CALLEE:
+  - start|BRANCH_ROUTE_NO_SBC:
+  - start|ROUTE_BRANCH_ACC_RTP:
+  - end|ROUTE_BRANCH_ACC_RTP:
+  - start|ROUTE_SET_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - end|ROUTE_PREPARE_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - end|ROUTE_PREPARE_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - end|ROUTE_PREPARE_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - end|ROUTE_PREPARE_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - end|ROUTE_PREPARE_CALLER_CLI:
+  - end|ROUTE_SET_CALLER_CLI:
+  - start|ROUTE_SET_CALLEE:
+  - end|ROUTE_SET_CALLEE:
+  - start|ROUTE_ADD_CALLINFO:
+  - end|ROUTE_ADD_CALLINFO:
+  - end|BRANCH_ROUTE_NO_SBC:
+  - exit|ROUTE_OUTBOUND:
+sip_in:
+  - '^INVITE'
+  - 'Contact: sip:testuser1001@'
+  - 'CSeq: 2 INVITE'
+  - 'Max-Forwards: 16'
+  - 'Content-Type: application/sdp'
+  - 'Proxy-Authorization: Digest username="testuser1001"'
+sip_out:
+  - [
+      '^SIP/2.0 100 Trying',
+      'CSeq: 2 INVITE',
+      'From: <sip:testuser1001@',
+      'To: <sip:\*55\*\d{4}@'
+    ]
+  - [
+      '^SIP/2.0 101 Connecting',
+      'CSeq: 2 INVITE',
+      'From: <sip:testuser1001@',
+      'To: <sip:\*55\*\d{4}@'
+    ]
+  - [
+      '^INVITE sip:\*55\*\d{4}@',
+      'CSeq: 2 INVITE',
+      'From: <sip:4311001@',
+      'To: <sip:\*55\*\d{4}@',
+      'Content-Type: application/sdp',
+      'P-Caller-UUID: \w+',
+      'P-Callee-UUID: \w+',
+      'P-App-Name: sw_vsc'
+    ]
