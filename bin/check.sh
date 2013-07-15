@@ -103,7 +103,7 @@ function run_sipp
     ${BIN_DIR}/sipp.sh -d ${DOMAIN} -p ${PORT} -m ${MPORT} -r ${SCEN_CHECK_DIR}/${base}.xml &
     responder_pid="${responder_pid} ${base}:$!:${PORT}:${MPORT}"
     let PORT=${PORT}+1
-    let MPORT=${MPORT}+2
+    let MPORT=${MPORT}+3
   done
   status=0
   # let's fire sipp scenarios
@@ -190,6 +190,12 @@ if [ "${PROFILE}" != "CE" ] && [ "${PROFILE}" != "PRO" ]; then
   echo "PROFILE ${PROFILE} unknown"
   usage
   exit 2
+fi
+
+if [ ! -d ${SCEN_CHECK_DIR} ]; then
+  echo "no ${SCEN_CHECK_DIR} found"
+  usage
+  exit 3
 fi
 
 if [ -z $SKIP ]; then
