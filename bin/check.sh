@@ -154,11 +154,11 @@ if [[ $# != 1 ]]; then
 fi
 
 NAME_CHECK="$1"
-BASE_DIR="/usr/local/src/kamailio-config-tests"
+BASE_DIR="${BASE_DIR:-/usr/local/src/kamailio-config-tests}"
 BIN_DIR="${BASE_DIR}/bin"
 LOG_DIR="${BASE_DIR}/log/${NAME_CHECK}"
 RESULT_DIR="${BASE_DIR}/result/${NAME_CHECK}"
-KAM_LOG="/var/log/ngcp/kamailio-proxy.log"
+KAM_LOG="${KAM_LOG:-/var/log/ngcp/kamailio-proxy.log}"
 SCEN_DIR="${BASE_DIR}/scenarios"
 SCEN_CHECK_DIR="${SCEN_DIR}/${NAME_CHECK}"
 DOMAIN=${DOMAIN:-"spce.test"}
