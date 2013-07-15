@@ -2,3 +2,4 @@
 log
 result
 *.pyc
+*_test.yml
