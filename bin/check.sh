@@ -6,6 +6,8 @@ function graph
 {
   if [ -f $1 ]; then
     ${BIN_DIR}/graph_flow.pl $1 $2
+  else
+    ERR_FLAG=1
   fi
 }
 
@@ -16,10 +18,12 @@ function check_test
 {
   if [ ! -f $1 ]; then
     echo "File $1 does not exists"
+    ERR_FLAG=1
     return
   fi
   if [ ! -f $2 ]; then
-   echo "File $2 does not exists"
+    echo "File $2 does not exists"
+    ERR_FLAG=1
     return
   fi
 
