@@ -1,5 +1,5 @@
 Source: kamailio-config-tests
-Section: unknown
+Section: Development
 Priority: extra
 Maintainer: Sipwise Development Team <support@sipwise.com>
 Build-Depends: debhelper (>= 8.0.0)
