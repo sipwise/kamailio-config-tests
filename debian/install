@@ -1,0 +1,3 @@
+bin/ /usr/local/src/kamailio-config-tests/
+scenarios/ /usr/local/src/kamailio-config-tests/
+run_tests.sh /usr/local/src/kamailio-config-tests/
