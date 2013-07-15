@@ -51,7 +51,7 @@ if [ ! -f $1 ]; then
 	usage
 	exit 1
 fi
-BASE_DIR="${BASE_DIR:-$(dirname $1)}"
+BASE_DIR="$(dirname $1)"
 IP="127.0.0.1"
 DOMAIN=${DOMAIN:-"spce.test"}
 MAX="5000"
