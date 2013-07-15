@@ -39,10 +39,10 @@ Usage:
       - a png file ( routes flow )
 
  If you want to run test manually just exec this onces:
-  #./config_debug.pl
+  #./bin/config_debug.pl on
   #ngcpcfg apply
  and run the check that you want:
-  #./scenarios/check <checkname>
+  #./bin/check.sh <checkname>
 
 --
 Victor Seva <vseva@sipwise.com>
