@@ -133,10 +133,27 @@ function run_sipp
   ${BIN_DIR}/ulog_parser.pl ${LOG_DIR}/kamailio.log ${LOG_DIR}
 }
 
-while getopts 'CRDTGd:' opt; do
+function usage
+{
+  echo "Usage: check.sh [-hCDRTG] [-d DOMAIN ] [-p PROFILE ] check_name"
+  echo "Options:"
+  echo -e "\t-C: skip creation of domain and subscribers"
+  echo -e "\t-R: skip run sipp"
+  echo -e "\t-D: skip deletion of domain and subscribers as final step"
+  echo -e "\t-T: skip checks"
+  echo -e "\t-G: skip creation of graphviz image"
+  echo -e "\t-d: DOMAIN"
+  echo -e "\t-p CE|PRO default is CE"
+  echo "Arguments:"
+  echo -e "\tcheck_name. Scenario name to check. This is the name of the directory on scenarios dir."
+}
+
+while getopts 'hCRDTGd:p:' opt; do
   case $opt in
+    h) usage; exit 0;;
     C) SKIP=1;;
     d) DOMAIN=$OPTARG;;
+    p) PROFILE=$OPTARG;;
     R) SKIP_RUNSIPP=1;;
     D) SKIP_DELDOMAIN=1;;
     T) SKIP_TESTS=1;;
@@ -146,14 +163,8 @@ done
 shift $(($OPTIND - 1))
 
 if [[ $# != 1 ]]; then
-  echo "Usage: $0 [-sDr] [-d DOMAIN] check_name"
-  echo "Options:"
-  echo "-C: skip creation of domain and subscribers"
-  echo "-R: skip run sipp"
-  echo "-D: skip deletion of domain and subscribers as final step"
-  echo "-T: skip checks"
-  echo "-G: skip creation of graphviz image"
-  echo "-d: DOMAIN"
+  echo "Wrong number of arguments"
+  usage
   exit 1
 fi
 
@@ -166,6 +177,13 @@ KAM_LOG="${KAM_LOG:-/var/log/ngcp/kamailio-proxy.log}"
 SCEN_DIR="${BASE_DIR}/scenarios"
 SCEN_CHECK_DIR="${SCEN_DIR}/${NAME_CHECK}"
 DOMAIN=${DOMAIN:-"spce.test"}
+PROFILE="${PROFILE:-CE}"
+
+if [ "${PROFILE}" != "CE" ] && [ "${PROFILE}" != "PRO" ]; then
+  echo "PROFILE ${PROFILE} unknown"
+  usage
+  exit 2
+fi
 
 if [ -z $SKIP ]; then
   delete_voip ${DOMAIN} # just to be sure nothing is there
@@ -186,6 +204,7 @@ fi
 ERR_FLAG=0
 if [ -z ${SKIP_TESTS} ]; then
   mkdir -p ${RESULT_DIR}
+  ${BIN_DIR}/generate_tests.sh -d ${SCEN_CHECK_DIR} ${PROFILE}
   for t in ${SCEN_CHECK_DIR}/*_test.yml; do
     msg_name=$(echo $t|sed 's/_test\.yml/\.yml/')
     msg=${LOG_DIR}/$(basename $msg_name)
