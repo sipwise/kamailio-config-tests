@@ -148,7 +148,7 @@ function usage
   echo -e "\t-R: skip run sipp"
   echo -e "\t-D: skip deletion of domain and subscribers as final step"
   echo -e "\t-T: skip checks"
-  echo -e "\t-G: skip creation of graphviz image"
+  echo -e "\t-G: creation of graphviz image"
   echo -e "\t-d: DOMAIN"
   echo -e "\t-p CE|PRO default is CE"
   echo "Arguments:"
@@ -164,7 +164,7 @@ while getopts 'hCRDTGd:p:' opt; do
     R) SKIP_RUNSIPP=1;;
     D) SKIP_DELDOMAIN=1;;
     T) SKIP_TESTS=1;;
-    G) SKIP_GRAPH=1;;
+    G) GRAPH=1;;
   esac
 done
 shift $(($OPTIND - 1))
@@ -223,7 +223,7 @@ if [ -z ${SKIP_TESTS} ]; then
     msg=${LOG_DIR}/$(basename $msg_name)
     dest=${RESULT_DIR}/$(basename $t .yml)
     check_test $t $msg ${dest}.tap
-    if [ -z ${SKIP_GRAPH} ]; then
+    if [ ! -z ${GRAPH} ]; then
       echo "Generating flow image: ${dest}.png"
       graph $msg ${dest}.png
     fi
