@@ -47,16 +47,10 @@ for i in ${LOG_DIR} ${RESULT_DIR}; do
   rm -rf $i
 done
 
-${BIN_DIR}/generate_tests.sh ${PROFILE}
-if [ $? -ne 0 ]; then
-  echo "Generating tests error"
-  exit 3
-fi
-
 for t in $(find ${BASE_DIR}/scenarios/ -depth -maxdepth 1 -mindepth 1 -type d | sort); do
   echo "Run: $(basename $t)"
   if [ -z $TEST ]; then
-    ${BIN_DIR}/check.sh -d ${DOMAIN} $(basename $t)
+    ${BIN_DIR}/check.sh -d ${DOMAIN} -p ${PROFILE} $(basename $t)
     if [ $? -ne 0 ]; then
     	error_flag=1
     fi
