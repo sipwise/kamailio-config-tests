@@ -23,7 +23,7 @@ function usage
   echo "Options:"
   echo -e "\t-d: DOMAIN. default: spce.test"
   echo -e "\t-p: sip port. default 50602/50603(responder)"
-  echo -e "\t-m: media port. default 6002/6003(responder)"
+  echo -e "\t-m: media port"
   echo -e "\t-t: timeout. default 10/25(responder)"
   echo "Arguments:"
   echo -e "\t sipp_scenario.xml file"
@@ -58,18 +58,27 @@ MAX="5000"
 set_domain 1
 
 if [ -z ${RESP} ]; then
-  MPORT=${PORT:-"6002"}
+  if [ ! -z ${MPORT} ]; then
+    MPORT_ARG="-mp ${MPORT}"
+  fi
   PORT=${PORT:-"50602"}
   TIMEOUT=${TIMEOUT:-"10"}
+  #echo "Running sipp SCENARIO=$1 IP=${IP} PORT=${PORT} MPORT_ARG=${MPORT_ARG} TIMEOUT=${TIMEOUT}"
   sipp -max_socket $MAX -inf ${BASE_DIR}/../callee.csv -inf ${BASE_DIR}/../caller.csv -sf $1 -i $IP \
-    -nd -t ul -p $PORT $IP -m 1 -mp ${MPORT} -timeout ${TIMEOUT} -timeout_error -trace_err &> /dev/null
+    -nd -t ul -p $PORT $IP -m 1 ${MPORT_ARG} -timeout ${TIMEOUT} -timeout_error -trace_err &> /dev/null
+  status=$?
 else
-  MPORT=${PORT:-"6003"}
+  if [ ! -z ${MPORT} ]; then
+    MPORT_ARG="-rtp_echo -mp ${MPORT}"
+  fi
   PORT=${PORT:-"50603"}
   TIMEOUT=${TIMEOUT:-"25"}
+  #echo "Running RESP sipp SCENARIO=$1 IP=${IP} PORT=${PORT} MPORT_ARG=${MPORT_ARG} TIMEOUT=${TIMEOUT}"
   sipp -max_socket $MAX -inf ${BASE_DIR}/../callee.csv -sf $1 -i $IP \
-    -nd -t ul -p $PORT $IP -m 1 -rtp_echo -mp ${MPORT} -timeout ${TIMEOUT} -timeout_error -trace_err &> /dev/null
+    -nd -t ul -p $PORT $IP -m 1 ${MPORT_ARG} -timeout ${TIMEOUT} -timeout_error -trace_err &> /dev/null
+  status=$?
 fi
 
 set_domain 0
+exit $status
 #EOF

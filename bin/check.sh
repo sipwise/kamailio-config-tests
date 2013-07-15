@@ -85,6 +85,8 @@ function error_sipp
 # $1 sipp xml scenario file
 function run_sipp
 {
+  PORT=50603
+  MPORT=6003
   # test LOG_DIR
   # we dont want to remove "/*" don't we?
   if [ -z ${LOG_DIR} ]; then
@@ -96,15 +98,19 @@ function run_sipp
   ${BIN_DIR}/restart_log.sh
   for res in $(find ${SCEN_CHECK_DIR} -type f -name 'sipp_scenario_responder[0-9][0-9].xml'| sort); do
     base=$(basename $res .xml)
-    ${BIN_DIR}/sipp.sh -d ${DOMAIN} -r ${SCEN_CHECK_DIR}/${base}_reg.xml
-    ${BIN_DIR}/sipp.sh -d ${DOMAIN} -r ${SCEN_CHECK_DIR}/${base}.xml &
-    responder_pid="${responder_pid} ${base}:$!"
+    echo "Running ${base} ${PORT}-${MPORT}"
+    ${BIN_DIR}/sipp.sh -d ${DOMAIN} -p ${PORT} -r ${SCEN_CHECK_DIR}/${base}_reg.xml
+    ${BIN_DIR}/sipp.sh -d ${DOMAIN} -p ${PORT} -m ${MPORT} -r ${SCEN_CHECK_DIR}/${base}.xml &
+    responder_pid="${responder_pid} ${base}:$!:${PORT}:${MPORT}"
+    let PORT=${PORT}+1
+    let MPORT=${MPORT}+2
   done
   status=0
   # let's fire sipp scenarios
   for send in $(find ${SCEN_CHECK_DIR} -type f -name 'sipp_scenario[0-9][0-9].xml'| sort); do
-    echo "Run sipp with $send"
-    ${BIN_DIR}/sipp.sh -d ${DOMAIN} $send
+    base=$(basename $send .xml)
+    echo "Running ${base} 50602-7002"
+    ${BIN_DIR}/sipp.sh -d ${DOMAIN} -p 50602 -m 7002 $send
     if [[ $? -ne 0 ]]; then
       status=1
     fi
@@ -113,13 +119,14 @@ function run_sipp
   for res in ${responder_pid}; do
     base=$(echo $res| cut -d: -f1)
     pid=$(echo $res| cut -d: -f2)
+    port=$(echo $res| cut -d: -f3)
     ps -p${pid} &> /dev/null
     ps_status=$?
     if [ ${ps_status} -eq 0 ]; then
       echo "sipp responder $base pid $pid not finished yet. Waiting 5 secs"
       sleep 5
     fi
-    ${BIN_DIR}/sipp.sh -d ${DOMAIN} -r ${SCEN_CHECK_DIR}/${base}_unreg.xml
+    ${BIN_DIR}/sipp.sh -d ${DOMAIN} -p ${PORT} -r ${SCEN_CHECK_DIR}/${base}_unreg.xml
   done
 
   # copy the kamailio log
