@@ -1,0 +1,17 @@
+Source: kamailio-config-tests
+Section: unknown
+Priority: extra
+Maintainer: Sipwise Development Team <support@sipwise.com>
+Build-Depends: debhelper (>= 8.0.0)
+Standards-Version: 3.9.4
+Homepage: http://www.sipwise.com/
+
+Package: kamailio-config-tests
+Architecture: all
+Depends: ${misc:Depends},
+ python-yaml,
+ libgraphviz-perl,
+ libtemplate-perl,
+ sip-tester ( >= 1:3.2-1~ )
+Description: Kamailio configuration tests
+ scripts and tests scenarios to check Kamailio configuration
