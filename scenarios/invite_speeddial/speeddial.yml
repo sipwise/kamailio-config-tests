@@ -1,0 +1,9 @@
+---
+testuser1002@spce.test:
+  - slot: '*0'
+    destination: 4311003
+  - slot: '*1'
+    destination: sip:testuser1001@spce.test
+  - slot: '*2'
+    destination: sip:testuserNO@spce.test
+  
