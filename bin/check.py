@@ -191,6 +191,7 @@ def check_sip_out(scen, msgs, test):
   num_msgs = len(msgs)
   num_scen = len(scen)
   for i in (range(num_scen)):
+    test.comment("sip_out %d" % i)
     if(i<num_msgs):
       check_sip(scen[i], msgs[i], test)
     else:
