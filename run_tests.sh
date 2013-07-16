@@ -50,13 +50,14 @@ for i in ${LOG_DIR} ${RESULT_DIR}; do
 done
 
 for t in $(find ${BASE_DIR}/scenarios/ -depth -maxdepth 1 -mindepth 1 -type d | sort); do
-  echo "Run: $(basename $t)"
+  echo "Run: $(basename $t) ================================================="
   if [ -z $TEST ]; then
     ${BIN_DIR}/check.sh ${GRAPH} -d ${DOMAIN} -p ${PROFILE} $(basename $t)
     if [ $? -ne 0 ]; then
     	error_flag=1
     fi
   fi
+  echo "====================================================================="
 done
 
 if [ -z $SKIP ]; then

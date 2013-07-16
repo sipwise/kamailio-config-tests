@@ -37,11 +37,8 @@ die usage() unless defined $opts{v} and defined $opts{s} and defined $opts{d}
 
 sub main {
     my ($bprov) = @_;
-    print "$0 ". scalar(localtime time) . " starting\n";
-
     print "\nCreating $opts{v} accounts with $opts{s} subscribers each.\n";
     print "Numbers go from +$opts{c}-$opts{a}-$opts{n} to +$opts{c}-$opts{a}-".($opts{n} + ($opts{v} * $opts{s} - 1))."\n";
-    print "$0 ". scalar(localtime time) . " working\n";
 
     my $foo = $opts{n};
     my $i = 0;
@@ -75,8 +72,6 @@ sub main {
     }
 
     print "Created $i subscribers.\n" if $i % 100;
-    print "$0 ". scalar(localtime time) . " finished\n";
-
     exit;
 }
 
