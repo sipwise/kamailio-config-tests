@@ -57,6 +57,9 @@ flow:
   - end|ROUTE_ADD_CALLINFO:
   - end|BRANCH_ROUTE_NO_SBC:
   - exit|ROUTE_OUTBOUND:
+  # 200 OK
+  - start|REPLY_ROUTE_NAT:
+  - exit|REPLY_ROUTE_NAT:
 sip_in:
   - '^INVITE'
   - 'Contact: sip:testuser1001@'
@@ -86,4 +89,11 @@ sip_out:
       'P-Caller-UUID: \w+',
       'P-Callee-UUID: \w+',
       'P-App-Name: sw_vsc'
+    ]
+  - [
+      '^SIP/2.0 200 OK',
+      'CSeq: 2 INVITE',
+      'From: <sip:testuser1001@',
+      'To: <sip:\*55\*\d{4}@',
+      'Content-Type: application/sdp'
     ]
