@@ -48,7 +48,7 @@
     ]]>
   </send>
 
-  <send retrans="500" start_rtd="3">
+  <send start_rtd="3">
     <![CDATA[
 
       INVITE sip:*9@[field3 file="callee.csv" line=0] SIP/2.0
