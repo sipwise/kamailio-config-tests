@@ -113,19 +113,29 @@ while($line = <$log>)
       }
       $data->{'msgid'} = $msgid;
     }
+    my $prev_line = $line;
     $line = <$log>;
-    if(($json) = ($line =~ m/.+dbg_dump_json\(\): (\{.*\})$/))
+    if(!$line)
     {
-      $pjson = from_json($json);
-      push($data->{'flow'}, { $mode."|".$route => $pjson });
-      if ($route eq "MAIN" && $mode eq "start")
+      print $prev_line;
+      close($log);
+      die("Error parsing $filename. Malformed debug output\n");
+    }
+    else
+    {
+      if(($json) = ($line =~ m/.+dbg_dump_json\(\): (\{.*\})$/))
       {
-        ($msg) = $method;
-        if(($callid) = ($msg =~ m/.+Call-ID: ([^#]+)#015#012.+$/si)) { $data->{'callid'} = $callid; }
-        $msg =~ s/#015#012/\n/g;
-        if($mode eq "start") { $data->{'sip_in'} = $msg; }
+        $pjson = from_json($json);
+        push($data->{'flow'}, { $mode."|".$route => $pjson });
+        if ($route eq "MAIN" && $mode eq "start")
+        {
+          ($msg) = $method;
+          if(($callid) = ($msg =~ m/.+Call-ID: ([^#]+)#015#012.+$/si)) { $data->{'callid'} = $callid; }
+          $msg =~ s/#015#012/\n/g;
+          if($mode eq "start") { $data->{'sip_in'} = $msg; }
+        }
+        #print $mode."|".$route."\n";
       }
-      #print $mode."|".$route."\n";
     }
   }
 } #while
