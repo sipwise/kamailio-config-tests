@@ -30,8 +30,6 @@ sub main {
     {
         my @fields = split /@/, $key;
         my $pref = { username => $fields[0], domain => $fields[1], preferences => $prefs->{$key} };
-        print "Setting $key prefs\n";
-        print Dumper $pref;
         call_prov( 'set_subscriber_preferences',  $pref);
     }
 
