@@ -93,11 +93,25 @@ while($line = <$log>)
   {
     do
     {
-      $msg =~ s/#015#012/\n/g;
-      push($data->{'sip_out'}, $msg);
+      if(($callid) = ($msg =~ m/.+Call-ID: ([^#]+)#015#012.+$/si))
+      {
+        if($data->{'callid'} eq $callid)
+        {
+          $msg =~ s/#015#012/\n/g;
+          push($data->{'sip_out'}, $msg);
+        }
+        else
+        {
+          print "Not this Call-ID:$msg\n"
+        }
+      }
+      else
+      {
+        print "No Call-ID\n";
+      }
       $line = <$log>;
       #print substr($line, 34, 25)."\n";
-      if(!$line) { $line = '' }
+      if(!$line) { $line = ''; }
     }while(($msg) = ($line =~ m/.+msg out:{(.+)}$/));
     #print "msg_out\n";
   }
