@@ -125,10 +125,18 @@ function run_sipp
     if [ ${ps_status} -eq 0 ]; then
       echo "sipp responder $base pid $pid not finished yet. Waiting 5 secs"
       sleep 5
+      ps -p${pid} &> /dev/null
+      ps_status=$?
+      if [ ${ps_status} -eq 0 ]; then
+        echo "sipp responder $base pid $pid not finished yet. Killing it"
+        kill -9 ${pid}
+      fi
     fi
     ${BIN_DIR}/sipp.sh -d ${DOMAIN} -p ${PORT} -r ${SCEN_CHECK_DIR}/${base}_unreg.xml
   done
 
+  # wait a moment. We want all the info
+  sleep 1
   # copy the kamailio log
   cp ${KAM_LOG} ${LOG_FILE} ${LOG_DIR}/kamailio.log
   find ${SCEN_CHECK_DIR}/ -type f -name 'sipp_scenario*errors.log' -exec mv {} ${LOG_DIR} \;
