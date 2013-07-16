@@ -1,0 +1,141 @@
+# INVITE callforward scenario
+flow:
+  - start|MAIN:
+  - start|ROUTE_NET_INFO:
+  - end|ROUTE_NET_INFO:
+  - start|ROUTE_PRX_REQUEST:
+  - start|ROUTE_INVITE:
+  - start|ROUTE_LOAD_CALLEE_DOMAIN_PREF:
+  - end|ROUTE_LOAD_CALLEE_DOMAIN_PREF:
+  - start|ROUTE_FIND_CALLER:
+  - end|ROUTE_FIND_CALLER:
+  - start|ROUTE_LOAD_CALLER_PREF:
+  - start|ROUTE_CLEAR_CALLER_PREF:
+  - end|ROUTE_CLEAR_CALLER_PREF:
+  - end|ROUTE_LOAD_CALLER_PREF:
+  - start|ROUTE_GET_FORWARDER_CLI:
+  - end|ROUTE_GET_FORWARDER_CLI:
+  - start|ROUTE_CHECK_USERPROV_CLI:
+  - start|ROUTE_CHECK_CLI_ALLOWED:
+  - end|ROUTE_CHECK_CLI_ALLOWED:
+  - end|ROUTE_CHECK_USERPROV_CLI:
+  - start|ROUTE_CLIR:
+  - end|ROUTE_CLIR:
+  - start|ROUTE_FIND_CALLEE:
+  - start|ROUTE_CLEAR_CALLEE_PREF:
+  - end|ROUTE_CLEAR_CALLEE_PREF:
+  - start|ROUTE_NCOS:
+  - end|ROUTE_NCOS:
+  - start|ROUTE_NCOS:
+  - end|ROUTE_NCOS:
+  - start|ROUTE_BLOCK_OUT:
+  - end|ROUTE_BLOCK_OUT:
+  - start|ROUTE_LOAD_CALLEE_PREF:
+  - start|ROUTE_BLOCK_IN:
+  - end|ROUTE_BLOCK_IN:
+  - end|ROUTE_LOAD_CALLEE_PREF:
+  - start|ROUTE_INVITE_TO_INT:
+  - start|ROUTE_SET_RUSER:
+  - end|ROUTE_SET_RUSER:
+  - start|ROUTE_OUTBOUND:
+  - start|ROUTE_ACC_CALLER:
+  - end|ROUTE_ACC_CALLER:
+  - start|ROUTE_ACC_CALLEE:
+  - end|ROUTE_ACC_CALLEE:
+  - start|BRANCH_ROUTE_SBC:
+  - start|ROUTE_BRANCH_ACC_RTP:
+  - end|ROUTE_BRANCH_ACC_RTP:
+  - start|ROUTE_PREPARE_SST:
+  - end|ROUTE_PREPARE_SST:
+  - start|ROUTE_SET_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - end|ROUTE_PREPARE_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - end|ROUTE_PREPARE_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - end|ROUTE_PREPARE_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - end|ROUTE_PREPARE_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - end|ROUTE_PREPARE_CALLER_CLI:
+  - end|ROUTE_SET_CALLER_CLI:
+  - start|ROUTE_SET_CALLEE:
+  - end|ROUTE_SET_CALLEE:
+  - start|ROUTE_ADD_CALLINFO:
+  - end|ROUTE_ADD_CALLINFO:
+  - end|BRANCH_ROUTE_SBC:
+  - exit|ROUTE_OUTBOUND:
+  - start|REPLY_ROUTE_NAT:
+  - exit|REPLY_ROUTE_NAT:
+  - start|REPLY_ROUTE_NAT:
+  - exit|REPLY_ROUTE_NAT:
+  - start|REPLY_ROUTE_NAT:
+  - exit|REPLY_ROUTE_NAT:
+  - start|REPLY_ROUTE_NAT:
+  - exit|REPLY_ROUTE_NAT:
+  - start|REPLY_ROUTE_NAT:
+  - exit|REPLY_ROUTE_NAT:
+sip_in:
+  - '^INVITE sip:4311005@'
+  - 'Contact: <sip:127.0.0.1:5080>'
+  - 'CSeq: 10 INVITE'
+  - 'Content-Type: application/sdp'
+  - 'P-Caller-UUID: \w+'
+  - 'P-First-Caller-UPN: 4311002'
+  - 'P-First-Caller-NPN: 4311002'
+  - 'P-Acc-Caller-User: testuser1004'
+  - 'P-Acc-State: cfb'
+  - 'P-From-Peer: 0'
+  - 'P-CF-Depth: 1'
+  - 'P-Callee-Account-ID: \d+'
+sip_out:
+  - [
+      '^SIP/2.0 100 Trying',
+      'CSeq: 10 INVITE',
+      'From: <sip:testuser1002@',
+      'To: <sip:testuser1004@'
+    ]
+  - [
+      '^INVITE sip:testuser1005@',
+      'CSeq: 10 INVITE',
+      'From: <sip:4311002@',
+      'Contact: <sip:127.0.0.1:5080>',
+      'To: <sip:testuser1004@',
+      'Content-Type: application/sdp',
+      'P-Callee-UUID: \w+',
+      'P-Asserted-Identity: <sip:4311002@',
+      'P-Called-Party-ID: <sip:testuser1005@',
+      'P-App-Name: sbc',
+      'P-NGCP-Caller-Info: <sip:testuser1004@',
+      'P-NGCP-Callee-Info: <sip:testuser1005@'
+    ]
+  - [
+      '^SIP/2.0 180 Ringing',
+      'CSeq: 10 INVITE',
+      'From: <sip:testuser1002@',
+      'To: <sip:testuser1004@',
+      'Contact: <sip:testuser1005@'
+    ]
+  - [
+      '^SIP/2.0 180 Ringing',
+      'CSeq: 2 INVITE',
+      'From: <sip:testuser1002@',
+      'To: <sip:testuser1004@',
+      'Contact: <sip:4311005@'
+    ]
+  - [
+      '^SIP/2.0 200 OK',
+      'CSeq: 10 INVITE',
+      'From: <sip:testuser1002@',
+      'To: <sip:testuser1004@',
+      'Contact: <sip:testuser1005@',
+      'Content-Type: application/sdp'
+    ]
+  - [
+      '^SIP/2.0 200 OK',
+      'CSeq: 2 INVITE',
+      'From: <sip:testuser1002@',
+      'To: <sip:testuser1004@',
+      'Contact: <sip:4311005@',
+      'Content-Type: application/sdp'
+    ]
