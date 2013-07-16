@@ -41,7 +41,7 @@ function check_test
 function create_voip
 {
   ${BIN_DIR}/create_domain.pl $1
-  ${BIN_DIR}/create_subscribers.pl -v 1 -s 3 -d $1 -u testuser -c 43  -a 1 -n 1001 -p testuser
+  ${BIN_DIR}/create_subscribers.pl -v 1 -s 5 -d $1 -u testuser -c 43  -a 1 -n 1001 -p testuser
 }
 
 # $1 prefs yml file
