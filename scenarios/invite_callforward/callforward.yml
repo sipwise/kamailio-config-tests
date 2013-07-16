@@ -1,0 +1,14 @@
+---
+testuser1001@spce.test:
+  destination_set:
+    - destinations:
+        - destination: sip:4311003@spce.test
+          priority: 0
+          timeout: 2
+        - destination: sip:testuser1003@spce.test
+          priority: 1
+          timeout: 2
+      name: cf_set_1001_00
+  map:
+    - destination_set_id: cf_set_1001_00
+      type: cfu
