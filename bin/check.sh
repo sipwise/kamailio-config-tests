@@ -27,10 +27,10 @@ function check_test
     return
   fi
 
-  echo -n "Testing $1 againts $2 -> $3"
+  echo -n "$(date) - Testing $(basename $1) againts $(basename $2) -> $(basename $3)"
   ${BIN_DIR}/check.py $1 $2 > $3
   if [[ $? -ne "0" ]]; then
-    echo " not ok"
+    echo " NOT ok"
     ERR_FLAG=1
   else
     echo " ok"
@@ -48,17 +48,17 @@ function create_voip
 function create_voip_prefs
 {
   if [ -f ${SCEN_CHECK_DIR}/callforward.yml ]; then
-   echo "Setting callforward config"
+   echo "$(date) - Setting callforward config"
    ${BIN_DIR}/set_subscribers_callforward.pl ${SCEN_CHECK_DIR}/callforward.yml
   fi
 
   if [ -f ${SCEN_CHECK_DIR}/speeddial.yml ]; then
-   echo "Setting speeddial config"
+   echo "$(date) - Setting speeddial config"
    ${BIN_DIR}/set_subscribers_speeddial.pl ${SCEN_CHECK_DIR}/speeddial.yml
   fi
 
   if [ -f ${SCEN_CHECK_DIR}/prefs.yml ]; then
-    echo "Setting subcribers preferences"
+    echo "$(date) - Setting subcribers preferences"
     ${BIN_DIR}/set_subscribers_preferences.pl ${SCEN_CHECK_DIR}/prefs.yml
   fi
 }
@@ -75,7 +75,7 @@ function error_sipp
 {
   echo $1
   if [ -z ${SKIP} ] || [ -z ${SKIP_DELDOMAIN} ]; then
-    echo "Deleting domain:${DOMAIN}"
+    echo "$(date) - Deleting domain:${DOMAIN}"
     delete_voip ${DOMAIN}
   fi
   find ${SCEN_CHECK_DIR}/ -type f -name 'sipp_scenario*errors.log' -exec mv {} ${LOG_DIR} \;
@@ -98,7 +98,7 @@ function run_sipp
   ${BIN_DIR}/restart_log.sh
   for res in $(find ${SCEN_CHECK_DIR} -type f -name 'sipp_scenario_responder[0-9][0-9].xml'| sort); do
     base=$(basename $res .xml)
-    echo "Running ${base} ${PORT}-${MPORT}"
+    echo "$(date) - Running ${base} ${PORT}-${MPORT}"
     ${BIN_DIR}/sipp.sh -d ${DOMAIN} -p ${PORT} -r ${SCEN_CHECK_DIR}/${base}_reg.xml
     ${BIN_DIR}/sipp.sh -d ${DOMAIN} -p ${PORT} -m ${MPORT} -r ${SCEN_CHECK_DIR}/${base}.xml &
     responder_pid="${responder_pid} ${base}:$!:${PORT}:${MPORT}"
@@ -109,7 +109,7 @@ function run_sipp
   # let's fire sipp scenarios
   for send in $(find ${SCEN_CHECK_DIR} -type f -name 'sipp_scenario[0-9][0-9].xml'| sort); do
     base=$(basename $send .xml)
-    echo "Running ${base} 50602-7002"
+    echo "$(date) - Running ${base} 50602-7002"
     ${BIN_DIR}/sipp.sh -d ${DOMAIN} -p 50602 -m 7002 $send
     if [[ $? -ne 0 ]]; then
       status=1
@@ -123,12 +123,12 @@ function run_sipp
     ps -p${pid} &> /dev/null
     ps_status=$?
     if [ ${ps_status} -eq 0 ]; then
-      echo "sipp responder $base pid $pid not finished yet. Waiting 5 secs"
+      echo "$(date) - sipp responder $base pid $pid not finished yet. Waiting 5 secs"
       sleep 5
       ps -p${pid} &> /dev/null
       ps_status=$?
       if [ ${ps_status} -eq 0 ]; then
-        echo "sipp responder $base pid $pid not finished yet. Killing it"
+        echo "$(date) - sipp responder $base pid $pid not finished yet. Killing it"
         kill -9 ${pid}
       fi
     fi
@@ -144,7 +144,7 @@ function run_sipp
     error_sipp "error in sipp" 2
   fi
 
-  echo "Parsing ${LOG_DIR}/kamailio.log"
+  echo "$(date) - Parsing ${LOG_DIR}/kamailio.log"
   ${BIN_DIR}/ulog_parser.pl ${LOG_DIR}/kamailio.log ${LOG_DIR}
 }
 
@@ -207,17 +207,23 @@ if [ ! -d ${SCEN_CHECK_DIR} ]; then
 fi
 
 if [ -z $SKIP ]; then
+  echo "$(date) - Deleting all info for ${DOMAIN} domain"
   delete_voip ${DOMAIN} # just to be sure nothing is there
+  echo "$(date) - Creating ${DOMAIN}"
   create_voip ${DOMAIN}
+  echo "$(date) - Adding prefs"
   create_voip_prefs
 
   if [ -z $SKIP_RUNSIPP ]; then
+    echo "$(date) - Running sipp scenarios"
     run_sipp
+    echo "$(date) - Done sipp"
   fi
 
   if [ -z ${SKIP_DELDOMAIN} ]; then
-    echo "Deleting domain:${DOMAIN}"
+    echo "$(date) - Deleting domain:${DOMAIN}"
     delete_voip ${DOMAIN}
+    echo "$(date) - Done"
   fi
 fi
 
@@ -225,15 +231,20 @@ fi
 ERR_FLAG=0
 if [ -z ${SKIP_TESTS} ]; then
   mkdir -p ${RESULT_DIR}
+  echo "$(date) - Generating tests files"
   ${BIN_DIR}/generate_tests.sh -d ${SCEN_CHECK_DIR} ${PROFILE}
+  echo "$(date) - Done"
   for t in ${SCEN_CHECK_DIR}/*_test.yml; do
+    echo "$(date) - check test $t"
     msg_name=$(echo $t|sed 's/_test\.yml/\.yml/')
     msg=${LOG_DIR}/$(basename $msg_name)
     dest=${RESULT_DIR}/$(basename $t .yml)
     check_test $t $msg ${dest}.tap
+    echo "$(date) - Done"
     if [ ! -z ${GRAPH} ]; then
-      echo "Generating flow image: ${dest}.png"
+      echo "$(date) - Generating flow image: ${dest}.png"
       graph $msg ${dest}.png
+      echo "$(date) - Done"
     fi
   done
 fi

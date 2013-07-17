@@ -5,6 +5,7 @@ LOG_DIR="${BASE_DIR}/log"
 RESULT_DIR="${BASE_DIR}/result"
 PROFILE="CE"
 DOMAIN="spce.test"
+LOGGER=""
 error_flag=0
 
 function usage
@@ -41,8 +42,10 @@ if [ "${PROFILE}" != "CE" ] && [ "${PROFILE}" != "PRO" ]; then
 fi
 
 if [ -z $SKIP ]; then
+  echo "$(date) - Setting config debug on"
   ${BIN_DIR}/config_debug.pl on ${DOMAIN}
   ngcpcfg apply
+  echo "$(date) - Setting config debug on. Done."
 fi
 
 for i in ${LOG_DIR} ${RESULT_DIR}; do
@@ -50,19 +53,21 @@ for i in ${LOG_DIR} ${RESULT_DIR}; do
 done
 
 for t in $(find ${BASE_DIR}/scenarios/ -depth -maxdepth 1 -mindepth 1 -type d | sort); do
-  echo "Run: $(basename $t) ================================================="
+  echo "$(date) - Run[${PROFILE}]: $(basename $t) ================================================="
   if [ -z $TEST ]; then
     ${BIN_DIR}/check.sh ${GRAPH} -d ${DOMAIN} -p ${PROFILE} $(basename $t)
     if [ $? -ne 0 ]; then
     	error_flag=1
     fi
   fi
-  echo "====================================================================="
+  echo "$(date) - ================================================================================="
 done
 
 if [ -z $SKIP ]; then
+  echo "$(date) - Setting config debug off"
   ${BIN_DIR}/config_debug.pl off ${DOMAIN}
   ngcpcfg apply
+  echo "$(date) - Setting config debug off. Done."
 fi
 
 exit $error_flag
