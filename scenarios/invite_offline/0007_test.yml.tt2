@@ -52,7 +52,7 @@ flow:
   - end|ROUTE_ADD_CALLINFO_REPLY:
   - exit|ROUTE_EARLY_REJECT:
 sip_in:
-  - '^INVITE sip:testuser1003@'
+  - '^INVITE sip:4311003@'
   - 'Contact: sip:testuser1002@'
   - 'CSeq: 2 INVITE'
   - 'Max-Forwards: 16'
@@ -67,14 +67,10 @@ sip_out:
   - [
       '^SIP/2.0 101 Connecting',
       'CSeq: 2 INVITE',
-      'From: <sip:testuser1002@',
-      'P-NGCP-Authorization: testuser1002',
-      'P-NGCP-Authorized: 1'
+      'From: <sip:testuser1002@'
     ]
   - [
       '^SIP/2.0 480 Offline',
       'CSeq: 2 INVITE',
-      'From: <sip:testuser1002@',
-      'P-NGCP-Authorization: testuser1002',
-      'P-NGCP-Authorized: 1'
+      'From: <sip:testuser1002@'
     ]
