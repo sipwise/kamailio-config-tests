@@ -104,8 +104,9 @@ function check_port
 {
   status=0
   port=$1
+  step=${2:-1}
   until [ $status -eq 1 ]; do
-    let port=${port}+1
+    let port=${port}+${step}
     $(netstat -n | grep ":$port ")
     status=$?
   done
@@ -116,7 +117,7 @@ function run_sipp
 {
   check_port 50603
   PORT=$port
-  check_port 6003
+  check_port 6003 3
   MPORT=$port
   # test LOG_DIR
   # we dont want to remove "/*" don't we?
@@ -137,7 +138,7 @@ function run_sipp
     responder_pid="${responder_pid} ${base}:$!:${PORT}:${MPORT}"
     check_port ${PORT}
     PORT=$port
-    check_port ${MPORT}
+    check_port ${MPORT} 3
     MPORT=$port
   done
   status=0
