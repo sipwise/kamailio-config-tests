@@ -43,7 +43,7 @@ fi
 
 if [ -z $SKIP ]; then
   echo "$(date) - Setting config debug on"
-  ${BIN_DIR}/config_debug.pl on ${DOMAIN}
+  ${BIN_DIR}/config_debug.pl -p ${PROFILE} on ${DOMAIN}
   ngcpcfg apply
   echo "$(date) - Setting config debug on. Done."
 fi
@@ -65,7 +65,7 @@ done
 
 if [ -z $SKIP ]; then
   echo "$(date) - Setting config debug off"
-  ${BIN_DIR}/config_debug.pl off ${DOMAIN}
+  ${BIN_DIR}/config_debug.pl -p ${PROFILE} off ${DOMAIN}
   ngcpcfg apply
   echo "$(date) - Setting config debug off. Done."
 fi
