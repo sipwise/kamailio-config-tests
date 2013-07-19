@@ -130,7 +130,7 @@ sip_out:
       'P-NGCP-Callee-Info: <sip:testuser1004@'
     ]
   - [
-      '^ACK sip:testuser1004@127.0.0.1:50604 SIP/2.0',
+      '^ACK sip:testuser1004@',
       'CSeq: 2 ACK',
       'From: <sip:4311002@',
       'To: <sip:testuser1004@',
