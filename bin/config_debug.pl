@@ -1,4 +1,5 @@
 #!/usr/bin/perl
+use File::Spec;
 use Tie::File;
 use strict;
 use warnings;
@@ -32,9 +33,19 @@ if($profile ne "CE" && $profile ne "PRO")
   die("Uknown PROFILE:$profile\n".usage());
 }
 
+my $base_dir;
 my $yaml = YAML::Tiny->new;
 my $file  = "/etc/ngcp-config/config.yml";
 my @array;
+my $path;
+if (exists $ENV{'BASE_DIR'})
+{
+  $base_dir = $ENV{'BASE_DIR'};
+}
+else
+{
+  $base_dir = '/usr/local/src/kamailio-config-tests';
+}
 
 $yaml = YAML::Tiny->read($file) or die "File $file could not be read";
 
@@ -55,7 +66,16 @@ if (lc($action) eq "off")
     s/\Q$domain\E//;
   }
   untie @array;
-
+  for my $i ('caller.csv', 'callee.csv')
+  {
+    $path = File::Spec->catfile( $base_dir, 'scenarios', $i);
+    tie @array, 'Tie::File', $path or die ("Can set test domain on $path");
+    for (@array)
+    {
+      s/\Q$domain\E/DOMAIN/;
+    }
+    untie @array;
+  }
 }
 else
 {
@@ -69,6 +89,16 @@ else
     s/127.0.0.1 localhost/127.0.0.1 localhost $domain/;
   }
   untie @array;
+  for my $i ('caller.csv', 'callee.csv')
+  {
+    $path = File::Spec->catfile( $base_dir, 'scenarios', $i);
+    tie @array, 'Tie::File', $path or die ("Can set test domain on $path");
+    for (@array)
+    {
+      s/DOMAIN/$domain/;
+    }
+    untie @array;
+  }
 }
 open(my $fh, '>', "$file") or die "Could not open $file for writing";
 print $fh $yaml->write_string() or die "Could not write YAML to $file";

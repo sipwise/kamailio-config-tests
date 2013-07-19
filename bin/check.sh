@@ -109,8 +109,8 @@ function run_sipp
   for res in $(find ${SCEN_CHECK_DIR} -type f -name 'sipp_scenario_responder[0-9][0-9].xml'| sort); do
     base=$(basename $res .xml)
     echo "$(date) - Running ${base} ${PORT}-${MPORT}"
-    ${BIN_DIR}/sipp.sh -d ${DOMAIN} -p ${PORT} -r ${SCEN_CHECK_DIR}/${base}_reg.xml
-    ${BIN_DIR}/sipp.sh -d ${DOMAIN} -p ${PORT} -m ${MPORT} -r ${SCEN_CHECK_DIR}/${base}.xml &
+    ${BIN_DIR}/sipp.sh -p ${PORT} -r ${SCEN_CHECK_DIR}/${base}_reg.xml
+    ${BIN_DIR}/sipp.sh -p ${PORT} -m ${MPORT} -r ${SCEN_CHECK_DIR}/${base}.xml &
     responder_pid="${responder_pid} ${base}:$!:${PORT}:${MPORT}"
     let PORT=${PORT}+1
     let MPORT=${MPORT}+3
@@ -120,7 +120,7 @@ function run_sipp
   for send in $(find ${SCEN_CHECK_DIR} -type f -name 'sipp_scenario[0-9][0-9].xml'| sort); do
     base=$(basename $send .xml)
     echo "$(date) - Running ${base} 50602-7002"
-    ${BIN_DIR}/sipp.sh -d ${DOMAIN} -p 50602 -m 7002 $send
+    ${BIN_DIR}/sipp.sh -p 50602 -m 7002 $send
     if [[ $? -ne 0 ]]; then
       status=1
     fi
@@ -142,7 +142,7 @@ function run_sipp
         kill -9 ${pid}
       fi
     fi
-    ${BIN_DIR}/sipp.sh -d ${DOMAIN} -p ${PORT} -r ${SCEN_CHECK_DIR}/${base}_unreg.xml
+    ${BIN_DIR}/sipp.sh -p ${PORT} -r ${SCEN_CHECK_DIR}/${base}_unreg.xml
   done
 
   # wait a moment. We want all the info

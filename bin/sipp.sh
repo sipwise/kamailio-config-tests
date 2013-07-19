@@ -1,27 +1,9 @@
 #!/bin/bash
 
-function set_domain
-{
-  if [[ $1 -eq 1 ]]; then
-    p="s/DOMAIN/${DOMAIN}/"
-  else
-    p="s/${DOMAIN}/DOMAIN/"
-  fi
-  for i in e r; do 
-    if [ -f "${BASE_DIR}/../calle$i.csv" ]; then
-      sed -e "$p" -i ${BASE_DIR}/../calle$i.csv
-    else
-      echo "No ${BASE_DIR}/../calle$i.csv file found"
-      exit 1
-    fi
-  done
-}
-
 function usage
 {
-  echo "Usage: sipp.sh [-d domain] [-p PORT] [-m MPORT] [-t TIMEOUT] [-r] scenario.xml"
+  echo "Usage: sipp.sh [-p PORT] [-m MPORT] [-t TIMEOUT] [-r] scenario.xml"
   echo "Options:"
-  echo -e "\t-d: DOMAIN. default: spce.test"
   echo -e "\t-p: sip port. default 50602/50603(responder)"
   echo -e "\t-m: media port"
   echo -e "\t-t: timeout. default 10/25(responder)"
@@ -29,14 +11,13 @@ function usage
   echo -e "\t sipp_scenario.xml file"
 }
 
-while getopts 'hrp:m:t:d:' opt; do
+while getopts 'hrp:m:t:' opt; do
   case $opt in
     h) usage; exit 0;;
     r) RESP=1;;
     p) PORT=$OPTARG;;
     m) MPORT=$OPTARG;;
     t) TIMEOUT=$OPTARG;;
-    d) DOMAIN=$OPTARG;;
   esac
 done
 shift $(($OPTIND - 1))
@@ -53,9 +34,7 @@ if [ ! -f $1 ]; then
 fi
 BASE_DIR="$(dirname $1)"
 IP="127.0.0.1"
-DOMAIN=${DOMAIN:-"spce.test"}
 MAX="5000"
-set_domain 1
 
 if [ -z ${RESP} ]; then
   if [ ! -z ${MPORT} ]; then
@@ -79,6 +58,5 @@ else
   status=$?
 fi
 
-set_domain 0
 exit $status
 #EOF
