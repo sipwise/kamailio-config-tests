@@ -79,6 +79,13 @@ function delete_voip
   ${BIN_DIR}/delete_domain.pl $1
 }
 
+function delete_locations
+{
+  for sub in $(cat scenarios/callee.csv | grep test | cut -d\; -f1 | xargs); do
+    ngcp-kamctl proxy ul rm $sub@${DOMAIN}
+  done
+}
+
 # $1 msg to echo
 # $2 exit value
 function error_sipp
@@ -92,11 +99,25 @@ function error_sipp
   exit $2
 }
 
+# $1 port to check
+function check_port
+{
+  status=0
+  port=$1
+  until [ $status -eq 1 ]; do
+    let port=${port}+1
+    $(netstat -n | grep ":$port ")
+    status=$?
+  done
+}
+
 # $1 sipp xml scenario file
 function run_sipp
 {
-  PORT=50603
-  MPORT=6003
+  check_port 50603
+  PORT=$port
+  check_port 6003
+  MPORT=$port
   # test LOG_DIR
   # we dont want to remove "/*" don't we?
   if [ -z ${LOG_DIR} ]; then
@@ -105,6 +126,8 @@ function run_sipp
   rm -rf ${LOG_DIR}
   mkdir -p ${LOG_DIR}
 
+  delete_locations
+
   ${BIN_DIR}/restart_log.sh
   for res in $(find ${SCEN_CHECK_DIR} -type f -name 'sipp_scenario_responder[0-9][0-9].xml'| sort); do
     base=$(basename $res .xml)
@@ -112,8 +135,10 @@ function run_sipp
     ${BIN_DIR}/sipp.sh -p ${PORT} -r ${SCEN_CHECK_DIR}/${base}_reg.xml
     ${BIN_DIR}/sipp.sh -p ${PORT} -m ${MPORT} -r ${SCEN_CHECK_DIR}/${base}.xml &
     responder_pid="${responder_pid} ${base}:$!:${PORT}:${MPORT}"
-    let PORT=${PORT}+1
-    let MPORT=${MPORT}+3
+    check_port ${PORT}
+    PORT=$port
+    check_port ${MPORT}
+    MPORT=$port
   done
   status=0
   # let's fire sipp scenarios
