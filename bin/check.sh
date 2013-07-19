@@ -41,7 +41,17 @@ function check_test
 function create_voip
 {
   ${BIN_DIR}/create_domain.pl $1
+  if [[ $? -ne 0 ]]; then
+    echo "$(date) - Cannot create domain"
+    exit 1
+  fi
   ${BIN_DIR}/create_subscribers.pl -v 1 -s 5 -d $1 -u testuser -c 43  -a 1 -n 1001 -p testuser
+  if [[ $? -ne 0 ]]; then
+    echo "$(date) - Deleting domain:${DOMAIN}"
+    delete_voip $1
+    echo "$(date) - Cannot create domain subscribers"
+    exit 1
+  fi
 }
 
 # $1 prefs yml file
