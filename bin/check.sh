@@ -40,7 +40,7 @@ function check_test
 # $1 domain
 function create_voip
 {
-  ${BIN_DIR}/create_domain.pl $1
+  /usr/bin/ngcp-create_domain $1
   if [[ $? -ne 0 ]]; then
     echo "$(date) - Cannot create domain"
     exit 1
@@ -76,7 +76,7 @@ function create_voip_prefs
 # $1 domain
 function delete_voip
 {
-  ${BIN_DIR}/delete_domain.pl $1
+  /usr/bin/ngcp-delete_domain $1
 }
 
 function delete_locations

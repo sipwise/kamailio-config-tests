@@ -9,6 +9,7 @@ Homepage: http://www.sipwise.com/
 Package: kamailio-config-tests
 Architecture: all
 Depends: ${misc:Depends},
+ ngcp-ossbss-clients-perl,
  python-yaml,
  libgraphviz-perl,
  libtemplate-perl,
