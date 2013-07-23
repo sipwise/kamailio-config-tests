@@ -9,6 +9,8 @@ Requeriments:
  - python-yaml
  - libgraphviz-perl
  - libtemplate-perl
+ - ngcp-ossbss-clients-perl
+ - parallel
 
 Installation:
 -------------
@@ -19,7 +21,8 @@ Installation:
   #cd /usr/local/src
   #git clone git@git.mgm.sipwise.com:kamailio-config-tests
   #apt-get install python-yaml sip-tester \
-                   libgraphviz-perl libtemplate-perl
+                   libgraphviz-perl libtemplate-perl \
+                   ngcp-ossbss-clients-perl parallel
 
 Usage:
 ------
@@ -27,22 +30,27 @@ Usage:
            "PRO"
   #bash /usr/local/src/kamailio-config-tests/run_tests.sh [-p PROFILE ]
 
-  This will create 2 directories:
+  This will create:
     - /usr/local/src/kamailio-config-tests/log
       with a directory per test with:
       - kamailio.log
       - parsed messages
       - sipp error logs
+
+  #bash /usr/local/src/kamailio-config-tests/get_result.sh [-p PROFILE ] [-g]
+
+  This will create:
     - /usr/local/src/kamailio-config-tests/result
       with a directory per test with:
       - a tap file ( test results )
-      - a png file ( routes flow )
+      - a png file ( routes flow ) If you use -g option
 
  If you want to run test manually just exec this onces:
   #./bin/config_debug.pl on
   #ngcpcfg apply
  and run the check that you want:
   #./bin/check.sh <checkname>
+ this will run the test and the result taps
 
 --
 Victor Seva <vseva@sipwise.com>

@@ -1,5 +1,5 @@
 #!/bin/bash
-BASE_DIR="${BASE_DIR:-/usr/local/src/kamailio-config-tests}"
+BASE_DIR=${BASE_DIR:-"/usr/local/src/kamailio-config-tests"}
 BIN_DIR="${BASE_DIR}/bin"
 LOG_DIR="${BASE_DIR}/log"
 RESULT_DIR="${BASE_DIR}/result"
@@ -13,18 +13,17 @@ function usage
   echo "Usage: run_test.sh [-p PROFILE] [-c] [-t]"
   echo "-p CE|PRO default is CE"
   echo "-c skips configuration of the environment"
-  echo "-t skips tests"
-  echo "-g generate route flow graphs"
   echo "-h this help"
+
+  echo "BASE_DIR:${BASE_DIR}"
+  echo "BIN_DIR:${BIN_DIR}"
 }
 
-while getopts 'hctp:' opt; do
+while getopts 'hcp:' opt; do
   case $opt in
     h) usage; exit 0;;
     c) SKIP=1;;
-    t) TEST=1;;
     p) PROFILE=$OPTARG;;
-    g) GRAPH="-G"
   esac
 done
 shift $(($OPTIND - 1))
@@ -43,29 +42,26 @@ fi
 
 if [ -z $SKIP ]; then
   echo "$(date) - Setting config debug on"
-  ${BIN_DIR}/config_debug.pl -p ${PROFILE} on ${DOMAIN}
+  ${BIN_DIR}/config_debug.pl on ${DOMAIN}
   ngcpcfg apply
   echo "$(date) - Setting config debug on. Done."
 fi
 
-for i in ${LOG_DIR} ${RESULT_DIR}; do
-  rm -rf $i
-done
+echo "$(date) - Clean log dir"
+rm -rf ${LOG_DIR}
 
 for t in $(find ${BASE_DIR}/scenarios/ -depth -maxdepth 1 -mindepth 1 -type d | sort); do
   echo "$(date) - Run[${PROFILE}]: $(basename $t) ================================================="
-  if [ -z $TEST ]; then
-    ${BIN_DIR}/check.sh ${GRAPH} -d ${DOMAIN} -p ${PROFILE} $(basename $t)
-    if [ $? -ne 0 ]; then
-    	error_flag=1
-    fi
+  ${BIN_DIR}/check.sh -P -d ${DOMAIN} -p ${PROFILE} $(basename $t)
+  if [ $? -ne 0 ]; then
+    error_flag=1
   fi
   echo "$(date) - ================================================================================="
 done
 
 if [ -z $SKIP ]; then
   echo "$(date) - Setting config debug off"
-  ${BIN_DIR}/config_debug.pl -p ${PROFILE} off ${DOMAIN}
+  ${BIN_DIR}/config_debug.pl off ${DOMAIN}
   ngcpcfg apply
   echo "$(date) - Setting config debug off. Done."
 fi

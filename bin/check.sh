@@ -179,9 +179,6 @@ function run_sipp
   if [[ $status -ne 0 ]]; then
     error_sipp "error in sipp" 2
   fi
-
-  echo "$(date) - Parsing ${LOG_DIR}/kamailio.log"
-  ${BIN_DIR}/ulog_parser.pl ${LOG_DIR}/kamailio.log ${LOG_DIR}
 }
 
 function usage
@@ -192,6 +189,7 @@ function usage
   echo -e "\t-R: skip run sipp"
   echo -e "\t-D: skip deletion of domain and subscribers as final step"
   echo -e "\t-T: skip checks"
+  echo -e "\t-P: skip parse. -T is froced"
   echo -e "\t-G: creation of graphviz image"
   echo -e "\t-d: DOMAIN"
   echo -e "\t-p CE|PRO default is CE"
@@ -199,7 +197,7 @@ function usage
   echo -e "\tcheck_name. Scenario name to check. This is the name of the directory on scenarios dir."
 }
 
-while getopts 'hCRDTGd:p:' opt; do
+while getopts 'hCd:p:RDTPG' opt; do
   case $opt in
     h) usage; exit 0;;
     C) SKIP=1;;
@@ -208,6 +206,7 @@ while getopts 'hCRDTGd:p:' opt; do
     R) SKIP_RUNSIPP=1;;
     D) SKIP_DELDOMAIN=1;;
     T) SKIP_TESTS=1;;
+    P) SKIP_PARSE=1; SKIP_TESTS=1;;
     G) GRAPH=1;;
   esac
 done
@@ -261,6 +260,12 @@ if [ -z $SKIP ]; then
     delete_voip ${DOMAIN}
     echo "$(date) - Done"
   fi
+fi
+
+if [ -z ${SKIP_PARSE} ]; then
+  echo "$(date) - Parsing ${LOG_DIR}/kamailio.log"
+  ${BIN_DIR}/ulog_parser.pl ${LOG_DIR}/kamailio.log ${LOG_DIR}
+  echo "$(date) - Done"
 fi
 
 # let's check the results
