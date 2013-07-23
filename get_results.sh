@@ -41,9 +41,7 @@ fi
 echo "$(date) - Clean result dir"
 rm -rf ${RESULT_DIR}
 
-for t in $(find ${BASE_DIR}/scenarios/ -depth -maxdepth 1 -mindepth 1 -type d | sort); do
-  echo "$(date) - Testing[${PROFILE}]: $(basename $t) ================================================="
-  echo $(basename $t) | parallel "${BIN_DIR}/check.sh ${GRAPH} -C -d ${DOMAIN} -p ${PROFILE}"
-done
+find ${BASE_DIR}/scenarios/ -depth -maxdepth 1 -mindepth 1 -type d -exec basename {} \; | sort \
+ | parallel "${BIN_DIR}/check.sh ${GRAPH} -C -d ${DOMAIN} -p ${PROFILE}"
 
 echo "$(date) - All done"
