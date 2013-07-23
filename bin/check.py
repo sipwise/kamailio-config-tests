@@ -218,8 +218,6 @@ def main():
     else:
       assert False, "unhandled option"
 
-  print "args:%s" % args
-
   if(len(args)!=2):
     usage()
     sys.exit(1)
@@ -228,11 +226,15 @@ def main():
     scen = load(file, Loader=Loader)
   file.close()
 
-  with io.open(args[1], 'r') as file:
-    check = load(file, Loader=Loader)
-  file.close()
-
   test = Test()
+
+  try:
+    with io.open(args[1], 'r') as file:
+      check = load(file, Loader=Loader)
+    file.close()
+  except:
+    check = {'flow': [], 'sip_in': '', 'sip_out': []}
+    test.error("Error loading file:%s" % args[1])
 
   test.comment('check flow')
   check_flow(scen['flow'], check['flow'], test)
