@@ -71,12 +71,22 @@ function create_voip_prefs
     echo "$(date) - Setting subcribers preferences"
     ${BIN_DIR}/set_subscribers_preferences.pl ${SCEN_CHECK_DIR}/prefs.yml
   fi
+
+  if [ -f ${SCEN_CHECK_DIR}/peer.yml ]; then
+    echo "$(date) - Creating peers"
+    ${BIN_DIR}/create_peers.pl ${SCEN_CHECK_DIR}/peer.yml
+  fi
 }
 
 # $1 domain
 function delete_voip
 {
   /usr/bin/ngcp-delete_domain $1
+
+  if [ -f ${SCEN_CHECK_DIR}/peer.yml ]; then
+    echo "$(date) - Deleting peers"
+    ${BIN_DIR}/create_peers.pl -d ${SCEN_CHECK_DIR}/peer.yml
+  fi
 }
 
 function delete_locations
