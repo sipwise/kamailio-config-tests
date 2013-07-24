@@ -7,17 +7,19 @@ function usage
   echo -e "\t-p: sip port. default 50602/50603(responder)"
   echo -e "\t-m: media port"
   echo -e "\t-t: timeout. default 10/25(responder)"
+  echo -e "\t-i: IP. default 127.0.0.1"
   echo "Arguments:"
   echo -e "\t sipp_scenario.xml file"
 }
 
-while getopts 'hrp:m:t:' opt; do
+while getopts 'hrp:m:t:i:' opt; do
   case $opt in
     h) usage; exit 0;;
     r) RESP=1;;
     p) PORT=$OPTARG;;
     m) MPORT=$OPTARG;;
     t) TIMEOUT=$OPTARG;;
+    i) IP=$OPTARG;;
   esac
 done
 shift $(($OPTIND - 1))
@@ -33,7 +35,8 @@ if [ ! -f $1 ]; then
 	exit 1
 fi
 BASE_DIR="$(dirname $1)"
-IP="127.0.0.1"
+IP=${IP:-"127.0.0.1"}
+IP_SERVER=${IP_SERVER:-"127.0.0.1"}
 MAX="5000"
 
 if [ -z ${RESP} ]; then
@@ -42,9 +45,17 @@ if [ -z ${RESP} ]; then
   fi
   PORT=${PORT:-"50602"}
   TIMEOUT=${TIMEOUT:-"10"}
-  #echo "Running sipp SCENARIO=$1 IP=${IP} PORT=${PORT} MPORT_ARG=${MPORT_ARG} TIMEOUT=${TIMEOUT}"
-  sipp -max_socket $MAX -inf ${BASE_DIR}/../callee.csv -inf ${BASE_DIR}/../caller.csv -sf $1 -i $IP \
-    -nd -t ul -p $PORT $IP -m 1 ${MPORT_ARG} -timeout ${TIMEOUT} -timeout_error -trace_err &> /dev/null
+
+  if [ -f ${BASE_DIR}/peer.yml ]; then
+    PEER="-inf ${BASE_DIR}/../peer.csv"
+  fi
+
+  sipp -max_socket $MAX \
+    $PEER  -inf ${BASE_DIR}/../callee.csv -inf ${BASE_DIR}/../caller.csv \
+    -sf $1 -i $IP -p $PORT \
+    -nd -t ul -m 1 ${MPORT_ARG} \
+    -timeout ${TIMEOUT} -timeout_error -trace_err \
+    $IP_SERVER &> /dev/null
   status=$?
 else
   if [ ! -z ${MPORT} ]; then
@@ -52,9 +63,13 @@ else
   fi
   PORT=${PORT:-"50603"}
   TIMEOUT=${TIMEOUT:-"25"}
-  #echo "Running RESP sipp SCENARIO=$1 IP=${IP} PORT=${PORT} MPORT_ARG=${MPORT_ARG} TIMEOUT=${TIMEOUT}"
-  sipp -max_socket $MAX -inf ${BASE_DIR}/../callee.csv -sf $1 -i $IP \
-    -nd -t ul -p $PORT $IP -m 1 ${MPORT_ARG} -timeout ${TIMEOUT} -timeout_error -trace_err &> /dev/null
+
+  sipp -max_socket $MAX \
+    -inf ${BASE_DIR}/../callee.csv \
+    -sf $1 -i $IP -p $PORT \
+    -nd -t ul -m 1 ${MPORT_ARG} \
+    -timeout ${TIMEOUT} -timeout_error -trace_err \
+    $IP_SERVER &> /dev/null
   status=$?
 fi
 

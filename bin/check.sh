@@ -152,11 +152,17 @@ function run_sipp
     MPORT=$port
   done
   status=0
+  if [ -f ${SCEN_CHECK_DIR}/peer.yml ]; then
+    ip=$(cut -d\; -f 3 scenarios/peer.csv | grep -v SEQUENTIAL| head -n1)
+  else
+    ip="127.0.0.1"
+  fi
+
   # let's fire sipp scenarios
   for send in $(find ${SCEN_CHECK_DIR} -type f -name 'sipp_scenario[0-9][0-9].xml'| sort); do
     base=$(basename $send .xml)
     echo "$(date) - Running ${base} 50602-7002"
-    ${BIN_DIR}/sipp.sh -p 50602 -m 7002 $send
+    ${BIN_DIR}/sipp.sh -i $ip -p 50602 -m 7002 $send
     if [[ $? -ne 0 ]]; then
       status=1
     fi
