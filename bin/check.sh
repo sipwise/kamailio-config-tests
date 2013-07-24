@@ -91,7 +91,7 @@ function delete_locations
 function error_sipp
 {
   echo $1
-  if [ -z ${SKIP} ] || [ -z ${SKIP_DELDOMAIN} ]; then
+  if [ -z ${SKIP_DELDOMAIN} ]; then
     echo "$(date) - Deleting domain:${DOMAIN}"
     delete_voip ${DOMAIN}
   fi
