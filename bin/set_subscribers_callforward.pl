@@ -1,16 +1,20 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use Data::Dumper;
+
 use Getopt::Std;
-use Sipwise::Provisioning::Voip;
 use Cwd 'abs_path';
 use YAML;
+use Sipwise::Provisioning::Voip;
+use Sipwise::Provisioning::Config;
 
-my %CONFIG = (
-               admin    => 'administrator',
-               password => 'administrator',
-             );
+our %CONFIG = ( admin    => 'cmd' );
+
+my $config = Sipwise::Provisioning::Config->new()->get_config();
+
+unless ($CONFIG{password} = $config->{acl}->{$CONFIG{admin}}->{password}) {
+  die "Error: No provisioning password found for user $CONFIG{admin}\n";
+}
 
 sub main;
 sub usage;
@@ -82,7 +86,7 @@ sub call_prov {
         $result = $bprov->handle_request( $function,
                                           {
                                             authentication => {
-                                                                type     => 'admin',
+                                                                type     => 'system',
                                                                 username => $CONFIG{admin},
                                                                 password => $CONFIG{password},
                                                               },
