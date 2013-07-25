@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 use strict;
-use warning;
+use warnings;
 
 use Getopt::Std;
 use Cwd 'abs_path';
