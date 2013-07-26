@@ -160,7 +160,6 @@ function run_sipp
 
   local base=""
   local pid=""
-  local port=0
 
   # test LOG_DIR
   # we dont want to remove "/*" don't we?
