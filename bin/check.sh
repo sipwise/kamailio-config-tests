@@ -106,7 +106,35 @@ function error_sipp
     delete_voip ${DOMAIN}
   fi
   find ${SCEN_CHECK_DIR}/ -type f -name 'sipp_scenario*errors.log' -exec mv {} ${LOG_DIR} \;
+  stop_capture
   exit $2
+}
+
+function capture
+{
+  local name=$(basename ${SCEN_CHECK_DIR})
+  echo "$(date) - Begin capture"
+  for inter in $(ip link | grep '^[0-9]' | cut -d: -f2 | sed 's/ //' | xargs); do
+    tcpdump -i ${inter} -n -s 65535 -w ${LOG_DIR}/${name}_${inter}.pcap &
+    capture_pid="$capture_pid ${inter}:$!"
+  done
+}
+
+function stop_capture
+{
+  local inter=""
+  local temp_pid=""
+  if [ ! -z "${capture_pid}" ]; then
+    for temp in ${capture_pid}; do
+      inter=$(echo $temp|cut -d: -f1)
+      temp_pid=$(echo $temp|cut -d: -f2)
+      echo "inter:${inter} temp_pid:${temp_pid}"
+      if $(ps -p${temp_pid} &> /dev/null); then
+        echo "$(date) - End ${inter}[$temp_pid] capture"
+        kill -15 ${temp_pid}
+      fi
+    done
+  fi
 }
 
 # $1 port to check
@@ -126,9 +154,14 @@ function check_port
 function run_sipp
 {
   check_port 50603
-  PORT=$port
+  local PORT=$port
   check_port 6003 3
-  MPORT=$port
+  local MPORT=$port
+
+  local base=""
+  local pid=""
+  local port=0
+
   # test LOG_DIR
   # we dont want to remove "/*" don't we?
   if [ -z ${LOG_DIR} ]; then
@@ -140,6 +173,8 @@ function run_sipp
   delete_locations
 
   ${BIN_DIR}/restart_log.sh
+  capture
+  
   for res in $(find ${SCEN_CHECK_DIR} -type f -name 'sipp_scenario_responder[0-9][0-9].xml'| sort); do
     base=$(basename $res .xml)
     echo "$(date) - Running ${base} ${PORT}-${MPORT}"
@@ -189,6 +224,7 @@ function run_sipp
 
   # wait a moment. We want all the info
   sleep 1
+  stop_capture
   # copy the kamailio log
   cp ${KAM_LOG} ${LOG_FILE} ${LOG_DIR}/kamailio.log
   find ${SCEN_CHECK_DIR}/ -type f -name 'sipp_scenario*errors.log' -exec mv {} ${LOG_DIR} \;
