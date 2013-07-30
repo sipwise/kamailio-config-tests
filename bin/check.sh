@@ -91,7 +91,7 @@ function delete_voip
 
 function delete_locations
 {
-  for sub in $(cat ${SCEN_DIR}/callee.csv | grep test | cut -d\; -f1 | xargs); do
+  for sub in $(cat ${SCEN_CHECK_DIR}/callee.csv | grep test | cut -d\; -f1 | xargs); do
     ngcp-kamctl proxy ul rm $sub@${DOMAIN}
   done
 }
