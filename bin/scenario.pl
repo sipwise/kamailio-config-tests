@@ -72,6 +72,8 @@ sub generate
     {
         my $user   = $_->{user};
         my $domain = $_->{domain};
+        $_->{username} = "" unless defined($_->{username});
+        $_->{password} = "" unless defined($_->{password});
         my $auth   = "[authentication username=$_->{username} password=$_->{password}]";
         my $csv_data = [$user, $auth, $domain];
         $csv->{caller}->print($io_caller, $csv_data);
@@ -83,7 +85,7 @@ sub generate
             $domain = $_->{domain};
             my $number = $_->{number};
             # by default responder is active
-            $_->{active} = "yes" unless undef($_->{active});
+            $_->{active} = "yes" unless defined($_->{active});
             $auth   = "[authentication username=$_->{username} password=$_->{password}]";
             $csv_data = [$user, $number, $auth, $domain];
             $csv->{callee}->print($io_callee, $csv_data);
