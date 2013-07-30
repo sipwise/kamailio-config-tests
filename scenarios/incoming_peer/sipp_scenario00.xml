@@ -6,11 +6,11 @@
 
       INVITE sip:[field1 file="callee.csv" line=0]@[field3 file="callee.csv" line=0] SIP/2.0
       Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
-      From: <sip:[field0 file="peer.csv" line=0]@[field2 file="peer.csv" line=0]>;tag=[pid]SIPpTag00[call_number]
+      From: <sip:[field0 file="caller.csv" line=0]@[field2 file="caller.csv" line=0]>;tag=[pid]SIPpTag00[call_number]
       To: <sip:[field1 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]>
       Call-ID: [call_id]
       CSeq: 1 INVITE
-      Contact: sip:[field0 file="peer.csv" line=0]@[local_ip]:[local_port]
+      Contact: sip:[field0 file="caller.csv" line=0]@[local_ip]:[local_port]
       Max-Forwards: 70
       Content-Type: application/sdp
       Content-Length: [len]
@@ -44,12 +44,12 @@
 
       ACK [next_url] SIP/2.0
       Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
-      From: <sip:[field0 file="peer.csv" line=0]@[field2 file="peer.csv" line=0]>;tag=[pid]SIPpTag00[call_number]
+      From: <sip:[field0 file="caller.csv" line=0]@[field2 file="caller.csv" line=0]>;tag=[pid]SIPpTag00[call_number]
       To: <sip:[field1 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]>[peer_tag_param]
       Call-ID: [call_id]
       [routes]
       CSeq: 2 ACK
-      Contact: sip:[field0 file="peer.csv" line=0]@[local_ip]:[local_port]
+      Contact: sip:[field0 file="caller.csv" line=0]@[local_ip]:[local_port]
       Max-Forwards: 70
       Content-Length: 0
 
@@ -70,11 +70,11 @@
 
       BYE [next_url] SIP/2.0
       Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
-      From: <sip:[field0 file="peer.csv" line=0]@[field2 file="peer.csv" line=0]>;tag=[pid]SIPpTag00[call_number]
+      From: <sip:[field0 file="caller.csv" line=0]@[field2 file="caller.csv" line=0]>;tag=[pid]SIPpTag00[call_number]
       To: <sip:[field1 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]>[peer_tag_param]
       Call-ID: [call_id]
       CSeq: 3 BYE
-      Contact: sip:[field0 file="peer.csv" line=0]@[local_ip]:[local_port]
+      Contact: sip:[field0 file="caller.csv" line=0]@[local_ip]:[local_port]
       [routes]
       Max-Forwards: 70
       Content-Length: 0
