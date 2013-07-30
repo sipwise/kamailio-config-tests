@@ -13,6 +13,7 @@ Depends: ${misc:Depends},
  python-yaml,
  libgraphviz-perl,
  libtemplate-perl,
+ libtext-csv-perl,
  sip-tester ( >= 1:3.2-1~ ),
  parallel,
  tcpdump
