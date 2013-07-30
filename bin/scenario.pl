@@ -54,6 +54,7 @@ sub new_csv
 sub generate
 {
     my $id = 0;
+    my $res_id = 0;
     my ($data) = @_;
     my $csv = { callee => new_csv(), caller => new_csv(), scenario => new_csv() };
     my $io_caller = new IO::File(File::Spec->catfile($base_check_dir, "caller.csv"), "w")
@@ -69,7 +70,6 @@ sub generate
 
     foreach (@{$data})
     {
-        my $res_id = 0;
         my $user   = $_->{user};
         my $domain = $_->{domain};
         my $auth   = "[authentication username=$_->{username} password=$_->{password}]";
