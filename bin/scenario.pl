@@ -82,12 +82,14 @@ sub generate
             $user   = $_->{user};
             $domain = $_->{domain};
             my $number = $_->{number};
+            # by default responder is active
+            $_->{active} = "yes" unless undef($_->{active});
             $auth   = "[authentication username=$_->{username} password=$_->{password}]";
             $csv_data = [$user, $number, $auth, $domain];
             $csv->{callee}->print($io_callee, $csv_data);
             $csv_data = ["sipp_scenario_responder".sprintf("%02i", $res_id).".xml", $_->{ip}];
             $csv->{scenario}->print($io_scenario, $csv_data);
-            if($_->{register} eq "yes")
+            if($_->{register} eq "yes" && $_->{active} eq "yes")
             {
                 generate_reg($res_id)
             }
