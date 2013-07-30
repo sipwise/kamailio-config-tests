@@ -225,7 +225,11 @@ function run_sipp
   sleep 1
   stop_capture
   # copy the kamailio log
-  cp ${KAM_LOG} ${LOG_FILE} ${LOG_DIR}/kamailio.log
+  cp ${KAM_LOG} ${LOG_DIR}/kamailio.log
+  # copy the sems log
+  cp ${SEMS_LOG} ${LOG_DIR}/sems.log
+  # copy the kamailio-lb log
+  cp ${KAMLB_LOG} ${LOG_DIR}/kamailio-lb.log
   find ${SCEN_CHECK_DIR}/ -type f -name 'sipp_scenario*errors.log' -exec mv {} ${LOG_DIR} \;
   if [[ $status -ne 0 ]]; then
     error_sipp "error in sipp" 2
@@ -274,7 +278,9 @@ BASE_DIR="${BASE_DIR:-/usr/local/src/kamailio-config-tests}"
 BIN_DIR="${BASE_DIR}/bin"
 LOG_DIR="${BASE_DIR}/log/${NAME_CHECK}"
 RESULT_DIR="${BASE_DIR}/result/${NAME_CHECK}"
-KAM_LOG="${KAM_LOG:-/var/log/ngcp/kamailio-proxy.log}"
+KAM_LOG=${KAM_LOG:-"/var/log/ngcp/kamailio-proxy.log"}
+KAMLB_LOG=${KAMLB_LOG:-"/var/log/ngcp/kamailio-lb.log"}
+SEMS_LOG=${SEMS_LOG:-"/var/log/ngcp/sems.log"}
 SCEN_DIR="${BASE_DIR}/scenarios"
 SCEN_CHECK_DIR="${SCEN_DIR}/${NAME_CHECK}"
 DOMAIN=${DOMAIN:-"spce.test"}
