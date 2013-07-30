@@ -46,12 +46,8 @@ if [ -z ${RESP} ]; then
   PORT=${PORT:-"50602"}
   TIMEOUT=${TIMEOUT:-"10"}
 
-  if [ -f ${BASE_DIR}/peer.yml ]; then
-    PEER="-inf ${BASE_DIR}/../peer.csv"
-  fi
-
   sipp -max_socket $MAX \
-    $PEER  -inf ${BASE_DIR}/../callee.csv -inf ${BASE_DIR}/../caller.csv \
+    -inf ${BASE_DIR}/callee.csv -inf ${BASE_DIR}/caller.csv \
     -sf $1 -i $IP -p $PORT \
     -nd -t ul -m 1 ${MPORT_ARG} \
     -timeout ${TIMEOUT} -timeout_error -trace_err \
@@ -65,7 +61,7 @@ else
   TIMEOUT=${TIMEOUT:-"25"}
 
   sipp -max_socket $MAX \
-    -inf ${BASE_DIR}/../callee.csv \
+    -inf ${BASE_DIR}/callee.csv \
     -sf $1 -i $IP -p $PORT \
     -nd -t ul -m 1 ${MPORT_ARG} \
     -timeout ${TIMEOUT} -timeout_error -trace_err \

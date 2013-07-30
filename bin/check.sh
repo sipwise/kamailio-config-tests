@@ -98,7 +98,7 @@ function delete_locations
 
 # $1 msg to echo
 # $2 exit value
-function error_sipp
+function error_helper
 {
   echo $1
   if [ -z ${SKIP_DELDOMAIN} ]; then
@@ -128,7 +128,7 @@ function stop_capture
     for temp in ${capture_pid}; do
       inter=$(echo $temp|cut -d: -f1)
       temp_pid=$(echo $temp|cut -d: -f2)
-      echo "inter:${inter} temp_pid:${temp_pid}"
+      #echo "inter:${inter} temp_pid:${temp_pid}"
       if $(ps -p${temp_pid} &> /dev/null); then
         echo "$(date) - End ${inter}[$temp_pid] capture"
         kill -15 ${temp_pid}
@@ -150,6 +150,15 @@ function check_port
   done
 }
 
+#$1 is filename
+function get_ip
+{
+  ip=$(grep "$1" ${SCEN_CHECK_DIR}/scenario.csv|cut -d\; -f2| tr -d '\n')
+  if [[ $? -ne 0 ]]; then
+    error_helper "cannot find $1 ip on ${SCEN_CHECK_DIR}/scenario.csv" 10
+  fi
+}
+
 # $1 sipp xml scenario file
 function run_sipp
 {
@@ -164,7 +173,7 @@ function run_sipp
   # test LOG_DIR
   # we dont want to remove "/*" don't we?
   if [ -z ${LOG_DIR} ]; then
-    error_sipp "LOG_DIR empty" 1
+    error_helper "LOG_DIR empty" 1
   fi
   rm -rf ${LOG_DIR}
   mkdir -p ${LOG_DIR}
@@ -176,28 +185,29 @@ function run_sipp
   
   for res in $(find ${SCEN_CHECK_DIR} -type f -name 'sipp_scenario_responder[0-9][0-9].xml'| sort); do
     base=$(basename $res .xml)
-    echo "$(date) - Running ${base} ${PORT}-${MPORT}"
-    ${BIN_DIR}/sipp.sh -p ${PORT} -r ${SCEN_CHECK_DIR}/${base}_reg.xml
-    ${BIN_DIR}/sipp.sh -p ${PORT} -m ${MPORT} -r ${SCEN_CHECK_DIR}/${base}.xml &
-    responder_pid="${responder_pid} ${base}:$!:${PORT}:${MPORT}"
+    get_ip $(basename $res)
+    echo "$(date) - Running ${base} $ip:${PORT}-${MPORT}"
+    if [ -f ${SCEN_CHECK_DIR}/${base}_reg.xml ]; then
+      echo "$(date) - Register ${base} $ip:${PORT}-${MPORT}"
+      ${BIN_DIR}/sipp.sh -i $ip -p ${PORT} -r ${SCEN_CHECK_DIR}/${base}_reg.xml
+    fi
+    ${BIN_DIR}/sipp.sh -i $ip -p ${PORT} -m ${MPORT} -r ${SCEN_CHECK_DIR}/${base}.xml &
+    responder_pid="${responder_pid} ${base}:$!"
     check_port ${PORT}
     PORT=$port
     check_port ${MPORT} 3
     MPORT=$port
   done
+  
   status=0
-  if [ -f ${SCEN_CHECK_DIR}/peer.yml ]; then
-    ip=$(cut -d\; -f 3 scenarios/peer.csv | grep -v SEQUENTIAL| head -n1)
-  else
-    ip="127.0.0.1"
-  fi
-
   # let's fire sipp scenarios
   for send in $(find ${SCEN_CHECK_DIR} -type f -name 'sipp_scenario[0-9][0-9].xml'| sort); do
     base=$(basename $send .xml)
-    echo "$(date) - Running ${base} 50602-7002"
+    get_ip $(basename $send)
+    echo "$(date) - Running ${base} $ip:50602-7002"
     ${BIN_DIR}/sipp.sh -i $ip -p 50602 -m 7002 $send
     if [[ $? -ne 0 ]]; then
+      echo "$(date) - $base error"
       status=1
     fi
   done
@@ -205,7 +215,6 @@ function run_sipp
   for res in ${responder_pid}; do
     base=$(echo $res| cut -d: -f1)
     pid=$(echo $res| cut -d: -f2)
-    port=$(echo $res| cut -d: -f3)
     ps -p${pid} &> /dev/null
     ps_status=$?
     if [ ${ps_status} -eq 0 ]; then
@@ -218,7 +227,6 @@ function run_sipp
         kill -9 ${pid}
       fi
     fi
-    ${BIN_DIR}/sipp.sh -p ${PORT} -r ${SCEN_CHECK_DIR}/${base}_unreg.xml
   done
 
   # wait a moment. We want all the info
@@ -232,7 +240,7 @@ function run_sipp
   cp ${KAMLB_LOG} ${LOG_DIR}/kamailio-lb.log
   find ${SCEN_CHECK_DIR}/ -type f -name 'sipp_scenario*errors.log' -exec mv {} ${LOG_DIR} \;
   if [[ $status -ne 0 ]]; then
-    error_sipp "error in sipp" 2
+    error_helper "error in sipp" 2
   fi
 }
 
@@ -307,6 +315,11 @@ if [ -z $SKIP ]; then
   create_voip_prefs
 
   if [ -z $SKIP_RUNSIPP ]; then
+    echo "$(date) - Generating csv files"
+    ${BIN_DIR}/scenario.pl ${SCEN_CHECK_DIR}/scenario.yml
+    if [[ $? -ne 0 ]]; then
+      error_helper "Error creating csv files" 4
+    fi
     echo "$(date) - Running sipp scenarios"
     run_sipp
     echo "$(date) - Done sipp"
