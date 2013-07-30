@@ -51,6 +51,7 @@ if (lc($action) eq "off")
 {
   $yaml->[0]->{kamailio}{lb}{debug} = 'no';
   $yaml->[0]->{kamailio}{proxy}{debug} = 'no';
+  $yaml->[0]->{sems}{debug} = 'no';
   $yaml->[0]->{checktools}{sip_check_enable} = 1;
 
   tie @array, 'Tie::File', '/etc/hosts' or die ('Can set test domain on /etc/hosts');
@@ -74,6 +75,7 @@ else
 {
   $yaml->[0]->{kamailio}{lb}{debug} = 'yes';
   $yaml->[0]->{kamailio}{proxy}{debug} = 'yes';
+  $yaml->[0]->{sems}{debug} = 'yes';
   $yaml->[0]->{checktools}{sip_check_enable} = 0;
 
   tie @array, 'Tie::File', '/etc/hosts' or die ('Can set test domain on /etc/hosts');
