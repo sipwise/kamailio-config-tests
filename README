@@ -4,13 +4,15 @@ Kamailio configuration tests
 Requeriments:
 -------------
  - A working NGCP
- - sipp with ssl enabled ( needed for auth ).
+ - sip-tester. sipp with ssl enabled ( needed for auth ).
    We provide a version backported to wheezy
  - python-yaml
  - libgraphviz-perl
  - libtemplate-perl
+ - libtext-csv-perl
  - ngcp-ossbss-clients-perl
  - parallel
+ - tcpdump
 
 Installation:
 -------------
@@ -21,8 +23,8 @@ Installation:
   #cd /usr/local/src
   #git clone git@git.mgm.sipwise.com:kamailio-config-tests
   #apt-get install python-yaml sip-tester \
-                   libgraphviz-perl libtemplate-perl \
-                   ngcp-ossbss-clients-perl parallel
+                   libgraphviz-perl libtemplate-perl libtext-csv-perl \
+                   ngcp-ossbss-clients-perl parallel tcpdump
 
 Usage:
 ------
@@ -52,5 +54,21 @@ Usage:
   #./bin/check.sh <checkname>
  this will run the test and the result taps
 
+Development:
+------------
+
+Every test has to be located at the scenarios directory. It must include:
+
+ - scenario.yml
+ - XXXX_test.yml.tt2
+   XXXX indicates the number of kamailio parsed msg XXXX.yml to test
+ - sipp_scenarioXX.xml
+
+And can optionally include:
+ - sipp_scenario_responderXX.xml
+ - prefs.yml
+ - callforward.yml
+ - speeddial.yml
+ - peer.yml
 --
 Victor Seva <vseva@sipwise.com>
