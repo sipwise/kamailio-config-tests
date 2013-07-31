@@ -315,7 +315,10 @@ if [ -z $SKIP ]; then
   create_voip_prefs
 
   if [ -z $SKIP_RUNSIPP ]; then
-    echo "$(date) - Generating csv files"
+    echo "$(date) - Cleaning csv/reg.xml files"
+    find ${SCEN_CHECK_DIR} -name 'sipp_scenario_responder*_reg.xml' -exec rm {} \;
+    find ${SCEN_CHECK_DIR} -name '*.csv' -exec rm {} \;
+    echo "$(date) - Generating csv/reg.xml files"
     ${BIN_DIR}/scenario.pl ${SCEN_CHECK_DIR}/scenario.yml
     if [[ $? -ne 0 ]]; then
       error_helper "Error creating csv files" 4
