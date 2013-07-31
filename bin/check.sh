@@ -345,6 +345,8 @@ fi
 ERR_FLAG=0
 if [ -z ${SKIP_TESTS} ]; then
   mkdir -p ${RESULT_DIR}
+  echo "$(date) - Cleaning tests files"
+  find ${SCEN_CHECK_DIR} -type f -name '*test.yml' -exec rm {} \;
   echo "$(date) - Generating tests files"
   ${BIN_DIR}/generate_tests.sh -d ${SCEN_CHECK_DIR} ${PROFILE}
   echo "$(date) - Done"
