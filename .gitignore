@@ -3,3 +3,5 @@ log
 result
 *.pyc
 *_test.yml
+sipp_scenario_responder*_reg.xml
+*.csv
