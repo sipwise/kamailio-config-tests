@@ -1,0 +1,15 @@
+scenarios:
+  - ip: 127.126.0.1
+    user: testuser1002
+    domain: spce.test
+    username: testuser1002
+    password: testuser
+    responders:
+      - ip: 127.1.0.1
+        number: 4311003
+        user: testuser1003
+        domain: spce.test
+        register: no
+        username: testuser1003
+        password: testuser
+        active: no
