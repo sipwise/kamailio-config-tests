@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 
 <scenario name="Sipwise NGCP Benchmark UAC Caller">
-  <send retrans="500" start_rtd="1" start_rtd="2">
+  <send start_rtd="1" start_rtd="2">
     <![CDATA[
 
       INVITE sip:*9@[field3 file="callee.csv" line=0] SIP/2.0
       Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
-      From: <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>;tag=[pid]SIPpTag00[call_number]
+      From: <sip:[field0 file="caller.csv" line=3]@[field2 file="caller.csv" line=3]>;tag=[pid]SIPpTag00[call_number]
       To: <sip:*9@[field3 file="callee.csv" line=0]>
       Call-ID: [call_id]
       CSeq: 1 INVITE
-      Contact: sip:[field0 file="caller.csv"]@[local_ip]:[local_port]
+      Contact: sip:[field0 file="caller.csv" line=3]@[local_ip]:[local_port]
       Max-Forwards: 70
       Content-Type: application/sdp
       Content-Length: [len]
@@ -37,11 +37,11 @@
 
       ACK sip:*9@[field3 file="callee.csv" line=0]:[remote_port] SIP/2.0
       [last_Via:]
-      From: <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>;tag=[pid]SIPpTag00[call_number]
+      From: <sip:[field0 file="caller.csv" line=3]@[field2 file="caller.csv" line=3]>;tag=[pid]SIPpTag00[call_number]
       To: <sip:*9@[field3 file="callee.csv" line=0]>[peer_tag_param]
       Call-ID: [call_id]
       CSeq: 1 ACK
-      Contact: sip:[field0 file="caller.csv"]@[local_ip]:[local_port]
+      Contact: sip:[field0 file="caller.csv" line=3]@[local_ip]:[local_port]
       Max-Forwards: 70
       Content-Length: 0
 
@@ -53,13 +53,13 @@
 
       INVITE sip:*9@[field3 file="callee.csv" line=0] SIP/2.0
       Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
-      From: <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>;tag=[pid]SIPpTag00[call_number]
+      From: <sip:[field0 file="caller.csv" line=3]@[field2 file="caller.csv" line=3]>;tag=[pid]SIPpTag00[call_number]
       To: <sip:*9@[field3 file="callee.csv" line=0]>
       Call-ID: [call_id]
       CSeq: 2 INVITE
-      Contact: sip:[field0 file="caller.csv"]@[local_ip]:[local_port]
+      Contact: sip:[field0 file="caller.csv" line=3]@[local_ip]:[local_port]
       Max-Forwards: 70
-      [field1 file="caller.csv"]
+      [field1 file="caller.csv" line=3]
       Content-Type: application/sdp
       Content-Length: [len]
 
@@ -86,12 +86,12 @@
 
       ACK [next_url] SIP/2.0
       Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
-      From: <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>;tag=[pid]SIPpTag00[call_number]
+      From: <sip:[field0 file="caller.csv" line=3]@[field2 file="caller.csv" line=3]>;tag=[pid]SIPpTag00[call_number]
       To: <sip:*9@[field3 file="callee.csv" line=0]>[peer_tag_param]
       Call-ID: [call_id]
       [routes]
       CSeq: 2 ACK
-      Contact: sip:[field0 file="caller.csv"]@[local_ip]:[local_port]
+      Contact: sip:[field0 file="caller.csv" line=3]@[local_ip]:[local_port]
       Max-Forwards: 70
       Content-Length: 0
 
