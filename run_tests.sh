@@ -50,7 +50,7 @@ fi
 echo "$(date) - Clean log dir"
 rm -rf ${LOG_DIR}
 
-for t in $(find ${BASE_DIR}/scenarios/ -depth -maxdepth 1 -mindepth 1 -type d | sort); do
+for t in $(find ${BASE_DIR}/scenarios/ -depth -maxdepth 1 -mindepth 1 -type d | grep -v templates | sort); do
   echo "$(date) - Run[${PROFILE}]: $(basename $t) ================================================="
   ${BIN_DIR}/check.sh -P -d ${DOMAIN} -p ${PROFILE} $(basename $t)
   if [ $? -ne 0 ]; then
