@@ -1,42 +1,53 @@
+subscribers:
+  spce.test:
+    testuser1003:
+      password: testuser
+      cc: 43
+      ac: 1
+      sn: 1003
+    testuser1002:
+      password: testuser
+      cc: 43
+      ac: 1
+      sn: 1002
+    testuser1001:
+      password: testuser
+      cc: 43
+      ac: 1
+      sn: 1001
+    testuser1004:
+      password: testuser
+      cc: 43
+      ac: 1
+      sn: 1004
+    testuser1005:
+      password: testuser
+      cc: 43
+      ac: 1
+      sn: 1005
 scenarios:
   - ip: 127.126.0.1
-    user: testuser1002
-    domain: spce.test
     username: testuser1002
-    password: testuser
+    domain: spce.test
     responders:
       - ip: 127.1.0.1
-        number: 4311001
-        user: testuser1001
+        username: testuser1001
         domain: spce.test
         register: no
         active: no
-        username: testuser1001
-        password: testuser
       - ip: 127.1.0.3
-        number: 4311003
-        user: testuser1003
+        username: testuser1003
         domain: spce.test
         register: yes
-        username: testuser1003
-        password: testuser
   - ip: 127.126.0.1
-    user: testuser1002
-    domain: spce.test
     username: testuser1002
-    password: testuser
+    domain: spce.test
     responders:
       - ip: 127.1.0.4
-        number: 4311004
-        user: testuser1004
-        domain: spce.test
-        register: yes
         username: testuser1004
-        password: testuser
-      - ip: 127.1.0.5
-        number: 4311005
-        user: testuser1005
         domain: spce.test
         register: yes
+      - ip: 127.1.0.5
         username: testuser1005
-        password: testuser
+        domain: spce.test
+        register: yes
