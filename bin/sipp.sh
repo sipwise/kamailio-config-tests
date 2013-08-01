@@ -49,7 +49,7 @@ if [ -z ${RESP} ]; then
   sipp -max_socket $MAX \
     -inf ${BASE_DIR}/callee.csv -inf ${BASE_DIR}/caller.csv \
     -sf $1 -i $IP -p $PORT \
-    -nd -t ul -m 1 ${MPORT_ARG} \
+    -nr -nd -t ul -m 1 ${MPORT_ARG} \
     -timeout ${TIMEOUT} -timeout_error -trace_err \
     $IP_SERVER &> /dev/null
   status=$?
@@ -63,7 +63,7 @@ else
   sipp -max_socket $MAX \
     -inf ${BASE_DIR}/callee.csv \
     -sf $1 -i $IP -p $PORT \
-    -nd -t ul -m 1 ${MPORT_ARG} \
+    -nr -nd -t ul -m 1 ${MPORT_ARG} \
     -timeout ${TIMEOUT} -timeout_error -trace_err \
     $IP_SERVER &> /dev/null
   status=$?
