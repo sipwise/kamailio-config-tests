@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 
 <scenario name="Sipwise NGCP Benchmark UAC Caller">
-  <send retrans="500" start_rtd="1" start_rtd="2">
+  <send start_rtd="1" start_rtd="2">
     <![CDATA[
 
       INVITE sip:[field0 file="callee.csv" line=2]@[field3 file="callee.csv" line=2] SIP/2.0
@@ -48,7 +48,7 @@
     ]]>
   </send>
 
-  <send retrans="500" start_rtd="3">
+  <send start_rtd="3">
     <![CDATA[
 
       INVITE sip:[field0 file="callee.csv" line=2]@[field3 file="callee.csv" line=2] SIP/2.0
@@ -113,7 +113,7 @@
   
   <pause milliseconds="1000"/> 
 
-  <send retrans="500" start_rtd="4">
+  <send start_rtd="4">
     <![CDATA[
 
       BYE [next_url] SIP/2.0
