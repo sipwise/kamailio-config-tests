@@ -51,6 +51,30 @@ sub new_csv
                  or die "Cannot use CSV: ".Text::CSV->error_diag();
 }
 
+sub get_subs_info
+{
+    my ($data_sub, $data) = @_;
+    if (defined($data_sub->{$data->{domain}}))
+    {
+        my $domain = $data->{domain};
+        if (defined($data_sub->{$domain}->{$data->{username}}))
+        {
+            my $username = $data->{username};
+            my $subs = $data_sub->{$domain}->{$username};
+            $data->{password} = $subs->{password};
+            eval { $data->{number} = $subs->{cc}.$subs->{ac}.$subs->{sn}; };
+        }
+        else
+        {
+            die("username:".$data->{username}."@".$domain." not defined in subscribers");
+        }
+    }
+    else
+    {
+        die("domain:".$data->{domain}." not defined in subscribers");
+    }
+}
+
 sub generate
 {
     my $id = 0;
@@ -68,26 +92,22 @@ sub generate
     $csv->{caller}->print($io_caller, $seq);
     $csv->{callee}->print($io_callee, $seq);
 
-    foreach (@{$data})
+    foreach (@{$data->{scenarios}})
     {
-        my $user   = $_->{user};
-        my $domain = $_->{domain};
-        $_->{username} = "" unless defined($_->{username});
+        eval { get_subs_info($data->{subscribers}, $_); };
         $_->{password} = "" unless defined($_->{password});
         my $auth   = "[authentication username=$_->{username} password=$_->{password}]";
-        my $csv_data = [$user, $auth, $domain];
+        my $csv_data = [$_->{username}, $auth, $_->{domain}];
         $csv->{caller}->print($io_caller, $csv_data);
         $csv_data = ["sipp_scenario".sprintf("%02i", $id).".xml", $_->{ip}];
         $csv->{scenario}->print($io_scenario, $csv_data);
         foreach (@{$_->{responders}})
         {
-            $user   = $_->{user};
-            $domain = $_->{domain};
-            my $number = $_->{number};
+            get_subs_info($data->{subscribers}, $_);
             # by default responder is active
             $_->{active} = "yes" unless defined($_->{active});
             $auth   = "[authentication username=$_->{username} password=$_->{password}]";
-            $csv_data = [$user, $number, $auth, $domain];
+            $csv_data = [$_->{username}, $_->{number}, $auth, $_->{domain}];
             $csv->{callee}->print($io_callee, $csv_data);
             $csv_data = ["sipp_scenario_responder".sprintf("%02i", $res_id).".xml", $_->{ip}];
             $csv->{scenario}->print($io_scenario, $csv_data);
@@ -109,4 +129,4 @@ sub generate_reg
     $tt->process($template_reg, $vars, $fn) or die($tt->error(), "\n");
 }
 
-generate($cf->{scenarios});
+generate($cf);

@@ -45,7 +45,7 @@ function create_voip
     echo "$(date) - Cannot create domain"
     exit 1
   fi
-  ${BIN_DIR}/create_subscribers.pl -v 1 -s 5 -d $1 -u testuser -c 43  -a 1 -n 1001 -p testuser
+  ${BIN_DIR}/create_subscribers.pl ${SCEN_CHECK_DIR}/scenario.yml
   if [[ $? -ne 0 ]]; then
     echo "$(date) - Deleting domain:${DOMAIN}"
     delete_voip $1
@@ -304,6 +304,11 @@ if [ ! -d ${SCEN_CHECK_DIR} ]; then
   echo "no ${SCEN_CHECK_DIR} found"
   usage
   exit 3
+fi
+
+if [ ! -f ${SCEN_CHECK_DIR}/scenario.yml ]; then
+  echo "${SCEN_CHECK_DIR}/scenario.yml not found"
+  exit 14
 fi
 
 if [ -z $SKIP ]; then
