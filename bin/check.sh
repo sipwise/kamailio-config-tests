@@ -157,6 +157,7 @@ function get_ip
   if [[ $? -ne 0 ]]; then
     error_helper "cannot find $1 ip on ${SCEN_CHECK_DIR}/scenario.csv" 10
   fi
+  peer_host=$(grep "$1" ${SCEN_CHECK_DIR}/scenario.csv|cut -d\; -f3| tr -d '\n')
 }
 
 # $1 sipp xml scenario file
@@ -186,6 +187,13 @@ function run_sipp
   for res in $(find ${SCEN_CHECK_DIR} -type f -name 'sipp_scenario_responder[0-9][0-9].xml'| sort); do
     base=$(basename $res .xml)
     get_ip $(basename $res)
+    if [ "${peer_host}" != "" ]; then
+      echo "$(date) - Update peer_host:${peer_host} ${ip}:${PORT} info"
+      ${BIN_DIR}/update_peer_host.pl --ip=${ip} --port=${PORT} ${peer_host} ${SCEN_CHECK_DIR}/scenario.yml
+      if [[ $? -ne 0 ]]; then
+        error_helper "$(date) - error updating peer info" 15
+      fi
+    fi
     echo "$(date) - Running ${base} $ip:${PORT}-${MPORT}"
     if [ -f ${SCEN_CHECK_DIR}/${base}_reg.xml ]; then
       echo "$(date) - Register ${base} $ip:${PORT}-${MPORT}"

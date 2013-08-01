@@ -103,13 +103,16 @@ sub generate
         $csv->{scenario}->print($io_scenario, $csv_data);
         foreach (@{$_->{responders}})
         {
-            get_subs_info($data->{subscribers}, $_);
+            get_subs_info($data->{subscribers}, $_) unless defined($_->{peer_host});
+            $_->{password} = "" unless defined($_->{password});
             # by default responder is active
             $_->{active} = "yes" unless defined($_->{active});
+            # by default peer_host is empty
+            $_->{peer_host} = "" unless defined($_->{peer_host});
             $auth   = "[authentication username=$_->{username} password=$_->{password}]";
             $csv_data = [$_->{username}, $_->{number}, $auth, $_->{domain}];
             $csv->{callee}->print($io_callee, $csv_data);
-            $csv_data = ["sipp_scenario_responder".sprintf("%02i", $res_id).".xml", $_->{ip}];
+            $csv_data = ["sipp_scenario_responder".sprintf("%02i", $res_id).".xml", $_->{ip}, $_->{peer_host}];
             $csv->{scenario}->print($io_scenario, $csv_data);
             if($_->{register} eq "yes" && $_->{active} eq "yes")
             {
