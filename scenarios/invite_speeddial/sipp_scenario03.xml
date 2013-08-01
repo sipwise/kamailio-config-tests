@@ -81,15 +81,14 @@
   <recv response="484" rrs="true" rtd="3">
   </recv>
 
-  <send>
+<send>
     <![CDATA[
 
-      ACK [next_url] SIP/2.0
-      Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
+      ACK sip:*9@[field3 file="callee.csv" line=0]:[remote_port] SIP/2.0
+      [last_Via:]
       From: <sip:[field0 file="caller.csv" line=3]@[field2 file="caller.csv" line=3]>;tag=[pid]SIPpTag00[call_number]
       To: <sip:*9@[field3 file="callee.csv" line=0]>[peer_tag_param]
       Call-ID: [call_id]
-      [routes]
       CSeq: 2 ACK
       Contact: sip:[field0 file="caller.csv" line=3]@[local_ip]:[local_port]
       Max-Forwards: 70
