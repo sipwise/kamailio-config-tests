@@ -12,4 +12,7 @@ for i in $(seq $NUM); do
   	break
   fi
   echo "$i done ok"
+  # keep everything
+  mv log log_$i 
+  mv result result_$i
 done
