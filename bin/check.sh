@@ -245,7 +245,7 @@ function run_sipp
   # copy the kamailio-lb log
   cp ${KAMLB_LOG} ${LOG_DIR}/kamailio-lb.log
   # if any scenario has a log... error
-  if [ $(ls ${SCEN_CHECK_DIR}/sipp_scenario*errors.log|wc -l) -ne 0 ]; then
+  if [ $(ls ${SCEN_CHECK_DIR}/sipp_scenario*errors.log 2>/dev/null|wc -l) -ne 0 ]; then
     find ${SCEN_CHECK_DIR}/ -type f -name 'sipp_scenario*errors.log' -exec mv {} ${LOG_DIR} \;
     status=1
   fi
