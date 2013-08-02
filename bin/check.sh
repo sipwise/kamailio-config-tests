@@ -237,8 +237,6 @@ function run_sipp
     fi
   done
 
-  # wait a moment. We want all the info
-  sleep 1
   stop_capture
   # copy the kamailio log
   cp ${KAM_LOG} ${LOG_DIR}/kamailio.log
@@ -246,7 +244,11 @@ function run_sipp
   cp ${SEMS_LOG} ${LOG_DIR}/sems.log
   # copy the kamailio-lb log
   cp ${KAMLB_LOG} ${LOG_DIR}/kamailio-lb.log
-  find ${SCEN_CHECK_DIR}/ -type f -name 'sipp_scenario*errors.log' -exec mv {} ${LOG_DIR} \;
+  # if any scenario has a log... error
+  if [ $(ls ${SCEN_CHECK_DIR}/sipp_scenario*errors.log|wc -l) -ne 0 ]; then
+    find ${SCEN_CHECK_DIR}/ -type f -name 'sipp_scenario*errors.log' -exec mv {} ${LOG_DIR} \;
+    status=1
+  fi
   if [[ $status -ne 0 ]]; then
     error_helper "error in sipp" 2
   fi
