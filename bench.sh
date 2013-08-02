@@ -1,5 +1,7 @@
 #!/bin/bash
 NUM=${1:-20}
+# clean previous
+rm -rf log_* result_*
 for i in $(seq $NUM); do
   BASE_DIR=$(pwd) ./run_tests.sh -c &> /tmp/run_tests.log
   if [[ $? -ne 0 ]]; then
