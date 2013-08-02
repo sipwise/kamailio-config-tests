@@ -54,23 +54,23 @@ flow:
 sip_in:
   - '^INVITE sip:4311003@'
   - 'Contact: sip:testuser1002@'
-  - 'CSeq: 2 INVITE'
+  - 'CSeq: 3 INVITE'
   - 'Max-Forwards: 16'
   - 'Content-Type: application/sdp'
   - 'Proxy-Authorization: Digest username="testuser1002"'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
-      'CSeq: 2 INVITE',
+      'CSeq: 3 INVITE',
       'From: <sip:testuser1002@'
     ]
   - [
       '^SIP/2.0 101 Connecting',
-      'CSeq: 2 INVITE',
+      'CSeq: 3 INVITE',
       'From: <sip:testuser1002@'
     ]
   - [
       '^SIP/2.0 480 Offline',
-      'CSeq: 2 INVITE',
+      'CSeq: 3 INVITE',
       'From: <sip:testuser1002@'
     ]
