@@ -160,6 +160,16 @@ function get_ip
   peer_host=$(grep "$1" ${SCEN_CHECK_DIR}/scenario.csv|cut -d\; -f3| tr -d '\n')
 }
 
+function copy_logs
+{
+  # copy the kamailio log
+  cp ${KAM_LOG} ${LOG_DIR}/kamailio.log
+  # copy the sems log
+  cp ${SEMS_LOG} ${LOG_DIR}/sems.log
+  # copy the kamailio-lb log
+  cp ${KAMLB_LOG} ${LOG_DIR}/kamailio-lb.log
+}
+
 # $1 sipp xml scenario file
 function run_sipp
 {
@@ -182,6 +192,10 @@ function run_sipp
   delete_locations
 
   ${BIN_DIR}/restart_log.sh
+  if [[ $? -ne 0 ]]; then
+    copy_logs
+    error_helper "Restart error" 16
+  fi
   capture
   
   for res in $(find ${SCEN_CHECK_DIR} -type f -name 'sipp_scenario_responder[0-9][0-9].xml'| sort); do
@@ -238,12 +252,7 @@ function run_sipp
   done
 
   stop_capture
-  # copy the kamailio log
-  cp ${KAM_LOG} ${LOG_DIR}/kamailio.log
-  # copy the sems log
-  cp ${SEMS_LOG} ${LOG_DIR}/sems.log
-  # copy the kamailio-lb log
-  cp ${KAMLB_LOG} ${LOG_DIR}/kamailio-lb.log
+  copy_logs
   # if any scenario has a log... error
   if [ $(ls ${SCEN_CHECK_DIR}/sipp_scenario*errors.log 2>/dev/null|wc -l) -ne 0 ]; then
     find ${SCEN_CHECK_DIR}/ -type f -name 'sipp_scenario*errors.log' -exec mv {} ${LOG_DIR} \;
