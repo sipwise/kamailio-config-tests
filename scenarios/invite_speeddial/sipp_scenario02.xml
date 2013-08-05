@@ -48,6 +48,8 @@
     ]]>
   </send>
 
+  <pause milliseconds="500"/>
+
   <send start_rtd="3">
     <![CDATA[
 
