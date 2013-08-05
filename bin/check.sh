@@ -72,6 +72,11 @@ function create_voip_prefs
    ${BIN_DIR}/set_subscribers_speeddial.pl ${SCEN_CHECK_DIR}/speeddial.yml
   fi
 
+  if [ -f ${SCEN_CHECK_DIR}/ncos.yml ]; then
+    echo "$(date) - Creating ncos levels"
+    ${BIN_DIR}/create_ncos.pl ${SCEN_CHECK_DIR}/ncos.yml
+  fi
+
   if [ -f ${SCEN_CHECK_DIR}/peer.yml ]; then
     echo "$(date) - Creating peers"
     ${BIN_DIR}/create_peers.pl ${SCEN_CHECK_DIR}/peer.yml
@@ -91,6 +96,11 @@ function delete_voip
   if [ -f ${SCEN_CHECK_DIR}/peer.yml ]; then
     echo "$(date) - Deleting peers"
     ${BIN_DIR}/create_peers.pl -d ${SCEN_CHECK_DIR}/peer.yml
+  fi
+
+  if [ -f ${SCEN_CHECK_DIR}/ncos.yml ]; then
+    echo "$(date) - Deleting ncos levels"
+    ${BIN_DIR}/create_ncos.pl -d ${SCEN_CHECK_DIR}/ncos.yml
   fi
 
   if [ -f ${SCEN_CHECK_DIR}/rewrite.yml ]; then
