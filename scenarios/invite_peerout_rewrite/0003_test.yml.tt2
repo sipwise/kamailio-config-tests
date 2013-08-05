@@ -1,0 +1,133 @@
+# INVITE_OFFLINE scenario
+flow:
+  - start|MAIN:
+  - start|ROUTE_NET_INFO:
+  - end|ROUTE_NET_INFO:
+  - start|ROUTE_PRX_REQUEST:
+  - start|ROUTE_INVITE:
+  - start|ROUTE_LOAD_CALLEE_DOMAIN_PREF:
+  - end|ROUTE_LOAD_CALLEE_DOMAIN_PREF:
+  - start|ROUTE_FIND_CALLER:
+  - start|ROUTE_AUTH:
+  - start|ROUTE_ADD_CALLINFO_REPLY:
+  - end|ROUTE_ADD_CALLINFO_REPLY:
+  - end|ROUTE_AUTH:
+  - end|ROUTE_FIND_CALLER:
+  - start|ROUTE_LOAD_CALLER_PREF:
+  - start|ROUTE_CLEAR_CALLER_PREF:
+  - end|ROUTE_CLEAR_CALLER_PREF:
+  - end|ROUTE_LOAD_CALLER_PREF:
+  - start|ROUTE_GET_CALLER_CLI:
+  - end|ROUTE_GET_CALLER_CLI:
+  - start|ROUTE_GET_FORWARDER_CLI:
+  - end|ROUTE_GET_FORWARDER_CLI:
+  - start|ROUTE_CHECK_USERPROV_CLI:
+  - start|ROUTE_CHECK_CLI_ALLOWED:
+  - end|ROUTE_CHECK_CLI_ALLOWED:
+  - end|ROUTE_CHECK_USERPROV_CLI:
+  - start|ROUTE_CLIR:
+  - end|ROUTE_CLIR:
+  - start|ROUTE_FIND_CALLEE:
+  - start|ROUTE_CLEAR_CALLEE_PREF:
+  - end|ROUTE_CLEAR_CALLEE_PREF:
+  - start|ROUTE_NCOS:
+  - end|ROUTE_NCOS:
+  - start|ROUTE_NCOS:
+  - end|ROUTE_NCOS:
+  - start|ROUTE_BLOCK_OUT:
+  - end|ROUTE_BLOCK_OUT:
+  - start|ROUTE_INVITE_TO_EXT:
+  - start|ROUTE_SET_RUSER:
+  - end|ROUTE_SET_RUSER:
+  - start|ROUTE_PSTN:
+  - start|ROUTE_CLEAR_PEER_OUT_PREF:
+  - end|ROUTE_CLEAR_PEER_OUT_PREF:
+  - start|ROUTE_LOAD_PEER_OUT_PREF:
+  - end|ROUTE_LOAD_PEER_OUT_PREF:
+  - start|ROUTE_OUTBOUND:
+  - start|ROUTE_ACC_CALLER:
+  - end|ROUTE_ACC_CALLER:
+  - start|ROUTE_ACC_CALLEE:
+  - end|ROUTE_ACC_CALLEE:
+  - start|BRANCH_ROUTE_SBC:
+  - start|ROUTE_BRANCH_ACC_RTP:
+  - end|ROUTE_BRANCH_ACC_RTP:
+  - start|ROUTE_PREPARE_SST:
+  - end|ROUTE_PREPARE_SST:
+[% IF PRO -%]
+  - start|ROUTE_PREPARE_MOH:
+  - end|ROUTE_PREPARE_MOH:
+[% END -%]
+  - start|ROUTE_SET_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - end|ROUTE_PREPARE_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - end|ROUTE_PREPARE_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - end|ROUTE_PREPARE_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - end|ROUTE_PREPARE_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - end|ROUTE_PREPARE_CALLER_CLI:
+  - end|ROUTE_SET_CALLER_CLI:
+  - start|ROUTE_SET_CALLEE:
+  - end|ROUTE_SET_CALLEE:
+  - start|ROUTE_ADD_CALLINFO:
+  - end|ROUTE_ADD_CALLINFO:
+  - end|BRANCH_ROUTE_SBC:
+  - exit|ROUTE_OUTBOUND:
+  # 101 Connecting
+  - start|REPLY_ROUTE_NAT:
+  - exit|REPLY_ROUTE_NAT:
+  # 180 Ringing
+  - start|REPLY_ROUTE_NAT:
+  - exit|REPLY_ROUTE_NAT:
+  # 200 OK
+  - start|REPLY_ROUTE_NAT:
+  - exit|REPLY_ROUTE_NAT:
+sip_in:
+  - '^INVITE sip:004321001@'
+  - 'Contact: sip:testuser1002@'
+  - 'CSeq: 2 INVITE'
+  - 'Max-Forwards: 16'
+  - 'Content-Type: application/sdp'
+  - 'Proxy-Authorization: Digest username="testuser1002"'
+sip_out:
+  - [
+      '^SIP/2.0 100 Trying',
+      'CSeq: 2 INVITE',
+      'From: <sip:testuser1002@',
+      'To: <sip:004321001@'
+    ]
+  - [
+      '^SIP/2.0 101 Connecting',
+      'CSeq: 2 INVITE',
+      'From: <sip:testuser1002@',
+      'To: <sip:004321001@'
+    ]
+  - [
+      '^INVITE sip:4321001@',
+      'CSeq: 2 INVITE',
+      'From: <sip:4311002@',
+      'To: <sip:004321001@',
+      'Content-Type: application/sdp',
+      'P-Caller-UUID: \w+',
+      'P-Callee-UUID: \w+',
+      'P-Asserted-Identity: <sip:4311002@',
+      'P-Called-Party-ID: <sip:4321001@',
+      'P-App-Param: ;aleg_sst_enable=no;sst_enable=no',
+      'P-App-Name: sbc'
+    ]
+  - [
+      '^SIP/2.0 180 Ringing',
+      'CSeq: 2 INVITE',
+      'From: <sip:testuser1002@',
+      'To: <sip:004321001@'
+    ]
+  - [
+      '^SIP/2.0 200 OK',
+      'CSeq: 2 INVITE',
+      'From: <sip:testuser1002@',
+      'To: <sip:004321001@'
+    ]
+
