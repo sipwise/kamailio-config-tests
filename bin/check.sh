@@ -72,14 +72,14 @@ function create_voip_prefs
    ${BIN_DIR}/set_subscribers_speeddial.pl ${SCEN_CHECK_DIR}/speeddial.yml
   fi
 
-  if [ -f ${SCEN_CHECK_DIR}/prefs.yml ]; then
-    echo "$(date) - Setting subcribers preferences"
-    ${BIN_DIR}/set_subscribers_preferences.pl ${SCEN_CHECK_DIR}/prefs.yml
-  fi
-
   if [ -f ${SCEN_CHECK_DIR}/peer.yml ]; then
     echo "$(date) - Creating peers"
     ${BIN_DIR}/create_peers.pl ${SCEN_CHECK_DIR}/peer.yml
+  fi
+
+  if [ -f ${SCEN_CHECK_DIR}/prefs.yml ]; then
+    echo "$(date) - Setting preferences"
+    ${BIN_DIR}/set_preferences.pl ${SCEN_CHECK_DIR}/prefs.yml
   fi
 }
 
