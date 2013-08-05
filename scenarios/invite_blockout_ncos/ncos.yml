@@ -1,0 +1,8 @@
+ncos_test_00:
+  data:
+    mode: blacklist
+    local_ac: 0
+    description: test ncos level
+  patterns:
+    - pattern: "^431"
+      description: block local area calls
