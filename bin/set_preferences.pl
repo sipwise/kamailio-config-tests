@@ -6,7 +6,6 @@ use Getopt::Std;
 use Cwd 'abs_path';
 use YAML;
 use Sipwise::Provisioning::Voip;
-use Sipwise::Provisioning::Billing;
 use Sipwise::Provisioning::Config;
 use Data::Dumper;
 
@@ -24,7 +23,6 @@ sub call_prov;
 
 die usage() unless ($#ARGV == 0);
 
-our $bprov = Sipwise::Provisioning::Billing->new();
 our $vprov = Sipwise::Provisioning::Voip->new();
 
 main();
