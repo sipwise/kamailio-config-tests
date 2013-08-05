@@ -57,6 +57,11 @@ function create_voip
 # $1 prefs yml file
 function create_voip_prefs
 {
+  if [ -f ${SCEN_CHECK_DIR}/rewrite.yml ]; then
+    echo "$(date) - Creating rewrite rules"
+    ${BIN_DIR}/create_rewrite_rules.pl ${SCEN_CHECK_DIR}/rewrite.yml
+  fi
+
   if [ -f ${SCEN_CHECK_DIR}/callforward.yml ]; then
    echo "$(date) - Setting callforward config"
    ${BIN_DIR}/set_subscribers_callforward.pl ${SCEN_CHECK_DIR}/callforward.yml
@@ -86,6 +91,11 @@ function delete_voip
   if [ -f ${SCEN_CHECK_DIR}/peer.yml ]; then
     echo "$(date) - Deleting peers"
     ${BIN_DIR}/create_peers.pl -d ${SCEN_CHECK_DIR}/peer.yml
+  fi
+
+  if [ -f ${SCEN_CHECK_DIR}/rewrite.yml ]; then
+    echo "$(date) - Deleting rewrite rules"
+    ${BIN_DIR}/create_rewrite_rules.pl -d ${SCEN_CHECK_DIR}/rewrite.yml
   fi
 }
 
