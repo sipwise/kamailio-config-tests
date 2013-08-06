@@ -252,6 +252,7 @@ function run_sipp
       echo "$(date) - $base error"
       status=1
     fi
+    sleep 1
   done
 
   for res in ${responder_pid}; do
