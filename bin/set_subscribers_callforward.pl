@@ -73,6 +73,12 @@ sub main {
           $param = { username => $fields[0], domain => $fields[1], data => $m };
           call_prov( 'create_subscriber_cf_map',  $param);
         }
+        # voicebox
+        if (exists($cf->{$key}->{voicebox}))
+        {
+          $param = { username => $fields[0], domain => $fields[1], preferences => $cf->{$key}->{voicebox}};
+          call_prov( 'set_subscriber_voicebox_preferences',  $param);
+        }
     }
     exit;
 }
