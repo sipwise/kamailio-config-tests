@@ -1,0 +1,91 @@
+# INVITE_OFFLINE scenario
+flow:
+  - start|MAIN:
+  - start|ROUTE_NET_INFO:
+  - end|ROUTE_NET_INFO:
+  - start|ROUTE_PRX_REQUEST:
+  - start|ROUTE_INVITE:
+  - start|ROUTE_LOAD_CALLEE_DOMAIN_PREF:
+  - end|ROUTE_LOAD_CALLEE_DOMAIN_PREF:
+  - start|ROUTE_FIND_CALLER:
+  - start|ROUTE_AUTH:
+  - start|ROUTE_ADD_CALLINFO_REPLY:
+  - end|ROUTE_ADD_CALLINFO_REPLY:
+  - end|ROUTE_AUTH:
+  - end|ROUTE_FIND_CALLER:
+  - start|ROUTE_LOAD_CALLER_PREF:
+  - start|ROUTE_CLEAR_CALLER_PREF:
+  - end|ROUTE_CLEAR_CALLER_PREF:
+  - end|ROUTE_LOAD_CALLER_PREF:
+  - start|ROUTE_GET_CALLER_CLI:
+  - end|ROUTE_GET_CALLER_CLI:
+  - start|ROUTE_GET_FORWARDER_CLI:
+  - end|ROUTE_GET_FORWARDER_CLI:
+  - start|ROUTE_CHECK_USERPROV_CLI:
+  - start|ROUTE_CHECK_CLI_ALLOWED:
+  - end|ROUTE_CHECK_CLI_ALLOWED:
+  - end|ROUTE_CHECK_USERPROV_CLI:
+  - start|ROUTE_CLIR:
+  - end|ROUTE_CLIR:
+  - start|ROUTE_FIND_CALLEE:
+  - start|ROUTE_CLEAR_CALLEE_PREF:
+  - end|ROUTE_CLEAR_CALLEE_PREF:
+  - start|ROUTE_NCOS:
+  - end|ROUTE_NCOS:
+  - start|ROUTE_NCOS:
+  - end|ROUTE_NCOS:
+  - start|ROUTE_BLOCK_OUT:
+  - end|ROUTE_BLOCK_OUT:
+  - start|ROUTE_LOAD_CALLEE_PREF:
+  - start|ROUTE_BLOCK_IN:
+  - end|ROUTE_BLOCK_IN:
+  - start|ROUTE_LOAD_CF_MAP:
+  - end|ROUTE_LOAD_CF_MAP:
+  - start|ROUTE_CHECK_CF_PERIOD:
+  - return|ROUTE_CHECK_CF_PERIOD:
+  - start|ROUTE_ACC_CF:
+  - start|ROUTE_ACC_CALLER:
+  - end|ROUTE_ACC_CALLER:
+  - start|ROUTE_ACC_CALLEE:
+  - end|ROUTE_ACC_CALLEE:
+  - end|ROUTE_ACC_CF:
+  - start|ROUTE_EXECUTE_CF_LOOP:
+  - start|BRANCH_ROUTE_FWD_LOOP:
+  - start|ROUTE_ADD_CALLINFO:
+  - end|ROUTE_ADD_CALLINFO:
+  - end|BRANCH_ROUTE_FWD_LOOP:
+  - exit|ROUTE_EXECUTE_CF_LOOP:
+sip_in:
+  - '^INVITE'
+  - 'Contact: sip:testuser1002@'
+  - 'CSeq: 2 INVITE'
+  - 'Max-Forwards: 16'
+  - 'Content-Type: application/sdp'
+  - 'Proxy-Authorization: Digest username="testuser1002"'
+sip_out:
+  - [
+      '^SIP/2.0 100 Trying',
+      'CSeq: 2 INVITE',
+      'From: <sip:testuser1002@',
+      'To: <sip:testuser1001@'
+    ]
+  - [
+      '^SIP/2.0 101 Connecting',
+      'CSeq: 2 INVITE',
+      'From: <sip:testuser1002@',
+      'To: <sip:testuser1001@'
+    ]
+  - [
+      '^INVITE sip:vmu4311001@voicebox.local SIP/2.0',
+      'CSeq: 2 INVITE',
+      'From: <sip:testuser1002@',
+      'To: <sip:testuser1001@',
+      'Content-Type: application/sdp',
+      'P-Caller-UUID: \w+',
+      'P-First-Caller-UPN: 4311002',
+      'P-First-Caller-NPN: 4311002',
+      'P-Acc-Caller-User: testuser1001',
+      'P-Acc-State: cfu',
+      'P-App-Param: ;profile=ngcp_cf',
+      'P-App-Name: sbc'
+    ]
