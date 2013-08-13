@@ -14,11 +14,10 @@ Requeriments:
  - parallel
  - tcpdump
 
-Installation:
+Manual Installation:
 -------------
   You can install the scripts in other place but you have
-  to modify BASE_DIR on run_test.sh and scenarios/check.sh
-  scripts.
+  to modify BASE_DIR environment variable.
 
   #cd /usr/local/src
   #git clone git@git.mgm.sipwise.com:kamailio-config-tests
@@ -26,23 +25,52 @@ Installation:
                    libgraphviz-perl libtemplate-perl libtext-csv-perl \
                    ngcp-ossbss-clients-perl parallel tcpdump
 
+Debian Deb Installation:
+------------------------
+
+In a ce-trunk installation:
+
+# aptitude install kamailio-config-tests
+
+In a ce-3.0 installation:
+
+- Add kamailio-config-tests and sip-tester repositories:
+
+ #cat /etc/apt/sources.list.d/kamailio-config-test.list
+ deb http://jenkins.mgm.sipwise.com/debian kamailio-config-tests_vseva_3.0 main
+ deb http://jenkins.mgm.sipwise.com/debian sip-tester-wheezy main
+
+ #cat /etc/apt/preferences.d/kamailio-config-tests
+ Package: *
+ Pin: origin jenkins.mgm.sipwise.com
+ Pin-Priority: 990
+
+ # aptitude install kamailio-config-tests
+
 Usage:
 ------
+  # cd /usr/local/src/kamailio-config-tests
+
+  If you are using the git version and not in /usr/local/src/kamailio-config-tests
+  you need to set BASE_DIR environment variable accordingly:
+  # export BASE_DIR=`pwd`
+  This is not needed if you are using the Debian packaged version.
+
   PROFILE: "CE" the default
            "PRO"
-  #bash /usr/local/src/kamailio-config-tests/run_tests.sh [-p PROFILE ]
+  #bash ./run_tests.sh [-p PROFILE ]
 
   This will create:
-    - /usr/local/src/kamailio-config-tests/log
+    - $BASE_DIR/log
       with a directory per test with:
       - kamailio.log
       - parsed messages
       - sipp error logs
 
-  #bash /usr/local/src/kamailio-config-tests/get_result.sh [-p PROFILE ] [-g]
+  #bash ./get_result.sh [-p PROFILE ] [-g]
 
   This will create:
-    - /usr/local/src/kamailio-config-tests/result
+    - $BASE_DIR/result
       with a directory per test with:
       - a tap file ( test results )
       - a png file ( routes flow ) If you use -g option
@@ -53,6 +81,8 @@ Usage:
  and run the check that you want:
   #./bin/check.sh <checkname>
  this will run the test and the result taps
+ or run all the tests as many times you want with:
+  #./bin/bench.sh $NUM
 
 Development:
 ------------
