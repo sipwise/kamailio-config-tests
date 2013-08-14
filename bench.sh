@@ -5,13 +5,15 @@ rm -rf log_* result_*
 echo "$(date) - Starting $NUM tests"
 for i in $(seq $NUM); do
   BASE_DIR=$(pwd) ./run_tests.sh -c &> /tmp/run_tests.log
-  if [[ $? -ne 0 ]]; then
-  	echo "$(date) - ERROR run_tests $i"
+  status=$?
+  if [[ $status -ne 0 ]]; then
+  	echo "$(date) - ERROR[$status] run_tests $i"
   	break
   fi
   BASE_DIR=$(pwd) ./get_results.sh &> /tmp/get_results.log
-  if [[ $? -ne 0 ]]; then
-  	echo "$(date) - ERROR get_results $i"
+  status=$?
+  if [[ $status -ne 0 ]]; then
+  	echo "$(date) - ERROR[$status] get_results $i"
   	break
   fi
   echo "$(date) - $i done ok"
