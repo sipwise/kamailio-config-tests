@@ -66,4 +66,5 @@ if [ -z $SKIP ]; then
   echo "$(date) - Setting config debug off. Done."
 fi
 
+echo "$(date) - Done[$error_flag]"
 exit $error_flag
