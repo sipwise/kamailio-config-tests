@@ -37,7 +37,7 @@ if (exists $ENV{'BASE_DIR'})
 }
 else
 {
-  $base_dir = '/usr/local/src/kamailio-config-tests';
+  $base_dir = '/usr/share/kamailio-config-tests';
 }
 
 $yaml = YAML::Tiny->read($file) or die "File $file could not be read";

@@ -19,7 +19,7 @@ Manual Installation:
   You can install the scripts in other place but you have
   to modify BASE_DIR environment variable.
 
-  #cd /usr/local/src
+  #cd /usr/share/kamailio-config-tests
   #git clone git@git.mgm.sipwise.com:kamailio-config-tests
   #apt-get install python-yaml sip-tester \
                    libgraphviz-perl libtemplate-perl libtext-csv-perl \
@@ -49,9 +49,9 @@ In a ce-3.0 installation:
 
 Usage:
 ------
-  # cd /usr/local/src/kamailio-config-tests
+  # cd /usr/share/kamailio-config-tests
 
-  If you are using the git version and not in /usr/local/src/kamailio-config-tests
+  If you are using the git version and not in /usr/share/kamailio-config-tests
   you need to set BASE_DIR environment variable accordingly:
   # export BASE_DIR=`pwd`
   This is not needed if you are using the Debian packaged version.

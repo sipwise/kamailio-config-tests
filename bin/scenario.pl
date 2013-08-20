@@ -31,8 +31,8 @@ my $filename = abs_path($ARGV[0]);
 our $base_check_dir = dirname($filename);
 my $cf = YAML::LoadFile($filename);
 
-our $bin_dir = '/usr/local/src/kamailio-config-tests/bin';
-our $template_dir = '/usr/local/src/kamailio-config-tests/scenarios/templates';
+our $bin_dir = '/usr/share/kamailio-config-tests/bin';
+our $template_dir = '/usr/share/kamailio-config-tests/scenarios/templates';
 if (exists $ENV{'BASE_DIR'})
 {
   $bin_dir = File::Spec->catfile(abs_path($ENV{'BASE_DIR'}), 'bin');
