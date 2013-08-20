@@ -8,14 +8,14 @@ Homepage: http://www.sipwise.com/
 
 Package: kamailio-config-tests
 Architecture: all
-Depends: ${misc:Depends},
- ngcp-ossbss-clients-perl,
- python-yaml,
- libgraphviz-perl,
- libtemplate-perl,
- libtext-csv-perl,
- sip-tester ( >= 1:3.2-1~ ),
- parallel,
- tcpdump
+Depends: libgraphviz-perl,
+         libtemplate-perl,
+         libtext-csv-perl,
+         ngcp-ossbss-clients-perl,
+         parallel,
+         python-yaml,
+         sip-tester ( >= 1:3.2-1~ ),
+         tcpdump,
+         ${misc:Depends}
 Description: Kamailio configuration tests
  scripts and tests scenarios to check Kamailio configuration
