@@ -28,24 +28,7 @@ Manual Installation:
 Debian Deb Installation:
 ------------------------
 
-In a ce-trunk installation:
-
 # aptitude install kamailio-config-tests
-
-In a ce-3.0 installation:
-
-- Add kamailio-config-tests and sip-tester repositories:
-
- #cat /etc/apt/sources.list.d/kamailio-config-test.list
- deb http://jenkins.mgm.sipwise.com/debian kamailio-config-tests_vseva_3.0 main
- deb http://jenkins.mgm.sipwise.com/debian sip-tester-wheezy main
-
- #cat /etc/apt/preferences.d/kamailio-config-tests
- Package: *
- Pin: origin jenkins.mgm.sipwise.com
- Pin-Priority: 990
-
- # aptitude install kamailio-config-tests
 
 Usage:
 ------
