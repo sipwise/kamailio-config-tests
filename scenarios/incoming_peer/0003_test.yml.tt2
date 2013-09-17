@@ -5,6 +5,8 @@ flow:
   - start|ROUTE_PRX_REQUEST:
   - start|ROUTE_INVITE:
   - start|ROUTE_LOAD_CALLEE_DOMAIN_PREF:
+  - start|ROUTE_CLEAR_CALLEE_DOMAIN_PREF:
+  - end|ROUTE_CLEAR_CALLEE_DOMAIN_PREF:
   - end|ROUTE_LOAD_CALLEE_DOMAIN_PREF:
   - start|ROUTE_FIND_CALLER:
   - start|ROUTE_CLEAR_PEER_IN_PREF:
@@ -34,8 +36,6 @@ flow:
   - end|ROUTE_BLOCK_IN:
   - end|ROUTE_LOAD_CALLEE_PREF:
   - start|ROUTE_INVITE_TO_INT:
-  - start|ROUTE_SET_RUSER:
-  - end|ROUTE_SET_RUSER:
   - start|ROUTE_OUTBOUND:
   - start|ROUTE_ACC_CALLER:
   - end|ROUTE_ACC_CALLER:
@@ -44,6 +44,8 @@ flow:
   - start|BRANCH_ROUTE_SBC:
   - start|ROUTE_BRANCH_ACC_RTP:
   - end|ROUTE_BRANCH_ACC_RTP:
+  - start|ROUTE_SET_RUSER:
+  - end|ROUTE_SET_RUSER:
   - start|ROUTE_PREPARE_SST:
   - end|ROUTE_PREPARE_SST:
 [% IF PRO -%]
@@ -51,6 +53,8 @@ flow:
   - end|ROUTE_PREPARE_MOH:
 [% END -%]
   - start|ROUTE_SET_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - end|ROUTE_PREPARE_CALLER_CLI:
   - start|ROUTE_PREPARE_CALLER_CLI:
   - end|ROUTE_PREPARE_CALLER_CLI:
   - start|ROUTE_PREPARE_CALLER_CLI:
@@ -101,7 +105,7 @@ sip_out:
       'P-Callee-UUID: \w+',
       'P-Asserted-Identity: <sip:004321001@',
       'P-Called-Party-ID: <sip:testuser1003@',
-      'P-App-Param: ;aleg_sst_enable=no;sst_enable=no',
+      'P-App-Param: ;su=testuser1003;sr=[\w\.]+;sp=testuser;aleg_sst_enable=no;sst_enable=no',
       'P-App-Name: sbc'
     ]
   - [
