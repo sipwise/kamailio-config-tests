@@ -35,6 +35,7 @@ flow:
   - start|ROUTE_BLOCK_IN:
   - end|ROUTE_BLOCK_IN:
   - end|ROUTE_LOAD_CALLEE_PREF:
+      $xavp(caller_peer_prefs[0]=>concurrent_max[*]): [1]
   - start|ROUTE_INVITE_TO_INT:
   - start|ROUTE_OUTBOUND:
   - start|ROUTE_ACC_CALLER:
