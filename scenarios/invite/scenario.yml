@@ -10,6 +10,10 @@ subscribers:
       cc: 43
       ac: 1
       sn: 1002
+      alias_numbers:
+        - cc: 34
+          ac: 96
+          sn: 5711941
 scenarios:
   - ip: 127.126.0.1
     username: testuser1002
