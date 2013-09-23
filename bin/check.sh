@@ -311,7 +311,7 @@ function usage
   echo -e "\t-R: skip run sipp"
   echo -e "\t-D: skip deletion of domain and subscribers as final step"
   echo -e "\t-T: skip checks"
-  echo -e "\t-P: skip parse. -T is froced"
+  echo -e "\t-P: skip parse"
   echo -e "\t-G: creation of graphviz image"
   echo -e "\t-d: DOMAIN"
   echo -e "\t-p CE|PRO default is CE"
@@ -328,7 +328,7 @@ while getopts 'hCd:p:RDTPG' opt; do
     R) SKIP_RUNSIPP=1;;
     D) SKIP_DELDOMAIN=1;;
     T) SKIP_TESTS=1;;
-    P) SKIP_PARSE=1; SKIP_TESTS=1;;
+    P) SKIP_PARSE=1;;
     G) GRAPH=1;;
   esac
 done
