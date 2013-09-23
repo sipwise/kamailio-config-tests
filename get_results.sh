@@ -42,7 +42,7 @@ echo "$(date) - Clean result dir"
 rm -rf ${RESULT_DIR}
 
 find ${BASE_DIR}/scenarios/ -depth -maxdepth 1 -mindepth 1 -type d -exec basename {} \; | grep -v templates| sort \
- | parallel "${BIN_DIR}/check.sh ${GRAPH} -C -d ${DOMAIN} -p ${PROFILE}"
+ | parallel "${BIN_DIR}/check.sh ${GRAPH} -C -R -d ${DOMAIN} -p ${PROFILE}"
 status=$?
 echo "$(date) - All done[$status]"
 exit $status
