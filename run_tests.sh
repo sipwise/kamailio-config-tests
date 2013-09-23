@@ -19,9 +19,15 @@ function usage
   echo "BIN_DIR:${BIN_DIR}"
 }
 
-while getopts 'hcp:' opt; do
+function list
+{
+  find ${BASE_DIR}/scenarios/ -depth -maxdepth 1 -mindepth 1 -type d -exec basename {} \;| grep -v templates | sort
+}
+
+while getopts 'hlcp:' opt; do
   case $opt in
     h) usage; exit 0;;
+    l) list; exit 0;;
     c) SKIP=1;;
     p) PROFILE=$OPTARG;;
   esac
