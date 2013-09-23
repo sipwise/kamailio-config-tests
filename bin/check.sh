@@ -377,26 +377,26 @@ if [ -z $SKIP ]; then
   create_voip ${DOMAIN}
   echo "$(date) - Adding prefs"
   create_voip_prefs
+fi
 
-  if [ -z $SKIP_RUNSIPP ]; then
-    echo "$(date) - Cleaning csv/reg.xml files"
-    find ${SCEN_CHECK_DIR} -name 'sipp_scenario_responder*_reg.xml' -exec rm {} \;
-    find ${SCEN_CHECK_DIR} -name '*.csv' -exec rm {} \;
-    echo "$(date) - Generating csv/reg.xml files"
-    ${BIN_DIR}/scenario.pl ${SCEN_CHECK_DIR}/scenario.yml
-    if [[ $? -ne 0 ]]; then
-      error_helper "Error creating csv files" 4
-    fi
-    echo "$(date) - Running sipp scenarios"
-    run_sipp
-    echo "$(date) - Done sipp"
+if [ -z $SKIP_RUNSIPP ]; then
+  echo "$(date) - Cleaning csv/reg.xml files"
+  find ${SCEN_CHECK_DIR} -name 'sipp_scenario_responder*_reg.xml' -exec rm {} \;
+  find ${SCEN_CHECK_DIR} -name '*.csv' -exec rm {} \;
+  echo "$(date) - Generating csv/reg.xml files"
+  ${BIN_DIR}/scenario.pl ${SCEN_CHECK_DIR}/scenario.yml
+  if [[ $? -ne 0 ]]; then
+    error_helper "Error creating csv files" 4
   fi
+  echo "$(date) - Running sipp scenarios"
+  run_sipp
+  echo "$(date) - Done sipp"
+fi
 
-  if [ -z ${SKIP_DELDOMAIN} ]; then
-    echo "$(date) - Deleting domain:${DOMAIN}"
-    delete_voip ${DOMAIN}
-    echo "$(date) - Done"
-  fi
+if [ -z ${SKIP_DELDOMAIN} ]; then
+  echo "$(date) - Deleting domain:${DOMAIN}"
+  delete_voip ${DOMAIN}
+  echo "$(date) - Done"
 fi
 
 if [ -z ${SKIP_PARSE} ]; then
