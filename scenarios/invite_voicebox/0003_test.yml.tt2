@@ -30,6 +30,8 @@ flow:
   - start|ROUTE_CLIR:
   - end|ROUTE_CLIR:
   - start|ROUTE_FIND_CALLEE:
+  - start|ROUTE_APPLY_REWRITE_RULE:
+  - return|ROUTE_APPLY_REWRITE_RULE:
   - start|ROUTE_CLEAR_CALLEE_PREF:
   - end|ROUTE_CLEAR_CALLEE_PREF:
   - start|ROUTE_NCOS:

@@ -42,6 +42,8 @@ flow:
   - start|ROUTE_BLOCK_IN:
   - end|ROUTE_BLOCK_IN:
   - end|ROUTE_LOAD_CALLEE_PREF:
+  - start|ROUTE_CHECK_PBX:
+  - return|ROUTE_CHECK_PBX:
   - start|ROUTE_INVITE_TO_INT:
   - start|ROUTE_OUTBOUND:
   - start|ROUTE_ACC_CALLER:

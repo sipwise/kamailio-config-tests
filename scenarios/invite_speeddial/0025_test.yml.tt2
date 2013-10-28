@@ -30,6 +30,8 @@ flow:
   - start|ROUTE_CLIR:
   - end|ROUTE_CLIR:
   - start|ROUTE_FIND_CALLEE:
+  - start|ROUTE_APPLY_REWRITE_RULE:
+  - return|ROUTE_APPLY_REWRITE_RULE:
   - start|ROUTE_CLEAR_CALLEE_PREF:
   - end|ROUTE_CLEAR_CALLEE_PREF:
   - start|ROUTE_NCOS:
@@ -38,6 +40,8 @@ flow:
   - end|ROUTE_NCOS:
   - start|ROUTE_BLOCK_OUT:
   - end|ROUTE_BLOCK_OUT:
+  - start|ROUTE_CHECK_PBX:
+  - return|ROUTE_CHECK_PBX:
   - start|ROUTE_INVITE_TO_EXT:
   - start|ROUTE_PSTN:
   - start|ROUTE_ACC_FAILURE:

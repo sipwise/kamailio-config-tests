@@ -29,6 +29,8 @@ flow:
   - start|ROUTE_CLIR:
   - end|ROUTE_CLIR:
   - start|ROUTE_FIND_CALLEE:
+  - start|ROUTE_APPLY_REWRITE_RULE:
+  - return|ROUTE_APPLY_REWRITE_RULE:
   - start|ROUTE_CLEAR_CALLEE_PREF:
   - end|ROUTE_CLEAR_CALLEE_PREF:
   - start|ROUTE_NCOS:
@@ -41,6 +43,8 @@ flow:
   - start|ROUTE_BLOCK_IN:
   - end|ROUTE_BLOCK_IN:
   - end|ROUTE_LOAD_CALLEE_PREF:
+  - start|ROUTE_CHECK_PBX:
+  - return|ROUTE_CHECK_PBX:
   - start|ROUTE_INVITE_TO_INT:
   - start|ROUTE_OUTBOUND:
   - start|ROUTE_ACC_CALLER:
@@ -90,6 +94,8 @@ flow:
   - end|ROUTE_CLEAR_CALLER_PREF:
   - end|ROUTE_LOAD_CALLER_PREF:
   - start|ROUTE_FIND_CALLEE:
+  - start|ROUTE_APPLY_REWRITE_RULE:
+  - return|ROUTE_APPLY_REWRITE_RULE:
   - start|ROUTE_CLEAR_CALLEE_PREF:
   - end|ROUTE_CLEAR_CALLEE_PREF:
   - start|ROUTE_NCOS:
@@ -102,6 +108,8 @@ flow:
   - start|ROUTE_BLOCK_IN:
   - end|ROUTE_BLOCK_IN:
   - end|ROUTE_LOAD_CALLEE_PREF:
+  - start|ROUTE_CHECK_PBX:
+  - return|ROUTE_CHECK_PBX:
   - start|ROUTE_INVITE_TO_INT:
   - start|ROUTE_OUTBOUND:
   - start|ROUTE_ACC_CALLER:

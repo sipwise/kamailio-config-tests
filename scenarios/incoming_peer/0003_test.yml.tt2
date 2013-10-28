@@ -36,6 +36,8 @@ flow:
   - end|ROUTE_BLOCK_IN:
   - end|ROUTE_LOAD_CALLEE_PREF:
       $xavp(caller_peer_prefs[0]=>concurrent_max[*]): [1]
+  - start|ROUTE_CHECK_PBX:
+  - return|ROUTE_CHECK_PBX:
   - start|ROUTE_INVITE_TO_INT:
   - start|ROUTE_OUTBOUND:
   - start|ROUTE_ACC_CALLER:
@@ -106,7 +108,7 @@ sip_out:
       'P-Callee-UUID: \w+',
       'P-Asserted-Identity: <sip:004321001@',
       'P-Called-Party-ID: <sip:testuser1003@',
-      'P-App-Param: ;su=testuser1003;sr=[\w\.]+;sp=testuser;aleg_sst_enable=no;sst_enable=no',
+      'P-App-Param: ;aleg_sst_enable=no;sst_enable=no',
       'P-App-Name: sbc'
     ]
   - [
