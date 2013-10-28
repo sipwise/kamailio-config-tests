@@ -60,7 +60,7 @@ flow:
   - end|ROUTE_PREPARE_SST:
 [% IF PRO -%]
   - start|ROUTE_PREPARE_MOH:
-   - end|ROUTE_PREPARE_MOH:
+  - end|ROUTE_PREPARE_MOH:
 [% END -%]
   - start|ROUTE_SET_CALLER_CLI:
   - start|ROUTE_PREPARE_CALLER_CLI:
