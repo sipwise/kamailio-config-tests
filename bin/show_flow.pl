@@ -11,7 +11,8 @@ sub usage
 {
   my $output = "usage: show_flow.pl [-h] file.yml\n";
   $output .= "\tOptions:\n";
-  $output .= "-h: this help\n";
+  $output .= "-h --help: this help\n";
+  $output .= "-y --yml: yaml output\n";
   return $output
 }
 
