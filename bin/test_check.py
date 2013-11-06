@@ -136,7 +136,8 @@ Path: <sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060>"""
 - 'Contact: "TestBria" <sip:testuser1003@127.126.0.1:50602;ob>;reg-id=1;\+sip.instance="<urn:uuid:C3DD6013-20E8-40E3-8EA2-5849B02ED0C4>"'
 - 'Contact: "TestBria" <sip:testuser1003@127.126.0.1:6666;ob>;expires=0'
 - 'Content-Length: 0'
-- 'Expires: 600'
+- 'Expires: \d+'
+- '_:NOT:_Expires: 0'
 - 'Authorization: Digest username="testuser1003"'""")
     check_sip(sip_in, self.msg, self.ctest)
     print self.ctest
@@ -186,7 +187,8 @@ class TestCheckSipOut(unittest.TestCase):
     'Contact: <sip:testuser1003@127.126.0.1:50602;ob>;expires=600;\+sip.instance="<urn:uuid:C3DD6013-20E8-40E3-8EA2-5849B02ED0C4>";reg-id=1',
     'Content-Length: 0',
     'P-NGCP-Authorization: testuser1003@',
-    'P-NGCP-Authorized: 1'
+    'P-NGCP-Authorized: 1',
+    '_:NOT:_Contact: <sip:testuser1003@127.126.0.1:6666;ob>;expires=\d+'
   ]""")
     check_sip_out(sip_out, self.msg, self.ctest)
     print self.ctest
