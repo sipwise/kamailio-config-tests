@@ -1,5 +1,6 @@
 #!/usr/bin/env python
-from check import XAvp, Test, check_flow, check_flow_vars
+from check import XAvp, Test, check_flow, check_flow_vars, check_sip, check_sip_out
+import yaml
 import unittest
 
 class TestXAvp(unittest.TestCase):
@@ -102,6 +103,92 @@ class TestCheckFlowVars(unittest.TestCase):
 
   def testFlowVars_xavp(self):
     check_flow_vars('RO', self.scen[0]['R0'], self.check_ok[0]['R0'], self.ctest)
+    print self.ctest
+    self.assertFalse(self.ctest.isError())
+
+class TestCheckSipIn(unittest.TestCase):
+
+  def setUp(self):
+    self.ctest = Test()
+    self.msg ="""REGISTER sip:testuser1003@spce.test SIP/2.0
+Via: SIP/2.0/UDP 127.0.0.1;branch=z9hG4bK3969.2f1956baf914fd272ada0363d9577b29.0
+Via: SIP/2.0/UDP 127.126.0.1:50602;rport=50602;branch=z9hG4bK-24881-1-3
+From: <sip:testuser1003@spce.test>;tag=24881SIPpTag001
+To: "TestBria" <sip:testuser1003@spce.test>
+Call-ID: 1-24881@127.126.0.1
+CSeq: 4 REGISTER
+Authorization: Digest username="testuser1003",realm="spce.test",uri="sip:127.0.0.1:5060",nonce="Una661J2ub8hRdmjTwus8Habu3n6G/By",response="c1b8da80c3d05f8d4da478128f94907a",algorithm=MD5
+Contact: "TestBria" <sip:testuser1003@127.126.0.1:50602;ob>;reg-id=1;+sip.instance="<urn:uuid:C3DD6013-20E8-40E3-8EA2-5849B02ED0C4>"
+Contact: "TestBria" <sip:testuser1003@127.126.0.1:6666;ob>;expires=0
+Expires: 600
+Max-Forwards: 16
+Content-Length: 0
+P-NGCP-Src-Ip: 127.126.0.1
+P-NGCP-Src-Port: 50602
+P-NGCP-Src-Proto: udp
+P-NGCP-Src-Af: 4
+P-Sock-Info: udp:127.0.0.1:5060
+Path: <sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060>"""
+
+  def testSipIn(self):
+    sip_in = yaml.load("""
+- '^REGISTER'
+- 'Contact: "TestBria" <sip:testuser1003@127.126.0.1:50602;ob>;reg-id=1;\+sip.instance="<urn:uuid:C3DD6013-20E8-40E3-8EA2-5849B02ED0C4>"'
+- 'Contact: "TestBria" <sip:testuser1003@127.126.0.1:6666;ob>;expires=0'
+- 'Content-Length: 0'
+- 'Expires: 600'
+- 'Authorization: Digest username="testuser1003"'""")
+    check_sip(sip_in, self.msg, self.ctest)
+    print self.ctest
+    self.assertFalse(self.ctest.isError())
+
+class TestCheckSipOut(unittest.TestCase):
+
+  def setUp(self):
+    self.ctest = Test()
+    self.msg =  yaml.load("""
+- |+
+  SIP/2.0 100 Trying
+  Via: SIP/2.0/UDP 127.0.0.1;branch=z9hG4bK3969.2f1956baf914fd272ada0363d9577b29.0
+  Via: SIP/2.0/UDP 127.126.0.1:50602;rport=50602;branch=z9hG4bK-24881-1-3
+  From: <sip:testuser1003@spce.test>;tag=24881SIPpTag001
+  To: "TestBria" <sip:testuser1003@spce.test>
+  Call-ID: 1-24881@127.126.0.1
+  CSeq: 4 REGISTER
+  P-Out-Socket: udp:127.0.0.1:5060
+  Server: Sipwise NGCP Proxy 2.X
+  Content-Length: 0
+
+- |+
+  SIP/2.0 200 OK
+  Via: SIP/2.0/UDP 127.0.0.1;branch=z9hG4bK3969.2f1956baf914fd272ada0363d9577b29.0;rport=5060
+  Via: SIP/2.0/UDP 127.126.0.1:50602;rport=50602;branch=z9hG4bK-24881-1-3
+  From: <sip:testuser1003@spce.test>;tag=24881SIPpTag001
+  To: "TestBria" <sip:testuser1003@spce.test>;tag=1d24a28a0bded6c40d31e6db8aab9ac6.504e
+  Call-ID: 1-24881@127.126.0.1
+  CSeq: 4 REGISTER
+  P-Out-Socket: udp:127.0.0.1:5060
+  P-NGCP-Authorization: testuser1003@spce.test
+  P-NGCP-Authorized: 1
+  P-Caller-UUID: 2cc06244-5a63-46cd-aee9-1d804d314371
+  Contact: <sip:testuser1003@127.126.0.1:50602;ob>;expires=600;+sip.instance="<urn:uuid:C3DD6013-20E8-40E3-8EA2-5849B02ED0C4>";reg-id=1
+  Server: Sipwise NGCP Proxy 2.X
+  Content-Length: 0""")
+
+  def testSipOut(self):
+    sip_out = yaml.load("""
+- [
+    '^SIP/2.0 100 Trying',
+    'Content-Length: 0'
+  ]
+- [
+    '^SIP/2.0 200 OK',
+    'Contact: <sip:testuser1003@127.126.0.1:50602;ob>;expires=600;\+sip.instance="<urn:uuid:C3DD6013-20E8-40E3-8EA2-5849B02ED0C4>";reg-id=1',
+    'Content-Length: 0',
+    'P-NGCP-Authorization: testuser1003@',
+    'P-NGCP-Authorized: 1'
+  ]""")
+    check_sip_out(sip_out, self.msg, self.ctest)
     print self.ctest
     self.assertFalse(self.ctest.isError())
 
