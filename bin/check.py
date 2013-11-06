@@ -181,11 +181,21 @@ def check_flow(scen, check, test):
 
 def check_sip(scen, msg, test):
   for rule in scen:
+    if rule.startswith('_:NOT:_'):
+      flag = False
+      rule = rule[7:]
+      msg_ok = '%s not match'
+      msg_ko = '%s match'
+    else:
+      flag = True
+      msg_ok = '%s match'
+      msg_ko = '%s not match'
     result = re.search(rule, msg)
-    if result is not None:
-      test.ok('%s match' % rule)
+    if (result is not None) == flag:
+      test.ok(msg_ok % rule)
       continue
-    test.error('%s not match' % rule)
+    test.comment('result:%s' % result)
+    test.error(msg_ko % rule)
 
 def check_sip_out(scen, msgs, test):
   num_msgs = len(msgs)
