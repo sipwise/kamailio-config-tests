@@ -1,5 +1,126 @@
 kamailio-config-tests (0.1) unstable; urgency=low
 
-  * Initial Release.
+  [ Andrew Pogrebennyk ]
+  * [7d25fdd] Make the tests work on a PRO.
+  * [7e3b3e8] Add allowed_clis tests.
+  * [7fbcafb] Make call-forward test work on a PRO.
+  * [e36f983] Fix ACK sending.
 
- -- Victor Seva <vseva@sipwise.com>  Mon, 15 Jul 2013 13:24:06 +0200
+  [ Victor Seva ]
+  * Initial Release.
+  * [1daa021] README: refresh documentation
+  * [665fccd] debian: fix section
+  * [083a0a5] Deactivate flow graphs by default
+  * [4ac5657] bin/ulog_parser.pl: error if found flow info without json info
+  * [ba84e5c] bin/check.sh: kill responder after the 5 secs wait. Sleep 1 sec before copy the kamailio log.
+  * [caff0d6] bin/set_subscribers_preferences.pl: remove output
+  * [be07916] scenarios/reminder: fix 0003 test.
+  * [d817332] scenarios/invite_speeddial: Added speeddial tests
+  * [ea8ffff] scenarios/invite_speeddial: do not retrans. Do not wait on responders.
+  * [aa87938] bin/ulog_parser.pl: do not mix msg_out.
+  * [13ea3ac] bin/create_subscribers.pl: remove output run_tests.sh: define start and end output
+  * [a8f3768] scenarios: fixed responders. Do not retrans, removed waiting.
+  * [fa595bf] bin/check.py: added comment on sip_out
+  * [7341444] scenarios/invite_callforward: Added scenario with callforward
+  * [631dca6] Added more subscribers
+  * [54ba2c4] scenarios/invite_callforward: Added callforward busy test
+  * [9bbb257] Added timestamp on messages
+  * [8b2a715] scenarios/invite_offline: be sure that the callee is unregistered.
+  * [7e481a8] bin/config_debug.pl: fix on PRO
+  * [d7a103d] bin/check.sh: exit with error on create_domain.pl or create_subscribers.pl error.
+  * [b5b0d3b] move set domain of scenarios/calle[r|e].csv files from sipp.sh to config_debug.pl script.
+  * [167253c] bin/check.sh: delete callee locations before any tests. Check port is not in use.
+  * [e8ad1d1] bin/check.sh: fix locations. Use proper ENV var
+  * [815edd0] bin/check.sh: MPORT fix. introduce step arg
+  * [c7d2c69] scenarios/invite_callforward: fix tests match
+  * [303d0c9] scenarios/invite_speeddial: fix PRO profile
+  * [0d1cab6] remove scripts added to ngcp-ossbss-clients-perl package.
+  * [2628aa7] split logic. run_tests.sh runs the sipp scenarios. get_results.sh generates the tap files.
+  * [05437c6] Add missing new script
+  * [633a193] get_results.sh: use parallel properly
+  * [4bbfe32] bin/check.py: generate tap file if the message cannot be loaded.
+  * [81259f3] bin/check.sh: fix do not delete domain on sipp error
+  * [1186150] Use proper interface config for scripts.
+  * [98d62f2] bin/set_subscribers_preferences.pl: fix typo
+  * [fad4833] bin/config_debug.pl: activate debug on lb too.
+  * [bb2f289] bin/create_peers.pl: script to create/delete peers from peer.yml input
+  * [e14771e] bin/check.sh: Add/Delete peers
+  * [32bee68] Adapt bin/sipp.h bin/check.sh to peer
+  * [282a986] scenario/incoming_peer: incoming call from a peer
+  * [a33ed48] scenarios/incoming_peer/sipp_scenario00.xml: Use [local_ip]
+  * [3828c78] bin/check.sh: Added capture logs to debug
+  * [31517ff] bin/check.sh: fix last commit. port is not local var
+  * [b35a548] debian/control: Added tcpdump Dependence
+  * [66c9b1e] bin/config_debug.pl: Added sems debug
+  * [56b0e17] bin/restart_log.sh: clean kamailio-lb and sems logs. No restart is done.
+  * [ee99f5a] bin/check.sh: copy kamailio-lb and sems logs to LOG_DIR
+  * [63c4f68] Reorganize the way scenarios are created.
+  * [ba97e3f] debian/control: added needed perl library
+  * [7f509e3] scenario/invite: Added scenario.yml and cleanup.
+  * [8f3e304] scenarios/incoming_peer: Added scenario.yml and cleanup.
+  * [33819b4] bin/check: fix delete_locations
+  * [1af3995] scenarios/invite_allowedcli_match: Added scenario.yml and cleanup.
+  * [b2696fe] scenarios/invite_allowedcli_nonmatch: Added scenario.yml and cleanup.
+  * [28834f7] bin/scenario.pl: Added active option for responders.
+  * [ed07342] bin/scenario.pl: fix res_id
+  * [073dbc1] bin/scenario.pl: remove warning if no username or password.
+  * [0d2e020] bin/check.sh: clean generated csv/reg.xml files before run again.
+  * [ec168c0] scenarios/invite_allowip: Added scenario.yml and cleanup.
+  * [fda6ad6] scenarios/invite_blockin_blst: Added scenario.yml and cleanup.
+  * [dc966db] scenarios/invite_blockin_wlst: Added scenario.yml and cleanup.
+  * [4dccec5] scenarios/invite_blockin_clir: Added scenario.yml and cleanup.
+  * [3590f7c] scenarios/invite_blockout_blst: Added scenario.yml and cleanup.
+  * [7549139] scenarios/invite_blockout_pinoverride: Added scenario.yml and cleanup.
+  * [0f21cae] scenarios/invite_blockout_wlst: Added scenario.yml and cleanup.
+  * [ac97abb] scenarios/invite_ignore_allowip: Add scenario.yml and clean.
+  * [64c75e6] scenarios/invite_callforward: Added scenario.yml and cleanup.
+  * [f76c712] ignore generated files
+  * [4b1c8bb] scenarios/invite_offline: Added scenario.yml and cleaning.
+  * [babfec8] bin/check.sh: Clean generated tests before generate again them.
+  * [78b7963] scenarios/invite_speeddial: Added scenario.yml and clean.
+  * [2003b7d] scenarios/register: Added scenario.yml
+  * [d3d7dcc] scenarios/register_allowip: Added scenario.yml
+  * [a27a235] scenarios/register_ignore_allowip: Added scenario.yml
+  * [8cf92d1] scenarios/reminder: Added scenario.yml and clean.
+  * [641b341] Exclude templates dir from tests/results
+  * [763fbc7] README: Upgrade a bit the documentation.
+  * [bf6a35a] Create subscribers from scenarios.yml file.
+  * [444fa76] scenarios/*: New scenario.yml version with subscribers info.
+  * [99d3de1] Peer responders
+  * [3749554] scenarios/invite_peerout: Call using a peer
+  * [7909910] scenarios: remove retransmission options on send
+  * [472272b] scenarios/incoming_peer: fix numbering testcase
+  * [0a07ff5] get_results.sh: fix exit status
+  * [9f1e6c3] bench.sh: helper script to run the process several times
+  * [98fef05] bin/sipp.sh: Disable retransmission in UDP mode.
+  * [072c811] scenarios/invite_speeddial: fix ACKs
+  * [47d4562] scenarios: use local_port
+  * [5c2128d] scenarios/invite_offline: fix cseq. Thanks apogrebennyk!
+  * [c3ad1b3] scenarios/incoming_peer: fix CSeq
+  * [73ff024] scenarios/register: no need to unregister. All locations are removed by check.sh
+  * [b994582] scenarios/register_ignore_allowip: no need to unregister. All locations are removed by check.sh
+  * [659dadf] bin/check.sh: force error if there is any errors.log from sipp
+  * [5ec884a] bin/check.sh: fix last commit. Show no error
+  * [26fef21] scenarios: sending 200 OK before BYE in responders
+  * [43926fe] bench.sh: keep the log and result dirs from every execution
+  * [851fc07] debian/install: added bench.sh to the Debian package
+  * [b84da07] bench.sh: clean previous log/result
+  * [a4fbfec] bin/check.sh: try to get the kamailio.log on restart_log.sh error
+  * [79a8195] bin/create_rewrite_rules.pl: helper script to create/delete rewrite_rules described at scenario.yml files
+  * [1221c60] bin/check.sh: Add create_rewrite_rules script
+  * [5b540a9] bin/check.sh: use renamed script. Must be exec before create_peers.pl bin/set_preferences.pl: Create prefs for domain, peer or subscriber
+  * [ea3045d] fix
+  * [3e9a45a] scenario/invite_peerout_rewrite: example with rewrite.yml.
+  * [96ff528] bin/create_ncos.pl: Added helper script to add ncos levels on ncos.yml bin/check.sh: Call create_ncos.pl when needed.
+  * [de1ed54] scenarios/invite_blockout_ncos: add example with  ncos level
+  * [62f0ffa] scenarios: try to get the same msgid by adding some pause
+  * [fadc242] bin/check.sh: wait between sip_scenarios.
+  * [aaef97d] bin/restart_log.sh: force kill kamailio and check if it starts
+  * [8110096] bin/set_subscribers_callforward.pl: Added voicebox preferences
+  * [ab2eadc] scenarios/invite_voicebox: invite goes to voicebox
+  * [489de49] bench.sh: Added time info
+  * [b089252] README: update documentation. (cherry picked from commit 8d6893d995dedd272f3bf9efce640b3f7eef98de)
+  * [753031d] Show exit status on output (cherry picked from commit c0d83bd77341da60d721ddcb297ce89c84844b16)
+  * [c8245da] bin/show_flow.pl: add missing option to help output (cherry picked from commit 3b7e2d49383ea205b046b43df6afa482ef2c93e3)
+
+ -- Victor Seva <vseva@sipwise.com>  Fri, 22 Nov 2013 09:01:07 +0100
