@@ -1,3 +1,44 @@
+kamailio-config-tests (0.2) unstable; urgency=low
+
+  [ Victor Seva ]
+  * [8d6893d] README: update documentation.
+  * [e308ca7] bin/restart_log.sh: Use the new kamailio RPC command to reset the msgid
+  * [1d255e9] xavp changed??
+  * [c0d83bd] Show exit status on output
+  * [157a2bc] invite_redirect: Add scenario for test 302
+  * [7b8e889] Update documentation. Now 3.0 has the reset_msgid patch.
+  * [6fce6b4] test fix_3837
+  * [13ec4c7] fix flows since kamailio config has been changed
+  * [b423a6c] fixing flow
+  * [f1f49fe] test fix 3837
+  * [bc33a6e] add more xavp checks
+  * [b8ae679] Add an example of alias at scenario.yml
+  * [54b0e7c] invite_blockout_blst: use second value of the xavp
+  * [09d7184] testing 3837
+  * [9796497] testing 3837
+  * [0076efe] Add list scenarios command
+  * [e091e7d] bin/check.sh: fix skip creation option
+  * [300bb0f] bin/check.sh: do not force skip test on skip parse
+  * [08ca7f7] invite_redirect: fix flow
+  * [3b7e2d4] bin/show_flow.pl: add missing option to help output
+  * [3558279] MT#4675 refresh checks
+  * [fcedee9] MT#4675 fix PRO tests
+  * [1e76a20] MT#4691 Update documentation for oficial releases
+  * [b97e447] MT#4143 scenario to check unregister with 2 contacts as Bria does
+  * [5f62e52] Add tests for sip_in and sip_out
+  * [77e1e2f] MT#4817 Add not match rule.
+  * [4db93a7] MT#4817 add tests for not match rules
+  * [c5124f7] MT#4143 add rule to check previous contact not matched
+
+  [ Michael Prokop ]
+  * [7471d7d] Switch from /usr/local/src to /usr/share
+  * [4b6995f] Run wrap-and-sort over all debian/ files
+
+  [ Andrew Pogrebennyk ]
+  * [d52d58a] Add test for subscriber with aliases and extension_in_npn
+
+ -- Victor Seva <vseva@sipwise.com>  Fri, 22 Nov 2013 09:06:45 +0100
+
 kamailio-config-tests (0.1) unstable; urgency=low
 
   [ Andrew Pogrebennyk ]
