@@ -2,7 +2,7 @@
 BASE_DIR="${BASE_DIR:-/usr/share/kamailio-config-tests}"
 BIN_DIR="${BASE_DIR}/bin"
 LOG_DIR="${BASE_DIR}/log"
-RESULT_DIR="${BASE_DIR}/result"
+BASE_RESULT_DIR="${BASE_RESULT_DIR:-${BASE_DIR}/result}"
 PROFILE="CE"
 DOMAIN="spce.test"
 
@@ -39,7 +39,7 @@ if [ "${PROFILE}" != "CE" ] && [ "${PROFILE}" != "PRO" ]; then
 fi
 
 echo "$(date) - Clean result dir"
-rm -rf ${RESULT_DIR}
+rm -rf ${BASE_RESULT_DIR}
 
 find ${BASE_DIR}/scenarios/ -depth -maxdepth 1 -mindepth 1 -type d -exec basename {} \; | grep -v templates| sort \
  | parallel "${BIN_DIR}/check.sh ${GRAPH} -C -R -d ${DOMAIN} -p ${PROFILE}"

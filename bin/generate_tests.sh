@@ -1,8 +1,8 @@
 #!/bin/bash
 BASE_DIR="${BASE_DIR:-/usr/share/kamailio-config-tests}"
 BIN_DIR="${BASE_DIR}/bin"
-LOG_DIR="${BASE_DIR}/log"
-RESULT_DIR="${BASE_DIR}/result"
+BASE_LOG_DIR="${BASE_LOG_DIR:-${BASE_DIR}/log}"
+BASE_RESULT_DIR="${BASE_RESULT_DIR:-${BASE_DIR}/result}"
 DOMAIN="spce.test"
 TPAGE="/usr/bin/tpage"
 DIR="${BASE_DIR}/scenarios"

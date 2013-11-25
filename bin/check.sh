@@ -324,8 +324,10 @@ fi
 NAME_CHECK="$1"
 BASE_DIR="${BASE_DIR:-/usr/share/kamailio-config-tests}"
 BIN_DIR="${BASE_DIR}/bin"
-LOG_DIR="${BASE_DIR}/log/${NAME_CHECK}"
-RESULT_DIR="${BASE_DIR}/result/${NAME_CHECK}"
+BASE_LOG_DIR="${BASE_LOG_DIR:-${BASE_DIR}/log}"
+BASE_RESULT_DIR="${BASE_RESULT_DIR:-${BASE_DIR}/result}"
+LOG_DIR="${BASE_LOG_DIR}/${NAME_CHECK}"
+RESULT_DIR="${BASE_RESULT_DIR}/${NAME_CHECK}"
 KAM_LOG=${KAM_LOG:-"/var/log/ngcp/kamailio-proxy.log"}
 KAMLB_LOG=${KAMLB_LOG:-"/var/log/ngcp/kamailio-lb.log"}
 SEMS_LOG=${SEMS_LOG:-"/var/log/ngcp/sems.log"}

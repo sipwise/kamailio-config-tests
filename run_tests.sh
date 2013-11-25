@@ -1,8 +1,7 @@
 #!/bin/bash
 BASE_DIR=${BASE_DIR:-"/usr/share/kamailio-config-tests"}
 BIN_DIR="${BASE_DIR}/bin"
-LOG_DIR="${BASE_DIR}/log"
-RESULT_DIR="${BASE_DIR}/result"
+BASE_LOG_DIR="${BASE_LOG_DIR:-${BASE_DIR}/log}"
 PROFILE="CE"
 DOMAIN="spce.test"
 LOGGER=""
@@ -17,6 +16,8 @@ function usage
 
   echo "BASE_DIR:${BASE_DIR}"
   echo "BIN_DIR:${BIN_DIR}"
+  echo "BASE_LOG_DIR:${BASE_LOG_DIR}"
+  echo "BASE_RESULT_DIR:${BASE_RESULT_DIR}"
 }
 
 function list
@@ -54,7 +55,7 @@ if [ -z $SKIP ]; then
 fi
 
 echo "$(date) - Clean log dir"
-rm -rf ${LOG_DIR}
+rm -rf ${BASE_LOG_DIR}
 
 for t in $(find ${BASE_DIR}/scenarios/ -depth -maxdepth 1 -mindepth 1 -type d | grep -v templates | sort); do
   echo "$(date) - Run[${PROFILE}]: $(basename $t) ================================================="
