@@ -1,3 +1,13 @@
+kamailio-config-tests (0.2.1) unstable; urgency=low
+
+  [ Andrew Pogrebennyk ]
+  * [db0f4d1] MT#4675 fix checks (cherry picked from commit f116a18c5546c7231154b75c5506dfb8d327ccc6)
+
+  [ Victor Seva ]
+  * [175f557] MT#4009 Add GPL licence to all scripts
+
+ -- Victor Seva <vseva@sipwise.com>  Fri, 29 Nov 2013 17:25:54 +0100
+
 kamailio-config-tests (0.2) unstable; urgency=low
 
   [ Victor Seva ]
