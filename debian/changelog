@@ -1,3 +1,14 @@
+kamailio-config-tests (0.1.1) unstable; urgency=low
+
+  [ Michael Prokop ]
+  * [bd2c364] Switch from /usr/local/src to /usr/share
+
+  [ Victor Seva ]
+  * [cff0810] bin/restart_log.sh: Use the new kamailio RPC command to reset the msgid
+  * [3ecac0c] MT#4009 Add GPL licence to all scripts
+
+ -- Victor Seva <vseva@sipwise.com>  Fri, 29 Nov 2013 17:25:01 +0100
+
 kamailio-config-tests (0.1) unstable; urgency=low
 
   [ Andrew Pogrebennyk ]
