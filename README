@@ -14,42 +14,6 @@ Requeriments:
  - parallel
  - tcpdump
 
-Oficial releases:
------------------
-
-Add sip-tester and kamailio-config-tests repositories (use ngcp3.X):
-
- #cat > /etc/apt/sources.list.d/kamailio-config-tests.list <<EOF
-deb http://jenkins.mgm.sipwise.com/debian sip-tester-wheezy main
-deb http://jenkins.mgm.sipwise.com/debian kamailio-config-tests_vseva_ngcp3.0 main
-EOF
-
-Force apt to use the backported version of sip-tester from us:
-
-#cat > /etc/apt/preferences.d/kamailio-config-tests << EOF
-Package: sip-tester
-Pin: origin jenkins.mgm.sipwise.com
-Pin-Priority: 991
-EOF
-
- #aptitude update
-
-Debian Deb Installation:
-------------------------
-
-# aptitude install kamailio-config-tests
-
-Manual Installation:
--------------
-  You can install the scripts in other place but you have
-  to modify BASE_DIR environment variable.
-
-  #cd /usr/share/kamailio-config-tests
-  #git clone git@git.mgm.sipwise.com:kamailio-config-tests
-  #apt-get install python-yaml sip-tester \
-                   libgraphviz-perl libtemplate-perl libtext-csv-perl \
-                   ngcp-ossbss-clients-perl parallel tcpdump
-
 Usage:
 ------
   # cd /usr/share/kamailio-config-tests
@@ -67,8 +31,11 @@ Usage:
     - $BASE_DIR/log
       with a directory per test with:
       - kamailio.log
-      - parsed messages
+      - kamailio-lb.log
+      - sems.log
+      - parsed messages (XXXX.yml)
       - sipp error logs
+      - a pcap file for each interface
 
   #bash ./get_result.sh [-p PROFILE ] [-g]
 
