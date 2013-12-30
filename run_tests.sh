@@ -45,6 +45,11 @@ if [ -z $SKIP ]; then
   ${BIN_DIR}/config_debug.pl on ${DOMAIN}
   ngcpcfg apply
   echo "$(date) - Setting config debug on. Done."
+  if [ "${PROFILE}" == "PRO" ]; then
+    echo "$(date) wait for monit to restart services"
+    sleep 5
+    echo "$(date) wait for monit to restart services. Done"
+  fi
 fi
 
 echo "$(date) - Clean log dir"
