@@ -1,11 +1,11 @@
 # REGISTER scenario
 flow:
   - start|MAIN:
-      $fU: testuser1003
-      $tU: testuser1003
+      $fU: testuser1004
+      $tU: testuser1004
   - start|ROUTE_NET_INFO:
-      $fU: testuser1003
-      $tU: testuser1003
+      $fU: testuser1004
+      $tU: testuser1004
   - end|ROUTE_NET_INFO:
   - start|ROUTE_REG_REQUEST:
   - start|ROUTE_REG_HANDLE:
@@ -13,7 +13,7 @@ flow:
   - exit|ROUTE_AUTH:
 sip_in:
   - '^REGISTER'
-  - 'Contact: "TestBria" <sip:testuser1003@127.126.0.1:6666;ob>;reg-id=1;\+sip.instance="<urn:uuid:C3DD6013-20E8-40E3-8EA2-5849B02ED0C4>"'
+  - 'Contact: "TestBria" <sip:testuser1004@127.126.0.1:6666;ob>;reg-id=1;\+sip.instance="<urn:uuid:C3DD6013-20E8-40E3-8EA2-5849B02ED0C4>"'
   - 'Content-Length: 0'
   - 'Expires: 600'
 sip_out:
