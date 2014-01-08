@@ -199,6 +199,16 @@ function get_ip
   peer_host=$(grep "$1" ${SCEN_CHECK_DIR}/scenario.csv|cut -d\; -f3| tr -d '\n')
 }
 
+#$1 is filename
+function is_enabled
+{
+  grep "$1" ${SCEN_CHECK_DIR}/scenario.csv &>/dev/null
+  if [[ $? -ne 0 ]]; then
+    echo "$(date) $1 deactivated"
+    continue
+  fi
+}
+
 function copy_logs
 {
   # copy the kamailio log
@@ -239,6 +249,7 @@ function run_sipp
   
   for res in $(find ${SCEN_CHECK_DIR} -type f -name 'sipp_scenario_responder[0-9][0-9].xml'| sort); do
     base=$(basename $res .xml)
+    is_enabled $(basename $res)
     get_ip $(basename $res)
     if [ "${peer_host}" != "" ]; then
       echo "$(date) - Update peer_host:${peer_host} ${ip}:${PORT} info"
@@ -264,6 +275,7 @@ function run_sipp
   # let's fire sipp scenarios
   for send in $(find ${SCEN_CHECK_DIR} -type f -name 'sipp_scenario[0-9][0-9].xml'| sort); do
     base=$(basename $send .xml)
+    is_enabled $(basename $send)
     get_ip $(basename $send)
     echo "$(date) - Running ${base} $ip:50602-7002"
     ${BIN_DIR}/sipp.sh -i $ip -p 50602 -m 7002 $send
