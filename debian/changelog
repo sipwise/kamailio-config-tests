@@ -1,3 +1,10 @@
+kamailio-config-tests (0.2.2) unstable; urgency=medium
+
+  * [b122e41] update README
+  * [a1961c7] bin/ulog_parser.pl: filter lines by kamailio pid.
+
+ -- Victor Seva <vseva@sipwise.com>  Fri, 10 Jan 2014 12:25:29 +0100
+
 kamailio-config-tests (0.2.1) unstable; urgency=low
 
   [ Andrew Pogrebennyk ]
