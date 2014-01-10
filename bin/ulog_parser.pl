@@ -92,6 +92,35 @@ sub save_data
   };
 }
 
+my $pid;
+my $log;
+my $line;
+sub next_line
+{
+  my $pid_read;
+  do
+  {
+    $line = <$log>;
+    #print "read line\n";
+    if(!$line) { $line = ''; return ($line ne '');}
+    else
+    {
+      ($pid_read) = ($line =~ m/.+proxy\[(\d+)\]: DEBUG:.*$/);
+        if($pid_read) {
+          if(!$pid) {
+            $pid = $pid_read;
+            #print "pid:".$pid."\n";
+          }
+        }
+        else {
+          $pid_read = '';
+          #print "what?".$line."\n";
+        }
+    }
+  } while($pid_read ne $pid);
+  return ($line ne '');
+}
+
 given($#ARGV)
 {
   when (1) { $filename = $ARGV[0]; $output_dir = $ARGV[1]; }
@@ -99,12 +128,10 @@ given($#ARGV)
 }
 $filename = abs_path($filename);
 $output_dir = abs_path($output_dir);
-my $log;
-my $line;
 my $out;
 open($log, "<$filename") or die "Couldn't open kamailio log, $!";
 
-while($line = <$log>)
+while(next_line())
 {
   my ($mode, $route, $msgid, $msgid_t, $json, $msg, $pjson, $callid, $method);
   # Jun 25 14:52:16 spce proxy[11248]: DEBUG: debugger [debugger_api.c:427]: dbg_cfg_dump(): msg out:{
@@ -128,9 +155,7 @@ while($line = <$log>)
       {
         print "No Call-ID\n";
       }
-      $line = <$log>;
-      #print substr($line, 34, 25)."\n";
-      if(!$line) { $line = ''; }
+      next_line();
     }while(($msg) = ($line =~ m/.+msg out:{(.+)}$/));
     #print "msg_out\n";
   }
@@ -147,7 +172,7 @@ while($line = <$log>)
       $data->{'msgid'} = $msgid;
     }
     my $prev_line = $line;
-    $line = <$log>;
+    next_line();
     if(!$line)
     {
       print $prev_line;
