@@ -1,3 +1,9 @@
+kamailio-config-tests (0.2.3) unstable; urgency=medium
+
+  * [ad14b8c] get_results.sh: fix g option. Generating flow_graph
+
+ -- Victor Seva <vseva@sipwise.com>  Thu, 16 Jan 2014 11:26:59 +0100
+
 kamailio-config-tests (0.2.2) unstable; urgency=medium
 
   * [b122e41] update README
