@@ -17,7 +17,7 @@ function usage
   echo "BIN_DIR:${BIN_DIR}"
 }
 
-while getopts 'hcp:' opt; do
+while getopts 'hgp:' opt; do
   case $opt in
     h) usage; exit 0;;
     g) GRAPH="-G";;
