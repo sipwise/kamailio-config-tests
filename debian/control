@@ -3,7 +3,7 @@ Section: Development
 Priority: extra
 Maintainer: Sipwise Development Team <support@sipwise.com>
 Build-Depends: debhelper (>= 8.0.0)
-Standards-Version: 3.9.4
+Standards-Version: 3.9.5
 Homepage: http://www.sipwise.com/
 
 Package: kamailio-config-tests
