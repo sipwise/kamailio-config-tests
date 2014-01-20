@@ -70,6 +70,7 @@ if (lc($action) eq "off")
 {
   $yaml->[0]->{kamailio}{lb}{debug} = 'no';
   $yaml->[0]->{kamailio}{proxy}{debug} = 'no';
+  $yaml->[0]->{kamailio}{proxy}{presence}{enable} = 'no';
   $yaml->[0]->{sems}{debug} = 'no';
   $yaml->[0]->{checktools}{sip_check_enable} = 1;
 
@@ -94,6 +95,7 @@ else
 {
   $yaml->[0]->{kamailio}{lb}{debug} = 'yes';
   $yaml->[0]->{kamailio}{proxy}{debug} = 'yes';
+  $yaml->[0]->{kamailio}{proxy}{presence}{enable} = 'yes';
   $yaml->[0]->{sems}{debug} = 'yes';
   $yaml->[0]->{checktools}{sip_check_enable} = 0;
 
