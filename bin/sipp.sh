@@ -20,17 +20,18 @@
 #
 function usage
 {
-  echo "Usage: sipp.sh [-p PORT] [-m MPORT] [-t TIMEOUT] [-r] scenario.xml"
+  echo "Usage: sipp.sh [-p PORT] [-m MPORT] [-t TIMEOUT] [-r] [-T TRANSPORT] scenario.xml"
   echo "Options:"
   echo -e "\t-p: sip port. default 50602/50603(responder)"
   echo -e "\t-m: media port"
   echo -e "\t-t: timeout. default 10/25(responder)"
   echo -e "\t-i: IP. default 127.0.0.1"
+  echo -e "\t-T: transport [UDP|TCP] default UDP"
   echo "Arguments:"
   echo -e "\t sipp_scenario.xml file"
 }
 
-while getopts 'hrp:m:t:i:' opt; do
+while getopts 'hrp:m:t:i:T:' opt; do
   case $opt in
     h) usage; exit 0;;
     r) RESP=1;;
@@ -38,6 +39,7 @@ while getopts 'hrp:m:t:i:' opt; do
     m) MPORT=$OPTARG;;
     t) TIMEOUT=$OPTARG;;
     i) IP=$OPTARG;;
+    T) TRANSPORT=${OPTARG,,};;
   esac
 done
 shift $(($OPTIND - 1))
@@ -57,6 +59,12 @@ IP=${IP:-"127.0.0.1"}
 IP_SERVER=${IP_SERVER:-"127.0.0.1"}
 MAX="5000"
 
+if [ ! -z ${TRANSPORT} ] && [ "${TRANSPORT}" == "tcp" ]; then
+    TRANSPORT_ARG="-t t1"
+else
+    TRANSPORT_ARG="-t ul"
+fi
+
 if [ -z ${RESP} ]; then
   if [ ! -z ${MPORT} ]; then
     MPORT_ARG="-mp ${MPORT}"
@@ -64,10 +72,10 @@ if [ -z ${RESP} ]; then
   PORT=${PORT:-"50602"}
   TIMEOUT=${TIMEOUT:-"10"}
 
-  sipp -max_socket $MAX \
+  sipp -max_socket $MAX ${TRANSPORT_ARG}\
     -inf ${BASE_DIR}/callee.csv -inf ${BASE_DIR}/caller.csv \
     -sf $1 -i $IP -p $PORT \
-    -nr -nd -t ul -m 1 ${MPORT_ARG} \
+    -nr -nd -m 1 ${MPORT_ARG} \
     -timeout ${TIMEOUT} -timeout_error -trace_err \
     $IP_SERVER &> /dev/null
   status=$?
@@ -78,8 +86,8 @@ else
   PORT=${PORT:-"50603"}
   TIMEOUT=${TIMEOUT:-"25"}
 
-  sipp -max_socket $MAX \
-    -inf ${BASE_DIR}/callee.csv \
+  sipp -max_socket $MAX ${TRANSPORT_ARG}\
+    -inf ${BASE_DIR}/callee.csv -inf ${BASE_DIR}/caller.csv \
     -sf $1 -i $IP -p $PORT \
     -nr -nd -t ul -m 1 ${MPORT_ARG} \
     -timeout ${TIMEOUT} -timeout_error -trace_err \

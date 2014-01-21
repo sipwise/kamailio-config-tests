@@ -192,11 +192,12 @@ function check_port
 #$1 is filename
 function get_ip
 {
-  ip=$(grep "$1" ${SCEN_CHECK_DIR}/scenario.csv|cut -d\; -f2| tr -d '\n')
+  transport=$(grep "$1" ${SCEN_CHECK_DIR}/scenario.csv|cut -d\; -f2| tr -d '\n')
+  ip=$(grep "$1" ${SCEN_CHECK_DIR}/scenario.csv|cut -d\; -f3| tr -d '\n')
   if [[ $? -ne 0 ]]; then
     error_helper "cannot find $1 ip on ${SCEN_CHECK_DIR}/scenario.csv" 10
   fi
-  peer_host=$(grep "$1" ${SCEN_CHECK_DIR}/scenario.csv|cut -d\; -f3| tr -d '\n')
+  peer_host=$(grep "$1" ${SCEN_CHECK_DIR}/scenario.csv|cut -d\; -f4| tr -d '\n')
 }
 
 #$1 is filename
@@ -261,9 +262,9 @@ function run_sipp
     echo "$(date) - Running ${base} $ip:${PORT}-${MPORT}"
     if [ -f ${SCEN_CHECK_DIR}/${base}_reg.xml ]; then
       echo "$(date) - Register ${base} $ip:${PORT}-${MPORT}"
-      ${BIN_DIR}/sipp.sh -i $ip -p ${PORT} -r ${SCEN_CHECK_DIR}/${base}_reg.xml
+      ${BIN_DIR}/sipp.sh -T $transport -i $ip -p ${PORT} -r ${SCEN_CHECK_DIR}/${base}_reg.xml
     fi
-    ${BIN_DIR}/sipp.sh -i $ip -p ${PORT} -m ${MPORT} -r ${SCEN_CHECK_DIR}/${base}.xml &
+    ${BIN_DIR}/sipp.sh -T $transport -i $ip -p ${PORT} -m ${MPORT} -r ${SCEN_CHECK_DIR}/${base}.xml &
     responder_pid="${responder_pid} ${base}:$!"
     check_port ${PORT}
     PORT=$port
@@ -278,7 +279,7 @@ function run_sipp
     is_enabled $(basename $send)
     get_ip $(basename $send)
     echo "$(date) - Running ${base} $ip:50602-7002"
-    ${BIN_DIR}/sipp.sh -i $ip -p 50602 -m 7002 $send
+    ${BIN_DIR}/sipp.sh -T $transport -i $ip -p 50602 -m 7002 $send
     if [[ $? -ne 0 ]]; then
       echo "$(date) - $base error"
       status=1
