@@ -1,0 +1,49 @@
+flow:
+  - start|MAIN:
+  - start|ROUTE_NET_INFO:
+  - end|ROUTE_NET_INFO:
+  - start|ROUTE_IMP_REQUEST:
+  - start|ROUTE_IMP_WITHINDLG:
+  - end|ROUTE_IMP_WITHINDLG:
+  - start|ROUTE_AUTH:
+  - start|ROUTE_ADD_CALLINFO_REPLY:
+  - return|ROUTE_ADD_CALLINFO_REPLY:
+  - end|ROUTE_AUTH:
+  - start|ROUTE_IMP_PRESENCE:
+  - exit|ROUTE_IMP_PRESENCE:
+sip_in:
+  - '^SUBSCRIBE sip:testuser1002@'
+  - 'Contact: <sip:127.1.1.1'
+  - 'To: <sip:testuser1002@'
+  - 'From: <sip:testuser1001@'
+  - 'CSeq: 4 SUBSCRIBE'
+  - 'Max-Forwards: 16'
+  - 'Content-Length: 0'
+  - 'Event: presence'
+  - 'Accept: application/pidf\+xml'
+sip_out:
+  - [
+      '^SIP/2.0 100 Trying',
+      'CSeq: 4 SUBSCRIBE',
+      'From: <sip:testuser1001@',
+      'To: <sip:testuser1002@'
+    ]
+  - [
+      '^SIP/2.0 202 OK',
+      'CSeq: 4 SUBSCRIBE',
+      'From: <sip:testuser1001@',
+      'To: <sip:testuser1002@',
+      'P-NGCP-Authorization: testuser1001@',
+      'Contact: <sip:127.0.0.1:5062;transport=udp>',
+      'Content-Length: 0'
+    ]
+  - [
+      '^NOTIFY sip:127.1.1.1',
+      'CSeq: 2 NOTIFY',
+      'From: <sip:testuser1002@',
+      'To: <sip:testuser1001@',
+      'Event: presence',
+      'Contact: <sip:127.0.0.1:5062;transport=udp>',
+      'Content-Length: 0',
+      'Subscription-State: pending;expires=30'
+    ]

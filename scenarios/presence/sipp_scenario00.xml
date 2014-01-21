@@ -1,0 +1,483 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<scenario name="Sipwise NGCP Benchmark UAC Caller">
+
+  <send>
+    <![CDATA[
+
+      SUBSCRIBE sip:[field0 file="caller.csv"]@[field2 file="caller.csv"] SIP/2.0
+      Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
+      From: <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>;tag=[pid]SIPpTag00[call_number]
+      To: <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>
+      Call-ID: [call_id]
+      CSeq: [cseq] SUBSCRIBE
+      Contact: sip:[field0 file="caller.csv"]@[local_ip]:[local_port]
+      Max-Forwards: 70
+      Expires: 30
+      Event: presence.winfo
+      Accept: application/watcherinfo+xml
+      Content-Length: [len]
+
+    ]]>
+  </send>
+
+  <recv response="100" optional="true">
+  </recv>
+
+  <recv response="407" auth="true"/>
+
+  <send>
+    <![CDATA[
+
+      ACK sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]:[remote_port] SIP/2.0
+      [last_Via:]
+      From: <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>;tag=[pid]SIPpTag00[call_number]
+      To: <sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]>[peer_tag_param]
+      Call-ID: [call_id]
+      CSeq: [cseq] ACK
+      Contact: sip:[field0 file="caller.csv"]@[local_ip]:[local_port]
+      Max-Forwards: 70
+      Content-Length: [len]
+
+    ]]>
+  </send>
+
+  <send>
+    <![CDATA[
+
+      SUBSCRIBE sip:[field0 file="caller.csv"]@[field2 file="caller.csv"] SIP/2.0
+      Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
+      From: <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>;tag=[pid]SIPpTag00[call_number]
+      To: <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>
+      Call-ID: [call_id]
+      CSeq: [cseq] SUBSCRIBE
+      Contact: sip:[field0 file="caller.csv"]@[local_ip]:[local_port]
+      [field1 file="caller.csv"]
+      Max-Forwards: 70
+      Expires: 30
+      Event: presence.winfo
+      Accept: application/watcherinfo+xml
+      Content-Length: [len]
+
+    ]]>
+  </send>
+
+  <recv response="100" optional="true">
+  </recv>
+
+  <recv response="180" optional="true">
+  </recv>
+
+  <recv response="183" optional="true">
+  </recv>
+
+  <recv response="200" rrs="true">
+  </recv>
+
+  <send>
+    <![CDATA[
+
+      ACK [next_url] SIP/2.0
+      Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
+      From: <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>;tag=[pid]SIPpTag00[call_number]
+      To: <sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]>[peer_tag_param]
+      Call-ID: [call_id]
+      [routes]
+      CSeq: [cseq] ACK
+      Contact: sip:[field0 file="caller.csv"]@[local_ip]:[local_port]
+      Max-Forwards: 70
+      Content-Length: 0
+
+    ]]>
+  </send>
+
+  <recv request="NOTIFY" crlf="true">
+
+  <send>
+    <![CDATA[
+
+      SIP/2.0 200 OK
+      [last_Via:]
+      [last_From:]
+      [last_To:]
+      [last_Call-ID:]
+      [last_CSeq:]
+      Contact: <sip:[local_ip]:[local_port];transport=[transport]>
+      Content-Length: [len]
+
+    ]]>
+  </send>
+
+  <send>
+    <![CDATA[
+
+      NOTIFY sip:[field0 file="caller.csv"]@[field2 file="caller.csv"] SIP/2.0
+      Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
+      From: <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>;tag=[pid]SIPpTag00[call_number]
+      To: <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>[peer_tag_param]
+      Call-ID: [call_id]
+      CSeq: [cseq] NOTIFY
+      Contact: sip:[field0 file="caller.csv"]@[local_ip]:[local_port]
+      Max-Forwards: 70
+      Event: presence;winfo
+      Subscription-State: active;expires=15
+      Content-Type: application/watcherinfo+xml
+      Content-Length: [len]
+
+   <?xml version="1.0"?>
+   <watcherinfo xmlns="urn:ietf:params:xml:ns:watcherinfo"
+                version="1" state="partial">
+     <watcher-list resource="sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]" package="presence">
+       <watcher id="[$3]" event="approved"
+                status="active">sip:[field0 file="callee.csv" line=1]@[field3 file="callee.csv" line=1]</watcher>
+     </watcher-list>
+   </watcherinfo>
+
+    ]]>
+  </send>
+
+  <recv response="100" optional="true">
+  </recv>
+
+  <recv response="407" auth="true"/>
+
+  <send>
+    <![CDATA[
+
+      ACK sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]:[remote_port] SIP/2.0
+      [last_Via:]
+      From: <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>;tag=[pid]SIPpTag00[call_number]
+      To: <sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]>[peer_tag_param]
+      Call-ID: [call_id]
+      CSeq: [cseq] ACK
+      Contact: sip:[field0 file="caller.csv"]@[local_ip]:[local_port]
+      Max-Forwards: 70
+      Content-Length: 0
+
+    ]]>
+  </send>
+
+  <recv request="NOTIFY" crlf="true">
+
+  <send>
+    <![CDATA[
+
+      SIP/2.0 200 OK
+      [last_Via:]
+      [last_From:]
+      [last_To:]
+      [last_Call-ID:]
+      [last_CSeq:]
+      Contact: <sip:[local_ip]:[local_port];transport=[transport]>
+      Content-Length: [len]
+
+    ]]>
+  </send>
+
+  <pause milliseconds="500"/>
+
+  <send>
+    <![CDATA[
+
+      NOTIFY sip:[field0 file="caller.csv"]@[field2 file="caller.csv"] SIP/2.0
+      Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
+      From: <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>;tag=[pid]SIPpTag00[call_number]
+      To: <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>[peer_tag_param]
+      Call-ID: [call_id]
+      CSeq: [cseq] NOTIFY
+      Contact: sip:[field0 file="caller.csv"]@[local_ip]:[local_port]
+      [field1 file="caller.csv"]
+      Max-Forwards: 70
+      Event: presence;winfo
+      Subscription-State: active;expires=15
+      Content-Type: application/watcherinfo+xml
+      Content-Length: [len]
+
+   <?xml version="1.0"?>
+   <watcherinfo xmlns="urn:ietf:params:xml:ns:watcherinfo"
+                version="1" state="partial">
+     <watcher-list resource="sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]" package="presence">
+       <watcher id="[$3]" event="approved"
+                status="active">sip:[field0 file="callee.csv" line=1]@[field3 file="callee.csv" line=1]</watcher>
+     </watcher-list>
+   </watcherinfo>
+
+    ]]>
+  </send>
+
+  <recv response="100" optional="true">
+  </recv>
+
+  <recv response="180" optional="true">
+  </recv>
+
+  <recv response="183" optional="true">
+  </recv>
+
+  <recv response="200" rrs="true">
+  </recv>
+
+  <send>
+    <![CDATA[
+
+      ACK [next_url] SIP/2.0
+      Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
+      From: <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>;tag=[pid]SIPpTag00[call_number]
+      To: <sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]>[peer_tag_param]
+      Call-ID: [call_id]
+      [routes]
+      CSeq: [cseq] ACK
+      Contact: sip:[field0 file="caller.csv"]@[local_ip]:[local_port]
+      Max-Forwards: 70
+      Content-Length: [len]
+
+    ]]>
+  </send>
+
+  <send>
+    <![CDATA[
+
+      PUBLISH sip:[field0 file="caller.csv"]@[field2 file="caller.csv"] SIP/2.0
+      Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
+      From: <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>;tag=[pid]SIPpTag00[call_number]
+      To: <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>
+      Call-ID: [call_id]
+      CSeq: [cseq] PUBLISH
+      Contact: sip:[field0 file="caller.csv"]@[local_ip]:[local_port]
+      Max-Forwards: 70
+      Expires: 30
+      Allow: REFER, UPDATE, INFO, OPTIONS, ACK, INVITE, BYE, CANCEL, NOTIFY, SUBSCRIBE
+      Supported: timer,replaces
+      Event: presence
+      Content-Type: application/pidf+xml
+      Content-Length: [len]
+
+<?xml version='1.0' encoding='UTF-8'?><presence xmlns='urn:ietf:params:xml:ns:pidf' xmlns:dm='urn:ietf:params:xml:ns:pidf:data-model' xmlns:rpid='urn:ietf:params:xml:ns:pidf:rpid' xmlns:c='urn:ietf:params:xml:ns:pidf:cipid' entity='sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]'><tuple id='t3817d047'><status><basic>open</basic></status></tuple><dm:person id='p097eb63c'><rpid:activities><rpid:unknown/></rpid:activities></dm:person></presence>
+
+    ]]>
+  </send>
+
+  <recv response="100" optional="true">
+  </recv>
+
+  <recv response="407" auth="true"/>
+
+  <send>
+    <![CDATA[
+
+      ACK sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]:[remote_port] SIP/2.0
+      [last_Via:]
+      From: <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>;tag=[pid]SIPpTag00[call_number]
+      To: <sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]>[peer_tag_param]
+      Call-ID: [call_id]
+      CSeq: [cseq] ACK
+      Contact: sip:[field0 file="caller.csv"]@[local_ip]:[local_port]
+      Max-Forwards: 70
+      Content-Length: [len]
+
+    ]]>
+  </send>
+
+  <pause milliseconds="500"/>
+
+  <send>
+    <![CDATA[
+
+      PUBLISH sip:[field0 file="caller.csv"]@[field2 file="caller.csv"] SIP/2.0
+      Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
+      From: <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>;tag=[pid]SIPpTag00[call_number]
+      To: <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>
+      Call-ID: [call_id]
+      CSeq: [cseq] PUBLISH
+      Contact: sip:[field0 file="caller.csv"]@[local_ip]:[local_port]
+      [field1 file="caller.csv"]
+      Max-Forwards: 70
+      Expires: 30
+      Allow: REFER, UPDATE, INFO, OPTIONS, ACK, INVITE, BYE, CANCEL, NOTIFY, SUBSCRIBE
+      Supported: timer,replaces
+      Event: presence
+      Content-Type: application/pidf+xml
+      Content-Length: [len]
+
+<?xml version='1.0' encoding='UTF-8'?><presence xmlns='urn:ietf:params:xml:ns:pidf' xmlns:dm='urn:ietf:params:xml:ns:pidf:data-model' xmlns:rpid='urn:ietf:params:xml:ns:pidf:rpid' xmlns:c='urn:ietf:params:xml:ns:pidf:cipid' entity='sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]'><tuple id='t3817d047'><status><basic>open</basic></status></tuple><dm:person id='p097eb63c'><rpid:activities><rpid:unknown/></rpid:activities></dm:person></presence>
+
+    ]]>
+  </send>
+
+  <recv response="100" optional="true">
+  </recv>
+
+  <recv response="180" optional="true">
+  </recv>
+
+  <recv response="183" optional="true">
+  </recv>
+
+  <recv response="200" rrs="true">
+  </recv>
+
+  <send>
+    <![CDATA[
+
+      ACK [next_url] SIP/2.0
+      Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
+      From: <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>;tag=[pid]SIPpTag00[call_number]
+      To: <sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]>[peer_tag_param]
+      Call-ID: [call_id]
+      [routes]
+      CSeq: [cseq] ACK
+      Contact: sip:[field0 file="caller.csv"]@[local_ip]:[local_port]
+      Max-Forwards: 70
+      Content-Length: [len]
+
+    ]]>
+  </send>
+
+  <!-- unsubscribe !-->
+  <send>
+    <![CDATA[
+
+      SUBSCRIBE sip:[field0 file="caller.csv"]@[field2 file="caller.csv"] SIP/2.0
+      Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
+      From: <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>;tag=[pid]SIPpTag00[call_number]
+      To: <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>[peer_tag_param]
+      Call-ID: [call_id]
+      CSeq: [cseq] SUBSCRIBE
+      Contact: sip:[field0 file="caller.csv"]@[local_ip]:[local_port]
+      Max-Forwards: 70
+      Event: presence;winfo
+      Expires: 0
+      Accept: application/watcherinfo+xml
+      Content-Length: [len]
+
+    ]]>
+  </send>
+
+  <recv response="100" optional="true">
+  </recv>
+
+  <recv response="407" auth="true"/>
+
+  <send>
+    <![CDATA[
+
+      SUBSCRIBE sip:[field0 file="caller.csv"]@[field2 file="caller.csv"] SIP/2.0
+      Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
+      From: <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>;tag=[pid]SIPpTag00[call_number]
+      To: <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>[peer_tag_param]
+      Call-ID: [call_id]
+      CSeq: [cseq] SUBSCRIBE
+      Contact: sip:[field0 file="caller.csv"]@[local_ip]:[local_port]
+      [field1 file="caller.csv"]
+      Max-Forwards: 70
+      Expires: 0
+      Event: presence;winfo
+      Accept: application/watcherinfo+xml
+      Content-Length: [len]
+
+    ]]>
+  </send>
+
+  <recv response="100" optional="true">
+  </recv>
+
+  <recv response="180" optional="true">
+  </recv>
+
+  <recv response="183" optional="true">
+  </recv>
+
+  <recv response="200" rrs="true">
+  </recv>
+
+  <send>
+    <![CDATA[
+
+      ACK [next_url] SIP/2.0
+      Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
+      From: <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>;tag=[pid]SIPpTag00[call_number]
+      To: <sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]>[peer_tag_param]
+      Call-ID: [call_id]
+      [routes]
+      CSeq: [cseq] ACK
+      Contact: sip:[field0 file="caller.csv"]@[local_ip]:[local_port]
+      Max-Forwards: 70
+      Content-Length: 0
+
+    ]]>
+  </send>
+
+  <recv request="NOTIFY" crlf="true">
+
+  <send>
+    <![CDATA[
+
+      SIP/2.0 200 OK
+      [last_Via:]
+      [last_From:]
+      [last_To:]
+      [last_Call-ID:]
+      [last_CSeq:]
+      Contact: <sip:[local_ip]:[local_port];transport=[transport]>
+      Content-Length: [len]
+
+    ]]>
+  </send>
+
+  <recv request="NOTIFY" crlf="true">
+
+  <send>
+    <![CDATA[
+
+      SIP/2.0 200 OK
+      [last_Via:]
+      [last_From:]
+      [last_To:]
+      [last_Call-ID:]
+      [last_CSeq:]
+      Contact: <sip:[local_ip]:[local_port];transport=[transport]>
+      Content-Length: [len]
+
+    ]]>
+  </send>
+
+  <recv request="NOTIFY" crlf="true">
+
+  <send>
+    <![CDATA[
+
+      SIP/2.0 200 OK
+      [last_Via:]
+      [last_From:]
+      [last_To:]
+      [last_Call-ID:]
+      [last_CSeq:]
+      Contact: <sip:[local_ip]:[local_port];transport=[transport]>
+      Content-Length: [len]
+
+    ]]>
+  </send>
+
+    <recv request="NOTIFY" crlf="true">
+
+  <send>
+    <![CDATA[
+
+      SIP/2.0 200 OK
+      [last_Via:]
+      [last_From:]
+      [last_To:]
+      [last_Call-ID:]
+      [last_CSeq:]
+      Contact: <sip:[local_ip]:[local_port];transport=[transport]>
+      Content-Length: [len]
+
+    ]]>
+  </send>
+
+  <ResponseTimeRepartition value="10, 20, 30, 40, 50, 100, 150, 200, 500, 1000"/>
+
+<!-- <CallLengthRepartition value="10, 50, 100, 500, 1000, 5000, 10000"/> >
+
+</scenario>
+

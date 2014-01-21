@@ -1,0 +1,32 @@
+flow:
+  - start|MAIN:
+  - start|ROUTE_NET_INFO:
+  - end|ROUTE_NET_INFO:
+  - start|ROUTE_IMP_REQUEST:
+  - start|ROUTE_IMP_WITHINDLG:
+  - end|ROUTE_IMP_WITHINDLG:
+  - start|ROUTE_AUTH:
+  - exit|ROUTE_AUTH:
+sip_in:
+  - '^SUBSCRIBE sip:testuser1002@'
+  - 'Contact: <sip:127.1.1.1'
+  - 'To: <sip:testuser1002@'
+  - 'From: <sip:testuser1001@'
+  - 'CSeq: 3 SUBSCRIBE'
+  - 'Max-Forwards: 16'
+  - 'Content-Length: 0'
+  - 'Event: presence'
+  - 'Accept: application/pidf\+xml'
+sip_out:
+  - [
+      '^SIP/2.0 100 Trying',
+      'CSeq: 3 SUBSCRIBE',
+      'From: <sip:testuser1001@',
+      'To: <sip:testuser1002@'
+    ]
+  - [
+      '^SIP/2.0 407 Proxy Authentication Required',
+      'CSeq: 3 SUBSCRIBE',
+      'From: <sip:testuser1001@',
+      'To: <sip:testuser1002@'
+    ]
