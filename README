@@ -151,6 +151,8 @@ scenario.yml file syntax:
 
   If foreign: yes then sipp_scenario_responderXX.xml will be run with 5060 port.
 
+  If password_wrong: yes then the caller is going to use 'wrongpass' as password.
+
   Example:
 
   subscribers:
@@ -184,6 +186,7 @@ scenario.yml file syntax:
       username: testuser1003
       domain: spce.test
       proto: udp
+      password_wrong: yes
       responders:
         - ip: 127.126.0.1                --> sipp_scenario_responder01.xml
           username: testuser1002

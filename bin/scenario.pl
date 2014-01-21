@@ -119,6 +119,11 @@ sub generate
         $_->{password} = "" unless defined($_->{password});
         # by default proto is udp
         $_->{proto} = "udp" unless defined($_->{proto});
+        $_->{password_wrong} = "no" unless defined($_->{password_wrong});
+        if($_->{password_wrong} eq "yes")
+        {
+            $_->{password} = "wrongpass";
+        }
         my $auth   = "[authentication username=$_->{username} password=$_->{password}]";
         my $csv_data = [$_->{username}, $auth, $_->{domain}];
         $csv->{caller}->print($io_caller, $csv_data);
