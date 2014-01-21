@@ -138,6 +138,8 @@ function delete_locations
 {
   for sub in $(cat ${SCEN_CHECK_DIR}/callee.csv | grep test | cut -d\; -f1 | xargs); do
     ngcp-kamctl proxy ul rm $sub@${DOMAIN}
+    # delete possible banned user
+    ngcp-sercmd lb htable.delete auth $sub@${DOMAIN}::auth_count
   done
 }
 
