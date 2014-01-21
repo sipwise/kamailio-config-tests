@@ -88,9 +88,13 @@ sub do_delete
         $result = call_prov( $bprov, 'get_sip_peering_contracts');
         foreach (@{$result})
         {
-            if ($_->{contact}->{company} eq $peer_name)
+            my $contact = $_->{contact};
+            if(defined($contact->{company}))
             {
-                call_prov($bprov, 'delete_sip_peering_contract', { id => $_->{id}});
+                if ($contact->{company} eq $peer_name)
+                {
+                    call_prov($bprov, 'delete_sip_peering_contract', { id => $_->{id}});
+                }
             }
         }
     }
