@@ -14,7 +14,7 @@ flow:
 sip_in:
   - '^BYE sip:127.0.0.1:5080 SIP/2.0'
   - 'Contact: <sip:testuser1002@'
-  - 'CSeq: 3 BYE'
+  - 'CSeq: 11 BYE'
   - 'Max-Forwards: 16'
   - 'Content-Length: 0'
   - 'From: <sip:testuser1002@'
@@ -23,7 +23,7 @@ sip_in:
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
-      'CSeq: 3 BYE',
+      'CSeq: 11 BYE',
       'Content-Length: 0',
       'From: <sip:testuser1002@',
       'To: <sip:testuser1003@'
@@ -31,7 +31,7 @@ sip_out:
   - [
       '^BYE sip:127.0.0.1:5080 SIP/2.0',
       'Contact: <sip:testuser1002@',
-      'CSeq: 3 BYE',
+      'CSeq: 11 BYE',
       'Max-Forwards: 15',
       'Content-Length: 0',
       'From: <sip:4311002@',
@@ -39,7 +39,7 @@ sip_out:
     ]
   - [
       '^SIP/2.0 200 OK',
-      'CSeq: 3 BYE',
+      'CSeq: 11 BYE',
       'Content-Length: 0',
       'From: <sip:testuser1002@',
       'To: <sip:testuser1003@'

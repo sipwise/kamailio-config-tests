@@ -136,6 +136,8 @@
     ]]>
   </send>
 
+  <recv request="ACK" rtd="true"/>
+
   <nop>
     <action>
       <exec play_pcap_audio="scenarios/media181sec.pcap"/>
@@ -152,7 +154,7 @@
       From: <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>;tag=[pid]SIPpTag00[call_number]
       To: <sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]>[peer_tag_param]
       Call-ID: [call_id]
-      CSeq: 3 BYE
+      CSeq: [cseq] BYE
       Contact: <sip:[field0 file="caller.csv"]@[local_ip]:[local_port];transport=[transport]>
       [routes]
       Max-Forwards: 70

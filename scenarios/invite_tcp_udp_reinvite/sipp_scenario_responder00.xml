@@ -129,6 +129,23 @@
   <recv response="200" rrs="true">
   </recv>
 
+  <send>
+    <![CDATA[
+
+      ACK [next_url] SIP/2.0
+      Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
+      From: <sip:[field0 file="callee.csv"]@[field3 file="callee.csv"]>;tag=[pid]SIPpTag01[call_number]
+      To: <sip:[field0 file="caller.csv" line=0]@[field2 file="caller.csv" line=0]>;tag=[$3]
+      [last_Call-ID:]
+      [routes]
+      CSeq: [cseq] ACK
+      Contact: <sip:[field0 file="caller.csv"]@[local_ip]:[local_port];transport=[transport]>
+      Max-Forwards: 70
+      Content-Length: 0
+
+    ]]>
+  </send>
+
   <recv request="BYE" rtd="true">
   </recv>
 
