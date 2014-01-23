@@ -10,17 +10,19 @@ function usage
 {
   echo "Usage: get_results.sh [-p PROFILE] [-h] [-g]"
   echo "-p CE|PRO default is CE"
-  echo "-g generate png flow graphs"
+  echo "-g generate png flow graphs if test fails"
+  echo "-G generate png all flow graphs"
   echo "-h this help"
 
   echo "BASE_DIR:${BASE_DIR}"
   echo "BIN_DIR:${BIN_DIR}"
 }
 
-while getopts 'hgp:' opt; do
+while getopts 'hgGp:' opt; do
   case $opt in
     h) usage; exit 0;;
-    g) GRAPH="-G";;
+    G) GRAPH="-G";;
+    g) GRAPH="-g";;
     p) PROFILE=$OPTARG;;
   esac
 done

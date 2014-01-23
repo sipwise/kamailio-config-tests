@@ -35,6 +35,7 @@ function graph
 # $3 destination tap filename
 function check_test
 {
+  local dest=${RESULT_DIR}/$(basename $3 .tap)
   if [ ! -f $1 ]; then
     echo "File $1 does not exists"
     ERR_FLAG=1
@@ -51,6 +52,11 @@ function check_test
   if [[ $? -ne "0" ]]; then
     echo " NOT ok"
     ERR_FLAG=1
+    if [ -z ${GRAPH} ] && [ ! -z ${GRAPH_FAIL} ]; then
+      echo "$(date) - Generating flow image: ${dest}.png"
+      graph $msg ${dest}.png
+      echo "$(date) - Done"
+    fi
   else
     echo " ok"
   fi
@@ -326,13 +332,14 @@ function usage
   echo -e "\t-T: skip checks"
   echo -e "\t-P: skip parse"
   echo -e "\t-G: creation of graphviz image"
+  echo -e "\t-g: creation of graphviz image only if test fails"
   echo -e "\t-d: DOMAIN"
   echo -e "\t-p CE|PRO default is CE"
   echo "Arguments:"
   echo -e "\tcheck_name. Scenario name to check. This is the name of the directory on scenarios dir."
 }
 
-while getopts 'hCd:p:RDTPG' opt; do
+while getopts 'hCd:p:RDTPGg' opt; do
   case $opt in
     h) usage; exit 0;;
     C) SKIP=1;;
@@ -343,6 +350,7 @@ while getopts 'hCd:p:RDTPG' opt; do
     T) SKIP_TESTS=1;;
     P) SKIP_PARSE=1;;
     G) GRAPH=1;;
+    g) GRAPH_FAIL=1;;
   esac
 done
 shift $(($OPTIND - 1))
