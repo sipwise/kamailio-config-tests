@@ -29,6 +29,7 @@ use IO::File;
 use YAML;
 use Text::CSV;
 use Template;
+use Data::Dumper;
 
 sub usage
 {
@@ -58,6 +59,7 @@ if (exists $ENV{'BASE_DIR'})
   $template_dir = File::Spec->catfile(abs_path($ENV{'BASE_DIR'}), 'scenarios', 'templates');
 }
 our $template_reg = 'sipp_scenario_responder_reg.xml.tt2';
+our $template_presence = 'pres-rules.xml.tt2';
 
 our $tt = Template->new({
     INCLUDE_PATH => $template_dir,
@@ -72,7 +74,7 @@ sub new_csv
 
 sub get_subs_info
 {
-    my ($data_sub, $data) = @_;
+    my ($data_sub, $data, $presence) = @_;
     if (defined($data_sub->{$data->{domain}}))
     {
         my $domain = $data->{domain};
@@ -81,7 +83,7 @@ sub get_subs_info
             my $username = $data->{username};
             my $subs = $data_sub->{$domain}->{$username};
             $data->{password} = $subs->{password};
-            eval { $data->{number} = $subs->{cc}.$subs->{ac}.$subs->{sn}; };
+            eval { $data->{number} = $subs->{cc}.$subs->{ac}.$subs->{sn}; } unless defined($presence);
         }
         else
         {
@@ -155,4 +157,34 @@ sub generate_reg
     $tt->process($template_reg, $vars, $fn) or die($tt->error(), "\n");
 }
 
+sub generate_presence
+{
+    my @rules;
+    my ($data) = @_;
+    foreach (@{$data->{presence}})
+    {
+        eval { get_subs_info($data->{subscribers}, $_); };
+        $_->{password} = "" unless defined($_->{password});
+        my $vars = { users => @{$_->{allow}} };
+        my $fn = File::Spec->catfile($base_check_dir, "presence_".$_->{username}."_".$_->{domain}.".xml");
+        $tt->process($template_presence, $vars, $fn) or die($tt->error(), "\n");
+        undef $fn;
+        my $digest = $_->{username}."@".$_->{domain}.":".$_->{password};
+        push @rules, "$bin_dir/presence.sh $digest $template_dir/$template_presence"
+    }
+    if(scalar(@rules)>0)
+    {
+        my $file = "$base_check_dir/presence.sh";
+        my $fn = IO::File->new($file, "w") or die("can't create $file");
+        print {$fn} "#!/bin/bash\n";
+        foreach(@rules)
+        {
+            print {$fn} "$_\n";
+        }
+        chmod(0755, $fn);
+        undef $fn;
+    }
+}
+
 generate($cf);
+generate_presence($cf);

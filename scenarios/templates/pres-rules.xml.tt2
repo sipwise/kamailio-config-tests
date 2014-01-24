@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ruleset xmlns="urn:ietf:params:xml:ns:common-policy">
+	<rule id="presence_allow">
+		<conditions>
+			<identity>[% FOREACH user IN users -%]<one id="sip:[% users -%]"/>[% END -%]</identity>
+		</conditions>
+		<actions>
+			<sub-handling xmlns="urn:ietf:params:xml:ns:pres-rules">allow</sub-handling>
+		</actions>
+		<transformations>
+			<provide-devices xmlns="urn:ietf:params:xml:ns:pres-rules">
+				<all-devices/>
+			</provide-devices>
+			<provide-persons xmlns="urn:ietf:params:xml:ns:pres-rules">
+				<all-persons/>
+			</provide-persons>
+			<provide-services xmlns="urn:ietf:params:xml:ns:pres-rules">
+				<all-services/>
+			</provide-services>
+		</transformations>
+	</rule>
+</ruleset>

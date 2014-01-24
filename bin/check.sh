@@ -253,7 +253,15 @@ function run_sipp
     error_helper "Restart error" 16
   fi
   capture
-  
+
+  if [ -e ${SCEN_CHECK_DIR}/presence.sh ]; then
+    echo "$(date) - Presence xcap"
+    ${SCEN_CHECK_DIR}/presence.sh
+    if [ $? -ne 0 ]; then
+      error_helper "error in presence.sh" 17
+    fi
+  fi
+
   for res in $(find ${SCEN_CHECK_DIR} -type f -name 'sipp_scenario_responder[0-9][0-9].xml'| sort); do
     base=$(basename $res .xml)
     is_enabled $(basename $res)
