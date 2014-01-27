@@ -95,6 +95,31 @@ sub save_data
 my $pid;
 my $log;
 my $line;
+sub first_line
+{
+  $pid="unknown";
+  my $pid_read;
+  do
+  {
+    $line = <$log>;
+    #print "read line\n";
+    if(!$line) { $line = ''; return ($line ne '');}
+    else
+    {
+      ($pid_read) = ($line =~ m/.+proxy\[(\d+)\]: DEBUG: <script>: start of route MAIN.*$/);
+        if($pid_read) {
+            $pid = $pid_read;
+            #print "pid:".$pid."\n";
+        }
+        else {
+          $pid_read = '';
+          #print "what?".$line."\n";
+        }
+    }
+  } while($pid_read ne $pid);
+  return ($line ne '');
+}
+
 sub next_line
 {
   my $pid_read;
@@ -131,7 +156,8 @@ $output_dir = abs_path($output_dir);
 my $out;
 open($log, "<$filename") or die "Couldn't open kamailio log, $!";
 
-while(next_line())
+first_line();
+do
 {
   my ($mode, $route, $msgid, $msgid_t, $json, $msg, $pjson, $callid, $method);
   # Jun 25 14:52:16 spce proxy[11248]: DEBUG: debugger [debugger_api.c:427]: dbg_cfg_dump(): msg out:{
@@ -196,7 +222,7 @@ while(next_line())
       }
     }
   }
-} #while
+} while(next_line());
 if($data->{'msgid'} ne '') { save_data(); }
 close($log);
 #EOF
