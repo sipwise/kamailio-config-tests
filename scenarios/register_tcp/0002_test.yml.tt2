@@ -16,6 +16,18 @@ flow:
   - end|ROUTE_AUTH:
   - start|ROUTE_PREFERENCES:
   - end|ROUTE_PREFERENCES:
+      $xavp(caller_dom_prefs[0]=>dummy[*]): ['caller']
+      $xavp(caller_dom_prefs[0]=>ac[*]): None
+      $xavp(caller_dom_prefs[0]=>cc[*]): None
+      $xavp(caller_dom_prefs[0]=>cli[*]): None
+      $xavp(caller_real_prefs[0]=>dummy[*]): ['caller']
+      $xavp(caller_real_prefs[0]=>ac[*]): [1]
+      $xavp(caller_real_prefs[0]=>cc[*]): [43]
+      $xavp(caller_real_prefs[0]=>cli[*]): [4311003]
+      $xavp(caller_usr_prefs[0]=>dummy[*]): ['caller']
+      $xavp(caller_usr_prefs[0]=>ac[*]): [1]
+      $xavp(caller_usr_prefs[0]=>cc[*]): [43]
+      $xavp(caller_usr_prefs[0]=>cli[*]): [4311003]
   - exit|ROUTE_REG_HANDLE:
 sip_in:
   - '^REGISTER'
