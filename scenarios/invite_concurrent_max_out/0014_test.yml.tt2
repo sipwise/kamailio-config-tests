@@ -1,0 +1,46 @@
+flow:
+  - start|MAIN:
+  - start|ROUTE_NET_INFO:
+  - end|ROUTE_NET_INFO:
+  - start|ROUTE_PRX_REQUEST:
+  - start|ROUTE_OUTBOUND:
+  - exit|ROUTE_OUTBOUND:
+  - start|REPLY_ROUTE_NAT:
+  - exit|REPLY_ROUTE_NAT:
+  - start|REPLY_ROUTE_NAT:
+  - exit|REPLY_ROUTE_NAT:
+sip_in:
+  - '^INVITE sip:127.0.0.1:5080'
+  - 'Contact: sip:testuser1002@'
+  - 'CSeq: 3 INVITE'
+  - 'Max-Forwards: 15'
+  - 'Content-Type: application/sdp'
+  - 'Proxy-Authorization: Digest username="testuser1002"'
+  - 'a=sendonly'
+sip_out:
+  - [
+      '^SIP/2.0 100 Trying',
+      'CSeq: 3 INVITE',
+      'From: <sip:testuser1002@',
+      'To: <sip:testuser1003@'
+    ]
+  - [
+      '^INVITE sip:127.0.0.1:5080',
+      'From: <sip:4311002@',
+      'To: <sip:testuser1003@',
+      'CSeq: 3 INVITE',
+      'Max-Forwards: 14',
+      'Contact: sip:testuser1002@',
+      'Content-Type: application/sdp',
+      'Proxy-Authorization: Digest username="testuser1002"',
+      'a=sendonly'
+    ]
+  - [
+      '^SIP/2.0 200 OK',
+      'From: <sip:testuser1002@',
+      'To: <sip:testuser1003@',
+      'CSeq: 3 INVITE',
+      'Contact: <sip:testuser1003@127.0.0.1:5080>',
+      'Content-Type: application/sdp',
+      'a=recvonly'
+    ]
