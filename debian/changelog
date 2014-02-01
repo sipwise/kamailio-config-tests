@@ -1,8 +1,40 @@
-kamailio-config-tests (0.3) UNRELEASED; urgency=low
+kamailio-config-tests (0.3+0~mr3.3) unstable; urgency=low
 
+  [ Victor Seva ]
   * devel version for 3.2
+  * [560e36a] MT#4009 Add GPL licence to all scripts
+  * [9bde508] update README
+  * [764528b] MT#5385 wait sometime for monit to restart the services after ngcpcfg apply execution
+  * [ed91cb2] MT#5565 register_bria: Add another registered user first
+  * [4c0a6cf] bin/check.sh: Add check for deactivated files not in scenario.csv
+  * [7facd87] bin/ulog_parser.pl: filter lines by kamailio pid.
+  * [bd748c6] get_results.sh: fix g option. Generating flow_graph
+  * [9db218c] MT#5733 bin/create_peers.pl: fix warning
+  * [c20e75b] MT#5733 add transport to scenario.csv file
+  * [4ff4f70] MT#5733 use transport option on sipp
+  * [2c702bc] MT#5733 added scenario register_tcp.
+  * [02eaa78] MT#5109 Added scenarios to test tcp_udp scenario.
+  * [7b51aa8] MT#5109 fix invite_tcp_udp_reinvite scenario. ACK missing.
+  * [608c604] MT#5757 bin/check.sh: add -g option to generate graph only if test fails
+  * [babfc14] MT#5633 bin/config_debug.pl: activate presence
+  * [3b62b41] MT#5633 add presence support on scenario.
+  * [8a7e878] MT#5633 bin/ulog_parser.pl: fix 7facd87c61ad65b335534d91f9b88e0e60510965
+  * [3f0a003] MT#5633 add scenario presence
+  * [0e2a718] MT#5787 add invite_concurrent_max scenario
+  * [7356d3f] MT#5787 add invite_concurrent_max_out scenario
+  * [9ea4d88] MT#5787 add invite_concurrent_max_per_account scenario
+  * [7360858] MT#5801 add/modify var tests on register scenarios to check this bug.
+  * [98983f2] MT#5225 MT#5701 fix scenarios after changes on templates
 
- -- Victor Seva <vseva@sipwise.com>  Fri, 22 Nov 2013 09:11:46 +0100
+  [ Andrew Pogrebennyk ]
+  * [f116a18] MT#4675 fix checks
+
+  [ Michael Prokop ]
+  * [cc7d92b] Bump Standards-Version to 3.9.5
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Sat, 01 Feb 2014 19:44:35 +0100
 
 kamailio-config-tests (0.2) unstable; urgency=low
 
