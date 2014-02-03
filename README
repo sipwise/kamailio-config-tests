@@ -70,5 +70,67 @@ And can optionally include:
  - callforward.yml
  - speeddial.yml
  - peer.yml
+
+Test file syntax:
+-----------------
+
+The test file is divided in tree different parts:
+ - flow:
+  Array of routes with a possible list of pseudo-variables values to test.
+  If the value is a string it will be treated as a regular expression rule[0].
+
+  Example:
+  flow:
+    - start|MAIN:
+        $avp(val): [1, "test"]
+    - start|ROUTE_NET_INFO:
+        $avp(val): [2,1]
+    - end|ROUTE_NET_INFO:
+        $avp(val): None
+    - start|ROUTE_PRX_REQUEST:
+        $xavp(caller_peer_prefs[0]=>concurrent_max): '\d+'
+    - start|ROUTE_INVITE:
+        $xavp(caller_peer_prefs[0]=>concurrent_max[*]): [1]
+    - start|ROUTE_LOAD_CALLEE_DOMAIN_PREF:
+    - start|ROUTE_CLEAR_CALLEE_DOMAIN_PREF:
+    - end|ROUTE_CLEAR_CALLEE_DOMAIN_PREF:
+    - end|ROUTE_LOAD_CALLEE_DOMAIN_PREF:
+    - start|ROUTE_FIND_CALLER:
+    - start|ROUTE_AUTH:
+    - exit|ROUTE_AUTH:
+        $fU: testuser
+
+ - sip_in:
+  Array of regular expresion rules[0] to match in the sip messsage. If the rule
+  starts with '_:NOT:_' it will fail if the rule matches.
+
+  Example:
+  sip_in:
+    - '^INVITE'
+    - 'Contact: sip:testuser1002@'
+    - 'CSeq: 2 INVITE'
+    - 'Max-Forwards: 16'
+    - 'Content-Type: application/sdp'
+    - 'Proxy-Authorization: Digest username="testuser1002"'
+    - '_:NOT:_Contact: <sip:testuser1003@127.126.0.1:6666;ob>;expires=\d+',
+
+ - sip_out:
+  Array of lists of regular expression rules[0] to match the array of sip messages
+  send out. If the rule starts with '_:NOT:_' it will fail if the rule matches.
+
+  Example:
+  sip_out:
+  - [
+      '^SIP/2.0 100 Trying',
+      'Content-Length: 0'
+    ]
+  - [
+      '^SIP/2.0 403 Unauthorized IP detected',
+      'Content-Length: 0',
+      'P-NGCP-Authorization: testuser1003@',
+      'P-NGCP-Authorized: 1'
+    ]
+
+ [0] http://docs.python.org/2/library/re.html#regular-expression-syntax
 --
 Victor Seva <vseva@sipwise.com>
