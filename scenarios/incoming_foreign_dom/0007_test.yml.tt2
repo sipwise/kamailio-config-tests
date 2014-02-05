@@ -1,0 +1,25 @@
+flow:
+  - start|MAIN:
+  - start|ROUTE_NET_INFO:
+  - end|ROUTE_NET_INFO:
+  - start|ROUTE_PRX_REQUEST:
+  - start|ROUTE_OUTBOUND:
+sip_in:
+  - '^ACK sip:127.0.0.1:5080 SIP/2.0'
+  - 'Contact: sip:external@'
+  - 'CSeq: 1 ACK'
+  - 'Max-Forwards: 16'
+  - 'Content-Length: 0'
+  - 'From: <sip:external@external.test>'
+  - 'To: <sip:4311003@'
+
+sip_out:
+  - [
+      '^ACK sip:127.0.0.1:5080 SIP/2.0',
+      'Contact: sip:external@',
+      'CSeq: 1 ACK',
+      'Max-Forwards: 15',
+      'Content-Length: 0',
+      'From: <sip:external@external.test>',
+      'To: <sip:4311003@'
+    ]
