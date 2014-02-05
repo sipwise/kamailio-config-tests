@@ -132,6 +132,12 @@ function delete_voip
     echo "$(date) - Deleting rewrite rules"
     ${BIN_DIR}/create_rewrite_rules.pl -d ${SCEN_CHECK_DIR}/rewrite.yml
   fi
+
+  if [ -f ${SCEN_CHECK_DIR}/hosts ]; then
+    echo "$(date) - Deleting foreign domains"
+    sed -e "s:$(cat ${SCEN_CHECK_DIR}/hosts)::" -i /etc/hosts
+    rm ${SCEN_CHECK_DIR}/hosts
+  fi
 }
 
 function delete_locations
@@ -204,6 +210,7 @@ function get_ip
     error_helper "cannot find $1 ip on ${SCEN_CHECK_DIR}/scenario.csv" 10
   fi
   peer_host=$(grep "$1" ${SCEN_CHECK_DIR}/scenario.csv|cut -d\; -f4| tr -d '\n')
+  foreign_dom=$(grep "$1" ${SCEN_CHECK_DIR}/scenario.csv|cut -d\; -f5| tr -d '\n')
 }
 
 #$1 is filename
@@ -229,6 +236,7 @@ function copy_logs
 # $1 sipp xml scenario file
 function run_sipp
 {
+  local PORT_OLD
   check_port 50603
   local PORT=$port
   check_port 6003 3
@@ -273,6 +281,12 @@ function run_sipp
         error_helper "$(date) - error updating peer info" 15
       fi
     fi
+    if [ "${foreign_dom}" != "" ]; then
+      echo "$(date) - foreign domain detected... using 5060 port"
+      PORT_OLD=${PORT}
+      PORT="5060"
+    fi
+
     echo "$(date) - Running ${base} $ip:${PORT}-${MPORT}"
     if [ -f ${SCEN_CHECK_DIR}/${base}_reg.xml ]; then
       echo "$(date) - Register ${base} $ip:${PORT}-${MPORT}"
@@ -280,12 +294,15 @@ function run_sipp
     fi
     ${BIN_DIR}/sipp.sh -T $transport -i $ip -p ${PORT} -m ${MPORT} -r ${SCEN_CHECK_DIR}/${base}.xml &
     responder_pid="${responder_pid} ${base}:$!"
-    check_port ${PORT}
-    PORT=$port
+
+    if [ "${foreign_dom}" == "" ]; then
+      check_port ${PORT}
+      PORT=$port
+    fi
     check_port ${MPORT} 3
     MPORT=$port
   done
-  
+
   status=0
   # let's fire sipp scenarios
   for send in $(find ${SCEN_CHECK_DIR} -type f -name 'sipp_scenario[0-9][0-9].xml'| sort); do
@@ -417,6 +434,12 @@ if [ -z $SKIP_RUNSIPP ]; then
   if [[ $? -ne 0 ]]; then
     error_helper "Error creating csv files" 4
   fi
+
+  if [ -f ${SCEN_CHECK_DIR}/hosts ]; then
+    echo "$(date) - Setting foreign domains"
+    cat ${SCEN_CHECK_DIR}/hosts >> /etc/hosts
+  fi
+
   echo "$(date) - Running sipp scenarios"
   run_sipp
   echo "$(date) - Done sipp"

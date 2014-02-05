@@ -69,6 +69,7 @@ $domain = 'spce.test' unless defined($domain);
 if (lc($action) eq "off")
 {
   $yaml->[0]->{kamailio}{lb}{debug} = 'no';
+  $yaml->[0]->{kamailio}{lb}{use_dns_cache} = 'on';
   $yaml->[0]->{kamailio}{proxy}{debug} = 'no';
   $yaml->[0]->{kamailio}{proxy}{presence}{enable} = 'no';
   $yaml->[0]->{sems}{debug} = 'no';
@@ -94,6 +95,7 @@ if (lc($action) eq "off")
 else
 {
   $yaml->[0]->{kamailio}{lb}{debug} = 'yes';
+  $yaml->[0]->{kamailio}{lb}{use_dns_cache} = 'off';
   $yaml->[0]->{kamailio}{proxy}{debug} = 'yes';
   $yaml->[0]->{kamailio}{proxy}{presence}{enable} = 'yes';
   $yaml->[0]->{sems}{debug} = 'yes';
