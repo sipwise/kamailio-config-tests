@@ -149,6 +149,8 @@ scenario.yml file syntax:
   If active: no then no sipp_scenario_responderXX.xml exists for that responder. It's just
   info of the callee.
 
+  If foreign: yes then sipp_scenario_responderXX.xml will be run with 5060 port.
+
   Example:
 
   subscribers:
