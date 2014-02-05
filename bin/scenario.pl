@@ -126,7 +126,12 @@ sub generate
         $csv->{scenario}->print($io_scenario, $csv_data);
         foreach (@{$_->{responders}})
         {
-            get_subs_info($data->{subscribers}, $_) unless defined($_->{peer_host});
+            # by default foreign is no
+            $_->{foreign} = "no" unless defined($_->{foreign});
+            if(!defined($_->{peer_host}) and $_->{foreign} ne "yes")
+            {
+                get_subs_info($data->{subscribers}, $_);
+            }
             $_->{password} = "" unless defined($_->{password});
             # by default responder is active
             $_->{active} = "yes" unless defined($_->{active});
@@ -137,11 +142,15 @@ sub generate
             $auth   = "[authentication username=$_->{username} password=$_->{password}]";
             $csv_data = [$_->{username}, $_->{number}, $auth, $_->{domain}];
             $csv->{callee}->print($io_callee, $csv_data);
-            $csv_data = ["sipp_scenario_responder".sprintf("%02i", $res_id).".xml", $_->{proto}, $_->{ip}, $_->{peer_host}];
+            $csv_data = ["sipp_scenario_responder".sprintf("%02i", $res_id).".xml", $_->{proto}, $_->{ip}, $_->{peer_host}, $_->{foreign}];
             $csv->{scenario}->print($io_scenario, $csv_data);
             if($_->{register} eq "yes" && $_->{active} eq "yes")
             {
                 generate_reg($res_id)
+            }
+            if($_->{foreign} eq "yes")
+            {
+                generate_foreign_dom($_->{domain}, $_->{ip});
             }
             $res_id++;
         }
@@ -184,6 +193,15 @@ sub generate_presence
         chmod(0755, $fn);
         undef $fn;
     }
+}
+
+sub generate_foreign_dom
+{
+    my ($domain, $ip) = @_;
+    my $file = "$base_check_dir/hosts";
+    my $fn = IO::File->new($file, "w") or die("can't create $file");
+    print {$fn} "$ip $domain\n";
+    undef $fn;
 }
 
 generate($cf);
