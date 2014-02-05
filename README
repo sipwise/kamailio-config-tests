@@ -132,5 +132,85 @@ The test file is divided in tree different parts:
     ]
 
  [0] http://docs.python.org/2/library/re.html#regular-expression-syntax
+
+scenario.yml file syntax:
+-------------------------
+
+  This file is divided in two sections: subscribers and scenarios. In subscribers
+  we put the info and alias numbers. In scenarios we put the info needed to run the
+  sipp scenarios.
+
+  The check.sh script will start all the responders in the background in order and then
+  any sipp_scenarioXX.xml one by one.
+
+  If the responder has register: yes a sipp_scenario_responderXX_reg.xml will be created
+  and run it before the correspondent responder.
+
+  If active: no then no sipp_scenario_responderXX.xml exists for that responder. It's just
+  info of the callee.
+
+  Example:
+
+  subscribers:
+    spce.test:
+      testuser1003:
+        password: testuser
+        cc: 43
+        ac: 1
+        sn: 1003
+      testuser1002:
+        password: testuser
+        cc: 43
+        ac: 1
+        sn: 1002
+        alias_numbers:
+          - cc: 34
+            ac: 96
+            sn: 5711941
+  scenarios:
+    - ip: 127.126.0.1                    --> sipp_scenario00.xml
+      username: testuser1002
+      domain: spce.test
+      proto: tcp
+      responders:
+        - ip: 127.1.0.1                  --> sipp_scenario_responder00.xml
+          username: testuser1003
+          domain: spce.test
+          register: yes
+          proto: udp
+    - ip: 127.1.0.1                      --> sipp_scenario01.xml
+      username: testuser1003
+      domain: spce.test
+      proto: udp
+      responders:
+        - ip: 127.126.0.1                --> sipp_scenario_responder01.xml
+          username: testuser1002
+          domain: spce.test
+          register: yes
+          proto: tcp
+        - ip: 127.0.2.1                  --> sipp_scenario_responder02.xml
+          number: 004321001
+          username: 004321001
+          domain: spce.test
+          peer_host: peer_00_host0
+          register: no
+
+
+prefs.yml file syntax:
+----------------------
+
+  subscriber@domain:
+    - preference: value
+    - preference: value
+  '@domain':
+    - preference: value
+    - preference: value
+  peer_host:
+    - preference: value
+    - preference: value
+
+ Preferences must match SOAP definition [1]
+
+ [1] https://localhost:2443/SOAP/Provisioning.wsdl
 --
 Victor Seva <vseva@sipwise.com>
