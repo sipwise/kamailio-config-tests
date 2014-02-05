@@ -1,0 +1,17 @@
+subscribers:
+  spce.test:
+    testuser1002:
+      password: testuser
+      cc: 43
+      ac: 1
+      sn: 1002
+scenarios:
+  - ip: 127.126.0.1
+    username: testuser1002
+    domain: spce.test
+    responders:
+      - ip: 127.0.2.1
+        username: 004321001
+        domain: external.test
+        foreign: yes
+        register: no
