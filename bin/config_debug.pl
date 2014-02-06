@@ -67,7 +67,7 @@ $domain = 'spce.test' unless defined($domain);
 
 if (lc($action) eq "off")
 {
-  move($file.".orig", $file);
+  move("$file.orig", $file) or die "Can't restore the orig config";
   tie @array, 'Tie::File', '/etc/hosts' or die ('Can set test domain on /etc/hosts');
   for (@array)
   {
@@ -112,8 +112,8 @@ else
     }
     untie @array;
   }
+  open(my $fh, '>', "$file") or die "Could not open $file for writing";
+  print $fh $yaml->write_string() or die "Could not write YAML to $file";
 }
-open(my $fh, '>', "$file") or die "Could not open $file for writing";
-print $fh $yaml->write_string() or die "Could not write YAML to $file";
 
 #EOF
