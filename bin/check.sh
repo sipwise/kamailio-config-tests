@@ -281,7 +281,7 @@ function run_sipp
         error_helper "$(date) - error updating peer info" 15
       fi
     fi
-    if [ "${foreign_dom}" != "" ]; then
+    if [ "${foreign_dom}" == "yes" ]; then
       echo "$(date) - foreign domain detected... using 5060 port"
       PORT_OLD=${PORT}
       PORT="5060"
@@ -295,7 +295,7 @@ function run_sipp
     ${BIN_DIR}/sipp.sh -T $transport -i $ip -p ${PORT} -m ${MPORT} -r ${SCEN_CHECK_DIR}/${base}.xml &
     responder_pid="${responder_pid} ${base}:$!"
 
-    if [ "${foreign_dom}" == "" ]; then
+    if [ "${foreign_dom}" == "no" ]; then
       check_port ${PORT}
       PORT=$port
     fi
