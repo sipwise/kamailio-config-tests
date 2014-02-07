@@ -48,6 +48,7 @@ if($#ARGV>1 || $help)
 my $base_dir;
 my $yaml = YAML::Tiny->new;
 my $file  = "/etc/ngcp-config/config.yml";
+my $kamailio_config = '/etc/ngcp-config/templates/etc/kamailio/proxy/kamailio.cfg.tt2';
 my @array;
 my $path;
 if (exists $ENV{'BASE_DIR'})
@@ -89,6 +90,12 @@ if (lc($action) eq "off")
     }
     untie @array;
   }
+  tie @array, 'Tie::File', $kamailio_config or die ("Can't open $kamailio_config");
+  for (@array)
+  {
+    s/"publish_reginfo", 0/"publish_reginfo", 1/;
+  }
+  untie @array;
 }
 else
 {
@@ -113,6 +120,12 @@ else
     }
     untie @array;
   }
+  tie @array, 'Tie::File', $kamailio_config or die ("Can't open $kamailio_config");
+  for (@array)
+  {
+    s/"publish_reginfo", 1/"publish_reginfo", 0/;
+  }
+  untie @array;
 }
 open(my $fh, '>', "$file") or die "Could not open $file for writing";
 print $fh $yaml->write_string() or die "Could not write YAML to $file";
