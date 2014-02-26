@@ -136,11 +136,27 @@ function delete_voip
 
 function delete_locations
 {
-  for sub in $(cat ${SCEN_CHECK_DIR}/callee.csv | grep test | cut -d\; -f1 | xargs); do
-    ngcp-kamctl proxy ul rm $sub@${DOMAIN}
-    # delete possible banned user
-    ngcp-sercmd lb htable.delete auth $sub@${DOMAIN}::auth_count
+  local f
+  local sub
+
+  for f in ${SCEN_CHECK_DIR}/callee.csv ${SCEN_CHECK_DIR}/caller.csv; do
+    for sub in $(uniq $f | grep ${DOMAIN} | cut -d\; -f1 | xargs); do
+      ngcp-kamctl proxy ul rm $sub@${DOMAIN}
+      # delete possible banned user
+      ngcp-sercmd lb htable.delete auth $sub@${DOMAIN}::auth_count
+    done
   done
+
+  # check what's in the DDBB
+  f=$(mysql kamailio -e 'select count(*) from location;' -s -r | head)
+  if [ "$f" != "0" ]; then
+    echo "$(date) Cleaning location table"
+    sub=$(mysql -e 'select concat(username, "@", domain) as user from kamailio.location;' -r -s | head| uniq|xargs)
+    for f in $sub; do
+      ngcp-kamctl proxy ul rm $f
+    done
+    mysql -e 'delete from kamailio.location;' || true
+  fi
 }
 
 # $1 msg to echo
@@ -306,6 +322,9 @@ function run_sipp
     find ${SCEN_CHECK_DIR}/ -type f -name 'sipp_scenario*errors.log' -exec mv {} ${LOG_DIR} \;
     status=1
   fi
+
+  delete_locations
+
   if [[ $status -ne 0 ]]; then
     error_helper "error in sipp" 2
   fi
