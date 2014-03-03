@@ -1,3 +1,11 @@
+kamailio-config-tests (0.2.4) unstable; urgency=medium
+
+  * [c67060b] MT#5757 bin/check.sh: add -g option to generate graph only if test fails
+  * [160560c] MT#5947 remove possible banned user
+  * [440e753] MT#6055 clean kamailio location table
+
+ -- Victor Seva <vseva@sipwise.com>  Mon, 03 Mar 2014 17:06:07 +0100
+
 kamailio-config-tests (0.2.3) unstable; urgency=medium
 
   * [ad14b8c] get_results.sh: fix g option. Generating flow_graph
