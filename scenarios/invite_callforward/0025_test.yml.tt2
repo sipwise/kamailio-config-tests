@@ -85,6 +85,10 @@ flow:
   - exit|REPLY_ROUTE_NAT:
   - start|REPLY_ROUTE_NAT:
   - exit|REPLY_ROUTE_NAT:
+  - start|redirect:
+  - start|ROUTE_STOP_RTPPROXY_BRANCH:
+  - end|ROUTE_STOP_RTPPROXY_BRANCH:
+  - end|redirect:
   - start|FAILURE_ROUTE_LOCAL:
   - start|ROUTE_STOP_RTPPROXY_BRANCH:
   - end|ROUTE_STOP_RTPPROXY_BRANCH:
