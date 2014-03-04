@@ -84,7 +84,7 @@ flow:
   - exit|REPLY_ROUTE_NAT:
   - start|REPLY_ROUTE_NAT:
   - exit|REPLY_ROUTE_NAT:
-  - start|FAILURE_ROUTE_LOCAL:
+  - start|redirect:
   - start|ROUTE_STOP_RTPPROXY_BRANCH:
   - end|ROUTE_STOP_RTPPROXY_BRANCH:
   - start|ROUTE_LOAD_CALLER_PREF:
@@ -142,11 +142,6 @@ flow:
   - start|ROUTE_ADD_CALLINFO:
   - end|ROUTE_ADD_CALLINFO:
   - end|BRANCH_ROUTE_SBC:
-  - start|BRANCH_ROUTE_SBC:
-  - start|ROUTE_BRANCH_ACC_RTP:
-  - end|ROUTE_BRANCH_ACC_RTP:
-  - start|ROUTE_SET_RUSER:
-  - end|ROUTE_SET_RUSER:
   - start|BRANCH_ROUTE_SBC:
   - start|ROUTE_BRANCH_ACC_RTP:
   - end|ROUTE_BRANCH_ACC_RTP:
