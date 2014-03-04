@@ -13,16 +13,19 @@ function usage
   echo "-g generate png flow graphs if test fails"
   echo "-G generate png all flow graphs"
   echo "-h this help"
-
+  echo "-P parse only will disable test"
+  echo "-T test only will disable parse"
   echo "BASE_DIR:${BASE_DIR}"
   echo "BIN_DIR:${BIN_DIR}"
 }
 
-while getopts 'hgGp:' opt; do
+while getopts 'hgGp:TP' opt; do
   case $opt in
     h) usage; exit 0;;
     G) GRAPH="-G";;
     g) GRAPH="-g";;
+    P) OPTS="-T";;
+    T) OPTS="-P";;
     p) PROFILE=$OPTARG;;
   esac
 done
@@ -44,7 +47,7 @@ echo "$(date) - Clean result dir"
 rm -rf ${RESULT_DIR}
 
 find ${BASE_DIR}/scenarios/ -depth -maxdepth 1 -mindepth 1 -type d -exec basename {} \; | grep -v templates| sort \
- | parallel "${BIN_DIR}/check.sh ${GRAPH} -C -R -d ${DOMAIN} -p ${PROFILE}"
+ | parallel "${BIN_DIR}/check.sh ${GRAPH} -C -R ${OPTS} -d ${DOMAIN} -p ${PROFILE}"
 status=$?
 echo "$(date) - All done[$status]"
 exit $status
