@@ -1,3 +1,9 @@
+kamailio-config-tests (0.2.5) unstable; urgency=medium
+
+  * [5fc1763] MT#5385 wait sometime for monit to restart the services after ngcpcfg apply execution
+
+ -- Victor Seva <vseva@sipwise.com>  Mon, 10 Mar 2014 15:15:24 +0100
+
 kamailio-config-tests (0.2.4) unstable; urgency=medium
 
   * [c67060b] MT#5757 bin/check.sh: add -g option to generate graph only if test fails
