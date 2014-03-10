@@ -1,3 +1,11 @@
+kamailio-config-tests (0.1.6) unstable; urgency=medium
+
+  * [862c8ed] MT#5385 wait sometime for monit to restart the services after ngcpcfg apply execution
+  * [1ba3ed3] MT#5947 remove possible banned user
+  * [d486230] MT#6055 clean kamailio location table
+
+ -- Victor Seva <vseva@sipwise.com>  Mon, 10 Mar 2014 13:34:14 +0100
+
 kamailio-config-tests (0.1.5) unstable; urgency=medium
 
   * [65c516d] MT#5757 bin/check.sh: add -g option to generate graph only if test fails
