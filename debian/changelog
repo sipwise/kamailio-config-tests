@@ -1,3 +1,9 @@
+kamailio-config-tests (0.2.6) unstable; urgency=medium
+
+  * [2acae20] MT#5633 bin/ulog_parser.pl: fix 7facd87c61ad65b335534d91f9b88e0e60510965
+
+ -- Victor Seva <vseva@sipwise.com>  Tue, 11 Mar 2014 16:12:38 +0100
+
 kamailio-config-tests (0.2.5) unstable; urgency=medium
 
   * [5fc1763] MT#5385 wait sometime for monit to restart the services after ngcpcfg apply execution
