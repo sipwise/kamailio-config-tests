@@ -19,6 +19,9 @@
 # Public License version 3 can be found in "/usr/share/common-licenses/GPL-3".
 #
 
+# sipwise password for mysql connections
+. /etc/mysql/sipwise.cnf
+
 # $1 kamailio msg parsed to yml
 # $2 destination png filename
 function graph
@@ -154,14 +157,18 @@ function delete_locations
   done
 
   # check what's in the DDBB
-  f=$(mysql kamailio -e 'select count(*) from location;' -s -r | head)
+  f=$(mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" \
+      kamailio -e 'select count(*) from location;' -s -r | head)
   if [ "$f" != "0" ]; then
     echo "$(date) Cleaning location table"
-    sub=$(mysql -e 'select concat(username, "@", domain) as user from kamailio.location;' -r -s | head| uniq|xargs)
+    sub=$(mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" \
+      -e 'select concat(username, "@", domain) as user from kamailio.location;' \
+      -r -s | head| uniq|xargs)
     for f in $sub; do
       ngcp-kamctl proxy ul rm $f
     done
-    mysql -e 'delete from kamailio.location;' || true
+    mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" \
+      -e 'delete from kamailio.location;' || true
   fi
 }
 
