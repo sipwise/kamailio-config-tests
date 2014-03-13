@@ -1,3 +1,9 @@
+kamailio-config-tests (0.2.7) unstable; urgency=medium
+
+  * [2575c13] MT#6133 use sipwise user when connecting to mysql
+
+ -- Victor Seva <vseva@sipwise.com>  Thu, 13 Mar 2014 11:14:20 +0100
+
 kamailio-config-tests (0.2.6) unstable; urgency=medium
 
   * [2acae20] MT#5633 bin/ulog_parser.pl: fix 7facd87c61ad65b335534d91f9b88e0e60510965
