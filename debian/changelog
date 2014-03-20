@@ -1,3 +1,9 @@
+kamailio-config-tests (0.2.8) unstable; urgency=medium
+
+  * [4de4e2d] MT#6335 loosen the check for allowed_ips_grp pref value.
+
+ -- Andrew Pogrebennyk <apogrebennyk@sipwise.com>  Thu, 20 Mar 2014 13:29:36 +0100
+
 kamailio-config-tests (0.2.7) unstable; urgency=medium
 
   * [2575c13] MT#6133 use sipwise user when connecting to mysql
