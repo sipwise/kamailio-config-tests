@@ -18,8 +18,8 @@ flow:
   - start|ROUTE_CLEAR_CALLER_PREF:
   - end|ROUTE_CLEAR_CALLER_PREF:
   - end|ROUTE_LOAD_CALLER_PREF:
-      $xavp(caller_usr_prefs[0]=>allowed_ips_grp[*]): [1]
-      $xavp(caller_real_prefs[0]=>allowed_ips_grp[*]): [1]
+      $xavp(caller_usr_prefs[0]=>allowed_ips_grp[*]): '\d+'
+      $xavp(caller_real_prefs[0]=>allowed_ips_grp[*]): '\d+'
   - start|ROUTE_ACC_FAILURE:
   - start|ROUTE_ACC_CALLER:
   - end|ROUTE_ACC_CALLER:
