@@ -1,3 +1,30 @@
+kamailio-config-tests (0.4.0.0+0~mr3.3.0.0) unstable; urgency=low
+
+  [ Victor Seva ]
+  * [d769bdd] MT#5851 Fix lintian error: add python as dependence.
+  * [bf17039] MT#5865 Add some documentation about test file syntax
+  * [98e71d5] MT#5787 add invite_concurrent_max_out_per_account scenario
+  * [8ecac59] MT#5789 add incoming_foreign_dom scenario
+  * [236f7de] MT#5865 Add some documentation about scenario.yml and prefs.yml syntax
+  * [cfb23bb] MT#5789 foreign domain support
+  * [4347a90] MT#5789 add invite_foreign_dom scenario
+  * [a17d3c9] MT#5887 copy the original config.yml file and restore it after the tests.
+  * [58b0eb8] MT#5887 fix a17d3c9ef4f2693fb05db603f2594278b3f8ffad
+  * [82d9543] MT#5789 fix cfb23bb974f2286ffc0d2d091e53c507ad0bbc81
+  * [053b69b] MT#5947 remove possible banned user
+  * [89d4e27] MT#5947 Add a way to use a wrong password for auth on the caller
+  * [22e6c54] MT#5947 Add auth_fail scenario
+  * [cf4ce57] MT#6055 clean kamailio location table
+  * [cb5deae] MT#6165 allow parse only or test only on get_results.sh
+  * [9e8a299] MT#6133 use sipwise user when connecting to mysql
+
+  [ Andrew Pogrebennyk ]
+  * [ef9e050] MT#6021 Adapt tests for per-branch failure route.
+  * [71eec82] MT#6021 Adapt tests for per-branch failure route.
+  * [fac80cb] MT#6335 loosen the check for allowed_ips_grp pref value.
+
+ -- Alexander Lutay <alutay@sipwise.com>  Fri, 21 Mar 2014 15:22:32 +0100
+
 kamailio-config-tests (0.3+0~mr3.3) unstable; urgency=low
 
   [ Victor Seva ]
