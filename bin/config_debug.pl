@@ -99,7 +99,7 @@ else
   tie @array, 'Tie::File', '/etc/hosts' or die ('Can set test domain on /etc/hosts');
   for (@array)
   {
-    s/127.0.0.1 localhost/127.0.0.1 localhost $domain/;
+    s/127.0.0.1[ \t]+localhost/127.0.0.1 localhost $domain/;
   }
   untie @array;
   for my $i ('caller.csv', 'callee.csv')
