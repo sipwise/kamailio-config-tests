@@ -32,9 +32,9 @@ flow:
   - start|ROUTE_CHECK_CLI_ALLOWED:
   - end|ROUTE_CHECK_CLI_ALLOWED:
   - end|ROUTE_CHECK_USERPROV_CLI:
+  - start|ROUTE_FIND_CALLEE:
   - start|ROUTE_CLIR:
   - end|ROUTE_CLIR:
-  - start|ROUTE_FIND_CALLEE:
   - start|ROUTE_CLEAR_CALLEE_PREF:
       $avp(size): [1]
   - end|ROUTE_CLEAR_CALLEE_PREF:
