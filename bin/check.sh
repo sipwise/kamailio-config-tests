@@ -33,6 +33,18 @@ function graph
   fi
 }
 
+# $1 destination tap file
+# $2 file path
+function generate_error_tap
+{
+  local tap_file="$1"
+  cat <<EOF > $tap_file
+1..1
+not ok File $2 does not exists
+EOF
+echo "$(date) - $(basename $2) NOT ok"
+}
+
 # $1 unit test yml
 # $2 kamailio msg parsed to yml
 # $3 destination tap filename
@@ -40,12 +52,12 @@ function check_test
 {
   local dest=${RESULT_DIR}/$(basename $3 .tap)
   if [ ! -f $1 ]; then
-    echo "File $1 does not exists"
+    generate_error_tap $3 $1
     ERR_FLAG=1
     return
   fi
   if [ ! -f $2 ]; then
-    echo "File $2 does not exists"
+    generate_error_tap $3 $2
     ERR_FLAG=1
     return
   fi
