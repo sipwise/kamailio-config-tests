@@ -19,7 +19,6 @@
 # Public License version 3 can be found in "/usr/share/common-licenses/GPL-3".
 #
 use File::Spec;
-use File::Copy;
 use Tie::File;
 use strict;
 use warnings;
@@ -60,6 +59,8 @@ else
   $base_dir = '/usr/share/kamailio-config-tests';
 }
 
+$yaml = YAML::Tiny->read($file) or die "File $file could not be read";
+
 my ($action, $domain) = @ARGV;
 
 $action = 'off' unless defined($action);
@@ -67,7 +68,12 @@ $domain = 'spce.test' unless defined($domain);
 
 if (lc($action) eq "off")
 {
-  move($file.".orig", $file);
+  $yaml->[0]->{kamailio}{lb}{debug} = 'no';
+  $yaml->[0]->{kamailio}{proxy}{debug} = 'no';
+  $yaml->[0]->{kamailio}{proxy}{presence}{enable} = 'no';
+  $yaml->[0]->{sems}{debug} = 'no';
+  $yaml->[0]->{checktools}{sip_check_enable} = 1;
+
   tie @array, 'Tie::File', '/etc/hosts' or die ('Can set test domain on /etc/hosts');
   for (@array)
   {
@@ -87,8 +93,6 @@ if (lc($action) eq "off")
 }
 else
 {
-  copy($file, $file.".orig") or die "Copy failed: $!";
-  $yaml = YAML::Tiny->read($file) or die "File $file could not be read";
   $yaml->[0]->{kamailio}{lb}{debug} = 'yes';
   $yaml->[0]->{kamailio}{proxy}{debug} = 'yes';
   $yaml->[0]->{kamailio}{proxy}{presence}{enable} = 'yes';
