@@ -1,3 +1,12 @@
+kamailio-config-tests (0.3.0.2+0~mr3.2.1.2) unstable; urgency=low
+
+  [ Victor Seva ]
+  * [eca73cb] MT#6565 disable presence tests
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 07 Apr 2014 13:20:30 +0200
+
 kamailio-config-tests (0.3.0.1+0~mr3.2.1.1) unstable; urgency=low
 
   [ Victor Seva ]
