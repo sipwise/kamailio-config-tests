@@ -56,7 +56,7 @@ sip_in:
   - '^INVITE sip:\*2@'
   - 'Contact: sip:testuser1002@'
   - 'CSeq: 2 INVITE'
-  - 'Max-Forwards: 16'
+  - 'Max-Forwards: 69'
   - 'From: <sip:testuser1002@'
   - 'To: <sip:\*2@'
   - 'Content-Type: application/sdp'

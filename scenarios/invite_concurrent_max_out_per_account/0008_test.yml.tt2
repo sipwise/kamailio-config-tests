@@ -13,7 +13,7 @@ sip_in:
   - '^INVITE'
   - 'Contact: sip:testuser1002@'
   - 'CSeq: 3 INVITE'
-  - 'Max-Forwards: 15'
+  - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
   - 'Proxy-Authorization: Digest username="testuser1002"'
   - 'a=sendonly'
@@ -31,7 +31,7 @@ sip_out:
       'To: <sip:004321001@',
       'Content-Type: application/sdp',
       'Proxy-Authorization: Digest username="testuser1002"',
-      'Max-Forwards: 14',
+      'Max-Forwards: 68',
       'Content-Type: application/sdp',
       'a=sendonly'
     ]

@@ -15,7 +15,7 @@ sip_in:
   - 'From: <sip:testuser1002@'
   - 'To: <sip:004321001@'
   - 'CSeq: 6 BYE'
-  - 'Max-Forwards: 16'
+  - 'Max-Forwards: 69'
   - 'Content-Length: 0'
 sip_out:
   - [

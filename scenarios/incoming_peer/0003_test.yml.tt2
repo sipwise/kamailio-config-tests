@@ -88,7 +88,7 @@ sip_in:
   - '^INVITE sip:4311003@'
   - 'Contact: sip:004321001@'
   - 'CSeq: 1 INVITE'
-  - 'Max-Forwards: 16'
+  - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
 sip_out:
   - [

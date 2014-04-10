@@ -17,7 +17,7 @@ sip_in:
   - 'Contact: sip:testuser1004@'
   - 'To: <sip:testuser1002@'
   - 'CSeq: 1 INVITE'
-  - 'Max-Forwards: 16'
+  - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
 sip_out:
   - [

@@ -84,7 +84,7 @@ sip_in:
   - '^INVITE sip:004321001@'
   - 'Contact: sip:testuser1002@'
   - 'CSeq: 2 INVITE'
-  - 'Max-Forwards: 16'
+  - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
   - 'Proxy-Authorization: Digest username="testuser1002"'
 sip_out:

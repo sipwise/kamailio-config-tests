@@ -29,7 +29,7 @@ sip_out:
   - [
       '^BYE sip:vmu4311001@127.0.0.1:5070 SIP/2.0',
       'CSeq: 11 BYE',
-      'Max-Forwards: 10',
+      'Max-Forwards: 70',
       'Content-Length: 0',
       'From: <sip:4311002@',
       'To: <sip:testuser1001@'

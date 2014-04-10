@@ -15,7 +15,7 @@ sip_in:
   - '^BYE sip:127.0.0.1:5080 SIP/2.0'
   - 'Contact: sip:testuser1002@'
   - 'CSeq: 3 BYE'
-  - 'Max-Forwards: 16'
+  - 'Max-Forwards: 69'
   - 'Content-Length: 0'
   - 'From: "431100299" <sip:testuser1002@'
   - 'To: <sip:testuser1003@'
@@ -32,7 +32,7 @@ sip_out:
       '^BYE sip:127.0.0.1:5080 SIP/2.0',
       'Contact: sip:testuser1002@',
       'CSeq: 3 BYE',
-      'Max-Forwards: 15',
+      'Max-Forwards: 68',
       'Content-Length: 0',
       'From: "431100299" <sip:431100299@',
       'To: <sip:testuser1003@'

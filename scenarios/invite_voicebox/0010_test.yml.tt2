@@ -17,7 +17,7 @@ sip_out:
       '^ACK sip:vmu4311001@127.0.0.1:5070 SIP/2.0',
       'Contact: <sip:127.0.0.1:5080>',
       'CSeq: 10 ACK',
-      'Max-Forwards: 10',
+      'Max-Forwards: 70',
       'Content-Length: 0',
       'From: <sip:4311002@',
       'To: <sip:testuser1001@'

@@ -9,7 +9,7 @@ sip_in:
   - '^ACK sip:127.0.0.1:5080 SIP/2.0'
   - 'Contact: sip:testuser1002@'
   - 'CSeq: 2 ACK'
-  - 'Max-Forwards: 16'
+  - 'Max-Forwards: 69'
   - 'Content-Length: 0'
   - 'From: "4311009" <sip:testuser1002@'
   - 'To: <sip:testuser1003@'
@@ -19,7 +19,7 @@ sip_out:
       '^ACK sip:127.0.0.1:5080 SIP/2.0',
       'Contact: sip:testuser1002@',
       'CSeq: 2 ACK',
-      'Max-Forwards: 15',
+      'Max-Forwards: 68',
       'Content-Length: 0',
       'From: "4311009" <sip:4311009@',
       'To: <sip:testuser1003@'
