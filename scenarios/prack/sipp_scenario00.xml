@@ -100,7 +100,7 @@
       PRACK [next_url] SIP/2.0
       Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
       From: <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>;tag=[pid]SIPpTag00[call_number]
-      To: <sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]>
+      To: <sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]>[peer_tag_param]
       Call-ID: [call_id]
       [routes]
       CSeq: 3 PRACK
@@ -144,7 +144,7 @@
     </action>
   </nop>
 
-  <pause milliseconds="1000"/>
+  <pause milliseconds="8000"/>
 
   <send start_rtd="4">
     <![CDATA[
@@ -154,7 +154,7 @@
       From: <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>;tag=[pid]SIPpTag00[call_number]
       To: <sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]>[peer_tag_param]
       Call-ID: [call_id]
-      CSeq: 3 BYE
+      CSeq: 4 BYE
       Contact: sip:[field0 file="caller.csv"]@[local_ip]:[local_port]
       [routes]
       Max-Forwards: 70
