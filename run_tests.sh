@@ -49,13 +49,19 @@ fi
 if [ -z $SKIP ]; then
   echo "$(date) - Setting config debug on"
   ${BIN_DIR}/config_debug.pl on ${DOMAIN}
-  ngcpcfg apply
-  echo "$(date) - Setting config debug on. Done."
   if [ "${PROFILE}" == "PRO" ]; then
-    echo "$(date) wait for monit to restart services"
-    sleep 5
-    echo "$(date) wait for monit to restart services. Done"
+    ( timeout 60 ${BIN_DIR}/pid_watcher.py )&
   fi
+  ngcpcfg apply
+  if [ "${PROFILE}" == "PRO" ]; then
+    wait $!
+    if [ "$?" != "0" ]; then
+      echo "error on apply config"
+      echo "$(date) - Done[1]"
+      exit 1
+    fi
+  fi
+  echo "$(date) - Setting config debug on. Done."
 fi
 
 echo "$(date) - Clean log dir"
