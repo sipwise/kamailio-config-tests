@@ -1,3 +1,28 @@
+kamailio-config-tests (0.3.1.1+0~mr3.2.2.1) unstable; urgency=low
+
+  [ Victor Seva ]
+  * [1447911] MT#6565 disable presence tests
+  * [8d297ba] MT#6543 generate tap file even if no sip message yaml exists
+  * [7f8169a] MT#5865 Add some documentation about scenario.yml and prefs.yml syntax
+  * [66d42a0] MT#5789 add invite_foreign_dom scenario
+  * [a992ac5] MT#5789 add incoming_foreign_dom scenario
+  * [ffc3b25] MT#5789 foreign domain support
+  * [d392e24] MT#5789 fix cfb23bb974f2286ffc0d2d091e53c507ad0bbc81
+  * [4642784] MT#5887 copy the original config.yml file and restore it after the tests.
+  * [ecda9b3] MT#5887 fix a17d3c9ef4f2693fb05db603f2594278b3f8ffad
+  * [595b042] MT#5947 Add a way to use a wrong password for auth on the caller
+  * [6d53794] MT#5947 Add auth_fail scenario
+
+  [ Andrew Pogrebennyk ]
+  * [29ae5c9] MT#6491 adapt tests after ROUTE_CLIR moving.
+  * [c06f1e5] MT#6491 invite_speeddial: ROUTE_CLIR is now not called
+  * [e141517] Revert "MT#5887 fix a17d3c9ef4f2693fb05db603f2594278b3f8ffad"
+  * [f73c525] Revert "MT#5887 copy the original config.yml file and restore it after the tests."
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 13 May 2014 11:56:59 +0200
+
 kamailio-config-tests (0.3.1.0+0~mr3.2.2.0) unstable; urgency=low
 
   [ Victor Seva ]
