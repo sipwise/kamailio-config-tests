@@ -2,6 +2,7 @@
 BASE_DIR=${BASE_DIR:-"/usr/share/kamailio-config-tests"}
 BIN_DIR="${BASE_DIR}/bin"
 LOG_DIR="${BASE_DIR}/log"
+MLOG_DIR="${BASE_DIR}/mem"
 RESULT_DIR="${BASE_DIR}/result"
 PROFILE="CE"
 DOMAIN="spce.test"
@@ -60,6 +61,12 @@ fi
 
 echo "$(date) - Clean log dir"
 rm -rf ${LOG_DIR}
+mkdir -p ${MLOG_DIR}
+
+echo "$(date) - Initial mem stats"
+VERSION="${PROFILE}_$(cat /etc/ngcp_version | cut -f1 -d' ')_"
+${BIN_DIR}/mem_stats.py --private_file=${MLOG_DIR}/${VERSION}initial_pvm.cvs \
+  --share_file=${MLOG_DIR}/${VERSION}initial_shm.cvs
 
 for t in $(find ${BASE_DIR}/scenarios/ -depth -maxdepth 1 -mindepth 1 -type d | grep -v templates | sort); do
   echo "$(date) - Run[${PROFILE}]: $(basename $t) ================================================="
@@ -69,6 +76,10 @@ for t in $(find ${BASE_DIR}/scenarios/ -depth -maxdepth 1 -mindepth 1 -type d | 
   fi
   echo "$(date) - ================================================================================="
 done
+
+echo "$(date) - Final mem stats"
+${BIN_DIR}/mem_stats.py --private_file=${MLOG_DIR}/${VERSION}final_pvm.cvs \
+  --share_file=${MLOG_DIR}/${VERSION}final_shm.cvs
 
 if [ -z $SKIP ]; then
   echo "$(date) - Setting config debug off"
