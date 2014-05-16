@@ -82,7 +82,7 @@ for t in $(find ${BASE_DIR}/scenarios/ -depth -maxdepth 1 -mindepth 1 -type d | 
   echo "$(date) - ================================================================================="
 done
 
-echo "$(date) - Initial mem stats"
+echo "$(date) - Final mem stats"
 ${BIN_DIR}/mem_stats.py --private_file=${MLOG_DIR}/final_pvm.cvs \
   --share_file=${MLOG_DIR}/final_shm.cvs
 
