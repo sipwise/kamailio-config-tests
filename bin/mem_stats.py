@@ -26,20 +26,30 @@ KAM_LINES=10
 
 proxy = xmlrpclib.ServerProxy(KAM_URL)
 
-def get_headers(l):
-    res = {}
+def get_headers(l, prefix):
+    res = []
     for i in l:
-        res[i] = i
+        res.append("%s%s" % (prefix, i))
     return res
 
 def sum_row(s, r):
     for i in ['used', 'real_used', 'free']:
         s[i] = s[i] + r[i];
 
+def save_data(datafile, headers, prefix, res):
+    show_headers = get_headers(headers, prefix)
+    with open(datafile, 'w+') as csvfile:
+        spamwriter = csv.writer(csvfile)
+        spamwriter.writerow(show_headers)
+        spamwriter = csv.DictWriter(csvfile,
+            headers, extrasaction='ignore')
+        for row in res:
+            spamwriter.writerow(row)
+
 def get_pvm(private_file):
     res = [{'pid':'SUM', 'used':0, 'real_used':0, 'free':0},]
     headers = ['pid', 'used', 'real_used', 'free']
-    write_headers = False
+    prefix = 'rss_'
     try:
         for i in range(KAM_LINES):
             row = proxy.pkg.stats("index", i)[0]
@@ -57,18 +67,13 @@ def get_pvm(private_file):
         print "Error code: %d" % err.errcode
         print "Error message: %s" % err.errmsg
         sys.exit(-2)
-    if not os.path.isfile(private_file):
-        write_headers = True
-    with open(private_file, 'a+') as csvfile:
-        spamwriter = csv.DictWriter(csvfile,
-            headers, extrasaction='ignore')
-        if write_headers:
-            spamwriter.writerow(get_headers(headers))
-        for row in res:
-            spamwriter.writerow(row)
+    save_data(private_file, headers, prefix, res)
 
 def get_shm(share_file):
-    write_headers = False
+    headers = ['used', 'real_used', 'max_used',
+        'free', 'fragments', 'total'
+    ]
+    prefix = 'shared_'
     try:
         res = proxy.core.shmmem('b')
     except xmlrpclib.Fault as err:
@@ -83,14 +88,7 @@ def get_shm(share_file):
         print "Error code: %d" % err.errcode
         print "Error message: %s" % err.errmsg
         sys.exit(-2)
-    if not os.path.isfile(share_file):
-        write_headers = True
-    with open(share_file, 'a+') as csvfile:
-        spamwriter = csv.DictWriter(csvfile,
-            res.keys())
-        if write_headers:
-            spamwriter.writerow(get_headers(res.keys()))
-        spamwriter.writerow(res)
+    save_data(share_file, headers, prefix, [res, ])
 
 def main():
     parser = argparse.ArgumentParser(description='export to csv kamailio proxy stats.')
