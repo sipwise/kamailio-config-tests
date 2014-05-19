@@ -32,13 +32,19 @@ def get_headers(l):
         res[i] = i
     return res
 
+def sum_row(s, r):
+    for i in ['used', 'real_used', 'free']:
+        s[i] = s[i] + r[i];
+
 def get_pvm(private_file):
-    res = []
+    res = [{'pid':'SUM', 'used':0, 'real_used':0, 'free':0},]
     headers = ['pid', 'used', 'real_used', 'free']
     write_headers = False
     try:
         for i in range(KAM_LINES):
-            res.append(proxy.pkg.stats("index", i)[0])
+            row = proxy.pkg.stats("index", i)[0]
+            res.append(row)
+            sum_row(res[0], row)
     except xmlrpclib.Fault as err:
         print "A fault occurred"
         print "Fault code: %d" % err.faultCode
