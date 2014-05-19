@@ -67,7 +67,10 @@ def get_pvm(private_file):
         print "Error code: %d" % err.errcode
         print "Error message: %s" % err.errmsg
         sys.exit(-2)
-    save_data(private_file, headers, prefix, res)
+    save_data(private_file, headers, prefix, res[:1])
+    fileName, fileExtension = os.path.splitext(private_file)
+    private_file_pp = '%s_per_pid%s' % (fileName, fileExtension)
+    save_data(private_file_pp, headers, prefix, res[2:])
 
 def get_shm(share_file):
     headers = ['used', 'real_used', 'max_used',
