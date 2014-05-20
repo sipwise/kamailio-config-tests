@@ -1,3 +1,10 @@
+kamailio-config-tests (0.2.9) unstable; urgency=medium
+
+  * [943d709] MT#6817 add pid_watcher.py
+  * [16a964e] MT#7109 Add mem stats
+
+ -- Victor Seva <vseva@sipwise.com>  Tue, 20 May 2014 11:30:49 +0200
+
 kamailio-config-tests (0.2.8) unstable; urgency=medium
 
   * [4de4e2d] MT#6335 loosen the check for allowed_ips_grp pref value.
