@@ -1,3 +1,10 @@
+kamailio-config-tests (0.1.9) unstable; urgency=medium
+
+  * [e009937] MT#6817 add pid_watcher.py
+  * [fcdf61a] MT#7109 Add mem stats
+
+ -- Victor Seva <vseva@sipwise.com>  Tue, 20 May 2014 11:37:31 +0200
+
 kamailio-config-tests (0.1.8) unstable; urgency=medium
 
   * [c3a7490] MT#6133 use sipwise user when connecting to mysql
