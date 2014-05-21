@@ -54,6 +54,11 @@ if [ -z $SKIP ]; then
     ( timeout 60 ${BIN_DIR}/pid_watcher.py )&
   fi
   ngcpcfg apply
+  if [ "$?" != "0" ]; then
+    echo "$(date) - ngcp apply returned != 0"
+    echo "$(date) - Done[3]"
+    exit 3
+  fi
   if [ "${PROFILE}" == "PRO" ]; then
     wait $!
     if [ "$?" != "0" ]; then
@@ -91,7 +96,10 @@ if [ -z $SKIP ]; then
   echo "$(date) - Setting config debug off"
   ${BIN_DIR}/config_debug.pl off ${DOMAIN}
   ngcpcfg apply
-  echo "$(date) - Setting config debug off. Done."
+  if [ "$?" != "0" ]; then
+    error_flag=4
+  fi
+  echo "$(date) - Setting config debug off. Done"
 fi
 
 echo "$(date) - Done[$error_flag]"
