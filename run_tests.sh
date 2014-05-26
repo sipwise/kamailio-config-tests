@@ -32,7 +32,7 @@ function cfg_debug_off
     echo "$(date) - Setting config debug off"
     ${BIN_DIR}/config_debug.pl off ${DOMAIN}
     ngcpcfg apply
-    res = $?
+    res=$?
     if [ "$res" != "0" ]; then
       echo "$(date) - ngcpcfg apply returned $res"
       error_flag=4
@@ -74,7 +74,7 @@ if [ -z $SKIP ]; then
     ( timeout 60 ${BIN_DIR}/pid_watcher.py &> ${LOG_DIR}/pid_watcher.log )&
   fi
   ngcpcfg apply
-  res = $?
+  res=$?
   if [ "$res" != "0" ]; then
     echo "$(date) - ngcp apply returned $res"
     echo "$(date) - Done[3]"
