@@ -27,11 +27,14 @@ function list
 
 function cfg_debug_off
 {
+  local res
   if [ -z $SKIP ]; then
     echo "$(date) - Setting config debug off"
     ${BIN_DIR}/config_debug.pl off ${DOMAIN}
     ngcpcfg apply
-    if [ "$?" != "0" ]; then
+    res = $?
+    if [ "$res" != "0" ]; then
+      echo "$(date) - ngcpcfg apply returned $res"
       error_flag=4
     fi
     echo "$(date) - Setting config debug off. Done[$error_flag]"
@@ -71,8 +74,9 @@ if [ -z $SKIP ]; then
     ( timeout 60 ${BIN_DIR}/pid_watcher.py &> ${LOG_DIR}/pid_watcher.log )&
   fi
   ngcpcfg apply
-  if [ "$?" != "0" ]; then
-    echo "$(date) - ngcp apply returned != 0"
+  res = $?
+  if [ "$res" != "0" ]; then
+    echo "$(date) - ngcp apply returned $res"
     echo "$(date) - Done[3]"
     cfg_debug_off
     exit 3
