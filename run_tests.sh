@@ -25,6 +25,19 @@ function list
   find ${BASE_DIR}/scenarios/ -depth -maxdepth 1 -mindepth 1 -type d -exec basename {} \;| grep -v templates | sort
 }
 
+function cfg_debug_off
+{
+  if [ -z $SKIP ]; then
+    echo "$(date) - Setting config debug off"
+    ${BIN_DIR}/config_debug.pl off ${DOMAIN}
+    ngcpcfg apply
+    if [ "$?" != "0" ]; then
+      error_flag=4
+    fi
+    echo "$(date) - Setting config debug off. Done[$error_flag]"
+  fi
+}
+
 while getopts 'hlcp:' opt; do
   case $opt in
     h) usage; exit 0;;
@@ -47,16 +60,21 @@ if [ "${PROFILE}" != "CE" ] && [ "${PROFILE}" != "PRO" ]; then
   exit 2
 fi
 
+echo "$(date) - Clean log dir"
+rm -rf ${LOG_DIR}
+mkdir -p ${MLOG_DIR} ${LOG_DIR}
+
 if [ -z $SKIP ]; then
   echo "$(date) - Setting config debug on"
   ${BIN_DIR}/config_debug.pl on ${DOMAIN}
   if [ "${PROFILE}" == "PRO" ]; then
-    ( timeout 60 ${BIN_DIR}/pid_watcher.py )&
+    ( timeout 60 ${BIN_DIR}/pid_watcher.py &> ${LOG_DIR}/pid_watcher.log )&
   fi
   ngcpcfg apply
   if [ "$?" != "0" ]; then
     echo "$(date) - ngcp apply returned != 0"
     echo "$(date) - Done[3]"
+    cfg_debug_off
     exit 3
   fi
   if [ "${PROFILE}" == "PRO" ]; then
@@ -64,15 +82,12 @@ if [ -z $SKIP ]; then
     if [ "$?" != "0" ]; then
       echo "error on apply config"
       echo "$(date) - Done[1]"
+      cfg_debug_off
       exit 1
     fi
   fi
-  echo "$(date) - Setting config debug on. Done."
+  echo "$(date) - Setting config debug on. Done[$error_flag]."
 fi
-
-echo "$(date) - Clean log dir"
-rm -rf ${LOG_DIR}
-mkdir -p ${MLOG_DIR}
 
 echo "$(date) - Initial mem stats"
 VERSION="${PROFILE}_$(cat /etc/ngcp_version | cut -f1 -d' ')_"
@@ -92,15 +107,7 @@ echo "$(date) - Final mem stats"
 ${BIN_DIR}/mem_stats.py --private_file=${MLOG_DIR}/${VERSION}final_pvm.cvs \
   --share_file=${MLOG_DIR}/${VERSION}final_shm.cvs
 
-if [ -z $SKIP ]; then
-  echo "$(date) - Setting config debug off"
-  ${BIN_DIR}/config_debug.pl off ${DOMAIN}
-  ngcpcfg apply
-  if [ "$?" != "0" ]; then
-    error_flag=4
-  fi
-  echo "$(date) - Setting config debug off. Done"
-fi
+cfg_debug_off
 
 echo "$(date) - Done[$error_flag]"
 exit $error_flag
