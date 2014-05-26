@@ -1,3 +1,34 @@
+kamailio-config-tests (0.5.0.0+0~mr3.4.0.0) unstable; urgency=low
+
+  [ Victor Seva ]
+  * [9934dcf] MT#6165 ulog_parser.pl: add more info on error Call-ID
+  * [62c9562] MT#6499 bin/config_debug.pl: more flexible localhost match
+  * [601f7c5] MT#6543 generate tap file even if no sip message yaml exists
+  * [2999025] MT#6565 disable presence tests
+  * [f5b9fda] MT#6817 add pid_watcher.py
+  * [ea6c1b4] MT#7109 Add mem stats
+  * [8129a13] MT#7109 fix copy paste typo
+  * [fa9ce94] MT#7109 Add first SUM row to private mem stat file
+  * [42491e6] MT#7109 add prefix to headers
+  * [73fd5c7] MT#7109 create private memory per_pid file
+  * [2d36611] MT#7109 use profile and version in the mem files
+  * [75bd40d] MT#7109 fix last commit
+  * [ae5d564] MT#6817 Stop tests if ngcpcfg apply returns error
+  * [fcb8961] MT#6817 set debug off if error. Add pid_watcher log
+  * [f77b10c] MT#6817 add ngcpcfg apply result to output
+  * [0af7ebd] MT#6817 add ngcpcfg apply result to output. fix
+
+  [ Andrew Pogrebennyk ]
+  * [3fb4a8e] MT#6491 adapt tests after ROUTE_CLIR moving.
+  * [48f6c4f] MT#6491 invite_speeddial: ROUTE_CLIR is now not called
+  * [24c733e] MT#4759 adapt tests to the new upper limit for the max-forward value.
+  * [f216511] MT#7005 adapt tests for new CFU call-flow.
+  * [42ce4ec] MT#6981 add test for rewrite-rule with variable in match part.
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 26 May 2014 15:44:11 +0200
+
 kamailio-config-tests (0.4.0.0+0~mr3.3.0.0) unstable; urgency=low
 
   [ Victor Seva ]
