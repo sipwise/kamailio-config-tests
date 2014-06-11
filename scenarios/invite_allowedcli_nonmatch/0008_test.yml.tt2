@@ -1,0 +1,21 @@
+flow:
+  - start|DEFAULT_ROUTE:
+  - start|ROUTE_NET_INFO:
+  - return|ROUTE_NET_INFO:
+  - start|ROUTE_PRX_REQUEST:
+  - start|ROUTE_INITVARS:
+  - return|ROUTE_INITVARS:
+  - start|ROUTE_OUTBOUND:
+  - return|ROUTE_OUTBOUND:
+sip_in:
+  - '^ACK sip:127.0.0.1:5080;prxroute=1 SIP/2.0'
+  - 'CSeq: 2 ACK'
+  - 'From: "431100222" <sip:testuser1002@'
+  - 'To: <sip:testuser1003@'
+sip_out:
+  - [
+      '^ACK sip:127.0.0.1:5080;prxroute=1 SIP/2.0',
+      'CSeq: 2 ACK',
+      'From: "431100222" <sip:43122122@',
+      'To: <sip:testuser1003@'
+    ]

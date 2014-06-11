@@ -1,46 +1,17 @@
 flow:
-  - start|MAIN:
-  - start|ROUTE_NET_INFO:
-  - end|ROUTE_NET_INFO:
-  - start|ROUTE_PRX_REQUEST:
-  - start|ROUTE_INITVARS:
-  - end|ROUTE_INITVARS:
-  - start|ROUTE_STOP_RTPPROXY:
-  - end|ROUTE_STOP_RTPPROXY:
-  - start|ROUTE_OUTBOUND:
-  - exit|ROUTE_OUTBOUND:
-  # 200 OK
   - start|REPLY_ROUTE_NAT:
   - exit|REPLY_ROUTE_NAT:
 sip_in:
-  - '^BYE sip:127.0.0.1:5080(;prxroute=1)? SIP/2.0'
-  - 'Contact: sip:external@'
+  - '^SIP/2.0 200 OK'
   - 'CSeq: 2 BYE'
-  - 'Max-Forwards: 69'
   - 'Content-Length: 0'
-  - 'From: <sip:external@external.test>'
+  - 'From: <sip:external@'
   - 'To: <sip:4311003@'
 sip_out:
-  - [
-      '^SIP/2.0 100 Trying',
-      'CSeq: 2 BYE',
-      'Content-Length: 0',
-      'From: <sip:external@external.test>',
-      'To: <sip:4311003@'
-    ]
-  - [
-      '^BYE sip:127.0.0.1:5080(;prxroute=1)? SIP/2.0',
-      'Contact: sip:external@',
-      'CSeq: 2 BYE',
-      'Max-Forwards: 68',
-      'Content-Length: 0',
-      'From: <sip:external@external.test>',
-      'To: <sip:4311003@'
-    ]
   - [
       '^SIP/2.0 200 OK',
       'CSeq: 2 BYE',
       'Content-Length: 0',
-      'From: <sip:external@external.test>',
+      'From: <sip:external@',
       'To: <sip:4311003@'
     ]

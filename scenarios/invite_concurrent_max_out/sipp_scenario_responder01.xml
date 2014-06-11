@@ -12,6 +12,7 @@
       From: <sip:[field0 file="caller.csv" line=0]@[field2 file="caller.csv" line=0]>;tag=[pid]SIPpTag00[call_number]
       To: <sip:[field0 file="callee.csv" line=1]@[field3 file="callee.csv" line=1]>
       Call-ID: [call_id]
+      P-NGCP-CFGTEST: [field4 file="callee.csv" line=0]
       CSeq: 1 INVITE
       Contact: sip:[field0 file="caller.csv" line=0]@[local_ip]:[local_port]
       Max-Forwards: 70
@@ -43,6 +44,7 @@
       From: <sip:[field0 file="caller.csv" line=0]@[field2 file="caller.csv" line=0]>;tag=[pid]SIPpTag00[call_number]
       To: <sip:[field0 file="callee.csv" line=1]@[field3 file="callee.csv" line=1]>[peer_tag_param]
       Call-ID: [call_id]
+      P-NGCP-CFGTEST: [field4 file="callee.csv" line=0]
       CSeq: [cseq] ACK
       Contact: sip:[field0 file="caller.csv" line=0]@[local_ip]:[local_port]
       Max-Forwards: 70
@@ -61,6 +63,7 @@
       From: <sip:[field0 file="caller.csv" line=0]@[field2 file="caller.csv" line=0]>;tag=[pid]SIPpTag00[call_number]
       To: <sip:[field0 file="callee.csv" line=1]@[field3 file="callee.csv" line=1]>
       Call-ID: [call_id]
+      P-NGCP-CFGTEST: [field4 file="callee.csv" line=0]
       CSeq:  [cseq] INVITE
       Contact: sip:[field0 file="caller.csv" line=0]@[local_ip]:[local_port]
       Max-Forwards: 70
@@ -94,6 +97,7 @@
       From: <sip:[field0 file="caller.csv" line=0]@[field2 file="caller.csv" line=0]>;tag=[pid]SIPpTag00[call_number]
       To: <sip:[field0 file="callee.csv" line=1]@[field3 file="callee.csv" line=1]>[peer_tag_param]
       Call-ID: [call_id]
+      P-NGCP-CFGTEST: [field4 file="callee.csv" line=0]
       CSeq: [cseq] ACK
       Contact: sip:[field0 file="caller.csv" line=0]@[local_ip]:[local_port]
       Max-Forwards: 70
