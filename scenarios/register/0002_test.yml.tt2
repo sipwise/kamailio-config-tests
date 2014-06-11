@@ -1,20 +1,19 @@
-# REGISTER scenario
 flow:
-  - start|MAIN:
+  - start|DEFAULT_ROUTE:
       $fU: testuser1003
       $tU: testuser1003
   - start|ROUTE_NET_INFO:
       $fU: testuser1003
       $tU: testuser1003
-  - end|ROUTE_NET_INFO:
+  - return|ROUTE_NET_INFO:
   - start|ROUTE_REG_REQUEST:
   - start|ROUTE_REG_HANDLE:
   - start|ROUTE_AUTH:
   - start|ROUTE_ADD_CALLINFO_REPLY:
   - return|ROUTE_ADD_CALLINFO_REPLY:
-  - end|ROUTE_AUTH:
+  - return|ROUTE_AUTH:
   - start|ROUTE_PREFERENCES:
-  - end|ROUTE_PREFERENCES:
+  - return|ROUTE_PREFERENCES:
       $xavp(caller_dom_prefs[0]=>dummy[*]): ['caller']
       $xavp(caller_dom_prefs[0]=>ac[*]): None
       $xavp(caller_dom_prefs[0]=>cc[*]): None
