@@ -70,7 +70,7 @@ rm -rf ${RESULT_DIR}
 get_scenarios
 
 echo ${SCENARIOS} |  tr ' ' '\n' \
- | parallel "${BIN_DIR}/check.sh ${GRAPH} -C -R ${OPTS} -d ${DOMAIN} -p ${PROFILE}"
+ | parallel "${BIN_DIR}/check.sh ${GRAPH} -J -C -R ${OPTS} -d ${DOMAIN} -p ${PROFILE}"
 status=$?
 echo "$(date) - All done[$status]"
 exit $status

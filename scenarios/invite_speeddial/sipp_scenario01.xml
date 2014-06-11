@@ -9,6 +9,7 @@
       From: <sip:[field0 file="caller.csv" line=1]@[field2 file="caller.csv" line=1]>;tag=[pid]SIPpTag00[call_number]
       To: <sip:*1@[field3 file="callee.csv" line=0]>
       Call-ID: [call_id]
+      P-NGCP-CFGTEST: [field4 file="callee.csv" line=0]
       CSeq: 1 INVITE
       Contact: sip:[field0 file="caller.csv" line=1]@[local_ip]:[local_port]
       Max-Forwards: 70
@@ -29,9 +30,9 @@
 
   <recv response="100" rtd="1" optional="true">
   </recv>
-  
+
   <recv response="407" rtd="2" auth="true"/>
-  
+
   <send>
     <![CDATA[
 
@@ -40,6 +41,7 @@
       From: <sip:[field0 file="caller.csv" line=1]@[field2 file="caller.csv" line=1]>;tag=[pid]SIPpTag00[call_number]
       To: <sip:*1@[field3 file="callee.csv" line=0]>[peer_tag_param]
       Call-ID: [call_id]
+      P-NGCP-CFGTEST: [field4 file="callee.csv" line=0]
       CSeq: 1 ACK
       Contact: sip:[field0 file="caller.csv" line=1]@[local_ip]:[local_port]
       Max-Forwards: 70
@@ -58,6 +60,7 @@
       From: <sip:[field0 file="caller.csv" line=1]@[field2 file="caller.csv" line=1]>;tag=[pid]SIPpTag00[call_number]
       To: <sip:*1@[field3 file="callee.csv" line=0]>
       Call-ID: [call_id]
+      P-NGCP-CFGTEST: [field4 file="callee.csv" line=0]
       CSeq: 2 INVITE
       Contact: sip:[field0 file="caller.csv" line=1]@[local_ip]:[local_port]
       Max-Forwards: 70
@@ -97,6 +100,7 @@
       From: <sip:[field0 file="caller.csv" line=1]@[field2 file="caller.csv" line=1]>;tag=[pid]SIPpTag00[call_number]
       To: <sip:*1@[field3 file="callee.csv" line=0]>[peer_tag_param]
       Call-ID: [call_id]
+      P-NGCP-CFGTEST: [field4 file="callee.csv" line=0]
       [routes]
       CSeq: 2 ACK
       Contact: sip:[field0 file="caller.csv" line=1]@[local_ip]:[local_port]
@@ -112,8 +116,8 @@
       <exec play_pcap_audio="scenarios/media181sec.pcap"/>
     </action>
   </nop>
-  
-  <pause milliseconds="1000"/> 
+
+  <pause milliseconds="1000"/>
 
   <send start_rtd="4">
     <![CDATA[
@@ -123,6 +127,7 @@
       From: <sip:[field0 file="caller.csv" line=1]@[field2 file="caller.csv" line=1]>;tag=[pid]SIPpTag00[call_number]
       To: <sip:*1@[field3 file="callee.csv" line=0]>[peer_tag_param]
       Call-ID: [call_id]
+      P-NGCP-CFGTEST: [field4 file="callee.csv" line=0]
       CSeq: 3 BYE
       Contact: sip:[field0 file="caller.csv" line=1]@[local_ip]:[local_port]
       [routes]
@@ -131,7 +136,7 @@
 
     ]]>
   </send>
-  
+
   <recv response="100" optional="true">
   </recv>
 

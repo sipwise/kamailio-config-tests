@@ -110,6 +110,7 @@ sub generate
     my $io_scenario = new IO::File(File::Spec->catfile($base_check_dir, "scenario.csv"), "w")
         or die("Cannot create file scenario.csv");
     my $seq = ["SEQUENTIAL"];
+    my $test_uuid = $data->{test_uuid};
 
     $csv->{caller}->print($io_caller, $seq);
     $csv->{callee}->print($io_callee, $seq);
@@ -126,7 +127,7 @@ sub generate
             $_->{password} = "wrongpass";
         }
         my $auth   = "[authentication username=$_->{username} password=$_->{password}]";
-        my $csv_data = [$_->{username}, $auth, $_->{domain}];
+        my $csv_data = [$_->{username}, $auth, $_->{domain}, $test_uuid];
         $csv->{caller}->print($io_caller, $csv_data);
         $csv_data = ["sipp_scenario".sprintf("%02i", $id).".xml", $_->{proto}, $_->{ip}];
         $csv->{scenario}->print($io_scenario, $csv_data);
@@ -146,13 +147,13 @@ sub generate
             # by default proto is udp
             $_->{proto} = "udp" unless defined($_->{proto});
             $auth   = "[authentication username=$_->{username} password=$_->{password}]";
-            $csv_data = [$_->{username}, $_->{number}, $auth, $_->{domain}];
+            $csv_data = [$_->{username}, $_->{number}, $auth, $_->{domain}, $test_uuid];
             $csv->{callee}->print($io_callee, $csv_data);
             $csv_data = ["sipp_scenario_responder".sprintf("%02i", $res_id).".xml", $_->{proto}, $_->{ip}, $_->{peer_host}, $_->{foreign}];
             $csv->{scenario}->print($io_scenario, $csv_data);
             if($_->{register} eq "yes" && $_->{active} eq "yes")
             {
-                generate_reg($res_id)
+                generate_reg($res_id, $test_uuid);
             }
             if($_->{foreign} eq "yes")
             {
@@ -167,8 +168,8 @@ sub generate
 
 sub generate_reg
 {
-    my ($num) = @_;
-    my $vars = { line => $num };
+    my ($num, $test_uuid) = @_;
+    my $vars = { line => $num, test_uuid => $test_uuid };
     my $fn = File::Spec->catfile($base_check_dir, "sipp_scenario_responder".(sprintf "%02i", $num)."_reg.xml");
     $tt->process($template_reg, $vars, $fn) or die($tt->error(), "\n");
     return;
