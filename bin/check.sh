@@ -51,6 +51,8 @@ echo "$(date) - $(basename $2) NOT ok"
 function check_test
 {
   local dest=${RESULT_DIR}/$(basename $3 .tap)
+  local kam_type="--yaml"
+
   if [ ! -f $1 ]; then
     generate_error_tap $3 $1
     ERR_FLAG=1
@@ -62,8 +64,12 @@ function check_test
     return
   fi
 
+  if [ -n ${JSON_KAM} ]; then
+    kam_type="--json"
+  fi
+
   echo -n "$(date) - Testing $(basename $1) againts $(basename $2) -> $(basename $3)"
-  ${BIN_DIR}/check.py $1 $2 > $3
+  ${BIN_DIR}/check.py ${kam_type} $1 $2 > $3
   if [[ $? -ne "0" ]]; then
     echo " NOT ok"
     ERR_FLAG=1
@@ -289,6 +295,7 @@ function run_sipp
     error_helper "LOG_DIR empty" 1
   fi
   rm -rf ${LOG_DIR}
+  echo "$(date) - create ${LOG_DIR}"
   mkdir -p ${LOG_DIR}
 
   delete_locations
@@ -388,9 +395,21 @@ function run_sipp
   fi
 }
 
+function test_filepath
+{
+  local msg_name
+
+  if [ -z ${JSON_KAM} ]; then
+    msg_name=$(echo $1|sed 's/_test\.yml/\.yml/')
+  else
+    msg_name=$(echo $1|sed 's/_test\.yml/\.json/')
+  fi
+  msg=${LOG_DIR}/$(basename $msg_name)
+}
+
 function usage
 {
-  echo "Usage: check.sh [-hCDRTG] [-d DOMAIN ] [-p PROFILE ] check_name"
+  echo "Usage: check.sh [-hCDRTGgJ] [-d DOMAIN ] [-p PROFILE ] check_name"
   echo "Options:"
   echo -e "\t-C: skip creation of domain and subscribers"
   echo -e "\t-R: skip run sipp"
@@ -401,11 +420,12 @@ function usage
   echo -e "\t-g: creation of graphviz image only if test fails"
   echo -e "\t-d: DOMAIN"
   echo -e "\t-p CE|PRO default is CE"
+  echo -e "\t-J kamailio json output ON. PARSE skipped"
   echo "Arguments:"
   echo -e "\tcheck_name. Scenario name to check. This is the name of the directory on scenarios dir."
 }
 
-while getopts 'hCd:p:RDTPGg' opt; do
+while getopts 'hCd:p:RDTPGgJ' opt; do
   case $opt in
     h) usage; exit 0;;
     C) SKIP=1;;
@@ -417,6 +437,7 @@ while getopts 'hCd:p:RDTPGg' opt; do
     P) SKIP_PARSE=1;;
     G) GRAPH=1;;
     g) GRAPH_FAIL=1;;
+    J) JSON_KAM=1;;
   esac
 done
 shift $(($OPTIND - 1))
@@ -428,6 +449,7 @@ if [[ $# != 1 ]]; then
 fi
 
 NAME_CHECK="$1"
+KAM_DIR="${KAM_DIR:-/var/run/kamailio/cfgtest}"
 BASE_DIR="${BASE_DIR:-/usr/share/kamailio-config-tests}"
 BIN_DIR="${BASE_DIR}/bin"
 LOG_DIR="${BASE_DIR}/log/${NAME_CHECK}"
@@ -493,9 +515,11 @@ if [ -z ${SKIP_DELDOMAIN} ]; then
 fi
 
 if [ -z ${SKIP_PARSE} ]; then
-  echo "$(date) - Parsing ${LOG_DIR}/kamailio.log"
-  ${BIN_DIR}/ulog_parser.pl ${LOG_DIR}/kamailio.log ${LOG_DIR}
-  echo "$(date) - Done"
+  if [ -z ${JSON_KAM} ]; then
+    echo "$(date) - Parsing ${LOG_DIR}/kamailio.log"
+    ${BIN_DIR}/ulog_parser.pl ${LOG_DIR}/kamailio.log ${LOG_DIR}
+    echo "$(date) - Done"
+  fi
 fi
 
 # let's check the results
@@ -507,10 +531,10 @@ if [ -z ${SKIP_TESTS} ]; then
   echo "$(date) - Generating tests files"
   ${BIN_DIR}/generate_tests.sh -d ${SCEN_CHECK_DIR} ${PROFILE}
   echo "$(date) - Done"
+
   for t in ${SCEN_CHECK_DIR}/*_test.yml; do
-    echo "$(date) - check test $t"
-    msg_name=$(echo $t|sed 's/_test\.yml/\.yml/')
-    msg=${LOG_DIR}/$(basename $msg_name)
+    test_filepath $t
+    echo "$(date) - check test $t on $msg"
     dest=${RESULT_DIR}/$(basename $t .yml)
     check_test $t $msg ${dest}.tap
     echo "$(date) - Done"

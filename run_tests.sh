@@ -1,5 +1,6 @@
 #!/bin/bash
 BASE_DIR=${BASE_DIR:-"/usr/share/kamailio-config-tests"}
+RPC_DIR="${BASE_DIR}/rpc_server"
 BIN_DIR="${BASE_DIR}/bin"
 LOG_DIR="${BASE_DIR}/log"
 MLOG_DIR="${BASE_DIR}/mem"
@@ -109,6 +110,10 @@ if [ -z $SKIP ]; then
   echo "$(date) - Setting config debug on. Done[$error_flag]."
 fi
 
+echo "$(date) - Start rpcserver"
+(cd ${RPC_DIR}; ./cfgtrpcjson_server.py >"${LOG_DIR}"/rpcserver.log 2>&1)&
+rpcserver_pid=$(ps aux | grep 'cfgtrpcjson_server.py' | awk '{print $2}' | head -1)
+
 echo "$(date) - Initial mem stats"
 VERSION="${PROFILE}_$(cat /etc/ngcp_version | cut -f1 -d' ')_"
 ${BIN_DIR}/mem_stats.py --private_file=${MLOG_DIR}/${VERSION}initial_pvm.cvs \
@@ -130,6 +135,11 @@ ${BIN_DIR}/mem_stats.py --private_file=${MLOG_DIR}/${VERSION}final_pvm.cvs \
   --share_file=${MLOG_DIR}/${VERSION}final_shm.cvs
 
 cfg_debug_off
+
+if $(ps -p${rpcserver_pid} &> /dev/null); then
+  echo "$(date) - Stop rpcserver"
+  kill -15 ${rpcserver_pid}
+fi
 
 echo "$(date) - Done[$error_flag]"
 exit $error_flag
