@@ -90,8 +90,10 @@ else
 {
   copy($file, $file.".orig") or die "Copy failed: $ERRNO" unless(-e $file.".orig");
   $yaml = YAML::Tiny->read($file) or die "File $file could not be read";
+  $yaml->[0]->{kamailio}{lb}{children} = 1;
   $yaml->[0]->{kamailio}{lb}{debug} = 'yes';
   $yaml->[0]->{kamailio}{lb}{use_dns_cache} = 'off';
+  $yaml->[0]->{kamailio}{proxy}{children} = 1;
   $yaml->[0]->{kamailio}{proxy}{debug} = 'yes';
   $yaml->[0]->{kamailio}{proxy}{presence}{enable} = 'yes';
   $yaml->[0]->{kamailio}{proxy}{fritzbox_prefixes} = [ '112', '110', '118[0-9]{2}' ];

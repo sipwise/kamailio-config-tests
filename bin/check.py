@@ -22,6 +22,9 @@ import io
 import sys
 import re
 import getopt
+import json
+import logging
+
 from yaml import load
 from pprint import pprint
 try:
@@ -120,8 +123,26 @@ class Test:
 
     @classmethod
     def compare(cls, val0, val1):
+        logging.debug("val0:[%s]:'%s' val1:[%s]:'%s'" %
+            (type(val0), unicode(val0), type(val1), unicode(val1)))
         if isinstance(val0, basestring):
             result = re.search(val0, str(val1))
+        elif isinstance(val0, int):
+            try:
+                result = (val0 == int(val1))
+            except:
+                result = false
+        elif isinstance(val0, list) and isinstance(val1, list):
+            size = len(val0)
+            if size != len(val1):
+                return False
+            result = True
+            for k in range(size):
+                try:
+                    result = result and cls.compare(val0[k], val1[k])
+                except Exception, e:
+                    logging.debug(e)
+                    return False
         else:
             result = (val0 == val1)
         return result
@@ -167,6 +188,7 @@ class Test:
 def check_flow_vars(sk, sv, cv, test):
     """ check the vars on a flow level"""
     for k in sv.iterkeys():
+        logging.debug("check k:'%s'" % k)
         if(k not in cv):
             try:
                 info = XAvp.parse(k)
@@ -176,7 +198,7 @@ def check_flow_vars(sk, sv, cv, test):
                                     (search_key, info))
                 xavp = XAvp(search_key, cv[search_key])
                 val = xavp.get(k)
-                # print "testing %s == %s" % (sv[k], val)
+                logging.debug("testing %s == %s" % (sv[k], val))
                 test.test(sv[k], val,
                           'flow[%s] expected %s == %s but is %s' %
                           (sk, k, sv[k], val),
@@ -193,6 +215,7 @@ def check_flow_vars(sk, sv, cv, test):
                     test.error(
                         'Expected var %s on flow[%s]. %s' % (k, sk, err))
         else:
+            logging.debug("sv[k]:'%s' cv[k]:'%s'" % (sv[k], cv[k]))
             test.test(sv[k], cv[k], 'flow[%s] expected %s == %s but is %s' % (
                 sk, k, sv[k], cv[k]), 'flow[%s] %s' % (sk, k))
 
@@ -224,6 +247,12 @@ def check_flow(scen, check, test):
 
 
 def check_sip(scen, msg, test):
+    if isinstance(msg, list):
+        if len(msg) != 1:
+            test.error('sip_in len != 1')
+            return
+        else:
+            msg = msg[0]
     for rule in scen:
         if rule.startswith('_:NOT:_'):
             flag = False
@@ -257,13 +286,34 @@ def check_sip_out(scen, msgs, test):
 
 
 def usage():
-    print 'Usage: check.py [-h] scenario.yml test.yml'
+    print 'Usage: check.py [-h] [-d] [-j] [-y] scenario_file test.yml'
     print '-h: this help'
+    print '-d: debug'
+
+
+def load_yaml(filepath):
+    output = None
+    with io.open(filepath, 'r') as file:
+        output = load(file, Loader=Loader)
+    file.close()
+    return output
+
+
+def load_json(filepath):
+    output = None
+    with io.open(filepath, 'r') as file:
+        output = json.load(file)
+    file.close()
+    return output
 
 
 def main():
+    # default -y
+    load_check = load_yaml
+
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "h", ["help"])
+        opts, args = getopt.getopt(
+            sys.argv[1:], "hyjd", ["help", "yaml", "json", "debug"])
     except getopt.GetoptError as err:
         # print help information and exit:
         print str(err)  # will print something like "option -a not recognized"
@@ -273,6 +323,12 @@ def main():
         if o in ("-h", "--help"):
             usage()
             sys.exit()
+        elif o in ("-y", "--yaml"):
+            load_check = load_yaml
+        elif o in ("-j", "--json"):
+            load_check = load_json
+        elif o in ("-d", "--debug"):
+            logging.basicConfig(level=logging.DEBUG)
         else:
             assert False, "unhandled option"
 
@@ -280,16 +336,12 @@ def main():
         usage()
         sys.exit(1)
 
-    with io.open(args[0], 'r') as file:
-        scen = load(file, Loader=Loader)
-    file.close()
+    scen = load_yaml(args[0])
 
     test = Test()
 
     try:
-        with io.open(args[1], 'r') as file:
-            check = load(file, Loader=Loader)
-        file.close()
+        check = load_check(args[1])
     except:
         check = {'flow': [], 'sip_in': '', 'sip_out': []}
         test.error("Error loading file:%s" % args[1])

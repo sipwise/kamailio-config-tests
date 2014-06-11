@@ -21,7 +21,6 @@
 use 5.014;
 use strict;
 use warnings;
-use YAML;
 use Cwd 'abs_path';
 use Data::Dumper;
 use GraphViz;
@@ -29,14 +28,16 @@ use Getopt::Long;
 
 sub usage
 {
-  my $output = "usage: graph_flow.pl [-h] file_in.yml file_out.png\n";
+  my $output = "usage: graph_flow.pl [-h] [-j] file_in file_out.png\n";
   $output .= "Options:\n";
   $output .= "\t-h: this help\n";
-  return $output
+  $output .= "\t-j: file_in is json\n";
+  return $output;
 }
 
 my $help = 0;
-GetOptions ("h|help" => \$help)
+my $json_in = 0;
+GetOptions ("h|help" => \$help, "j|json" => \$json_in)
   or die("Error in command line arguments\n".usage());
 
 if($#ARGV!=1)
@@ -47,8 +48,23 @@ if($#ARGV!=1)
 my $g = GraphViz->new();
 my $filename = abs_path($ARGV[0]);
 my $outfilename = $ARGV[1];
-my $ylog = YAML::LoadFile($filename);
-
+my $inlog;
+if($json_in) {
+  use utf8;
+  use JSON;
+  my $json;
+  {
+    local $/; #Enable 'slurp' mode
+    open my $fh, "<", $filename;
+    $json = <$fh>;
+    close $fh;
+  }
+  $inlog = decode_json($json);
+}
+else {
+  use YAML;
+  $inlog = YAML::LoadFile($filename);
+}
 my @prevs = ();
 my $name = '';
 my $action = '';
@@ -56,12 +72,12 @@ my $prev;
 my $cont = 1;
 $g->add_node(name => 'END', shape =>'box');
 
-foreach my $i (@{$ylog->{'flow'}})
+foreach my $i (@{$inlog->{'flow'}})
 {
   foreach my $key (keys %{$i})
   {
     #print "$key\n";
-    if(($action, $name) = ($key =~ m/(exit|start|end)\|(\w+)/))
+    if(($action, $name) = ($key =~ m/(start|exit|drop|return)\|(\w+)/))
     {
       if ($action eq "start")
       {
@@ -82,7 +98,7 @@ foreach my $i (@{$ylog->{'flow'}})
       {
         pop(@prevs); # this is me.
         $prev = $prevs[-1];
-        if ($action eq "end") { $g->add_edge($name => $prev, label => $cont++); }
+        if ($action eq "return") { $g->add_edge($name => $prev, label => $cont++); }
         else { @prevs = ();  $g->add_edge($name => 'END', label => $cont++); }
       }
     }
