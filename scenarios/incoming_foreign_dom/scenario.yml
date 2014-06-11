@@ -1,3 +1,4 @@
+test_uuid: incoming_foreign_dom
 subscribers:
   spce.test:
     testuser1003:

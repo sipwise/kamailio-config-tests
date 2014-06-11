@@ -14,6 +14,7 @@ function usage
   echo "Usage: run_test.sh [-p PROFILE] [-c] [-t]"
   echo "-p CE|PRO default is CE"
   echo "-c skips configuration of the environment"
+  echo "-K capture messages with tcpdump"
   echo "-h this help"
 
   echo "BASE_DIR:${BASE_DIR}"
@@ -57,12 +58,13 @@ function cfg_debug_off
   fi
 }
 
-while getopts 'hlcp:' opt; do
+while getopts 'hlcp:K' opt; do
   case $opt in
     h) usage; exit 0;;
     l) get_scenarios; echo "${SCENARIOS}"; exit 0;;
     c) SKIP=1;;
     p) PROFILE=$OPTARG;;
+    K) SKIP_CAPTURE=1;;
   esac
 done
 shift $(($OPTIND - 1))
@@ -116,9 +118,14 @@ ${BIN_DIR}/mem_stats.py --private_file=${MLOG_DIR}/${VERSION}initial_pvm.cvs \
 
 get_scenarios
 
+if [[ ${SKIP_CAPTURE} = 1 ]] ; then
+  echo "$(date) enable capture"
+  OPTS+="-K"
+fi
+
 for t in ${SCENARIOS}; do
   echo "$(date) - Run[${PROFILE}]: $t ================================================="
-  ${BIN_DIR}/check.sh -P -T -d ${DOMAIN} -p ${PROFILE} $t
+  ${BIN_DIR}/check.sh ${OPTS} -P -T -d ${DOMAIN} -p ${PROFILE} $t
   if [ $? -ne 0 ]; then
     error_flag=1
   fi
