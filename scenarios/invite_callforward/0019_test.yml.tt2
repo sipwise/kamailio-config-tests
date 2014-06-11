@@ -1,0 +1,17 @@
+flow:
+  - start|REPLY_ROUTE_NAT:
+  - exit|REPLY_ROUTE_NAT:
+sip_in:
+  - '^SIP/2.0 200 OK'
+  - 'CSeq: 3 BYE'
+  - 'Content-Length: 0'
+  - 'From: <sip:testuser1002@'
+  - 'To: <sip:testuser1001@'
+sip_out:
+  - [
+      '^SIP/2.0 200 OK',
+      'CSeq: 3 BYE',
+      'Content-Length: 0',
+      'From: <sip:testuser1002@',
+      'To: <sip:testuser1001@'
+    ]

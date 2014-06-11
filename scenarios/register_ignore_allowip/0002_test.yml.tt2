@@ -1,18 +1,17 @@
-# REGISTER scenario
 flow:
-  - start|MAIN:
+  - start|DEFAULT_ROUTE:
       $fU: testuser1003
       $tU: testuser1003
   - start|ROUTE_NET_INFO:
       $fU: testuser1003
       $tU: testuser1003
-  - end|ROUTE_NET_INFO:
+  - return|ROUTE_NET_INFO:
   - start|ROUTE_REG_REQUEST:
   - start|ROUTE_REG_HANDLE:
   - start|ROUTE_AUTH:
   - start|ROUTE_ADD_CALLINFO_REPLY:
   - return|ROUTE_ADD_CALLINFO_REPLY:
-  - end|ROUTE_AUTH:
+  - return|ROUTE_AUTH:
   - start|ROUTE_PREFERENCES:
       $xavp(callee_dom_prefs): None
       $xavp(callee_peer_prefs): None
@@ -22,7 +21,7 @@ flow:
       $xavp(caller_peer_prefs): None
       $xavp(caller_real_prefs): None
       $xavp(caller_usr_prefs): None
-  - end|ROUTE_PREFERENCES:
+  - return|ROUTE_PREFERENCES:
       $xavp(callee_dom_prefs): None
       $xavp(callee_peer_prefs): None
       $xavp(callee_real_prefs): None

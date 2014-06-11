@@ -1,3 +1,4 @@
+test_uuid: invite_concurrent_max_out_per_account
 subscribers:
   spce.test:
     testuser1002:
