@@ -1,0 +1,12 @@
+# INVITE_OFFLINE scenario
+flow:
+  - start|REPLY_ROUTE_NAT:
+  - exit|REPLY_ROUTE_NAT:
+sip_in:
+  - '^SIP/2.0 180 Ringing'
+  - 'CSeq: 1 INVITE'
+sip_out:
+  - [
+      '^SIP/2.0 180 Ringing',
+      'CSeq: 1 INVITE',
+    ]

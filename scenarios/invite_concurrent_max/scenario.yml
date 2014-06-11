@@ -1,3 +1,4 @@
+test_uuid: invite_concurrent_max
 subscribers:
   spce.test:
     testuser1003:
