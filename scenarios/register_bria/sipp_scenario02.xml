@@ -9,7 +9,7 @@
       Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
       From: <sip:[field0 file="callee.csv" line=1]@[field3 file="callee.csv" line=1]>;tag=[pid]SIPpTag00[call_number]
       To: "TestBria" <sip:[field0 file="callee.csv" line=1]@[field3 file="callee.csv" line=1]>
-      Call-ID: [call_id]
+      Call-ID: NGCP%[field4 file="callee.csv" line=0]%///[call_id]
       CSeq: 3 REGISTER
       Contact: "TestBria" <sip:[field0 file="callee.csv" line=1]@[local_ip]:[local_port];ob>;reg-id=1;+sip.instance="<urn:uuid:C3DD6013-20E8-40E3-8EA2-5849B02ED0C4>"
       Contact: "TestBria" <sip:[field0 file="callee.csv" line=1]@[local_ip]:6666;ob>;expires=0
@@ -23,9 +23,9 @@
   <recv response="100"
         optional="true">
   </recv>
-  
+
   <recv response="401" auth="true"/>
-  
+
   <send>
     <![CDATA[
 
@@ -33,7 +33,7 @@
       Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
       From: <sip:[field0 file="callee.csv" line=1]@[field3 file="callee.csv" line=1]>;tag=[pid]SIPpTag00[call_number]
       To: "TestBria" <sip:[field0 file="callee.csv" line=1]@[field3 file="callee.csv" line=1]>
-      Call-ID: [call_id]
+      Call-ID: NGCP%[field4 file="callee.csv" line=0]%///[call_id]
       CSeq: 4 REGISTER
       [field2 file="callee.csv" line=1]
       Contact: "TestBria" <sip:[field0 file="callee.csv" line=1]@[local_ip]:[local_port];ob>;reg-id=1;+sip.instance="<urn:uuid:C3DD6013-20E8-40E3-8EA2-5849B02ED0C4>"
@@ -44,7 +44,7 @@
 
     ]]>
   </send>
-  
+
   <recv response="100" optional="true">
   </recv>
 

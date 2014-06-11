@@ -21,23 +21,24 @@
 use 5.014;
 use strict;
 use warnings;
-use YAML;
 use Cwd 'abs_path';
 use Data::Dumper;
 use Getopt::Long;
 
 sub usage
 {
-  my $output = "usage: show_flow.pl [-h] file.yml\n";
+  my $output = "usage: show_flow.pl [-h] file\n";
   $output .= "\tOptions:\n";
   $output .= "-h --help: this help\n";
   $output .= "-y --yml: yaml output\n";
+  $output .= "-j --json: json input\n";
   return $output
 }
 
 my $yml = '';
 my $help = 0;
-GetOptions ("y|yml+" => \$yml, "h|help" => \$help)
+my $json_in = 0;
+GetOptions ("y|yml+" => \$yml, "h|help" => \$help, "j|json" => \$json_in)
   or die("Error in command line arguments\n".usage());
 
 if($#ARGV!=0 || $help)
@@ -45,9 +46,25 @@ if($#ARGV!=0 || $help)
   die(usage())
 }
 my $filename = abs_path($ARGV[0]);
-my $ylog = YAML::LoadFile($filename);
+my $inlog;
+if($json_in) {
+  use utf8;
+  use JSON;
+  my $json;
+  {
+    local $/; #Enable 'slurp' mode
+    open my $fh, "<", $filename;
+    $json = <$fh>;
+    close $fh;
+  }
+  $inlog = decode_json($json);
+}
+else {
+  use YAML;
+  $inlog = YAML::LoadFile($filename);
+}
 
-foreach my $i (@{$ylog->{'flow'}})
+foreach my $i (@{$inlog->{'flow'}})
 {
   foreach my $key (keys %{$i})
   {

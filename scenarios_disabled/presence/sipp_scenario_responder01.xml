@@ -8,7 +8,7 @@
         Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
         To: <sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]>
         From: <sip:[field0 file="callee.csv" line=1]@[field3 file="callee.csv" line=1]>;tag=[pid]
-        Call-ID: [call_id]
+        Call-ID: NGCP%[field4 file="callee.csv" line=0]%///[call_id]
         CSeq: [cseq] SUBSCRIBE
         Max-Forwards: 70
         Event: presence
@@ -32,7 +32,7 @@
       [last_Via:]
       From: <sip:[field0 file="callee.csv" line=1]@[field3 file="callee.csv" line=1]>;tag=[pid]
       To: <sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]>[peer_tag_param]
-      Call-ID: [call_id]
+      Call-ID: NGCP%[field4 file="callee.csv" line=0]%///[call_id]
       CSeq: [cseq] ACK
       Contact: <sip:[local_ip]:[local_port];transport=[transport]>
       Max-Forwards: 70
@@ -47,7 +47,7 @@
         Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
         To: <sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]>
         From: <sip:[field0 file="callee.csv" line=1]@[field3 file="callee.csv" line=1]>;tag=[pid]
-        Call-ID: [call_id]
+        Call-ID: NGCP%[field4 file="callee.csv" line=0]%///[call_id]
         CSeq: [cseq] SUBSCRIBE
         Max-Forwards: 70
         [field2 file="callee.csv" line=1]
@@ -91,7 +91,7 @@
         Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
         To: <sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]>
         From: <sip:[field0 file="callee.csv" line=1]@[field3 file="callee.csv" line=1]>;tag=[pid]
-        Call-ID: [call_id]
+        Call-ID: NGCP%[field4 file="callee.csv" line=0]%///[call_id]
         CSeq: [cseq] SUBSCRIBE
         Max-Forwards: 70
         Event: presence
@@ -115,7 +115,7 @@
       [last_Via:]
       From: <sip:[field0 file="callee.csv" line=1]@[field3 file="callee.csv" line=1]>;tag=[pid]
       To: <sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]>[peer_tag_param]
-      Call-ID: [call_id]
+      Call-ID: NGCP%[field4 file="callee.csv" line=0]%///[call_id]
       CSeq: [cseq] ACK
       Contact: <sip:[local_ip]:[local_port];transport=[transport]>
       Max-Forwards: 70
@@ -130,7 +130,7 @@
         Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
         To: <sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]>
         From: <sip:[field0 file="callee.csv" line=1]@[field3 file="callee.csv" line=1]>;tag=[pid]
-        Call-ID: [call_id]
+        Call-ID: NGCP%[field4 file="callee.csv" line=0]%///[call_id]
         CSeq: [cseq] SUBSCRIBE
         Max-Forwards: 70
         [field2 file="callee.csv" line=1]
