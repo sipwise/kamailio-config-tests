@@ -8,7 +8,7 @@
       Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
       From: <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>;tag=[pid]SIPpTag00[call_number]
       To: <sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]>
-      Call-ID: [call_id]
+      Call-ID: NGCP%[field4 file="callee.csv" line=0]%///[call_id]
       CSeq: [cseq] INVITE
       Contact: <sip:[field0 file="caller.csv"]@[local_ip]:[local_port];transport=[transport]>
       Max-Forwards: 70
@@ -39,7 +39,7 @@
       [last_Via:]
       From: <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>;tag=[pid]SIPpTag00[call_number]
       To: <sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]>[peer_tag_param]
-      Call-ID: [call_id]
+      Call-ID: NGCP%[field4 file="callee.csv" line=0]%///[call_id]
       CSeq: [cseq] ACK
       Contact: <sip:[field0 file="caller.csv"]@[local_ip]:[local_port];transport=[transport]>
       Max-Forwards: 70
@@ -57,7 +57,7 @@
       Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
       From: <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>;tag=[pid]SIPpTag00[call_number]
       To: <sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]>
-      Call-ID: [call_id]
+      Call-ID: NGCP%[field4 file="callee.csv" line=0]%///[call_id]
       CSeq: [cseq] INVITE
       Contact: <sip:[field0 file="caller.csv"]@[local_ip]:[local_port];transport=[transport]>
       Max-Forwards: 70
@@ -96,7 +96,7 @@
       Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
       From: <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>;tag=[pid]SIPpTag00[call_number]
       To: <sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]>[peer_tag_param]
-      Call-ID: [call_id]
+      Call-ID: NGCP%[field4 file="callee.csv" line=0]%///[call_id]
       [routes]
       CSeq: [cseq] ACK
       Contact: <sip:[field0 file="caller.csv"]@[local_ip]:[local_port];transport=[transport]>
@@ -153,7 +153,7 @@
       Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
       From: <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>;tag=[pid]SIPpTag00[call_number]
       To: <sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]>[peer_tag_param]
-      Call-ID: [call_id]
+      Call-ID: NGCP%[field4 file="callee.csv" line=0]%///[call_id]
       CSeq: [cseq] BYE
       Contact: <sip:[field0 file="caller.csv"]@[local_ip]:[local_port];transport=[transport]>
       [routes]
@@ -171,7 +171,7 @@
 
   <ResponseTimeRepartition value="10, 20, 30, 40, 50, 100, 150, 200, 500, 1000"/>
 
-<!-- <CallLengthRepartition value="10, 50, 100, 500, 1000, 5000, 10000"/> >
+<!-- <CallLengthRepartition value="10, 50, 100, 500, 1000, 5000, 10000"/> -->
 
 </scenario>
 

@@ -11,7 +11,7 @@
       Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
       From: <sip:[field0 file="caller.csv" line=0]@[field2 file="caller.csv" line=0]>;tag=[pid]SIPpTag00[call_number]
       To: <sip:[field0 file="callee.csv" line=1]@[field3 file="callee.csv" line=1]>
-      Call-ID: [call_id]
+      Call-ID: NGCP%[field4 file="callee.csv" line=0]%///[call_id]
       CSeq: 1 INVITE
       Contact: sip:[field0 file="caller.csv" line=0]@[local_ip]:[local_port]
       Max-Forwards: 70
@@ -42,7 +42,7 @@
       [last_Via:]
       From: <sip:[field0 file="caller.csv" line=0]@[field2 file="caller.csv" line=0]>;tag=[pid]SIPpTag00[call_number]
       To: <sip:[field0 file="callee.csv" line=1]@[field3 file="callee.csv" line=1]>[peer_tag_param]
-      Call-ID: [call_id]
+      Call-ID: NGCP%[field4 file="callee.csv" line=0]%///[call_id]
       CSeq: [cseq] ACK
       Contact: sip:[field0 file="caller.csv" line=0]@[local_ip]:[local_port]
       Max-Forwards: 70
@@ -60,7 +60,7 @@
       Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
       From: <sip:[field0 file="caller.csv" line=0]@[field2 file="caller.csv" line=0]>;tag=[pid]SIPpTag00[call_number]
       To: <sip:[field0 file="callee.csv" line=1]@[field3 file="callee.csv" line=1]>
-      Call-ID: [call_id]
+      Call-ID: NGCP%[field4 file="callee.csv" line=0]%///[call_id]
       CSeq:  [cseq] INVITE
       Contact: sip:[field0 file="caller.csv" line=0]@[local_ip]:[local_port]
       Max-Forwards: 70
@@ -93,7 +93,7 @@
       [last_Via:]
       From: <sip:[field0 file="caller.csv" line=0]@[field2 file="caller.csv" line=0]>;tag=[pid]SIPpTag00[call_number]
       To: <sip:[field0 file="callee.csv" line=1]@[field3 file="callee.csv" line=1]>[peer_tag_param]
-      Call-ID: [call_id]
+      Call-ID: NGCP%[field4 file="callee.csv" line=0]%///[call_id]
       CSeq: [cseq] ACK
       Contact: sip:[field0 file="caller.csv" line=0]@[local_ip]:[local_port]
       Max-Forwards: 70
@@ -104,7 +104,7 @@
 
   <ResponseTimeRepartition value="10, 20, 30, 40, 50, 100, 150, 200, 500, 1000"/>
 
-<!-- <CallLengthRepartition value="10, 50, 100, 500, 1000, 5000, 10000"/> >
+<!-- <CallLengthRepartition value="10, 50, 100, 500, 1000, 5000, 10000"/> -->
 
 </scenario>
 

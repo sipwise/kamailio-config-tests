@@ -14,13 +14,14 @@
       [last_To:];tag=[pid]SIPpTag01[call_number]
       [last_Call-ID:]
       [last_CSeq:]
+      P-NGCP-TEST: 0007_test
       Contact: <sip:[local_ip]:[local_port];transport=[transport]>
       Content-Length: 0
 
     ]]>
   </send>
 
-  <pause milliseconds="500"/> 
+  <pause milliseconds="500"/>
 
   <send>
     <![CDATA[
@@ -33,6 +34,7 @@
       [last_CSeq:]
       [last_Record-Route:]
       [last_Route:]
+      P-NGCP-TEST: 0008_test
       Contact: <sip:[local_ip]:[local_port];transport=[transport]>
       Content-Type: application/sdp
       Content-Length: [len]
@@ -65,12 +67,13 @@
       [last_To:]
       [last_Call-ID:]
       [last_CSeq:]
+      P-NGCP-TEST: 0011_test
       Contact: <sip:[local_ip]:[local_port];transport=[transport]>
       Content-Length: [len]
 
     ]]>
   </send>
-  
+
   <ResponseTimeRepartition value="10, 20, 30, 40, 50, 100, 150, 200"/>
   <CallLengthRepartition value="10, 50, 100, 500, 1000, 5000, 10000"/>
 
