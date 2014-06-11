@@ -22,6 +22,8 @@ import io
 import sys
 import re
 import getopt
+import json
+
 from yaml import load
 from pprint import pprint
 try:
@@ -224,6 +226,12 @@ def check_flow(scen, check, test):
 
 
 def check_sip(scen, msg, test):
+    if isinstance(msg, list):
+        if len(msg) != 1:
+            test.error('sip_in len != 1')
+            return
+        else:
+            msg = msg[0]
     for rule in scen:
         if rule.startswith('_:NOT:_'):
             flag = False
@@ -257,13 +265,33 @@ def check_sip_out(scen, msgs, test):
 
 
 def usage():
-    print 'Usage: check.py [-h] scenario.yml test.yml'
+    print 'Usage: check.py [-h] [-j] [-y] scenario_file test.yml'
     print '-h: this help'
 
 
+def load_yaml(filepath):
+    output = None
+    with io.open(filepath, 'r') as file:
+        output = load(file, Loader=Loader)
+    file.close()
+    return output
+
+
+def load_json(filepath):
+    output = None
+    with io.open(filepath, 'r') as file:
+        output = json.load(file)
+    file.close()
+    return output
+
+
 def main():
+    # default -y
+    load_check = load_yaml
+
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "h", ["help"])
+        opts, args = getopt.getopt(
+            sys.argv[1:], "hyj", ["help", "yaml", "json"])
     except getopt.GetoptError as err:
         # print help information and exit:
         print str(err)  # will print something like "option -a not recognized"
@@ -273,6 +301,10 @@ def main():
         if o in ("-h", "--help"):
             usage()
             sys.exit()
+        elif o in ("-y", "--yaml"):
+            load_check = load_yaml
+        elif o in ("-j", "--json"):
+            load_check = load_json
         else:
             assert False, "unhandled option"
 
@@ -280,16 +312,12 @@ def main():
         usage()
         sys.exit(1)
 
-    with io.open(args[0], 'r') as file:
-        scen = load(file, Loader=Loader)
-    file.close()
+    scen = load_yaml(args[0])
 
     test = Test()
 
     try:
-        with io.open(args[1], 'r') as file:
-            check = load(file, Loader=Loader)
-        file.close()
+        check = load_check(args[1])
     except:
         check = {'flow': [], 'sip_in': '', 'sip_out': []}
         test.error("Error loading file:%s" % args[1])
