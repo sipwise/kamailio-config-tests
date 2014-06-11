@@ -1,5 +1,6 @@
 #!/bin/bash
 BASE_DIR=${BASE_DIR:-"/usr/share/kamailio-config-tests"}
+RPC_DIR="${BASE_DIR}/rpc_server"
 BIN_DIR="${BASE_DIR}/bin"
 LOG_DIR="${BASE_DIR}/log"
 MLOG_DIR="${BASE_DIR}/mem"

@@ -1,6 +1,6 @@
 # REGISTER scenario
 flow:
-  - start|MAIN:
+  - start|DEFAULT_ROUTE:
   - start|ROUTE_NET_INFO:
   - end|ROUTE_NET_INFO:
   - start|ROUTE_PRX_REQUEST:

@@ -18,7 +18,7 @@
 # On Debian systems, the complete text of the GNU General
 # Public License version 3 can be found in "/usr/share/common-licenses/GPL-3".
 #
-ngcp-sercmd proxy dbg.reset_msgid
+#ngcp-sercmd proxy dbg.reset_msgid
 rm -rf /var/log/ngcp/kamailio-proxy.log
 rm -rf /var/log/ngcp/sems.log
 rm -rf /var/log/ngcp/kamailio-lb.log
