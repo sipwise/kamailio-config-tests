@@ -1,0 +1,19 @@
+flow:
+  - start|REPLY_ROUTE_NAT:
+  - exit|REPLY_ROUTE_NAT:
+sip_in:
+  - '^SIP/2.0 200 OK'
+  - 'CSeq: 2 BYE'
+  - 'Content-Type: application/sdp'
+  - 'From: <sip:4311002@'
+  - 'To: <sip:\*1@'
+  - 'Contact: <sip:(testuser1001@)?127.0.0.1:5080(;transport=udp)?>'
+sip_out:
+  - [
+      '^SIP/2.0 200 OK',
+      'Contact: <sip:(testuser1001@)?127.0.0.1:5080(;transport=udp)?>',
+      'CSeq: 2 INVITE',
+      'From: <sip:testuser1002@',
+      'To: <sip:\*1@',
+      'Content-Type: application/sdp'
+    ]

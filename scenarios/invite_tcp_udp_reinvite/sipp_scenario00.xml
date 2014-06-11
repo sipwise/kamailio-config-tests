@@ -9,6 +9,7 @@
       From: <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>;tag=[pid]SIPpTag00[call_number]
       To: <sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]>
       Call-ID: [call_id]
+      P-NGCP-CFGTEST: [field4 file="callee.csv" line=0]
       CSeq: [cseq] INVITE
       Contact: <sip:[field0 file="caller.csv"]@[local_ip]:[local_port];transport=[transport]>
       Max-Forwards: 70
@@ -40,6 +41,7 @@
       From: <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>;tag=[pid]SIPpTag00[call_number]
       To: <sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]>[peer_tag_param]
       Call-ID: [call_id]
+      P-NGCP-CFGTEST: [field4 file="callee.csv" line=0]
       CSeq: [cseq] ACK
       Contact: <sip:[field0 file="caller.csv"]@[local_ip]:[local_port];transport=[transport]>
       Max-Forwards: 70
@@ -58,6 +60,7 @@
       From: <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>;tag=[pid]SIPpTag00[call_number]
       To: <sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]>
       Call-ID: [call_id]
+      P-NGCP-CFGTEST: [field4 file="callee.csv" line=0]
       CSeq: [cseq] INVITE
       Contact: <sip:[field0 file="caller.csv"]@[local_ip]:[local_port];transport=[transport]>
       Max-Forwards: 70
@@ -97,6 +100,7 @@
       From: <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>;tag=[pid]SIPpTag00[call_number]
       To: <sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]>[peer_tag_param]
       Call-ID: [call_id]
+      P-NGCP-CFGTEST: [field4 file="callee.csv" line=0]
       [routes]
       CSeq: [cseq] ACK
       Contact: <sip:[field0 file="caller.csv"]@[local_ip]:[local_port];transport=[transport]>
@@ -154,6 +158,7 @@
       From: <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>;tag=[pid]SIPpTag00[call_number]
       To: <sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]>[peer_tag_param]
       Call-ID: [call_id]
+      P-NGCP-CFGTEST: [field4 file="callee.csv" line=0]
       CSeq: [cseq] BYE
       Contact: <sip:[field0 file="caller.csv"]@[local_ip]:[local_port];transport=[transport]>
       [routes]
