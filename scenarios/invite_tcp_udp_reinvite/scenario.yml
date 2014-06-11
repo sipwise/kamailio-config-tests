@@ -1,3 +1,4 @@
+test_uuid: invite_tcp_udp_reinvite
 subscribers:
   spce.test:
     testuser1003:

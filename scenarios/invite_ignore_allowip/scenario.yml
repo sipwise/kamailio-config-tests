@@ -1,3 +1,4 @@
+test_uuid: invite_ignore_allowip
 subscribers:
   spce.test:
     testuser1003:
