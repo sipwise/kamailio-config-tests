@@ -1,40 +1,44 @@
+# INVITE_OFFLINE scenario
 flow:
-  - start|MAIN:
+  - start|DEFAULT_ROUTE:
   - start|ROUTE_NET_INFO:
-  - end|ROUTE_NET_INFO:
+  - return|ROUTE_NET_INFO:
   - start|ROUTE_PRX_REQUEST:
   - start|ROUTE_INITVARS:
-  - end|ROUTE_INITVARS:
+  - return|ROUTE_INITVARS:
+  - start|BRANCH_ROUTE_SBC:
+  - return|BRANCH_ROUTE_SBC:
+  # branch ??
+  - return|BRANCH_ROUTE_SBC:
+  - start|ROUTE_STOP_RTPPROXY:
   - start|ROUTE_RESTORE_CLUSTERSET:
-  - end|ROUTE_RESTORE_CLUSTERSET:
+  - return|ROUTE_RESTORE_CLUSTERSET:
+  - return|ROUTE_STOP_RTPPROXY:
   - start|ROUTE_OUTBOUND:
   - exit|ROUTE_OUTBOUND:
-      $avp(proto): ["udp"]
-  - start|REPLY_ROUTE_NAT:
-  - exit|REPLY_ROUTE_NAT:
 sip_in:
-  - '^INVITE'
-  - 'Contact: <sip:(testuser1003@)?127.0.0.1:5080(;transport=udp)?>'
-  - 'CSeq: 10 INVITE'
-  - 'Content-Type: application/sdp'
+  - '^BYE sip:127.0.0.1:5080(;prxroute=1)? SIP/2.0'
+  - 'Contact: <sip:testuser1002@'
+  - 'CSeq: 11 BYE'
+  - 'Max-Forwards: 69'
+  - 'Content-Length: 0'
+  - 'From: <sip:testuser1002@'
+  - 'To: <sip:testuser1003@'
+
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
-      'CSeq: 10 INVITE',
-      'From: <sip:testuser1003@',
-      'To: <sip:4311002@'
+      'CSeq: 11 BYE',
+      'Content-Length: 0',
+      'From: <sip:testuser1002@',
+      'To: <sip:testuser1003@'
     ]
   - [
-      '^INVITE sip:testuser1002@',
-      'CSeq: 10 INVITE',
-      'From: <sip:testuser1003@',
-      'To: <sip:testuser1002@',
-      'Content-Type: application/sdp'
-    ]
-  - [
-      '^SIP/2.0 200 OK',
-      'CSeq: 10 INVITE',
-      'From: <sip:testuser1003@',
-      'To: <sip:4311002@',
-      'Content-Type: application/sdp'
+      '^BYE sip:127.0.0.1:5080(;prxroute=1)? SIP/2.0',
+      'Contact: <sip:testuser1002@',
+      'CSeq: 11 BYE',
+      'Max-Forwards: 68',
+      'Content-Length: 0',
+      'From: <sip:4311002@',
+      'To: <sip:testuser1003@'
     ]

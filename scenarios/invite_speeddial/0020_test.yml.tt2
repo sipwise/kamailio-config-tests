@@ -1,28 +1,15 @@
-# INVITE speeddial scenario
 flow:
-  - start|MAIN:
-  - start|ROUTE_NET_INFO:
-  - end|ROUTE_NET_INFO:
-  - start|ROUTE_PRX_REQUEST:
-  - start|ROUTE_INITVARS:
-  - end|ROUTE_INITVARS:
-  - start|ROUTE_OUTBOUND:
+  - start|REPLY_ROUTE_NAT:
+  - exit|REPLY_ROUTE_NAT:
 sip_in:
-  - '^ACK sip:127.0.0.1:5080(;prxroute=1)? SIP/2.0'
-  - 'Contact: sip:testuser1002@'
-  - 'CSeq: 2 ACK'
-  - 'Max-Forwards: 69'
-  - 'Content-Length: 0'
-  - 'From: <sip:testuser1002@'
+  - '^SIP/2.0 200 OK'
+  - 'CSeq: 3 BYE'
+  - 'From: <sip:4311002@'
   - 'To: <sip:\*1@'
-
 sip_out:
   - [
-      '^ACK sip:127.0.0.1:5080(;prxroute=1)? SIP/2.0',
-      'Contact: sip:testuser1002@',
-      'CSeq: 2 ACK',
-      'Max-Forwards: 68',
-      'Content-Length: 0',
-      'From: <sip:4311002@',
-      'To: <sip:\*1@'
+      '^SIP/2.0 200 OK',
+      'CSeq: 3 BYE',
+      'From: <sip:testuser1002@',
+      'To: <sip:\*1@',
     ]

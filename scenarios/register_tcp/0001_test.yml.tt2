@@ -1,12 +1,11 @@
-# REGISTER scenario
 flow:
-  - start|MAIN:
+  - start|DEFAULT_ROUTE:
       $fU: testuser1003
       $tU: testuser1003
   - start|ROUTE_NET_INFO:
       $fU: testuser1003
       $tU: testuser1003
-  - end|ROUTE_NET_INFO:
+  - return|ROUTE_NET_INFO:
       $avp(proto): ["tcp"]
   - start|ROUTE_REG_REQUEST:
   - start|ROUTE_REG_HANDLE:
