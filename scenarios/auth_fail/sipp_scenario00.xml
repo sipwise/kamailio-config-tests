@@ -11,6 +11,7 @@
       From: <sip:[field0 file="caller.csv" line=0]@[field2 file="caller.csv" line=0]>;tag=[pid]SIPpTag00[call_number]
       To: <sip:[field0 file="caller.csv" line=0]@[field2 file="caller.csv" line=0]>
       Call-ID: [call_id]
+      P-NGCP-CFGTEST: [field4 file="callee.csv" line=0]
       CSeq: [cseq] REGISTER
       Contact: sip:[field0 file="caller.csv" line=0]@[local_ip]:[local_port]
       Expires: 600
@@ -31,27 +32,7 @@
       From: <sip:[field0 file="caller.csv" line=0]@[field2 file="caller.csv" line=0]>;tag=[pid]SIPpTag00[call_number]
       To: <sip:[field0 file="caller.csv" line=0]@[field2 file="caller.csv" line=0]>
       Call-ID: [call_id]
-      CSeq: [cseq] REGISTER
-      [field1 file="caller.csv"]
-      Contact: sip:[field0 file="caller.csv" line=0]@[local_ip]:[local_port]
-      Expires: 600
-      Max-Forwards: 70
-      Content-Length: 0
-
-    ]]>
-  </send>
-
-  <recv response="100" optional="true"/>
-  <recv response="401" auth="true"/>
-
-  <send>
-    <![CDATA[
-
-      REGISTER sip:[field0 file="caller.csv" line=0]@[field2 file="caller.csv" line=0] SIP/2.0
-      Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
-      From: <sip:[field0 file="caller.csv" line=0]@[field2 file="caller.csv" line=0]>;tag=[pid]SIPpTag00[call_number]
-      To: <sip:[field0 file="caller.csv" line=0]@[field2 file="caller.csv" line=0]>
-      Call-ID: [call_id]
+      P-NGCP-CFGTEST: [field4 file="callee.csv" line=0]
       CSeq: [cseq] REGISTER
       [field1 file="caller.csv"]
       Contact: sip:[field0 file="caller.csv" line=0]@[local_ip]:[local_port]
@@ -73,6 +54,7 @@
       From: <sip:[field0 file="caller.csv" line=0]@[field2 file="caller.csv" line=0]>;tag=[pid]SIPpTag00[call_number]
       To: <sip:[field0 file="caller.csv" line=0]@[field2 file="caller.csv" line=0]>
       Call-ID: [call_id]
+      P-NGCP-CFGTEST: [field4 file="callee.csv" line=0]
       CSeq: [cseq] REGISTER
       [field1 file="caller.csv"]
       Contact: sip:[field0 file="caller.csv" line=0]@[local_ip]:[local_port]
@@ -94,6 +76,29 @@
       From: <sip:[field0 file="caller.csv" line=0]@[field2 file="caller.csv" line=0]>;tag=[pid]SIPpTag00[call_number]
       To: <sip:[field0 file="caller.csv" line=0]@[field2 file="caller.csv" line=0]>
       Call-ID: [call_id]
+      P-NGCP-CFGTEST: [field4 file="callee.csv" line=0]
+      CSeq: [cseq] REGISTER
+      [field1 file="caller.csv"]
+      Contact: sip:[field0 file="caller.csv" line=0]@[local_ip]:[local_port]
+      Expires: 600
+      Max-Forwards: 70
+      Content-Length: 0
+
+    ]]>
+  </send>
+
+  <recv response="100" optional="true"/>
+  <recv response="401" auth="true"/>
+
+  <send>
+    <![CDATA[
+
+      REGISTER sip:[field0 file="caller.csv" line=0]@[field2 file="caller.csv" line=0] SIP/2.0
+      Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
+      From: <sip:[field0 file="caller.csv" line=0]@[field2 file="caller.csv" line=0]>;tag=[pid]SIPpTag00[call_number]
+      To: <sip:[field0 file="caller.csv" line=0]@[field2 file="caller.csv" line=0]>
+      Call-ID: [call_id]
+      P-NGCP-CFGTEST: [field4 file="callee.csv" line=0]
       CSeq: [cseq] REGISTER
       [field1 file="caller.csv"]
       Contact: sip:[field0 file="caller.csv" line=0]@[local_ip]:[local_port]
