@@ -1,20 +1,20 @@
-# INVITE_OFFLINE scenario
 flow:
-  - start|MAIN:
+  - start|DEFAULT_ROUTE:
   - start|ROUTE_NET_INFO:
-  - end|ROUTE_NET_INFO:
+  - return|ROUTE_NET_INFO:
   - start|ROUTE_PRX_REQUEST:
   - start|ROUTE_INITVARS:
-  - end|ROUTE_INITVARS:
+  - return|ROUTE_INITVARS:
+  - start|BRANCH_ROUTE_SBC:
+  - return|BRANCH_ROUTE_SBC:
+  # branch ??
+  - return|BRANCH_ROUTE_SBC:
   - start|ROUTE_STOP_RTPPROXY:
   - start|ROUTE_RESTORE_CLUSTERSET:
-  - end|ROUTE_RESTORE_CLUSTERSET:
-  - end|ROUTE_STOP_RTPPROXY:
+  - return|ROUTE_RESTORE_CLUSTERSET:
+  - return|ROUTE_STOP_RTPPROXY:
   - start|ROUTE_OUTBOUND:
   - exit|ROUTE_OUTBOUND:
-  # 200 OK
-  - start|REPLY_ROUTE_NAT:
-  - exit|REPLY_ROUTE_NAT:
 sip_in:
   - '^BYE sip:127.0.0.1:5080(;prxroute=1)? SIP/2.0'
   - 'Contact: sip:testuser1002@'
@@ -39,12 +39,5 @@ sip_out:
       'Max-Forwards: 68',
       'Content-Length: 0',
       'From: <sip:4311002@',
-      'To: <sip:\*0@'
-    ]
-  - [
-      '^SIP/2.0 200 OK',
-      'CSeq: 3 BYE',
-      'Content-Length: 0',
-      'From: <sip:testuser1002@',
       'To: <sip:\*0@'
     ]

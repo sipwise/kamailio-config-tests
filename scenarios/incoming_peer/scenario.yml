@@ -1,3 +1,4 @@
+test_uuid: incoming_peer
 subscribers:
   spce.test:
     testuser1003:
