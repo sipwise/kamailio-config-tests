@@ -26,9 +26,14 @@
 # $2 destination png filename
 function graph
 {
+  local OPTS
+  if [ -n ${JSON_KAM} ]; then
+    OPTS="--json"
+  fi
   if [ -f $1 ]; then
-    ${BIN_DIR}/graph_flow.pl $1 $2
+    ${BIN_DIR}/graph_flow.pl $OPTS $1 $2
   else
+    echo "No $1 found"
     ERR_FLAG=1
   fi
 }
@@ -51,6 +56,8 @@ echo "$(date) - $(basename $2) NOT ok"
 function check_test
 {
   local dest=${RESULT_DIR}/$(basename $3 .tap)
+  local kam_type="--yaml"
+
   if [ ! -f $1 ]; then
     generate_error_tap $3 $1
     ERR_FLAG=1
@@ -62,8 +69,12 @@ function check_test
     return
   fi
 
+  if [ -n ${JSON_KAM} ]; then
+    kam_type="--json"
+  fi
+
   echo -n "$(date) - Testing $(basename $1) againts $(basename $2) -> $(basename $3)"
-  ${BIN_DIR}/check.py $1 $2 > $3
+  ${BIN_DIR}/check.py ${kam_type} $1 $2 > $3
   if [[ $? -ne "0" ]]; then
     echo " NOT ok"
     ERR_FLAG=1
@@ -264,8 +275,10 @@ function copy_logs
 {
   # copy the kamailio log
   cp ${KAM_LOG} ${LOG_DIR}/kamailio.log
-  # copy the sems log
-  cp ${SEMS_LOG} ${LOG_DIR}/sems.log
+  if [ -f ${SEMS_LOG} ] ; then
+    # copy the sems log
+    cp ${SEMS_LOG} ${LOG_DIR}/sems.log
+  fi
   # copy the kamailio-lb log
   cp ${KAMLB_LOG} ${LOG_DIR}/kamailio-lb.log
 }
@@ -289,6 +302,7 @@ function run_sipp
     error_helper "LOG_DIR empty" 1
   fi
   rm -rf ${LOG_DIR}
+  echo "$(date) - create ${LOG_DIR}"
   mkdir -p ${LOG_DIR}
 
   delete_locations
@@ -298,7 +312,9 @@ function run_sipp
     copy_logs
     error_helper "Restart error" 16
   fi
-  capture
+  if [ "${CAPTURE}" = "1" ] ; then
+    capture
+  fi
 
   if [ -e ${SCEN_CHECK_DIR}/presence.sh ]; then
     echo "$(date) - Presence xcap"
@@ -353,7 +369,6 @@ function run_sipp
       echo "$(date) - $base error"
       status=1
     fi
-    sleep 1
   done
 
   for res in ${responder_pid}; do
@@ -373,7 +388,9 @@ function run_sipp
     fi
   done
 
-  stop_capture
+  if [ "${CAPTURE}" = "1" ] ; then
+    stop_capture
+  fi
   copy_logs
   # if any scenario has a log... error
   if [ $(ls ${SCEN_CHECK_DIR}/sipp_scenario*errors.log 2>/dev/null|wc -l) -ne 0 ]; then
@@ -388,9 +405,21 @@ function run_sipp
   fi
 }
 
+function test_filepath
+{
+  local msg_name
+
+  if [ -z ${JSON_KAM} ]; then
+    msg_name=$(echo $1|sed 's/_test\.yml/\.yml/')
+  else
+    msg_name=$(echo $1|sed 's/_test\.yml/\.json/')
+  fi
+  msg=${LOG_DIR}/$(basename $msg_name)
+}
+
 function usage
 {
-  echo "Usage: check.sh [-hCDRTG] [-d DOMAIN ] [-p PROFILE ] check_name"
+  echo "Usage: check.sh [-hCDRTGgJ] [-d DOMAIN ] [-p PROFILE ] check_name"
   echo "Options:"
   echo -e "\t-C: skip creation of domain and subscribers"
   echo -e "\t-R: skip run sipp"
@@ -401,11 +430,13 @@ function usage
   echo -e "\t-g: creation of graphviz image only if test fails"
   echo -e "\t-d: DOMAIN"
   echo -e "\t-p CE|PRO default is CE"
+  echo -e "\t-J kamailio json output ON. PARSE skipped"
+  echo -e "\t-K enable tcpdump capture"
   echo "Arguments:"
   echo -e "\tcheck_name. Scenario name to check. This is the name of the directory on scenarios dir."
 }
 
-while getopts 'hCd:p:RDTPGg' opt; do
+while getopts 'hCd:p:RDTPGgJK' opt; do
   case $opt in
     h) usage; exit 0;;
     C) SKIP=1;;
@@ -415,8 +446,10 @@ while getopts 'hCd:p:RDTPGg' opt; do
     D) SKIP_DELDOMAIN=1;;
     T) SKIP_TESTS=1;;
     P) SKIP_PARSE=1;;
+    K) CAPTURE=1;;
     G) GRAPH=1;;
     g) GRAPH_FAIL=1;;
+    J) JSON_KAM=1;;
   esac
 done
 shift $(($OPTIND - 1))
@@ -428,6 +461,7 @@ if [[ $# != 1 ]]; then
 fi
 
 NAME_CHECK="$1"
+KAM_DIR="${KAM_DIR:-/var/run/kamailio/cfgtest}"
 BASE_DIR="${BASE_DIR:-/usr/share/kamailio-config-tests}"
 BIN_DIR="${BASE_DIR}/bin"
 LOG_DIR="${BASE_DIR}/log/${NAME_CHECK}"
@@ -455,6 +489,13 @@ fi
 if [ ! -f ${SCEN_CHECK_DIR}/scenario.yml ]; then
   echo "${SCEN_CHECK_DIR}/scenario.yml not found"
   exit 14
+fi
+
+if [ -n ${JSON_KAM} ] ; then
+  echo "$(date) - dir and perms for ${KAM_DIR}"
+  rm -rf "${KAM_DIR}/${NAME_CHECK}"
+  mkdir -p ${KAM_DIR}
+  chown -R kamailio:kamailio ${KAM_DIR}
 fi
 
 if [ -z $SKIP ]; then
@@ -493,24 +534,45 @@ if [ -z ${SKIP_DELDOMAIN} ]; then
 fi
 
 if [ -z ${SKIP_PARSE} ]; then
-  echo "$(date) - Parsing ${LOG_DIR}/kamailio.log"
-  ${BIN_DIR}/ulog_parser.pl ${LOG_DIR}/kamailio.log ${LOG_DIR}
-  echo "$(date) - Done"
+  if [ -z ${JSON_KAM} ]; then
+    echo "$(date) - Parsing ${LOG_DIR}/kamailio.log"
+    ${BIN_DIR}/ulog_parser.pl ${LOG_DIR}/kamailio.log ${LOG_DIR}
+    echo "$(date) - Done"
+  fi
+fi
+
+if [ -z $SKIP_RUNSIPP ] && [ -n ${JSON_KAM} ] ; then
+  echo "$(date) - get kamailio cfgt files"
+  if [ -d "${KAM_DIR}/${NAME_CHECK}" ] ; then
+    for i in "${KAM_DIR}/${NAME_CHECK}"/*.json ; do
+      expand -t1 $i > ${LOG_DIR}/$(printf '%04d.json' $(basename $i .json))
+    done
+  else
+    echo "no cfgt files found"
+  fi
 fi
 
 # let's check the results
 ERR_FLAG=0
 if [ -z ${SKIP_TESTS} ]; then
+  if [ -d ${RESULT_DIR} ]; then
+    echo "$(date) - Cleaning result dir"
+    rm -rf ${RESULT_DIR}
+  fi
   mkdir -p ${RESULT_DIR}
   echo "$(date) - Cleaning tests files"
   find ${SCEN_CHECK_DIR} -type f -name '*test.yml' -exec rm {} \;
   echo "$(date) - Generating tests files"
   ${BIN_DIR}/generate_tests.sh -d ${SCEN_CHECK_DIR} ${PROFILE}
   echo "$(date) - Done"
+
+  if [ -n ${JSON_KAM} ]; then
+    file_type=".json"
+  fi
+
   for t in ${SCEN_CHECK_DIR}/*_test.yml; do
-    echo "$(date) - check test $t"
-    msg_name=$(echo $t|sed 's/_test\.yml/\.yml/')
-    msg=${LOG_DIR}/$(basename $msg_name)
+    test_filepath $t
+    echo "$(date) - check test $t on $msg"
     dest=${RESULT_DIR}/$(basename $t .yml)
     check_test $t $msg ${dest}.tap
     echo "$(date) - Done"
