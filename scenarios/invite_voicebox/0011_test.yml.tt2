@@ -8,9 +8,11 @@ flow:
   - end|ROUTE_STOP_RTPPROXY:
   - start|ROUTE_OUTBOUND:
   - exit|ROUTE_OUTBOUND:
+[% IF PRO %]
   # 200 OK
   - start|REPLY_ROUTE_NAT:
   - exit|REPLY_ROUTE_NAT:
+[% END -%]
 sip_in:
   - '^BYE sip:127.0.0.1:5080(;transport=udp)? SIP/2.0'
   - 'Contact: sip:testuser1002@'
@@ -37,6 +39,7 @@ sip_out:
       'From: <sip:testuser1002@',
       'To: <sip:testuser1001@'
     ]
+[% IF PRO -%]
   - [
       '^SIP/2.0 200 OK',
       'CSeq: 3 BYE',
@@ -44,3 +47,4 @@ sip_out:
       'From: <sip:testuser1002@',
       'To: <sip:testuser1001@'
     ]
+[% END -%]
