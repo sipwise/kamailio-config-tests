@@ -64,7 +64,7 @@ flow:
   - exit|REPLY_ROUTE_NAT:
 sip_in:
   - '^INVITE sip:vmu4311001@voicebox.local SIP/2.0'
-  - 'Contact: <sip:127.0.0.1:5080>'
+  - 'Contact: <sip:127.0.0.1:5080(;transport=udp)?>'
   - 'CSeq: 10 INVITE'
   - 'Content-Type: application/sdp'
   - 'P-Caller-UUID: \w+'
@@ -84,7 +84,7 @@ sip_out:
       'CSeq: 10 INVITE',
       'From: <sip:4311002@',
       'To: <sip:testuser1001@',
-      'Contact: <sip:127.0.0.1:5080>',
+      'Contact: <sip:127.0.0.1:5080(;transport=udp)?>',
       'Content-Type: application/sdp'
     ]
   - [
@@ -101,6 +101,6 @@ sip_out:
       'CSeq: 2 INVITE',
       'From: <sip:testuser1002@',
       'To: <sip:testuser1001@',
-      'Contact: <sip:vmu4311001@127.0.0.1:5080>',
+      'Contact: <sip:(vmu4311001@)?127.0.0.1:5080(;transport=udp)?>',
       'Content-Type: application/sdp'
     ]

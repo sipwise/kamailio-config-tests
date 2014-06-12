@@ -7,7 +7,7 @@ flow:
   - start|ROUTE_OUTBOUND:
 sip_in:
   - '^ACK sip:vmu4311001@127.0.0.1:5070 SIP/2.0'
-  - 'Contact: <sip:127.0.0.1:5080>'
+  - 'Contact: <sip:127.0.0.1:5080(;transport=udp)?>'
   - 'CSeq: 10 ACK'
   - 'Content-Length: 0'
   - 'From: <sip:testuser1002@'
@@ -15,9 +15,8 @@ sip_in:
 sip_out:
   - [
       '^ACK sip:vmu4311001@127.0.0.1:5070 SIP/2.0',
-      'Contact: <sip:127.0.0.1:5080>',
+      'Contact: <sip:127.0.0.1:5080(;transport=udp)?>',
       'CSeq: 10 ACK',
-      'Max-Forwards: 70',
       'Content-Length: 0',
       'From: <sip:4311002@',
       'To: <sip:testuser1001@'

@@ -40,7 +40,7 @@ sip_out:
       'From: <sip:testuser1002@',
       'To: <sip:testuser1003@',
       'CSeq: 3 INVITE',
-      'Contact: <sip:testuser1003@127.0.0.1:5080>',
+      'Contact: <sip:(testuser1003@)?127.0.0.1:5080(;transport=udp)>',
       'Content-Type: application/sdp',
       'a=recvonly'
     ]

@@ -6,16 +6,16 @@ flow:
   - start|ROUTE_PRX_REQUEST:
   - start|ROUTE_OUTBOUND:
 sip_in:
-  - '^ACK sip:testuser1003@127.0.0.1:5080 SIP/2.0'
-  - 'Contact: <sip:127.0.0.1:5080>'
+  - '^ACK sip:(testuser1003@)?127.0.0.1:5080(;transport=udp)? SIP/2.0'
+  - 'Contact: <sip:127.0.0.1:5080(;transport=udp)?>'
   - 'CSeq: 10 ACK'
   - 'Content-Length: 0'
   - 'From: <sip:testuser1002@'
   - 'To: <sip:testuser1001@'
 sip_out:
   - [
-      '^ACK sip:testuser1003@127.0.0.1:5080 SIP/2.0',
-      'Contact: <sip:127.0.0.1:5080>',
+      '^ACK sip:(testuser1003@)?127.0.0.1:5080(;transport=udp)? SIP/2.0',
+      'Contact: <sip:127.0.0.1:5080(;transport=udp)?>',
       'CSeq: 10 ACK',
       'Content-Length: 0',
       'From: <sip:4311002@',

@@ -10,7 +10,7 @@ flow:
   - exit|REPLY_ROUTE_NAT:
 sip_in:
   - '^INVITE'
-  - 'Contact: <sip:testuser1003@'
+  - 'Contact: <sip:(testuser1003@)?127.0.0.1:5080(;transport=udp)?>'
   - 'CSeq: 10 INVITE'
   - 'Content-Type: application/sdp'
 sip_out:

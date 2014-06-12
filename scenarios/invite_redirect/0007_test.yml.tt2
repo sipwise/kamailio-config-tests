@@ -224,7 +224,7 @@ sip_out:
       'From: <sip:testuser1002@',
       'To: <sip:testuser1003@',
       'CSeq: 2 INVITE',
-      'Contact: <sip:testuser1004@',
+      'Contact: <sip:(testuser1004@)?127.0.0.1:5080(;transport=udp)?>',
       'Content-Length: 0'
     ]
   - [
@@ -232,6 +232,6 @@ sip_out:
       'From: <sip:testuser1002@',
       'To: <sip:testuser1003@',
       'CSeq: 2 INVITE',
-      'Contact: <sip:testuser1004@',
+      'Contact: <sip:(testuser1004@)?127.0.0.1:5080(;transport=udp)?>',
       'Content-Type: application/sdp'
     ]
