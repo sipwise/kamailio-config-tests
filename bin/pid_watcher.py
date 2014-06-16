@@ -30,7 +30,7 @@ files we want to watch
 services = [
     'kamailio/kamailio.lb.pid',
     'kamailio/kamailio.proxy.pid',
-    'sems/sems.pid',
+    'ngcp-sems/ngcp-sems.pid',
     'collectdmon.pid'
 ]
 
