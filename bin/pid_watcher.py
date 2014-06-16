@@ -36,7 +36,7 @@ services = [
 
 watched_dirs = [
     '/var/run/kamailio',
-    '/var/run/sems',
+    '/var/run/ngcp-sems',
     '/var/run'
 ]
 
