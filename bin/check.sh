@@ -40,7 +40,7 @@ function generate_error_tap
   local tap_file="$1"
   cat <<EOF > $tap_file
 1..1
-not ok File $2 does not exists
+not ok 1 - ERROR: File $2 does not exists
 EOF
 echo "$(date) - $(basename $2) NOT ok"
 }

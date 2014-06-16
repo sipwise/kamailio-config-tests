@@ -143,7 +143,7 @@ class Test:
         else:
           output += "ok %d\n" % test
       else:
-        output += "not ok %d - %s\n" % (test, s['msg_err'])
+        output += "not ok %d - ERROR: %s\n" % (test, s['msg_err'])
       test = test + 1
     return output
 
