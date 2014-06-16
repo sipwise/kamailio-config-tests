@@ -35,6 +35,10 @@ flow:
   - start|ROUTE_NCOS:
   - end|ROUTE_NCOS:
   - start|ROUTE_NCOS:
+  - end|ROUTE_NCOS:
+  - start|ROUTE_NCOS:
+  - end|ROUTE_NCOS:
+  - start|ROUTE_NCOS:
   - start|ROUTE_ACC_FAILURE:
   - start|ROUTE_ACC_CALLER:
   - end|ROUTE_ACC_CALLER:

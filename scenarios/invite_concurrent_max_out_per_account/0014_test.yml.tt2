@@ -29,6 +29,21 @@ flow:
   - start|ROUTE_FIND_CALLEE:
   - start|ROUTE_CLIR:
   - end|ROUTE_CLIR:
+  - start|ROUTE_CLEAR_CALLEE_PREF:
+  - end|ROUTE_CLEAR_CALLEE_PREF:
+  - start|ROUTE_NCOS:
+  - end|ROUTE_NCOS:
+  - start|ROUTE_NCOS:
+  - end|ROUTE_NCOS:
+  - start|ROUTE_NCOS:
+  - end|ROUTE_NCOS:
+  - start|ROUTE_NCOS:
+  - end|ROUTE_NCOS:
+  - start|ROUTE_BLOCK_OUT:
+  - end|ROUTE_BLOCK_OUT:
+  - start|ROUTE_CHECK_PBX:
+  - return|ROUTE_CHECK_PBX:
+  - start|ROUTE_SET_CALLER_DIALOG:
   - start|ROUTE_ACC_FAILURE:
   - start|ROUTE_ACC_CALLER:
   - end|ROUTE_ACC_CALLER:

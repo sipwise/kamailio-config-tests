@@ -44,10 +44,16 @@ flow:
   - end|ROUTE_NCOS:
   - start|ROUTE_NCOS:
   - end|ROUTE_NCOS:
+  - start|ROUTE_NCOS:
+  - end|ROUTE_NCOS:
+  - start|ROUTE_NCOS:
+  - end|ROUTE_NCOS:
   - start|ROUTE_BLOCK_OUT:
   - end|ROUTE_BLOCK_OUT:
   - start|ROUTE_CHECK_PBX:
   - return|ROUTE_CHECK_PBX:
+  - start|ROUTE_SET_CALLER_DIALOG:
+  - end|ROUTE_SET_CALLER_DIALOG:
   - start|ROUTE_INVITE_TO_EXT:
   - start|ROUTE_PSTN:
   - start|ROUTE_CLEAR_PEER_OUT_PREF:

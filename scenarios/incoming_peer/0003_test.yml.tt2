@@ -29,9 +29,15 @@ flow:
   - end|ROUTE_NCOS:
   - start|ROUTE_NCOS:
   - end|ROUTE_NCOS:
+  - start|ROUTE_NCOS:
+  - end|ROUTE_NCOS:
+  - start|ROUTE_NCOS:
+  - end|ROUTE_NCOS:
   - start|ROUTE_BLOCK_OUT:
   - end|ROUTE_BLOCK_OUT:
   - start|ROUTE_LOAD_CALLEE_PREF:
+  - start|ROUTE_SET_CALLER_DIALOG:
+  - end|ROUTE_SET_CALLER_DIALOG:
   - start|ROUTE_BLOCK_IN:
   - end|ROUTE_BLOCK_IN:
   - end|ROUTE_LOAD_CALLEE_PREF:
