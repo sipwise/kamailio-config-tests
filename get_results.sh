@@ -19,6 +19,27 @@ function usage
   echo "BIN_DIR:${BIN_DIR}"
 }
 
+function get_scenarios
+{
+  local t
+  local flag
+  flag=0
+  if [ -n "${SCENARIOS}" ]; then
+    for t in ${SCENARIOS}; do
+      if [ ! -d "${BASE_DIR}/scenarios/$t" ]; then
+        echo "$(date) - scenario: $t not found"
+        flag=1
+      fi
+    done
+    if [ $flag != 0 ]; then
+      exit 1
+    fi
+  else
+    SCENARIOS=$(find ${BASE_DIR}/scenarios/ -depth -maxdepth 1 -mindepth 1 \
+      -type d -exec basename {} \; | grep -v templates | sort)
+  fi
+}
+
 while getopts 'hgGp:TP' opt; do
   case $opt in
     h) usage; exit 0;;
@@ -46,7 +67,9 @@ fi
 echo "$(date) - Clean result dir"
 rm -rf ${RESULT_DIR}
 
-find ${BASE_DIR}/scenarios/ -depth -maxdepth 1 -mindepth 1 -type d -exec basename {} \; | grep -v templates| sort \
+get_scenarios
+
+echo ${SCENARIOS} |  tr ' ' '\n' \
  | parallel "${BIN_DIR}/check.sh ${GRAPH} -C -R ${OPTS} -d ${DOMAIN} -p ${PROFILE}"
 status=$?
 echo "$(date) - All done[$status]"

@@ -20,9 +20,25 @@ function usage
   echo "BIN_DIR:${BIN_DIR}"
 }
 
-function list
+function get_scenarios
 {
-  find ${BASE_DIR}/scenarios/ -depth -maxdepth 1 -mindepth 1 -type d -exec basename {} \;| grep -v templates | sort
+  local t
+  local flag
+  flag=0
+  if [ -n "${SCENARIOS}" ]; then
+    for t in ${SCENARIOS}; do
+      if [ ! -d "${BASE_DIR}/scenarios/$t" ]; then
+        echo "$(date) - scenario: $t not found"
+        flag=1
+      fi
+    done
+    if [ $flag != 0 ]; then
+      exit 1
+    fi
+  else
+    SCENARIOS=$(find ${BASE_DIR}/scenarios/ -depth -maxdepth 1 -mindepth 1 \
+      -type d -exec basename {} \; | grep -v templates | sort)
+  fi
 }
 
 function cfg_debug_off
@@ -44,7 +60,7 @@ function cfg_debug_off
 while getopts 'hlcp:' opt; do
   case $opt in
     h) usage; exit 0;;
-    l) list; exit 0;;
+    l) get_scenarios; echo "${SCENARIOS}"; exit 0;;
     c) SKIP=1;;
     p) PROFILE=$OPTARG;;
   esac
@@ -85,8 +101,8 @@ if [ -z $SKIP ]; then
     wait $!
     if [ "$?" != "0" ]; then
       echo "error on apply config"
-      echo "$(date) - Done[1]"
       cfg_debug_off
+      echo "$(date) - Done[1]"
       exit 1
     fi
   fi
@@ -98,9 +114,11 @@ VERSION="${PROFILE}_$(cat /etc/ngcp_version | cut -f1 -d' ')_"
 ${BIN_DIR}/mem_stats.py --private_file=${MLOG_DIR}/${VERSION}initial_pvm.cvs \
   --share_file=${MLOG_DIR}/${VERSION}initial_shm.cvs
 
-for t in $(find ${BASE_DIR}/scenarios/ -depth -maxdepth 1 -mindepth 1 -type d | grep -v templates | sort); do
-  echo "$(date) - Run[${PROFILE}]: $(basename $t) ================================================="
-  ${BIN_DIR}/check.sh -P -T -d ${DOMAIN} -p ${PROFILE} $(basename $t)
+get_scenarios
+
+for t in ${SCENARIOS}; do
+  echo "$(date) - Run[${PROFILE}]: $t ================================================="
+  ${BIN_DIR}/check.sh -P -T -d ${DOMAIN} -p ${PROFILE} $t
   if [ $? -ne 0 ]; then
     error_flag=1
   fi

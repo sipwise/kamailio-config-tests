@@ -54,6 +54,12 @@ Usage:
  or run all the tests as many times you want with:
   #./bin/bench.sh $NUM
 
+If you want to test just a set of scenarios, set the SCENARIOS
+environment var.
+
+#bash SCENARIOS="invite invite_callforward" ./run_tests.sh
+#bash SCENARIOS="invite invite_callforward" ./get_results.sh
+
 Development:
 ------------
 
