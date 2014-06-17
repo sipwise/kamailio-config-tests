@@ -36,7 +36,6 @@ flow:
   - start|ROUTE_CLIR:
   - end|ROUTE_CLIR:
   - start|ROUTE_CLEAR_CALLEE_PREF:
-      $avp(size): [1]
   - end|ROUTE_CLEAR_CALLEE_PREF:
   - start|ROUTE_NCOS:
   - end|ROUTE_NCOS:
@@ -51,6 +50,7 @@ flow:
   - start|ROUTE_LOAD_CALLEE_PREF:
   - start|ROUTE_SET_CALLER_DIALOG:
   - end|ROUTE_SET_CALLER_DIALOG:
+      $avp(size): [1]
   - start|ROUTE_BLOCK_IN:
   - end|ROUTE_BLOCK_IN:
   - end|ROUTE_LOAD_CALLEE_PREF:
