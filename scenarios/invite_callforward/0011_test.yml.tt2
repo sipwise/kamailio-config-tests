@@ -115,7 +115,7 @@ sip_out:
       '^INVITE sip:testuser1003@',
       'CSeq: 10 INVITE',
       'From: <sip:4311002@',
-      'Contact: <sip:127.0.0.1:5080(;transport=udp)>',
+      'Contact: <sip:127.0.0.1:5080(;transport=udp)?>',
       'To: <sip:testuser1001@',
       'Content-Type: application/sdp',
       'P-Callee-UUID: \w+',
@@ -130,21 +130,21 @@ sip_out:
       'CSeq: 10 INVITE',
       'From: <sip:testuser1002@',
       'To: <sip:testuser1001@',
-      'Contact: <sip:(testuser1003@)?127.0.0.1:5080(;transport=udp)>',
+      'Contact: <sip:(testuser1003@)?127.0.0.1:5080(;transport=udp)?>',
     ]
   - [
       '^SIP/2.0 180 Ringing',
       'CSeq: 2 INVITE',
       'From: <sip:testuser1002@',
       'To: <sip:testuser1001@',
-      'Contact: <sip:(4311003@)?127.0.0.1:5080(;transport=udp)>',
+      'Contact: <sip:(4311003@)?127.0.0.1:5080(;transport=udp)?>',
     ]
   - [
       '^SIP/2.0 200 OK',
       'CSeq: 10 INVITE',
       'From: <sip:testuser1002@',
       'To: <sip:testuser1001@',
-      'Contact: <sip:(testuser1003@)?127.0.0.1:5080(;transport=udp)>',
+      'Contact: <sip:(testuser1003@)?127.0.0.1:5080(;transport=udp)?>',
       'Content-Type: application/sdp'
     ]
   - [
@@ -152,6 +152,6 @@ sip_out:
       'CSeq: 2 INVITE',
       'From: <sip:testuser1002@',
       'To: <sip:testuser1001@',
-      'Contact: <sip:(4311003@)?127.0.0.1:5080(;transport=udp)>',
+      'Contact: <sip:(4311003@)?127.0.0.1:5080(;transport=udp)?>',
       'Content-Type: application/sdp'
     ]
