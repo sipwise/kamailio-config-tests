@@ -1,3 +1,16 @@
+kamailio-config-tests (0.4.1.1+0~mr3.3.1.1) unstable; urgency=low
+
+  [ Alexander Lutay ]
+  * [c294150] MT#7531 Add ERROR label for failed TAP cases
+
+  [ Victor Seva ]
+  * [a14d9c2] MT#7535 add invite_no_refer test.
+  * [ad8291c] MT#7535 fix invite_no_refer flow
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 19 Jun 2014 07:18:35 +0200
+
 kamailio-config-tests (0.4.1.0+0~mr3.3.1.0) unstable; urgency=low
 
   [ Victor Seva ]
