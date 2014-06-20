@@ -36,6 +36,10 @@ flow:
   - end|ROUTE_NCOS:
   - start|ROUTE_NCOS:
   - end|ROUTE_NCOS:
+  - start|ROUTE_NCOS:
+  - end|ROUTE_NCOS:
+  - start|ROUTE_NCOS:
+  - end|ROUTE_NCOS:
   - start|ROUTE_BLOCK_OUT:
       $xavp(caller_usr_prefs[0]=>block_out_list[*]): [4311001, 4311003]
       $xavp(caller_real_prefs[0]=>block_out_list[*]): [4311001, 4311003]

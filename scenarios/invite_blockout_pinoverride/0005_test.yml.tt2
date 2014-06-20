@@ -34,6 +34,10 @@ flow:
   - end|ROUTE_CLEAR_CALLEE_PREF:
   - start|ROUTE_NCOS:
   - end|ROUTE_NCOS:
+  - start|ROUTE_NCOS:
+  - end|ROUTE_NCOS:
+  - start|ROUTE_NCOS:
+  - end|ROUTE_NCOS:
   - start|ROUTE_BLOCK_OUT:
   - return|ROUTE_BLOCK_OUT:
   - start|ROUTE_LOAD_CALLEE_PREF:
