@@ -11,7 +11,7 @@ flow:
   - start|REPLY_ROUTE_NAT:
   - exit|REPLY_ROUTE_NAT:
 sip_in:
-  - '^BYE sip:127.0.0.1:5080 SIP/2.0'
+  - '^BYE sip:127.0.0.1:5080(;prxroute=1)? SIP/2.0'
   - 'Contact: sip:external@'
   - 'CSeq: 2 BYE'
   - 'Max-Forwards: 69'
@@ -27,7 +27,7 @@ sip_out:
       'To: <sip:4311003@'
     ]
   - [
-      '^BYE sip:127.0.0.1:5080 SIP/2.0',
+      '^BYE sip:127.0.0.1:5080(;prxroute=1)? SIP/2.0',
       'Contact: sip:external@',
       'CSeq: 2 BYE',
       'Max-Forwards: 68',

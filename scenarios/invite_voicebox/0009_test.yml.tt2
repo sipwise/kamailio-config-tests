@@ -6,7 +6,7 @@ flow:
   - start|ROUTE_PRX_REQUEST:
   - start|ROUTE_OUTBOUND:
 sip_in:
-  - '^ACK sip:127.0.0.1:5080 SIP/2.0'
+  - '^ACK sip:127.0.0.1:5080(;prxroute=1)? SIP/2.0'
   - 'Contact: sip:testuser1002@'
   - 'CSeq: 2 ACK'
   - 'Max-Forwards: 69'
@@ -15,7 +15,7 @@ sip_in:
   - 'To: <sip:testuser1001@'
 sip_out:
   - [
-      '^ACK sip:127.0.0.1:5080 SIP/2.0',
+      '^ACK sip:127.0.0.1:5080(;prxroute=1)? SIP/2.0',
       'Contact: sip:testuser1002@',
       'CSeq: 2 ACK',
       'Max-Forwards: 68',
