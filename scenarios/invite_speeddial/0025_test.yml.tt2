@@ -44,8 +44,6 @@ flow:
   - end|ROUTE_BLOCK_OUT:
   - start|ROUTE_CHECK_PBX:
   - return|ROUTE_CHECK_PBX:
-  - start|ROUTE_SET_CALLER_DIALOG:
-  - end|ROUTE_SET_CALLER_DIALOG:
   - start|ROUTE_INVITE_TO_EXT:
   - start|ROUTE_PSTN:
   - start|ROUTE_ACC_FAILURE:
