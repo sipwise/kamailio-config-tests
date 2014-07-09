@@ -26,7 +26,7 @@ peer_00:
         transport: UDP
         weight: 1
       preferences:
-        concurrent_max: 1
+        concurrent_max: 10
 peer_01:
   contract:
     billing_profile: default
@@ -54,4 +54,4 @@ peer_01:
         transport: UDP
         weight: 2
       preferences:
-        concurrent_max: 1
+        concurrent_max: 10
