@@ -7,10 +7,10 @@
   <send start_rtd="1" start_rtd="2">
     <![CDATA[
 
-      INVITE sip:[field0 file="caller.csv" line=0]@[field2 file="caller.csv" line=0] SIP/2.0
+      INVITE sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0] SIP/2.0
       Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
       From: <sip:[field0 file="callee.csv" line=1]@[field3 file="callee.csv" line=1]>;tag=[pid]SIPpTag00[call_number]
-      To: <sip:[field0 file="caller.csv" line=0]@[field2 file="caller.csv" line=0]>
+      To: <sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]>
       Call-ID: [call_id]
       CSeq: 1 INVITE
       Contact: sip:[field0 file="callee.csv" line=1]@[local_ip]:[local_port]
@@ -38,10 +38,10 @@
   <send>
     <![CDATA[
 
-      ACK sip:[field0 file="caller.csv" line=0]@[field2 file="caller.csv" line=0]:[remote_port] SIP/2.0
+      ACK sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]:[remote_port] SIP/2.0
       [last_Via:]
       From: <sip:[field0 file="callee.csv" line=1]@[field3 file="callee.csv" line=1]>;tag=[pid]SIPpTag00[call_number]
-      To: <sip:[field0 file="caller.csv" line=0]@[field2 file="caller.csv" line=0]>[peer_tag_param]
+      To: <sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]>[peer_tag_param]
       Call-ID: [call_id]
       CSeq: 1 ACK
       Contact: sip:[field0 file="callee.csv" line=1]@[local_ip]:[local_port]
@@ -56,10 +56,10 @@
   <send start_rtd="3">
     <![CDATA[
 
-      INVITE sip:[field0 file="caller.csv" line=0]@[field2 file="caller.csv" line=0] SIP/2.0
+      INVITE sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0] SIP/2.0
       Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
       From: <sip:[field0 file="callee.csv" line=1]@[field3 file="callee.csv" line=1]>;tag=[pid]SIPpTag00[call_number]
-      To: <sip:[field0 file="caller.csv" line=0]@[field2 file="caller.csv" line=0]>
+      To: <sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]>
       Call-ID: [call_id]
       CSeq: 2 INVITE
       Contact: sip:[field0 file="callee.csv" line=1]@[local_ip]:[local_port]
@@ -92,7 +92,7 @@
       ACK [next_url] SIP/2.0
       Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
       From: <sip:[field0 file="callee.csv" line=1]@[field3 file="callee.csv" line=1]>;tag=[pid]SIPpTag00[call_number]
-      To: <sip:[field0 file="caller.csv" line=0]@[field2 file="caller.csv" line=0]>[peer_tag_param]
+      To: <sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]>[peer_tag_param]
       Call-ID: [call_id]
       [routes]
       CSeq: 2 ACK

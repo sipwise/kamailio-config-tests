@@ -29,9 +29,9 @@
 
   <recv response="100" rtd="1" optional="true">
   </recv>
-
+  
   <recv response="407" rtd="2" auth="true"/>
-
+  
   <send>
     <![CDATA[
 
@@ -112,8 +112,8 @@
       <exec play_pcap_audio="scenarios/media181sec.pcap"/>
     </action>
   </nop>
-
-  <pause milliseconds="1500"/>
+  
+  <pause milliseconds="1000"/> 
 
   <send start_rtd="4">
     <![CDATA[
@@ -131,7 +131,7 @@
 
     ]]>
   </send>
-
+  
   <recv response="100" optional="true">
   </recv>
 

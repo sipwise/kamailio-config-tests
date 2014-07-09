@@ -43,12 +43,6 @@ flow:
   - start|ROUTE_BLOCK_OUT:
   - end|ROUTE_BLOCK_OUT:
   - start|ROUTE_LOAD_CALLEE_PREF:
-  - start|ROUTE_BLOCK_IN:
-  - end|ROUTE_BLOCK_IN:
-  - end|ROUTE_LOAD_CALLEE_PREF:
-  - start|ROUTE_CHECK_PBX:
-  - return|ROUTE_CHECK_PBX:
-  - start|ROUTE_INVITE_TO_INT:
   - start|ROUTE_ACC_FAILURE:
       $xavp(callee_real_prefs[0]=>concurrent_max[*]): [1]
       $xavp(callee_real_prefs[0]=>concurrent_max_out[*]): None
@@ -65,7 +59,7 @@ flow:
   - end|ROUTE_ADD_CALLINFO_REPLY:
   - exit|ROUTE_EARLY_REJECT:
 sip_in:
-  - '^INVITE sip:testuser1002@'
+  - '^INVITE sip:testuser1003@'
   - 'Contact: sip:testuser1004@'
   - 'CSeq: 2 INVITE'
   - 'Max-Forwards: 69'
@@ -76,18 +70,18 @@ sip_out:
       '^SIP/2.0 100 Trying',
       'CSeq: 2 INVITE',
       'From: <sip:testuser1004@',
-      'To: <sip:testuser1002@'
+      'To: <sip:testuser1003@'
     ]
   - [
       '^SIP/2.0 101 Connecting',
       'CSeq: 2 INVITE',
       'From: <sip:testuser1004@',
-      'To: <sip:testuser1002@'
+      'To: <sip:testuser1003@'
     ]
   - [
       '^SIP/2.0 486 Busy',
       'CSeq: 2 INVITE',
       'From: <sip:testuser1004@',
-      'To: <sip:testuser1002@',
+      'To: <sip:testuser1003@',
       'P-NGCP-Authorization: testuser1004@'
     ]

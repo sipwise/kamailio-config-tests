@@ -20,7 +20,7 @@
     ]]>
   </send>
 
-  <pause milliseconds="500"/>
+  <pause milliseconds="500"/> 
 
   <send>
     <![CDATA[
@@ -70,7 +70,7 @@
 
     ]]>
   </send>
-
+  
   <ResponseTimeRepartition value="10, 20, 30, 40, 50, 100, 150, 200"/>
   <CallLengthRepartition value="10, 50, 100, 500, 1000, 5000, 10000"/>
 
