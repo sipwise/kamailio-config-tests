@@ -65,10 +65,10 @@ flow:
   - end|ROUTE_ADD_CALLINFO_REPLY:
   - exit|ROUTE_EARLY_REJECT:
 sip_in:
-  - '^INVITE sip:testuser1002@'
+  - '^INVITE sip:testuser1004@'
   - 'Contact: sip:testuser1002@'
   - 'From: <sip:testuser1002@'
-  - 'To: <sip:testuser1002@'
+  - 'To: <sip:testuser1004@'
   - 'CSeq:  2 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
@@ -78,19 +78,19 @@ sip_out:
       '^SIP/2.0 100 Trying',
       'CSeq:  2 INVITE',
       'From: <sip:testuser1002@',
-      'To: <sip:testuser1002@'
+      'To: <sip:testuser1004@'
     ]
   - [
       '^SIP/2.0 101 Connecting',
-      '<sip:testuser1002@',
-      'To: <sip:testuser1002@',
+      'From: <sip:testuser1002@',
+      'To: <sip:testuser1004@',
       'CSeq:  2 INVITE',
       'P-NGCP-Authorization: testuser1002@',
     ]
   - [
       '^SIP/2.0 403 Maximum parallel calls exceeded',
       'From: <sip:testuser1002@',
-      'To: <sip:testuser1002@',
+      'To: <sip:testuser1004@',
       'CSeq:  2 INVITE',
       'P-NGCP-Authorization: testuser1002@',
       'P-NGCP-Authorized: 1'

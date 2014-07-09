@@ -30,6 +30,6 @@ scenarios:
         domain: spce.test
         register: yes
       - ip: 127.2.0.1
-        username: testuser1002
+        username: testuser1004
         domain: spce.test
         register: yes
