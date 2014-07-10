@@ -1,3 +1,35 @@
+kamailio-config-tests (0.5.1.0+0~mr3.4.1.0) unstable; urgency=low
+
+  [ Victor Seva ]
+  * [f6745fd] MT#7423 trying to deal with sems 1.6 different behaviour
+  * [58d0488] MT#7423 invite_voicebox: disable BYE.
+  * [cf58dab] MT#7169 update flows
+  * [7942d5e] MT#7349 pid_watcher.py: update sems pid filename
+  * [3fdb96f] MT#7349 pid_watcher.py: update sems dir too.
+  * [9207990] MT#7169 update missing flow from cf58dab3ff4a
+  * [d75a861] MT#7523 allow use of SCENARIOS env var
+  * [ea2291f] MT#7535 add invite_no_refer test.
+  * [3882a64] MT#7169 fix test of avp(s:size) dialog.
+  * [574e5f8] MT#7423 trying to deal with sems 1.6 different behaviour. fix missing contacts.
+
+  [ Alexander Lutay ]
+  * [9518075] MT#7531 Add ERROR label for failed TAP cases
+
+  [ Andrew Pogrebennyk ]
+  * [3d6ae3f] MT#7893 add prxroute parameter to results to fix tests
+  * [60d8f9e] MT#7969 fix tests
+  * [7462af6] MT#7971 get rid of IF PRO in kamailio templates (fix tests)
+  * [279ef71] MT#7319 try to fix the tests
+  * [91ccfbd] MT#7319 try to fix the tests. part II
+  * [3a982cf] MT#7319 fix invite_concurrent_max_out
+  * [856ca63] MT#7319 disable wrong concurrent_max*_per_account scenarios
+  * [b4cd401] MT#7319 fix invite_concurrent_max_out_per_account
+  * [1218f3e] MT#7319 fix invite_concurrent_max and invite_concurrent_max_per_account
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 10 Jul 2014 15:14:30 +0200
+
 kamailio-config-tests (0.5.0.0+0~mr3.4.0.0) unstable; urgency=low
 
   [ Victor Seva ]
