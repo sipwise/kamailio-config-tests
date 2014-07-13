@@ -47,11 +47,15 @@ if [ "${PROFILE}" != "CE" ] && [ "${PROFILE}" != "PRO" ]; then
   exit 2
 fi
 
+echo "$(date) - Clean log dir"
+rm -rf ${LOG_DIR}
+mkdir -p ${MLOG_DIR} ${LOG_DIR}
+
 if [ -z $SKIP ]; then
   echo "$(date) - Setting config debug on"
   ${BIN_DIR}/config_debug.pl on ${DOMAIN}
   if [ "${PROFILE}" == "PRO" ]; then
-    ( timeout 60 ${BIN_DIR}/pid_watcher.py )&
+    ( timeout 60 ${BIN_DIR}/pid_watcher.py &> ${LOG_DIR}/pid_watcher.log )&
   fi
   ngcpcfg apply
   if [ "${PROFILE}" == "PRO" ]; then
@@ -64,10 +68,6 @@ if [ -z $SKIP ]; then
   fi
   echo "$(date) - Setting config debug on. Done."
 fi
-
-echo "$(date) - Clean log dir"
-rm -rf ${LOG_DIR}
-mkdir -p ${MLOG_DIR}
 
 echo "$(date) - Initial mem stats"
 VERSION="${PROFILE}_$(cat /etc/ngcp_version | cut -f1 -d' ')_"
