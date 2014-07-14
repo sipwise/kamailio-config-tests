@@ -1,3 +1,12 @@
+kamailio-config-tests (0.4.3.0+0~mr3.3.3.0) unstable; urgency=low
+
+  [ Victor Seva ]
+  * [77408a0] MT#7495 fix new flow introduced by 8ee92ee161d4fdd074027e90d2bf726a0836d18c
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 14 Jul 2014 17:04:20 +0200
+
 kamailio-config-tests (0.4.2.0+0~mr3.3.2.0) unstable; urgency=low
 
   [ Alexander Lutay ]
