@@ -281,6 +281,7 @@ function run_sipp
 
   local base=""
   local pid=""
+  local responder_pid=""
 
   # test LOG_DIR
   # we dont want to remove "/*" don't we?
@@ -324,13 +325,13 @@ function run_sipp
       PORT="5060"
     fi
 
-    echo "$(date) - Running ${base} $ip:${PORT}-${MPORT}"
     if [ -f ${SCEN_CHECK_DIR}/${base}_reg.xml ]; then
       echo "$(date) - Register ${base} $ip:${PORT}-${MPORT}"
       ${BIN_DIR}/sipp.sh -T $transport -i $ip -p ${PORT} -r ${SCEN_CHECK_DIR}/${base}_reg.xml
     fi
-    ${BIN_DIR}/sipp.sh -T $transport -i $ip -p ${PORT} -m ${MPORT} -r ${SCEN_CHECK_DIR}/${base}.xml &
-    responder_pid="${responder_pid} ${base}:$!"
+    pid=$(${BIN_DIR}/sipp.sh -b -T $transport -i $ip -p ${PORT} -m ${MPORT} -r ${SCEN_CHECK_DIR}/${base}.xml)
+    echo "$(date) - Running ${base}[${pid}] ${ip}:${PORT}-${MPORT}"
+    responder_pid="${responder_pid} ${base}:${pid}"
 
     if [ "${foreign_dom}" == "no" ]; then
       check_port ${PORT}
@@ -367,7 +368,7 @@ function run_sipp
       ps_status=$?
       if [ ${ps_status} -eq 0 ]; then
         echo "$(date) - sipp responder $base pid $pid not finished yet. Killing it"
-        kill -9 ${pid}
+        kill -SIGUSR1 ${pid}
       fi
     fi
   done
