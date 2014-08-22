@@ -95,7 +95,6 @@ else
   $yaml->[0]->{kamailio}{proxy}{presence}{enable} = 'yes';
   $yaml->[0]->{sems}{debug} = 'yes';
   $yaml->[0]->{checktools}{sip_check_enable} = 0;
-  $yaml->[0]->{rateomat}{enable} = 'no';
 
   tie @array, 'Tie::File', '/etc/hosts' or die ('Can set test domain on /etc/hosts');
   for (@array)
