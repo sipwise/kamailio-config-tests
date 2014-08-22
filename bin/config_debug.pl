@@ -87,7 +87,7 @@ if (lc($action) eq "off")
 }
 else
 {
-  copy($file, $file.".orig") or die "Copy failed: $!";
+  copy($file, $file.".orig") or die "Copy failed: $!" unless(-e $file.".orig");
   $yaml = YAML::Tiny->read($file) or die "File $file could not be read";
   $yaml->[0]->{kamailio}{lb}{debug} = 'yes';
   $yaml->[0]->{kamailio}{lb}{use_dns_cache} = 'off';
@@ -99,7 +99,7 @@ else
   tie @array, 'Tie::File', '/etc/hosts' or die ('Can set test domain on /etc/hosts');
   for (@array)
   {
-    s/127.0.0.1[ \t]+localhost/127.0.0.1 localhost $domain/;
+    s/127.0.0.1[ \t]+localhost/127.0.0.1 localhost $domain/ unless($_ =~ /$domain/);
   }
   untie @array;
   for my $i ('caller.csv', 'callee.csv')
