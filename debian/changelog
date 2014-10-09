@@ -1,3 +1,18 @@
+kamailio-config-tests (0.7.0.0+0~mr3.6.0.0) unstable; urgency=low
+
+  [ Victor Seva ]
+  * [d2d2cff] MT#8673 MT#8503 add new routes
+  * [d46bb84] MT#8503 add new routes
+  * [968175b] MT#8503 add new routes
+  * [637eb05] MT#8721 run sipp on background to get the proper pid on responder scenario
+  * [e972c3c] MT#8753 protection of run "bin/config_debug.pl on" twice in a row
+  * [6a327ad] MT#7533 stop rate-o-mat service
+  * [c4e7d63] Revert "MT#7533 stop rate-o-mat service"
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 09 Oct 2014 16:31:01 +0200
+
 kamailio-config-tests (0.6.0.0+0~mr3.5.0.0) unstable; urgency=low
 
   [ Victor Seva ]
