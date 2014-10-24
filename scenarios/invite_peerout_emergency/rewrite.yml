@@ -1,0 +1,13 @@
+rw_00:
+  - direction: in
+    field: callee
+    match_pattern: "^([1-9][0-9]{2})$"
+    replace_pattern: "emergency_\1"
+    priority: 1
+    description: Emergency in
+  - direction: out
+    field: callee
+    match_pattern: "^emergency_([1-9][0-9]+)$"
+    replace_pattern: "\1"
+    priority: 1
+    description: Emergency out
