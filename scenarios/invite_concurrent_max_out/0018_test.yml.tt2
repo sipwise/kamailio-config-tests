@@ -49,6 +49,10 @@ flow:
   - return|ROUTE_CHECK_PBX:
   - start|ROUTE_INVITE_TO_INT:
   - start|ROUTE_OUTBOUND:
+  - start|ROUTE_ACC_CALLER:
+  - end|ROUTE_ACC_CALLER:
+  - start|ROUTE_ACC_CALLEE:
+  - end|ROUTE_ACC_CALLEE:
   - start|ROUTE_SET_CALLER_DIALOG:
   - start|ROUTE_ACC_FAILURE:
   - start|ROUTE_ACC_CALLER:
