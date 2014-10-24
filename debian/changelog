@@ -1,3 +1,15 @@
+kamailio-config-tests (0.5.1.2+0~mr3.4.1.2) unstable; urgency=low
+
+  [ Victor Seva ]
+  * [3a73fc4] MT#6243 activate emergency test
+
+  [ Andrew Pogrebennyk ]
+  * [f969098] MT#9733 MT#6243 adapt emergency test to mr3.4
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 24 Oct 2014 13:21:40 +0200
+
 kamailio-config-tests (0.5.1.1+0~mr3.4.1.1) unstable; urgency=low
 
   * New release.
