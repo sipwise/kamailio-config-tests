@@ -1,3 +1,13 @@
+kamailio-config-tests (0.5.1.4+0~mr3.4.1.4) unstable; urgency=low
+
+  [ Andrew Pogrebennyk ]
+  * [52ff6d1] MT#6243 adapt emergency test to mr3.4
+  * [c5926f7] MT#9807 disable multi-mime test until CE sems is fixed
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 24 Oct 2014 17:02:25 +0200
+
 kamailio-config-tests (0.5.1.3+0~mr3.4.1.3) unstable; urgency=low
 
   [ Andrew Pogrebennyk ]
