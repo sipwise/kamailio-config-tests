@@ -1,3 +1,12 @@
+kamailio-config-tests (0.6.1.2+0~mr3.5.1.2) unstable; urgency=low
+
+  [ Andrew Pogrebennyk ]
+  * [dbeb941] MT#9733 fix the test flows
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 24 Oct 2014 11:49:29 +0200
+
 kamailio-config-tests (0.6.1.1+0~mr3.5.1.1) unstable; urgency=low
 
   * New release.
