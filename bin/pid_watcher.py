@@ -21,6 +21,13 @@
 import sys
 import os.path
 import pyinotify
+import logging
+import os
+BASE_DIR = "/usr/share/kamailio-config-tests"
+if os.environ.has_key('BASE_DIR'):
+    BASE_DIR = os.environ['BASE_DIR']
+filelog = os.path.join(BASE_DIR, 'log', 'pid_watcher.log')
+logging.basicConfig(filename=filelog, level=logging.DEBUG, format='%(asctime)s %(message)s')
 
 base_path = "/var/run"
 
@@ -50,36 +57,37 @@ class Handler(pyinotify.ProcessEvent):
         all = True
         for k,v in self.watched.iteritems():
             all = (all and (v['created'] or v['modified']))
-            print "checking: %s[%s] all:%s" % (k,v, all)
+            logging.info("checking: %s[%s] all:%s" % (k,v, all))
         return all
 
     def process_IN_CREATE(self, event):
         if watched.has_key(event.pathname):
             watched[event.pathname]['created'] = True
-            print "created %s" % event.pathname
+            logging.info("created %s" % event.pathname)
             if self.check_all():
                 sys.exit(0)
 
     def process_IN_IGNORED(self, event):
         if watched.has_key(event.pathname):
             watched[event.pathname]['deleted'] = True
-            print "deleted %s" % event.pathname
+            logging.info("deleted %s" % event.pathname)
 
     def process_IN_MODIFY(self, event):
         if watched.has_key(event.pathname):
             watched[event.pathname]['modified'] = True
-            print "modified %s" % event.pathname
+            logging.info("modified %s" % event.pathname)
 # for debug
 #    def process_default(self, event):
 #        if watched.has_key(event.pathname):
 #            print event
 
+logging.info("PID watcher started")
 wm = pyinotify.WatchManager()
 handler = Handler(watched=watched)
 notifier = pyinotify.Notifier(wm, default_proc_fun=handler)
 for service in services:
     service_pid = os.path.join(base_path, service)
-    print "Watching %s" % service_pid
+    logging.info("Watching %s" % service_pid)
     watched[service_pid] = {'deleted': False, 'created': False, 'modified': False }
     wm.add_watch(service_pid, pyinotify.IN_IGNORED)
 for d in watched_dirs:

@@ -87,7 +87,7 @@ if [ -z $SKIP ]; then
   echo "$(date) - Setting config debug on"
   ${BIN_DIR}/config_debug.pl on ${DOMAIN}
   if [ "${PROFILE}" == "PRO" ]; then
-    ( timeout 60 ${BIN_DIR}/pid_watcher.py &> ${LOG_DIR}/pid_watcher.log )&
+    ( timeout 60 ${BIN_DIR}/pid_watcher.py )&
   fi
   ngcpcfg apply
   res=$?
