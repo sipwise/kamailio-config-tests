@@ -1,3 +1,19 @@
+kamailio-config-tests (0.7.1.0+0~mr3.6.1.0) unstable; urgency=low
+
+  [ Andrew Pogrebennyk ]
+  * [79e9cd9] MT#6243 add test for emergency call with multipart body
+  * [7a9805a] MT#9733 fix the test flows
+  * [d3b9db3] MT#9807 disable multi-mime test until CE sems is fixed
+
+  [ Victor Seva ]
+  * [9a419f8] MT#6243 update test for emergency call with multipart body
+  * [6bd2af2] MT#6243 activate emergency test
+  * [1bce64b] MT#6499 pid_watcher.py: create logging file here not by run_tests.sh
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 30 Oct 2014 17:19:30 +0100
+
 kamailio-config-tests (0.7.0.0+0~mr3.6.0.0) unstable; urgency=low
 
   [ Victor Seva ]
