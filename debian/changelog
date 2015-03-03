@@ -1,3 +1,12 @@
+kamailio-config-tests (0.8.3.0+0~mr3.7.3.0) unstable; urgency=low
+
+  [ Andrew Pogrebennyk ]
+  * [247c48f] MT#11651 fix test (caller dialog was previously counted twice)
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 03 Mar 2015 16:40:46 +0100
+
 kamailio-config-tests (0.8.2.0+0~mr3.7.2.0) unstable; urgency=low
 
   * New release.
