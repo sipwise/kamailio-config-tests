@@ -1,0 +1,27 @@
+- |+
+  SIP/2.0 100 Trying
+  Via: SIP/2.0/UDP 127.0.0.1;branch=z9hG4bK3969.2f1956baf914fd272ada0363d9577b29.0
+  Via: SIP/2.0/UDP 127.126.0.1:50602;rport=50602;branch=z9hG4bK-24881-1-3
+  From: <sip:testuser1003@spce.test>;tag=24881SIPpTag001
+  To: "TestBria" <sip:testuser1003@spce.test>
+  Call-ID: 1-24881@127.126.0.1
+  CSeq: 4 REGISTER
+  P-Out-Socket: udp:127.0.0.1:5060
+  Server: Sipwise NGCP Proxy 2.X
+  Content-Length: 0
+
+- |+
+  SIP/2.0 200 OK
+  Via: SIP/2.0/UDP 127.0.0.1;branch=z9hG4bK3969.2f1956baf914fd272ada0363d9577b29.0;rport=5060
+  Via: SIP/2.0/UDP 127.126.0.1:50602;rport=50602;branch=z9hG4bK-24881-1-3
+  From: <sip:testuser1003@spce.test>;tag=24881SIPpTag001
+  To: "TestBria" <sip:testuser1003@spce.test>;tag=1d24a28a0bded6c40d31e6db8aab9ac6.504e
+  Call-ID: 1-24881@127.126.0.1
+  CSeq: 4 REGISTER
+  P-Out-Socket: udp:127.0.0.1:5060
+  P-NGCP-Authorization: testuser1003@spce.test
+  P-NGCP-Authorized: 1
+  P-Caller-UUID: 2cc06244-5a63-46cd-aee9-1d804d314371
+  Contact: <sip:testuser1003@127.126.0.1:50602;ob>;expires=600;+sip.instance="<urn:uuid:C3DD6013-20E8-40E3-8EA2-5849B02ED0C4>";reg-id=1
+  Server: Sipwise NGCP Proxy 2.X
+  Content-Length: 0

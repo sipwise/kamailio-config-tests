@@ -75,7 +75,7 @@ sub save_data
     YAML::DumpFile($path, $data);
     #print "$data->{'msgid'} saved\n";
     # This tries to fix problems with string values '-' being saved
-    # without quotes. 
+    # without quotes.
     tie my @array, 'Tie::File', $path or die ('Can not open $path');
     for (@array)
     {
@@ -90,6 +90,7 @@ sub save_data
     sip_in => '',
     sip_out => [],
   };
+  return;
 }
 
 my $pid;
@@ -154,7 +155,7 @@ given($#ARGV)
 $filename = abs_path($filename);
 $output_dir = abs_path($output_dir);
 my $out;
-open($log, "<$filename") or die "Couldn't open kamailio log, $!";
+open($log, '<', "$filename") or die "Couldn't open kamailio log, $ERRNO";
 
 first_line();
 do

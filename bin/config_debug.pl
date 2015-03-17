@@ -18,13 +18,14 @@
 # On Debian systems, the complete text of the GNU General
 # Public License version 3 can be found in "/usr/share/common-licenses/GPL-3".
 #
-use File::Spec;
+use English;
 use File::Copy;
-use Tie::File;
+use File::Spec;
+use Getopt::Long;
 use strict;
+use Tie::File;
 use warnings;
 use YAML::Tiny;
-use Getopt::Long;
 
 sub usage
 {
@@ -87,12 +88,13 @@ if (lc($action) eq "off")
 }
 else
 {
-  copy($file, $file.".orig") or die "Copy failed: $!" unless(-e $file.".orig");
+  copy($file, $file.".orig") or die "Copy failed: $ERRNO" unless(-e $file.".orig");
   $yaml = YAML::Tiny->read($file) or die "File $file could not be read";
   $yaml->[0]->{kamailio}{lb}{debug} = 'yes';
   $yaml->[0]->{kamailio}{lb}{use_dns_cache} = 'off';
   $yaml->[0]->{kamailio}{proxy}{debug} = 'yes';
   $yaml->[0]->{kamailio}{proxy}{presence}{enable} = 'yes';
+  $yaml->[0]->{kamailio}{proxy}{fritzbox_prefixes} = [ '112', '110', '118[0-9]{2}' ];
   $yaml->[0]->{sems}{debug} = 'yes';
   $yaml->[0]->{checktools}{sip_check_enable} = 0;
 

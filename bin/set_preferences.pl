@@ -21,6 +21,7 @@
 use strict;
 use warnings;
 
+use English;
 use Getopt::Std;
 use Cwd 'abs_path';
 use YAML;
@@ -134,11 +135,11 @@ sub call_prov {
                                         });
     };
 
-    if($@) {
-        if(ref $@ eq 'SOAP::Fault') {
-            die "Billing\::$function failed: ". $@->faultstring;
+    if($EVAL_ERROR) {
+        if(ref $EVAL_ERROR eq 'SOAP::Fault') {
+            die "Billing\::$function failed: ". $EVAL_ERROR->faultstring;
         } else {
-            die "Billing\::$function failed: $@";
+            die "Billing\::$function failed: $EVAL_ERROR";
         }
     }
 
@@ -146,5 +147,5 @@ sub call_prov {
 }
 
 sub usage {
-    die "Usage:\n$0 prefs.yml\n";
+    die "Usage:\n$PROGRAM_NAME prefs.yml\n";
 }

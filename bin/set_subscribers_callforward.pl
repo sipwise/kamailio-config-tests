@@ -21,6 +21,7 @@
 use strict;
 use warnings;
 
+use English;
 use Getopt::Std;
 use Cwd 'abs_path';
 use YAML;
@@ -55,7 +56,7 @@ sub main {
         my $param;
         # cf_set
         my $set = {}; # name -> set_id
-        my $time = {}; # name -> time_id 
+        my $time = {}; # name -> time_id
         foreach my $s (@{$cf->{$key}->{'destination_set'}})
         {
           $param = { username => $fields[0], domain => $fields[1], data => $s };
@@ -119,11 +120,11 @@ sub call_prov {
                                         });
     };
 
-    if($@) {
-        if(ref $@ eq 'SOAP::Fault') {
-            die "Voip\::$function failed: ". $@->faultstring;
+    if($EVAL_ERROR) {
+        if(ref $EVAL_ERROR eq 'SOAP::Fault') {
+            die "Voip\::$function failed: ". $EVAL_ERROR->faultstring;
         } else {
-            die "Voip\::$function failed: $@";
+            die "Voip\::$function failed: $EVAL_ERROR";
         }
     }
 
@@ -131,5 +132,5 @@ sub call_prov {
 }
 
 sub usage {
-    die "Usage:\n$0 callforward.yml\n";
+    die "Usage:\n$PROGRAM_NAME callforward.yml\n";
 }

@@ -21,6 +21,7 @@
 use strict;
 use warnings;
 
+use English;
 use YAML;
 use Getopt::Long;
 use Sipwise::Provisioning::Billing;
@@ -40,7 +41,7 @@ our %BILLING = (
               );
 
 sub usage {
-    die "Usage:\n$0 scenario.yml\n".
+    die "Usage:\n$PROGRAM_NAME scenario.yml\n".
         "Options:\n".
         "  -h this help\n";
 }
@@ -72,6 +73,7 @@ sub main
         call_prov( $bprov, 'create_voip_account', { data => { %BILLING, subscribers => \@subs }});
         if($debug) { print("created ".($#subs+1)." subscribers"); }
     }
+    return;
 }
 
 sub call_prov {
@@ -91,11 +93,11 @@ sub call_prov {
                                         });
     };
 
-    if($@) {
-        if(ref $@ eq 'SOAP::Fault') {
-            die "Billing\::$function failed: ". $@->faultstring;
+    if($EVAL_ERROR) {
+        if(ref $EVAL_ERROR eq 'SOAP::Fault') {
+            die "Billing\::$function failed: ". $EVAL_ERROR->faultstring;
         } else {
-            die "Billing\::$function failed: $@";
+            die "Billing\::$function failed: $EVAL_ERROR";
         }
     }
 
