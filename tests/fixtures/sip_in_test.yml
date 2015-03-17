@@ -1,0 +1,7 @@
+- '^REGISTER'
+- 'Contact: "TestBria" <sip:testuser1003@127.126.0.1:50602;ob>;reg-id=1;\+sip.instance="<urn:uuid:C3DD6013-20E8-40E3-8EA2-5849B02ED0C4>"'
+- 'Contact: "TestBria" <sip:testuser1003@127.126.0.1:6666;ob>;expires=0'
+- 'Content-Length: 0'
+- 'Expires: \d+'
+- '_:NOT:_Expires: 0'
+- 'Authorization: Digest username="testuser1003"'
