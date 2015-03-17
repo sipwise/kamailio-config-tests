@@ -139,10 +139,10 @@ class TestCheckSipIn(unittest.TestCase):
 
     def setUp(self):
         self.ctest = Test()
-        self.msg = open('tests/fixtures/sip_in.txt', 'r').read()
+        self.msg = open('./tests/fixtures/sip_in.txt', 'r').read()
 
     def testSipIn(self):
-        sip_in = yaml.load(open('tests/fixtures/sip_in_test.yml', 'r'))
+        sip_in = yaml.load(open('./tests/fixtures/sip_in_test.yml', 'r'))
         check_sip(sip_in, self.msg, self.ctest)
         # print self.ctest
         self.assertFalse(self.ctest.isError())
@@ -152,10 +152,10 @@ class TestCheckSipOut(unittest.TestCase):
 
     def setUp(self):
         self.ctest = Test()
-        self.msg = yaml.load(open('tests/fixtures/sip_out.yml', 'r'))
+        self.msg = yaml.load(open('./tests/fixtures/sip_out.yml', 'r'))
 
     def testSipOut(self):
-        sip_out = yaml.load(open('tests/fixtures/sip_out_test.yml', 'r'))
+        sip_out = yaml.load(open('./tests/fixtures/sip_out_test.yml', 'r'))
         check_sip_out(sip_out, self.msg, self.ctest)
         # print self.ctest
         self.assertFalse(self.ctest.isError())
