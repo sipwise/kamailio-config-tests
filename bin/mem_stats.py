@@ -18,13 +18,17 @@
 # On Debian systems, the complete text of the GNU General
 # Public License version 3 can be found in "/usr/share/common-licenses/GPL-3".
 #
-import sys, os, csv, argparse
+import argparse
+import csv
+import os
+import sys
 import xmlrpclib
 
-KAM_URL='http://127.0.0.1:5062'
-KAM_LINES=10
+KAM_URL = 'http://127.0.0.1:5062'
+KAM_LINES = 10
 
 proxy = xmlrpclib.ServerProxy(KAM_URL)
+
 
 def get_headers(l, prefix):
     res = []
@@ -32,9 +36,11 @@ def get_headers(l, prefix):
         res.append("%s%s" % (prefix, i))
     return res
 
+
 def sum_row(s, r):
     for i in ['used', 'real_used', 'free']:
-        s[i] = s[i] + r[i];
+        s[i] = s[i] + r[i]
+
 
 def save_data(datafile, headers, prefix, res):
     show_headers = get_headers(headers, prefix)
@@ -42,12 +48,13 @@ def save_data(datafile, headers, prefix, res):
         spamwriter = csv.writer(csvfile)
         spamwriter.writerow(show_headers)
         spamwriter = csv.DictWriter(csvfile,
-            headers, extrasaction='ignore')
+                                    headers, extrasaction='ignore')
         for row in res:
             spamwriter.writerow(row)
 
+
 def get_pvm(private_file):
-    res = [{'pid':'SUM', 'used':0, 'real_used':0, 'free':0},]
+    res = [{'pid': 'SUM', 'used': 0, 'real_used': 0, 'free': 0}, ]
     headers = ['pid', 'used', 'real_used', 'free']
     prefix = 'rss_'
     try:
@@ -72,10 +79,11 @@ def get_pvm(private_file):
     private_file_pp = '%s_per_pid%s' % (fileName, fileExtension)
     save_data(private_file_pp, headers, prefix, res[2:])
 
+
 def get_shm(share_file):
     headers = ['used', 'real_used', 'max_used',
-        'free', 'fragments', 'total'
-    ]
+               'free', 'fragments', 'total'
+               ]
     prefix = 'shared_'
     try:
         res = proxy.core.shmmem('b')
@@ -93,18 +101,20 @@ def get_shm(share_file):
         sys.exit(-2)
     save_data(share_file, headers, prefix, [res, ])
 
+
 def main():
-    parser = argparse.ArgumentParser(description='export to csv kamailio proxy stats.')
+    parser = argparse.ArgumentParser(
+        description='export to csv kamailio proxy stats.')
     parser.add_argument('--private_file', '-P', nargs='?', default='pvm.csv',
-                   help='path to the private csv file')
+                        help='path to the private csv file')
     parser.add_argument('--share_file', '-S', nargs='?', default='shm.csv',
-                   help='path to the share csv file')
+                        help='path to the share csv file')
     parser.add_argument('--rpc_url', nargs='?', default=KAM_URL,
-                   help='rpc URL of kamailio. Default:%s' % KAM_URL)
+                        help='rpc URL of kamailio. Default:%s' % KAM_URL)
     args = parser.parse_args()
 
     get_pvm(args.private_file)
     get_shm(args.share_file)
 
 if __name__ == "__main__":
-  main()
+    main()

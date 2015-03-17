@@ -21,6 +21,7 @@
 use strict;
 use warnings;
 
+use English;
 use Getopt::Std;
 use Cwd 'abs_path';
 use YAML;
@@ -116,7 +117,7 @@ sub do_create {
         foreach (@{$peer->{groups}})
         {
             $_->{peering_contract_id} = $contract_id;
-            call_prov( $vprov, 'create_peer_group', $_ );            
+            call_prov( $vprov, 'create_peer_group', $_ );
         }
         my $result = call_prov( $vprov, 'get_peer_groups');
         foreach (@{$result})
@@ -147,7 +148,6 @@ sub do_create {
                     $param = { id => $_->{id}, preferences => $host->{$_->{name}}->{preferences}};
                     call_prov($vprov, 'set_peer_preferences', $param);
                 }
-                
             }
         }
     }
@@ -171,11 +171,11 @@ sub call_prov {
                                         });
     };
 
-    if($@) {
-        if(ref $@ eq 'SOAP::Fault') {
-            die "Voip\::$function failed: ". $@->faultstring;
+    if($EVAL_ERROR) {
+        if(ref $EVAL_ERROR eq 'SOAP::Fault') {
+            die "Voip\::$function failed: ". $EVAL_ERROR->faultstring;
         } else {
-            die "Voip\::$function failed: $@";
+            die "Voip\::$function failed: $EVAL_ERROR";
         }
     }
 
@@ -183,5 +183,5 @@ sub call_prov {
 }
 
 sub usage {
-    return "Usage:\n$0 peer.yml\n";
+    return "Usage:\n$PROGRAM_NAME peer.yml\n";
 }
