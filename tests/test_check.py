@@ -20,12 +20,13 @@
 #
 import os
 import sys
+import unittest
+import xmlrunner
+import yaml
 lib_path = os.path.abspath('bin')
 sys.path.append(lib_path)
 from check import check_sip, check_sip_out
 from check import XAvp, Test, check_flow, check_flow_vars
-import unittest
-import yaml
 
 
 class TestXAvp(unittest.TestCase):
@@ -160,4 +161,8 @@ class TestCheckSipOut(unittest.TestCase):
         self.assertFalse(self.ctest.isError())
 
 if __name__ == '__main__':
-    unittest.main()
+    unittest.main(
+        testRunner=xmlrunner.XMLTestRunner(output=sys.stdout),
+        # these make sure that some options that are not applicable
+        # remain hidden from the help menu.
+        failfast=False, buffer=False, catchbreak=False)
