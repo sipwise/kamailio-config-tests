@@ -21,6 +21,7 @@
 use 5.014;
 use strict;
 use warnings;
+use English;
 use JSON;
 use YAML;
 use File::Spec;
