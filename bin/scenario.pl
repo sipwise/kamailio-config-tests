@@ -94,6 +94,7 @@ sub get_subs_info
     {
         die("domain:".$data->{domain}." not defined in subscribers");
     }
+    return;
 }
 
 sub generate
@@ -133,7 +134,7 @@ sub generate
         {
             # by default foreign is no
             $_->{foreign} = "no" unless defined($_->{foreign});
-            if(!defined($_->{peer_host}) and $_->{foreign} ne "yes")
+            if(not defined($_->{peer_host}) and $_->{foreign} ne "yes")
             {
                 get_subs_info($data->{subscribers}, $_);
             }
@@ -161,6 +162,7 @@ sub generate
         }
         $id++;
     }
+    return;
 }
 
 sub generate_reg
@@ -169,6 +171,7 @@ sub generate_reg
     my $vars = { line => $num };
     my $fn = File::Spec->catfile($base_check_dir, "sipp_scenario_responder".(sprintf "%02i", $num)."_reg.xml");
     $tt->process($template_reg, $vars, $fn) or die($tt->error(), "\n");
+    return;
 }
 
 sub generate_presence
@@ -198,6 +201,7 @@ sub generate_presence
         chmod(0755, $fn);
         undef $fn;
     }
+    return;
 }
 
 sub generate_foreign_dom
@@ -207,6 +211,7 @@ sub generate_foreign_dom
     my $fn = IO::File->new($file, "w") or die("can't create $file");
     print {$fn} "$ip $domain\n";
     undef $fn;
+    return;
 }
 
 generate($cf);
