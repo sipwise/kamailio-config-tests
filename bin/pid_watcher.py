@@ -18,16 +18,18 @@
  On Debian systems, the complete text of the GNU General
  Public License version 3 can be found in "/usr/share/common-licenses/GPL-3".
 """
-import sys
-import os.path
-import pyinotify
 import logging
 import os
+import os.path
+import pyinotify
+import sys
+
 BASE_DIR = "/usr/share/kamailio-config-tests"
-if os.environ.has_key('BASE_DIR'):
+if 'BASE_DIR' in os.environ:
     BASE_DIR = os.environ['BASE_DIR']
 filelog = os.path.join(BASE_DIR, 'log', 'pid_watcher.log')
-logging.basicConfig(filename=filelog, level=logging.DEBUG, format='%(asctime)s %(message)s')
+logging.basicConfig(
+    filename=filelog, level=logging.DEBUG, format='%(asctime)s %(message)s')
 
 base_path = "/var/run"
 
@@ -49,31 +51,33 @@ watched_dirs = [
 
 watched = {}
 
+
 class Handler(pyinotify.ProcessEvent):
+
     def my_init(self, watched):
         self.watched = watched
 
     def check_all(self):
         all = True
-        for k,v in self.watched.iteritems():
+        for k, v in self.watched.iteritems():
             all = (all and (v['created'] or v['modified']))
-            logging.info("checking: %s[%s] all:%s" % (k,v, all))
+            logging.info("checking: %s[%s] all:%s" % (k, v, all))
         return all
 
     def process_IN_CREATE(self, event):
-        if watched.has_key(event.pathname):
+        if event.pathname in watched:
             watched[event.pathname]['created'] = True
             logging.info("created %s" % event.pathname)
             if self.check_all():
                 sys.exit(0)
 
     def process_IN_IGNORED(self, event):
-        if watched.has_key(event.pathname):
+        if event.pathname in watched:
             watched[event.pathname]['deleted'] = True
             logging.info("deleted %s" % event.pathname)
 
     def process_IN_MODIFY(self, event):
-        if watched.has_key(event.pathname):
+        if event.pathname in watched:
             watched[event.pathname]['modified'] = True
             logging.info("modified %s" % event.pathname)
 # for debug
@@ -88,7 +92,8 @@ notifier = pyinotify.Notifier(wm, default_proc_fun=handler)
 for service in services:
     service_pid = os.path.join(base_path, service)
     logging.info("Watching %s" % service_pid)
-    watched[service_pid] = {'deleted': False, 'created': False, 'modified': False }
+    watched[service_pid] = {
+        'deleted': False, 'created': False, 'modified': False}
     wm.add_watch(service_pid, pyinotify.IN_IGNORED)
 for d in watched_dirs:
     wm.add_watch(d, pyinotify.ALL_EVENTS)
