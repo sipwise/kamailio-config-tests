@@ -1,3 +1,23 @@
+kamailio-config-tests (0.9.1.0+0~mr3.8.1.0) unstable; urgency=low
+
+  [ Andrew Pogrebennyk ]
+  * [5d3fcec] MT#11651 fix test (caller dialog was previously counted twice)
+
+  [ Michael Prokop ]
+  * [8172139] MT#9127 Bump Standards-Version to 3.9.6
+
+  [ Victor Seva ]
+  * [473cee3] MT#7505 Add .gitreview file
+  * [2383caf] MT#11921 fix tap-test errors and move unit-tests to tests dir
+  * [07545f7] MT#9683 improve unit-tests execution
+  * [0cf87e1] MT#9683 improve unit-tests execution:
+  * [2822efd] MT#9683 rename fixtures to not match .gitignore *_test.yml rule
+  * [ef49f26] MT#11921 fix tap-test errors. fix commit 2383cafe859e52
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 18 Mar 2015 14:01:15 +0100
+
 kamailio-config-tests (0.9.0.0+0~mr3.8.0.0) unstable; urgency=low
 
   [ Andrew Pogrebennyk ]
