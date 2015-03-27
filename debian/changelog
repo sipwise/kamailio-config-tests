@@ -1,3 +1,20 @@
+kamailio-config-tests (0.8.1.3+0~mr3.7.1.3) unstable; urgency=low
+
+  [ Andrew Pogrebennyk ]
+  * [6352af8] MT#12217 fix the test for 302 redirect
+
+  [ Victor Seva ]
+  * [ad6f175] MT#7505 Add .gitreview file
+  * [cbc3bf5] MT#11921 fix tap-test errors and move unit-tests to tests dir
+  * [6274497] MT#9683 improve unit-tests execution
+  * [8f4229a] MT#9683 improve unit-tests execution:
+  * [e616886] MT#9683 rename fixtures to not match .gitignore *_test.yml rule
+  * [3a48a0b] MT#11921 fix tap-test errors. fix commit 2383cafe859e52
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 27 Mar 2015 12:20:51 +0100
+
 kamailio-config-tests (0.8.1.2+0~mr3.7.1.2) unstable; urgency=low
 
   [ Andrew Pogrebennyk ]
