@@ -1,0 +1,37 @@
+# REGISTER scenario
+flow:
+  - start|MAIN:
+      $fU: testuser1003
+      $tU: testuser1003
+  - start|ROUTE_NET_INFO:
+      $fU: testuser1003
+      $tU: testuser1003
+  - end|ROUTE_NET_INFO:
+  - start|ROUTE_REG_REQUEST:
+  - start|ROUTE_REG_HANDLE:
+  - start|ROUTE_AUTH:
+  - start|ROUTE_ADD_CALLINFO_REPLY:
+  - return|ROUTE_ADD_CALLINFO_REPLY:
+  - end|ROUTE_AUTH:
+  - start|ROUTE_PREFERENCES:
+  - end|ROUTE_PREFERENCES:
+  - exit|ROUTE_REG_HANDLE:
+sip_in:
+  - '^REGISTER'
+  - 'Contact: "TestBria" <sip:testuser1003@127.126.0.1:50602;ob>'
+  - 'Contact: "TestBria" <sip:testuser1003@127.126.0.1:6668;ob>;reg-id=1;\+sip.instance="<urn:uuid:C3DD6013-20E8-40E3-8EA2-5849B02ED0C4>";expires=0'
+  - 'Content-Length: 0'
+  - 'Authorization: Digest username="testuser1003"'
+sip_out:
+  - [
+      '^SIP/2.0 100 Trying',
+      'Content-Length: 0'
+    ]
+  - [
+      '^SIP/2.0 200 OK',
+      'Contact: <sip:testuser1003@127.126.0.1:50602;ob>;expires=300',
+      '_:NOT:_Contact:.* <sip:testuser1003@127.126.0.1:6668;ob>',
+      'Content-Length: 0',
+      'P-NGCP-Authorization: testuser1003@',
+      'P-NGCP-Authorized: 1'
+    ]

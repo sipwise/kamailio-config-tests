@@ -1,0 +1,27 @@
+# REGISTER scenario
+flow:
+  - start|MAIN:
+      $fU: testuser1004
+      $tU: testuser1004
+  - start|ROUTE_NET_INFO:
+      $fU: testuser1004
+      $tU: testuser1004
+  - end|ROUTE_NET_INFO:
+  - start|ROUTE_REG_REQUEST:
+  - start|ROUTE_REG_HANDLE:
+  - start|ROUTE_AUTH:
+  - exit|ROUTE_AUTH:
+sip_in:
+  - '^REGISTER'
+  - 'Contact: "TestBria" <sip:testuser1004@127.126.0.1:6666;ob>;reg-id=1;\+sip.instance="<urn:uuid:C3DD6013-20E8-40E3-8EA2-5849B02ED0C4>"'
+  - 'Content-Length: 0'
+  - 'Expires: 600'
+sip_out:
+  - [
+      '^SIP/2.0 100 Trying',
+      'Content-Length: 0'
+    ]
+  - [
+      '^SIP/2.0 401 Unauthorized',
+      'Content-Length: 0'
+    ]
