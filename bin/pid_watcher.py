@@ -80,6 +80,8 @@ class Handler(pyinotify.ProcessEvent):
         if event.pathname in watched:
             watched[event.pathname]['modified'] = True
             logging.info("modified %s" % event.pathname)
+            if self.check_all():
+                sys.exit(0)
 # for debug
 #    def process_default(self, event):
 #        if watched.has_key(event.pathname):
