@@ -1,7 +1,21 @@
 test_uuid: register_ignore_allowip
+domains:
+  'spce.test':
+    reseller_id: 1
+customers:
+  'customer.test':
+    contacts:
+      - email: "customer.test@spce.test"
+        reseller_id: 1
+    details:
+      status: 'active'
+      type: 'sipaccount'
+      billing_profile_id: 1
+      reseller_id: 1
 subscribers:
   spce.test:
     testuser1003:
+      customer: 'customer.test'
       password: testuser
       cc: 43
       ac: 1
