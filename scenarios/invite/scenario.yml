@@ -1,12 +1,34 @@
 test_uuid: invite
+resellers:
+  reseller.test:
+    status: 'active'
+    contacts:
+      - email: 'reseller.test@spce.test'
+    contracts:
+      - status: 'active'
+        type: 'reseller'
+        billing_profile_id: 1
+    domains:
+      'spce.test': ~
+customers:
+  'customer.test':
+    reseller: 'reseller.test'
+    contacts:
+      - email: "customer.test@spce.test"
+    contracts:
+      - status: 'active'
+        type: 'sippeering'
+        billing_profile_id: 1
 subscribers:
   spce.test:
     testuser1003:
+      reseller: 'reseller.test'
       password: testuser
       cc: 43
       ac: 1
       sn: 1003
     testuser1002:
+      reseller: 'reseller.test'
       password: testuser
       cc: 43
       ac: 1
