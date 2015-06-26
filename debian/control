@@ -10,6 +10,8 @@ Package: kamailio-config-tests
 Architecture: all
 Depends: curl,
          libgraphviz-perl,
+         libhash-merge-perl,
+         libjson-perl,
          libtemplate-perl,
          libtext-csv-perl,
          ngcp-ossbss-clients-perl,
@@ -17,7 +19,7 @@ Depends: curl,
          python,
          python-pyinotify,
          python-yaml,
-         sip-tester ( >= 1:3.2-1~ ),
+         sip-tester ( >= 1:3.3-1~ ),
          tcpdump,
          ${misc:Depends}
 Description: Kamailio configuration tests

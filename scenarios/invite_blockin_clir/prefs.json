@@ -1,0 +1,11 @@
+{
+    "testuser1002@spce.test": {
+        "clir": 1
+    },
+    "testuser1003@spce.test": {
+        "block_in_list": [
+            "4311001"
+        ],
+        "block_in_clir": 1
+    }
+}

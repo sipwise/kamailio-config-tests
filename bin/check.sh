@@ -92,10 +92,6 @@ function check_test
 # $1 domain
 function create_voip
 {
-  if ! /usr/bin/ngcp-create_domain "$1" ; then
-    echo "$(date) - Cannot create domain"
-    exit 1
-  fi
   if ! "${BIN_DIR}/create_subscribers.pl" "${SCEN_CHECK_DIR}/scenario.yml" ; then
     echo "$(date) - Deleting domain:${DOMAIN}"
     delete_voip "$1"
@@ -132,9 +128,9 @@ function create_voip_prefs
     "${BIN_DIR}/create_peers.pl" "${SCEN_CHECK_DIR}/peer.yml"
   fi
 
-  if [ -f "${SCEN_CHECK_DIR}/prefs.yml" ]; then
+  if [ -f "${SCEN_CHECK_DIR}/prefs.json" ]; then
     echo "$(date) - Setting preferences"
-    "${BIN_DIR}/set_preferences.pl" "${SCEN_CHECK_DIR}/prefs.yml"
+    "${BIN_DIR}/set_preferences.pl" "${SCEN_CHECK_DIR}/prefs.json"
   fi
 }
 
