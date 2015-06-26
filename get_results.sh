@@ -1,5 +1,6 @@
 #!/bin/bash
-BASE_DIR="${BASE_DIR:-/usr/share/kamailio-config-tests}"
+RUN_DIR="$(dirname "$0")"
+export BASE_DIR=${BASE_DIR:-$RUN_DIR}
 BIN_DIR="${BASE_DIR}/bin"
 PROFILE="CE"
 DOMAIN="spce.test"

@@ -1,6 +1,7 @@
 *~
 log
 result
+mem
 *.pyc
 *_test.yml
 sipp_scenario_responder*_reg.xml
