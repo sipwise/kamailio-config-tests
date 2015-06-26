@@ -1,5 +1,8 @@
 #!/bin/bash
-BASE_DIR=${BASE_DIR:-"/usr/share/kamailio-config-tests"}
+RUN_DIR="$(dirname "$0")"
+export BASE_DIR=${BASE_DIR:-$RUN_DIR}
+# Set up the environment, to use local perl modules
+export PERL5LIB="${BASE_DIR}/lib"
 BIN_DIR="${BASE_DIR}/bin"
 LOG_DIR="${BASE_DIR}/log"
 MLOG_DIR="${BASE_DIR}/mem"
