@@ -1,0 +1,6 @@
+{
+    "testuser1002@spce.test": {
+        "concurrent_max": 2,
+        "concurrent_max_out": 1
+    }
+}

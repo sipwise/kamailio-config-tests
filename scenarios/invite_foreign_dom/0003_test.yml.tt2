@@ -109,6 +109,5 @@ sip_out:
       'P-Caller-UUID: \w+',
       'P-Callee-UUID: \w+',
       'P-Called-Party-ID: <sip:004321001@',
-      'P-App-Param: ;aleg_sst_enable=no;sst_enable=no',
       'P-App-Name: sbc'
     ]

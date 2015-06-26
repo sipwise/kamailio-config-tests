@@ -1,0 +1,5 @@
+{
+    "@spce.test": {
+        "allow_out_foreign_domain": true
+    }
+}
