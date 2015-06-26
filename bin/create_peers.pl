@@ -21,6 +21,8 @@
 use strict;
 use warnings;
 
+die("Not implemented in REST");
+
 use English;
 use Getopt::Std;
 use Cwd 'abs_path';
