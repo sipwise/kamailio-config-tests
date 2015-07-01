@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa5d592f_7179e792",
+        "filename": "bin/check.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2015-07-01T14:36:08Z",
+      "side": 1,
+      "message": "this is not really correct.\nhttp://www.tldp.org/LDP/Bash-Beginners-Guide/html/sect_07_01.html\n\n[[ ... ]] supports by bash only, and no need to use it if regexp is not involved.\n\nto compare digits you should use \u0027-eq\u0027 , while \u0027\u003d\u0027 is for strings only:\n\n\u003e if [ ${CAPTURE} -eq 1 ] ; then\n\nand it will cause error if $CAPTURE is not defined for some reason...\n\nIMHO better to use safe way\n\n\u003e if [ \"${CAPTURE}\" \u003d \"1\" ] ; then\n\nwhich will also work in all known for me shells.",
+      "revId": "b863f3238e6549ad7b577468b606f110e64fc6b1",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
