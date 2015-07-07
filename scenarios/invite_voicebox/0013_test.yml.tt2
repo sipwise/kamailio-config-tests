@@ -1,8 +1,5 @@
 flow:
-[% IF CE %]
-  - start|REPLY_ROUTE_NAT:
-  - exit|REPLY_ROUTE_NAT:
-[% ELSE %]
+[% IF PRO %]
   - start|DEFAULT_ROUTE:
   - start|ROUTE_NET_INFO:
   - return|ROUTE_NET_INFO:
@@ -15,31 +12,26 @@ flow:
   - return|ROUTE_STOP_RTPPROXY:
   - start|ROUTE_OUTBOUND:
   - exit|ROUTE_OUTBOUND:
+[% ELSE %]
+  - start|REPLY_ROUTE_NAT:
+  - exit|REPLY_ROUTE_NAT:
 [% END %]
 sip_in:
-[% IF CE %]
-  - '^SIP/2.0 200 OK'
-  - 'CSeq: 11 BYE'
-  - 'Content-Length: 0'
-  - 'From: <sip:4311002@'
-  - 'To: <sip:testuser1001@'
-[% ELSE %]
-  - '^BYE sip:(testuser1003@)?127.0.0.1:5080(;transport=udp)? SIP/2.0'
+[% IF PRO %]
+  - '^BYE sip:vmu4311001@127.0.0.1:5070 SIP/2.0'
   - 'CSeq: 11 BYE'
   - 'Content-Length: 0'
   - 'From: <sip:testuser1002@'
   - 'To: <sip:testuser1001@'
+[% ELSE %]
+  - '^SIP/2.0 200 OK'
+  - 'CSeq: 11 BYE'
+  - 'From: <sip:4311002@'
+  - 'Content-Length: 0'
+  - 'To: <sip:testuser1001@'
 [% END %]
 sip_out:
-[% IF CE %]
-  - [
-      '^SIP/2.0 200 OK',
-      'CSeq: 11 BYE',
-      'Content-Length: 0',
-      'From: <sip:testuser1002@',
-      'To: <sip:testuser1001@'
-    ]
-[% ELSE %]
+[% IF PRO %]
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: 11 BYE',
@@ -48,11 +40,19 @@ sip_out:
       'To: <sip:testuser1001@'
     ]
   - [
-      '^BYE sip:(testuser1003@)?127.0.0.1:5080(;transport=udp)? SIP/2.0',
+      '^BYE sip:vmu4311001@127.0.0.1:5070 SIP/2.0',
       'CSeq: 11 BYE',
       'Max-Forwards: 70',
       'Content-Length: 0',
       'From: <sip:4311002@',
+      'To: <sip:testuser1001@'
+    ]
+[% ELSE %]
+  - [
+      '^SIP/2.0 200 OK',
+      'CSeq: 11 BYE',
+      'Content-Length: 0',
+      'From: <sip:testuser1002@',
       'To: <sip:testuser1001@'
     ]
 [% END %]
