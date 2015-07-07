@@ -60,7 +60,7 @@ if [[ $# -ne 1 ]]; then
 fi
 
 if [ "${PROFILE}" == "CE" ]; then
-  TPAGE_ARGS=""
+  TPAGE_ARGS="--define CE=true"
 elif [ "${PROFILE}" == "PRO" ]; then
   TPAGE_ARGS="--define PRO=true"
 else
