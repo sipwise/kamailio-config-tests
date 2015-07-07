@@ -1,4 +1,8 @@
 flow:
+[% IF PRO %]
+  - start|REPLY_ROUTE_NAT:
+  - exit|REPLY_ROUTE_NAT:
+[% ELSE %]
   - start|DEFAULT_ROUTE:
   - start|ROUTE_NET_INFO:
   - return|ROUTE_NET_INFO:
@@ -11,13 +15,31 @@ flow:
   - return|ROUTE_STOP_RTPPROXY:
   - start|ROUTE_OUTBOUND:
   - exit|ROUTE_OUTBOUND:
+[% END %]
 sip_in:
+[% IF PRO %]
+  - '^SIP/2.0 200 OK'
+  - 'CSeq: 3 BYE'
+  - 'From: <sip:testuser1002@'
+  - 'Content-Length: 0'
+  - 'To: <sip:testuser1001@'
+[% ELSE %]
   - '^BYE sip:vmu4311001@127.0.0.1:5070 SIP/2.0'
   - 'CSeq: 11 BYE'
   - 'Content-Length: 0'
   - 'From: <sip:testuser1002@'
   - 'To: <sip:testuser1001@'
+[% END %]
 sip_out:
+[% IF PRO %]
+  - [
+      '^SIP/2.0 200 OK',
+      'CSeq: 3 BYE',
+      'Content-Length: 0',
+      'From: <sip:testuser1002@',
+      'To: <sip:testuser1001@'
+    ]
+[% ELSE %]
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: 11 BYE',
@@ -33,3 +55,4 @@ sip_out:
       'From: <sip:4311002@',
       'To: <sip:testuser1001@'
     ]
+[% END %]

@@ -24,6 +24,7 @@ use warnings;
 use Cwd 'abs_path';
 use Data::Dumper;
 use Getopt::Long;
+use English;
 
 sub usage
 {
@@ -52,7 +53,7 @@ if($json_in) {
   use JSON;
   my $json;
   {
-    local $/; #Enable 'slurp' mode
+    local $INPUT_RECORD_SEPARATOR = undef; #Enable 'slurp' mode
     open my $fh, "<", $filename;
     $json = <$fh>;
     close $fh;

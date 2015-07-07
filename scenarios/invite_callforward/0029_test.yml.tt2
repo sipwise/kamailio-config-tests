@@ -88,7 +88,7 @@ flow:
   - exit|ROUTE_OUTBOUND:
 sip_in:
   - '^INVITE sip:4311005@'
-  - 'Contact: <sip:127.0.0.1:5080;transport=udp>'
+  - 'Contact: <sip:(testuser1003@)?127.0.0.1:5080(;transport=udp)?>'
   - 'CSeq: 10 INVITE'
   - 'Content-Type: application/sdp'
 sip_out:
@@ -109,5 +109,9 @@ sip_out:
       'P-App-Name: sbc',
       'P-NGCP-Caller-Info: <sip:testuser1004@',
       'P-NGCP-Callee-Info: <sip:testuser1005@',
+[% IF PRO %]
+      'Max-Forwards: 70'
+[% ELSE %]
       'Max-Forwards: 69'
+[% END %]
     ]

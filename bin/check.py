@@ -124,7 +124,8 @@ class Test:
     @classmethod
     def compare(cls, val0, val1):
         logging.debug("val0:[%s]:'%s' val1:[%s]:'%s'" %
-            (type(val0), unicode(val0), type(val1), unicode(val1)))
+                      (type(val0), unicode(val0), type(val1),
+                       unicode(val1)))
         if isinstance(val0, basestring):
             result = re.search(val0, str(val1))
         elif isinstance(val0, int):
