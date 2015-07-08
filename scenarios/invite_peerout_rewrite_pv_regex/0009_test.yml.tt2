@@ -5,7 +5,7 @@ sip_in:
   - '^SIP/2.0 200 OK'
   - 'CSeq: 3 BYE'
   - 'Content-Length: 0'
-  - 'From: <sip:4311002@'
+  - 'From: <sip:1002@'
   - 'To: <sip:004321001@'
 sip_out:
   - [

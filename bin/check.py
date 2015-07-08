@@ -132,7 +132,7 @@ class Test:
             try:
                 result = (val0 == int(val1))
             except:
-                result = false
+                result = False
         elif isinstance(val0, list) and isinstance(val1, list):
             size = len(val0)
             if size != len(val1):

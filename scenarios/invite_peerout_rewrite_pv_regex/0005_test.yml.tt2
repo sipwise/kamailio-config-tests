@@ -2,14 +2,14 @@ flow:
   - start|REPLY_ROUTE_NAT:
   - exit|REPLY_ROUTE_NAT:
 sip_in:
-  - '^SIP/2.0 200 OK'
+  - '^SIP/2.0 180 Ringing'
   - 'CSeq: 2 INVITE'
-  - 'From: <sip:4311002@'
+  - 'From: <sip:1002@'
   - 'To: <sip:004321001@'
 sip_out:
   - [
-      '^SIP/2.0 200 OK',
+      '^SIP/2.0 180 Ringing',
       'CSeq: 2 INVITE',
       'From: <sip:testuser1002@',
-      'To: <sip:004321001@',
+  	  'To: <sip:004321001@',
     ]
