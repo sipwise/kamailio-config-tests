@@ -1,36 +1,25 @@
 test_uuid: invite_concurrent_max_out
 subscribers:
   spce.test:
-    testuser1003:
-      password: testuser
-      cc: 43
-      ac: 1
-      sn: 1003
     testuser1002:
       password: testuser
       cc: 43
       ac: 1
       sn: 1002
-    testuser1004:
-      password: testuser
-      cc: 43
-      ac: 1
-      sn: 1004
-    testuser1001:
-      password: testuser
-      cc: 43
-      ac: 1
-      sn: 1001
 scenarios:
   - ip: 127.126.0.1
     username: testuser1002
     domain: spce.test
     responders:
-      - ip: 127.1.0.1
-        username: testuser1003
+      - ip: 127.0.2.1
+        number: 004321001
+        username: 004321001
         domain: spce.test
-        register: yes
-      - ip: 127.2.0.1
-        username: testuser1004
+        peer_host: peer_00_host0
+        register: no
+      - ip: 127.0.3.1
+        number: 004421003
+        username: 004421003
         domain: spce.test
-        register: yes
+        peer_host: peer_00_host1
+        register: no

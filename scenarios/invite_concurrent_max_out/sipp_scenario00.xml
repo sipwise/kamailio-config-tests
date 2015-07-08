@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 
 <scenario name="Sipwise NGCP Benchmark UAC Caller">
-  <send>
+  <send start_txn="invite0">
     <![CDATA[
 
       INVITE sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0] SIP/2.0
@@ -27,12 +27,12 @@
     ]]>
   </send>
 
-  <recv response="100" optional="true">
+  <recv response="100" response_txn="invite0" optional="true">
   </recv>
 
-  <recv response="407" auth="true"/>
+  <recv response="407" response_txn="invite0" auth="true"/>
 
-  <send>
+  <send ack_txn="invite0">
     <![CDATA[
 
       ACK sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]:[remote_port] SIP/2.0
@@ -50,7 +50,7 @@
 
   <pause milliseconds="500"/>
 
-  <send>
+  <send start_txn="invite1">
     <![CDATA[
 
       INVITE sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0] SIP/2.0
@@ -77,19 +77,19 @@
     ]]>
   </send>
 
-  <recv response="100" optional="true">
+  <recv response="100" response_txn="invite1" optional="true">
   </recv>
 
-  <recv response="180" optional="true">
+  <recv response="180" response_txn="invite1" optional="true">
   </recv>
 
-  <recv response="183" optional="true">
+  <recv response="183" response_txn="invite1" optional="true">
   </recv>
 
-  <recv response="200" rrs="true">
+  <recv response="200" response_txn="invite1" rrs="true">
   </recv>
 
-  <send>
+  <send ack_txn="invite1">
     <![CDATA[
 
       ACK [next_url] SIP/2.0
@@ -108,7 +108,7 @@
 
   <pause milliseconds="500"/>
 
-  <send>
+  <send start_txn="reinvite0">
     <![CDATA[
 
       INVITE [next_url] SIP/2.0
@@ -137,13 +137,17 @@
     ]]>
   </send>
 
-  <recv response="100" optional="true">
+  <recv response="100" response_txn="reinvite0" optional="true">
   </recv>
 
-  <recv response="200" rrs="true">
+  <recv response="200" response_txn="reinvite0" rrs="true">
+    <action>
+      <ereg regexp="tag=(.*)" search_in="hdr" header="To:" check_it="true" assign_to="1,2" />
+      <log message="[$1]"/>
+    </action>
   </recv>
 
-  <send>
+  <send ack_txn="reinvite0">
     <![CDATA[
 
       ACK [next_url] SIP/2.0
@@ -161,20 +165,124 @@
   </send>
 
   <pause milliseconds="500"/>
-  <nop>
-    <action>
-      <exec play_pcap_audio="scenarios/media181sec.pcap"/>
-    </action>
-  </nop>
 
-  <send>
+  <send start_txn="invite2">
+    <![CDATA[
+
+      INVITE sip:[field0 file="callee.csv" line=1]@[field3 file="callee.csv" line=1] SIP/2.0
+      Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
+      From: <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>;tag=[pid]SIPpTag01[call_number]
+      To: <sip:[field0 file="callee.csv" line=1]@[field3 file="callee.csv" line=1]>
+      Call-ID: NGCP%[field4 file="callee.csv" line=0]%NEW///[call_id]
+      CSeq: 1 INVITE
+      Contact: sip:[field0 file="caller.csv"]@[local_ip]:[local_port]
+      Max-Forwards: 70
+      Content-Type: application/sdp
+      Content-Length: [len]
+
+      v=0
+      o=user1 53655765 2353687637 IN IP[local_ip_type] [local_ip]
+      s=-
+      c=IN IP[media_ip_type] [media_ip]
+      t=0 0
+      m=audio [media_port] RTP/AVP 8
+      a=rtpmap:8 PCMA/8000
+      a=ptime:50
+
+    ]]>
+  </send>
+
+  <recv response="100" response_txn="invite2" optional="true">
+  </recv>
+
+  <recv response="407" response_txn="invite2" auth="true"/>
+
+  <send ack_txn="invite2">
+    <![CDATA[
+
+      ACK sip:[field0 file="callee.csv" line=1]@[field3 file="callee.csv" line=1]:[remote_port] SIP/2.0
+      [last_Via:]
+      From: <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>;tag=[pid]SIPpTag01[call_number]
+      To: <sip:[field0 file="callee.csv" line=1]@[field3 file="callee.csv" line=1]>[peer_tag_param]
+      Call-ID: NGCP%[field4 file="callee.csv" line=0]%NEW///[call_id]
+      CSeq: 1 ACK
+      Contact: sip:[field0 file="caller.csv"]@[local_ip]:[local_port]
+      Max-Forwards: 70
+      Content-Length: 0
+
+    ]]>
+  </send>
+
+  <pause milliseconds="500"/>
+
+  <send start_txn="invite3">
+    <![CDATA[
+
+      INVITE sip:[field0 file="callee.csv" line=1]@[field3 file="callee.csv" line=1] SIP/2.0
+      Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
+      From: <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>;tag=[pid]SIPpTag01[call_number]
+      To: <sip:[field0 file="callee.csv" line=1]@[field3 file="callee.csv" line=1]>
+      Call-ID: NGCP%[field4 file="callee.csv" line=0]%NEW///[call_id]
+      CSeq: 2 INVITE
+      Contact: sip:[field0 file="caller.csv"]@[local_ip]:[local_port]
+      Max-Forwards: 70
+      [field1 file="caller.csv"]
+      Content-Type: application/sdp
+      Content-Length: [len]
+
+      v=0
+      o=user1 53655765 2353687637 IN IP[local_ip_type] [local_ip]
+      s=-
+      c=IN IP[media_ip_type] [media_ip]
+      t=0 0
+      m=audio [media_port] RTP/AVP 8
+      a=rtpmap:8 PCMA/8000
+      a=ptime:50
+
+    ]]>
+  </send>
+
+  <recv response="100" response_txn="invite3" optional="true">
+  </recv>
+
+  <recv response="180" response_txn="invite3" optional="true">
+  </recv>
+
+  <recv response="183" response_txn="invite3" optional="true">
+  </recv>
+
+  <recv response="403" response_txn="invite3" rrs="true">
+    <action>
+      <ereg regexp="tag=(.*)" search_in="hdr" header="To:" check_it="true" assign_to="1,3" />
+    </action>
+  </recv>
+
+  <send ack_txn="invite3">
+    <![CDATA[
+
+      ACK sip:[field0 file="callee.csv" line=1]@[field3 file="callee.csv" line=1]:[remote_port] SIP/2.0
+      [last_Via:]
+      From: <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>;tag=[pid]SIPpTag01[call_number]
+      To: <sip:[field0 file="callee.csv" line=1]@[field3 file="callee.csv" line=1]>;tag=[$3]
+      Call-ID: NGCP%[field4 file="callee.csv" line=0]%NEW///[call_id]
+      CSeq: 2 ACK
+      Contact: sip:[field0 file="caller.csv"]@[local_ip]:[local_port]
+      Max-Forwards: 70
+      Content-Length: 0
+
+    ]]>
+  </send>
+
+  <pause milliseconds="500"/>
+
+  <send start_txn="reinvite0">
     <![CDATA[
 
       BYE [next_url] SIP/2.0
       Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
       From: <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>;tag=[pid]SIPpTag00[call_number]
-      To: <sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]>[peer_tag_param]
-      [last_Call-ID:]
+      To: <sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]>;tag=[$2]
+      Call-ID: NGCP%[field4 file="callee.csv" line=0]%///[call_id]
       CSeq: [cseq] BYE
       Contact: sip:[field0 file="caller.csv"]@[local_ip]:[local_port]
       [routes]
@@ -184,10 +292,10 @@
     ]]>
   </send>
 
-  <recv response="100" optional="true">
+  <recv response="100" response_txn="reinvite0" optional="true">
   </recv>
 
-  <recv response="200" crlf="true">
+  <recv response="200" response_txn="reinvite0" crlf="true">
   </recv>
 
   <ResponseTimeRepartition value="10, 20, 30, 40, 50, 100, 150, 200, 500, 1000"/>

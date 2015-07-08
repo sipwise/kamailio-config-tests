@@ -43,13 +43,14 @@ flow:
   - return|ROUTE_NCOS:
   - start|ROUTE_BLOCK_OUT:
   - return|ROUTE_BLOCK_OUT:
-  - start|ROUTE_LOAD_CALLEE_PREF:
-  - start|ROUTE_BLOCK_IN:
-  - return|ROUTE_BLOCK_IN:
-  - return|ROUTE_LOAD_CALLEE_PREF:
   - start|ROUTE_CHECK_PBX:
   - return|ROUTE_CHECK_PBX:
-  - start|ROUTE_INVITE_TO_INT:
+  - start|ROUTE_INVITE_TO_EXT:
+  - start|ROUTE_PSTN:
+  - start|ROUTE_CLEAR_PEER_OUT_PREF:
+  - return|ROUTE_CLEAR_PEER_OUT_PREF:
+  - start|ROUTE_LOAD_PEER_OUT_PREF:
+  - return|ROUTE_LOAD_PEER_OUT_PREF:
   - start|ROUTE_OUTBOUND:
   - start|ROUTE_SET_CALLER_DIALOG:
   - return|ROUTE_SET_CALLER_DIALOG:
@@ -87,7 +88,7 @@ flow:
   - return|BRANCH_ROUTE_SBC:
   - exit|ROUTE_OUTBOUND:
 sip_in:
-  - '^INVITE'
+  - '^INVITE sip:004321001@'
   - 'Contact: sip:testuser1002@'
   - 'CSeq: 2 INVITE'
   - 'Max-Forwards: 69'
@@ -98,24 +99,24 @@ sip_out:
       '^SIP/2.0 100 Trying',
       'CSeq: 2 INVITE',
       'From: <sip:testuser1002@',
-      'To: <sip:testuser1003@'
+      'To: <sip:004321001@'
     ]
   - [
       '^SIP/2.0 101 Connecting',
       'CSeq: 2 INVITE',
       'From: <sip:testuser1002@',
-      'To: <sip:testuser1003@'
+      'To: <sip:004321001@'
     ]
   - [
-      '^INVITE sip:testuser1003@',
+      '^INVITE sip:004321001@',
       'CSeq: 2 INVITE',
       'From: <sip:4311002@',
-      'To: <sip:testuser1003@',
+      'To: <sip:004321001@',
       'Content-Type: application/sdp',
       'P-Caller-UUID: \w+',
       'P-Callee-UUID: \w+',
       'P-Asserted-Identity: <sip:4311002@',
-      'P-Called-Party-ID: <sip:testuser1003@',
+      'P-Called-Party-ID: <sip:004321001@',
       'P-App-Param: ;aleg_sst_enable=no;sst_enable=no',
       'P-App-Name: sbc'
     ]

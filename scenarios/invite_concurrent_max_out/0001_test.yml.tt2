@@ -14,23 +14,22 @@ flow:
   - start|ROUTE_AUTH:
   - exit|ROUTE_AUTH:
 sip_in:
-  - '^INVITE sip:004421003@'
+  - '^INVITE sip:004321001@'
   - 'Contact: sip:testuser1002@'
-  - 'To: <sip:004421003@'
+  - 'To: <sip:004321001@'
   - 'CSeq: 1 INVITE'
   - 'Max-Forwards: 69'
-  - 'Call-ID: NGCP%invite_concurrent_max_out%NEW///'
   - 'Content-Type: application/sdp'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: 1 INVITE',
       'From: <sip:testuser1002@',
-      'To: <sip:004421003@'
+      'To: <sip:004321001@'
     ]
   - [
       '^SIP/2.0 407 Proxy Authentication Required',
       'CSeq: 1 INVITE',
       'From: <sip:testuser1002@',
-      'To: <sip:004421003@'
+      'To: <sip:004321001@'
     ]
