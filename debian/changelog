@@ -1,3 +1,12 @@
+kamailio-config-tests (0.8.1.4+0~mr3.7.1.4) unstable; urgency=low
+
+  [ Alexander Lutay ]
+  * [815908f] MT#13297 pid_watcher.py will trigger check_all on event 'modified'
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 08 Jul 2015 21:18:24 +0200
+
 kamailio-config-tests (0.8.1.3+0~mr3.7.1.3) unstable; urgency=low
 
   [ Andrew Pogrebennyk ]
