@@ -41,6 +41,7 @@ sip_out:
   - [
       '^SIP/2.0 200 OK',
       'Content-Length: 0',
+      '_:NOT:_Contact: <sip:testuser1003@.+>;expires=0',
       'P-NGCP-Authorization: testuser1003@',
       'P-NGCP-Authorized: 1'
     ]

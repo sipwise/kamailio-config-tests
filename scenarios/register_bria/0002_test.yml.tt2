@@ -28,7 +28,7 @@ sip_out:
     ]
   - [
       '^SIP/2.0 200 OK',
-      'Contact: <sip:testuser1004@127.126.0.1:6666;ob>;expires=600;\+sip.instance="<urn:uuid:C3DD6013-20E8-40E3-8EA2-5849B02ED0C4>";reg-id=1',
+      'Contact: <sip:testuser1004@127.126.0.1:6666;ob>;expires=\d{3};\+sip.instance="<urn:uuid:C3DD6013-20E8-40E3-8EA2-5849B02ED0C4>";reg-id=1',
       'Content-Length: 0',
       'P-NGCP-Authorization: testuser1004@',
       'P-NGCP-Authorized: 1'
