@@ -1,3 +1,22 @@
+kamailio-config-tests (0.10.1.0+0~mr4.0.1.0) unstable; urgency=low
+
+  [ Andrew Pogrebennyk ]
+  * [d0d35cc] MT#12217 fix the test for 302 redirect
+
+  [ Alexander Lutay ]
+  * [78fc7f0] MT#13297 pid_watcher.py will trigger check_all on event 'modified'
+
+  [ Victor Seva ]
+  * [e1a76fb] MT#6565 kamailio saving json using uuid for tests
+  * [8df7016] MT#6565 CE/PRO differences due to sems version
+  * [8d49e5b] MT#6565 invite_concurrent_max_out: don't use responder to place a new call
+  * [f67b5bd] MT#6565 enable invite_peerout_rewrite_pv_regex. Fix typo check.py
+  * [f368090] MT#10535 register_bria: fix check of contact reply
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 13 Jul 2015 15:13:19 +0200
+
 kamailio-config-tests (0.10.0.0+0~mr4.0.0.0) unstable; urgency=low
 
   [ Andrew Pogrebennyk ]
