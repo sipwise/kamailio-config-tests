@@ -80,6 +80,9 @@
   <recv response="100" optional="true">
   </recv>
 
+  <recv response="102" optional="true">
+  </recv>
+
   <recv response="180" optional="true">
   </recv>
 
