@@ -1,8 +1,6 @@
 #!/bin/bash
 BASE_DIR="${BASE_DIR:-/usr/share/kamailio-config-tests}"
 BIN_DIR="${BASE_DIR}/bin"
-LOG_DIR="${BASE_DIR}/log"
-RESULT_DIR="${BASE_DIR}/result"
 PROFILE="CE"
 DOMAIN="spce.test"
 
@@ -35,7 +33,7 @@ function get_scenarios
       exit 1
     fi
   else
-    SCENARIOS=$(find ${BASE_DIR}/scenarios/ -depth -maxdepth 1 -mindepth 1 \
+    SCENARIOS=$(find "${BASE_DIR}/scenarios/" -depth -maxdepth 1 -mindepth 1 \
       -type d -exec basename {} \; | grep -v templates | sort)
   fi
 }
@@ -50,7 +48,7 @@ while getopts 'hgGp:TP' opt; do
     p) PROFILE=$OPTARG;;
   esac
 done
-shift $(($OPTIND - 1))
+shift $((OPTIND-1))
 
 if [[ $# -ne 0 ]]; then
   echo "Wrong number or arguments"
@@ -66,7 +64,7 @@ fi
 
 get_scenarios
 
-echo ${SCENARIOS} |  tr ' ' '\n' \
+echo "${SCENARIOS}" |  tr ' ' '\n' \
  | parallel "${BIN_DIR}/check.sh ${GRAPH} -J -C -R ${OPTS} -d ${DOMAIN} -p ${PROFILE}"
 status=$?
 echo "$(date) - All done[$status]"
