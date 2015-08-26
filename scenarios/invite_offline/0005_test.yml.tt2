@@ -60,10 +60,9 @@ flow:
   - start|ROUTE_EARLY_REJECT:
   - start|ROUTE_ADD_CALLINFO_REPLY:
   - return|ROUTE_ADD_CALLINFO_REPLY:
-  - start|BRANCH_ROUTE_SBC:
-  - return|BRANCH_ROUTE_SBC:
-  # branch ??
-  - return|BRANCH_ROUTE_SBC:
+  - 'start|dialog:failed':
+  - 'return|dialog:failed':
+  - 'return|dialog:failed':
   - exit|ROUTE_EARLY_REJECT:
 sip_in:
   - '^INVITE sip:4311003@'
