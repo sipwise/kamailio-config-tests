@@ -6,10 +6,9 @@ flow:
   - start|ROUTE_PRX_REQUEST:
   - start|ROUTE_INITVARS:
   - return|ROUTE_INITVARS:
-  - start|BRANCH_ROUTE_SBC:
-  - return|BRANCH_ROUTE_SBC:
-  # branch ??
-  - return|BRANCH_ROUTE_SBC:
+  - 'start|dialog:end':
+  - 'return|dialog:end':
+  - 'return|dialog:end':
   - start|ROUTE_STOP_RTPPROXY:
   - start|ROUTE_RESTORE_CLUSTERSET:
   - return|ROUTE_RESTORE_CLUSTERSET:
