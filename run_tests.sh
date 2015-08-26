@@ -3,10 +3,8 @@ BASE_DIR=${BASE_DIR:-"/usr/share/kamailio-config-tests"}
 BIN_DIR="${BASE_DIR}/bin"
 LOG_DIR="${BASE_DIR}/log"
 MLOG_DIR="${BASE_DIR}/mem"
-RESULT_DIR="${BASE_DIR}/result"
 PROFILE="CE"
 DOMAIN="spce.test"
-LOGGER=""
 error_flag=0
 
 function usage
@@ -37,21 +35,18 @@ function get_scenarios
       exit 1
     fi
   else
-    SCENARIOS=$(find ${BASE_DIR}/scenarios/ -depth -maxdepth 1 -mindepth 1 \
+    SCENARIOS=$(find "${BASE_DIR}/scenarios/" -depth -maxdepth 1 -mindepth 1 \
       -type d -exec basename {} \; | grep -v templates | sort)
   fi
 }
 
 function cfg_debug_off
 {
-  local res
-  if [ -z $SKIP ]; then
+  if [ -z "$SKIP" ]; then
     echo "$(date) - Setting config debug off"
-    ${BIN_DIR}/config_debug.pl off ${DOMAIN}
-    ngcpcfg apply
-    res=$?
-    if [ "$res" != "0" ]; then
-      echo "$(date) - ngcpcfg apply returned $res"
+    "${BIN_DIR}/config_debug.pl" off ${DOMAIN}
+    if ! ngcpcfg apply ; then
+      echo "$(date) - ngcpcfg apply returned $?"
       error_flag=4
     fi
     echo "$(date) - Setting config debug off. Done[$error_flag]"
@@ -67,7 +62,7 @@ while getopts 'hlcp:K' opt; do
     K) SKIP_CAPTURE=1;;
   esac
 done
-shift $(($OPTIND - 1))
+shift $((OPTIND - 1))
 
 if [[ $# -ne 0 ]]; then
   echo "Wrong number or arguments"
@@ -82,26 +77,23 @@ if [ "${PROFILE}" != "CE" ] && [ "${PROFILE}" != "PRO" ]; then
 fi
 
 echo "$(date) - Clean mem log dir"
-rm -rf ${MLOG_DIR}
-mkdir -p ${MLOG_DIR} ${LOG_DIR}
+rm -rf "${MLOG_DIR}"
+mkdir -p "${MLOG_DIR}" "${LOG_DIR}"
 
 if [ -z $SKIP ]; then
   echo "$(date) - Setting config debug on"
-  ${BIN_DIR}/config_debug.pl on ${DOMAIN}
+  "${BIN_DIR}/config_debug.pl" on ${DOMAIN}
   if [ "${PROFILE}" == "PRO" ]; then
-    ( timeout 60 ${BIN_DIR}/pid_watcher.py )&
+    ( timeout 60 "${BIN_DIR}/pid_watcher.py" )&
   fi
-  ngcpcfg apply
-  res=$?
-  if [ "$res" != "0" ]; then
-    echo "$(date) - ngcp apply returned $res"
+  if ! ngcpcfg apply ; then
+    echo "$(date) - ngcp apply returned $?"
     echo "$(date) - Done[3]"
     cfg_debug_off
     exit 3
   fi
   if [ "${PROFILE}" == "PRO" ]; then
-    wait $!
-    if [ "$?" != "0" ]; then
+    if ! wait "$!" ; then
       echo "error on apply config"
       cfg_debug_off
       echo "$(date) - Done[1]"
@@ -112,9 +104,9 @@ if [ -z $SKIP ]; then
 fi
 
 echo "$(date) - Initial mem stats"
-VERSION="${PROFILE}_$(cat /etc/ngcp_version | cut -f1 -d' ')_"
-${BIN_DIR}/mem_stats.py --private_file=${MLOG_DIR}/${VERSION}initial_pvm.cvs \
-  --share_file=${MLOG_DIR}/${VERSION}initial_shm.cvs
+VERSION="${PROFILE}_$(cut -f1 -d' '< /etc/ngcp_version)_"
+"${BIN_DIR}/mem_stats.py" --private_file="${MLOG_DIR}/${VERSION}initial_pvm.cvs" \
+  --share_file="${MLOG_DIR}/${VERSION}initial_shm.cvs"
 
 get_scenarios
 
@@ -125,12 +117,12 @@ fi
 
 for t in ${SCENARIOS}; do
   echo "$(date) - Run[${PROFILE}]: $t ================================================="
-  if [ -d "${LOG_DIR}/${t}" ]; then
+  log_temp="${LOG_DIR}/${t}"
+  if [ -d "${log_temp}" ]; then
     echo "$(date) - Clean log dir"
-    rm -rf "${LOG_DIR}/${t}"
+    rm -rf "${log_temp}"
   fi
-  ${BIN_DIR}/check.sh ${OPTS} -P -T -d ${DOMAIN} -p ${PROFILE} $t
-  if [ $? -ne 0 ]; then
+  if ! "${BIN_DIR}/check.sh" ${OPTS} -P -T -d ${DOMAIN} -p "${PROFILE}" "$t" ; then
     echo "ERROR: $t"
     error_flag=1
   fi
@@ -138,8 +130,8 @@ for t in ${SCENARIOS}; do
 done
 
 echo "$(date) - Final mem stats"
-${BIN_DIR}/mem_stats.py --private_file=${MLOG_DIR}/${VERSION}final_pvm.cvs \
-  --share_file=${MLOG_DIR}/${VERSION}final_shm.cvs
+"${BIN_DIR}/mem_stats.py" --private_file="${MLOG_DIR}/${VERSION}final_pvm.cvs" \
+  --share_file="${MLOG_DIR}/${VERSION}final_shm.cvs"
 
 cfg_debug_off
 
