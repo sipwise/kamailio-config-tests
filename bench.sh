@@ -3,7 +3,7 @@ NUM=${1:-20}
 # clean previous
 rm -rf log_* result_*
 echo "$(date) - Starting $NUM tests"
-for i in $(seq $NUM); do
+for i in $(seq "$NUM"); do
   BASE_DIR=$(pwd) ./run_tests.sh -c &> /tmp/run_tests.log
   status=$?
   if [[ $status -ne 0 ]]; then
@@ -18,6 +18,6 @@ for i in $(seq $NUM); do
   fi
   echo "$(date) - $i done ok"
   # keep everything
-  mv log log_$i 
-  mv result result_$i
+  mv log "log_$i"
+  mv result "result_$i"
 done
