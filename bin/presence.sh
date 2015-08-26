@@ -19,16 +19,11 @@
 # Public License version 3 can be found in "/usr/share/common-licenses/GPL-3".
 #
 BASE_DIR="${BASE_DIR:-/usr/share/kamailio-config-tests}"
-BIN_DIR="${BASE_DIR}/bin"
-LOG_DIR="${BASE_DIR}/log"
-RESULT_DIR="${BASE_DIR}/result"
-DOMAIN="spce.test"
 DIR="${BASE_DIR}/scenarios"
-error_flag=0
 
 function clean
 {
-  find ${DIR} -type f -name 'presence_*.xml' -exec rm {} \;
+  find "${DIR}" -type f -name 'presence_*.xml' -exec rm {} \;
 }
 
 function usage
@@ -49,7 +44,7 @@ while getopts 'hcd:' opt; do
     d) DIR=$OPTARG;;
   esac
 done
-shift $(($OPTIND - 1))
+shift $((OPTIND - 1))
 
 if [[ $# -ne 2 ]]; then
   echo "Wrong number or arguments"
@@ -62,10 +57,10 @@ if [ ! -e "${2}" ]; then
     exit 1
 fi
 # subscriber part
-subs=$(echo ${1}|cut -f1 -d:)
-curl -T ${2} -X PUT --digest -k -u ${1} \
-	https://127.0.0.1:1080/xcap/pres-rules/users/sip:${subs}/presrules
-if [ $? -ne 0 ]; then
+subs=$(echo "$1"|cut -f1 -d:)
+if ! curl -T "$2" -X PUT --digest -k -u "$1" \
+  "https://127.0.0.1:1080/xcap/pres-rules/users/sip:${subs}/presrules";
+then
 	echo "error sending xcap info"
 	exit 1
 fi

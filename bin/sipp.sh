@@ -45,69 +45,71 @@ while getopts 'hrp:m:t:i:T:b' opt; do
     b) BACK="-bg";;
   esac
 done
-shift $(($OPTIND - 1))
+shift $((OPTIND - 1))
 
 if [[ $# -ne 1 ]]; then
   echo "Wrong number of arguments"
   usage
   exit 1
 fi
-if [ ! -f $1 ]; then
+if [ ! -f "$1" ]; then
 	echo "No $1 file found"
 	usage
 	exit 1
 fi
-BASE_DIR="$(dirname $1)"
+BASE_DIR="$(dirname "$1")"
 IP=${IP:-"127.0.0.1"}
 IP_SERVER=${IP_SERVER:-"127.0.0.1"}
 MAX="5000"
 
-if [ ! -z ${TRANSPORT} ] && [ "${TRANSPORT}" == "tcp" ]; then
+if [ ! -z "${TRANSPORT}" ] && [ "${TRANSPORT}" == "tcp" ]; then
     TRANSPORT_ARG="-t t1"
 else
     TRANSPORT_ARG="-t ul"
 fi
-
+# shellcheck disable=SC2086
+{
 if [ -z ${RESP} ]; then
-  if [ ! -z ${MPORT} ]; then
+  if [ ! -z "${MPORT}" ]; then
     MPORT_ARG="-mp ${MPORT}"
   fi
   PORT=${PORT:-"50602"}
   TIMEOUT=${TIMEOUT:-"10"}
 
   sipp -max_socket $MAX ${TRANSPORT_ARG}\
-    -inf ${BASE_DIR}/callee.csv -inf ${BASE_DIR}/caller.csv \
-    -sf $1 -i $IP -p $PORT \
+    -inf "${BASE_DIR}/callee.csv" -inf "${BASE_DIR}/caller.csv" \
+    -sf "$1" -i "$IP" -p "$PORT" \
     -nr -nd -m 1 ${MPORT_ARG} \
-    -timeout ${TIMEOUT} -timeout_error -trace_err \
-    $IP_SERVER &> /dev/null
+    -timeout "${TIMEOUT}" -timeout_error -trace_err \
+    "$IP_SERVER" &> /dev/null
   status=$?
 else
-  if [ ! -z ${MPORT} ]; then
+  if [ ! -z "${MPORT}" ]; then
     MPORT_ARG="-rtp_echo -mp ${MPORT}"
   fi
   PORT=${PORT:-"50603"}
   TIMEOUT=${TIMEOUT:-"25"}
 
-  if [ -z ${BACK} ]; then
+  if [ -z "${BACK}" ]; then
     sipp -max_socket $MAX ${TRANSPORT_ARG}\
-      -inf ${BASE_DIR}/callee.csv -inf ${BASE_DIR}/caller.csv \
-      -sf $1 -i $IP -p $PORT \
+      -inf "${BASE_DIR}/callee.csv" -inf "${BASE_DIR}/caller.csv" \
+      -sf "$1" -i "$IP" -p "$PORT" \
       -nr -nd -t ul -m 1 ${MPORT_ARG} \
-      -timeout ${TIMEOUT} -timeout_error -trace_err \
-      $IP_SERVER &> /dev/null
+      -timeout "${TIMEOUT}" -timeout_error -trace_err \
+      "$IP_SERVER" &> /dev/null
     status=$?
   else
     tmp=$(sipp $BACK -max_socket $MAX ${TRANSPORT_ARG}\
-      -inf ${BASE_DIR}/callee.csv -inf ${BASE_DIR}/caller.csv \
-      -sf $1 -i $IP -p $PORT \
+      -inf "${BASE_DIR}/callee.csv" -inf "${BASE_DIR}/caller.csv" \
+      -sf "$1" -i "$IP" -p "$PORT" \
       -nr -nd -t ul -m 1 ${MPORT_ARG} \
-      -timeout ${TIMEOUT} -timeout_error -trace_err \
-      $IP_SERVER)
-    echo $(echo $tmp | cut -d= -f2 | sed -e 's_\[__' -e 's_\]__')
+      -timeout "${TIMEOUT}" -timeout_error -trace_err \
+      "$IP_SERVER")
+    # shellcheck disable=SC2046
+    echo "$tmp" | cut -d= -f2 | sed -e 's_\[__' -e 's_\]__'
     status=0
   fi
 fi
-
+}
 exit $status
 #EOF
