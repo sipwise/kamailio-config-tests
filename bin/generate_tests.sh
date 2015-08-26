@@ -19,17 +19,13 @@
 # Public License version 3 can be found in "/usr/share/common-licenses/GPL-3".
 #
 BASE_DIR="${BASE_DIR:-/usr/share/kamailio-config-tests}"
-BIN_DIR="${BASE_DIR}/bin"
-LOG_DIR="${BASE_DIR}/log"
-RESULT_DIR="${BASE_DIR}/result"
-DOMAIN="spce.test"
 TPAGE="/usr/bin/tpage"
 DIR="${BASE_DIR}/scenarios"
 error_flag=0
 
 function clean
 {
-  find ${BASE_DIR}/scenarios/ -type f -name '*test.yml'  -exec rm {} \;
+  find "${BASE_DIR}/scenarios/" -type f -name '*test.yml'  -exec rm {} \;
 }
 
 function usage
@@ -50,7 +46,7 @@ while getopts 'hcd:' opt; do
     d) DIR=$OPTARG;;
   esac
 done
-shift $(($OPTIND - 1))
+shift $((OPTIND - 1))
 PROFILE="$1"
 
 if [[ $# -ne 1 ]]; then
@@ -75,19 +71,19 @@ if [ ! -x ${TPAGE} ]; then
   exit 3
 fi
 
-for t in $(find ${DIR} -not -regex '.+customtt.tt2' -type f -name '*.tt2' | sort); do
-  template="$(basename $t)"
-  destdir="$(dirname $t)"
-  destfile="$(basename $t .tt2)"
-  custom_template="$(basename $t .tt2).customtt.tt2"
+for t in $(find "${DIR}" -not -regex '.+customtt.tt2' -type f -name '*.tt2' | sort); do
+  template="$(basename "$t")"
+  destdir="$(dirname "$t")"
+  destfile="$(basename "$t" .tt2)"
+  custom_template="$(basename "$t" .tt2).customtt.tt2"
 
   if [ -f "${destdir}/${custom_template}" ]; then
     echo "Custom detected"
     template=${custom_template}
   fi
   echo "generating: ${destdir}/${destfile}"
-  ${TPAGE} ${TPAGE_ARGS} ${destdir}/${template} > ${destdir}/${destfile}
-  if [ $? -ne 0 ]; then
+  # shellcheck disable=SC2086
+  if ! "${TPAGE}" ${TPAGE_ARGS} "${destdir}/${template}" > "${destdir}/${destfile}" ; then
     error_flag=1
   fi
 done

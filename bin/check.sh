@@ -27,11 +27,11 @@
 function graph
 {
   local OPTS
-  if [ -n ${JSON_KAM} ]; then
+  if [ -n "${JSON_KAM}" ]; then
     OPTS="--json"
   fi
-  if [ -f $1 ]; then
-    ${BIN_DIR}/graph_flow.pl $OPTS $1 $2
+  if [ -f "$1" ]; then
+    "${BIN_DIR}/graph_flow.pl" $OPTS "$1" "$2"
   else
     echo "No $1 found"
     ERR_FLAG=1
@@ -47,7 +47,7 @@ function generate_error_tap
 1..1
 not ok 1 - ERROR: File $2 does not exists
 EOF
-echo "$(date) - $(basename $2) NOT ok"
+echo "$(date) - $(basename "$2") NOT ok"
 }
 
 # $1 unit test yml
@@ -55,32 +55,33 @@ echo "$(date) - $(basename $2) NOT ok"
 # $3 destination tap filename
 function check_test
 {
-  local dest=${RESULT_DIR}/$(basename $3 .tap)
+  local dest
   local kam_type="--yaml"
 
-  if [ ! -f $1 ]; then
-    generate_error_tap $3 $1
+  dest=${RESULT_DIR}/$(basename "$3" .tap)
+
+  if ! [ -f "$1" ]; then
+    generate_error_tap "$3" "$1"
     ERR_FLAG=1
     return
   fi
-  if [ ! -f $2 ]; then
-    generate_error_tap $3 $2
+  if ! [ -f "$2" ]; then
+    generate_error_tap "$3" "$2"
     ERR_FLAG=1
     return
   fi
 
-  if [ -n ${JSON_KAM} ]; then
+  if [ -n "${JSON_KAM}" ]; then
     kam_type="--json"
   fi
 
-  echo -n "$(date) - Testing $(basename $1) againts $(basename $2) -> $(basename $3)"
-  ${BIN_DIR}/check.py ${kam_type} $1 $2 > $3
-  if [[ $? -ne "0" ]]; then
+  echo -n "$(date) - Testing $(basename "$1") againts $(basename "$2") -> $(basename "$3")"
+  if ! "${BIN_DIR}/check.py" ${kam_type} "$1" "$2" > "$3" ; then
     echo " NOT ok"
     ERR_FLAG=1
-    if [ -z ${GRAPH} ] && [ ! -z ${GRAPH_FAIL} ]; then
+    if [ -z "${GRAPH}" ] && [ -n "${GRAPH_FAIL}" ]; then
       echo "$(date) - Generating flow image: ${dest}.png"
-      graph $msg ${dest}.png
+      graph "$msg" "${dest}.png"
       echo "$(date) - Done"
     fi
   else
@@ -91,15 +92,13 @@ function check_test
 # $1 domain
 function create_voip
 {
-  /usr/bin/ngcp-create_domain $1
-  if [[ $? -ne 0 ]]; then
+  if ! /usr/bin/ngcp-create_domain "$1" ; then
     echo "$(date) - Cannot create domain"
     exit 1
   fi
-  ${BIN_DIR}/create_subscribers.pl ${SCEN_CHECK_DIR}/scenario.yml
-  if [[ $? -ne 0 ]]; then
+  if ! "${BIN_DIR}/create_subscribers.pl" "${SCEN_CHECK_DIR}/scenario.yml" ; then
     echo "$(date) - Deleting domain:${DOMAIN}"
-    delete_voip $1
+    delete_voip "$1"
     echo "$(date) - Cannot create domain subscribers"
     exit 1
   fi
@@ -108,61 +107,61 @@ function create_voip
 # $1 prefs yml file
 function create_voip_prefs
 {
-  if [ -f ${SCEN_CHECK_DIR}/rewrite.yml ]; then
+  if [ -f "${SCEN_CHECK_DIR}/rewrite.yml" ]; then
     echo "$(date) - Creating rewrite rules"
-    ${BIN_DIR}/create_rewrite_rules.pl ${SCEN_CHECK_DIR}/rewrite.yml
+    "${BIN_DIR}/create_rewrite_rules.pl" "${SCEN_CHECK_DIR}/rewrite.yml"
   fi
 
-  if [ -f ${SCEN_CHECK_DIR}/callforward.yml ]; then
+  if [ -f "${SCEN_CHECK_DIR}/callforward.yml" ]; then
    echo "$(date) - Setting callforward config"
-   ${BIN_DIR}/set_subscribers_callforward.pl ${SCEN_CHECK_DIR}/callforward.yml
+   "${BIN_DIR}/set_subscribers_callforward.pl" "${SCEN_CHECK_DIR}/callforward.yml"
   fi
 
-  if [ -f ${SCEN_CHECK_DIR}/speeddial.yml ]; then
+  if [ -f "${SCEN_CHECK_DIR}/speeddial.yml" ]; then
    echo "$(date) - Setting speeddial config"
-   ${BIN_DIR}/set_subscribers_speeddial.pl ${SCEN_CHECK_DIR}/speeddial.yml
+   "${BIN_DIR}/set_subscribers_speeddial.pl" "${SCEN_CHECK_DIR}/speeddial.yml"
   fi
 
-  if [ -f ${SCEN_CHECK_DIR}/ncos.yml ]; then
+  if [ -f "${SCEN_CHECK_DIR}/ncos.yml" ]; then
     echo "$(date) - Creating ncos levels"
-    ${BIN_DIR}/create_ncos.pl ${SCEN_CHECK_DIR}/ncos.yml
+    "${BIN_DIR}/create_ncos.pl" "${SCEN_CHECK_DIR}/ncos.yml"
   fi
 
-  if [ -f ${SCEN_CHECK_DIR}/peer.yml ]; then
+  if [ -f "${SCEN_CHECK_DIR}/peer.yml" ]; then
     echo "$(date) - Creating peers"
-    ${BIN_DIR}/create_peers.pl ${SCEN_CHECK_DIR}/peer.yml
+    "${BIN_DIR}/create_peers.pl" "${SCEN_CHECK_DIR}/peer.yml"
   fi
 
-  if [ -f ${SCEN_CHECK_DIR}/prefs.yml ]; then
+  if [ -f "${SCEN_CHECK_DIR}/prefs.yml" ]; then
     echo "$(date) - Setting preferences"
-    ${BIN_DIR}/set_preferences.pl ${SCEN_CHECK_DIR}/prefs.yml
+    "${BIN_DIR}/set_preferences.pl" "${SCEN_CHECK_DIR}/prefs.yml"
   fi
 }
 
 # $1 domain
 function delete_voip
 {
-  /usr/bin/ngcp-delete_domain $1
+  /usr/bin/ngcp-delete_domain "$1"
 
-  if [ -f ${SCEN_CHECK_DIR}/peer.yml ]; then
+  if [ -f "${SCEN_CHECK_DIR}/peer.yml" ]; then
     echo "$(date) - Deleting peers"
-    ${BIN_DIR}/create_peers.pl -d ${SCEN_CHECK_DIR}/peer.yml
+    "${BIN_DIR}/create_peers.pl" -d "${SCEN_CHECK_DIR}/peer.yml"
   fi
 
-  if [ -f ${SCEN_CHECK_DIR}/ncos.yml ]; then
+  if [ -f "${SCEN_CHECK_DIR}/ncos.yml" ]; then
     echo "$(date) - Deleting ncos levels"
-    ${BIN_DIR}/create_ncos.pl -d ${SCEN_CHECK_DIR}/ncos.yml
+    "${BIN_DIR}/create_ncos.pl" -d "${SCEN_CHECK_DIR}/ncos.yml"
   fi
 
-  if [ -f ${SCEN_CHECK_DIR}/rewrite.yml ]; then
+  if [ -f "${SCEN_CHECK_DIR}/rewrite.yml" ]; then
     echo "$(date) - Deleting rewrite rules"
-    ${BIN_DIR}/create_rewrite_rules.pl -d ${SCEN_CHECK_DIR}/rewrite.yml
+    "${BIN_DIR}/create_rewrite_rules.pl" -d "${SCEN_CHECK_DIR}/rewrite.yml"
   fi
 
-  if [ -f ${SCEN_CHECK_DIR}/hosts ]; then
+  if [ -f "${SCEN_CHECK_DIR}/hosts" ]; then
     echo "$(date) - Deleting foreign domains"
-    sed -e "s:$(cat ${SCEN_CHECK_DIR}/hosts)::" -i /etc/hosts
-    rm ${SCEN_CHECK_DIR}/hosts
+    sed -e "s:$(cat "${SCEN_CHECK_DIR}/hosts")::" -i /etc/hosts
+    rm "${SCEN_CHECK_DIR}/hosts"
   fi
 }
 
@@ -172,10 +171,10 @@ function delete_locations
   local sub
 
   for f in ${SCEN_CHECK_DIR}/callee.csv ${SCEN_CHECK_DIR}/caller.csv; do
-    for sub in $(uniq $f | grep ${DOMAIN} | cut -d\; -f1 | xargs); do
-      ngcp-kamctl proxy ul rm $sub@${DOMAIN}
+    for sub in $(uniq "$f" | grep "${DOMAIN}" | cut -d\; -f1 | xargs); do
+      ngcp-kamctl proxy ul rm "$sub@${DOMAIN}"
       # delete possible banned user
-      ngcp-sercmd lb htable.delete auth $sub@${DOMAIN}::auth_count
+      ngcp-sercmd lb htable.delete auth "$sub@${DOMAIN}::auth_count"
     done
   done
 
@@ -188,7 +187,7 @@ function delete_locations
       -e 'select concat(username, "@", domain) as user from kamailio.location;' \
       -r -s | head| uniq|xargs)
     for f in $sub; do
-      ngcp-kamctl proxy ul rm $f
+      ngcp-kamctl proxy ul rm "$f"
     done
     mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" \
       -e 'delete from kamailio.location;' || true
@@ -199,22 +198,24 @@ function delete_locations
 # $2 exit value
 function error_helper
 {
-  echo $1
-  if [ -z ${SKIP_DELDOMAIN} ]; then
+  echo "$1"
+  if [ -z "${SKIP_DELDOMAIN}" ]; then
     echo "$(date) - Deleting domain:${DOMAIN}"
-    delete_voip ${DOMAIN}
+    delete_voip "${DOMAIN}"
   fi
-  find ${SCEN_CHECK_DIR}/ -type f -name 'sipp_scenario*errors.log' -exec mv {} ${LOG_DIR} \;
+  find "${SCEN_CHECK_DIR}/" -type f -name 'sipp_scenario*errors.log' \
+    -exec mv {} "${LOG_DIR}" \;
   stop_capture
-  exit $2
+  exit "$2"
 }
 
 function capture
 {
-  local name=$(basename ${SCEN_CHECK_DIR})
+  local name
+  name=$(basename "${SCEN_CHECK_DIR}")
   echo "$(date) - Begin capture"
   for inter in $(ip link | grep '^[0-9]' | cut -d: -f2 | sed 's/ //' | xargs); do
-    tcpdump -i ${inter} -n -s 65535 -w ${LOG_DIR}/${name}_${inter}.pcap &
+    tcpdump -i "${inter}" -n -s 65535 -w "${LOG_DIR}/${name}_${inter}.pcap" &
     capture_pid="$capture_pid ${inter}:$!"
   done
 }
@@ -223,14 +224,14 @@ function stop_capture
 {
   local inter=""
   local temp_pid=""
-  if [ ! -z "${capture_pid}" ]; then
+  if [ -n "${capture_pid}" ]; then
     for temp in ${capture_pid}; do
-      inter=$(echo $temp|cut -d: -f1)
-      temp_pid=$(echo $temp|cut -d: -f2)
+      inter=$(echo "$temp"|cut -d: -f1)
+      temp_pid=$(echo "$temp"|cut -d: -f2)
       #echo "inter:${inter} temp_pid:${temp_pid}"
-      if $(ps -p${temp_pid} &> /dev/null); then
+      if ps -p"${temp_pid}" &> /dev/null ; then
         echo "$(date) - End ${inter}[$temp_pid] capture"
-        kill -15 ${temp_pid}
+        kill -15 "${temp_pid}"
       fi
     done
   fi
@@ -244,7 +245,7 @@ function check_port
   step=${2:-1}
   until [ $status -eq 1 ]; do
     let port=${port}+${step}
-    $(netstat -n | grep ":$port ")
+    netstat -n | grep -q ":$port "
     status=$?
   done
 }
@@ -252,21 +253,21 @@ function check_port
 #$1 is filename
 function get_ip
 {
-  transport=$(grep "$1" ${SCEN_CHECK_DIR}/scenario.csv|cut -d\; -f2| tr -d '\n')
-  ip=$(grep "$1" ${SCEN_CHECK_DIR}/scenario.csv|cut -d\; -f3| tr -d '\n')
+  transport=$(grep "$1" "${SCEN_CHECK_DIR}/scenario.csv"|cut -d\; -f2| tr -d '\n')
+  ip=$(grep "$1" "${SCEN_CHECK_DIR}/scenario.csv"|cut -d\; -f3| tr -d '\n')
   if [[ $? -ne 0 ]]; then
     error_helper "cannot find $1 ip on ${SCEN_CHECK_DIR}/scenario.csv" 10
   fi
-  peer_host=$(grep "$1" ${SCEN_CHECK_DIR}/scenario.csv|cut -d\; -f4| tr -d '\n')
-  foreign_dom=$(grep "$1" ${SCEN_CHECK_DIR}/scenario.csv|cut -d\; -f5| tr -d '\n')
+  peer_host=$(grep "$1" "${SCEN_CHECK_DIR}/scenario.csv"|cut -d\; -f4| tr -d '\n')
+  foreign_dom=$(grep "$1" "${SCEN_CHECK_DIR}/scenario.csv"|cut -d\; -f5| tr -d '\n')
 }
 
 #$1 is filename
 function is_enabled
 {
-  grep "$1" ${SCEN_CHECK_DIR}/scenario.csv &>/dev/null
-  if [[ $? -ne 0 ]]; then
+  if ! grep -q "$1" "${SCEN_CHECK_DIR}/scenario.csv" ; then
     echo "$(date) $1 deactivated"
+    # shellcheck disable=SC2104
     continue
   fi
 }
@@ -274,19 +275,18 @@ function is_enabled
 function copy_logs
 {
   # copy the kamailio log
-  cp ${KAM_LOG} ${LOG_DIR}/kamailio.log
-  if [ -f ${SEMS_LOG} ] ; then
+  cp "${KAM_LOG}" "${LOG_DIR}/kamailio.log"
+  if [ -f "${SEMS_LOG}" ] ; then
     # copy the sems log
-    cp ${SEMS_LOG} ${LOG_DIR}/sems.log
+    cp "${SEMS_LOG}" "${LOG_DIR}/sems.log"
   fi
   # copy the kamailio-lb log
-  cp ${KAMLB_LOG} ${LOG_DIR}/kamailio-lb.log
+  cp "${KAMLB_LOG}" "${LOG_DIR}/kamailio-lb.log"
 }
 
 # $1 sipp xml scenario file
 function run_sipp
 {
-  local PORT_OLD
   check_port 50603
   local PORT=$port
   check_port 6003 3
@@ -298,17 +298,16 @@ function run_sipp
 
   # test LOG_DIR
   # we dont want to remove "/*" don't we?
-  if [ -z ${LOG_DIR} ]; then
+  if [ -z "${LOG_DIR}" ]; then
     error_helper "LOG_DIR empty" 1
   fi
-  rm -rf ${LOG_DIR}
+  rm -rf "${LOG_DIR}"
   echo "$(date) - create ${LOG_DIR}"
-  mkdir -p ${LOG_DIR}
+  mkdir -p "${LOG_DIR}"
 
   delete_locations
 
-  ${BIN_DIR}/restart_log.sh
-  if [[ $? -ne 0 ]]; then
+  if ! "${BIN_DIR}/restart_log.sh" ; then
     copy_logs
     error_helper "Restart error" 16
   fi
@@ -316,36 +315,37 @@ function run_sipp
     capture
   fi
 
-  if [ -e ${SCEN_CHECK_DIR}/presence.sh ]; then
+  if [ -e "${SCEN_CHECK_DIR}/presence.sh" ]; then
     echo "$(date) - Presence xcap"
-    ${SCEN_CHECK_DIR}/presence.sh
-    if [ $? -ne 0 ]; then
+    if ! "${SCEN_CHECK_DIR}/presence.sh" ; then
       error_helper "error in presence.sh" 17
     fi
   fi
 
-  for res in $(find ${SCEN_CHECK_DIR} -type f -name 'sipp_scenario_responder[0-9][0-9].xml'| sort); do
-    base=$(basename $res .xml)
-    is_enabled $(basename $res)
-    get_ip $(basename $res)
+  for res in $(find "${SCEN_CHECK_DIR}" -type f -name 'sipp_scenario_responder[0-9][0-9].xml'| sort); do
+    base=$(basename "$res" .xml)
+    is_enabled "$(basename "$res")"
+    get_ip "$(basename "$res")"
     if [ "${peer_host}" != "" ]; then
       echo "$(date) - Update peer_host:${peer_host} ${ip}:${PORT} info"
-      ${BIN_DIR}/update_peer_host.pl --ip=${ip} --port=${PORT} ${peer_host} ${SCEN_CHECK_DIR}/scenario.yml
-      if [[ $? -ne 0 ]]; then
+      if ! "${BIN_DIR}/update_peer_host.pl" --ip="${ip}" --port="${PORT}" \
+          "${peer_host}" "${SCEN_CHECK_DIR}/scenario.yml" ;
+      then
         error_helper "$(date) - error updating peer info" 15
       fi
     fi
     if [ "${foreign_dom}" == "yes" ]; then
       echo "$(date) - foreign domain detected... using 5060 port"
-      PORT_OLD=${PORT}
       PORT="5060"
     fi
 
-    if [ -f ${SCEN_CHECK_DIR}/${base}_reg.xml ]; then
+    if [ -f "${SCEN_CHECK_DIR}/${base}_reg.xml" ]; then
       echo "$(date) - Register ${base} $ip:${PORT}-${MPORT}"
-      ${BIN_DIR}/sipp.sh -T $transport -i $ip -p ${PORT} -r ${SCEN_CHECK_DIR}/${base}_reg.xml
+      "${BIN_DIR}/sipp.sh" -T "$transport" -i "$ip" -p "${PORT}" \
+        -r "${SCEN_CHECK_DIR}/${base}_reg.xml"
     fi
-    pid=$(${BIN_DIR}/sipp.sh -b -T $transport -i $ip -p ${PORT} -m ${MPORT} -r ${SCEN_CHECK_DIR}/${base}.xml)
+    pid=$("${BIN_DIR}/sipp.sh" -b -T "$transport" -i "$ip" -p "${PORT}" \
+      -m "${MPORT}" -r "${SCEN_CHECK_DIR}/${base}.xml")
     echo "$(date) - Running ${base}[${pid}] ${ip}:${PORT}-${MPORT}"
     responder_pid="${responder_pid} ${base}:${pid}"
 
@@ -359,31 +359,26 @@ function run_sipp
 
   status=0
   # let's fire sipp scenarios
-  for send in $(find ${SCEN_CHECK_DIR} -type f -name 'sipp_scenario[0-9][0-9].xml'| sort); do
-    base=$(basename $send .xml)
-    is_enabled $(basename $send)
-    get_ip $(basename $send)
+  for send in $(find "${SCEN_CHECK_DIR}" -type f -name 'sipp_scenario[0-9][0-9].xml'| sort); do
+    base=$(basename "$send" .xml)
+    is_enabled "$(basename "$send")"
+    get_ip "$(basename "$send")"
     echo "$(date) - Running ${base} $ip:50602-7002"
-    ${BIN_DIR}/sipp.sh -T $transport -i $ip -p 50602 -m 7002 $send
-    if [[ $? -ne 0 ]]; then
+    if ! "${BIN_DIR}/sipp.sh" -T "$transport" -i "$ip" -p 50602 -m 7002 "$send" ; then
       echo "$(date) - $base error"
       status=1
     fi
   done
 
   for res in ${responder_pid}; do
-    base=$(echo $res| cut -d: -f1)
-    pid=$(echo $res| cut -d: -f2)
-    ps -p${pid} &> /dev/null
-    ps_status=$?
-    if [ ${ps_status} -eq 0 ]; then
+    base=$(echo "$res"| cut -d: -f1)
+    pid=$(echo "$res"| cut -d: -f2)
+    if ps -p"${pid}" &> /dev/null ; then
       echo "$(date) - sipp responder $base pid $pid not finished yet. Waiting 5 secs"
       sleep 5
-      ps -p${pid} &> /dev/null
-      ps_status=$?
-      if [ ${ps_status} -eq 0 ]; then
+      if ps -p"${pid}" &> /dev/null ; then
         echo "$(date) - sipp responder $base pid $pid not finished yet. Killing it"
-        kill -SIGUSR1 ${pid}
+        kill -SIGUSR1 "${pid}"
       fi
     fi
   done
@@ -393,8 +388,8 @@ function run_sipp
   fi
   copy_logs
   # if any scenario has a log... error
-  if [ $(ls ${SCEN_CHECK_DIR}/sipp_scenario*errors.log 2>/dev/null|wc -l) -ne 0 ]; then
-    find ${SCEN_CHECK_DIR}/ -type f -name 'sipp_scenario*errors.log' -exec mv {} ${LOG_DIR} \;
+  if [ "$(find "${SCEN_CHECK_DIR}" -name 'sipp_scenario*errors.log' 2>/dev/null|wc -l)" -ne 0 ]; then
+    find "${SCEN_CHECK_DIR}/" -type f -name 'sipp_scenario*errors.log' -exec mv {} "${LOG_DIR}" \;
     status=1
   fi
 
@@ -405,16 +400,17 @@ function run_sipp
   fi
 }
 
+# shellcheck disable=SC2001
 function test_filepath
 {
   local msg_name
 
-  if [ -z ${JSON_KAM} ]; then
-    msg_name=$(echo $1|sed 's/_test\.yml/\.yml/')
+  if [ -z "${JSON_KAM}" ]; then
+    msg_name=$(echo "$1"|sed 's/_test\.yml/\.yml/')
   else
-    msg_name=$(echo $1|sed 's/_test\.yml/\.json/')
+    msg_name=$(echo "$1"|sed 's/_test\.yml/\.json/')
   fi
-  msg=${LOG_DIR}/$(basename $msg_name)
+  msg=${LOG_DIR}/$(basename "$msg_name")
 }
 
 function usage
@@ -452,7 +448,7 @@ while getopts 'hCd:p:RDTPGgJK' opt; do
     J) JSON_KAM=1;;
   esac
 done
-shift $(($OPTIND - 1))
+shift $((OPTIND - 1))
 
 if [[ $# != 1 ]]; then
   echo "Wrong number of arguments"
@@ -480,105 +476,104 @@ if [ "${PROFILE}" != "CE" ] && [ "${PROFILE}" != "PRO" ]; then
   exit 2
 fi
 
-if [ ! -d ${SCEN_CHECK_DIR} ]; then
+if ! [ -d "${SCEN_CHECK_DIR}" ]; then
   echo "no ${SCEN_CHECK_DIR} found"
   usage
   exit 3
 fi
 
-if [ ! -f ${SCEN_CHECK_DIR}/scenario.yml ]; then
+if ! [ -f "${SCEN_CHECK_DIR}/scenario.yml" ]; then
   echo "${SCEN_CHECK_DIR}/scenario.yml not found"
   exit 14
 fi
 
-if [ -n ${JSON_KAM} ] ; then
+if [ -n "${JSON_KAM}" ] ; then
   echo "$(date) - dir and perms for ${KAM_DIR}"
-  rm -rf "${KAM_DIR}/${NAME_CHECK}"
-  mkdir -p ${KAM_DIR}
-  chown -R kamailio:kamailio ${KAM_DIR}
+  mkdir -p "${KAM_DIR}"
+  chown -R kamailio:kamailio "${KAM_DIR}"
 fi
 
-if [ -z $SKIP ]; then
+if [ -z "$SKIP" ]; then
   echo "$(date) - Deleting all info for ${DOMAIN} domain"
-  delete_voip ${DOMAIN} # just to be sure nothing is there
+  delete_voip "${DOMAIN}" # just to be sure nothing is there
   echo "$(date) - Creating ${DOMAIN}"
-  create_voip ${DOMAIN}
+  create_voip "${DOMAIN}"
   echo "$(date) - Adding prefs"
   create_voip_prefs
 fi
 
-if [ -z $SKIP_RUNSIPP ]; then
+if [ -z "$SKIP_RUNSIPP" ]; then
+  if [ -n "${JSON_KAM}" ] ; then
+    echo "$(date) - remove ${KAM_DIR}/${NAME_CHECK}"
+    # shellcheck disable=SC2115
+    rm -rf "${KAM_DIR}/${NAME_CHECK}"
+  fi
   echo "$(date) - Cleaning csv/reg.xml files"
-  find ${SCEN_CHECK_DIR} -name 'sipp_scenario_responder*_reg.xml' -exec rm {} \;
-  find ${SCEN_CHECK_DIR} -name '*.csv' -exec rm {} \;
+  find "${SCEN_CHECK_DIR}" -name 'sipp_scenario_responder*_reg.xml' -exec rm {} \;
+  find "${SCEN_CHECK_DIR}" -name '*.csv' -exec rm {} \;
   echo "$(date) - Generating csv/reg.xml files"
-  ${BIN_DIR}/scenario.pl ${SCEN_CHECK_DIR}/scenario.yml
-  if [[ $? -ne 0 ]]; then
+  if ! "${BIN_DIR}/scenario.pl" "${SCEN_CHECK_DIR}/scenario.yml" ; then
     error_helper "Error creating csv files" 4
   fi
 
-  if [ -f ${SCEN_CHECK_DIR}/hosts ]; then
+  if [ -f "${SCEN_CHECK_DIR}/hosts" ]; then
     echo "$(date) - Setting foreign domains"
-    cat ${SCEN_CHECK_DIR}/hosts >> /etc/hosts
+    cat "${SCEN_CHECK_DIR}/hosts" >> /etc/hosts
   fi
 
   echo "$(date) - Running sipp scenarios"
   run_sipp
   echo "$(date) - Done sipp"
-fi
-
-if [ -z ${SKIP_DELDOMAIN} ]; then
-  echo "$(date) - Deleting domain:${DOMAIN}"
-  delete_voip ${DOMAIN}
-  echo "$(date) - Done"
-fi
-
-if [ -z ${SKIP_PARSE} ]; then
-  if [ -z ${JSON_KAM} ]; then
-    echo "$(date) - Parsing ${LOG_DIR}/kamailio.log"
-    ${BIN_DIR}/ulog_parser.pl ${LOG_DIR}/kamailio.log ${LOG_DIR}
-    echo "$(date) - Done"
+else
+  if [ -n "${JSON_KAM}" ] ; then
+    echo "$(date) - get kamailio cfgt files"
+    if [ -d "${KAM_DIR}/${NAME_CHECK}" ] ; then
+      for i in "${KAM_DIR}/${NAME_CHECK}"/*.json ; do
+        expand -t1 "$i" > "${LOG_DIR}/$(printf '%04d.json' "$(basename "$i" .json)")"
+      done
+    else
+      echo "no cfgt files found"
+    fi
   fi
 fi
 
-if [ -z $SKIP_RUNSIPP ] && [ -n ${JSON_KAM} ] ; then
-  echo "$(date) - get kamailio cfgt files"
-  if [ -d "${KAM_DIR}/${NAME_CHECK}" ] ; then
-    for i in "${KAM_DIR}/${NAME_CHECK}"/*.json ; do
-      expand -t1 $i > ${LOG_DIR}/$(printf '%04d.json' $(basename $i .json))
-    done
-  else
-    echo "no cfgt files found"
+if [ -z "${SKIP_DELDOMAIN}" ]; then
+  echo "$(date) - Deleting domain:${DOMAIN}"
+  delete_voip "${DOMAIN}"
+  echo "$(date) - Done"
+fi
+
+if [ -z "${SKIP_PARSE}" ]; then
+  if [ -z "${JSON_KAM}" ]; then
+    echo "$(date) - Parsing ${LOG_DIR}/kamailio.log"
+    "${BIN_DIR}/ulog_parser.pl" "${LOG_DIR}/kamailio.log ${LOG_DIR}"
+    echo "$(date) - Done"
   fi
 fi
 
 # let's check the results
 ERR_FLAG=0
-if [ -z ${SKIP_TESTS} ]; then
-  if [ -d ${RESULT_DIR} ]; then
+if [ -z "${SKIP_TESTS}" ]; then
+  if [ -d "${RESULT_DIR}" ]; then
     echo "$(date) - Cleaning result dir"
-    rm -rf ${RESULT_DIR}
+    rm -rf "${RESULT_DIR}"
   fi
-  mkdir -p ${RESULT_DIR}
+  mkdir -p "${RESULT_DIR}"
   echo "$(date) - Cleaning tests files"
-  find ${SCEN_CHECK_DIR} -type f -name '*test.yml' -exec rm {} \;
+  find "${SCEN_CHECK_DIR}" -type f -name '*test.yml' -exec rm {} \;
   echo "$(date) - Generating tests files"
-  ${BIN_DIR}/generate_tests.sh -d ${SCEN_CHECK_DIR} ${PROFILE}
+  "${BIN_DIR}/generate_tests.sh" -d "${SCEN_CHECK_DIR}" "${PROFILE}"
   echo "$(date) - Done"
 
-  if [ -n ${JSON_KAM} ]; then
-    file_type=".json"
-  fi
-
   for t in ${SCEN_CHECK_DIR}/*_test.yml; do
-    test_filepath $t
+    test_filepath "$t"
     echo "$(date) - check test $t on $msg"
-    dest=${RESULT_DIR}/$(basename $t .yml)
-    check_test $t $msg ${dest}.tap
+    dest=${RESULT_DIR}/$(basename "$t" .yml)
+    check_test "$t" "$msg" "${dest}.tap"
     echo "$(date) - Done"
-    if [ ! -z ${GRAPH} ]; then
+    if [ -n "${GRAPH}" ]; then
       echo "$(date) - Generating flow image: ${dest}.png"
-      graph $msg ${dest}.png
+      graph "$msg" "${dest}.png"
       echo "$(date) - Done"
     fi
   done
