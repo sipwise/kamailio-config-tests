@@ -127,7 +127,10 @@ class Test:
                       (type(val0), unicode(val0), type(val1),
                        unicode(val1)))
         if isinstance(val0, basestring):
-            result = re.search(val0, str(val1))
+            if re.search(val0, str(val1)) is not None:
+                return True
+            else:
+                return False
         elif isinstance(val0, int):
             try:
                 result = (val0 == int(val1))
