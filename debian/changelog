@@ -1,3 +1,12 @@
+kamailio-config-tests (0.9.3.2+0~mr3.8.3.2) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [b48188f] MT#12937 fix new order of preferences
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 02 Sep 2015 17:58:28 +0200
+
 kamailio-config-tests (0.9.3.1+0~mr3.8.3.1) unstable; urgency=medium
 
   [ Alexander Lutay ]
