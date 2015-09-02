@@ -21,8 +21,8 @@ flow:
   - start|ROUTE_CLEAR_CALLER_PREF:
   - end|ROUTE_CLEAR_CALLER_PREF:
   - end|ROUTE_LOAD_CALLER_PREF:
-      $xavp(caller_usr_prefs[0]=>allowed_clis[*]): ['43110021*', '43110029*']
-      $xavp(caller_real_prefs[0]=>allowed_clis[*]): ['43110021*', '43110029*']
+      $xavp(caller_usr_prefs[0]=>allowed_clis[*]): ['43110029*', '43110021*']
+      $xavp(caller_real_prefs[0]=>allowed_clis[*]): ['43110029*', '43110021*']
       $xavp(caller_usr_prefs[0]=>user_cli[*]): [43122122]
       $xavp(caller_real_prefs[0]=>user_cli[*]): [43122122]
       $xavp(caller_usr_prefs[0]=>inbound_upn[*]): ['from_display']
