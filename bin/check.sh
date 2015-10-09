@@ -438,7 +438,7 @@ while getopts 'hCd:p:RDTPGgJK' opt; do
     C) SKIP=1;;
     d) DOMAIN=$OPTARG;;
     p) PROFILE=$OPTARG;;
-    R) SKIP_RUNSIPP=1;;
+    R) SKIP_RUNSIPP=1; SKIP_DELDOMAIN=1;;
     D) SKIP_DELDOMAIN=1;;
     T) SKIP_TESTS=1;;
     P) SKIP_PARSE=1;;
@@ -487,7 +487,7 @@ if ! [ -f "${SCEN_CHECK_DIR}/scenario.yml" ]; then
   exit 14
 fi
 
-if [ -n "${JSON_KAM}" ] ; then
+if [ -n "${JSON_KAM}" ] && [ -n "$SKIP_RUNSIPP" ] ; then
   echo "$(date) - dir and perms for ${KAM_DIR}"
   mkdir -p "${KAM_DIR}"
   chown -R kamailio:kamailio "${KAM_DIR}"
