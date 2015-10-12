@@ -487,12 +487,6 @@ if ! [ -f "${SCEN_CHECK_DIR}/scenario.yml" ]; then
   exit 14
 fi
 
-if [ -n "${JSON_KAM}" ] && [ -n "$SKIP_RUNSIPP" ] ; then
-  echo "$(date) - dir and perms for ${KAM_DIR}"
-  mkdir -p "${KAM_DIR}"
-  chown -R kamailio:kamailio "${KAM_DIR}"
-fi
-
 if [ -z "$SKIP" ]; then
   echo "$(date) - Deleting all info for ${DOMAIN} domain"
   delete_voip "${DOMAIN}" # just to be sure nothing is there
@@ -504,9 +498,15 @@ fi
 
 if [ -z "$SKIP_RUNSIPP" ]; then
   if [ -n "${JSON_KAM}" ] ; then
-    echo "$(date) - remove ${KAM_DIR}/${NAME_CHECK}"
-    # shellcheck disable=SC2115
-    rm -rf "${KAM_DIR}/${NAME_CHECK}"
+    if ! [ -d "${KAM_DIR}" ] ; then
+      echo "$(date) - dir and perms for ${KAM_DIR}"
+      mkdir -p "${KAM_DIR}"
+      chown -R kamailio:kamailio "${KAM_DIR}"
+    else
+      echo "$(date) - remove ${KAM_DIR}/${NAME_CHECK}"
+      # shellcheck disable=SC2115
+      rm -rf "${KAM_DIR}/${NAME_CHECK}"
+    fi
   fi
   echo "$(date) - Cleaning csv/reg.xml files"
   find "${SCEN_CHECK_DIR}" -name 'sipp_scenario_responder*_reg.xml' -exec rm {} \;
