@@ -1,3 +1,23 @@
+kamailio-config-tests (0.11.1.0+0~mr4.1.1.0) unstable; urgency=medium
+
+  [ Andrew Pogrebennyk ]
+  * [ba040fc] MT#14153 fix kamailio-config-test invite_voicebox
+  * [f094afa] MT#14153 fix kamailio-config-test invite_voicebox
+
+  [ Victor Seva ]
+  * [587d056] MT#14229 fix shellcheck warnings
+  * [04f22a3] MT#14721 fix routename from event_route
+  * [fe6ee4c] MT#14721 add new event_route dialog:start
+  * [8e20d27] MT#14967 fix check.py TAP output
+  * [c9d73ed] MT#12937 fix new order of preferences
+  * [cafe088] MT#7571 bin/check.sh: skip delete domain when skiping run tests
+  * [20bb49e] MT#7571 bin/check.sh: fix creation of KAM_DIR cfgtest dir
+  * [c421e3f] MT#7571 bin/check.sh: fix cosmetic output removing domain
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 12 Oct 2015 15:31:50 +0200
+
 kamailio-config-tests (0.11.0.0+0~mr4.1.0.0) unstable; urgency=low
 
   [ Andrew Pogrebennyk ]
