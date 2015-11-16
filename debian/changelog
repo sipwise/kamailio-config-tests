@@ -1,3 +1,16 @@
+kamailio-config-tests (0.10.2.1+0~mr4.0.2.1) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [176df2b] MT#14967 fix check.py TAP output
+  * [fa910e4] MT#12937 fix new order of preferences
+
+  [ Andrew Pogrebennyk ]
+  * [c767efb] MT#16213 add a test to check detection of retransmitted INVITE (mr4.0)
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 16 Nov 2015 14:23:20 +0100
+
 kamailio-config-tests (0.10.2.0+0~mr4.0.2.0) unstable; urgency=medium
 
   * New release.
