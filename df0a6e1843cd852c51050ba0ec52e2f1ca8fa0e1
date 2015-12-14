@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a96c907_32e7b8e6",
+        "filename": "bin/scenario.pl",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2015-12-14T09:56:07Z",
+      "side": 1,
+      "message": "Right, I\u0027d assume the other way to fix the warning here would be to surround the return value inside parenthesis as in «return (Foo or die)», but this looks clearer overall I guess. :)\n\nI\u0027d perhaps name the return var $csv, but it is fine as it is.",
+      "revId": "df0a6e1843cd852c51050ba0ec52e2f1ca8fa0e1",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
