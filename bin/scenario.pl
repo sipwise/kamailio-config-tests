@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #
-# Copyright: 2013 Sipwise Development Team <support@sipwise.com>
+# Copyright: 2013-2015 Sipwise Development Team <support@sipwise.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -68,8 +68,9 @@ our $tt = Template->new({
 
 sub new_csv
 {
-    return Text::CSV->new ( { quote_char => undef, sep_char => ';', eol => "\n" } )
-                 or die "Cannot use CSV: ".Text::CSV->error_diag();
+    my $r = Text::CSV->new({quote_char => undef, sep_char => ';', eol => "\n"})
+        or die("Cannot use CSV: ".Text::CSV->error_diag());
+    return $r;
 }
 
 sub get_subs_info
