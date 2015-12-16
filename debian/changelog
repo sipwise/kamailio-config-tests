@@ -1,3 +1,19 @@
+kamailio-config-tests (0.13.0.0+0~mr4.3.0.0) unstable; urgency=medium
+
+  [ Michael Prokop ]
+  * [80fc751] MT#15943 Provide commit message to 'ngcpcfg apply'
+
+  [ Andrew Pogrebennyk ]
+  * [0c36cda] MT#16213 add a test to check detection of retransmitted INVITE
+  * [f1fba3d] MT#16365 add test for late offer-answer model
+
+  [ Victor Seva ]
+  * [df0a6e1] MT#16237 bin/scenario.pl: fix warning
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 16 Dec 2015 09:14:51 +0100
+
 kamailio-config-tests (0.12.0.0+0~mr4.2.0.0) unstable; urgency=medium
 
   [ Andrew Pogrebennyk ]
