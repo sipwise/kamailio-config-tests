@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da7095c5_425ce825",
+        "filename": "lib/Sipwise/API.pm",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2015-12-29T14:42:38Z",
+      "side": 1,
+      "message": "4) IMHO, it should be part of ngcp-panel.",
+      "revId": "bd717611eefa2c69ce9e0c6c88f65b9794202e4c",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
