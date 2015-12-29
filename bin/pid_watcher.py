@@ -40,7 +40,7 @@ services = [
     'kamailio/kamailio.lb.pid',
     'kamailio/kamailio.proxy.pid',
     'ngcp-sems/ngcp-sems.pid',
-    'collectdmon.pid'
+    'collectd.pid'
 ]
 
 watched_dirs = [
