@@ -22,48 +22,36 @@ use strict;
 use warnings;
 
 use English;
-use Getopt::Std;
-use Cwd 'abs_path';
-use YAML;
 use Getopt::Long;
-use Sipwise::Provisioning::Voip;
-use Sipwise::Provisioning::Billing;
-use Sipwise::Provisioning::Config;
+use Cwd 'abs_path';
+use Config::Tiny;
+use Sipwise::API qw(all);
+use YAML;
+use Data::Dumper;
 
-our %CONFIG = ( admin    => 'cmd' );
-
-my $config = Sipwise::Provisioning::Config->new()->get_config();
-
-unless ($CONFIG{password} = $config->{acl}->{$CONFIG{admin}}->{password}) {
-  die "Error: No provisioning password found for user $CONFIG{admin}\n";
+my $config =  Config::Tiny->read('/etc/default/ngcp-api');
+my $opts;
+if ($config) {
+    $opts = {};
+    $opts->{host} = $config->{_}->{NGCP_API_IP};
+    $opts->{port} = $config->{_}->{NGCP_API_PORT};
+    $opts->{sslverify} = $config->{_}->{NGCP_API_SSLVERIFY};
 }
+my $api = Sipwise::API->new($opts);
+$opts = $api->opts;
 
-sub usage;
-sub call_prov;
-
+sub usage {
+  return "Usage:\n$PROGRAM_NAME rewrite.yml\n".
+        "Options:\n".
+        "  -d debug\n".
+        "  -h this help\n";
+}
 my $help = 0;
-my $del = 0;
-GetOptions ("h|help" => \$help,
-            "d|delete" => \$del)
-  or die("Error in command line arguments\n".usage());
+GetOptions ("h|help" => \$help, "d|debug" => \$opts->{verbose})
+    or die("Error in command line arguments\n".usage());
 
 die(usage()) unless (!$help);
 die("Wrong number of arguments\n".usage()) unless ($#ARGV == 0);
-
-our $bprov = Sipwise::Provisioning::Billing->new();
-our $vprov = Sipwise::Provisioning::Voip->new();
-
-my $filename = abs_path($ARGV[0]);
-my $r = YAML::LoadFile($filename);
-
-if ($del)
-{
-    do_delete($r);
-}
-else
-{
-    do_create($r);
-}
 
 sub do_delete
 {
@@ -142,6 +130,17 @@ sub call_prov {
     return $result;
 }
 
-sub usage {
-    return "Usage:\n$PROGRAM_NAME scenario.yml\n";
+sub main {
+    my $r = shift;
+
+    if ($del)
+    {
+        return do_delete($r);
+    }
+    else
+    {
+        return do_create($r);
+    }
 }
+
+main(YAML::LoadFile(abs_path($ARGV[0])));
