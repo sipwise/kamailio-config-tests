@@ -151,7 +151,7 @@ function delete_voip
 
   if [ -f "${SCEN_CHECK_DIR}/rewrite.yml" ]; then
     echo "$(date) - Deleting rewrite rules"
-    "${BIN_DIR}/create_rewrite_rules.pl" -d "${SCEN_CHECK_DIR}/rewrite.yml"
+    "${BIN_DIR}/create_rewrite_rules.pl" -delete "${SCEN_CHECK_DIR}/rewrite.yml"
   fi
 
   if [ -f "${SCEN_CHECK_DIR}/hosts" ]; then
