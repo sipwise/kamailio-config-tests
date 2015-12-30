@@ -97,9 +97,10 @@ sub do_query {
 	my $ua = shift;
 	my $url = shift;
 	my $data = shift;
+	my $req_type = shift || 'GET';
 	my $URL = URI->new($url);
 	$URL->query_form($data);
-	my $req = HTTP::Request->new('GET', $URL);
+	my $req = HTTP::Request->new($req_type, $URL);
 
 	my $res = $ua->request($req);
 	if(!$res->is_success) {
@@ -153,6 +154,16 @@ sub _create {
 	return;
 }
 
+sub _delete {
+	my $self = shift;
+	my $urldata = shift;
+	my $urlbase = 'https://'.$self->{opts}->{host}.':'.$self->{opts}->{port};
+
+	my $ua = $self->create_ua();
+	my $res = $self->do_query($ua, $urlbase.$urldata, undef, 'DELETE');
+	return $res->is_success;
+}
+
 sub _get_content {
 	my $self = shift;
 	my $data = shift;
@@ -195,7 +206,9 @@ sub _exists {
 	my $collection = $self->_get_content($data, $urldata);
 
 	if (defined $collection && $collection->{total_count} == 1) {
-		return $collection->{_embedded}->{$collection_id}->{id};
+		my $links = $collection->{_embedded}->{$collection_id}->{_links};
+		my $href = $links->{$collection_id}->{href};
+		return _get_id($urldata, $href);
 	}
 	return;
 }
@@ -363,7 +376,7 @@ sub check_rewriteruleset_exists {
 	my $self = shift;
 	my $data = shift;
 	my $urldata = '/api/rewriterulesets/';
-	my $collection_id = 'ngcp:rewriterules';
+	my $collection_id = 'ngcp:rewriterulesets';
 
 	return $self->_exists($data, $urldata, $collection_id);
 }
@@ -374,4 +387,12 @@ sub create_rewriteruleset {
 	my $urldata = '/api/rewriterulesets/';
 
 	return $self->_create($data, $urldata);
+}
+
+sub delete_rewriteruleset {
+	my $self = shift;
+	my $id = shift;
+	my $urldata = "/api/rewriterulesets/${id}";
+
+	return $self->_delete($urldata);
 }

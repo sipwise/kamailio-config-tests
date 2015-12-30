@@ -22,66 +22,56 @@ use strict;
 use warnings;
 
 use English;
-use Getopt::Std;
-use Cwd 'abs_path';
-use YAML;
 use Getopt::Long;
-use Sipwise::Provisioning::Voip;
-use Sipwise::Provisioning::Billing;
-use Sipwise::Provisioning::Config;
+use Cwd 'abs_path';
+use Config::Tiny;
+use Sipwise::API qw(all);
+use YAML;
 
-our %CONFIG = ( admin    => 'cmd' );
-
-my $config = Sipwise::Provisioning::Config->new()->get_config();
-
-unless ($CONFIG{password} = $config->{acl}->{$CONFIG{admin}}->{password}) {
-  die "Error: No provisioning password found for user $CONFIG{admin}\n";
+my $config =  Config::Tiny->read('/etc/default/ngcp-api');
+my $opts;
+if ($config) {
+    $opts = {};
+    $opts->{host} = $config->{_}->{NGCP_API_IP};
+    $opts->{port} = $config->{_}->{NGCP_API_PORT};
+    $opts->{sslverify} = $config->{_}->{NGCP_API_SSLVERIFY};
 }
+my $api = Sipwise::API->new($opts);
+$opts = $api->opts;
+my $del;
 
-sub usage;
-sub call_prov;
-
+sub usage {
+  return "Usage:\n$PROGRAM_NAME rewrite.yml\n".
+        "Options:\n".
+        "  -delete\n".
+        "  -d debug\n".
+        "  -h this help\n";
+}
 my $help = 0;
-my $del = 0;
 GetOptions ("h|help" => \$help,
-            "d|delete" => \$del)
-  or die("Error in command line arguments\n".usage());
+    "d|debug" => \$opts->{verbose},
+    "delete" => \$del)
+    or die("Error in command line arguments\n".usage());
 
 die(usage()) unless (!$help);
 die("Wrong number of arguments\n".usage()) unless ($#ARGV == 0);
 
-our $bprov = Sipwise::Provisioning::Billing->new();
-our $vprov = Sipwise::Provisioning::Voip->new();
-
-my $filename = abs_path($ARGV[0]);
-my $r = YAML::LoadFile($filename);
-
-if ($del)
-{
-    do_delete($r);
-}
-else
-{
-    do_create($r);
-}
-
 sub do_delete
 {
     my ($data) = @_;
-    for my $rule_set_name (keys $data)
+    for my $rule_set_name (keys %{$data})
     {
-        my $rule_set;
-        my $result = call_prov( $vprov, 'get_rewrite_rule_sets');
-        foreach (@{$result})
-        {
-            $rule_set->{$_->{name}} = $_->{id};
-        }
-        if ($rule_set)
-        {
-            for my $rule_set_name (keys $rule_set)
-            {
-                call_prov($vprov, 'delete_rewrite_rule_set', {id => $rule_set->{$rule_set_name}});
+        my $param = { reseller_id => 1, name => $rule_set_name };
+        my $rws_id = $api->check_rewriteruleset_exists($param);
+        if(defined $rws_id) {
+            if($api->delete_rewriteruleset($rws_id)) {
+                print "rewriteruleset [$rule_set_name] deleted [$rws_id]\n";
             }
+            else {
+                die "rewriteruleset [$rule_set_name] can't be removed [$rws_id]\n";
+            }
+        } else {
+            print "rewriteruleset [$rule_set_name] not there\n";
         }
     }
     exit;
@@ -90,58 +80,45 @@ sub do_delete
 sub do_create
 {
     my ($data) = @_;
-    for my $rule_set_name (keys $data)
+    for my $rule_set_name (keys %{$data})
     {
-        my $param = { name => $rule_set_name };
-        call_prov( $vprov, 'create_rewrite_rule_set',  $param );
-    }
-    my $rule_set;
-    my $result = call_prov( $vprov, 'get_rewrite_rule_sets');
-    foreach (@{$result})
-    {
-        $rule_set->{$_->{name}} = $_->{id};
-    }
-    # rules
-    for my $rule_set_name (keys $data)
-    {
-        my $rs = $data->{$rule_set_name};
-        foreach (@{$rs})
-        {
-            my $param = { set_id => $rule_set->{$rule_set_name}, data => $_ };
-            call_prov($vprov, 'create_rewrite_rule', $param);
+        my $param = { reseller_id => 1, name => $rule_set_name };
+        my $rws_id = $api->check_rewriteruleset_exists($param);
+        if(defined $rws_id) {
+          print "rewriteruleset [$rule_set_name] already there [$rws_id]\n";
+        } else {
+          $rws_id = $api->create_rewriteruleset($param);
+          print "rewriteruleset [$rule_set_name] created [$rws_id]\n";
+        }
+        foreach my $param (@{$data->{$rule_set_name}}) {
+            $param->{set_id} = $rws_id;
+            my $rw_id = $api->create_rewriterule($param);
+            if(defined $rw_id) {
+                print "rewriterule [".
+                    $param->{field}."/".$param->{direction}.
+                    "] created [$rw_id]\n";
+            }
+            else {
+                die "Can't create rewriterule"
+            }
         }
     }
     exit;
 }
 
-sub call_prov {
-    #   scalar,    scalar,    hash-ref
-    my ($prov, $function, $parameter) = @_;
-    my $result;
+sub main {
+    my $r = shift;
 
-    eval {
-        $result = $prov->handle_request( $function,
-                                          {
-                                            authentication => {
-                                                                type     => 'system',
-                                                                username => $CONFIG{admin},
-                                                                password => $CONFIG{password},
-                                                              },
-                                            parameters => $parameter,
-                                        });
-    };
-
-    if($EVAL_ERROR) {
-        if(ref $EVAL_ERROR eq 'SOAP::Fault') {
-            die "Voip\::$function failed: ". $EVAL_ERROR->faultstring;
-        } else {
-            die "Voip\::$function failed: $EVAL_ERROR";
-        }
+    if ($del)
+    {
+        print "delete rewriterules\n" unless $opts->{debug};
+        return do_delete($r);
     }
-
-    return $result;
+    else
+    {
+        print "create rewriterules\n" unless $opts->{debug};
+        return do_create($r);
+    }
 }
 
-sub usage {
-    return "Usage:\n$PROGRAM_NAME scenario.yml\n";
-}
+main(YAML::LoadFile(abs_path($ARGV[0])));
