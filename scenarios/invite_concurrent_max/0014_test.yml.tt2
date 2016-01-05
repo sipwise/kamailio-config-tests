@@ -12,6 +12,13 @@ flow:
   - return|ROUTE_LOAD_CALLEE_DOMAIN_PREF:
   - start|ROUTE_FIND_CALLER:
   - start|ROUTE_AUTH:
+  - start|ROUTE_AUTH_HELPER:
+      $fd: spce.test
+      $var(realm_user): testuser1004
+      $var(realm_domain): spce.test
+  - return|ROUTE_AUTH_HELPER:
+      $avp(orig_acc_caller_user): ['testuser1004']
+      $avp(orig_acc_caller_domain): ['spce.test']
   - start|ROUTE_ADD_CALLINFO_REPLY:
   - return|ROUTE_ADD_CALLINFO_REPLY:
   - return|ROUTE_AUTH:

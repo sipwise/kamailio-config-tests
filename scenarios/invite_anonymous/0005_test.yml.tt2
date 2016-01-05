@@ -1,4 +1,3 @@
-# REGISTER scenario
 flow:
   - start|DEFAULT_ROUTE:
   - start|ROUTE_NET_INFO:
@@ -14,7 +13,8 @@ flow:
   - start|ROUTE_FIND_CALLER:
   - start|ROUTE_AUTH:
   - start|ROUTE_AUTH_HELPER:
-      $fd: spce.test
+      $fU: anonymous
+      $fd: anonymous.invalid
       $var(realm_user): testuser1002
       $var(realm_domain): spce.test
   - return|ROUTE_AUTH_HELPER:
@@ -58,21 +58,37 @@ flow:
   - start|ROUTE_CHECK_PBX:
   - return|ROUTE_CHECK_PBX:
   - start|ROUTE_INVITE_TO_INT:
-  - start|ROUTE_ACC_FAILURE:
+  - start|ROUTE_OUTBOUND:
+  - start|ROUTE_SET_CALLER_DIALOG:
+  - return|ROUTE_SET_CALLER_DIALOG:
   - start|ROUTE_ACC_CALLER:
   - return|ROUTE_ACC_CALLER:
   - start|ROUTE_ACC_CALLEE:
   - return|ROUTE_ACC_CALLEE:
-  - return|ROUTE_ACC_FAILURE:
-  - start|ROUTE_EARLY_REJECT:
-  - start|ROUTE_ADD_CALLINFO_REPLY:
-  - return|ROUTE_ADD_CALLINFO_REPLY:
-  - 'start|dialog:failed':
-  - 'return|dialog:failed':
-  - 'return|dialog:failed':
-  - exit|ROUTE_EARLY_REJECT:
+  - start|BRANCH_ROUTE_SBC:
+  - start|ROUTE_BRANCH_ACC_RTP:
+  - return|ROUTE_BRANCH_ACC_RTP:
+  - start|ROUTE_SET_RUSER:
+  - return|ROUTE_SET_RUSER:
+  - start|ROUTE_PREPARE_SST:
+  - return|ROUTE_PREPARE_SST:
+  - start|ROUTE_PREPARE_MOH:
+  - return|ROUTE_PREPARE_MOH:
+  - start|ROUTE_SET_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - return|ROUTE_PREPARE_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - return|ROUTE_PREPARE_CALLER_CLI:
+  - return|ROUTE_SET_CALLER_CLI:
+  - start|ROUTE_SET_CALLEE:
+  - return|ROUTE_SET_CALLEE:
+  - start|ROUTE_ADD_CALLINFO:
+  - return|ROUTE_ADD_CALLINFO:
+  - return|BRANCH_ROUTE_SBC:
+  - return|BRANCH_ROUTE_SBC:
+  - exit|ROUTE_OUTBOUND:
 sip_in:
-  - '^INVITE sip:testuser1003@'
+  - '^INVITE'
   - 'Contact: sip:testuser1002@'
   - 'CSeq: 2 INVITE'
   - 'Max-Forwards: 69'
@@ -82,19 +98,27 @@ sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: 2 INVITE',
-      'From: <sip:testuser1002@'
+      '_:NOT:_P-Asserted-Identity: \w+',
+      'From: "Anonymous" <sip:anonymous@anonymous.invalid>;tag=',
+      'To: <sip:testuser1003@'
     ]
   - [
       '^SIP/2.0 101 Connecting',
       'CSeq: 2 INVITE',
-      'From: <sip:testuser1002@',
-      'P-NGCP-Authorization: testuser1002',
-      'P-NGCP-Authorized: 1'
+      '_:NOT:_P-Asserted-Identity: \w+',
+      'From: "Anonymous" <sip:anonymous@anonymous.invalid>;tag=',
+      'To: <sip:testuser1003@'
     ]
   - [
-      '^SIP/2.0 480 Offline',
+      '^INVITE sip:testuser1003@',
       'CSeq: 2 INVITE',
-      'From: <sip:testuser1002@',
-      'P-NGCP-Authorization: testuser1002',
-      'P-NGCP-Authorized: 1'
+      'From: "Anonymous" <sip:anonymous@anonymous.invalid>;tag=',
+      'To: <sip:testuser1003@',
+      'Content-Type: application/sdp',
+      'P-Caller-UUID: \w+',
+      'P-Callee-UUID: \w+',
+      '_:NOT:_P-Asserted-Identity: \w+',
+      'P-Called-Party-ID: <sip:testuser1003@',
+      'P-App-Param: ;aleg_sst_enable=no;sst_enable=no',
+      'P-App-Name: sbc'
     ]

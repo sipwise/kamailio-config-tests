@@ -1,0 +1,43 @@
+flow:
+  - start|DEFAULT_ROUTE:
+  - start|ROUTE_NET_INFO:
+  - return|ROUTE_NET_INFO:
+  - start|ROUTE_PRX_REQUEST:
+  - start|ROUTE_INITVARS:
+  - return|ROUTE_INITVARS:
+  - start|ROUTE_INVITE:
+  - start|ROUTE_LOAD_CALLEE_DOMAIN_PREF:
+  - start|ROUTE_CLEAR_CALLEE_DOMAIN_PREF:
+  - return|ROUTE_CLEAR_CALLEE_DOMAIN_PREF:
+  - return|ROUTE_LOAD_CALLEE_DOMAIN_PREF:
+  - start|ROUTE_FIND_CALLER:
+  - start|ROUTE_AUTH:
+  - exit|ROUTE_AUTH:
+      $fU: anonymous
+      $fd: anonymous.invalid
+      $var(realm_user): testuser1002
+      $var(realm_domain): spce.test
+sip_in:
+  - '^INVITE'
+  - 'P-Asserted-Identity: "long name here" <sip:testuser1002@spce.test>'
+  - 'From: "Anonymous" <sip:anonymous@anonymous.invalid>;tag='
+  - 'Contact: sip:testuser1002@'
+  - 'To: <sip:testuser1003@'
+  - 'CSeq: 1 INVITE'
+  - 'Max-Forwards: 69'
+  - 'Content-Type: application/sdp'
+sip_out:
+  - [
+      '^SIP/2.0 100 Trying',
+      'CSeq: 1 INVITE',
+      '_:NOT:_P-Asserted-Identity: \w+',
+      'From: "Anonymous" <sip:anonymous@anonymous.invalid>;tag=',
+      'To: <sip:testuser1003@'
+    ]
+  - [
+      '^SIP/2.0 407 Proxy Authentication Required',
+      'CSeq: 1 INVITE',
+      '_:NOT:_P-Asserted-Identity: \w+',
+      'From: "Anonymous" <sip:anonymous@anonymous.invalid>;tag=',
+      'To: <sip:testuser1003@'
+    ]
