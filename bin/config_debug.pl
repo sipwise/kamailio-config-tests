@@ -99,7 +99,7 @@ else
   $yaml->[0]->{kamailio}{proxy}{fritzbox_prefixes} = [ '112', '110', '118[0-9]{2}' ];
   $yaml->[0]->{sems}{debug} = 'yes';
   $yaml->[0]->{checktools}{sip_check_enable} = 0;
-  $yaml->[0]->{security}->{ngcp-panel}->{scripts}->{restapi}->{sslverify} = 'no';
+  $yaml->[0]->{security}->{'ngcp-panel'}->{scripts}->{restapi}->{sslverify} = 'no';
 
   tie @array, 'Tie::File', '/etc/hosts' or die ('Can set test domain on /etc/hosts');
   for (@array)
