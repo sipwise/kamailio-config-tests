@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba65a107_536d9303",
+        "filename": "bin/create_rewrite_rules.pl",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000009
+      },
+      "writtenOn": "2016-01-13T04:52:14Z",
+      "side": 1,
+      "message": "Here can be the same as above: foreach $param (@{$data-\u003e{$rule_set_name}) {",
+      "range": {
+        "startLine": 93,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 24
+      },
+      "revId": "19b04eb847d20a7f2da578bb943190da6c0122e6",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
