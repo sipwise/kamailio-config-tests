@@ -1,3 +1,18 @@
+kamailio-config-tests (0.12.1.1+0~mr4.2.1.1) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [ebb3ad0] MT#16225 [jessie] update collectd pid filename
+  * [4a442ac] MT#7571 use NGCP REST API instead of SOAP lib
+  * [31b3a8d] MT#7571 config_debug.pl: disable sslverify for restapi
+  * [8d2eee1] MT#7571 config_debug.pl: disable sslverify for restapi. fix 7d3ec378bd4f
+
+  [ Alexander Lutay ]
+  * [fc2fa2f] MT#7571 config_debug.pl: Fix of the fix 78ba96f: s/ngcp-panel/ngcp_panel/
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 14 Jan 2016 23:29:32 +0100
+
 kamailio-config-tests (0.12.1.0+0~mr4.2.1.0) unstable; urgency=medium
 
   [ Michael Prokop ]
