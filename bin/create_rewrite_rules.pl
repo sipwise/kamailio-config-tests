@@ -54,7 +54,7 @@ GetOptions ("h|help" => \$help,
     or die("Error in command line arguments\n".usage());
 
 die(usage()) unless (!$help);
-die("Wrong number of arguments\n".usage()) unless ($#ARGV == 0);
+die("Error: Wrong number of arguments\n".usage()) unless ($#ARGV == 0);
 
 sub do_delete
 {
@@ -68,7 +68,7 @@ sub do_delete
                 print "rewriteruleset [$rule_set_name] deleted [$rws_id]\n";
             }
             else {
-                die "rewriteruleset [$rule_set_name] can't be removed [$rws_id]\n";
+                die "Error: rewriteruleset [$rule_set_name] can't be removed [$rws_id]\n";
             }
         } else {
             print "rewriteruleset [$rule_set_name] not there\n";
@@ -99,7 +99,7 @@ sub do_create
                     "] created [$rw_id]\n";
             }
             else {
-                die "Can't create rewriterule"
+                die "Error: Can't create rewriterule"
             }
         }
     }
