@@ -60,9 +60,9 @@ sub set_subscriber_preferences
 	my $domain = shift;
 	my $prefs = shift;
 	my $subs_id = $api->check_subscriber_exists({
-							'domain'=>$domain,
-							'username'=>$subscriber});
-	if(defined $subs_id) {
+							domain => $domain,
+							username => $subscriber});
+	if($subs_id) {
 		my $subs_prefs = $api->get_subscriber_preferences($subs_id);
 		delete $subs_prefs->{_links};
 		my $subs_prefs_id = $subs_prefs->{id};
@@ -71,8 +71,10 @@ sub set_subscriber_preferences
 		if($opts->{verbose}) {
 			print Dumper $res;
 		}
-		if(defined $res) {
+		if($res) {
 			print "prefs created for ${subscriber}\@${domain}\n";
+		} else {
+			die("pref failed for ${subscriber}\@${domain}");
 		}
 	}
 	else {
@@ -85,19 +87,21 @@ sub set_domain_preferences
 {
 	my $domain = shift;
 	my $prefs = shift;
-	my $domain_id = $api->check_domain_exists({'domain' => $domain});
+	my $domain_id = $api->check_domain_exists({ domain => $domain });
 
-	if(defined $domain_id) {
+	if($domain_id) {
 		my $dom_prefs = $api->get_domain_preferences($domain_id);
-		my $links = delete $dom_prefs->{_links};
+		delete $dom_prefs->{_links};
 		my $dom_prefs_id = $dom_prefs->{id};
 		my $res = $api->set_domain_preferences($dom_prefs_id,
 					merge($prefs, $dom_prefs));
 		if($opts->{verbose}) {
 			print Dumper $res;
 		}
-		if(defined $res) {
+		if($res) {
 			print "prefs created for ${domain}\n";
+		} else {
+			die("pref failed for ${domain}");
 		}
 	}
 	else {
@@ -108,19 +112,27 @@ sub set_domain_preferences
 
 sub set_peer_preferences
 {
-	my $id = shift;
+	my $name = shift;
 	my $prefs = shift;
-	my $peer_id = $api->check_peer_exists($id);
+	my $peer_id = $api->check_peeringserver_exists({ name => $name });
 
-	if(defined $peer_id) {
-		my $peer_prefs = $api->get_peer_preferences($peer_id);
+	if($peer_id) {
+		my $peer_prefs = $api->get_peeringserver_preferences($peer_id);
 		delete $peer_prefs->{_links};
 		my $peer_prefs_id = $peer_prefs->{id};
-		return $api->set_peer_preferences($peer_prefs_id,
+		my $res = $api->set_peeringserver_preferences($peer_prefs_id,
 					merge($prefs, $peer_prefs));
+		if($opts->{verbose}) {
+			print Dumper $res;
+		}
+		if($res) {
+			print "prefs created for ${name}\n";
+		} else {
+			die("pref failed for ${name}");
+		}
 	}
 	else {
-		die("No peer ${id} found");
+		die("No peer ${name} found");
 	}
 	return;
 }
@@ -132,38 +144,28 @@ sub main {
 
 	for my $key (keys %{$prefs})
 	{
+		print "processing $key\n";
 		if (exists($prefs->{$key}->{rewrite_rule_set}))
 		{
 			my $rule_set_id = $api->check_rewriterule_exists(
 								$prefs->{$key}->{rewrite_rule_set});
-			if (defined $rule_set_id)
-			{
+			if (defined $rule_set_id) {
 				$prefs->{$key}->{rewrite_rule_set} = $rule_set->{$prefs->{$key}->{rewrite_rule_set}};
-			}
-			else
-			{
+			} else {
 				die("No rewrite_rule_set:$prefs->{$key}->{rewrite_rule_set} found");
 			}
 		}
-		if ( $key =~ /@/ )
-		{
+		if ( $key =~ /@/ ) {
 			my @fields = split /@/, $key;
-			if (!$fields[0])
-			{
+			if (!$fields[0]) {
 				set_domain_preferences($fields[1], $prefs->{$key});
-			}
-			else
-			{
+			} else {
 				set_subscriber_preferences($fields[0], $fields[1], $prefs->{$key});
 			}
-		}
-		else
-		{
-			#set_peer_preferences($key, $prefs->{$key});
-			die "API peer preferences *Not* implemented";
+		} else {
+			set_peer_preferences($key, $prefs->{$key});
 		}
 	}
-
 	exit;
 }
 
