@@ -126,11 +126,13 @@ function create_voip_prefs
   if [ -f "${SCEN_CHECK_DIR}/peer.yml" ]; then
     echo "$(date) - Creating peers"
     "${BIN_DIR}/create_peers.pl" "${SCEN_CHECK_DIR}/peer.yml"
+    # REMOVE ME!! fix for REST API
+    ngcp-sercmd proxy lcr.reload
   fi
 
   if [ -f "${SCEN_CHECK_DIR}/prefs.json" ]; then
     echo "$(date) - Setting preferences"
-    "${BIN_DIR}/set_preferences.pl" "${SCEN_CHECK_DIR}/prefs.json"
+    "${BIN_DIR}/set_preferences.pl" -d "${SCEN_CHECK_DIR}/prefs.json"
   fi
 }
 
@@ -141,12 +143,12 @@ function delete_voip
 
   if [ -f "${SCEN_CHECK_DIR}/peer.yml" ]; then
     echo "$(date) - Deleting peers"
-    "${BIN_DIR}/create_peers.pl" -d "${SCEN_CHECK_DIR}/peer.yml"
+    "${BIN_DIR}/create_peers.pl" -delete "${SCEN_CHECK_DIR}/peer.yml"
   fi
 
   if [ -f "${SCEN_CHECK_DIR}/ncos.yml" ]; then
     echo "$(date) - Deleting ncos levels"
-    "${BIN_DIR}/create_ncos.pl" -d "${SCEN_CHECK_DIR}/ncos.yml"
+    "${BIN_DIR}/create_ncos.pl" -delete "${SCEN_CHECK_DIR}/ncos.yml"
   fi
 
   if [ -f "${SCEN_CHECK_DIR}/rewrite.yml" ]; then
@@ -325,9 +327,12 @@ function run_sipp
     if [ "${peer_host}" != "" ]; then
       echo "$(date) - Update peer_host:${peer_host} ${ip}:${PORT} info"
       if ! "${BIN_DIR}/update_peer_host.pl" --ip="${ip}" --port="${PORT}" \
-          "${peer_host}" "${SCEN_CHECK_DIR}/scenario.yml" ;
+          "${peer_host}" ;
       then
         error_helper "$(date) - error updating peer info" 15
+      else
+        # REMOVE ME!! fix for REST API
+          ngcp-sercmd proxy lcr.reload
       fi
     fi
     if [ "${foreign_dom}" == "yes" ]; then
