@@ -9,6 +9,8 @@ flow:
   - start|ROUTE_REG_REQUEST:
   - start|ROUTE_REG_HANDLE:
   - start|ROUTE_AUTH:
+  - start|ROUTE_AUTH_HELPER:
+  - return|ROUTE_AUTH_HELPER:
   - start|ROUTE_ADD_CALLINFO_REPLY:
   - return|ROUTE_ADD_CALLINFO_REPLY:
   - return|ROUTE_AUTH:

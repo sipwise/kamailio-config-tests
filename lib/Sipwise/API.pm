@@ -278,7 +278,7 @@ sub check_domain_exists {
 sub get_domain_preferences {
 	my $self = shift;
 	my $id = shift;
-	my $urldata = "/api/domains/${id}";
+	my $urldata = "/api/domainpreferences/${id}";
 	my $collection_id = 'ngcp:domainpreferences';
 
 	return $self->_get_content(undef, $urldata);
@@ -331,7 +331,7 @@ sub check_subscriber_exists {
 sub get_subscriber_preferences {
 	my $self = shift;
 	my $id = shift;
-	my $urldata = "/api/subscribers/${id}";
+	my $urldata = "/api/subscriberpreferences/${id}";
 	my $collection_id = 'ngcp:subscriberpreferences';
 
 	return $self->_get_content(undef, $urldata);
@@ -345,6 +345,63 @@ sub set_subscriber_preferences {
 	my $collection_id = 'ngcp:subscriberpreferences';
 
 	return $self->_set_content($data, $urldata);
+}
+
+sub set_subscriber_speeddial {
+	my $self = shift;
+	my $id = shift;
+	my $data = shift;
+	my $urldata = "/api/speeddials/${id}";
+	my $collection_id = 'ngcp:speeddials';
+
+	return $self->_set_content($data, $urldata);
+}
+
+sub get_subscriber_speeddial {
+	my $self = shift;
+	my $id = shift;
+	my $urldata = "/api/speeddials/${id}";
+	my $collection_id = 'ngcp:speeddials';
+
+	return $self->_get_content(undef, $urldata);
+}
+
+sub set_subscriber_callforward {
+	my $self = shift;
+	my $id = shift;
+	my $data = shift;
+	my $urldata = "/api/callforwards/${id}";
+	my $collection_id = 'ngcp:callforwards';
+
+	return $self->_set_content($data, $urldata);
+}
+
+sub get_subscriber_callforward {
+	my $self = shift;
+	my $id = shift;
+	my $urldata = "/api/callforwards/${id}";
+	my $collection_id = 'ngcp:callforwards';
+
+	return $self->_get_content(undef, $urldata);
+}
+
+sub set_subscriber_voicemailsettings {
+	my $self = shift;
+	my $id = shift;
+	my $data = shift;
+	my $urldata = "/api/voicemailsettings/${id}";
+	my $collection_id = 'ngcp:voicemailsettings';
+
+	return $self->_set_content($data, $urldata);
+}
+
+sub get_subscriber_voicemailsettings {
+	my $self = shift;
+	my $id = shift;
+	my $urldata = "/api/voicemailsettings/${id}";
+	my $collection_id = 'ngcp:voicemailsettings';
+
+	return $self->_get_content(undef, $urldata);
 }
 
 sub create_subscriber {
@@ -396,3 +453,167 @@ sub delete_rewriteruleset {
 
 	return $self->_delete($urldata);
 }
+
+sub check_peeringgroup_exists {
+	my $self = shift;
+	my $data = shift;
+	my $urldata = '/api/peeringgroups/';
+	my $collection_id = 'ngcp:peeringgroups';
+
+	return $self->_exists($data, $urldata, $collection_id);
+}
+
+sub create_peeringgroup {
+	my $self = shift;
+	my $data = shift;
+	my $urldata = '/api/peeringgroups/';
+
+	return $self->_create($data, $urldata);
+}
+
+sub delete_peeringgroup {
+	my $self = shift;
+	my $id = shift;
+	my $urldata = "/api/peeringgroups/${id}";
+
+	return $self->_delete($urldata);
+}
+
+sub check_peeringserver_exists {
+	my $self = shift;
+	my $data = shift;
+	my $urldata = '/api/peeringservers/';
+	my $collection_id = 'ngcp:peeringservers';
+
+	return $self->_exists($data, $urldata, $collection_id);
+}
+
+sub get_peeringserver_preferences {
+	my $self = shift;
+	my $id = shift;
+	my $urldata = "/api/peeringserverpreferences/${id}";
+	my $collection_id = 'ngcp:peeringserverpreferences';
+
+	return $self->_get_content(undef, $urldata);
+}
+
+sub set_peeringserver_preferences {
+	my $self = shift;
+	my $id = shift;
+	my $data = shift;
+	my $urldata = "/api/peeringserverpreferences/${id}";
+	my $collection_id = 'ngcp:peeringserverpreferences';
+
+	return $self->_set_content($data, $urldata);
+}
+
+sub create_peeringserver {
+	my $self = shift;
+	my $data = shift;
+	my $urldata = '/api/peeringservers/';
+
+	return $self->_create($data, $urldata);
+}
+
+sub set_peeringserver {
+	my $self = shift;
+	my $id = shift;
+	my $data = shift;
+	my $urldata = "/api/peeringservers/${id}";
+	my $collection_id = 'ngcp:peeringservers';
+
+	return $self->_set_content($data, $urldata);
+}
+
+sub get_peeringserver {
+	my $self = shift;
+	my $id = shift;
+	my $urldata = "/api/peeringservers/${id}";
+	my $collection_id = 'ngcp:peeringservers';
+
+	return $self->_get_content(undef, $urldata);
+}
+
+sub delete_peeringserver {
+	my $self = shift;
+	my $id = shift;
+	my $urldata = "/api/peeringservers/${id}";
+
+	return $self->_delete($urldata);
+}
+
+sub check_peeringrule_exists {
+	my $self = shift;
+	my $data = shift;
+	my $urldata = '/api/peeringrules/';
+	my $collection_id = 'ngcp:peeringrules';
+
+	return $self->_exists($data, $urldata, $collection_id);
+}
+
+sub create_peeringrule {
+	my $self = shift;
+	my $data = shift;
+	my $urldata = '/api/peeringrules/';
+
+	return $self->_create($data, $urldata);
+}
+
+sub delete_peeringrule {
+	my $self = shift;
+	my $id = shift;
+	my $urldata = "/api/peeringrules/${id}";
+
+	return $self->_delete($urldata);
+}
+
+sub check_ncoslevel_exists {
+	my $self = shift;
+	my $data = shift;
+	my $urldata = "/api/ncoslevels/";
+	my $collection_id = 'ngcp:ncoslevels';
+
+	return $self->_exists($data, $urldata, $collection_id);
+}
+
+sub create_ncoslevel {
+	my $self = shift;
+	my $data = shift;
+	my $urldata = '/api/ncoslevels/';
+
+	return $self->_create($data, $urldata);
+}
+
+sub delete_ncoslevel {
+	my $self = shift;
+	my $id = shift;
+	my $urldata = "/api/ncoslevels/${id}";
+
+	return $self->_delete($urldata);
+}
+
+sub check_ncospattern_exists {
+	my $self = shift;
+	my $data = shift;
+	my $urldata = "/api/ncospatterns/";
+	my $collection_id = 'ngcp:ncospatterns';
+
+	return $self->_exists($data, $urldata, $collection_id);
+}
+
+sub create_ncospattern {
+	my $self = shift;
+	my $data = shift;
+	my $urldata = '/api/ncospatterns/';
+
+	return $self->_create($data, $urldata);
+}
+
+sub delete_ncospattern {
+	my $self = shift;
+	my $id = shift;
+	my $urldata = "/api/ncospatterns/${id}";
+
+	return $self->_delete($urldata);
+}
+

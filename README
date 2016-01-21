@@ -6,13 +6,7 @@ Requeriments:
  - A working NGCP
  - sip-tester. sipp with ssl enabled ( needed for auth ).
    We provide a version backported to wheezy
- - python-yaml
- - libgraphviz-perl
- - libtemplate-perl
- - libtext-csv-perl
- - ngcp-ossbss-clients-perl
- - parallel
- - tcpdump
+ See debian/control for the actual list of dependences
 
 Usage:
 ------

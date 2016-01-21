@@ -10,11 +10,10 @@ Package: kamailio-config-tests
 Architecture: all
 Depends: curl,
          libgraphviz-perl,
-         libhash-merge-perl,
          libjson-perl,
          libtemplate-perl,
          libtext-csv-perl,
-         ngcp-ossbss-clients-perl,
+         ngcp-provisioning-tools,
          parallel,
          python,
          python-pyinotify,
