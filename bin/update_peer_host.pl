@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #
-# Copyright: 2013 Sipwise Development Team <support@sipwise.com>
+# Copyright: 2013-2016 Sipwise Development Team <support@sipwise.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,24 +22,26 @@ use strict;
 use warnings;
 
 use English;
-use Cwd 'abs_path';
-use YAML;
 use Getopt::Long;
-use Sipwise::Provisioning::Voip;
-use Sipwise::Provisioning::Billing;
-use Sipwise::Provisioning::Config;
-use Data::Dumper;
+use Cwd 'abs_path';
+use Config::Tiny;
+use Sipwise::API qw(all);
 
-our %CONFIG = ( admin    => 'cmd' );
-
-my $config = Sipwise::Provisioning::Config->new()->get_config();
-
-unless ($CONFIG{password} = $config->{acl}->{$CONFIG{admin}}->{password}) {
-  die "Error: No provisioning password found for user $CONFIG{admin}\n";
+my $config =  Config::Tiny->read('/etc/default/ngcp-api');
+my $opts;
+if ($config) {
+    $opts = {};
+    $opts->{host} = $config->{_}->{NGCP_API_IP};
+    $opts->{port} = $config->{_}->{NGCP_API_PORT};
+    $opts->{sslverify} = $config->{_}->{NGCP_API_SSLVERIFY};
 }
+my $api = Sipwise::API->new($opts);
+$opts = $api->opts;
 
-sub usage;
-sub call_prov;
+sub usage {
+    return "Usage:\n$PROGRAM_NAME [-h] [-i IP] [-p PORT]" .
+        " peer_host_name\n";
+}
 
 my $help = 0;
 my $ip;
@@ -50,82 +52,30 @@ GetOptions ("h|help" => \$help,
   or die("Error in command line arguments\n".usage());
 
 die(usage()) unless (!$help);
-die("Wrong number of arguments\n".usage()) unless ($#ARGV == 1);
+die("Wrong number of arguments\n".usage()) unless ($#ARGV == 0);
 
-our $bprov = Sipwise::Provisioning::Billing->new();
-our $vprov = Sipwise::Provisioning::Voip->new();
-my $data;
+my $data = {};
 $data->{ip} = $ip unless !defined($ip);
 $data->{port} = $port unless !defined($port);
 die("ip or port option has to be set\n".usage()) unless defined($data);
 
-print Dumper($data), "\n";
-
-do_update($data);
-
 sub do_update {
-    my ($data) = @_;
-    my $filename = abs_path($ARGV[1]);
-    my $r = YAML::LoadFile($filename);
-
-    for (keys $r)
-    {
-        my $peer = $r->{$_};
-        # groups
-        my $group = {}; # name = id
-        my $result = call_prov( $vprov, 'get_peer_groups');
-        foreach (@{$result})
-        {
-            $group->{$_->{name}} = $_->{id};
-        }
-        for (keys $group)
-        {
-            $result = call_prov( $vprov, 'get_peer_group_details', { id => $group->{$_} });
-            foreach (@{$result->{peers}})
-            {
-                if ($_->{name} eq $ARGV[0])
-                {
-                    my $param = {
-                        id => $_->{id},
-                        data => $data
-                    };
-                    call_prov( $vprov, 'update_peer_host', $param);
-                }
-            }
-        }
-    }
-    exit;
-}
-
-sub call_prov {
-    #   scalar,    scalar,    hash-ref
-    my ($prov, $function, $parameter) = @_;
-    my $result;
-
-    eval {
-        $result = $prov->handle_request( $function,
-                                          {
-                                            authentication => {
-                                                                type     => 'system',
-                                                                username => $CONFIG{admin},
-                                                                password => $CONFIG{password},
-                                                              },
-                                            parameters => $parameter,
-                                        });
-    };
-
-    if($EVAL_ERROR) {
-        if(ref $EVAL_ERROR eq 'SOAP::Fault') {
-            die "Voip\::$function failed: ". $EVAL_ERROR->faultstring;
+    my $host_id = $api->check_peeringserver_exists({ name => $ARGV[0] });
+    if($host_id) {
+        my $peer_data = $api->get_peeringserver($host_id);
+        if($peer_data) {
+            $peer_data->{ip} = $data->{ip};
+            $peer_data->{port} = $data->{port};
+            $api->set_peeringserver($host_id, $peer_data) or
+                die("Can't update peer $_->{name}");
+            print "peer $ARGV[0] updated [$host_id]\n";
         } else {
-            die "Voip\::$function failed: $EVAL_ERROR";
+            die("Can't get peer data");
         }
+    } else {
+        die("peer $_->{name} not found");
     }
-
-    return $result;
+    return;
 }
 
-sub usage {
-    return "Usage:\n$PROGRAM_NAME [-h] [-i IP] [-p PORT]" .
-        " peer_host_name peer.yml\n";
-}
+do_update();
