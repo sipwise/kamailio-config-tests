@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #
-# Copyright: 2013 Sipwise Development Team <support@sipwise.com>
+# Copyright: 2013-2016 Sipwise Development Team <support@sipwise.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,105 +22,119 @@ use strict;
 use warnings;
 
 use English;
-use Getopt::Std;
-use Cwd 'abs_path';
 use YAML;
 use Getopt::Long;
-use Sipwise::Provisioning::Billing;
-use Sipwise::Provisioning::Config;
+use Cwd 'abs_path';
+use Config::Tiny;
+use Sipwise::API qw(all);
+use Data::Dumper;
 
-our %CONFIG = ( admin    => 'cmd' );
-
-my $config = Sipwise::Provisioning::Config->new()->get_config();
-
-unless ($CONFIG{password} = $config->{acl}->{$CONFIG{admin}}->{password}) {
-  die "Error: No provisioning password found for user $CONFIG{admin}\n";
+my $config =  Config::Tiny->read('/etc/default/ngcp-api');
+my $opts;
+if ($config) {
+  $opts = {};
+  $opts->{host} = $config->{_}->{NGCP_API_IP};
+  $opts->{port} = $config->{_}->{NGCP_API_PORT};
+  $opts->{sslverify} = $config->{_}->{NGCP_API_SSLVERIFY};
 }
+my $api = Sipwise::API->new($opts);
+$opts = $api->opts;
 
-sub usage;
-sub call_prov;
-
+sub usage {
+  return  "Usage:\n$PROGRAM_NAME ncos.yml\n".
+          "Options:\n".
+          "  -delete remove ncos\n".
+          "  -d debug\n".
+          "  -h this help\n";
+}
 my $help = 0;
-my $del = 0;
-GetOptions ("h|help" => \$help,
-            "d|delete" => \$del)
-  or die("Error in command line arguments\n".usage());
+my $del;
+GetOptions(
+  "h|help" => \$help,
+  "d|debug" => \$opts->{verbose},
+  "delete" => \$del
+) or die("Error in command line arguments\n".usage());
 
 die(usage()) unless (!$help);
-die("Wrong number of arguments\n".usage()) unless ($#ARGV == 0);
+die("Error: wrong number of arguments\n".usage()) unless ($#ARGV == 0);
 
-our $bprov = Sipwise::Provisioning::Billing->new();
-
-my $filename = abs_path($ARGV[0]);
-my $r = YAML::LoadFile($filename);
-
-if ($del)
+sub manage_ncons
 {
-    do_delete($r);
+  my $data = shift;
+  my $param = {
+    level => $data->{level},
+    reseller_id => $data->{reseller_id}
+  };
+  my $id = $api->check_ncoslevel_exists($param);
+  if($id) {
+    $data->{id} = $id;
+    print "ncos [$data->{level}] already there [$id]\n";
+  } else {
+    $data->{id} = $api->create_ncoslevel($data);
+    print "ncos [$data->{level}]: created [$data->{id}]\n";
+  }
+  return;
 }
-else
+
+sub manage_ncons_patterns
 {
-    do_create($r);
+  my $data = shift;
+  my $ncos_id = shift;
+
+  foreach my $pattern (@{$data}) {
+    $pattern->{ncos_level_id} = $ncos_id;
+    my $id = $api->check_ncospattern_exists($pattern);
+    if($id) {
+      print "ncos_pattern [$pattern->{description}] already there [$id]\n";
+    } else {
+      $pattern->{id} = $api->create_ncospattern($pattern);
+      print "ncos_pattern [$pattern->{description}]: created [$pattern->{id}]\n";
+    }
+  }
+  return;
 }
 
 sub do_delete
 {
-    my ($data) = @_;
-    my $result = call_prov( $bprov, 'get_ncos_levels');
-    foreach (@{$result})
-    {
-        if (exists($data->{$_->{level}}))
-        {
-            call_prov($bprov, 'delete_ncos_level', { level => $_->{level}});
-        }
+  my ($data) = @_;
+  foreach (keys %{$data})
+  {
+    my $ncos = $data->{$_}->{data};
+    my $param = {
+      level => $_,
+      reseller_id => $ncos->{reseller_id}
+    };
+    my $id = $api->check_ncoslevel_exists($param);
+    if($id) {
+      if($api->delete_ncoslevel($id)) {
+        print "ncos: deleted [$param->{level}]\n";
+      } else {
+        die("Error: ncos: can't delete [$param->{level}]");
+      }
+    } else {
+      print "ncos: already gone [$param->{level}]\n";
     }
-    exit;
+  }
+  exit;
 }
 
 sub do_create
 {
-    my ($data) = @_;
-    for (keys $data)
-    {
-        my $ncos = $data->{$_};
-        # level
-        my $param = { level => $_, data => $ncos->{data} };
-        call_prov( $bprov, 'create_ncos_level',  $param );
-        # patterns
-        $param = { level => $_, patterns => $ncos->{patterns}, purge_existing => 1};
-        call_prov( $bprov, 'set_ncos_pattern_list', $param );
-    }
-    exit;
+  my ($data) = @_;
+  foreach (keys %{$data})
+  {
+    my $ncos = $data->{$_}->{data};
+    $ncos->{level} = $_;
+    manage_ncons($ncos);
+    manage_ncons_patterns($data->{$_}->{patterns}, $ncos->{id});
+  }
+  exit;
 }
 
-sub call_prov {
-    #   scalar,    scalar,    hash-ref
-    my ($prov, $function, $parameter) = @_;
-    my $result;
-
-    eval {
-        $result = $prov->handle_request( $function,
-                                          {
-                                            authentication => {
-                                                                type     => 'system',
-                                                                username => $CONFIG{admin},
-                                                                password => $CONFIG{password},
-                                                              },
-                                            parameters => $parameter,
-                                        });
-    };
-
-    if($EVAL_ERROR) {
-        if(ref $EVAL_ERROR eq 'SOAP::Fault') {
-            die "Voip\::$function failed: ". $EVAL_ERROR->faultstring;
-        } else {
-            die "Voip\::$function failed: $EVAL_ERROR";
-        }
-    }
-
-    return $result;
+my $r = YAML::LoadFile(abs_path($ARGV[0]));
+if ($del) {
+  do_delete($r);
 }
-
-sub usage {
-    return "Usage:\n$PROGRAM_NAME ncos.yml\n";
+else {
+  do_create($r);
 }
