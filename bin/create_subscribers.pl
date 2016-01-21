@@ -66,6 +66,7 @@ sub get_data {
       ac => $val->{ac},
       sn => $val->{sn}
     },
+    lock => $val->{lock},
   };
   my @aliases = ();
   foreach (@{$val->{alias_numbers}}) {
