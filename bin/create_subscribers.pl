@@ -66,6 +66,7 @@ sub get_data {
       ac => $val->{ac},
       sn => $val->{sn}
     },
+    lock => $val->{lock},
   };
   my @aliases = ();
   foreach (@{$val->{alias_numbers}}) {
@@ -175,8 +176,8 @@ sub main
         $s->{username} = $username;
         $s->{domain_id} = $data->{domains}->{$domain}->{domain_id};
         $s->{customer_id} = $data->{customers}->{$s->{customer}}->{customer_id};
-        $api->create_subscriber(get_data($s));
-        print("$username\@$domain created\n");
+        my $id = $api->create_subscriber(get_data($s));
+        print("$username\@$domain created [$id]\n");
       }
     }
     return;

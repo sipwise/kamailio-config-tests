@@ -1,5 +1,8 @@
 {
   "@spce.test": {
     "unauth_inbound_calls": true
+  },
+  "peer_00_host0": {
+    "concurrent_max": 1
   }
 }

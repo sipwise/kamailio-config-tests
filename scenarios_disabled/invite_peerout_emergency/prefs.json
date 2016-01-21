@@ -1,0 +1,12 @@
+{
+  "testuser1002@spce.test": {
+    "emergency_location_object": "7e 19 00 0d 64 30 90 11 f4 31 ff ff 43 68 65 6d 6e 69 74 7a 74 61 6c 73"
+  },
+  "@spce.test": {
+    "rewrite_rule_set": "rw_00"
+  },
+  "peer_00_host0": {
+    "rewrite_rule_set": "rw_00",
+    "concurrent_max": 1
+  }
+}
