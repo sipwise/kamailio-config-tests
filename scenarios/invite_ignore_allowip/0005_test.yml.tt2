@@ -12,6 +12,8 @@ flow:
   - return|ROUTE_LOAD_CALLEE_DOMAIN_PREF:
   - start|ROUTE_FIND_CALLER:
   - start|ROUTE_AUTH:
+  - start|ROUTE_AUTH_HELPER:
+  - return|ROUTE_AUTH_HELPER:
   - start|ROUTE_ADD_CALLINFO_REPLY:
   - return|ROUTE_ADD_CALLINFO_REPLY:
   - return|ROUTE_AUTH:
@@ -24,19 +26,11 @@ flow:
   - return|ROUTE_GET_CALLER_CLI:
   - start|ROUTE_GET_FORWARDER_CLI:
   - return|ROUTE_GET_FORWARDER_CLI:
-  - start|ROUTE_APPLY_CALLER_RWR:
-  - start|ROUTE_APPLY_REWRITE_RULE:
-  - return|ROUTE_APPLY_REWRITE_RULE:
-      $var(dp_user): 0
-  - return|ROUTE_APPLY_CALLER_RWR:
   - start|ROUTE_CHECK_USERPROV_CLI:
   - start|ROUTE_CHECK_CLI_ALLOWED:
   - return|ROUTE_CHECK_CLI_ALLOWED:
   - return|ROUTE_CHECK_USERPROV_CLI:
   - start|ROUTE_FIND_CALLEE:
-  - start|ROUTE_APPLY_REWRITE_RULE:
-  - return|ROUTE_APPLY_REWRITE_RULE:
-      $var(dp_user): 4321001
   - start|ROUTE_CLIR:
   - return|ROUTE_CLIR:
   - start|ROUTE_CLEAR_CALLEE_PREF:
@@ -51,14 +45,13 @@ flow:
   - return|ROUTE_NCOS:
   - start|ROUTE_BLOCK_OUT:
   - return|ROUTE_BLOCK_OUT:
+  - start|ROUTE_LOAD_CALLEE_PREF:
+  - start|ROUTE_BLOCK_IN:
+  - return|ROUTE_BLOCK_IN:
+  - return|ROUTE_LOAD_CALLEE_PREF:
   - start|ROUTE_CHECK_PBX:
   - return|ROUTE_CHECK_PBX:
-  - start|ROUTE_INVITE_TO_EXT:
-  - start|ROUTE_PSTN:
-  - start|ROUTE_CLEAR_PEER_OUT_PREF:
-  - return|ROUTE_CLEAR_PEER_OUT_PREF:
-  - start|ROUTE_LOAD_PEER_OUT_PREF:
-  - return|ROUTE_LOAD_PEER_OUT_PREF:
+  - start|ROUTE_INVITE_TO_INT:
   - start|ROUTE_OUTBOUND:
   - start|ROUTE_SET_CALLER_DIALOG:
   - return|ROUTE_SET_CALLER_DIALOG:
@@ -76,14 +69,6 @@ flow:
   - start|ROUTE_PREPARE_MOH:
   - return|ROUTE_PREPARE_MOH:
   - start|ROUTE_SET_CALLER_CLI:
-  - start|ROUTE_APPLY_CALLER_RWR_FIRST:
-  - start|ROUTE_APPLY_REWRITE_RULE:
-  - return|ROUTE_APPLY_REWRITE_RULE:
-      $var(dp_user): 1002
-  - start|ROUTE_APPLY_REWRITE_RULE:
-  - return|ROUTE_APPLY_REWRITE_RULE:
-      $var(dp_user): 1002
-  - return|ROUTE_APPLY_CALLER_RWR_FIRST:
   - start|ROUTE_PREPARE_CALLER_CLI:
   - return|ROUTE_PREPARE_CALLER_CLI:
   - start|ROUTE_PREPARE_CALLER_CLI:
@@ -96,9 +81,6 @@ flow:
   - return|ROUTE_PREPARE_CALLER_CLI:
   - return|ROUTE_SET_CALLER_CLI:
   - start|ROUTE_SET_CALLEE:
-  - start|ROUTE_APPLY_REWRITE_RULE:
-  - return|ROUTE_APPLY_REWRITE_RULE:
-      $var(dp_user): 0
   - return|ROUTE_SET_CALLEE:
   - start|ROUTE_ADD_CALLINFO:
   - return|ROUTE_ADD_CALLINFO:
@@ -107,7 +89,7 @@ flow:
   - return|BRANCH_ROUTE_SBC:
   - exit|ROUTE_OUTBOUND:
 sip_in:
-  - '^INVITE sip:004321001@'
+  - '^INVITE'
   - 'Contact: sip:testuser1002@'
   - 'CSeq: 2 INVITE'
   - 'Max-Forwards: 69'
@@ -118,24 +100,24 @@ sip_out:
       '^SIP/2.0 100 Trying',
       'CSeq: 2 INVITE',
       'From: <sip:testuser1002@',
-      'To: <sip:004321001@'
+      'To: <sip:testuser1003@'
     ]
   - [
       '^SIP/2.0 101 Connecting',
       'CSeq: 2 INVITE',
       'From: <sip:testuser1002@',
-      'To: <sip:004321001@'
+      'To: <sip:testuser1003@'
     ]
   - [
-      '^INVITE sip:4321001@',
+      '^INVITE sip:testuser1003@',
       'CSeq: 2 INVITE',
-      'From: <sip:1002@',
-      'To: <sip:004321001@',
+      'From: <sip:4311002@',
+      'To: <sip:testuser1003@',
       'Content-Type: application/sdp',
       'P-Caller-UUID: \w+',
       'P-Callee-UUID: \w+',
-      'P-Asserted-Identity: <sip:1002@',
-      'P-Called-Party-ID: <sip:4321001@',
+      'P-Asserted-Identity: <sip:4311002@',
+      'P-Called-Party-ID: <sip:testuser1003@',
       'P-App-Param: ;aleg_sst_enable=no;sst_enable=no',
       'P-App-Name: sbc'
     ]
