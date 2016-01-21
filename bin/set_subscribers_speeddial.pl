@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #
-# Copyright: 2013 Sipwise Development Team <support@sipwise.com>
+# Copyright: 2013-2016 Sipwise Development Team <support@sipwise.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,76 +22,74 @@ use strict;
 use warnings;
 
 use English;
-use Getopt::Std;
-use Cwd 'abs_path';
 use YAML;
-use DateTime;
-use Sipwise::Provisioning::Voip;
-use Sipwise::Provisioning::Config;
+use Getopt::Long;
+use Cwd 'abs_path';
+use Config::Tiny;
+use Sipwise::API qw(all);
+use Data::Dumper;
 
-our %CONFIG = ( admin    => 'cmd' );
-
-my $config = Sipwise::Provisioning::Config->new()->get_config();
-
-unless ($CONFIG{password} = $config->{acl}->{$CONFIG{admin}}->{password}) {
-  die "Error: No provisioning password found for user $CONFIG{admin}\n";
+my $config =  Config::Tiny->read('/etc/default/ngcp-api');
+my $opts;
+if ($config) {
+  $opts = {};
+  $opts->{host} = $config->{_}->{NGCP_API_IP};
+  $opts->{port} = $config->{_}->{NGCP_API_PORT};
+  $opts->{sslverify} = $config->{_}->{NGCP_API_SSLVERIFY};
 }
-
-sub main;
-sub usage;
-sub call_prov;
-
-die usage() unless ($#ARGV == 0);
-
-my $bprov = Sipwise::Provisioning::Voip->new();
-
-main;
-
-sub main {
-    my $filename = abs_path($ARGV[0]);
-    my $r = YAML::LoadFile($filename);
-
-    my $now = DateTime->now();
-    for my $key (keys $r)
-    {
-        my @fields = split /@/, $key;
-        foreach (@{$r->{$key}})
-        {
-          my $param = { username => $fields[0], domain => $fields[1], data => $_ };
-          call_prov( 'create_speed_dial_slot',  $param);
-        }
-    }
-    exit;
-}
-
-sub call_prov {
-    #   scalar,    scalar,    hash-ref
-    my ($function, $parameter) = @_;
-    my $result;
-
-    eval {
-        $result = $bprov->handle_request( $function,
-                                          {
-                                            authentication => {
-                                                                type     => 'system',
-                                                                username => $CONFIG{admin},
-                                                                password => $CONFIG{password},
-                                                              },
-                                            parameters => $parameter,
-                                        });
-    };
-
-    if($EVAL_ERROR) {
-        if(ref $EVAL_ERROR eq 'SOAP::Fault') {
-            die "Voip\::$function failed: ". $EVAL_ERROR->faultstring;
-        } else {
-            die "Voip\::$function failed: $EVAL_ERROR";
-        }
-    }
-
-    return $result;
-}
+my $api = Sipwise::API->new($opts);
+$opts = $api->opts;
 
 sub usage {
-    die "Usage:\n$PROGRAM_NAME speeddial.yml\n";
+  return  "Usage:\n$PROGRAM_NAME speeddial.yml\n".
+          "Options:\n".
+          "  -d debug\n".
+          "  -h this help\n";
 }
+my $help = 0;
+GetOptions(
+  "h|help" => \$help,
+  "d|debug" => \$opts->{verbose}
+) or die("Error in command line arguments\n".usage());
+
+die(usage()) unless (!$help);
+die("Error: wrong number of arguments\n".usage()) unless ($#ARGV == 0);
+
+sub set_subscriber_speeddial
+{
+  my $subscriber = shift;
+  my $domain = shift;
+  my $prefs = shift;
+  my $subs_id = $api->check_subscriber_exists({
+                          domain => $domain,
+                          username => $subscriber});
+  if($subs_id) {
+    my $res = $api->set_subscriber_speeddial($subs_id, {speeddials => $prefs});
+    if($opts->{verbose}) {
+      print Dumper $res;
+    }
+    if($res) {
+      print "speeddial created for ${subscriber}\@${domain} [$subs_id]\n";
+    } else {
+      die("Error: speeddial failed for ${subscriber}\@${domain} [$subs_id]");
+    }
+  }
+  else {
+    die("Error: No subscriber ${subscriber}\@${domain} found");
+  }
+  return;
+}
+
+
+sub main {
+  my $r = YAML::LoadFile(abs_path($ARGV[0]));
+
+  for my $key (keys %{$r})
+  {
+    my @fields = split /@/, $key;
+    set_subscriber_speeddial($fields[0], $fields[1], $r->{$key});
+  }
+  exit;
+}
+
+main();

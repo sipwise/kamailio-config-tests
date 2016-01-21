@@ -4,7 +4,7 @@ peer_00:
     company: peer_00
     email: peer_00@host0.not
   contract:
-    billing_profile_id: 1
+    billing_profile: 1
     status: active
     type: sippeering
   groups:
@@ -13,7 +13,7 @@ peer_00:
       description:
   rules:
     - group_id: peer_00_group
-      callee_prefix: "emergency"
+      callee_prefix: ""
       callee_pattern: ""
       caller_pattern: "^sip:.+@spce.test"
       description: ""
