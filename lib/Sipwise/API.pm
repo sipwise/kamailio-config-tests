@@ -396,3 +396,97 @@ sub delete_rewriteruleset {
 
 	return $self->_delete($urldata);
 }
+
+sub check_peeringgroup_exists {
+	my $self = shift;
+	my $data = shift;
+	my $urldata = '/api/peeringgroups/';
+	my $collection_id = 'ngcp:peeringgroups';
+
+	return $self->_exists($data, $urldata, $collection_id);
+}
+
+sub create_peeringgroup {
+	my $self = shift;
+	my $data = shift;
+	my $urldata = '/api/peeringgroups/';
+
+	return $self->_create($data, $urldata);
+}
+
+sub delete_peeringgroup {
+	my $self = shift;
+	my $id = shift;
+	my $urldata = "/api/peeringgroups/${id}";
+
+	return $self->_delete($urldata);
+}
+
+sub check_peeringserver_exists {
+	my $self = shift;
+	my $data = shift;
+	my $urldata = '/api/peeringservers/';
+	my $collection_id = 'ngcp:peeringservers';
+
+	return $self->_exists($data, $urldata, $collection_id);
+}
+
+sub get_peeringserver_preferences {
+	my $self = shift;
+	my $id = shift;
+	my $urldata = "/api/peeringservers/${id}";
+	my $collection_id = 'ngcp:peeringserverpreferences';
+
+	return $self->_get_content(undef, $urldata);
+}
+
+sub set_peeringserver_preferences {
+	my $self = shift;
+	my $id = shift;
+	my $data = shift;
+	my $urldata = "/api/peeringserverpreferences/${id}";
+	my $collection_id = 'ngcp:peeringserverpreferences';
+
+	return $self->_set_content($data, $urldata);
+}
+
+sub create_peeringserver {
+	my $self = shift;
+	my $data = shift;
+	my $urldata = '/api/peeringservers/';
+
+	return $self->_create($data, $urldata);
+}
+
+sub delete_peeringserver {
+	my $self = shift;
+	my $id = shift;
+	my $urldata = "/api/peeringservers/${id}";
+
+	return $self->_delete($urldata);
+}
+
+sub check_peeringrule_exists {
+	my $self = shift;
+	my $data = shift;
+	my $urldata = '/api/peeringrules/';
+	my $collection_id = 'ngcp:peeringrules';
+
+	return $self->_exists($data, $urldata, $collection_id);
+}
+
+sub create_peeringrule {
+	my $self = shift;
+	my $data = shift;
+	my $urldata = '/api/peeringrules/';
+
+	return $self->_create($data, $urldata);
+}
+
+sub delete_peeringrule {
+	my $self = shift;
+	my $id = shift;
+	my $urldata = "/api/peeringrules/${id}";
+
+	return $self->_delete($urldata);
+}

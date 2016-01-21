@@ -141,7 +141,7 @@ function delete_voip
 
   if [ -f "${SCEN_CHECK_DIR}/peer.yml" ]; then
     echo "$(date) - Deleting peers"
-    "${BIN_DIR}/create_peers.pl" -d "${SCEN_CHECK_DIR}/peer.yml"
+    "${BIN_DIR}/create_peers.pl" -delete "${SCEN_CHECK_DIR}/peer.yml"
   fi
 
   if [ -f "${SCEN_CHECK_DIR}/ncos.yml" ]; then

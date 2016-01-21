@@ -60,8 +60,8 @@ sub set_subscriber_preferences
 	my $domain = shift;
 	my $prefs = shift;
 	my $subs_id = $api->check_subscriber_exists({
-							'domain'=>$domain,
-							'username'=>$subscriber});
+							domain => $domain,
+							username => $subscriber});
 	if(defined $subs_id) {
 		my $subs_prefs = $api->get_subscriber_preferences($subs_id);
 		delete $subs_prefs->{_links};
@@ -85,11 +85,11 @@ sub set_domain_preferences
 {
 	my $domain = shift;
 	my $prefs = shift;
-	my $domain_id = $api->check_domain_exists({'domain' => $domain});
+	my $domain_id = $api->check_domain_exists({ domain => $domain });
 
 	if(defined $domain_id) {
 		my $dom_prefs = $api->get_domain_preferences($domain_id);
-		my $links = delete $dom_prefs->{_links};
+		delete $dom_prefs->{_links};
 		my $dom_prefs_id = $dom_prefs->{id};
 		my $res = $api->set_domain_preferences($dom_prefs_id,
 					merge($prefs, $dom_prefs));
@@ -108,19 +108,25 @@ sub set_domain_preferences
 
 sub set_peer_preferences
 {
-	my $id = shift;
+	my $name = shift;
 	my $prefs = shift;
-	my $peer_id = $api->check_peer_exists($id);
+	my $peer_id = $api->check_peeringserver_exists({ name => $name });
 
 	if(defined $peer_id) {
-		my $peer_prefs = $api->get_peer_preferences($peer_id);
+		my $peer_prefs = $api->get_peeringserver_preferences($peer_id);
 		delete $peer_prefs->{_links};
 		my $peer_prefs_id = $peer_prefs->{id};
-		return $api->set_peer_preferences($peer_prefs_id,
+		my $res = $api->set_peeringserver_preferences($peer_prefs_id,
 					merge($prefs, $peer_prefs));
+		if($opts->{verbose}) {
+			print Dumper $res;
+		}
+		if(defined $res) {
+			print "prefs created for peer ${name}\n";
+		}
 	}
 	else {
-		die("No peer ${id} found");
+		die("No peer ${name} found");
 	}
 	return;
 }
@@ -159,8 +165,7 @@ sub main {
 		}
 		else
 		{
-			#set_peer_preferences($key, $prefs->{$key});
-			die "API peer preferences *Not* implemented";
+			set_peer_preferences($key, $prefs->{$key});
 		}
 	}
 
