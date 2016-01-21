@@ -13,7 +13,7 @@ peer_00:
       description:
   rules:
     - group_id: peer_00_group
-      callee_prefix: "emergency"
+      callee_prefix: ""
       callee_pattern: ""
       caller_pattern: "^sip:.+@spce.test"
       description: ""
