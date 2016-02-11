@@ -106,6 +106,6 @@ sip_out:
       'P-Callee-Account-ID: \d+',
       'P-App-Param: ;profile=ngcp_cf',
       'P-App-Name: sbc',
-      'P-NGCP-Callee-Info: <sip:testuser1001@'
+      'P-NGCP-Callee-Info: <sip:4311003@'
     ]
 
