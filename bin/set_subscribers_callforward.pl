@@ -80,7 +80,7 @@ sub set_subscriber_callforward
   return;
 }
 
-sub set_subscriber_voicemailsetting
+sub set_subscriber_voicemailsettings
 {
   my $subscriber = shift;
   my $domain = shift;
@@ -89,7 +89,7 @@ sub set_subscriber_voicemailsetting
                           domain => $domain,
                           username => $subscriber});
   if($subs_id) {
-    my $res = $api->set_subscriber_voicemailsetting($subs_id, $prefs);
+    my $res = $api->set_subscriber_voicemailsettings($subs_id, $prefs);
     if($opts->{verbose}) {
       print Dumper $res;
     }
@@ -114,7 +114,7 @@ sub main {
         my $voicemail = delete $r->{$key}->{voicebox};
         set_subscriber_callforward($fields[0], $fields[1], $r->{$key});
         if ($voicemail) {
-          set_subscriber_voicemailsetting($fields[0], $fields[1], $voicemail);
+          set_subscriber_voicemailsettings($fields[0], $fields[1], $voicemail);
         }
     }
     return;

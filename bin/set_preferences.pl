@@ -52,7 +52,7 @@ GetOptions ("h|help" => \$help, "d|debug" => \$opts->{verbose})
 	or die("Error in command line arguments\n".usage());
 
 die(usage()) unless (!$help);
-die("Wrong number of arguments\n".usage()) unless ($#ARGV == 0);
+die("Error: wrong number of arguments\n".usage()) unless ($#ARGV == 0);
 
 sub set_subscriber_preferences
 {
@@ -74,11 +74,11 @@ sub set_subscriber_preferences
 		if($res) {
 			print "prefs created for ${subscriber}\@${domain}\n";
 		} else {
-			die("pref failed for ${subscriber}\@${domain}");
+			die("Error: pref failed for ${subscriber}\@${domain}");
 		}
 	}
 	else {
-		die("No subscriber ${subscriber}\@${domain} found");
+		printf("No subscriber ${subscriber}\@${domain} found\n");
 	}
 	return;
 }
@@ -101,11 +101,11 @@ sub set_domain_preferences
 		if($res) {
 			print "prefs created for ${domain}\n";
 		} else {
-			die("pref failed for ${domain}");
+			die("Error: pref failed for ${domain}");
 		}
 	}
 	else {
-		die("No domain ${domain} found");
+		printf("No domain ${domain} found\n");
 	}
 	return;
 }
@@ -114,6 +114,7 @@ sub set_peer_preferences
 {
 	my $name = shift;
 	my $prefs = shift;
+
 	my $peer_id = $api->check_peeringserver_exists({ name => $name });
 
 	if($peer_id) {
@@ -128,11 +129,11 @@ sub set_peer_preferences
 		if($res) {
 			print "prefs created for ${name}\n";
 		} else {
-			die("pref failed for ${name}");
+			die("Error: pref failed for ${name}");
 		}
 	}
 	else {
-		die("No peer ${name} found");
+                printf("No peer ${name} found\n");
 	}
 	return;
 }
@@ -152,7 +153,7 @@ sub main {
 			if (defined $rule_set_id) {
 				$prefs->{$key}->{rewrite_rule_set} = $rule_set->{$prefs->{$key}->{rewrite_rule_set}};
 			} else {
-				die("No rewrite_rule_set:$prefs->{$key}->{rewrite_rule_set} found");
+				printf ("No rewrite_rule_set:$prefs->{$key}->{rewrite_rule_set} found\n");
 			}
 		}
 		if ( $key =~ /@/ ) {
@@ -173,7 +174,7 @@ sub get_json {
 	my $filename = shift;
 	my $json_text = do {
 		open(my $json_fh, "<:encoding(UTF-8)", $filename)
-			or die("Can't open \$filename\": $ERRNO\n");
+			or die("Error: Can't open \$filename\": $ERRNO\n");
 		undef $RS; # enable "slurp" mode
 		<$json_fh>
 	};

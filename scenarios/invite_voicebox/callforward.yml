@@ -8,5 +8,5 @@ testuser1001@spce.test:
   voicebox:
     pin: 0000
     email: root@spce.test
-    attach: 0
+    attach: 1
     delete: 1
