@@ -16,6 +16,24 @@
       "revId": "b554137b342d378711283c9cd42cbaf36f176c07",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_fa124f61",
+        "filename": "bin/set_preferences.pl",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2016-02-16T15:48:20Z",
+      "side": 1,
+      "message": "then we have some bigger problem in design, as it fails for mostly all the cases and doesn\u0027t configure all the necessary preferences. 0_o",
+      "parentUuid": "9a6a9dd7_dfd89df1",
+      "revId": "b554137b342d378711283c9cd42cbaf36f176c07",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
