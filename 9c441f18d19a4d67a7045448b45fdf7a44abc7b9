@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a6a9dd7_bfdb69ec",
+        "filename": "bin/set_preferences.pl",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2016-02-16T13:40:20Z",
+      "side": 0,
+      "message": "It should die if I can\u0027t find the subscriber to set",
+      "revId": "9c441f18d19a4d67a7045448b45fdf7a44abc7b9",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
