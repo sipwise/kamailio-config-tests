@@ -128,7 +128,7 @@ sip_out:
       'To: <sip:\*0@',
       'P-App-Name: sbc',
       'P-NGCP-Caller-Info: <sip:testuser1002@',
-      'P-NGCP-Callee-Info: <sip:testuser1003@'
+      'P-NGCP-Callee-Info: <sip:4311003@'
     ]
   - [
       '^SIP/2.0 180 Ringing',
