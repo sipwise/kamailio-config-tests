@@ -99,13 +99,6 @@ sip_out:
       'To: <sip:testuser1001@'
     ]
   - [
-      '^SIP/2.0 102 Connecting',
-      'CSeq: 2 INVITE',
-      'From: <sip:testuser1002@',
-      'To: <sip:testuser1001@',
-      'P-NGCP-Callee-Info: <sip:testuser1001@spce.test>;ip=voicebox.local;port=5060'
-    ]
-  - [
       '^INVITE sip:vmu4311001@voicebox.local SIP/2.0',
       'CSeq: 2 INVITE',
       'From: <sip:testuser1002@',
