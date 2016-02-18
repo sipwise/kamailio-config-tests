@@ -117,6 +117,30 @@ sip_out:
       'P-Asserted-Identity: <sip:4311002@',
       'P-Called-Party-ID: <sip:testuser1004@',
       'P-App-Name: sbc',
+      'P-NGCP-Callee-Info: <sip:testuser1004@'
+    ]
+  - [
+      '^ACK sip:testuser1004@',
+      'CSeq: 2 ACK',
+      'From: <sip:4311002@',
+      'To: <sip:testuser1004@',
+    ]
+  - [
+      '^INVITE sip:4311005@',
+      'CSeq: 2 INVITE',
+      'From: <sip:testuser1002@',
+      'To: <sip:testuser1004@',
+      'Content-Type: application/sdp',
+      'P-Caller-UUID: \w+',
+      'P-First-Caller-UPN: 4311002',
+      'P-First-Caller-NPN: 4311002',
+      'P-Acc-Caller-User: testuser1004',
+      'P-Acc-State: cfb',
+      'P-From-Peer: 0',
+      'P-CF-Depth: 1',
+      'P-Callee-Account-ID: \d+',
+      'P-App-Param: ;profile=ngcp_cf',
+      'P-App-Name: sbc',
       'P-NGCP-Caller-Info: <sip:testuser1002@',
       'P-NGCP-Forward-Info: <sip:testuser1004@',
       'P-NGCP-Callee-Info: <sip:4311005@'
