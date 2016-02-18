@@ -118,5 +118,5 @@ sip_out:
       'P-Called-Party-ID: <sip:testuser1003@',
       'P-App-Name: sbc',
       'P-NGCP-Caller-Info: <sip:testuser1001@',
-      'P-NGCP-Callee-Info: <sip:testuser1003@'
+      'P-NGCP-Callee-Info: <sip:4311003@'
     ]
