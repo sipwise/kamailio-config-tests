@@ -1,3 +1,13 @@
+kamailio-config-tests (0.9.4.4+0~mr3.8.4.4) unstable; urgency=medium
+
+  [ Andrew Pogrebennyk ]
+  * [5cc40a7] MT#17837 add 'P-NGCP-Forward-Info' header in invite_callforward test
+  * [3f90990] MT#17837 fix invite_callforward test
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 24 Feb 2016 17:36:22 +0100
+
 kamailio-config-tests (0.9.4.3+0~mr3.8.4.3) unstable; urgency=medium
 
   [ Andrew Pogrebennyk ]
