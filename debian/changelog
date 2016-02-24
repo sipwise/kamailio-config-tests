@@ -1,3 +1,12 @@
+kamailio-config-tests (0.9.4.2+0~mr3.8.4.2) unstable; urgency=medium
+
+  [ Andrew Pogrebennyk ]
+  * [9596d72] MT#17837 fix invite_speeddial and invite_callforward tests
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 24 Feb 2016 15:49:15 +0100
+
 kamailio-config-tests (0.9.4.1+0~mr3.8.4.1) unstable; urgency=medium
 
   [ Victor Seva ]
