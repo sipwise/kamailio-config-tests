@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "1a76adc5_212205ba",
+        "filename": "bin/set_preferences.pl",
+        "patchSetId": 14
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2016-02-26T11:29:20Z",
+      "side": 1,
+      "message": "ok, from what we were discussing, there is no need to translate the name to the id for POSTing to /api/xxxpreferences/id ...",
+      "parentUuid": "1a76adc5_e17dedb2",
+      "range": {
+        "startLine": 178,
+        "startChar": 4,
+        "endLine": 178,
+        "endChar": 39
+      },
+      "revId": "8fcba2e0798a62c3429aa17214569dc64387babc",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_814af981",
         "filename": "bin/set_preferences.pl",
         "patchSetId": 14
