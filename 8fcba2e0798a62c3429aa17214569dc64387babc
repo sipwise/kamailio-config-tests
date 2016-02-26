@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_61723de7",
+        "filename": "bin/set_preferences.pl",
+        "patchSetId": 14
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2016-02-26T11:15:54Z",
+      "side": 1,
+      "message": "this one seems to contain the rewrite rule name, ie.e \"rw_00\"",
+      "range": {
+        "startLine": 172,
+        "startChar": 13,
+        "endLine": 172,
+        "endChar": 47
+      },
+      "revId": "8fcba2e0798a62c3429aa17214569dc64387babc",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_e17dedb2",
+        "filename": "bin/set_preferences.pl",
+        "patchSetId": 14
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2016-02-26T11:15:54Z",
+      "side": 1,
+      "message": "while posting /api/xxpreferences/id requires the name of a rewrite rule set, its id is explicitly extracted and saved here, for other purposes in this whole testsuite",
+      "range": {
+        "startLine": 178,
+        "startChar": 4,
+        "endLine": 178,
+        "endChar": 39
+      },
+      "revId": "8fcba2e0798a62c3429aa17214569dc64387babc",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_814af981",
+        "filename": "bin/set_preferences.pl",
+        "patchSetId": 14
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2016-02-26T11:15:54Z",
+      "side": 1,
+      "message": "may one day you would need to add aditional one here, like\n} elsif (exists($prefs-\u003e{$key}-\u003e{sound_set})) { \n ...",
+      "range": {
+        "startLine": 182,
+        "startChar": 2,
+        "endLine": 182,
+        "endChar": 3
+      },
+      "revId": "8fcba2e0798a62c3429aa17214569dc64387babc",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
