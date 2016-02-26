@@ -88,9 +88,9 @@ sub set_subscriber_preferences
 			print Dumper $res;
 		}
 		if($res) {
-			print "prefs created for ${subscriber}\@${domain}\n";
+			print "prefs created for ${subscriber}\@${domain} [$subs_id]\n";
 		} else {
-			die("Error: pref failed for ${subscriber}\@${domain}");
+			die("Error: pref failed for ${subscriber}\@${domain} [$subs_id]");
 		}
 	}
 	else {
@@ -119,7 +119,7 @@ sub set_domain_preferences
 			print Dumper $res;
 		}
 		if($res) {
-			print "prefs created for ${domain}\n";
+			print "prefs created for ${domain} [$domain_id]\n";
 		} else {
 			die("Error: pref failed for ${domain}");
 		}
@@ -150,7 +150,7 @@ sub set_peer_preferences
 			print Dumper($res);
 		}
 		if($res) {
-			print "prefs created for ${name}\n";
+			print "prefs created for ${name} [$peer_id]\n";
 		} else {
 			die("Error: pref failed for ${name}");
 		}
@@ -169,17 +169,6 @@ sub main {
 	for my $key (keys %{$prefs})
 	{
 		print "processing $key\n";
-		if (exists($prefs->{$key}->{rewrite_rule_set}))
-		{
-			my $param = { reseller_id => 1,
-				name => $prefs->{$key}->{rewrite_rule_set} };
-			my $rule_set_id = $api->check_rewriteruleset_exists($param);
-			if (defined $rule_set_id) {
-				$prefs->{$key}->{rewriteruleset_id} = $rule_set_id;
-			} else {
-				die("Error: No rewrite_rule_set:$prefs->{$key}->{rewrite_rule_set} found");
-			}
-		}
 		if ( $key =~ /@/ ) {
 			my @fields = split /@/, $key;
 			if (!$fields[0]) {
