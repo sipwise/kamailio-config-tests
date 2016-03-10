@@ -19,7 +19,7 @@ Usage:
 
   PROFILE: "CE" the default
            "PRO"
-  #bash ./run_tests.sh [-p PROFILE ]
+  #bash ./run_tests.sh [-p PROFILE ] [-K]
 
   This will create:
     - $BASE_DIR/log
@@ -27,7 +27,7 @@ Usage:
       - kamailio.log
       - kamailio-lb.log
       - sems.log
-      - parsed messages (XXXX.yml)
+      - parsed messages (XXXX.json)
       - sipp error logs
       - a pcap file for each interface
 
@@ -41,9 +41,9 @@ Usage:
 
  If you want to run test manually just exec this onces:
   #./bin/config_debug.pl on
-  #ngcpcfg apply
+  #ngcpcfg apply 'cfgtest'
  and run the check that you want:
-  #./bin/check.sh <checkname>
+  #PERL5LIB="$$(pwd)/lib" ./bin/check.sh <checkname>
  this will run the test and the result taps
  or run all the tests as many times you want with:
   #./bin/bench.sh $NUM
@@ -51,7 +51,7 @@ Usage:
 If you want to test just a set of scenarios, set the SCENARIOS
 environment var.
 
-#bash SCENARIOS="invite invite_callforward" ./run_tests.sh
+#bash SCENARIOS="invite invite_callforward" ./run_tests.sh -c
 #bash SCENARIOS="invite invite_callforward" ./get_results.sh
 
 Development:
@@ -61,12 +61,12 @@ Every test has to be located at the scenarios directory. It must include:
 
  - scenario.yml
  - XXXX_test.yml.tt2
-   XXXX indicates the number of kamailio parsed msg XXXX.yml to test
+   XXXX indicates the number of kamailio parsed msg XXXX.json to test
  - sipp_scenarioXX.xml
 
 And can optionally include:
  - sipp_scenario_responderXX.xml
- - prefs.yml
+ - prefs.json
  - callforward.yml
  - speeddial.yml
  - peer.yml
@@ -155,22 +155,46 @@ scenario.yml file syntax:
 
   Example:
 
+  test_uuid: lock_ported
+  domains:
+    'spce.test':
+      reseller_id: 1
+  customers:
+    'customer.test':
+      contacts:
+        - email: "customer.test@spce.test"
+          reseller_id: 1
+      details:
+        status: 'active'
+        type: 'sipaccount'
+        billing_profile_id: 1
+        reseller_id: 1
   subscribers:
     spce.test:
       testuser1003:
+        customer: 'customer.test'
         password: testuser
         cc: 43
         ac: 1
         sn: 1003
       testuser1002:
+        customer: 'customer.test'
         password: testuser
         cc: 43
         ac: 1
         sn: 1002
-        alias_numbers:
-          - cc: 34
-            ac: 96
-            sn: 5711941
+      testuser1001:
+        customer: 'customer.test'
+        password: testuser
+        cc: 43
+        ac: 1
+        sn: 1001
+      testuser1004:
+        customer: 'customer.test'
+        password: testuser
+        cc: 43
+        ac: 1
+        sn: 1004
   scenarios:
     - ip: 127.126.0.1                    --> sipp_scenario00.xml
       username: testuser1002
@@ -200,22 +224,62 @@ scenario.yml file syntax:
           peer_host: peer_00_host0
           register: no
 
+peer.yml file syntax:
+---------------------
 
-prefs.yml file syntax:
+Peer group definition:
+
+peer_00:
+  contact:
+    company: peer_00
+    email: peer_00@host0.not
+  contract:
+    billing_profile_id: 1
+    status: active
+    type: sippeering
+  groups:
+    - name: peer_00_group
+      priority: 1
+      description:
+  rules:
+    - group_id: peer_00_group
+      callee_prefix: ""
+      callee_pattern: ""
+      caller_pattern: "^sip:.+@spce.test"
+      description: ""
+  hosts:
+    - group_id: peer_00_group
+      name: peer_00_host0
+      ip: 127.0.2.1
+      port: 50602
+      host:
+      transport: 1
+      weight: 1
+
+prefs.json file syntax:
 ----------------------
 
-  subscriber@domain:
-    - preference: value
-    - preference: value
-  '@domain':
-    - preference: value
-    - preference: value
-  peer_host:
-    - preference: value
-    - preference: value
+{
+    "@spce.test": {                            --> domain prefs
+        "allow_out_foreign_domain": true
+    },
+    "testuser1002@spce.test": {                --> subscriber prefs
+        "allowed_clis": [
+            "43110029*",
+            "43110021*"
+        ],
+        "user_cli": 43122122,
+        "inbound_upn": "from_display",
+        "extension_in_npn": true
+    },
+    "peer_00_host0": {                         --> peer prefs
+        "rewrite_rule_set": "rw_00",
+        "concurrent_max": 1
+    }
+}
 
- Preferences must match SOAP definition [1]
+ Preferences must match REST definition [1]
 
- [1] https://localhost:2443/SOAP/Provisioning.wsdl
+ [1] https://localhost:1443/api/
 --
 Victor Seva <vseva@sipwise.com>
