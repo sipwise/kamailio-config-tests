@@ -1,3 +1,38 @@
+kamailio-config-tests (0.13.1.0+0~mr4.3.1.0) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [fc685d6] MT#16225 [jessie] update collectd pid filename
+  * [129397e] MT#7571 use NGCP REST API instead of SOAP lib
+  * [7d3ec37] MT#7571 config_debug.pl: disable sslverify for restapi
+  * [abc84e1] MT#17185 support rfc3325
+  * [78ba96f] MT#7571 config_debug.pl: disable sslverify for restapi. fix 7d3ec378bd4f
+  * [9a78149] MT#7571 bin/create_rewrite_rules.pl: use REST API
+  * [1ddd29c] MT#7571 API.pm: fix 9a7814994bc6 wrong key on exists
+  * [8fcba2e] MT#7571 provisioning via REST API step two
+  * [f998b16] MT#7571 disable invite_speeddial scenario
+  * [036064d] MT#13337 lock_ported scenario
+  * [8401532] MT#7571 update README
+
+  [ Alexander Lutay ]
+  * [1c77b3d] MT#7571 config_debug.pl: Fix of the fix 78ba96f: s/ngcp-panel/ngcp_panel/
+
+  [ Andrew Pogrebennyk ]
+  * [16907f4] MT#17837 fix invite_callforward test
+  * [5a70e0b] MT#17837 add 'P-NGCP-Forward-Info' header in invite_callforward test
+  * [2ee8044] MT#17837 add 'P-NGCP-Forward-Info' header in invite_callforward test
+  * [9e8755c] MT#17837 fix invite_voicebox and invite_callforward tests
+  * [78c1f5a] MT#17837 fix invite_speeddial and invite_callforward tests
+  * [3262dbe] MT#18427 fix typo in invite_peerout_rewrite/peer.yml
+  * [2a7366e] MT#15875 fix test invite_anonymous
+  * [6680c78] MT#18505 add test 'invite_redirect_blocked'
+
+  [ Michael Prokop ]
+  * [b0e0016] MT#17699 Bump Standards-Version to 3.9.7
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 21 Mar 2016 22:16:07 +0100
+
 kamailio-config-tests (0.13.0.0+0~mr4.3.0.0) unstable; urgency=medium
 
   [ Michael Prokop ]
