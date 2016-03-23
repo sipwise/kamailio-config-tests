@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dad5f5cf_9d8d6634",
+        "filename": "scenarios/incoming_foreign_dom/0003_test.yml.tt2",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000006
+      },
+      "writtenOn": "2016-03-23T13:53:08Z",
+      "side": 1,
+      "message": "I would say there should be \"return\" from that route as well",
+      "range": {
+        "startLine": 62,
+        "startChar": 4,
+        "endLine": 62,
+        "endChar": 34
+      },
+      "revId": "213b68a44f3eb292395f28f89dbe24f826387df6",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
