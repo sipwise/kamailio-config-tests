@@ -27,6 +27,8 @@ flow:
   - start|ROUTE_LOAD_CALLER_PREF:
   - start|ROUTE_CLEAR_CALLER_PREF:
   - return|ROUTE_CLEAR_CALLER_PREF:
+  - start|ROUTE_LOAD_CALLER_CONTRACT_PREF:
+  - return|ROUTE_LOAD_CALLER_CONTRACT_PREF:
   - return|ROUTE_LOAD_CALLER_PREF:
   - start|ROUTE_GET_CALLER_CLI:
   - return|ROUTE_GET_CALLER_CLI:
@@ -52,6 +54,9 @@ flow:
   - start|ROUTE_BLOCK_OUT:
   - return|ROUTE_BLOCK_OUT:
   - start|ROUTE_LOAD_CALLEE_PREF:
+  - start|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
+  - return|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
+  - start|ROUTE_SET_CALLEE_DIALOG:
   - start|ROUTE_ACC_FAILURE:
       $xavp(callee_real_prefs[0]=>concurrent_max[*]): None
       $xavp(callee_real_prefs[0]=>concurrent_max_out[*]): None
