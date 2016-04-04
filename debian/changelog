@@ -1,3 +1,12 @@
+kamailio-config-tests (0.13.2.0+0~mr4.3.2.0) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [9911c18] MT#18499 adapted kamailio tests
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 04 Apr 2016 23:26:25 +0200
+
 kamailio-config-tests (0.13.1.0+0~mr4.3.1.0) unstable; urgency=medium
 
   [ Victor Seva ]
