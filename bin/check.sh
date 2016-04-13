@@ -416,7 +416,7 @@ function test_filepath
 
 function usage
 {
-  echo "Usage: check.sh [-hCDRTGgJ] [-d DOMAIN ] [-p PROFILE ] check_name"
+  echo "Usage: check.sh [-hCDRTGgJ] [-d DOMAIN ] [-p PROFILE ] -s [GROUP] check_name"
   echo "Options:"
   echo -e "\t-C: skip creation of domain and subscribers"
   echo -e "\t-R: skip run sipp"
@@ -429,17 +429,19 @@ function usage
   echo -e "\t-p CE|PRO default is CE"
   echo -e "\t-J kamailio json output ON. PARSE skipped"
   echo -e "\t-K enable tcpdump capture"
+  echo -e "\t-s scenario group. Default: scenarios"
   echo "Arguments:"
-  echo -e "\tcheck_name. Scenario name to check. This is the name of the directory on scenarios dir."
+  echo -e "\tcheck_name. Scenario name to check. This is the name of the directory on GROUP dir."
 }
 
-while getopts 'hCd:p:RDTPGgJK' opt; do
+while getopts 'hCd:p:Rs:DTPGgJK' opt; do
   case $opt in
     h) usage; exit 0;;
     C) SKIP=1;;
     d) DOMAIN=$OPTARG;;
     p) PROFILE=$OPTARG;;
     R) SKIP_RUNSIPP=1; SKIP_DELDOMAIN=1;;
+    s) GROUP=$OPTARG;;
     D) SKIP_DELDOMAIN=1;;
     T) SKIP_TESTS=1;;
     P) SKIP_PARSE=1;;
@@ -457,16 +459,17 @@ if [[ $# != 1 ]]; then
   exit 1
 fi
 
+GROUP="${GROUP:-scenarios}"
 NAME_CHECK="$1"
 KAM_DIR="${KAM_DIR:-/var/run/kamailio/cfgtest}"
 BASE_DIR="${BASE_DIR:-/usr/share/kamailio-config-tests}"
 BIN_DIR="${BASE_DIR}/bin"
-LOG_DIR="${BASE_DIR}/log/${NAME_CHECK}"
-RESULT_DIR="${BASE_DIR}/result/${NAME_CHECK}"
+LOG_DIR="${BASE_DIR}/log/${GROUP}/${NAME_CHECK}"
+RESULT_DIR="${BASE_DIR}/result/${GROUP}/${NAME_CHECK}"
 KAM_LOG=${KAM_LOG:-"/var/log/ngcp/kamailio-proxy.log"}
 KAMLB_LOG=${KAMLB_LOG:-"/var/log/ngcp/kamailio-lb.log"}
 SEMS_LOG=${SEMS_LOG:-"/var/log/ngcp/sems.log"}
-SCEN_DIR="${BASE_DIR}/scenarios"
+SCEN_DIR="${BASE_DIR}/${GROUP}"
 SCEN_CHECK_DIR="${SCEN_DIR}/${NAME_CHECK}"
 DOMAIN=${DOMAIN:-"spce.test"}
 PROFILE="${PROFILE:-CE}"

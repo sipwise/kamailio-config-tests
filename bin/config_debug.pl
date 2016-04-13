@@ -25,13 +25,15 @@ use Getopt::Long;
 use strict;
 use Tie::File;
 use warnings;
-use YAML::Tiny;
+use YAML qw/LoadFile DumpFile/;
+use Hash::Merge qw(merge);
 
 sub usage
 {
   my $output = "usage: config_debug.pl [-h] MODE DOMAIN\n";
   $output .= "Options:\n";
   $output .= "\t-h: this help\n";
+  $output .= "\t-g: scenarios group\n";
   $output .= "\tMODE: on|off\tdefault: off\n";
   $output .= "\tDOMAIN: default: spce.test\n";
   return $output
@@ -39,7 +41,8 @@ sub usage
 
 my $help = 0;
 my $profile = "CE";
-GetOptions ("h|help" => \$help)
+my $group = "scenarios";
+GetOptions ("h|help" => \$help, "g|group" => \$group)
   or die("Error in command line arguments\n".usage());
 
 if($#ARGV>1 || $help)
@@ -48,7 +51,7 @@ if($#ARGV>1 || $help)
 }
 
 my $base_dir;
-my $yaml = YAML::Tiny->new;
+my $yaml;
 my $file  = "/etc/ngcp-config/config.yml";
 my @array;
 my $path;
@@ -89,17 +92,28 @@ if (lc($action) eq "off")
 else
 {
   copy($file, $file.".orig") or die "Copy failed: $ERRNO" unless(-e $file.".orig");
-  $yaml = YAML::Tiny->read($file) or die "File $file could not be read";
-  $yaml->[0]->{kamailio}{lb}{children} = 1;
-  $yaml->[0]->{kamailio}{lb}{debug} = 'yes';
-  $yaml->[0]->{kamailio}{lb}{use_dns_cache} = 'off';
-  $yaml->[0]->{kamailio}{proxy}{children} = 1;
-  $yaml->[0]->{kamailio}{proxy}{debug} = 'yes';
-  $yaml->[0]->{kamailio}{proxy}{presence}{enable} = 'yes';
-  $yaml->[0]->{kamailio}{proxy}{fritzbox_prefixes} = [ '112', '110', '118[0-9]{2}' ];
-  $yaml->[0]->{sems}{debug} = 'yes';
-  $yaml->[0]->{checktools}{sip_check_enable} = 0;
-  $yaml->[0]->{security}->{ngcp_panel}->{scripts}->{restapi}->{sslverify} = 'no';
+  $yaml = LoadFile($file) or die "File $file could not be read";
+  $yaml->{kamailio}{lb}{children} = 1;
+  $yaml->{kamailio}{lb}{debug} = 'yes';
+  $yaml->{kamailio}{lb}{use_dns_cache} = 'off';
+  $yaml->{kamailio}{proxy}{children} = 1;
+  $yaml->{kamailio}{proxy}{debug} = 'yes';
+  $yaml->{sems}{debug} = 'yes';
+  $yaml->{checktools}{sip_check_enable} = 0;
+  $yaml->{security}->{ngcp_panel}->{scripts}->{restapi}->{sslverify} = 'no';
+
+  my $group_yml_file = $base_dir."/".$group."/config.yml";
+  if ( -e  $group_yml_file )
+  {
+    my $group_yml = LoadFile($group_yml_file) or
+      die "File $group_yml_file could not be read";
+    my $hm = Hash::Merge->new('RIGHT_PRECEDENT');
+    my $config = {};
+    $config = $hm->merge( $config, $yaml);
+    $yaml = $hm->merge( $config, $group_yml);
+  } else {
+    print "$group_yml_file not found\n";
+  }
 
   tie @array, 'Tie::File', '/etc/hosts' or die ('Can set test domain on /etc/hosts');
   for (@array)
@@ -117,8 +131,7 @@ else
     }
     untie @array;
   }
-  open(my $fh, '>', "$file") or die "Could not open $file for writing";
-  print $fh $yaml->write_string() or die "Could not write YAML to $file";
+  DumpFile($file, $yaml) or die "Could not write YAML to $file";
 }
 
 #EOF

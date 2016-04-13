@@ -4,7 +4,8 @@ export BASE_DIR=${BASE_DIR:-$RUN_DIR}
 # Set up the environment, to use local perl modules
 export PERL5LIB="${BASE_DIR}/lib"
 BIN_DIR="${BASE_DIR}/bin"
-LOG_DIR="${BASE_DIR}/log"
+GROUP="${GROUP:-scenarios}"
+LOG_DIR="${BASE_DIR}/log/${GROUP}"
 MLOG_DIR="${BASE_DIR}/mem"
 PROFILE="CE"
 DOMAIN="spce.test"
@@ -29,8 +30,8 @@ function get_scenarios
   flag=0
   if [ -n "${SCENARIOS}" ]; then
     for t in ${SCENARIOS}; do
-      if [ ! -d "${BASE_DIR}/scenarios/$t" ]; then
-        echo "$(date) - scenario: $t not found"
+      if [ ! -d "${BASE_DIR}/${GROUP}/$t" ]; then
+        echo "$(date) - scenario: $t at ${GROUP} not found"
         flag=1
       fi
     done
@@ -38,7 +39,7 @@ function get_scenarios
       exit 1
     fi
   else
-    SCENARIOS=$(find "${BASE_DIR}/scenarios/" -depth -maxdepth 1 -mindepth 1 \
+    SCENARIOS=$(find "${BASE_DIR}/${GROUP}/" -depth -maxdepth 1 -mindepth 1 \
       -type d -exec basename {} \; | grep -v templates | sort)
   fi
 }
@@ -108,8 +109,8 @@ fi
 
 echo "$(date) - Initial mem stats"
 VERSION="${PROFILE}_$(cut -f1 -d' '< /etc/ngcp_version)_"
-"${BIN_DIR}/mem_stats.py" --private_file="${MLOG_DIR}/${VERSION}initial_pvm.cvs" \
-  --share_file="${MLOG_DIR}/${VERSION}initial_shm.cvs"
+"${BIN_DIR}/mem_stats.py" --private_file="${MLOG_DIR}/${VERSION}_${GROUP}_initial_pvm.cvs" \
+  --share_file="${MLOG_DIR}/${VERSION}_${GROUP}_initial_shm.cvs"
 
 get_scenarios
 
@@ -125,7 +126,7 @@ for t in ${SCENARIOS}; do
     echo "$(date) - Clean log dir"
     rm -rf "${log_temp}"
   fi
-  if ! "${BIN_DIR}/check.sh" ${OPTS} -J -P -T -d ${DOMAIN} -p "${PROFILE}" "$t" ; then
+  if ! "${BIN_DIR}/check.sh" ${OPTS} -J -P -T -d ${DOMAIN} -p "${PROFILE}" -s "${GROUP}" "$t" ; then
     echo "ERROR: $t"
     error_flag=1
   fi
@@ -133,8 +134,8 @@ for t in ${SCENARIOS}; do
 done
 
 echo "$(date) - Final mem stats"
-"${BIN_DIR}/mem_stats.py" --private_file="${MLOG_DIR}/${VERSION}final_pvm.cvs" \
-  --share_file="${MLOG_DIR}/${VERSION}final_shm.cvs"
+"${BIN_DIR}/mem_stats.py" --private_file="${MLOG_DIR}/${VERSION}_${GROUP}_final_pvm.cvs" \
+  --share_file="${MLOG_DIR}/${VERSION}_${GROUP}_final_shm.cvs"
 
 cfg_debug_off
 

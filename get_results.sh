@@ -4,6 +4,7 @@ export BASE_DIR=${BASE_DIR:-$RUN_DIR}
 BIN_DIR="${BASE_DIR}/bin"
 PROFILE="CE"
 DOMAIN="spce.test"
+GROUP="${GROUP:-scenarios}"
 
 function usage
 {
@@ -25,7 +26,7 @@ function get_scenarios
   flag=0
   if [ -n "${SCENARIOS}" ]; then
     for t in ${SCENARIOS}; do
-      if [ ! -d "${BASE_DIR}/scenarios/$t" ]; then
+      if [ ! -d "${BASE_DIR}/${GROUP}/$t" ]; then
         echo "$(date) - scenario: $t not found"
         flag=1
       fi
@@ -34,7 +35,7 @@ function get_scenarios
       exit 1
     fi
   else
-    SCENARIOS=$(find "${BASE_DIR}/scenarios/" -depth -maxdepth 1 -mindepth 1 \
+    SCENARIOS=$(find "${BASE_DIR}/${GROUP}/" -depth -maxdepth 1 -mindepth 1 \
       -type d -exec basename {} \; | grep -v templates | sort)
   fi
 }
@@ -66,7 +67,7 @@ fi
 get_scenarios
 
 echo "${SCENARIOS}" |  tr ' ' '\n' \
- | parallel "${BIN_DIR}/check.sh ${GRAPH} -J -C -R ${OPTS} -d ${DOMAIN} -p ${PROFILE}"
+ | parallel "${BIN_DIR}/check.sh ${GRAPH} -J -C -R ${OPTS} -d ${DOMAIN} -p ${PROFILE} -s ${GROUP}"
 status=$?
 echo "$(date) - All done[$status]"
 exit $status

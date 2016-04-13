@@ -1,0 +1,9 @@
+kamailio:
+  proxy:
+    presence:
+      enable: 'yes'
+    fritzbox:
+      prefixes:
+        - '112'
+        - '110'
+        - '118[0-9]{2}'
