@@ -42,7 +42,7 @@ sub usage
 my $help = 0;
 my $profile = "CE";
 my $group = "scenarios";
-GetOptions ("h|help" => \$help, "g|group" => \$group)
+GetOptions ("h|help" => \$help, "g|group=s" => \$group)
   or die("Error in command line arguments\n".usage());
 
 if($#ARGV>1 || $help)
