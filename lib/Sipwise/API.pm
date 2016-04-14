@@ -617,3 +617,52 @@ sub delete_ncospattern {
 	return $self->_delete($urldata);
 }
 
+sub check_lnpcarrier_exists {
+	my $self = shift;
+	my $data = shift;
+	my $urldata = "/api/lnpcarriers/";
+	my $collection_id = 'ngcp:lnpcarriers';
+
+	return $self->_exists($data, $urldata, $collection_id);
+}
+
+sub create_lnpcarrier {
+	my $self = shift;
+	my $data = shift;
+	my $urldata = '/api/lnpcarriers/';
+
+	return $self->_create($data, $urldata);
+}
+
+sub delete_lnpcarrier {
+	my $self = shift;
+	my $id = shift;
+	my $urldata = "/api/lnpcarriers/${id}";
+
+	return $self->_delete($urldata);
+}
+
+sub check_lnpnumber_exists {
+	my $self = shift;
+	my $data = shift;
+	my $urldata = "/api/lnpnumbers/";
+	my $collection_id = 'ngcp:lnpnumbers';
+
+	return $self->_exists($data, $urldata, $collection_id);
+}
+
+sub create_lnpnumber {
+	my $self = shift;
+	my $data = shift;
+	my $urldata = '/api/lnpnumbers/';
+
+	return $self->_create($data, $urldata);
+}
+
+sub delete_lnpnumber {
+	my $self = shift;
+	my $id = shift;
+	my $urldata = "/api/lnpnumbers/${id}";
+
+	return $self->_delete($urldata);
+}
