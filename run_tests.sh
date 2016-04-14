@@ -48,7 +48,7 @@ function cfg_debug_off
 {
   if [ -z "$SKIP" ]; then
     echo "$(date) - Setting config debug off"
-    "${BIN_DIR}/config_debug.pl" off ${DOMAIN}
+    "${BIN_DIR}/config_debug.pl" -g "${GROUP}" off ${DOMAIN}
     if ! ngcpcfg apply "config debug off via kamailio-config-tests" ; then
       echo "$(date) - ngcpcfg apply returned $?"
       error_flag=4
@@ -86,7 +86,7 @@ mkdir -p "${MLOG_DIR}" "${LOG_DIR}"
 
 if [ -z $SKIP ]; then
   echo "$(date) - Setting config debug on"
-  "${BIN_DIR}/config_debug.pl" on ${DOMAIN}
+  "${BIN_DIR}/config_debug.pl" -g "${GROUP}" on ${DOMAIN}
   if [ "${PROFILE}" == "PRO" ]; then
     ( timeout 60 "${BIN_DIR}/pid_watcher.py" )&
   fi

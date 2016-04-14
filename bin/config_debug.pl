@@ -105,6 +105,7 @@ else
   my $group_yml_file = $base_dir."/".$group."/config.yml";
   if ( -e  $group_yml_file )
   {
+    print "load $group_yml_file config file\n";
     my $group_yml = LoadFile($group_yml_file) or
       die "File $group_yml_file could not be read";
     my $hm = Hash::Merge->new('RIGHT_PRECEDENT');
