@@ -12,6 +12,10 @@ Usage:
 ------
   # cd /usr/share/kamailio-config-tests
 
+  We support groups of scenarios. Each group can have different configs, see
+  $BASE_DIR/$GROUP/config.yml. The default GROUP is 'scenarios'. Set GROUP to
+  scenarios_XXX in order to run/test that group.
+
   If you are using the git version and not in /usr/share/kamailio-config-tests
   you need to set BASE_DIR environment variable accordingly:
   # export BASE_DIR=`pwd`

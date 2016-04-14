@@ -130,6 +130,11 @@ function create_voip_prefs
     ngcp-sercmd proxy lcr.reload
   fi
 
+  if [ -f "${SCEN_CHECK_DIR}/lnp.yml" ]; then
+    echo "$(date) - Creating lnp carrier/number"
+    "${BIN_DIR}/create_lnp.pl" "${SCEN_CHECK_DIR}/lnp.yml"
+  fi
+
   if [ -f "${SCEN_CHECK_DIR}/prefs.json" ]; then
     echo "$(date) - Setting preferences"
     "${BIN_DIR}/set_preferences.pl" "${SCEN_CHECK_DIR}/prefs.json"
@@ -144,6 +149,11 @@ function delete_voip
   if [ -f "${SCEN_CHECK_DIR}/peer.yml" ]; then
     echo "$(date) - Deleting peers"
     "${BIN_DIR}/create_peers.pl" -delete "${SCEN_CHECK_DIR}/peer.yml"
+  fi
+
+  if [ -f "${SCEN_CHECK_DIR}/lnp.yml" ]; then
+    echo "$(date) - Deleting lnp carrier/number"
+    "${BIN_DIR}/create_lnp.pl" -delete "${SCEN_CHECK_DIR}/lnp.yml"
   fi
 
   if [ -f "${SCEN_CHECK_DIR}/ncos.yml" ]; then
