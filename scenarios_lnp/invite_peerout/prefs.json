@@ -1,0 +1,8 @@
+{
+	"testuser1002@spce.test": {
+		"lnp_add_npdi": true
+	},
+    "peer_00_host0": {
+        "concurrent_max": 1
+    }
+}
