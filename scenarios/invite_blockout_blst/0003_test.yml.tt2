@@ -42,6 +42,7 @@ flow:
   - return|ROUTE_CLIR:
   - start|ROUTE_CLEAR_CALLEE_PREF:
   - return|ROUTE_CLEAR_CALLEE_PREF:
+  - start|ROUTE_NCOS_CHECK:
   - start|ROUTE_NCOS:
   - return|ROUTE_NCOS:
   - start|ROUTE_NCOS:
@@ -50,6 +51,7 @@ flow:
   - return|ROUTE_NCOS:
   - start|ROUTE_NCOS:
   - return|ROUTE_NCOS:
+  - return|ROUTE_NCOS_CHECK:
   - start|ROUTE_BLOCK_OUT:
       $xavp(caller_usr_prefs[0]=>block_out_list[*]): ['4311003', '4311001']
       $xavp(caller_real_prefs[0]=>block_out_list[*]): ['4311003', '4311001']
