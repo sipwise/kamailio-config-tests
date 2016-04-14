@@ -1,0 +1,10 @@
+kamailio:
+  proxy:
+    lnp:
+      api:
+        keepalive_interval: 3
+        port: 8991
+        request_timeout: 1000
+        server: localhost
+      enabled: yes
+      type: local
