@@ -59,7 +59,7 @@
   <pause milliseconds="500"/>
   <nop>
     <action>
-      <exec play_pcap_audio="scenarios/media181sec.pcap"/>
+      <exec play_pcap_audio="scenarios_lnp/media181sec.pcap"/>
     </action>
   </nop>
 

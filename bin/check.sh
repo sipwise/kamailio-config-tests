@@ -154,6 +154,8 @@ function delete_voip
   if [ -f "${SCEN_CHECK_DIR}/lnp.yml" ]; then
     echo "$(date) - Deleting lnp carrier/number"
     "${BIN_DIR}/create_lnp.pl" -delete "${SCEN_CHECK_DIR}/lnp.yml"
+    # REMOVE ME!! fix for REST API
+    ngcp-sercmd proxy lcr.reload
   fi
 
   if [ -f "${SCEN_CHECK_DIR}/ncos.yml" ]; then
