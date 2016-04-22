@@ -15,8 +15,10 @@ function usage
 {
   echo "Usage: run_test.sh [-p PROFILE] [-c] [-t]"
   echo "-p CE|PRO default is CE"
+  echo "-l print available SCENARIOS in GROUP"
   echo "-c skips configuration of the environment"
   echo "-K capture messages with tcpdump"
+  echo "-x set GROUP scenario. Default: scenarios"
   echo "-h this help"
 
   echo "BASE_DIR:${BASE_DIR}"
@@ -57,13 +59,14 @@ function cfg_debug_off
   fi
 }
 
-while getopts 'hlcp:K' opt; do
+while getopts 'hlcp:Kx:' opt; do
   case $opt in
     h) usage; exit 0;;
-    l) get_scenarios; echo "${SCENARIOS}"; exit 0;;
+    l) SHOW_SCENARIOS=1;;
     c) SKIP=1;;
     p) PROFILE=$OPTARG;;
     K) SKIP_CAPTURE=1;;
+    x) GROUP=$OPTARG;;
   esac
 done
 shift $((OPTIND - 1))
@@ -72,6 +75,12 @@ if [[ $# -ne 0 ]]; then
   echo "Wrong number or arguments"
   usage
   exit 1
+fi
+
+if [[ ${SHOW_SCENARIOS} = 1 ]] ; then
+  get_scenarios
+  echo "${SCENARIOS}"
+  exit 0
 fi
 
 if [ "${PROFILE}" != "CE" ] && [ "${PROFILE}" != "PRO" ]; then
@@ -120,7 +129,7 @@ if [[ ${SKIP_CAPTURE} = 1 ]] ; then
 fi
 
 for t in ${SCENARIOS}; do
-  echo "$(date) - Run[${PROFILE}]: $t ================================================="
+  echo "$(date) - Run[${GROUP}/${PROFILE}]: $t ================================================="
   log_temp="${LOG_DIR}/${t}"
   if [ -d "${log_temp}" ]; then
     echo "$(date) - Clean log dir"
