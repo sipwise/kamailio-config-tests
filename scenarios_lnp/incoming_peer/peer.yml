@@ -11,12 +11,6 @@ peer_00:
     - name: peer_00_group
       priority: 1
       description:
-  rules:
-    - group_id: peer_00_group
-      callee_prefix: ""
-      callee_pattern: ""
-      caller_pattern: "^sip:.+@spce.test"
-      description: ""
   hosts:
     - group_id: peer_00_group
       name: peer_00_host0
@@ -25,8 +19,27 @@ peer_00:
       host:
       transport: 1
       weight: 1
-    - group_id: peer_00_group
-      name: peer_00_host1
+peer_01:
+  contact:
+    company: peer_01
+    email: peer_01@host1.not
+  contract:
+    billing_profile_id: 1
+    status: active
+    type: sippeering
+  groups:
+    - name: peer_01_group
+      priority: 1
+      description:
+  rules:
+    - group_id: peer_01_group
+      callee_prefix: ""
+      callee_pattern: ""
+      caller_pattern: "^sip:.+@spce.test"
+      description: ""
+  hosts:
+    - group_id: peer_01_group
+      name: peer_01_host1
       ip: 127.1.0.1
       port: 50602
       host:

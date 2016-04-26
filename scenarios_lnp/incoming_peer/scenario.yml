@@ -29,5 +29,5 @@ scenarios:
         number: 4311001
         username: 4311001
         domain: spce.test
-        peer_host: peer_00_host1
+        peer_host: peer_01_host1
         register: no
