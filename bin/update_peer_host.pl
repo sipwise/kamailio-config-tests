@@ -73,7 +73,7 @@ sub do_update {
             die("Can't get peer data");
         }
     } else {
-        die("peer $_->{name} not found");
+        die("peer $ARGV[0] not found");
     }
     return;
 }
