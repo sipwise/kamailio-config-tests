@@ -1,8 +1,10 @@
 {
-	"testuser1002@spce.test": {
-		"lnp_add_npdi": true
-	},
+    "testuser1002@spce.test": {
+        "lnp_add_npdi": true,
+        "rewrite_rule_set": "rw_00"
+    },
     "peer_00_host0": {
-        "concurrent_max": 1
+        "concurrent_max": 1,
+        "rewrite_rule_set": "rw_00"
     }
 }

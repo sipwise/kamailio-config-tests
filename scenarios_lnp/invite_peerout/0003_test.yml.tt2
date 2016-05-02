@@ -28,11 +28,17 @@ flow:
   - return|ROUTE_GET_CALLER_CLI:
   - start|ROUTE_GET_FORWARDER_CLI:
   - return|ROUTE_GET_FORWARDER_CLI:
+  - start|ROUTE_APPLY_CALLER_RWR:
+  - start|ROUTE_APPLY_REWRITE_RULE:
+  - return|ROUTE_APPLY_REWRITE_RULE:
+  - return|ROUTE_APPLY_CALLER_RWR:
   - start|ROUTE_CHECK_USERPROV_CLI:
   - start|ROUTE_CHECK_CLI_ALLOWED:
   - return|ROUTE_CHECK_CLI_ALLOWED:
   - return|ROUTE_CHECK_USERPROV_CLI:
   - start|ROUTE_FIND_CALLEE:
+  - start|ROUTE_APPLY_REWRITE_RULE:
+  - return|ROUTE_APPLY_REWRITE_RULE:
   - start|ROUTE_CLIR:
   - return|ROUTE_CLIR:
   - start|ROUTE_CLEAR_CALLEE_PREF:
@@ -41,8 +47,10 @@ flow:
   - start|ROUTE_LNP:
       $avp(callee_cli): ['004321001']
       $xavp(caller_real_prefs[0]=>lnp_to_rn): None
+  - start|ROUTE_APPLY_REWRITE_RULE:
+  - return|ROUTE_APPLY_REWRITE_RULE:
   - start|ROUTE_LNP_SET_URI:
-      $var(lnp_dst): 004328881001
+      $var(lnp_dst): 0043test28881001
   - start|ROUTE_LNP_SET_PARAMS:
       $xavp(caller_real_prefs[0]=>lnp_add_npdi): 1
   - return|ROUTE_LNP_SET_PARAMS:
@@ -89,6 +97,12 @@ flow:
   - start|ROUTE_PREPARE_MOH:
   - return|ROUTE_PREPARE_MOH:
   - start|ROUTE_SET_CALLER_CLI:
+  - start|ROUTE_APPLY_CALLER_RWR_FIRST:
+  - start|ROUTE_APPLY_REWRITE_RULE:
+  - return|ROUTE_APPLY_REWRITE_RULE:
+  - start|ROUTE_APPLY_REWRITE_RULE:
+  - return|ROUTE_APPLY_REWRITE_RULE:
+  - return|ROUTE_APPLY_CALLER_RWR_FIRST:
   - start|ROUTE_PREPARE_CALLER_CLI:
   - return|ROUTE_PREPARE_CALLER_CLI:
   - start|ROUTE_PREPARE_CALLER_CLI:
@@ -101,6 +115,8 @@ flow:
   - return|ROUTE_PREPARE_CALLER_CLI:
   - return|ROUTE_SET_CALLER_CLI:
   - start|ROUTE_SET_CALLEE:
+  - start|ROUTE_APPLY_REWRITE_RULE:
+  - return|ROUTE_APPLY_REWRITE_RULE:
   - return|ROUTE_SET_CALLEE:
   - start|ROUTE_ADD_CALLINFO:
   - return|ROUTE_ADD_CALLINFO:
@@ -129,7 +145,7 @@ sip_out:
       'To: <sip:004321001@'
     ]
   - [
-      '^INVITE sip:004328881001;npdi@',
+      '^INVITE sip:0043test28881001;npdi@',
       'CSeq: 2 INVITE',
       'From: <sip:4311002@',
       'To: <sip:004321001@',
@@ -137,7 +153,7 @@ sip_out:
       'P-Caller-UUID: \w+',
       'P-Callee-UUID: \w+',
       'P-Asserted-Identity: <sip:4311002@',
-      'P-Called-Party-ID: <sip:004328881001;npdi@',
+      'P-Called-Party-ID: <sip:0043test28881001;npdi@',
       'P-App-Param: ;aleg_sst_enable=no;sst_enable=no',
       'P-App-Name: sbc'
     ]
