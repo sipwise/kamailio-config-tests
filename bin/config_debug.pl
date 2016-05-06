@@ -93,7 +93,6 @@ else
 {
   copy($file, $file.".orig") or die "Copy failed: $ERRNO" unless(-e $file.".orig");
   $yaml = LoadFile($file) or die "File $file could not be read";
-  $yaml->{kamailio}{lb}{children} = 1;
   $yaml->{kamailio}{lb}{debug} = 'yes';
   $yaml->{kamailio}{lb}{use_dns_cache} = 'off';
   $yaml->{kamailio}{proxy}{children} = 1;
