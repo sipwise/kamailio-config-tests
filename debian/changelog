@@ -1,3 +1,29 @@
+kamailio-config-tests (0.15.0.0+0~mr4.5.0.0) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [b42a4ea] MT#18499 adapted kamailio tests
+
+  [ Victor Seva ]
+  * [d6bd38f] MT#19053 support groups of scenarios
+  * [a06a24b] MT#19053 fix bin/config_debug group option
+  * [22080eb] MT#17655 add ROUTE_NCOS_CHECK
+  * [1d9026e] MT#17333 add lnp scenarios group
+  * [60379ec] MT#19053 use -x for set the GROUP
+  * [4ee646e] MT#19053 scenarios_lnp: add lnp_to_rn test scenario
+  * [81fc94a] MT#19053 fix new flow with ROUTE_PSTN_SELECT_PEER
+  * [7267cba] MT#19053 bin/update_peer_host.pl: fix error message
+
+  [ Alexander Lutay ]
+  * [7faf9e7] MT#17333 Update scenarios_lnp/incoming_peer to force using two independent peer groups
+  * [d5b9c72] MT#19571 Remove {kamailio}{lb}{children} option from config_debug.pl as it doesn't exist
+
+  [ Andrew Pogrebennyk ]
+  * [62faf69] MT#19541 add rewrite rule check to LNP test
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 23 May 2016 18:45:10 +0200
+
 kamailio-config-tests (0.14.0.0+0~mr4.4.0.0) unstable; urgency=medium
 
   [ Victor Seva ]
