@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fab9d9a7_d3951e89",
+        "filename": "scenarios_lnp/register_lock_ported/prefs.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000006
+      },
+      "writtenOn": "2016-05-31T11:08:08Z",
+      "side": 1,
+      "message": "do we need that? maybe the register will be blocked because it\u0027s coming from IP !\u003d 1.2.3.4, not because subscriber is locked.",
+      "range": {
+        "startLine": 3,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 10
+      },
+      "revId": "6d91388134933bbab82a70e1e959fa9ba891f79c",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
