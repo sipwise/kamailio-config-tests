@@ -22,6 +22,30 @@
       "revId": "6d91388134933bbab82a70e1e959fa9ba891f79c",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fab9d9a7_13f3b60b",
+        "filename": "scenarios_lnp/register_lock_ported/prefs.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2016-05-31T11:21:54Z",
+      "side": 1,
+      "message": "The check:\n\u0027^SIP/2.0 403 Unauthorized, lock level ported detected\u0027,\nassures that is for lock level ported.\n\nI wanted to check that even if the IP is allowed we block the register, I forgot to add the proper IP here",
+      "parentUuid": "fab9d9a7_d3951e89",
+      "range": {
+        "startLine": 3,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 10
+      },
+      "revId": "6d91388134933bbab82a70e1e959fa9ba891f79c",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
