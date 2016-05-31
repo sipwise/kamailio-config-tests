@@ -1,0 +1,57 @@
+flow:
+  - start|DEFAULT_ROUTE:
+      $fU: testuser1003
+      $tU: testuser1003
+  - start|ROUTE_NET_INFO:
+      $fU: testuser1003
+      $tU: testuser1003
+  - return|ROUTE_NET_INFO:
+  - start|ROUTE_REG_REQUEST:
+  - start|ROUTE_REG_HANDLE:
+  - start|ROUTE_AUTH:
+  - start|ROUTE_AUTH_HELPER:
+  - return|ROUTE_AUTH_HELPER:
+  - start|ROUTE_ADD_CALLINFO_REPLY:
+  - return|ROUTE_ADD_CALLINFO_REPLY:
+  - return|ROUTE_AUTH:
+  - start|ROUTE_PREFERENCES:
+  - exit|ROUTE_PREFERENCES:
+      $xavp(callee_dom_prefs): None
+      $xavp(callee_peer_prefs): None
+      $xavp(callee_real_prefs): None
+      $xavp(callee_usr_prefs): None
+      $xavp(caller_dom_prefs[0]=>dummy[*]):
+        - caller
+      $xavp(caller_peer_prefs): None
+      $xavp(caller_real_prefs[0]=>ac[*]): [1]
+      $xavp(caller_real_prefs[0]=>account_id): '\d+'
+      $xavp(caller_real_prefs[0]=>allowed_ips_grp): '\d+'
+      $xavp(caller_real_prefs[0]=>cc[*]): [43]
+      $xavp(caller_real_prefs[0]=>cli[*]): [4311003]
+      $xavp(caller_real_prefs[0]=>dummy[*]):
+        - caller
+      $xavp(caller_real_prefs[0]=>lock[*]): [5]
+      $xavp(caller_usr_prefs[0]=>ac[*]): [1]
+      $xavp(caller_usr_prefs[0]=>account_id): '\d+'
+      $xavp(caller_usr_prefs[0]=>allowed_ips_grp): '\d+'
+      $xavp(caller_usr_prefs[0]=>cc[*]): [43]
+      $xavp(caller_usr_prefs[0]=>cli[*]): [4311003]
+      $xavp(caller_usr_prefs[0]=>dummy[*]):
+        - caller
+sip_in:
+  - '^REGISTER'
+  - 'Contact: sip:testuser1003@'
+  - 'Content-Length: 0'
+  - 'Expires: 600'
+  - 'Authorization: Digest username="testuser1003"'
+sip_out:
+  - [
+      '^SIP/2.0 100 Trying',
+      'Content-Length: 0'
+    ]
+  - [
+      '^SIP/2.0 403 Unauthorized, lock level ported detected',
+      'Content-Length: 0',
+      'P-NGCP-Authorization: testuser1003@',
+      'P-NGCP-Authorized: 1'
+    ]
