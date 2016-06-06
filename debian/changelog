@@ -1,3 +1,12 @@
+kamailio-config-tests (0.14.1.1+0~mr4.4.1.1) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [c7f9b8e] MT#20139 scenarios_lnp: add register_lock_ported
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 06 Jun 2016 22:57:53 +0200
+
 kamailio-config-tests (0.14.1.0+0~mr4.4.1.0) unstable; urgency=medium
 
   [ Kirill Solomko ]
