@@ -53,6 +53,8 @@ flow:
   - start|BRANCH_ROUTE_NO_SBC:
   - start|ROUTE_BRANCH_ACC_RTP:
   - return|ROUTE_BRANCH_ACC_RTP:
+  - start|ROUTE_FILTER_PRACK:
+  - return|ROUTE_FILTER_PRACK:
   - start|ROUTE_SET_CALLER_CLI:
   - start|ROUTE_PREPARE_CALLER_CLI:
   - return|ROUTE_PREPARE_CALLER_CLI:
