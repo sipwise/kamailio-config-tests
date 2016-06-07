@@ -82,6 +82,8 @@ flow:
   - return|ROUTE_BRANCH_ACC_RTP:
   - start|ROUTE_SET_RUSER:
   - return|ROUTE_SET_RUSER:
+  - start|ROUTE_FILTER_PRACK:
+  - return|ROUTE_FILTER_PRACK:
   - start|ROUTE_PREPARE_SST:
   - return|ROUTE_PREPARE_SST:
   - start|ROUTE_PREPARE_MOH:
