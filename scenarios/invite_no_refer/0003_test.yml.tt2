@@ -20,7 +20,7 @@ sip_in:
   - 'CSeq: 1 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
-  - 'Allow: .*REFER.*'
+  - '_:NOT:_Allow: .*REFER.*'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
