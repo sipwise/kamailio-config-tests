@@ -112,7 +112,7 @@ sip_in:
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
   - 'Proxy-Authorization: Digest username="testuser1002"'
-  - 'Allow: .*REFER.*'
+  - '_:NOT:_Allow: .*REFER.*'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',

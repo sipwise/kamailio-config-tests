@@ -13,5 +13,5 @@ sip_out:
       'CSeq: 2 INVITE',
       'From: <sip:testuser1002@',
       'To: <sip:testuser1003@',
-      '_:NOT:_Allow: .*REFER.*',
+      'Allow: .*REFER.*',
     ]
