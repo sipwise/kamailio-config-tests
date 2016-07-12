@@ -1,0 +1,7 @@
+Code-Review+2: Andrii Pogrebennyk <apogrebennyk@sipwise.com>
+Verified+1: Jenkins Jenkins <jenkins@sipwise.com>
+Submitted-by: Víctor Seva <vseva@sipwise.com>
+Submitted-at: Tue, 12 Jul 2016 15:56:22 +0200
+Reviewed-on: http://gerrit.mgm.sipwise.com/6988
+Project: kamailio-config-tests
+Branch: refs/heads/mr4.4.1
