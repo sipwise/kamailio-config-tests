@@ -1,3 +1,18 @@
+kamailio-config-tests (0.15.1.0+0~mr4.5.1.0) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [63d601b] MT#20139 scenarios_lnp: add register_lock_ported
+  * [8fc7843] MT#20125 update flow with new ROUTE_FILTER_PRACK
+  * [5f2ebf2] MT#20125 update flow with new ROUTE_FILTER_PRACK (take two)
+  * [5ebcb62] MT#20125 update flow with new ROUTE_FILTER_PRACK (take three)
+  * [5d8bf63] MT#20125 update flow with new ROUTE_FILTER_PRACK (take four)
+  * [286b2d0] MT#20759 scenanrios/invite_allowedcli_nonmatch_reject
+  * [4334b3a] MT#20617 REFER is now removed at lb
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 01 Aug 2016 16:24:49 +0200
+
 kamailio-config-tests (0.15.0.0+0~mr4.5.0.0) unstable; urgency=medium
 
   [ Kirill Solomko ]
