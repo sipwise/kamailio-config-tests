@@ -1,0 +1,141 @@
+flow:
+  - start|DEFAULT_ROUTE:
+  - start|ROUTE_NET_INFO:
+  - return|ROUTE_NET_INFO:
+  - start|ROUTE_PRX_REQUEST:
+  - start|ROUTE_INITVARS:
+  - return|ROUTE_INITVARS:
+  - start|ROUTE_INVITE:
+  - start|ROUTE_LOAD_CALLEE_DOMAIN_PREF:
+  - start|ROUTE_CLEAR_CALLEE_DOMAIN_PREF:
+  - return|ROUTE_CLEAR_CALLEE_DOMAIN_PREF:
+  - return|ROUTE_LOAD_CALLEE_DOMAIN_PREF:
+  - start|ROUTE_FIND_CALLER:
+  - return|ROUTE_FIND_CALLER:
+  - start|ROUTE_LOAD_CALLER_PREF:
+  - start|ROUTE_CLEAR_CALLER_PREF:
+  - return|ROUTE_CLEAR_CALLER_PREF:
+  - start|ROUTE_LOAD_CALLER_CONTRACT_PREF:
+  - return|ROUTE_LOAD_CALLER_CONTRACT_PREF:
+  - return|ROUTE_LOAD_CALLER_PREF:
+  - start|ROUTE_GET_FORWARDER_CLI:
+  - return|ROUTE_GET_FORWARDER_CLI:
+  - start|ROUTE_CHECK_USERPROV_CLI:
+  - start|ROUTE_CHECK_CLI_ALLOWED:
+  - return|ROUTE_CHECK_CLI_ALLOWED:
+  - return|ROUTE_CHECK_USERPROV_CLI:
+  - start|ROUTE_CHECK_USERPROV_CLI:
+  - start|ROUTE_CHECK_CLI_ALLOWED:
+  - return|ROUTE_CHECK_CLI_ALLOWED:
+  - return|ROUTE_CHECK_USERPROV_CLI:
+  - start|ROUTE_FIND_CALLEE:
+      $var(cf_loop): 1
+      $var(forward): 0
+  - start|ROUTE_CLIR:
+  - return|ROUTE_CLIR:
+  - start|ROUTE_CLEAR_CALLEE_PREF:
+  - return|ROUTE_CLEAR_CALLEE_PREF:
+  - start|ROUTE_NCOS_CHECK:
+  - start|ROUTE_NCOS:
+  - return|ROUTE_NCOS:
+  - start|ROUTE_NCOS:
+  - return|ROUTE_NCOS:
+  - start|ROUTE_NCOS:
+  - return|ROUTE_NCOS:
+  - start|ROUTE_NCOS:
+  - return|ROUTE_NCOS:
+  - start|ROUTE_NCOS:
+  - return|ROUTE_NCOS:
+  - return|ROUTE_NCOS_CHECK:
+  - start|ROUTE_BLOCK_OUT:
+  - return|ROUTE_BLOCK_OUT:
+  - start|ROUTE_LOAD_CALLEE_PREF:
+  - start|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
+  - return|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
+  - start|ROUTE_SET_CALLEE_DIALOG:
+  - return|ROUTE_SET_CALLEE_DIALOG:
+  - start|ROUTE_BLOCK_IN:
+  - return|ROUTE_BLOCK_IN:
+  - return|ROUTE_LOAD_CALLEE_PREF:
+  - start|ROUTE_CHECK_PBX:
+  - return|ROUTE_CHECK_PBX:
+  - start|ROUTE_INVITE_TO_INT:
+  - start|ROUTE_OUTBOUND:
+  - start|ROUTE_SET_CALLER_DIALOG:
+  - return|ROUTE_SET_CALLER_DIALOG:
+  - start|ROUTE_ACC_CALLER:
+  - return|ROUTE_ACC_CALLER:
+  - start|ROUTE_ACC_CALLEE:
+  - return|ROUTE_ACC_CALLEE:
+  - start|BRANCH_ROUTE_SBC:
+  - start|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
+  - return|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
+  - start|ROUTE_SET_CALLEE_DIALOG:
+  - return|ROUTE_SET_CALLEE_DIALOG:
+  - start|ROUTE_BRANCH_ACC_RTP:
+  - return|ROUTE_BRANCH_ACC_RTP:
+  - start|ROUTE_SET_RUSER:
+  - return|ROUTE_SET_RUSER:
+  - start|ROUTE_FILTER_PRACK:
+  - return|ROUTE_FILTER_PRACK:
+  - start|ROUTE_PREPARE_SST:
+  - return|ROUTE_PREPARE_SST:
+  - start|ROUTE_PREPARE_MOH:
+  - return|ROUTE_PREPARE_MOH:
+  - start|ROUTE_SET_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - return|ROUTE_PREPARE_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - return|ROUTE_PREPARE_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - return|ROUTE_PREPARE_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - return|ROUTE_PREPARE_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - return|ROUTE_PREPARE_CALLER_CLI:
+  - return|ROUTE_SET_CALLER_CLI:
+  - start|ROUTE_SET_CALLEE:
+  - return|ROUTE_SET_CALLEE:
+  - start|ROUTE_ADD_CALLINFO:
+  - return|ROUTE_ADD_CALLINFO:
+  - return|BRANCH_ROUTE_SBC:
+  # branch ??
+  - return|BRANCH_ROUTE_SBC:
+  - exit|ROUTE_OUTBOUND:
+sip_in:
+  - '^INVITE sip:4311002@'
+  - 'Contact: <sip:127.0.0.1:5080'
+  - 'CSeq: 10 INVITE'
+  - 'Content-Type: application/sdp'
+  - 'P-Caller-UUID: \w+'
+  - 'P-First-Caller-UPN: 004321001'
+  - 'P-First-Caller-NPN: 004321001'
+  - 'P-Acc-Caller-User: testuser1003'
+  - 'P-Acc-State: cfu'
+  - 'P-From-Peer: 1'
+  - 'P-CF-Depth: 1'
+  - 'P-Callee-Account-ID: \d+'
+sip_out:
+  - [
+      '^SIP/2.0 100 Trying',
+      'CSeq: 10 INVITE',
+      'From: <sip:004321001@',
+      'To: <sip:4311003@'
+    ]
+  - [
+      '^INVITE sip:testuser1002@',
+      'CSeq: 10 INVITE',
+      'From: <sip:004321001@',
+      'Contact: <sip:127.0.0.1:5080(;transport=udp)?>',
+      'To: <sip:4311003@',
+      'Content-Type: application/sdp',
+      'History-Info: <sip:\+4313012026@spce.test;user=phone\?privacy=history>;index=1',
+      'History-Info: <sip:\+4311003@spce.test;user=phone;cause=302\?privacy=id>;index=1.1',
+      'History-Info: <sip:\+4311002@spce.test:5060;cause=302;user=phone>;index=1.1.1',
+      'P-Callee-UUID: \w+',
+      'P-Asserted-Identity: <sip:004321001@',
+      'P-Called-Party-ID: <sip:testuser1002@',
+      'P-App-Name: sbc',
+      'P-NGCP-Caller-Info: <sip:testuser1003@',
+      'P-NGCP-Callee-Info: <sip:4311002@'
+    ]

@@ -1,0 +1,25 @@
+flow:
+  - start|REPLY_ROUTE_NAT:
+  - exit|REPLY_ROUTE_NAT:
+sip_in:
+  - '^SIP/2.0 200 OK'
+  - 'Content-Length: 0'
+[% IF PRO %]
+  - 'From: <sip:004321001@'
+[% ELSE %]
+  - 'CSeq: 2 BYE'
+  - 'From: <sip:004321001@'
+[% END %]
+  - 'To: <sip:4311003@'
+sip_out:
+  - [
+      '^SIP/2.0 200 OK',
+[% IF PRO %]
+      'CSeq: 11 BYE',
+[% ELSE %]
+      'CSeq: 2 BYE',
+[% END %]
+      'Content-Length: 0',
+      'From: <sip:004321001@',
+      'To: <sip:4311003@'
+    ]
