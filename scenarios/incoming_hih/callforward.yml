@@ -1,7 +1,0 @@
----
-testuser1003@spce.test:
-  cfu:
-    destinations:
-      - destination: sip:4311002@spce.test
-        priority: 0
-        timeout: 25
