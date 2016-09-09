@@ -567,6 +567,31 @@ sub delete_peeringrule {
 	return $self->_delete($urldata);
 }
 
+sub check_peeringinboundrule_exists {
+	my $self = shift;
+	my $data = shift;
+	my $urldata = '/api/peeringinboundrules/';
+	my $collection_id = 'ngcp:peeringinboundrules';
+
+	return $self->_exists($data, $urldata, $collection_id);
+}
+
+sub create_peeringinboundrule {
+	my $self = shift;
+	my $data = shift;
+	my $urldata = '/api/peeringinboundrules/';
+
+	return $self->_create($data, $urldata);
+}
+
+sub delete_peeringinboundrule {
+	my $self = shift;
+	my $id = shift;
+	my $urldata = "/api/peeringinboundrules/${id}";
+
+	return $self->_delete($urldata);
+}
+
 sub check_ncoslevel_exists {
 	my $self = shift;
 	my $data = shift;
