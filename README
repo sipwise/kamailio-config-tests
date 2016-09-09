@@ -251,6 +251,12 @@ peer_00:
       callee_pattern: ""
       caller_pattern: "^sip:.+@spce.test"
       description: ""
+  inboundrules:
+    - group_id: peer_00_group
+      field: "ruri_uri"
+      pattern: ".*"
+      priority: 50
+      enabled: 1
   hosts:
     - group_id: peer_00_group
       name: peer_00_host0
