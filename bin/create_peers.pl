@@ -125,6 +125,23 @@ sub manage_rules
   return;
 }
 
+sub manage_inbound_rules
+{
+  my $data = shift;
+
+  foreach my $rule (@{$data})
+  {
+    $rule->{id} = $api->check_peeringinboundrule_exists($rule);
+    if(defined $rule->{id}) {
+      print "inboundrule: already there [$rule->{id}]\n";
+    } else {
+      $rule->{id} = $api->create_peeringinboundrule($rule);
+      print "inboundrule: created [$rule->{id}]\n";
+    }
+  }
+  return;
+}
+
 sub manage_hosts
 {
   my $data = shift;
@@ -189,6 +206,10 @@ sub do_create {
       $_->{group_id} = $group->{$_->{group_id}}->{id};
     }
     manage_rules($peer->{rules});
+    foreach (@{$peer->{inboundrules}}) {
+      $_->{group_id} = $group->{$_->{group_id}}->{id};
+    }
+    manage_inbound_rules($peer->{inboundrules});
     foreach (@{$peer->{hosts}}) {
       $_->{group_id} = $group->{$_->{group_id}}->{id};
     }
