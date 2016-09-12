@@ -65,6 +65,8 @@ flow:
   - start|ROUTE_SET_CALLER_DIALOG:
   - return|ROUTE_SET_CALLER_DIALOG:
   - start|BRANCH_ROUTE_FWD_LOOP:
+  - start|ROUTE_APPEND_CF_HDRS:
+  - return|ROUTE_APPEND_CF_HDRS:
   - start|ROUTE_ADD_CALLINFO:
   - return|ROUTE_ADD_CALLINFO:
   - return|BRANCH_ROUTE_FWD_LOOP:
