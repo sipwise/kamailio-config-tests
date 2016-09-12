@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_d5ae1ce7",
+        "filename": "bin/create_peers.pl",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2016-09-12T10:02:40Z",
+      "side": 1,
+      "message": "do we need to remove them or removing the group will delete them too?",
+      "revId": "daf2912b51698f49748e19fee7bd233b617d11fa",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_b56438e6",
+        "filename": "bin/create_peers.pl",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2016-09-12T10:02:40Z",
+      "side": 1,
+      "message": "manage_inbound_rules($peer-\u003e{inboundrules}) ??",
+      "revId": "daf2912b51698f49748e19fee7bd233b617d11fa",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
