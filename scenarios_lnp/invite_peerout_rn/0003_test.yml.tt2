@@ -40,13 +40,8 @@ flow:
       $xavp(callee_real_prefs[0]=>lnp_for_local_sub): None
   - start|ROUTE_LNP:
       $avp(callee_cli): ['004321001']
-      $xavp(caller_real_prefs[0]=>lnp_to_rn): 1
   - start|ROUTE_LNP_SET_URI:
       $var(lnp_dst): 004328881001
-  - start|ROUTE_LNP_SET_PARAMS:
-      $xavp(caller_real_prefs[0]=>lnp_add_npdi): 1
-  - return|ROUTE_LNP_SET_PARAMS:
-      $var(lnp_npdi): 1
   - return|ROUTE_LNP_SET_URI:
   - return|ROUTE_LNP:
   - start|ROUTE_FIND_CALLEE_POST:
@@ -103,6 +98,12 @@ flow:
   - return|ROUTE_PREPARE_CALLER_CLI:
   - return|ROUTE_SET_CALLER_CLI:
   - start|ROUTE_SET_CALLEE:
+  - start|ROUTE_LNP_SET_PARAMS:
+      $xavp(callee_peer_prefs[0]=>lnp_to_rn): 1
+      $xavp(callee_peer_prefs[0]=>lnp_add_npdi): 1
+  - return|ROUTE_LNP_SET_PARAMS:
+      $var(lnp_npdi): 1
+      $var(lnp_rn): 1
   - return|ROUTE_SET_CALLEE:
   - start|ROUTE_ADD_CALLINFO:
   - return|ROUTE_ADD_CALLINFO:

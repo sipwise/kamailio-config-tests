@@ -37,13 +37,8 @@ flow:
   - return|ROUTE_CLEAR_CALLEE_PREF:
   - start|ROUTE_LNP:
       $avp(callee_cli): ['4311003']
-      $xavp(caller_real_prefs[0]=>lnp_to_rn): None
   - start|ROUTE_LNP_SET_URI:
       $var(lnp_dst): 4318881003
-  - start|ROUTE_LNP_SET_PARAMS:
-      $xavp(caller_real_prefs[0]=>lnp_add_npdi): None
-  - return|ROUTE_LNP_SET_PARAMS:
-      $var(lnp_npdi): 0
   - return|ROUTE_LNP_SET_URI:
   - return|ROUTE_LNP:
   - start|ROUTE_FIND_CALLEE_POST:
@@ -102,6 +97,12 @@ flow:
   - return|ROUTE_PREPARE_CALLER_CLI:
   - return|ROUTE_SET_CALLER_CLI:
   - start|ROUTE_SET_CALLEE:
+  - start|ROUTE_LNP_SET_PARAMS:
+      $xavp(callee_peer_prefs[0]=>lnp_to_rn): None
+      $xavp(callee_peer_prefs[0]=>lnp_add_npdi): None
+  - return|ROUTE_LNP_SET_PARAMS:
+      $var(lnp_npdi): 0
+      $var(lnp_rn): 0
   - return|ROUTE_SET_CALLEE:
   - start|ROUTE_ADD_CALLINFO:
   - return|ROUTE_ADD_CALLINFO:
