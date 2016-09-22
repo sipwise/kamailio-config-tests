@@ -51,10 +51,6 @@ flow:
   - return|ROUTE_APPLY_REWRITE_RULE:
   - start|ROUTE_LNP_SET_URI:
       $var(lnp_dst): 0043test28881001
-  - start|ROUTE_LNP_SET_PARAMS:
-      $xavp(caller_real_prefs[0]=>lnp_add_npdi): 1
-  - return|ROUTE_LNP_SET_PARAMS:
-      $var(lnp_npdi): 1
   - return|ROUTE_LNP_SET_URI:
   - return|ROUTE_LNP:
   - start|ROUTE_FIND_CALLEE_POST:
@@ -119,6 +115,10 @@ flow:
   - start|ROUTE_SET_CALLEE:
   - start|ROUTE_APPLY_REWRITE_RULE:
   - return|ROUTE_APPLY_REWRITE_RULE:
+  - start|ROUTE_LNP_SET_PARAMS:
+      $xavp(callee_peer_prefs[0]=>lnp_add_npdi): 1
+  - return|ROUTE_LNP_SET_PARAMS:
+      $var(lnp_npdi): 1
   - return|ROUTE_SET_CALLEE:
   - start|ROUTE_ADD_CALLINFO:
   - return|ROUTE_ADD_CALLINFO:
