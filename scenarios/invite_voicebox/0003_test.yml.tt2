@@ -68,8 +68,12 @@ flow:
   - start|ROUTE_INVITE_TO_INT:
   - start|ROUTE_LOAD_CF_MAP:
   - return|ROUTE_LOAD_CF_MAP:
+  - start|ROUTE_CHECK_CF:
+  - start|ROUTE_CHECK_CF_SOURCES:
+  - return|ROUTE_CHECK_CF_SOURCES:
   - start|ROUTE_CHECK_CF_PERIOD:
   - return|ROUTE_CHECK_CF_PERIOD:
+  - return|ROUTE_CHECK_CF:
   - start|ROUTE_ACC_CF:
   - start|ROUTE_ACC_CALLER:
   - return|ROUTE_ACC_CALLER:
