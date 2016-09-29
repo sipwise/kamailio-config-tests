@@ -2,25 +2,27 @@ Source: kamailio-config-tests
 Section: Development
 Priority: extra
 Maintainer: Sipwise Development Team <support@sipwise.com>
-Build-Depends: debhelper (>= 8.0.0)
+Build-Depends:
+ debhelper (>= 8.0.0),
 Standards-Version: 3.9.7
 Homepage: http://www.sipwise.com/
 
 Package: kamailio-config-tests
 Architecture: all
-Depends: curl,
-         libgraphviz-perl,
-         libjson-perl,
-         libtemplate-perl,
-         libtext-csv-perl,
-         libyaml-perl,
-         ngcp-provisioning-tools,
-         parallel,
-         python,
-         python-pyinotify,
-         python-yaml,
-         sip-tester ( >= 1:3.3-1~ ),
-         tcpdump,
-         ${misc:Depends}
+Depends:
+ curl,
+ libgraphviz-perl,
+ libjson-perl,
+ libtemplate-perl,
+ libtext-csv-perl,
+ libyaml-perl,
+ ngcp-provisioning-tools,
+ parallel,
+ python,
+ python-pyinotify,
+ python-yaml,
+ sip-tester ( >= 1:3.3-1~ ),
+ tcpdump,
+ ${misc:Depends},
 Description: Kamailio configuration tests
  scripts and tests scenarios to check Kamailio configuration

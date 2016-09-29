@@ -23,6 +23,7 @@ import os
 import os.path
 import pyinotify
 import sys
+import argparse
 
 BASE_DIR = "/usr/share/kamailio-config-tests"
 if 'BASE_DIR' in os.environ:
@@ -86,6 +87,23 @@ class Handler(pyinotify.ProcessEvent):
 #    def process_default(self, event):
 #        if watched.has_key(event.pathname):
 #            print event
+
+parser = argparse.ArgumentParser(
+    description='watch some pids to detect restarts')
+parser.add_argument('--pbx', dest='pbx', action='store_true',
+                    help='pbx is enabled')
+
+args = parser.parse_args()
+
+if args.pbx:
+    watched_dirs += [
+        '/var/run/sems-pbx',
+        '/var/run/fastcgi',
+    ]
+    services += [
+        'sems-pbx/sems-pbx.pid',
+        'fastcgi/ngcp-panel.pid',
+    ]
 
 logging.info("PID watcher started")
 wm = pyinotify.WatchManager()
