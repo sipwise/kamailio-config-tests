@@ -1,0 +1,6 @@
+kamailio:
+  proxy:
+    presence:
+      enable: 'yes'
+pbx:
+  enable: 'yes'
