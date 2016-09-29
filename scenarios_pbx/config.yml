@@ -1,0 +1,7 @@
+kamailio:
+  proxy:
+    allow_refer_method: 'yes'
+    presence:
+      enable: 'yes'
+pbx:
+  enable: 'yes'

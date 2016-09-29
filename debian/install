@@ -5,3 +5,4 @@ lib/ /usr/share/kamailio-config-tests/
 run_tests.sh /usr/share/kamailio-config-tests/
 scenarios/ /usr/share/kamailio-config-tests/
 scenarios_lnp /usr/share/kamailio-config-tests/
+scenarios_pbx /usr/share/kamailio-config-tests/

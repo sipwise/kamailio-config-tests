@@ -89,6 +89,14 @@ if [ "${PROFILE}" != "CE" ] && [ "${PROFILE}" != "PRO" ]; then
   exit 2
 fi
 
+if [ "$GROUP" = "scenarios_pbx" ] ; then
+  TIMEOUT=120
+  PIDWATCH_OPTS="--pbx"
+else
+  TIMEOUT=60
+  PIDWATCH_OPTS=""
+fi
+
 echo "$(date) - Clean mem log dir"
 rm -rf "${MLOG_DIR}"
 mkdir -p "${MLOG_DIR}" "${LOG_DIR}"
@@ -97,7 +105,8 @@ if [ -z $SKIP ]; then
   echo "$(date) - Setting config debug on"
   "${BIN_DIR}/config_debug.pl" -g "${GROUP}" on ${DOMAIN}
   if [ "${PROFILE}" == "PRO" ]; then
-    ( timeout 60 "${BIN_DIR}/pid_watcher.py" )&
+    echo "$(date) - Exec pid_watcher"
+    ( timeout ${TIMEOUT} "${BIN_DIR}/pid_watcher.py" ${PIDWATCH_OPTS} )&
   fi
   if ! ngcpcfg apply "config debug on via kamailio-config-tests" ; then
     echo "$(date) - ngcp apply returned $?"
@@ -106,6 +115,7 @@ if [ -z $SKIP ]; then
     exit 3
   fi
   if [ "${PROFILE}" == "PRO" ]; then
+    echo "$(date) - waiting for pid_watcher[$!] result"
     if ! wait "$!" ; then
       echo "error on apply config"
       cfg_debug_off
