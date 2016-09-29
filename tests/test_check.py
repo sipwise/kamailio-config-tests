@@ -31,6 +31,7 @@ from check import load_json, load_yaml
 
 not_ok = re.compile('^not ok.*', re.MULTILINE)
 
+
 class TestXAvp(unittest.TestCase):
 
     def setUp(self):
@@ -93,7 +94,7 @@ class TestCheckFlowVars(unittest.TestCase):
             {'R1': {'$xavp(v0)': [{'k0': [1, 2]}]}},
         ]
         self.check_ko = [
-            {'R0': {'$xavp(v0)': [{'k0': ['a', 'b']}] }},
+            {'R0': {'$xavp(v0)': [{'k0': ['a', 'b']}]}},
         ]
         self.scen_ko = [
             {'R0': {'$xavp(v0[0]=>k0[*])': ['a']}},
