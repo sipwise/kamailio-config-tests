@@ -61,6 +61,8 @@ sub get_data {
     customer_id => $val->{customer_id},
     username => $val->{username},
     password => $val->{password},
+    is_pbx_pilot => $val->{is_pbx_pilot},
+    pbx_extension => $val->{pbx_extension},
     primary_number => {
       cc => $val->{cc},
       ac => $val->{ac},
