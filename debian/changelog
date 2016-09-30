@@ -1,3 +1,16 @@
+kamailio-config-tests (0.14.3.0+0~mr4.4.3.0) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [a72ed0b] MT#20617 REFER is now removed at lb
+  * [e8a4b61] MT#20913 scenarios/incoming_hih: fix route flow for mr4.4
+
+  [ Andrew Pogrebennyk ]
+  * [1ba0a98] MT#20913 new test incoming_hih for History-Info header
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 30 Sep 2016 13:09:38 +0200
+
 kamailio-config-tests (0.14.2.0+0~mr4.4.2.0) unstable; urgency=medium
 
   [ Victor Seva ]
