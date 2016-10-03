@@ -30,11 +30,11 @@ flow:
   - start|ROUTE_CHECK_CLI_ALLOWED:
   - return|ROUTE_CHECK_CLI_ALLOWED:
   - return|ROUTE_CHECK_USERPROV_CLI:
+  - start|ROUTE_CLIR:
+  - return|ROUTE_CLIR:
   - start|ROUTE_FIND_CALLEE:
       $var(cf_loop): 1
       $var(forward): 0
-  - start|ROUTE_CLIR:
-  - return|ROUTE_CLIR:
   - start|ROUTE_CLEAR_CALLEE_PREF:
   - return|ROUTE_CLEAR_CALLEE_PREF:
   - start|ROUTE_NCOS_CHECK:

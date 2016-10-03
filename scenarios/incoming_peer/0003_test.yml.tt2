@@ -22,9 +22,9 @@ flow:
   - return|ROUTE_GET_CALLER_CLI:
   - start|ROUTE_GET_FORWARDER_CLI:
   - return|ROUTE_GET_FORWARDER_CLI:
-  - start|ROUTE_FIND_CALLEE:
   - start|ROUTE_CLIR:
   - return|ROUTE_CLIR:
+  - start|ROUTE_FIND_CALLEE:
   - start|ROUTE_CLEAR_CALLEE_PREF:
   - return|ROUTE_CLEAR_CALLEE_PREF:
   - start|ROUTE_NCOS_CHECK:

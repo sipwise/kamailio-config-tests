@@ -37,12 +37,12 @@ flow:
   - start|ROUTE_CHECK_CLI_ALLOWED:
   - return|ROUTE_CHECK_CLI_ALLOWED:
   - return|ROUTE_CHECK_USERPROV_CLI:
+  - start|ROUTE_CLIR:
+  - return|ROUTE_CLIR:
   - start|ROUTE_FIND_CALLEE:
      $var(cf_loop): 0
      $var(forward): 0
      $xavp(caller_real_prefs[0]=>lock[*]): [5]
-  - start|ROUTE_CLIR:
-  - return|ROUTE_CLIR:
   - start|ROUTE_ACC_FAILURE:
   - start|ROUTE_ACC_CALLER:
   - return|ROUTE_ACC_CALLER:
