@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_f0123761",
+        "filename": "bin/create_subscribers.pl",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2016-10-04T10:13:11Z",
+      "side": 1,
+      "message": "Using my ($a, $b, $c) \u003d @_ is usually more performant and more ideomatic, at least when the vars \u003e\u003d 2 or so. :)",
+      "revId": "5f6f00445304b871ab2dd3758ae69c4d58032f26",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_d0173350",
+        "filename": "bin/create_subscribers.pl",
+        "patchSetId": 1
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2016-10-04T10:13:11Z",
+      "side": 1,
+      "message": "If this output is intended as some kind of interface or can end up in files, then please sort the keys so that we get deterministic output.",
+      "revId": "5f6f00445304b871ab2dd3758ae69c4d58032f26",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_300c9f42",
+        "filename": "bin/create_subscribers.pl",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2016-10-04T10:13:11Z",
+      "side": 1,
+      "message": "Same issue with deterministic output here.",
+      "revId": "5f6f00445304b871ab2dd3758ae69c4d58032f26",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
