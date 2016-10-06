@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_ef26cdb9",
+        "filename": "run_tests.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2016-10-06T12:44:04Z",
+      "side": 1,
+      "message": "I checked that file, but it has no information like \"Aborted by timeout\"... it only has:\n\n2016-10-05 18:00:48,201 PID watcher started\n2016-10-05 18:00:48,223 Watching /var/run/kamailio/kamailio.lb.pid\n2016-10-05 18:00:48,224 Watching /var/run/kamailio/kamailio.proxy.pid\n2016-10-05 18:00:48,224 Watching /var/run/ngcp-sems/ngcp-sems.pid\n2016-10-05 18:00:48,224 Watching /var/run/collectd.pid\n\n\n\ncan you please also add the output there if it is aborted by timeout?",
+      "range": {
+        "startLine": 126,
+        "startChar": 28,
+        "endLine": 126,
+        "endChar": 47
+      },
+      "revId": "af1467a7511e837907b20ec4247b7300140e03bd",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
