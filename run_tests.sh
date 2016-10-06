@@ -9,6 +9,7 @@ LOG_DIR="${BASE_DIR}/log/${GROUP}"
 MLOG_DIR="${BASE_DIR}/mem"
 PROFILE="CE"
 DOMAIN="spce.test"
+TIMEOUT=${TIMEOUT:-300}
 error_flag=0
 
 function usage
@@ -19,6 +20,7 @@ function usage
   echo "-c skips configuration of the environment"
   echo "-K capture messages with tcpdump"
   echo "-x set GROUP scenario. Default: scenarios"
+  echo "-t set timeout in secs for pid_watcher.py [PRO]. Default: 300"
   echo "-h this help"
 
   echo "BASE_DIR:${BASE_DIR}"
@@ -59,7 +61,7 @@ function cfg_debug_off
   fi
 }
 
-while getopts 'hlcp:Kx:' opt; do
+while getopts 'hlcp:Kx:t:' opt; do
   case $opt in
     h) usage; exit 0;;
     l) SHOW_SCENARIOS=1;;
@@ -67,6 +69,7 @@ while getopts 'hlcp:Kx:' opt; do
     p) PROFILE=$OPTARG;;
     K) SKIP_CAPTURE=1;;
     x) GROUP=$OPTARG;;
+    t) TIMEOUT=$OPTARG;;
   esac
 done
 shift $((OPTIND - 1))
@@ -97,7 +100,8 @@ if [ -z $SKIP ]; then
   echo "$(date) - Setting config debug on"
   "${BIN_DIR}/config_debug.pl" -g "${GROUP}" on ${DOMAIN}
   if [ "${PROFILE}" == "PRO" ]; then
-    ( timeout 60 "${BIN_DIR}/pid_watcher.py" )&
+    echo "$(date) - Exec pid_watcher with timeout[$TIMEOUT]"
+    ( timeout "${TIMEOUT}" "${BIN_DIR}/pid_watcher.py" )&
   fi
   if ! ngcpcfg apply "config debug on via kamailio-config-tests" ; then
     echo "$(date) - ngcp apply returned $?"
@@ -107,7 +111,8 @@ if [ -z $SKIP ]; then
   fi
   if [ "${PROFILE}" == "PRO" ]; then
     if ! wait "$!" ; then
-      echo "error on apply config"
+      echo "$(date) - error on apply config. Some expected service didn't restart"
+      echo "$(date) - check log/pid_watcher.log for details"
       cfg_debug_off
       echo "$(date) - Done[1]"
       exit 1
