@@ -1,0 +1,41 @@
+flow:
+  - start|DEFAULT_ROUTE:
+  - start|ROUTE_NET_INFO:
+  - return|ROUTE_NET_INFO:
+  - start|ROUTE_PRX_REQUEST:
+  - start|ROUTE_INITVARS:
+  - return|ROUTE_INITVARS:
+  - 'start|dialog:end':
+  - 'return|dialog:end':
+  - 'return|dialog:end':
+  - start|ROUTE_STOP_RTPPROXY:
+  - start|ROUTE_RESTORE_CLUSTERSET:
+  - return|ROUTE_RESTORE_CLUSTERSET:
+  - return|ROUTE_STOP_RTPPROXY:
+  - start|ROUTE_OUTBOUND:
+  - exit|ROUTE_OUTBOUND:
+sip_in:
+  - '^BYE sip:testuser1003@127.0.0.1:5080(;prxroute=1)? SIP/2.0'
+  - 'CSeq: 11 BYE'
+  - 'Max-Forwards: 70'
+  - 'Content-Length: 0'
+  - 'From: <sip:testuser1002@'
+  - 'To: <sip:testuser1003@'
+  - 'P-Asserted-Identity: \"1003\" <sip:1003@'
+
+sip_out:
+  - [
+      '^SIP/2.0 100 Trying',
+      'CSeq: 11 BYE',
+      'Content-Length: 0',
+      'From: <sip:testuser1002@',
+      'To: <sip:testuser1003@'
+    ]
+  - [
+      '^BYE sip:testuser1003@127.0.0.1:5080(;prxroute=1)? SIP/2.0',
+      'CSeq: 11 BYE',
+      'Max-Forwards: 69',
+      'Content-Length: 0',
+      'From: <sip:4311002@',
+      'To: <sip:testuser1003@'
+    ]

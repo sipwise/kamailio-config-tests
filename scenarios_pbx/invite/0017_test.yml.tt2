@@ -1,16 +1,17 @@
 flow:
   - start|REPLY_ROUTE_NAT:
-  - 'start|dialog:start':
-  - 'return|dialog:start':
-  # branch ??
-  - 'return|dialog:start':
+  - exit|REPLY_ROUTE_NAT:
 sip_in:
   - '^SIP/2.0 200 OK'
-  - 'CSeq: 10 INVITE'
+  - 'CSeq: 11 BYE'
+  - 'Content-Length: 0'
+  - 'From: <sip:4311002@'
+  - 'To: <sip:testuser1003@'
 sip_out:
   - [
       '^SIP/2.0 200 OK',
-      'CSeq: 10 INVITE',
+      'CSeq: 11 BYE',
+      'Content-Length: 0',
       'From: <sip:testuser1002@',
       'To: <sip:testuser1003@'
     ]

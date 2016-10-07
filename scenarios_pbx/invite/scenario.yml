@@ -22,10 +22,6 @@ subscribers:
       sn: 1002
       is_pbx_pilot: 1
       pbx_extension: 1002
-      alias_numbers:
-        - cc: 34
-          ac: 96
-          sn: 5711941
     testuser1003:
       customer: 'customerpbx.test'
       password: testuser

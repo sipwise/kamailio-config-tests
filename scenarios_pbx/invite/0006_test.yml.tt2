@@ -1,0 +1,10 @@
+flow:
+  - start|REPLY_ROUTE_NAT:
+  - exit|REPLY_ROUTE_NAT:
+sip_in:
+  - 'SIP/2.0 100 Trying'
+  - 'From: <sip:testuser1002'
+  - 'To: <sip:testuser1003'
+  - 'CSeq: 2 INVITE'
+  - 'Content-Length: 0'
+sip_out: []

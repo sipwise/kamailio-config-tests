@@ -52,8 +52,6 @@ flow:
   - start|ROUTE_NCOS:
   - return|ROUTE_NCOS:
   - return|ROUTE_NCOS_CHECK:
-  - start|ROUTE_BLOCK_OUT:
-  - return|ROUTE_BLOCK_OUT:
   - start|ROUTE_LOAD_CALLEE_PREF:
   - start|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
   - return|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
@@ -65,8 +63,8 @@ flow:
   - return|ROUTE_ORDER_CF_MAP_ID:
   - return|ROUTE_LOAD_CALLEE_PREF:
   - start|ROUTE_CHECK_PBX:
-  - return|ROUTE_CHECK_PBX:
-  - start|ROUTE_INVITE_TO_INT:
+  - start|ROUTE_APPEND_PBX_HDRS:
+  - return|ROUTE_APPEND_PBX_HDRS:
   - start|ROUTE_OUTBOUND:
   - start|ROUTE_SET_CALLER_DIALOG:
   - return|ROUTE_SET_CALLER_DIALOG:
@@ -74,42 +72,25 @@ flow:
   - return|ROUTE_ACC_CALLER:
   - start|ROUTE_ACC_CALLEE:
   - return|ROUTE_ACC_CALLEE:
-  - start|BRANCH_ROUTE_SBC:
-  - start|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
-  - return|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
-  - start|ROUTE_SET_CALLEE_DIALOG:
-  - return|ROUTE_SET_CALLEE_DIALOG:
+  - start|BRANCH_ROUTE_NO_SBC:
   - start|ROUTE_BRANCH_ACC_RTP:
   - return|ROUTE_BRANCH_ACC_RTP:
-  - start|ROUTE_SET_RUSER:
-  - return|ROUTE_SET_RUSER:
   - start|ROUTE_FILTER_PRACK:
   - return|ROUTE_FILTER_PRACK:
+  - start|ROUTE_PREPARE_MOH_PBX:
+  - return|ROUTE_PREPARE_MOH_PBX:
   - start|ROUTE_PREPARE_SST:
   - return|ROUTE_PREPARE_SST:
-  - start|ROUTE_PREPARE_MOH:
-  - return|ROUTE_PREPARE_MOH:
-  - start|ROUTE_SET_CALLER_CLI:
-  - start|ROUTE_PREPARE_CALLER_CLI:
-  - return|ROUTE_PREPARE_CALLER_CLI:
-  - start|ROUTE_PREPARE_CALLER_CLI:
-  - return|ROUTE_PREPARE_CALLER_CLI:
-  - start|ROUTE_PREPARE_CALLER_CLI:
-  - return|ROUTE_PREPARE_CALLER_CLI:
-  - start|ROUTE_PREPARE_CALLER_CLI:
-  - return|ROUTE_PREPARE_CALLER_CLI:
-  - start|ROUTE_PREPARE_CALLER_CLI:
-  - return|ROUTE_PREPARE_CALLER_CLI:
-  - return|ROUTE_SET_CALLER_CLI:
-  - start|ROUTE_SET_CALLEE:
-  - return|ROUTE_SET_CALLEE:
+  - start|ROUTE_LOAD_PBXSRV:
+  - return|ROUTE_LOAD_PBXSRV:
   - start|ROUTE_ADD_CALLINFO:
   - return|ROUTE_ADD_CALLINFO:
-  - return|BRANCH_ROUTE_SBC:
-  - return|BRANCH_ROUTE_SBC:
+  - return|BRANCH_ROUTE_NO_SBC:
+  - return|BRANCH_ROUTE_NO_SBC:
   - exit|ROUTE_OUTBOUND:
+
 sip_in:
-  - '^INVITE'
+  - '^INVITE sip:1003'
   - 'Contact: sip:testuser1002@'
   - 'CSeq: 2 INVITE'
   - 'Max-Forwards: 69'
@@ -126,18 +107,21 @@ sip_out:
       '^SIP/2.0 101 Connecting',
       'CSeq: 2 INVITE',
       'From: <sip:testuser1002@',
-      'To: <sip:1003@'
+      'To: <sip:1003@',
+      'P-Caller-UUID: \w+',
+      'P-NGCP-Caller-Info: <sip:testuser1002@'
     ]
   - [
       '^INVITE sip:testuser1003@',
       'CSeq: 2 INVITE',
-      'From: <sip:4311002@',
-      'To: <sip:1003@',
+      'From: <sip:testuser1002@',
+      'To: <sip:testuser1003@',
       'Content-Type: application/sdp',
       'P-Caller-UUID: \w+',
       'P-Callee-UUID: \w+',
-      'P-Asserted-Identity: <sip:4311002@',
-      'P-Called-Party-ID: <sip:testuser1003@',
-      'P-App-Param: ;aleg_sst_enable=no;sst_enable=no',
+      'P-NGCP-Lookup-Ext: 1003',
+      'P-NGCP-Orig-User: 43110021003',
+      'P-NGCP-Orig-Dialed: 1003',
+      'P-App-Param: ;aleg_sst_enable=no;sst_enable=no;a_park_domain=\d+;b_park_domain=\d+',
       'P-App-Name: sbc'
     ]
