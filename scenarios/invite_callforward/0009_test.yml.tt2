@@ -126,7 +126,6 @@ sip_out:
       'P-Acc-State: cfu',
       'P-From-Peer: 0',
       'P-CF-Depth: 1',
-      'P-Callee-Account-ID: \d+',
       'P-App-Param: ;profile=ngcp_cf',
       'P-App-Name: sbc',
       'P-NGCP-Forward-Info: <sip:testuser1001@',

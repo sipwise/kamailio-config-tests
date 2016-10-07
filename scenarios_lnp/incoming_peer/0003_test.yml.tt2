@@ -135,7 +135,6 @@ sip_out:
       'To: <sip:4311001@',
       'Content-Type: application/sdp',
       'P-CF-Depth: 1',
-      'P-Callee-Account-ID: \d+',
       'P-Callee-UUID: 0',
       'P-Asserted-Identity: <sip:004321001@',
       'P-Called-Party-ID: <sip:4318881003@',

@@ -116,7 +116,6 @@ sip_in:
   - 'P-Acc-State: cfu'
   - 'P-From-Peer: 0'
   - 'P-CF-Depth: 1'
-  - 'P-Callee-Account-ID: \d+'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
