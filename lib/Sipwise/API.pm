@@ -691,3 +691,5 @@ sub delete_lnpnumber {
 
 	return $self->_delete($urldata);
 }
+
+1;

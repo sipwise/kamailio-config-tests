@@ -99,11 +99,25 @@ sub do_delete
   foreach (keys %{$data})
   {
     my $lnp = $data->{$_}->{data};
+    my $numbers = $data->{$_}->{numbers};
     my $param = {
       name => $lnp->{name}
     };
     my $id = $api->check_lnpcarrier_exists($param);
     if($id) {
+      foreach my $number (@{$numbers}) {
+        $number->{carrier_id} = $id;
+        my $nid = $api->check_lnpnumber_exists($number);
+        if($nid) {
+          if($api->delete_lnpnumber($nid)) {
+            print "lnpnumber [$number->{number}]: deleted [$nid]\n";
+          } else {
+            die("Error: can't delete lnpnumber [$number->{number}]");
+          }
+        } else {
+          print "lnpnumber: already gone [$number->{number}]\n";
+        }
+      }
       if($api->delete_lnpcarrier($id)) {
         print "lnp: deleted [$lnp->{name}]\n";
       } else {
