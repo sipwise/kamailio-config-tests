@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a42497e_a1e35804",
+        "filename": "bin/create_lnp.pl",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2016-10-07T09:43:30Z",
+      "side": 1,
+      "message": "well if this is used in a test case where created lnpnumbers are under control, i would not check for existence every time in the loop. maybe putting the delete inside an eval is faster.",
+      "range": {
+        "startLine": 112,
+        "startChar": 19,
+        "endLine": 112,
+        "endChar": 35
+      },
+      "revId": "1cf249f5606dc31df150fb353db6c0d3ee7ba49b",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
