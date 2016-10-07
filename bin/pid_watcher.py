@@ -24,6 +24,7 @@ import os.path
 import pyinotify
 import sys
 import argparse
+import signal
 
 BASE_DIR = "/usr/share/kamailio-config-tests"
 if 'BASE_DIR' in os.environ:
@@ -53,10 +54,19 @@ watched_dirs = [
 watched = {}
 
 
+def sigterm_handler(_signo, _stack_frame):
+    logging.info("Process aborted")
+    sys.exit(2)
+
+
 class Handler(pyinotify.ProcessEvent):
 
     def my_init(self, watched):
         self.watched = watched
+
+    def check_done(self):
+        logging.info("All OK, done")
+        sys.exit(0)
 
     def check_all(self):
         all = True
@@ -70,7 +80,7 @@ class Handler(pyinotify.ProcessEvent):
             watched[event.pathname]['created'] = True
             logging.info("created %s" % event.pathname)
             if self.check_all():
-                sys.exit(0)
+                self.check_done()
 
     def process_IN_IGNORED(self, event):
         if event.pathname in watched:
@@ -82,11 +92,14 @@ class Handler(pyinotify.ProcessEvent):
             watched[event.pathname]['modified'] = True
             logging.info("modified %s" % event.pathname)
             if self.check_all():
-                sys.exit(0)
+                self.check_done()
 # for debug
 #    def process_default(self, event):
 #        if watched.has_key(event.pathname):
 #            print event
+
+# catch SIGTERM signal
+signal.signal(signal.SIGTERM, sigterm_handler)
 
 parser = argparse.ArgumentParser(
     description='watch some pids to detect restarts')
@@ -118,4 +131,5 @@ for service in services:
 for d in watched_dirs:
     wm.add_watch(d, pyinotify.ALL_EVENTS)
 
+logging.info("start loop")
 notifier.loop()
