@@ -1,0 +1,11 @@
+{
+    "peer_00_host0": {
+    	"lnp_add_npdi": true,
+    	"lnp_to_rn": true,
+        "concurrent_max": 1
+    },
+    "testuser1001@spce.test": {
+        "lock": 5,
+        "ncos": "ncos_test_00"
+    }
+}
