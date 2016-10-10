@@ -1,0 +1,14 @@
+{
+    "@spce.test": {
+        "lnp_for_local_sub": true
+    },
+    "peer_00_host0": {
+        "concurrent_max": 1
+    },
+    "testuser1002@spce.test": {
+        "ncos": "ncos_test_00"
+    },
+    "testuser1001@spce.test": {
+        "lock": 5
+    }
+}
