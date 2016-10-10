@@ -1,3 +1,22 @@
+kamailio-config-tests (0.15.3.0+0~mr4.5.3.0) unstable; urgency=medium
+
+  [ Andrew Pogrebennyk ]
+  * [5d18317] MT#22487 Add missing routes for call forwards (mr4.5)
+  * [147f00b] TT#2503 update scenarios_lnp WRT new parameter handling
+  * [a4cbc64] TT#4060 MT#22447 now we are calling ROUTE_CLIR before ROUTE_FIND_CALLEE
+
+  [ Andreas Granig ]
+  * [b4e85d0] TT#4066 Add cf map reorder function
+
+  [ Victor Seva ]
+  * [c6cfabe] TT#4475 run_tests.sh: add timeout parameter and set 300 as default
+  * [75a0a5a] TT#4475 pid_watcher.py: catch SIGTERM and log that the process was aborted
+  * [9ac1635] TT#4556 bin/create_lnp.pl: fix removal logic
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 10 Oct 2016 16:12:15 +0200
+
 kamailio-config-tests (0.15.2.0+0~mr4.5.2.0) unstable; urgency=medium
 
   [ Andrew Pogrebennyk ]
