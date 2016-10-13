@@ -80,29 +80,22 @@
   <recv response="100" optional="true">
   </recv>
 
-  <recv response="403" rrs="true" rtd="3">
+  <recv response="403" rtd="3">
   </recv>
 
   <send>
     <![CDATA[
 
-      ACK [next_url] SIP/2.0
-      Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
+      ACK sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0] SIP/2.0
+      [last_Via:]
       From: "431100222" <sip:[field0 file="caller.csv" line=0]@[field2 file="caller.csv" line=0]>;tag=[pid]SIPpTag00[call_number]
       To: <sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]>[peer_tag_param]
       Call-ID: NGCP%[field4 file="callee.csv" line=0]%///[call_id]
-      [routes]
       CSeq: 2 ACK
-      Contact: sip:[field0 file="caller.csv" line=0]@[local_ip]:[local_port]
       Max-Forwards: 70
       Content-Length: 0
 
     ]]>
   </send>
-
-  <ResponseTimeRepartition value="10, 20, 30, 40, 50, 100, 150, 200, 500, 1000"/>
-
-<!-- <CallLengthRepartition value="10, 50, 100, 500, 1000, 5000, 10000"/> -->
-
 </scenario>
 

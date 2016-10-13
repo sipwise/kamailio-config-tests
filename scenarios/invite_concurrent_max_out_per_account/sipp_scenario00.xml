@@ -251,7 +251,7 @@
   <recv response="183" response_txn="invite3" optional="true">
   </recv>
 
-  <recv response="403" response_txn="invite3" rrs="true">
+  <recv response="403" response_txn="invite3">
     <action>
       <ereg regexp="tag=(.*)" search_in="hdr" header="To:" check_it="true" assign_to="1,3" />
     </action>
