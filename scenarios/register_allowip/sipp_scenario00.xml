@@ -49,7 +49,20 @@
   <recv response="403">
   </recv>
 
-  <ResponseTimeRepartition value="10, 20, 30, 40, 50, 100, 150, 200"/>
+  <send>
+    <![CDATA[
+
+      ACK sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0] SIP/2.0
+      [last_Via:]
+      From: <sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]>;tag=[pid]SIPpTag00[call_number]
+      To: <sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]>[peer_tag_param]
+      Call-ID: NGCP%[field4 file="callee.csv" line=0]%///[call_id]
+      CSeq: 2 ACK
+      Max-Forwards: 70
+      Content-Length: 0
+
+    ]]>
+  </send>
 
 </scenario>
 
