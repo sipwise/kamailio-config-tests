@@ -328,6 +328,14 @@ sub check_subscriber_exists {
 	return $self->_exists($data, $urldata, $collection_id);
 }
 
+sub get_subscriber {
+	my $self = shift;
+	my $id = shift;
+	my $urldata = "/api/subscribers/${id}";
+
+	return $self->_get_content(undef, $urldata);
+}
+
 sub get_subscriber_preferences {
 	my $self = shift;
 	my $id = shift;
