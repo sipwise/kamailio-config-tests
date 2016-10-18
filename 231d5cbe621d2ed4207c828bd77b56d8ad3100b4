@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_f4834bca",
+        "filename": "bin/create_peers.pl",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2016-10-18T12:05:08Z",
+      "side": 1,
+      "message": "You could use a non destructive construct here like:\n\n  my $key \u003d $host-\u003e{name} \u003d~ tr/\\./_/r;",
+      "revId": "231d5cbe621d2ed4207c828bd77b56d8ad3100b4",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_d488cfe9",
+        "filename": "bin/create_subscribers.pl",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2016-10-18T12:05:08Z",
+      "side": 1,
+      "message": "Non-destructive tr, here and below.",
+      "revId": "231d5cbe621d2ed4207c828bd77b56d8ad3100b4",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_346db333",
+        "filename": "bin/generate_test.pl",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2016-10-18T12:05:08Z",
+      "side": 1,
+      "message": "Perhaps to make this more future-proof, name the option such that it takes the actual type as a name, -s, --scenario TYPE, with type being CE/PRO/CARRIER or whatever?",
+      "revId": "231d5cbe621d2ed4207c828bd77b56d8ad3100b4",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_146a371a",
+        "filename": "bin/generate_test.pl",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2016-10-18T12:05:08Z",
+      "side": 1,
+      "message": "It\u0027s usually more idiomatic, and in many cases the only correct thing to do, to use \u0027or\u0027 for this kind of construct, instead of \u0027||\u0027.",
+      "revId": "231d5cbe621d2ed4207c828bd77b56d8ad3100b4",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_74773b03",
+        "filename": "lib/Sipwise/API.pm",
+        "patchSetId": 2
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2016-10-18T12:05:08Z",
+      "side": 1,
+      "message": "my ($self, $id) \u003d @_;",
+      "revId": "231d5cbe621d2ed4207c828bd77b56d8ad3100b4",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
