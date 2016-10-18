@@ -4,6 +4,7 @@ result
 mem
 *.pyc
 *_test.yml
+scenario_ids.yml
 sipp_scenario_responder*_reg.xml
 *.csv
 presence_*xml
