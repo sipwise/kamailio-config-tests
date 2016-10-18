@@ -26,7 +26,7 @@ use Getopt::Long;
 use Cwd 'abs_path';
 use Config::Tiny;
 use Sipwise::API qw(all);
-use YAML;
+use YAML qw{ DumpFile LoadFile };
 
 my $config =  Config::Tiny->read('/etc/default/ngcp-api');
 my $opts;
@@ -38,10 +38,12 @@ if ($config) {
 }
 my $api = Sipwise::API->new($opts);
 $opts = $api->opts;
-my $del;
+my $del = 0;
+my $ids;
+my $ids_path;
 
 sub usage {
-  return "Usage:\n$PROGRAM_NAME peer.yml\n".
+  return "Usage:\n$PROGRAM_NAME peer.yml scenarios_ids.yml\n".
         "Options:\n".
         "  -delete\n".
         "  -d debug\n".
@@ -54,7 +56,11 @@ GetOptions ("h|help" => \$help,
     or die("Error in command line arguments\n".usage());
 
 die(usage()) unless (!$help);
-die("Error: wrong number of arguments\n".usage()) unless ($#ARGV == 0);
+if(!$del) {
+  die("Error: wrong number of arguments\n".usage()) unless ($#ARGV == 1);
+} else {
+  die("Error: wrong number of arguments\n".usage()) unless ($#ARGV == 0);
+}
 
 sub manage_contact
 {
@@ -156,6 +162,8 @@ sub manage_hosts
       $host->{id} = $api->create_peeringserver($host);
       print "peer: $host->{name} created [$host->{id}]\n";
     }
+    my $key = $host->{name} =~ tr/\./_/r;
+    $ids->{$key}->{id} = $host->{id};
   }
   return;
 }
@@ -215,7 +223,7 @@ sub do_create {
     }
     manage_hosts($peer->{hosts});
   }
-  exit;
+  return;
 }
 
 sub main {
@@ -226,8 +234,17 @@ sub main {
         return do_delete($r);
     } else {
         print "create peers\n" unless $opts->{debug};
-        return do_create($r);
+        return do_create($r, $ids);
     }
 }
 
-main(YAML::LoadFile(abs_path($ARGV[0])));
+if(! $del) {
+  $ids_path = abs_path($ARGV[1]);
+  print "load $ids_path\n";
+  $ids = LoadFile($ids_path);
+}
+main(LoadFile(abs_path($ARGV[0])), $ids);
+if(! $del) {
+  print "save $ids_path\n";
+  DumpFile($ids_path, $ids);
+}

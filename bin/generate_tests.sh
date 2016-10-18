@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright: 2013 Sipwise Development Team <support@sipwise.com>
+# Copyright: 2013-2016 Sipwise Development Team <support@sipwise.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,8 +19,8 @@
 # Public License version 3 can be found in "/usr/share/common-licenses/GPL-3".
 #
 BASE_DIR="${BASE_DIR:-/usr/share/kamailio-config-tests}"
-TPAGE="/usr/bin/tpage"
 DIR="${BASE_DIR}/scenarios"
+BIN_DIR="${BASE_DIR}/bin"
 error_flag=0
 
 function clean
@@ -30,7 +30,7 @@ function clean
 
 function usage
 {
-  echo "Usage: generate_tests.sh [-h] [-c] [-d directory] profile"
+  echo "Usage: generate_tests.sh [-h] [-c] [-d directory] scenario_ids.yml profile"
   echo "Options:"
   echo -e "\tc: clean. Removes all generated test files"
   echo -e "\td: directory"
@@ -47,26 +47,26 @@ while getopts 'hcd:' opt; do
   esac
 done
 shift $((OPTIND - 1))
-PROFILE="$1"
+IDS="$1"
+PROFILE="$2"
 
-if [[ $# -ne 1 ]]; then
+if [[ $# -ne 2 ]]; then
   echo "Wrong number or arguments"
   usage
   exit 1
 fi
 
-if [ "${PROFILE}" == "CE" ]; then
-  TPAGE_ARGS="--define CE=true"
-elif [ "${PROFILE}" == "PRO" ]; then
-  TPAGE_ARGS="--define PRO=true"
-else
-  echo "PROFILE ${PROFILE} unknown"
-  usage
-  exit 2
-fi
+case ${PROFILE} in
+  PRO) ARGS="-p" ;;
+  CE)  ARGS="" ;;
+  *)
+    echo "PROFILE ${PROFILE} unknown"
+    usage
+    exit 2
+esac
 
-if [ ! -x ${TPAGE} ]; then
-  echo "Cannot exec ${TPAGE}"
+if [ ! -x "${BIN_DIR}/generate_test.pl" ]; then
+  echo "Cannot exec ${BIN_DIR}/generate_test.pl"
   usage
   exit 3
 fi
@@ -83,7 +83,7 @@ for t in $(find "${DIR}" -not -regex '.+customtt.tt2' -type f -name '*.tt2' | so
   fi
   echo "generating: ${destdir}/${destfile}"
   # shellcheck disable=SC2086
-  if ! "${TPAGE}" ${TPAGE_ARGS} "${destdir}/${template}" > "${destdir}/${destfile}" ; then
+  if ! "${BIN_DIR}/generate_test.pl" ${ARGS} "${destdir}/${template}" ${IDS} > "${destdir}/${destfile}" ; then
     error_flag=1
   fi
 done

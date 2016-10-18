@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #
-# Copyright: 2013-2015 Sipwise Development Team <support@sipwise.com>
+# Copyright: 2013-2016 Sipwise Development Team <support@sipwise.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,11 +22,11 @@ use strict;
 use warnings;
 
 use English;
-use YAML;
+use Cwd 'abs_path';
+use YAML qw{ DumpFile LoadFile };
 use Getopt::Long;
 use List::MoreUtils qw{ none };
 use Config::Tiny;
-use Data::Dumper;
 use Sipwise::API qw(all);
 
 my $config =  Config::Tiny->read('/etc/default/ngcp-api');
@@ -39,9 +39,10 @@ if ($config) {
 }
 my $api = Sipwise::API->new($opts);
 $opts = $api->opts;
+my $ids = {};
 
 sub usage {
-  return "Usage:\n$PROGRAM_NAME scenario.yml\n".
+  return "Usage:\n$PROGRAM_NAME scenario.yml scenario_ids.yml\n".
         "Options:\n".
         "  -d debug\n".
         "  -h this help\n";
@@ -51,7 +52,7 @@ GetOptions ("h|help" => \$help, "d|debug" => \$opts->{verbose})
   or die("Error in command line arguments\n".usage());
 
 die(usage()) unless (!$help);
-die("Wrong number of arguments\n".usage()) unless ($#ARGV == 0);
+die("Wrong number of arguments\n".usage()) unless ($#ARGV == 1);
 
 sub get_data {
   my $val = shift;
@@ -160,6 +161,8 @@ sub manage_customers
       $customer_data->{customer_id} = $api->create_customer($customer_data->{details});
       print "customer [$customer]: created [$customer_data->{customer_id}]\n";
     }
+    my $key = $customer =~ tr/\./_/r;
+    $ids->{$key}->{id} = $customer_data->{customer_id};
   }
   return;
 }
@@ -183,6 +186,10 @@ sub create_subscriber
   }
   delete $s->{pbx_groups};
   $s->{id} = $api->create_subscriber(get_data($s));
+  my $tmp = $api->get_subscriber($s->{id});
+  my $key = $username =~ tr/\./_/r;
+  my $key_dom = $domain =~ tr/\./_/r;
+  $ids->{$key_dom}->{$key}->{uuid} = $tmp->{uuid};
   return;
 }
 
@@ -226,6 +233,5 @@ sub main
     return;
 }
 
-my $cf = YAML::LoadFile($ARGV[0]);
-
-main($cf);
+main(LoadFile(abs_path($ARGV[0])));
+DumpFile(abs_path($ARGV[1]), $ids);

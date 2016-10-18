@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright: 2013 Sipwise Development Team <support@sipwise.com>
+# Copyright: 2013-2016 Sipwise Development Team <support@sipwise.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -43,7 +43,7 @@ function graph
 function generate_error_tap
 {
   local tap_file="$1"
-  cat <<EOF > $tap_file
+  cat <<EOF > "$tap_file"
 1..1
 not ok 1 - ERROR: File $2 does not exists
 EOF
@@ -92,7 +92,9 @@ function check_test
 # $1 domain
 function create_voip
 {
-  if ! "${BIN_DIR}/create_subscribers.pl" "${SCEN_CHECK_DIR}/scenario.yml" ; then
+  if ! "${BIN_DIR}/create_subscribers.pl" \
+    "${SCEN_CHECK_DIR}/scenario.yml" "${SCEN_CHECK_DIR}/scenario_ids.yml"
+  then
     echo "$(date) - Deleting domain:${DOMAIN}"
     delete_voip "$1"
     echo "$(date) - Cannot create domain subscribers"
@@ -125,7 +127,8 @@ function create_voip_prefs
 
   if [ -f "${SCEN_CHECK_DIR}/peer.yml" ]; then
     echo "$(date) - Creating peers"
-    "${BIN_DIR}/create_peers.pl" "${SCEN_CHECK_DIR}/peer.yml"
+    "${BIN_DIR}/create_peers.pl" \
+      "${SCEN_CHECK_DIR}/peer.yml" "${SCEN_CHECK_DIR}/scenario_ids.yml"
     # REMOVE ME!! fix for REST API
     ngcp-sercmd proxy lcr.reload
   fi
@@ -583,7 +586,10 @@ if [ -z "${SKIP_TESTS}" ]; then
   echo "$(date) - Cleaning tests files"
   find "${SCEN_CHECK_DIR}" -type f -name '*test.yml' -exec rm {} \;
   echo "$(date) - Generating tests files"
-  "${BIN_DIR}/generate_tests.sh" -d "${SCEN_CHECK_DIR}" "${PROFILE}"
+  "${BIN_DIR}/generate_tests.sh" -d \
+    "${SCEN_CHECK_DIR}" "${SCEN_CHECK_DIR}/scenario_ids.yml" "${PROFILE}"
+  echo "$(date) - copy scenario_ids.yml file"
+  cp "${SCEN_CHECK_DIR}/scenario_ids.yml" "${LOG_DIR}"
   echo "$(date) - Done"
 
   for t in ${SCEN_CHECK_DIR}/*_test.yml; do
