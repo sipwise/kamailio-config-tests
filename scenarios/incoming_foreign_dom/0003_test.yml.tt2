@@ -53,6 +53,13 @@ flow:
   - return|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
   - start|ROUTE_SET_CALLEE_DIALOG:
   - return|ROUTE_SET_CALLEE_DIALOG:
+      $avp(lua_dlg_profile): [
+        "totalaccount:[% customer_test.id %]",
+        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "total",
+        "account:[% customer_test.id %]",
+        "user:[% spce_test.testuser1003.uuid %]"
+      ]
   - start|ROUTE_BLOCK_IN:
   - return|ROUTE_BLOCK_IN:
   - start|ROUTE_ORDER_CF_MAP_ID:
@@ -64,6 +71,22 @@ flow:
   - start|ROUTE_OUTBOUND:
   - start|ROUTE_SET_CALLER_DIALOG:
   - return|ROUTE_SET_CALLER_DIALOG:
+      $avp(lua_dlg_profile): [
+        "accountout:0",
+        "userout:0",
+        "account:0",
+        "user:0",
+        "totalaccountout:0",
+        "totaluserout:0",
+        "totalaccount:0",
+        "totaluser:0",
+        "local",
+        "totalaccount:[% customer_test.id %]",
+        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "total",
+        "account:[% customer_test.id %]",
+        "user:[% spce_test.testuser1003.uuid %]"
+      ]
   - start|ROUTE_ACC_CALLER:
   - return|ROUTE_ACC_CALLER:
   - start|ROUTE_ACC_CALLEE:
@@ -135,7 +158,7 @@ sip_out:
       'Contact: sip:external@',
       'Content-Type: application/sdp',
       'P-Caller-UUID: 0',
-      'P-Callee-UUID: \w+',
+      'P-Callee-UUID: [% spce_test.testuser1003.uuid %]',
       'P-Asserted-Identity: <sip:external@external.test>',
       'P-Called-Party-ID: <sip:testuser1003@',
       'P-App-Name: sbc'

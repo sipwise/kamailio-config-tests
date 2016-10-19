@@ -1,5 +1,21 @@
 flow:
   - start|REPLY_ROUTE_NAT:
+      $avp(lua_dlg_profile): [
+        "accountout:0",
+        "userout:0",
+        "account:0",
+        "user:0",
+        "totalaccountout:0",
+        "totaluserout:0",
+        "totalaccount:0",
+        "totaluser:0",
+        "local",
+        "totalaccount:[% customer_test.id %]",
+        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "total",
+        "account:[% customer_test.id %]",
+        "user:[% spce_test.testuser1003.uuid %]"
+      ]
   - exit|REPLY_ROUTE_NAT:
 sip_in:
   - '^SIP/2.0 180 Ringing'
