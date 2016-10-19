@@ -1,0 +1,18 @@
+ncos_black:
+  data:
+    mode: blacklist
+    local_ac: 0
+    description: test ncos level
+    reseller_id: 1
+  patterns:
+    - pattern: "^439991"
+      description: block LNP call
+ncos_white:
+  data:
+    mode: whitelist
+    local_ac: 0
+    description: test ncos level
+    reseller_id: 1
+  patterns:
+    - pattern: "^439991"
+      description: allow LNP call

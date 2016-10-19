@@ -1,0 +1,18 @@
+flow:
+  - start|REPLY_ROUTE_NAT:
+  - 'start|dialog:start':
+  - 'return|dialog:start':
+  # branch ??
+  - 'return|dialog:start':
+sip_in:
+  - '^SIP/2.0 200 OK'
+  - 'CSeq: 2 INVITE'
+  - 'From: <sip:4311002@'
+  - 'To: <sip:43999200@'
+sip_out:
+  - [
+      '^SIP/2.0 200 OK',
+      'CSeq: 2 INVITE',
+      'From: <sip:testuser1002@',
+      'To: <sip:43999200@',
+    ]

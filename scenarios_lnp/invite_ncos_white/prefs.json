@@ -1,0 +1,14 @@
+{
+    "@spce.test": {
+        "lnp_for_local_sub": true,
+        "ncos": "ncos_white"
+    },
+    "peer_00_host0": {
+        "concurrent_max": 1,
+        "rewrite_rule_set": "rw_00"
+    },
+    "peer_00_host1": {
+        "concurrent_max": 1,
+        "rewrite_rule_set": "rw_00"
+    }
+}

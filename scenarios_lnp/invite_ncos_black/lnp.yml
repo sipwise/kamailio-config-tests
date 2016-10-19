@@ -1,0 +1,13 @@
+---
+lnp_test_00:
+  data:
+    name: lnp_test_00
+    prefix: AA
+  numbers:
+    - number: '439992'
+      routing_number: '4318881001'
+  ncos:
+    - level: ncos_black
+      reseller_id: 1
+    - level: ncos_white
+      reseller_id: 1
