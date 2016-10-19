@@ -1,0 +1,7 @@
+rw_00:
+  - direction: out
+    field: caller
+    match_pattern: "^(.+)$"
+    replace_pattern: "${callee_lnp_prefix}\1"
+    priority: 1
+    description: LNP prefix
