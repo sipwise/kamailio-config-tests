@@ -623,4 +623,26 @@ sub delete_lnpnumber {
 	return $self->_delete($urldata);
 }
 
+sub check_ncoslnpcarrier_exists {
+	my ($self, $data) = @_;
+	my $urldata = "/api/ncoslnpcarriers/";
+	my $collection_id = 'ngcp:ncoslnpcarriers';
+
+	return $self->_exists($data, $urldata, $collection_id);
+}
+
+sub create_ncoslnpcarrier {
+	my ($self, $data) = @_;
+	my $urldata = '/api/ncoslnpcarriers/';
+
+	return $self->_create($data, $urldata);
+}
+
+sub delete_ncoslnpcarrier {
+	my ($self, $id) = @_;
+	my $urldata = "/api/ncoslnpcarriers/${id}";
+
+	return $self->_delete($urldata);
+}
+
 1;
