@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<scenario name="Sipwise NGCP Benchmark UAC Caller">
+
+  <send>
+    <![CDATA[
+
+      SUBSCRIBE sip:[field0 file="caller.csv" line=1]@[field2 file="caller.csv" line=1] SIP/2.0
+      Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
+      From: <sip:[field0 file="caller.csv" line=1]@[field2 file="caller.csv" line=1]>;tag=[pid]SIPpTag00[call_number]
+      To: <sip:[field0 file="caller.csv" line=1]@[field2 file="caller.csv" line=1]>
+      Call-ID: NGCP%[field4 file="callee.csv" line=1]%///[call_id]
+      CSeq: 1 SUBSCRIBE
+      Contact: sip:[field0 file="caller.csv" line=1]@[local_ip]:[local_port]
+      Call-Info: <sip:[field2 file="caller.csv" line=1]>;appearance-index=1
+      Max-Forwards: 70
+      Expires: 30
+      Event: line-seize
+      Content-Length: [len]
+
+    ]]>
+  </send>
+
+  <recv response="100" optional="true">
+  </recv>
+
+  <recv response="407" auth="true"/>
+
+  <send>
+    <![CDATA[
+
+      ACK sip:[field0 file="callee.csv" line=1]@[field3 file="callee.csv" line=1]:[remote_port] SIP/2.0
+      [last_Via:]
+      From: <sip:[field0 file="caller.csv" line=1]@[field2 file="caller.csv" line=1]>;tag=[pid]SIPpTag00[call_number]
+      To: <sip:[field0 file="callee.csv" line=1]@[field3 file="callee.csv" line=1]>[peer_tag_param]
+      Call-ID: NGCP%[field4 file="callee.csv" line=1]%///[call_id]
+      CSeq: [cseq] ACK
+      Contact: sip:[field0 file="caller.csv" line=1]@[local_ip]:[local_port]
+      Max-Forwards: 70
+      Content-Length: [len]
+
+    ]]>
+  </send>
+
+  <send>
+    <![CDATA[
+
+      SUBSCRIBE sip:[field0 file="caller.csv" line=1]@[field2 file="caller.csv" line=1] SIP/2.0
+      Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
+      From: <sip:[field0 file="caller.csv" line=1]@[field2 file="caller.csv" line=1]>;tag=[pid]SIPpTag00[call_number]
+      To: <sip:[field0 file="caller.csv" line=1]@[field2 file="caller.csv" line=1]>
+      [field1 file="caller.csv" line=1]
+      Call-ID: NGCP%[field4 file="callee.csv" line=1]%///[call_id]
+      CSeq: 2 SUBSCRIBE
+      Contact: sip:[field0 file="caller.csv" line=1]@[local_ip]:[local_port]
+      Call-Info: <sip:[field2 file="caller.csv" line=1]>;appearance-index=1
+      Max-Forwards: 70
+      Expires: 30
+      Event: line-seize
+      Content-Length: [len]
+
+    ]]>
+  </send>
+
+  <recv response="100" optional="true">
+  </recv>
+
+  <recv response="202" rtd="true">
+  </recv>
+
+  <recv request="NOTIFY"></recv>
+
+  <send>
+    <![CDATA[
+
+      ACK sip:[field0 file="caller.csv" line=1]@[field2 file="caller.csv" line=1] SIP/2.0
+      Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
+      From: <sip:[field0 file="caller.csv" line=1]@[field2 file="caller.csv" line=1]>;tag=[pid]SIPpTag00[call_number]
+      To: <sip:[field0 file="callee.csv" line=1]@[field3 file="callee.csv" line=1]>[peer_tag_param]
+      Call-ID: NGCP%[field4 file="callee.csv" line=1]%///[call_id]
+      CSeq: 2 ACK
+      Contact: sip:[field0 file="caller.csv" line=1]@[local_ip]:[local_port]
+      Max-Forwards: 70
+      Content-Length: 0
+
+    ]]>
+  </send>
+
+
+  <send>
+    <![CDATA[
+
+      SIP/2.0 200 OK
+      [last_Via:]
+      [last_From:]
+      [last_To:]
+      [last_Call-ID:]
+      [last_CSeq:]
+      Contact: <sip:[local_ip]:[local_port];transport=[transport]>
+      Content-Length: [len]
+
+    ]]>
+  </send>
+
+</scenario>
+
