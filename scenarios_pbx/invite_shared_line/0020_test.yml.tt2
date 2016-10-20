@@ -1,0 +1,40 @@
+flow:
+  - start|REPLY_ROUTE_NAT:
+  - exit|REPLY_ROUTE_NAT:
+sip_in:
+  - '^SIP/2.0 180 Ringing'
+  - 'From: <sip:testuser1002@spce.test>;tag='
+  - 'To: <sip:1003@spce.test>;tag='
+  - 'CSeq: 2 INVITE'
+  - 'Contact: <sip:127.0.0.1:5085;transport=udp>'
+sip_out:
+  - [
+      '^NOTIFY sip:testuser1002@127.1.0.2:\d+ SIP/2.0',
+      'To: <sip:testuser1002@spce.test>;tag=',
+      'From: <sip:testuser1002@spce.test>;tag=',
+      'CSeq: 2 NOTIFY',
+      'Contact: sip:127.0.0.1:5062',
+      'Call-Info: <sip:spce.test>;appearance-index=1',
+      'Event: line-seize',
+      'Subscription-State: terminated;reason=noresource'
+    ]
+  - [
+      '^NOTIFY sip:testuser1002@127.1.0.1:\d+ SIP/2.0',
+      'To: <sip:testuser1002@spce.test>;tag=',
+      'From: <sip:testuser1002@spce.test>;tag=',
+      'CSeq: 4 NOTIFY',
+      'Contact: sip:127.0.0.1:5062',
+      'Call-Info: <sip:spce.test>;appearance-index=1;appearance-state=progressing,<sip:spce.test>;appearance-index=\*;appearance-state=idle',
+      'Event: call-info',
+      'Subscription-State: active;expires=\d+'
+    ]
+  - [
+      '^SIP/2.0 180 Ringing',
+      'From: <sip:testuser1002@spce.test>;tag=',
+      'To: <sip:1003@spce.test>;tag=',
+      'CSeq: 2 INVITE',
+      'Contact: <sip:127.0.0.1:5085;transport=udp>',
+      'Content-Length:\s+0',
+      'P-COLP-Identity: \"1003\" <sip:1003@spce.test>',
+      'P-Out-Socket: udp:127.0.0.1:5060'
+    ]
