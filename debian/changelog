@@ -1,3 +1,39 @@
+kamailio-config-tests (5.0.0.0+0~mr5.0.0.0) unstable; urgency=medium
+
+  [ Andrew Pogrebennyk ]
+  * [2eb7405] MT#20913 new test incoming_hih for History-Info header
+  * [47ccc8f] MT#22487 fix kamailio-config-tests WRT to new CF and incoming peer selection logic
+  * [8f77e10] TT#2766 MT#22487 fix scenarios_lnp WRT to new CF and incoming peer matching
+  * [36f626f] TT#2503 update scenarios_lnp WRT new parameter handling
+  * [805d9d8] TT#4060 MT#22447 now we are calling ROUTE_CLIR before ROUTE_FIND_CALLEE
+  * [5fcc29f] MT#22945 update flows after fix for CF headers removing
+
+  [ Andreas Granig ]
+  * [85f345d] TT#2766 Add inbound peering rules to tests
+  * [657fb54] MT#22487 Add missing route for incoming hih
+  * [cbce507] TT#2394 Implement source-based CF
+  * [fef2e32] TT#4066 Add cf map reorder function
+
+  [ Victor Seva ]
+  * [874667f] TT#4110 add support for pbx
+  * [407517a] TT#4110 Initial support for PBX scenarios
+  * [86e0e44] TT#4110 bin/create_subscribers.pl: add pbx_group support
+  * [af1467a] TT#4475 run_tests.sh: add timeout parameter and set 300 as default
+  * [e393498] TT#4475 pid_watcher.py: catch SIGTERM and log that the process was aborted
+  * [1cf249f] TT#4556 bin/create_lnp.pl: fix removal logic
+  * [28ac3bd] TT#4110 add sems-pbx logs
+  * [41ed75c] TT#4110 scenarios_pbx: is_pbx_pilot order is important
+  * [d9889e0] TT#4110 scenarios_pbx: fix scenario
+  * [cb5bc41] TT#4753 send proper ACK after 4xx
+  * [7dc0820] MT#17655 scenarios: new flow with ROUTE_CNT_CALLE[E|R]_REJECT
+  * [a0af0be] TT#4760 scenario_ids.yml
+  * [4fe4543] TT#4856 scenarios/incoming_foreign_dom: add counter info
+  * [947414d] TT#4466 scenarios_lnp: add incoming_peer_unallocated_authoritative
+  * [8e0a598] TT#4877 add ncoslnpcarrier support
+  * [b9fd822] TT#4857 add invite_ncos_[black|white]
+
+ -- Alexander Lutay <alutay@sipwise.com>  Fri, 21 Oct 2016 15:01:25 +0200
+
 kamailio-config-tests (0.16.0.0+0~mr5.0.0.0) unstable; urgency=medium
 
   [ Victor Seva ]
