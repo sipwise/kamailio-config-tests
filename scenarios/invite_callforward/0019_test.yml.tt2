@@ -7,6 +7,7 @@ flow:
   - return|ROUTE_INITVARS:
   - 'start|dialog:end':
   - 'return|dialog:end':
+      $avp(lua_dlg_profile): None
   - 'return|dialog:end':
   - start|ROUTE_STOP_RTPPROXY:
   - return|ROUTE_STOP_RTPPROXY:
