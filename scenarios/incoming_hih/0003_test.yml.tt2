@@ -17,6 +17,7 @@ flow:
   - return|ROUTE_CLEAR_PEER_IN_PREF:
   - start|ROUTE_LOAD_PEER_IN_PREF:
   - return|ROUTE_LOAD_PEER_IN_PREF:
+      $avp(lua_dlg_profile): ["peer:[% peer_00_host0.id %]", "total"]
   - start|ROUTE_PROCESS_INCOMING_HIH:
   - return|ROUTE_PROCESS_INCOMING_HIH:
   - return|ROUTE_FIND_CALLER:
@@ -48,6 +49,13 @@ flow:
   - return|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
   - start|ROUTE_SET_CALLEE_DIALOG:
   - return|ROUTE_SET_CALLEE_DIALOG:
+      $avp(lua_dlg_profile): [
+        "totalaccount:[% customer_test.id %]",
+        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "account:[% customer_test.id %]",
+        "user:[% spce_test.testuser1003.uuid %]",
+        "peer:[% peer_00_host0.id %]", "total"
+      ]
   - start|ROUTE_BLOCK_IN:
   - return|ROUTE_BLOCK_IN:
   - start|ROUTE_ORDER_CF_MAP_ID:
@@ -73,6 +81,13 @@ flow:
   - start|ROUTE_EXECUTE_CF_LOOP:
   - start|ROUTE_SET_CALLER_DIALOG:
   - return|ROUTE_SET_CALLER_DIALOG:
+      $avp(lua_dlg_profile): [
+        "totalaccount:[% customer_test.id %]",
+        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "account:[% customer_test.id %]",
+        "user:[% spce_test.testuser1003.uuid %]",
+        "peer:[% peer_00_host0.id %]", "total"
+      ]
   - start|BRANCH_ROUTE_FWD_LOOP:
   - start|ROUTE_PROCESS_INCOMING_HIH:
   - return|ROUTE_PROCESS_INCOMING_HIH:
