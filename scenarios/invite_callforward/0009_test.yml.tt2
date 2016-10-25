@@ -59,6 +59,13 @@ flow:
   - return|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
   - start|ROUTE_SET_CALLEE_DIALOG:
   - return|ROUTE_SET_CALLEE_DIALOG:
+      $avp(lua_dlg_profile): [
+        "totalaccount:[% customer_test.id %]",
+        "totaluser:[% spce_test.testuser1001.uuid %]",
+        "total",
+        "account:[% customer_test.id %]",
+        "user:[% spce_test.testuser1001.uuid %]"
+      ]
   - start|ROUTE_BLOCK_IN:
   - return|ROUTE_BLOCK_IN:
   - start|ROUTE_ORDER_CF_MAP_ID:
@@ -84,6 +91,21 @@ flow:
   - start|ROUTE_EXECUTE_CF_LOOP:
   - start|ROUTE_SET_CALLER_DIALOG:
   - return|ROUTE_SET_CALLER_DIALOG:
+      $avp(lua_dlg_profile): [
+        "accountout:[% customer_test.id %]",
+        "userout:[% spce_test.testuser1002.uuid %]",
+        "account:[% customer_test.id %]",
+        "user:[% spce_test.testuser1002.uuid %]",
+        "totalaccountout:[% customer_test.id %]",
+        "totaluserout:[% spce_test.testuser1002.uuid %]",
+        "totalaccount:[% customer_test.id %]",
+        "totaluser:[% spce_test.testuser1002.uuid %]",
+        "totalaccount:[% customer_test.id %]",
+        "totaluser:[% spce_test.testuser1001.uuid %]",
+        "total",
+        "account:[% customer_test.id %]",
+        "user:[% spce_test.testuser1001.uuid %]"
+      ]
   - start|BRANCH_ROUTE_FWD_LOOP:
   - start|ROUTE_APPEND_CF_HDRS:
   - return|ROUTE_APPEND_CF_HDRS:
@@ -111,7 +133,8 @@ sip_out:
       '^SIP/2.0 101 Connecting',
       'CSeq: 2 INVITE',
       'From: <sip:testuser1002@',
-      'To: <sip:testuser1001@'
+      'To: <sip:testuser1001@',
+      'P-Caller-UUID: [% spce_test.testuser1002.uuid %]'
     ]
   - [
       '^INVITE sip:4311003@',
@@ -119,7 +142,7 @@ sip_out:
       'From: <sip:testuser1002@',
       'To: <sip:testuser1001@',
       'Content-Type: application/sdp',
-      'P-Caller-UUID: \w+',
+      'P-Caller-UUID: [% spce_test.testuser1001.uuid %]',
       'P-First-Caller-UPN: 4311002',
       'P-First-Caller-NPN: 4311002',
       'P-Acc-Caller-User: testuser1001',
