@@ -17,6 +17,7 @@ flow:
   - return|ROUTE_CLEAR_PEER_IN_PREF:
   - start|ROUTE_LOAD_PEER_IN_PREF:
   - return|ROUTE_LOAD_PEER_IN_PREF:
+      $avp(lua_dlg_profile): ["peer:[% peer_00_host0.id %]", "total"]
   - return|ROUTE_FIND_CALLER:
   - start|ROUTE_GET_CALLER_CLI:
   - return|ROUTE_GET_CALLER_CLI:
@@ -46,6 +47,14 @@ flow:
   - return|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
   - start|ROUTE_SET_CALLEE_DIALOG:
   - return|ROUTE_SET_CALLEE_DIALOG:
+      $avp(lua_dlg_profile): [
+        "totalaccount:[% customer_test.id %]",
+        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "account:[% customer_test.id %]",
+        "user:[% spce_test.testuser1003.uuid %]",
+        "peer:[% peer_00_host0.id %]",
+        "total"
+      ]
   - start|ROUTE_BLOCK_IN:
   - return|ROUTE_BLOCK_IN:
   - start|ROUTE_ORDER_CF_MAP_ID:
@@ -57,6 +66,15 @@ flow:
   - start|ROUTE_INVITE_TO_INT:
   - start|ROUTE_OUTBOUND:
   - start|ROUTE_SET_CALLER_DIALOG:
+      $avp(lua_dlg_profile): [
+        "incoming",
+        "totalaccount:[% customer_test.id %]",
+        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "account:[% customer_test.id %]",
+        "user:[% spce_test.testuser1003.uuid %]",
+        "peer:[% peer_00_host0.id %]",
+        "total"
+      ]
   - return|ROUTE_SET_CALLER_DIALOG:
   - start|ROUTE_ACC_CALLER:
   - return|ROUTE_ACC_CALLER:
@@ -97,6 +115,15 @@ flow:
   # branch ??
   - return|BRANCH_ROUTE_SBC:
   - exit|ROUTE_OUTBOUND:
+      $avp(lua_dlg_profile): [
+        "incoming",
+        "totalaccount:[% customer_test.id %]",
+        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "account:[% customer_test.id %]",
+        "user:[% spce_test.testuser1003.uuid %]",
+        "peer:[% peer_00_host0.id %]",
+        "total"
+      ]
 sip_in:
   - '^INVITE sip:4311003@'
   - 'Contact: sip:004321001@'
