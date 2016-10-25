@@ -1,4 +1,3 @@
-# REGISTER scenario
 flow:
   - start|DEFAULT_ROUTE:
   - start|ROUTE_NET_INFO:
