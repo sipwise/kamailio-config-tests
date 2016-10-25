@@ -54,6 +54,12 @@ flow:
   - return|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
   - start|ROUTE_SET_CALLEE_DIALOG:
   - return|ROUTE_SET_CALLEE_DIALOG:
+      $avp(lua_dlg_profile): [
+        "totalaccount:[% customer_test.id %]",
+        "totaluser:[% spce_test.testuser1005.uuid %]",
+        "account:[% customer_test.id %]",
+        "user:[% spce_test.testuser1005.uuid %]"
+      ]
   - start|ROUTE_BLOCK_IN:
   - return|ROUTE_BLOCK_IN:
   - start|ROUTE_ORDER_CF_MAP_ID:
@@ -65,6 +71,20 @@ flow:
   - start|ROUTE_OUTBOUND:
   - start|ROUTE_SET_CALLER_DIALOG:
   - return|ROUTE_SET_CALLER_DIALOG:
+      $avp(lua_dlg_profile): [
+        "accountout:[% customer_test.id %]",
+        "userout:[% spce_test.testuser1004.uuid %]",
+        "account:[% customer_test.id %]",
+        "user:[% spce_test.testuser1004.uuid %]",
+        "totalaccountout:[% customer_test.id %]",
+        "totaluserout:[% spce_test.testuser1004.uuid %]",
+        "totalaccount:[% customer_test.id %]",
+        "totaluser:[% spce_test.testuser1004.uuid %]",
+        "totalaccount:[% customer_test.id %]",
+        "totaluser:[% spce_test.testuser1005.uuid %]",
+        "account:[% customer_test.id %]",
+        "user:[% spce_test.testuser1005.uuid %]"
+      ]
   - start|ROUTE_ACC_CALLER:
   - return|ROUTE_ACC_CALLER:
   - start|ROUTE_ACC_CALLEE:
@@ -104,6 +124,20 @@ flow:
   # branch ??
   - return|BRANCH_ROUTE_SBC:
   - exit|ROUTE_OUTBOUND:
+      $avp(lua_dlg_profile): [
+        "accountout:[% customer_test.id %]",
+        "userout:[% spce_test.testuser1004.uuid %]",
+        "account:[% customer_test.id %]",
+        "user:[% spce_test.testuser1004.uuid %]",
+        "totalaccountout:[% customer_test.id %]",
+        "totaluserout:[% spce_test.testuser1004.uuid %]",
+        "totalaccount:[% customer_test.id %]",
+        "totaluser:[% spce_test.testuser1004.uuid %]",
+        "totalaccount:[% customer_test.id %]",
+        "totaluser:[% spce_test.testuser1005.uuid %]",
+        "account:[% customer_test.id %]",
+        "user:[% spce_test.testuser1005.uuid %]"
+      ]
 sip_in:
   - '^INVITE sip:4311005@'
   - 'Contact: <sip:(testuser1003@)?127.0.0.1:5080(;transport=udp)?>'
@@ -122,7 +156,7 @@ sip_out:
       'From: <sip:4311002@',
       'To: <sip:testuser1004@',
       'Content-Type: application/sdp',
-      'P-Callee-UUID: \w+',
+      'P-Callee-UUID: [% spce_test.testuser1005.uuid %]',
       'P-Asserted-Identity: <sip:4311002@',
       'P-App-Name: sbc',
       'P-NGCP-Caller-Info: <sip:testuser1004@',

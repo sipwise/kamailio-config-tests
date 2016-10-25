@@ -33,6 +33,22 @@ flow:
 - return|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
 - start|ROUTE_SET_CALLEE_DIALOG:
 - return|ROUTE_SET_CALLEE_DIALOG:
+    $avp(lua_dlg_profile): [
+        "accountout:[% customer_test.id %]",
+        "userout:[% spce_test.testuser1002.uuid %]",
+        "account:[% customer_test.id %]",
+        "user:[% spce_test.testuser1002.uuid %]",
+        "totalaccountout:[% customer_test.id %]",
+        "totaluserout:[% spce_test.testuser1002.uuid %]",
+        "totalaccount:[% customer_test.id %]",
+        "totaluser:[% spce_test.testuser1002.uuid %]",
+        "local",
+        "totalaccount:[% customer_test.id %]",
+        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "total",
+        "account:[% customer_test.id %]",
+        "user:[% spce_test.testuser1003.uuid %]"
+      ]
 - start|ROUTE_BLOCK_IN:
 - return|ROUTE_BLOCK_IN:
 - start|ROUTE_ORDER_CF_MAP_ID:
@@ -44,6 +60,30 @@ flow:
 - start|ROUTE_OUTBOUND:
 - start|ROUTE_SET_CALLER_DIALOG:
 - return|ROUTE_SET_CALLER_DIALOG:
+    $avp(lua_dlg_profile): [
+        'accountout:[% customer_test.id %]',
+        'userout:[% spce_test.testuser1003.uuid %]',
+        'account:[% customer_test.id %]',
+        'user:[% spce_test.testuser1003.uuid %]',
+        'totalaccountout:[% customer_test.id %]',
+        'totaluserout:[% spce_test.testuser1003.uuid %]',
+        'totalaccount:[% customer_test.id %]',
+        'totaluser:[% spce_test.testuser1003.uuid %]',
+        "accountout:[% customer_test.id %]",
+        "userout:[% spce_test.testuser1002.uuid %]",
+        "account:[% customer_test.id %]",
+        "user:[% spce_test.testuser1002.uuid %]",
+        "totalaccountout:[% customer_test.id %]",
+        "totaluserout:[% spce_test.testuser1002.uuid %]",
+        "totalaccount:[% customer_test.id %]",
+        "totaluser:[% spce_test.testuser1002.uuid %]",
+        "local",
+        "totalaccount:[% customer_test.id %]",
+        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "total",
+        "account:[% customer_test.id %]",
+        "user:[% spce_test.testuser1003.uuid %]"
+      ]
 - start|ROUTE_ACC_CALLER:
 - return|ROUTE_ACC_CALLER:
 - start|ROUTE_ACC_CALLEE:
@@ -82,6 +122,30 @@ flow:
 - return|BRANCH_ROUTE_SBC:
 - return|BRANCH_ROUTE_SBC:
 - exit|ROUTE_OUTBOUND:
+    $avp(lua_dlg_profile): [
+        'accountout:[% customer_test.id %]',
+        'userout:[% spce_test.testuser1003.uuid %]',
+        'account:[% customer_test.id %]',
+        'user:[% spce_test.testuser1003.uuid %]',
+        'totalaccountout:[% customer_test.id %]',
+        'totaluserout:[% spce_test.testuser1003.uuid %]',
+        'totalaccount:[% customer_test.id %]',
+        'totaluser:[% spce_test.testuser1003.uuid %]',
+        "accountout:[% customer_test.id %]",
+        "userout:[% spce_test.testuser1002.uuid %]",
+        "account:[% customer_test.id %]",
+        "user:[% spce_test.testuser1002.uuid %]",
+        "totalaccountout:[% customer_test.id %]",
+        "totaluserout:[% spce_test.testuser1002.uuid %]",
+        "totalaccount:[% customer_test.id %]",
+        "totaluser:[% spce_test.testuser1002.uuid %]",
+        "local",
+        "totalaccount:[% customer_test.id %]",
+        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "total",
+        "account:[% customer_test.id %]",
+        "user:[% spce_test.testuser1003.uuid %]"
+      ]
 - exit|ROUTE_OUTBOUND:
 sip_in:
   - '^SIP/2.0 302 Moved Temporarily'
@@ -105,8 +169,8 @@ sip_out:
       'Contact: sip:testuser1002@',
       'Max-Forwards: 68',
       'Content-Type: application/sdp',
-      'P-Caller-UUID: \w+',
-      'P-Callee-UUID: \w+',
+      'P-Caller-UUID: [% spce_test.testuser1003.uuid %]',
+      'P-Callee-UUID: [% spce_test.testuser1004.uuid %]',
       'P-Asserted-Identity: <sip:4311002@',
       'P-Called-Party-ID: <sip:testuser1004@',
       'P-App-Name: sbc',

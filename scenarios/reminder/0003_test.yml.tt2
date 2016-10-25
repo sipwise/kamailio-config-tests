@@ -43,9 +43,19 @@ flow:
   - start|ROUTE_TO_APPSRV:
   - start|ROUTE_LOAD_APPSRV:
   - return|ROUTE_LOAD_APPSRV:
+      $avp(lua_dlg_profile): ["peer:appsrv", "local"]
   - start|ROUTE_OUTBOUND:
   - start|ROUTE_SET_CALLER_DIALOG:
   - return|ROUTE_SET_CALLER_DIALOG:
+      $avp(lua_dlg_profile): [
+        "totalaccountout:[% customer_test.id %]",
+        "totaluserout:[% spce_test.testuser1001.uuid %]",
+        "totalaccount:[% customer_test.id %]",
+        "totaluser:[% spce_test.testuser1001.uuid %]",
+        "total",
+        "peer:appsrv",
+        "local"
+      ]
   - start|ROUTE_ACC_CALLER:
   - return|ROUTE_ACC_CALLER:
   - start|ROUTE_ACC_CALLEE:
@@ -75,6 +85,15 @@ flow:
   # branch ??
   - return|BRANCH_ROUTE_NO_SBC:
   - exit|ROUTE_OUTBOUND:
+      $avp(lua_dlg_profile): [
+        "totalaccountout:[% customer_test.id %]",
+        "totaluserout:[% spce_test.testuser1001.uuid %]",
+        "totalaccount:[% customer_test.id %]",
+        "totaluser:[% spce_test.testuser1001.uuid %]",
+        "total",
+        "peer:appsrv",
+        "local"
+      ]
 sip_in:
   - '^INVITE'
   - 'Contact: sip:testuser1001@'
@@ -101,7 +120,7 @@ sip_out:
       'From: <sip:4311001@',
       'To: <sip:\*55\*\d{4}@',
       'Content-Type: application/sdp',
-      'P-Caller-UUID: \w+',
-      'P-Callee-UUID: \w+',
+      'P-Caller-UUID: [% spce_test.testuser1001.uuid %]',
+      'P-Callee-UUID: [% spce_test.testuser1001.uuid %]',
       'P-App-Name: sw_vsc'
     ]

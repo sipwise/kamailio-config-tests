@@ -54,14 +54,36 @@ flow:
   - start|ROUTE_INVITE_TO_EXT:
   - start|ROUTE_PSTN:
   - start|ROUTE_PSTN_SELECT_PEER:
+      $avp(lua_dlg_profile): ["outgoing"]
   - start|ROUTE_CLEAR_PEER_OUT_PREF:
   - return|ROUTE_CLEAR_PEER_OUT_PREF:
   - start|ROUTE_LOAD_PEER_OUT_PREF:
   - return|ROUTE_LOAD_PEER_OUT_PREF:
   - return|ROUTE_PSTN_SELECT_PEER:
   - start|ROUTE_OUTBOUND:
+      $avp(lua_dlg_profile): [
+        "relay",
+        "peerout:[% peer_00_host0.id %]",
+        "peer:[% peer_00_host0.id %]",
+        "outgoing"
+      ]
   - start|ROUTE_SET_CALLER_DIALOG:
   - start|ROUTE_CNT_CALLER_REJECT:
+      $avp(lua_dlg_profile): [
+        "accountout:[% customer_test.id %]",
+        "userout:[% spce_test.testuser1002.uuid %]",
+        "account:[% customer_test.id %]",
+        "user:[% spce_test.testuser1002.uuid %]",
+        "totalaccountout:[% customer_test.id %]",
+        "totaluserout:[% spce_test.testuser1002.uuid %]",
+        "totalaccount:[% customer_test.id %]",
+        "totaluser:[% spce_test.testuser1002.uuid %]",
+        "total",
+        "relay",
+        "peerout:[% peer_00_host0.id %]",
+        "peer:[% peer_00_host0.id %]",
+        "outgoing"
+      ]
   - return|ROUTE_CNT_CALLER_REJECT:
   - start|ROUTE_CNT_CALLER_REJECT:
   - start|ROUTE_ACC_FAILURE:
@@ -75,6 +97,7 @@ flow:
   - return|ROUTE_ADD_CALLINFO_REPLY:
   - 'start|dialog:failed':
   - 'return|dialog:failed':
+      $avp(lua_dlg_profile): None
   - 'return|dialog:failed':
   - exit|ROUTE_EARLY_REJECT:
 sip_in:
