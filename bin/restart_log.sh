@@ -19,8 +19,10 @@
 # Public License version 3 can be found in "/usr/share/common-licenses/GPL-3".
 #
 #ngcp-sercmd proxy dbg.reset_msgid
-rm -rf /var/log/ngcp/kamailio-proxy.log
-rm -rf /var/log/ngcp/sems.log
-rm -rf /var/log/ngcp/sems-pbx.log
-rm -rf /var/log/ngcp/kamailio-lb.log
+LOGS="/var/log/ngcp/kamailio-proxy.log /var/log/ngcp/sems.log \
+ /var/log/ngcp/sems-pbx.log /var/log/ngcp/kamailio-lb.log"
+rm -rf "$LOGS"
 invoke-rc.d rsyslog restart
+for l in $LOGS ; do
+  touch "$l"
+done
