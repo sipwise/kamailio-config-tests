@@ -65,7 +65,7 @@ MAX="5000"
 if [ "${TRANSPORT}" == "tcp" ]; then
     TRANSPORT_ARG="-t t1"
 else
-    TRANSPORT_ARG="-t ul"
+    TRANSPORT_ARG="-t u1"
 fi
 # shellcheck disable=SC2086
 {
@@ -94,7 +94,7 @@ else
     sipp -max_socket $MAX ${TRANSPORT_ARG}\
       -inf "${BASE_DIR}/callee.csv" -inf "${BASE_DIR}/caller.csv" \
       -sf "$1" -i "$IP" -p "$PORT" \
-      -nr -nd -t ul -m 1 ${MPORT_ARG} \
+      -nr -nd -m 1 ${MPORT_ARG} \
       -timeout "${TIMEOUT}" -timeout_error -trace_err \
       "$IP_SERVER" &> /dev/null
     status=$?
@@ -102,7 +102,7 @@ else
     tmp=$(sipp $BACK -max_socket $MAX ${TRANSPORT_ARG}\
       -inf "${BASE_DIR}/callee.csv" -inf "${BASE_DIR}/caller.csv" \
       -sf "$1" -i "$IP" -p "$PORT" \
-      -nr -nd -t ul -m 1 ${MPORT_ARG} \
+      -nr -nd -m 1 ${MPORT_ARG} \
       -timeout "${TIMEOUT}" -timeout_error -trace_err \
       "$IP_SERVER")
     # shellcheck disable=SC2046
