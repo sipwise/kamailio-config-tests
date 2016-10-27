@@ -253,14 +253,39 @@ function stop_capture
 # $1 port to check
 function check_port
 {
-  status=0
-  port=$1
-  step=${2:-1}
+  local status=0
+  local port=$1
+  local step=${2:-1}
+
   until [ $status -eq 1 ]; do
-    let port=${port}+${step}
     netstat -n | grep -q ":$port "
     status=$?
+    if [ $status -eq 0 ] ; then
+      let port=${port}+${step}
+    fi
   done
+  echo $port
+}
+
+# $1 media port to check
+function check_mport
+{
+  local status=0
+  local mport=$1
+  local step=${2:-3}
+  local mport2
+  until [ $status -eq 1 ]; do
+    if ! (netstat -n | grep -q ":${mport} ") ; then
+      let mport2=${mport}+2
+      if ! (netstat -n | grep -q ":${mport2} "); then
+        status=1
+      fi
+    fi
+    if [ $status -eq 0 ] ; then
+      let mport=${mport}+${step}
+    fi
+  done
+  echo $mport
 }
 
 #$1 is filename
@@ -304,10 +329,10 @@ function copy_logs
 # $1 sipp xml scenario file
 function run_sipp
 {
-  check_port 50603
-  local PORT=$port
-  check_port 6003 3
-  local MPORT=$port
+  local PORT
+  local MPORT
+  PORT=$(check_port 50603)
+  MPORT=$(check_mport 46003)
 
   local base=""
   local pid=""
@@ -370,11 +395,9 @@ function run_sipp
     responder_pid="${responder_pid} ${base}:${pid}"
 
     if [ "${foreign_dom}" == "no" ]; then
-      check_port ${PORT}
-      PORT=$port
+      PORT=$(check_port "${PORT}")
     fi
-    check_port ${MPORT} 3
-    MPORT=$port
+    MPORT=$(check_mport "${MPORT}")
   done
 
   status=0
@@ -383,8 +406,10 @@ function run_sipp
     base=$(basename "$send" .xml)
     is_enabled "$(basename "$send")"
     get_ip "$(basename "$send")"
-    echo "$(date) - Running ${base} $ip:50602-7002"
-    if ! "${BIN_DIR}/sipp.sh" -T "$transport" -i "$ip" -p 50602 -m 7002 "$send" ; then
+    PORT=$(check_port 51602)
+    MPORT=$(check_mport 45003)
+    echo "$(date) - Running ${base} $ip:${PORT}-${MPORT}"
+    if ! "${BIN_DIR}/sipp.sh" -T "$transport" -i "$ip" -p "${PORT}" -m "${MPORT}" "$send" ; then
       echo "$(date) - $base error"
       status=1
     fi
