@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a4c51b2_435526c5",
+        "filename": "bin/check.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2016-10-27T19:16:42Z",
+      "side": 1,
+      "message": "why not:\n\n    if netstat -n | grep -q \":$port \" ; then\n\n?",
+      "range": {
+        "startLine": 261,
+        "startChar": 0,
+        "endLine": 263,
+        "endChar": 31
+      },
+      "revId": "838317d7e2140bebe95dcb68740d4eee8c2b7896",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
