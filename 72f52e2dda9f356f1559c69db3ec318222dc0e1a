@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a4c51b2_484b8559",
+        "filename": "bin/check.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2016-10-27T13:21:09Z",
+      "side": 1,
+      "message": "why not:\n\n\u003e if netstat -n | grep -q \":$port \" ; then",
+      "range": {
+        "startLine": 261,
+        "startChar": 0,
+        "endLine": 263,
+        "endChar": 31
+      },
+      "revId": "72f52e2dda9f356f1559c69db3ec318222dc0e1a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4c51b2_e83d31bd",
+        "filename": "bin/check.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2016-10-27T13:21:09Z",
+      "side": 1,
+      "message": "IMHO for bash:\n\nport\u003d$((port + step))",
+      "range": {
+        "startLine": 264,
+        "startChar": 5,
+        "endLine": 264,
+        "endChar": 30
+      },
+      "revId": "72f52e2dda9f356f1559c69db3ec318222dc0e1a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4c51b2_88746d9d",
+        "filename": "bin/check.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2016-10-27T13:21:09Z",
+      "side": 1,
+      "message": "both functions chech_port and check_mport can be done withoit one function IMHO. it just check a port with differen amlount of steps 1 or 3 which you already define as thirf parameter.\n\nWhile up 2 you here, minor.",
+      "range": {
+        "startLine": 334,
+        "startChar": 0,
+        "endLine": 335,
+        "endChar": 28
+      },
+      "revId": "72f52e2dda9f356f1559c69db3ec318222dc0e1a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
