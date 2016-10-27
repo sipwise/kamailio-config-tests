@@ -41,9 +41,9 @@ flow:
   - start|ROUTE_SET_CALLER_DIALOG:
   - return|ROUTE_SET_CALLER_DIALOG:
       $avp(lua_dlg_profile): [
-        "totalaccountout:4",
+        "totalaccountout:[% customer_test.id %]",
         "totaluserout:[% spce_test.testuser1001.uuid %]",
-        "totalaccount:4",
+        "totalaccount:[% customer_test.id %]",
         "totaluser:[% spce_test.testuser1001.uuid %]",
         "peer:voicebox",
         "local"
@@ -78,9 +78,9 @@ flow:
   - return|BRANCH_ROUTE_NO_SBC:
   - exit|ROUTE_OUTBOUND:
       $avp(lua_dlg_profile): [
-        "totalaccountout:4",
+        "totalaccountout:[% customer_test.id %]",
         "totaluserout:[% spce_test.testuser1001.uuid %]",
-        "totalaccount:4",
+        "totalaccount:[% customer_test.id %]",
         "totaluser:[% spce_test.testuser1001.uuid %]",
         "peer:voicebox",
         "local"
