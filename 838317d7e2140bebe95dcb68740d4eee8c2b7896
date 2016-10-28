@@ -22,6 +22,30 @@
       "revId": "838317d7e2140bebe95dcb68740d4eee8c2b7896",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4c51b2_755575c5",
+        "filename": "bin/check.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2016-10-28T08:54:03Z",
+      "side": 1,
+      "message": "Jumping in just so I understand what\u0027s going on:\n\n# netstat -n | grep 5222\n\nvs\n\n# netstat -tulpn | grep 5222\ntcp        0      0 192.168.88.226:5222     0.0.0.0:*               LISTEN      22517/lua5.1    \n\nAre you just checking whether the port is in usage and not whether something is listening, right?",
+      "parentUuid": "3a4c51b2_435526c5",
+      "range": {
+        "startLine": 261,
+        "startChar": 0,
+        "endLine": 263,
+        "endChar": 31
+      },
+      "revId": "838317d7e2140bebe95dcb68740d4eee8c2b7896",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
