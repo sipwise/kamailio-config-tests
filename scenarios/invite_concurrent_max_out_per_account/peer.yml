@@ -21,7 +21,7 @@ peer_00:
     - group_id: peer_00_group
       name: peer_00_host0
       ip: 127.0.2.1
-      port: 50602
+      port: 51602
       host:
       transport: 1
       weight: 1
