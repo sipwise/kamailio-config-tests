@@ -407,10 +407,10 @@ function run_sipp
     base=$(basename "$send" .xml)
     is_enabled "$(basename "$send")"
     get_ip "$(basename "$send")"
-    PORT=$(check_port 51602)
-    MPORT=$(check_mport 45003)
-    echo "$(date) - Running ${base} $ip:${PORT}-${MPORT}"
-    if ! "${BIN_DIR}/sipp.sh" -T "$transport" -i "$ip" -p "${PORT}" -m "${MPORT}" "$send" ; then
+    PORT=$(check_port )
+    MPORT=$(check_mport )
+    echo "$(date) - Running ${base} $ip:51602-45003"
+    if ! "${BIN_DIR}/sipp.sh" -T "$transport" -i "$ip" -p 51602 -m 45003 "$send" ; then
       echo "$(date) - $base error"
       status=1
     fi
