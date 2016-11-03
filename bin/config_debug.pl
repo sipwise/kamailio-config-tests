@@ -41,7 +41,15 @@ sub usage
 
 my $help = 0;
 my $profile = "CE";
-my $group = "scenarios";
+my $group;
+if (exists $ENV{'GROUP'})
+{
+  $group = $ENV{'GROUP'};
+}
+else
+{
+  $group = "scenarios";
+}
 GetOptions ("h|help" => \$help, "g|group=s" => \$group)
   or die("Error in command line arguments\n".usage());
 
