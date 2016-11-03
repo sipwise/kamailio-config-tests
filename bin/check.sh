@@ -396,9 +396,9 @@ function run_sipp
     responder_pid="${responder_pid} ${base}:${pid}"
 
     if [ "${foreign_dom}" == "no" ]; then
-      PORT=$(check_port "${PORT}")
+      PORT=$(check_port "$((PORT+1))")
     fi
-    MPORT=$(check_mport "${MPORT}")
+    MPORT=$(check_mport "$((MPORT+2))")
   done
 
   local status=0
