@@ -1,0 +1,14 @@
+---
+customer_test:
+  id: 7
+peer_00_host0:
+  id: 31
+peer_00_host1:
+  id: 32
+spce_test:
+  testuser1001:
+    uuid: UUID1001
+    testuser1002:
+    uuid: UUID1002
+  testuser1003:
+    uuid: UUID1003
