@@ -11,5 +11,5 @@ sip_out:
       '^SIP/2.0 180 Ringing',
       'CSeq: 10 INVITE',
       'From: <sip:004321001@',
-  	  'To: <sip:4311001@',
+      'To: <sip:4311001@',
     ]
