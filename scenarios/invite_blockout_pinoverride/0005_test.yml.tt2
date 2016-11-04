@@ -42,16 +42,6 @@ flow:
   - start|ROUTE_FIND_CALLEE:
   - start|ROUTE_CLEAR_CALLEE_PREF:
   - return|ROUTE_CLEAR_CALLEE_PREF:
-  - start|ROUTE_NCOS_CHECK:
-  - start|ROUTE_NCOS:
-  - return|ROUTE_NCOS:
-  - start|ROUTE_NCOS:
-  - return|ROUTE_NCOS:
-  - start|ROUTE_NCOS:
-  - return|ROUTE_NCOS:
-  - return|ROUTE_NCOS_CHECK:
-  - start|ROUTE_BLOCK_OUT:
-  - return|ROUTE_BLOCK_OUT:
   - start|ROUTE_LOAD_CALLEE_PREF:
   - start|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
   - return|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
@@ -69,6 +59,16 @@ flow:
   - start|ROUTE_ORDER_CF_MAP_ID:
   - return|ROUTE_ORDER_CF_MAP_ID:
   - return|ROUTE_LOAD_CALLEE_PREF:
+  - start|ROUTE_NCOS_CHECK:
+  - start|ROUTE_NCOS:
+  - return|ROUTE_NCOS:
+  - start|ROUTE_NCOS:
+  - return|ROUTE_NCOS:
+  - start|ROUTE_NCOS:
+  - return|ROUTE_NCOS:
+  - return|ROUTE_NCOS_CHECK:
+  - start|ROUTE_BLOCK_OUT:
+  - return|ROUTE_BLOCK_OUT:
   - start|ROUTE_CHECK_PBX:
   - return|ROUTE_CHECK_PBX:
   - start|ROUTE_INVITE_TO_INT:
