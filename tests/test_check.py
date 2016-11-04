@@ -20,8 +20,8 @@
 #
 import os
 import sys
+import junitxml
 import unittest
-import xmlrunner
 import re
 lib_path = os.path.abspath('bin')
 sys.path.append(lib_path)
@@ -197,8 +197,17 @@ class TestJson(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    unittest.main(
-        testRunner=xmlrunner.XMLTestRunner(output=sys.stdout),
-        # these make sure that some options that are not applicable
-        # remain hidden from the help menu.
-        failfast=False, buffer=False, catchbreak=False)
+
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.defaultTestLoader.loadTestsFromTestCase(TestXAvp))
+    suite.addTest(
+        unittest.defaultTestLoader.loadTestsFromTestCase(TestCheckFlowVars))
+    suite.addTest(
+        unittest.defaultTestLoader.loadTestsFromTestCase(TestCheckSipIn))
+    suite.addTest(
+        unittest.defaultTestLoader.loadTestsFromTestCase(TestCheckSipOut))
+    suite.addTest(unittest.defaultTestLoader.loadTestsFromTestCase(TestJson))
+    result = junitxml.JUnitXmlResult(sys.stdout)
+    result.startTestRun()
+    suite.run(result)
+    result.stopTestRun()
