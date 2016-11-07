@@ -1,3 +1,13 @@
+kamailio-config-tests (0.15.2.3+0~mr4.5.2.3) unstable; urgency=medium
+
+  [ Andrew Pogrebennyk ]
+  * [c2f70b7] TT#5404 fix flows after moving ROUTE_LOAD_CALLEE_PREF before ROUTE_NCOS
+  * [b6637b3] TT#5404 fix flows after fix cf432cb (missed trailing colon)
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 07 Nov 2016 11:32:31 +0100
+
 kamailio-config-tests (0.15.2.2+0~mr4.5.2.2) unstable; urgency=medium
 
   [ Victor Seva ]
