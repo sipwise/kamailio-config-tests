@@ -36,6 +36,9 @@ flow:
   - return|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
   - start|ROUTE_SET_CALLEE_DIALOG:
   - return|ROUTE_SET_CALLEE_DIALOG:
+      $avp(lua_dlg_profile): [
+        "total"
+      ]
   - start|ROUTE_BLOCK_IN:
   - return|ROUTE_BLOCK_IN:
   - start|ROUTE_ORDER_CF_MAP_ID:
@@ -45,6 +48,10 @@ flow:
   - return|ROUTE_CHECK_PBX:
   - start|ROUTE_INVITE_TO_INT:
   - start|ROUTE_OUTBOUND:
+      $avp(lua_dlg_profile): [
+        "local",
+        "total"
+      ]
   - start|ROUTE_SET_CALLER_DIALOG:
   - return|ROUTE_SET_CALLER_DIALOG:
   - start|BRANCH_ROUTE_SBC:
@@ -81,11 +88,15 @@ flow:
   - return|BRANCH_ROUTE_SBC:
   - return|BRANCH_ROUTE_SBC:
   - exit|ROUTE_OUTBOUND:
+      $avp(lua_dlg_profile): [
+        "local",
+        "total"
+      ]
 sip_in:
   - 'INVITE sip:testuser1003@'
   - 'From: <sip:testuser1002@'
   - 'To: <sip:testuser1003@'
-  - 'CSeq: 10 INVITE'
+  - 'CSeq: \d+ INVITE'
   - 'Max-Forwards: 70'
   - 'P-NGCP-Lookup-Ext: 1003'
   - 'P-NGCP-Orig-User: 43110021003'
@@ -96,8 +107,8 @@ sip_in:
   - 'P-NGCP-ContBlockOut-Override: 0'
   - 'P-NGCP-ContAdmBlockOut-Override: 0'
   - 'P-Caller-CLIR: 0'
-  - 'P-Caller-UUID: \w+'
-  - 'P-Callee-UUID: \w+'
+  - 'P-Caller-UUID: [% spce_test.testuser1002.uuid %]'
+  - 'P-Callee-UUID: [% spce_test.testuser1003.uuid %]'
   - 'P-NGCP-Caller-Info: <sip:testuser1002@'
   - 'P-NGCP-Callee-Info: <sip:43110021003@spce.test>;ip=127.0.0.1;port=5085;'
   - 'P-To-Device: 1'
@@ -109,21 +120,21 @@ sip_out:
       'Via: SIP/2.0/UDP 127.0.0.1:5085;branch=',
       'From: <sip:testuser1002@',
       'To: <sip:testuser1003@',
-      'CSeq: 10 INVITE',
+      'CSeq: \d+ INVITE',
       'Content-Length: 0'
    ]
   - [
        'INVITE sip:testuser1003@',
        'From: <sip:4311002@',
        'To: <sip:testuser1003@',
-       'CSeq: 10 INVITE',
+       'CSeq: \d+ INVITE',
        'Max-Forwards: 69',
        'P-NGCP-Lookup-Ext: 1003',
        'Content-Type: application/sdp',
        'Contact: <sip:127.0.0.1:5085;transport=udp>',
        'Call-Info: <sip:spce.test>;appearance-index=1',
-       'P-Caller-UUID: \w+',
-       'P-Callee-UUID: \w+',
+       'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
+       'P-Callee-UUID: [% spce_test.testuser1003.uuid %]',
        'P-Asserted-Identity: <sip:4311002@',
        'P-Called-Party-ID: <sip:testuser1003@',
        'P-App-Param: ;aleg_sst_enable=no;sst_enable=no',

@@ -1,11 +1,15 @@
 flow:
   - start|REPLY_ROUTE_NAT:
+      $avp(lua_dlg_profile): [
+        "local",
+        "total"
+      ]
   - exit|REPLY_ROUTE_NAT:
 sip_in:
   - '^SIP/2.0 180 Ringing'
-  - 'CSeq: 10 INVITE'
+  - 'CSeq: \d+ INVITE'
 sip_out:
   - [
       '^SIP/2.0 180 Ringing',
-      'CSeq: 10 INVITE',
+      'CSeq: \d+ INVITE',
     ]

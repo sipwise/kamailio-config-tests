@@ -9,13 +9,13 @@ flow:
   - return|ROUTE_OUTBOUND:
 sip_in:
   - '^ACK sip:testuser1003@127.0.0.1:5080(;prxroute=1)? SIP/2.0'
-  - 'CSeq: 10 ACK'
+  - 'CSeq: \d+ ACK'
   - 'From: <sip:testuser1002@'
   - 'To: <sip:testuser1003@'
 sip_out:
   - [
       '^ACK sip:testuser1003@127.0.0.1:5080(;prxroute=1)? SIP/2.0',
-      'CSeq: 10 ACK',
+      'CSeq: \d+ ACK',
       'From: <sip:4311002@',
       'To: <sip:testuser1003@'
     ]
