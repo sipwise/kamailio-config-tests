@@ -57,14 +57,38 @@ flow:
   - start|ROUTE_INVITE_TO_EXT:
   - start|ROUTE_PSTN:
   - start|ROUTE_PSTN_SELECT_PEER:
+      $avp(lua_dlg_profile): [
+        "outgoing"
+      ]
   - start|ROUTE_CLEAR_PEER_OUT_PREF:
   - return|ROUTE_CLEAR_PEER_OUT_PREF:
   - start|ROUTE_LOAD_PEER_OUT_PREF:
   - return|ROUTE_LOAD_PEER_OUT_PREF:
   - return|ROUTE_PSTN_SELECT_PEER:
   - start|ROUTE_OUTBOUND:
+      $avp(lua_dlg_profile): [
+        "relay",
+        "peerout:[% peer_00_host0.id %]",
+        "peer:[% peer_00_host0.id %]",
+        "outgoing"
+      ]
   - start|ROUTE_SET_CALLER_DIALOG:
   - return|ROUTE_SET_CALLER_DIALOG:
+      $avp(lua_dlg_profile): [
+        "accountout:[% customer_test.id %]",
+        "userout:[% spce_test.testuser1002.uuid %]",
+        "account:[% customer_test.id %]",
+        "user:[% spce_test.testuser1002.uuid %]",
+        "totalaccountout:[% customer_test.id %]",
+        "totaluserout:[% spce_test.testuser1002.uuid %]",
+        "totalaccount:[% customer_test.id %]",
+        "totaluser:[% spce_test.testuser1002.uuid %]",
+        "total",
+        "relay",
+        "peerout:[% peer_00_host0.id %]",
+        "peer:[% peer_00_host0.id %]",
+        "outgoing"
+      ]
   - start|ROUTE_ACC_CALLER:
   - return|ROUTE_ACC_CALLER:
   - start|ROUTE_ACC_CALLEE:
@@ -107,7 +131,21 @@ flow:
   - return|BRANCH_ROUTE_SBC:
   - return|BRANCH_ROUTE_SBC:
   - exit|ROUTE_OUTBOUND:
-
+      $avp(lua_dlg_profile): [
+        "accountout:[% customer_test.id %]",
+        "userout:[% spce_test.testuser1002.uuid %]",
+        "account:[% customer_test.id %]",
+        "user:[% spce_test.testuser1002.uuid %]",
+        "totalaccountout:[% customer_test.id %]",
+        "totaluserout:[% spce_test.testuser1002.uuid %]",
+        "totalaccount:[% customer_test.id %]",
+        "totaluser:[% spce_test.testuser1002.uuid %]",
+        "total",
+        "relay",
+        "peerout:[% peer_00_host0.id %]",
+        "peer:[% peer_00_host0.id %]",
+        "outgoing"
+      ]
 sip_in:
   - '^INVITE sip:43999100@'
   - 'Contact: sip:testuser1002@'
@@ -134,8 +172,8 @@ sip_out:
       'From: <sip:4311002@',
       'To: <sip:43999100@',
       'Content-Type: application/sdp',
-      'P-Caller-UUID: \w+',
-      'P-Callee-UUID: \w+',
+      'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
+      'P-Callee-UUID: 0',
       'P-Asserted-Identity: <sip:4311002@',
       'P-Called-Party-ID: <sip:43999100@',
       'P-App-Param: ;aleg_sst_enable=no;sst_enable=no',

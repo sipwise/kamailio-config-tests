@@ -42,6 +42,13 @@ flow:
   - return|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
   - start|ROUTE_SET_CALLEE_DIALOG:
   - return|ROUTE_SET_CALLEE_DIALOG:
+      $avp(lua_dlg_profile): [
+        "totalaccount:[% customer_test.id %]",
+        "totaluser:[% spce_test.testuser1001.uuid %]",
+        "total",
+        "account:[% customer_test.id %]",
+        "user:[% spce_test.testuser1001.uuid %]"
+      ]
   - start|ROUTE_BLOCK_IN:
   - return|ROUTE_BLOCK_IN:
   - start|ROUTE_ORDER_CF_MAP_ID:
@@ -73,14 +80,52 @@ flow:
   - start|ROUTE_INVITE_TO_EXT:
   - start|ROUTE_PSTN:
   - start|ROUTE_PSTN_SELECT_PEER:
+      $avp(lua_dlg_profile): [
+        "outgoing",
+        "totalaccount:[% customer_test.id %]",
+        "totaluser:[% spce_test.testuser1001.uuid %]",
+        "total",
+        "account:[% customer_test.id %]",
+        "user:[% spce_test.testuser1001.uuid %]"
+      ]
   - start|ROUTE_CLEAR_PEER_OUT_PREF:
   - return|ROUTE_CLEAR_PEER_OUT_PREF:
   - start|ROUTE_LOAD_PEER_OUT_PREF:
   - return|ROUTE_LOAD_PEER_OUT_PREF:
   - return|ROUTE_PSTN_SELECT_PEER:
   - start|ROUTE_OUTBOUND:
+      $avp(lua_dlg_profile): [
+        "relay",
+        "peerout:[% peer_00_host0.id %]",
+        "peer:[% peer_00_host0.id %]",
+        "outgoing",
+        "totalaccount:[% customer_test.id %]",
+        "totaluser:[% spce_test.testuser1001.uuid %]",
+        "total",
+        "account:[% customer_test.id %]",
+        "user:[% spce_test.testuser1001.uuid %]"
+      ]
   - start|ROUTE_SET_CALLER_DIALOG:
   - return|ROUTE_SET_CALLER_DIALOG:
+      $avp(lua_dlg_profile): [
+        "accountout:[% customer_test.id %]",
+        "userout:[% spce_test.testuser1002.uuid %]",
+        "account:[% customer_test.id %]",
+        "user:[% spce_test.testuser1002.uuid %]",
+        "totalaccountout:[% customer_test.id %]",
+        "totaluserout:[% spce_test.testuser1002.uuid %]",
+        "totalaccount:[% customer_test.id %]",
+        "totaluser:[% spce_test.testuser1002.uuid %]",
+        "relay",
+        "peerout:[% peer_00_host0.id %]",
+        "peer:[% peer_00_host0.id %]",
+        "outgoing",
+        "totalaccount:[% customer_test.id %]",
+        "totaluser:[% spce_test.testuser1001.uuid %]",
+        "total",
+        "account:[% customer_test.id %]",
+        "user:[% spce_test.testuser1001.uuid %]"
+      ]
   - start|ROUTE_ACC_CALLER:
   - return|ROUTE_ACC_CALLER:
   - start|ROUTE_ACC_CALLEE:
@@ -121,6 +166,25 @@ flow:
   - return|BRANCH_ROUTE_SBC:
   - return|BRANCH_ROUTE_SBC:
   - exit|ROUTE_OUTBOUND:
+      $avp(lua_dlg_profile): [
+        "accountout:[% customer_test.id %]",
+        "userout:[% spce_test.testuser1002.uuid %]",
+        "account:[% customer_test.id %]",
+        "user:[% spce_test.testuser1002.uuid %]",
+        "totalaccountout:[% customer_test.id %]",
+        "totaluserout:[% spce_test.testuser1002.uuid %]",
+        "totalaccount:[% customer_test.id %]",
+        "totaluser:[% spce_test.testuser1002.uuid %]",
+        "relay",
+        "peerout:[% peer_00_host0.id %]",
+        "peer:[% peer_00_host0.id %]",
+        "outgoing",
+        "totalaccount:[% customer_test.id %]",
+        "totaluser:[% spce_test.testuser1001.uuid %]",
+        "total",
+        "account:[% customer_test.id %]",
+        "user:[% spce_test.testuser1001.uuid %]"
+      ]
 sip_in:
   - '^INVITE sip:4311001@'
   - 'Contact: sip:testuser1002@'
@@ -147,8 +211,8 @@ sip_out:
       'From: <sip:4311002@',
       'To: <sip:4311001@',
       'Content-Type: application/sdp',
-      'P-Caller-UUID: \w+',
-      'P-Callee-UUID: \w+',
+      'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
+      'P-Callee-UUID: [% spce_test.testuser1001.uuid %]',
       'P-Asserted-Identity: <sip:4311002@',
       'P-Called-Party-ID: <sip:4318881001@',
       'P-App-Param: ;aleg_sst_enable=no;sst_enable=no',

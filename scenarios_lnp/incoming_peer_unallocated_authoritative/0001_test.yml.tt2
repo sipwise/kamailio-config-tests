@@ -17,6 +17,7 @@ flow:
   - return|ROUTE_CLEAR_PEER_IN_PREF:
   - start|ROUTE_LOAD_PEER_IN_PREF:
   - return|ROUTE_LOAD_PEER_IN_PREF:
+      $avp(lua_dlg_profile): ["peer:[% peer_00_host0.id %]", "total"]
   - return|ROUTE_FIND_CALLER:
   - start|ROUTE_GET_CALLER_CLI:
   - return|ROUTE_GET_CALLER_CLI:
@@ -44,6 +45,7 @@ flow:
   - return|ROUTE_ADD_CALLINFO_REPLY:
   - start|dialog:failed:
   - return|dialog:failed:
+      $avp(lua_dlg_profile): None
   - return|dialog:failed:
   - exit|ROUTE_EARLY_REJECT:
 sip_in:
