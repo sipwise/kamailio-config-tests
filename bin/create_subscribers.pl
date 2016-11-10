@@ -193,6 +193,28 @@ sub create_subscriber
   return;
 }
 
+sub manage_pbx_pilot
+{
+  my $data = shift;
+  foreach my $domain (sort keys %{$data->{subscribers}})
+  {
+    my $d_data = $data->{subscribers}->{$domain};
+    foreach my $username (sort keys %{$d_data})
+    {
+      my $s = $d_data->{$username};
+      next unless $s->{is_pbx_pilot};
+      # TODO: support pbx_groups for pbx_pilot
+      if (exists $s->{pbx_groups}) {
+        print("WARN: pbx_groups not supported for pbx_pilot. Skipped\n");
+        delete $s->{pbx_groups};
+      }
+      create_subscriber($username, $domain, $data, $s);
+      print("$username\@$domain is a pbx_pilot[$s->{id}]\n");
+    }
+  }
+  return;
+}
+
 sub manage_pbx_groups
 {
   my $data = shift;
@@ -217,6 +239,7 @@ sub main
     my $data = shift;
     manage_customers($data);
     manage_domains($data);
+    manage_pbx_pilot($data);
     manage_pbx_groups($data);
 
     foreach my $domain (sort keys %{$data->{subscribers}})
@@ -225,7 +248,7 @@ sub main
       foreach my $username (sort keys %{$d_data})
       {
         my $s = $d_data->{$username};
-        next if $s->{is_pbx_group};
+        next if ($s->{is_pbx_group} || $s->{is_pbx_pilot});
         create_subscriber($username, $domain, $data, $s);
         print("$username\@$domain created [$s->{id}]\n");
       }
