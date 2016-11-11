@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a494da4_f8e6a815",
+        "filename": "bin/create_subscribers.pl",
+        "patchSetId": 1
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2016-11-11T12:40:33Z",
+      "side": 1,
+      "message": "Hmm, just skimmed over, but aren\u0027t we always creating the subscriber for all users? Is the logic split due to the more specific prints or? Maybe it would be nice to have just a central place where to create subscribers instead of having that in various functions?",
+      "revId": "6d10bef8485b7b27887e9b9d86cf2ac84079bd1f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
