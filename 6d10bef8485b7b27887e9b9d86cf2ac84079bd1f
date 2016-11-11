@@ -16,6 +16,24 @@
       "revId": "6d10bef8485b7b27887e9b9d86cf2ac84079bd1f",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba51214e_18044514",
+        "filename": "bin/create_subscribers.pl",
+        "patchSetId": 1
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2016-11-11T17:07:05Z",
+      "side": 1,
+      "message": "we have to create:\n\n- pbx_pilot user first ( we cannot create pbx_groups without pbx_pilot defined)\n- subscribers that are pbx_groups ( we store the ids )\n- \"normal\" subscribers ( we already have the pbx_groups ids )",
+      "parentUuid": "1a494da4_f8e6a815",
+      "revId": "6d10bef8485b7b27887e9b9d86cf2ac84079bd1f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
