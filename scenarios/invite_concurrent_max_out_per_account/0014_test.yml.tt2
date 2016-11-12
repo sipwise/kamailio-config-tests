@@ -25,6 +25,8 @@ flow:
   - return|ROUTE_LOAD_CALLER_CONTRACT_PREF:
   - return|ROUTE_LOAD_CALLER_PREF:
       $xavp(caller_real_prefs[0]=>concurrent_max_out_per_account[*]): [1]
+  - start|ROUTE_DLG_MANAGE:
+  - return|ROUTE_DLG_MANAGE:
   - start|ROUTE_GET_CALLER_CLI:
   - return|ROUTE_GET_CALLER_CLI:
   - start|ROUTE_GET_FORWARDER_CLI:
@@ -54,6 +56,8 @@ flow:
   - return|ROUTE_CHECK_PBX:
   - start|ROUTE_INVITE_TO_EXT:
   - start|ROUTE_PSTN:
+  - start|ROUTE_CNT_DLG_CHECK:
+  - return|ROUTE_CNT_DLG_CHECK:
   - start|ROUTE_PSTN_SELECT_PEER:
       $avp(lua_dlg_profile): ["outgoing"]
   - start|ROUTE_CLEAR_PEER_OUT_PREF:
@@ -69,6 +73,8 @@ flow:
         "outgoing"
       ]
   - start|ROUTE_SET_CALLER_DIALOG:
+  - start|ROUTE_CNT_DLG_CHECK:
+  - return|ROUTE_CNT_DLG_CHECK:
   - start|ROUTE_CNT_CALLER_REJECT:
       $avp(size): [2]
       $avp(lua_dlg_profile): [
