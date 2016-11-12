@@ -574,6 +574,10 @@ if [ -z "$SKIP_RUNSIPP" ]; then
   echo "$(date) - Running sipp scenarios"
   run_sipp
   echo "$(date) - Done sipp"
+
+  echo "$(date) - move scenario_ids.yml file"
+  mv "${SCEN_CHECK_DIR}/scenario_ids.yml" "${LOG_DIR}"
+  echo "$(date) - Done"
 else
   if [ -n "${JSON_KAM}" ] ; then
     echo "$(date) - get kamailio cfgt files"
@@ -613,10 +617,7 @@ if [ -z "${SKIP_TESTS}" ]; then
   find "${SCEN_CHECK_DIR}" -type f -name '*test.yml' -exec rm {} \;
   echo "$(date) - Generating tests files"
   "${BIN_DIR}/generate_tests.sh" -d \
-    "${SCEN_CHECK_DIR}" "${SCEN_CHECK_DIR}/scenario_ids.yml" "${PROFILE}"
-  echo "$(date) - copy scenario_ids.yml file"
-  cp "${SCEN_CHECK_DIR}/scenario_ids.yml" "${LOG_DIR}"
-  echo "$(date) - Done"
+    "${SCEN_CHECK_DIR}" "${LOG_DIR}/scenario_ids.yml" "${PROFILE}"
 
   for t in ${SCEN_CHECK_DIR}/*_test.yml; do
     test_filepath "$t"
