@@ -21,7 +21,7 @@ sip_in:
   - 'Max-Forwards: 70'
   - 'Content-Length: 0'
   - 'From: <sip:testuser1002@'
-  - 'To: <sip:testuser1003@'
+  - 'To: <sip:1003@'
   - 'P-Asserted-Identity: \"1003\" <sip:1003@'
 
 sip_out:
@@ -30,7 +30,7 @@ sip_out:
       'CSeq: \d+ BYE',
       'Content-Length: 0',
       'From: <sip:testuser1002@',
-      'To: <sip:testuser1003@'
+      'To: <sip:1003@'
     ]
   - [
       '^BYE sip:testuser1003@127.0.0.1:5080(;prxroute=1)? SIP/2.0',
@@ -38,5 +38,5 @@ sip_out:
       'Max-Forwards: 69',
       'Content-Length: 0',
       'From: <sip:4311002@',
-      'To: <sip:testuser1003@'
+      'To: <sip:1003@'
     ]

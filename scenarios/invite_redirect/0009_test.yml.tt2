@@ -1,152 +1,160 @@
 flow:
-- start|REPLY_ROUTE_NAT:
-- 'start|tm:branch-failure:redirect':
-- start|ROUTE_STOP_RTPPROXY_BRANCH:
-- start|ROUTE_RESTORE_CLUSTERSET:
-- return|ROUTE_RESTORE_CLUSTERSET:
-- return|ROUTE_STOP_RTPPROXY_BRANCH:
-- start|ROUTE_INITVARS:
-- return|ROUTE_INITVARS:
-- start|ROUTE_LOAD_CALLER_PREF:
-- start|ROUTE_CLEAR_CALLER_PREF:
-- return|ROUTE_CLEAR_CALLER_PREF:
-- start|ROUTE_LOAD_CALLER_CONTRACT_PREF:
-- return|ROUTE_LOAD_CALLER_CONTRACT_PREF:
-- return|ROUTE_LOAD_CALLER_PREF:
-- start|ROUTE_FIND_CALLEE:
-- start|ROUTE_CLEAR_CALLEE_PREF:
-- return|ROUTE_CLEAR_CALLEE_PREF:
-- start|ROUTE_LOAD_CALLEE_PREF:
-- start|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
-- return|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
-- start|ROUTE_SET_CALLEE_DIALOG:
-- return|ROUTE_SET_CALLEE_DIALOG:
-    $avp(lua_dlg_profile): [
-        "accountout:[% customer_test.id %]",
-        "userout:[% spce_test.testuser1002.uuid %]",
-        "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1002.uuid %]",
-        "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% spce_test.testuser1002.uuid %]",
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1002.uuid %]",
-        "local",
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1003.uuid %]",
-        "total",
-        "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1003.uuid %]"
-      ]
-- start|ROUTE_BLOCK_IN:
-- return|ROUTE_BLOCK_IN:
-- start|ROUTE_ORDER_CF_MAP_ID:
-- return|ROUTE_ORDER_CF_MAP_ID:
-- return|ROUTE_LOAD_CALLEE_PREF:
-- start|ROUTE_NCOS_CHECK:
-- start|ROUTE_NCOS:
-- return|ROUTE_NCOS:
-- start|ROUTE_NCOS:
-- return|ROUTE_NCOS:
-- start|ROUTE_NCOS:
-- return|ROUTE_NCOS:
-- start|ROUTE_NCOS:
-- return|ROUTE_NCOS:
-- return|ROUTE_NCOS_CHECK:
-- start|ROUTE_BLOCK_OUT:
-- return|ROUTE_BLOCK_OUT:
-- start|ROUTE_CHECK_PBX:
-- return|ROUTE_CHECK_PBX:
-- start|ROUTE_INVITE_TO_INT:
-- start|ROUTE_OUTBOUND:
-- start|ROUTE_SET_CALLER_DIALOG:
-- return|ROUTE_SET_CALLER_DIALOG:
-    $avp(lua_dlg_profile): [
-        'accountout:[% customer_test.id %]',
-        'userout:[% spce_test.testuser1003.uuid %]',
-        'account:[% customer_test.id %]',
-        'user:[% spce_test.testuser1003.uuid %]',
-        'totalaccountout:[% customer_test.id %]',
-        'totaluserout:[% spce_test.testuser1003.uuid %]',
-        'totalaccount:[% customer_test.id %]',
-        'totaluser:[% spce_test.testuser1003.uuid %]',
-        "accountout:[% customer_test.id %]",
-        "userout:[% spce_test.testuser1002.uuid %]",
-        "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1002.uuid %]",
-        "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% spce_test.testuser1002.uuid %]",
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1002.uuid %]",
-        "local",
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1003.uuid %]",
-        "total",
-        "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1003.uuid %]"
-      ]
-- start|ROUTE_ACC_CALLER:
-- return|ROUTE_ACC_CALLER:
-- start|ROUTE_ACC_CALLEE:
-- return|ROUTE_ACC_CALLEE:
-- start|BRANCH_ROUTE_SBC:
-- start|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
-- return|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
-- start|ROUTE_SET_CALLEE_DIALOG:
-- return|ROUTE_SET_CALLEE_DIALOG:
-- start|ROUTE_BRANCH_ACC_RTP:
-- return|ROUTE_BRANCH_ACC_RTP:
-- start|ROUTE_SET_RUSER:
-- return|ROUTE_SET_RUSER:
-- start|ROUTE_FILTER_PRACK:
-- return|ROUTE_FILTER_PRACK:
-- start|ROUTE_PREPARE_SST:
-- return|ROUTE_PREPARE_SST:
-- start|ROUTE_PREPARE_MOH:
-- return|ROUTE_PREPARE_MOH:
-- start|ROUTE_SET_CALLER_CLI:
-- start|ROUTE_PREPARE_CALLER_CLI:
-- return|ROUTE_PREPARE_CALLER_CLI:
-- start|ROUTE_PREPARE_CALLER_CLI:
-- return|ROUTE_PREPARE_CALLER_CLI:
-- start|ROUTE_PREPARE_CALLER_CLI:
-- return|ROUTE_PREPARE_CALLER_CLI:
-- start|ROUTE_PREPARE_CALLER_CLI:
-- return|ROUTE_PREPARE_CALLER_CLI:
-- start|ROUTE_PREPARE_CALLER_CLI:
-- return|ROUTE_PREPARE_CALLER_CLI:
-- return|ROUTE_SET_CALLER_CLI:
-- start|ROUTE_SET_CALLEE:
-- return|ROUTE_SET_CALLEE:
-- start|ROUTE_ADD_CALLINFO:
-- return|ROUTE_ADD_CALLINFO:
-- return|BRANCH_ROUTE_SBC:
-- return|BRANCH_ROUTE_SBC:
-- exit|ROUTE_OUTBOUND:
-    $avp(lua_dlg_profile): [
-        'accountout:[% customer_test.id %]',
-        'userout:[% spce_test.testuser1003.uuid %]',
-        'account:[% customer_test.id %]',
-        'user:[% spce_test.testuser1003.uuid %]',
-        'totalaccountout:[% customer_test.id %]',
-        'totaluserout:[% spce_test.testuser1003.uuid %]',
-        'totalaccount:[% customer_test.id %]',
-        'totaluser:[% spce_test.testuser1003.uuid %]',
-        "accountout:[% customer_test.id %]",
-        "userout:[% spce_test.testuser1002.uuid %]",
-        "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1002.uuid %]",
-        "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% spce_test.testuser1002.uuid %]",
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1002.uuid %]",
-        "local",
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1003.uuid %]",
-        "total",
-        "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1003.uuid %]"
-      ]
-- exit|ROUTE_OUTBOUND:
+  - start|REPLY_ROUTE_NAT:
+  - 'start|tm:branch-failure:redirect':
+  - start|ROUTE_STOP_RTPPROXY_BRANCH:
+  - start|ROUTE_RESTORE_CLUSTERSET:
+  - return|ROUTE_RESTORE_CLUSTERSET:
+  - return|ROUTE_STOP_RTPPROXY_BRANCH:
+  - start|ROUTE_INITVARS:
+  - return|ROUTE_INITVARS:
+  - start|ROUTE_LOAD_CALLER_PREF:
+  - start|ROUTE_CLEAR_CALLER_PREF:
+  - return|ROUTE_CLEAR_CALLER_PREF:
+  - start|ROUTE_LOAD_CALLER_CONTRACT_PREF:
+  - return|ROUTE_LOAD_CALLER_CONTRACT_PREF:
+  - return|ROUTE_LOAD_CALLER_PREF:
+  - start|ROUTE_FIND_CALLEE:
+  - start|ROUTE_CLEAR_CALLEE_PREF:
+  - return|ROUTE_CLEAR_CALLEE_PREF:
+  - start|ROUTE_LOAD_CALLEE_PREF:
+  - start|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
+  - return|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
+  - start|ROUTE_SET_CALLEE_DIALOG:
+  - start|ROUTE_CNT_DLG_CHECK:
+  - return|ROUTE_CNT_DLG_CHECK:
+  - return|ROUTE_SET_CALLEE_DIALOG:
+      $avp(lua_dlg_profile): [
+          "accountout:[% customer_test.id %]",
+          "userout:[% spce_test.testuser1002.uuid %]",
+          "account:[% customer_test.id %]",
+          "user:[% spce_test.testuser1002.uuid %]",
+          "totalaccountout:[% customer_test.id %]",
+          "totaluserout:[% spce_test.testuser1002.uuid %]",
+          "totalaccount:[% customer_test.id %]",
+          "totaluser:[% spce_test.testuser1002.uuid %]",
+          "local",
+          "totalaccount:[% customer_test.id %]",
+          "totaluser:[% spce_test.testuser1003.uuid %]",
+          "total",
+          "account:[% customer_test.id %]",
+          "user:[% spce_test.testuser1003.uuid %]"
+        ]
+  - start|ROUTE_BLOCK_IN:
+  - return|ROUTE_BLOCK_IN:
+  - start|ROUTE_ORDER_CF_MAP_ID:
+  - return|ROUTE_ORDER_CF_MAP_ID:
+  - return|ROUTE_LOAD_CALLEE_PREF:
+  - start|ROUTE_NCOS_CHECK:
+  - start|ROUTE_NCOS:
+  - return|ROUTE_NCOS:
+  - start|ROUTE_NCOS:
+  - return|ROUTE_NCOS:
+  - start|ROUTE_NCOS:
+  - return|ROUTE_NCOS:
+  - start|ROUTE_NCOS:
+  - return|ROUTE_NCOS:
+  - return|ROUTE_NCOS_CHECK:
+  - start|ROUTE_BLOCK_OUT:
+  - return|ROUTE_BLOCK_OUT:
+  - start|ROUTE_CHECK_PBX:
+  - return|ROUTE_CHECK_PBX:
+  - start|ROUTE_INVITE_TO_INT:
+  - start|ROUTE_CNT_DLG_CHECK:
+  - return|ROUTE_CNT_DLG_CHECK:
+  - start|ROUTE_OUTBOUND:
+  - start|ROUTE_SET_CALLER_DIALOG:
+  - start|ROUTE_CNT_DLG_CHECK:
+  - return|ROUTE_CNT_DLG_CHECK:
+  - return|ROUTE_SET_CALLER_DIALOG:
+      $avp(lua_dlg_profile): [
+          'accountout:[% customer_test.id %]',
+          'userout:[% spce_test.testuser1003.uuid %]',
+          'account:[% customer_test.id %]',
+          'user:[% spce_test.testuser1003.uuid %]',
+          'totalaccountout:[% customer_test.id %]',
+          'totaluserout:[% spce_test.testuser1003.uuid %]',
+          'totalaccount:[% customer_test.id %]',
+          'totaluser:[% spce_test.testuser1003.uuid %]',
+          "accountout:[% customer_test.id %]",
+          "userout:[% spce_test.testuser1002.uuid %]",
+          "account:[% customer_test.id %]",
+          "user:[% spce_test.testuser1002.uuid %]",
+          "totalaccountout:[% customer_test.id %]",
+          "totaluserout:[% spce_test.testuser1002.uuid %]",
+          "totalaccount:[% customer_test.id %]",
+          "totaluser:[% spce_test.testuser1002.uuid %]",
+          "local",
+          "totalaccount:[% customer_test.id %]",
+          "totaluser:[% spce_test.testuser1003.uuid %]",
+          "total",
+          "account:[% customer_test.id %]",
+          "user:[% spce_test.testuser1003.uuid %]"
+        ]
+  - start|ROUTE_ACC_CALLER:
+  - return|ROUTE_ACC_CALLER:
+  - start|ROUTE_ACC_CALLEE:
+  - return|ROUTE_ACC_CALLEE:
+  - start|BRANCH_ROUTE_SBC:
+  - start|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
+  - return|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
+  - start|ROUTE_SET_CALLEE_DIALOG:
+  - start|ROUTE_CNT_DLG_CHECK:
+  - return|ROUTE_CNT_DLG_CHECK:
+  - return|ROUTE_SET_CALLEE_DIALOG:
+  - start|ROUTE_BRANCH_ACC_RTP:
+  - return|ROUTE_BRANCH_ACC_RTP:
+  - start|ROUTE_SET_RUSER:
+  - return|ROUTE_SET_RUSER:
+  - start|ROUTE_FILTER_PRACK:
+  - return|ROUTE_FILTER_PRACK:
+  - start|ROUTE_PREPARE_SST:
+  - return|ROUTE_PREPARE_SST:
+  - start|ROUTE_PREPARE_MOH:
+  - return|ROUTE_PREPARE_MOH:
+  - start|ROUTE_SET_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - return|ROUTE_PREPARE_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - return|ROUTE_PREPARE_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - return|ROUTE_PREPARE_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - return|ROUTE_PREPARE_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - return|ROUTE_PREPARE_CALLER_CLI:
+  - return|ROUTE_SET_CALLER_CLI:
+  - start|ROUTE_SET_CALLEE:
+  - return|ROUTE_SET_CALLEE:
+  - start|ROUTE_ADD_CALLINFO:
+  - return|ROUTE_ADD_CALLINFO:
+  - return|BRANCH_ROUTE_SBC:
+  - return|BRANCH_ROUTE_SBC:
+  - exit|ROUTE_OUTBOUND:
+      $avp(lua_dlg_profile): [
+          'accountout:[% customer_test.id %]',
+          'userout:[% spce_test.testuser1003.uuid %]',
+          'account:[% customer_test.id %]',
+          'user:[% spce_test.testuser1003.uuid %]',
+          'totalaccountout:[% customer_test.id %]',
+          'totaluserout:[% spce_test.testuser1003.uuid %]',
+          'totalaccount:[% customer_test.id %]',
+          'totaluser:[% spce_test.testuser1003.uuid %]',
+          "accountout:[% customer_test.id %]",
+          "userout:[% spce_test.testuser1002.uuid %]",
+          "account:[% customer_test.id %]",
+          "user:[% spce_test.testuser1002.uuid %]",
+          "totalaccountout:[% customer_test.id %]",
+          "totaluserout:[% spce_test.testuser1002.uuid %]",
+          "totalaccount:[% customer_test.id %]",
+          "totaluser:[% spce_test.testuser1002.uuid %]",
+          "local",
+          "totalaccount:[% customer_test.id %]",
+          "totaluser:[% spce_test.testuser1003.uuid %]",
+          "total",
+          "account:[% customer_test.id %]",
+          "user:[% spce_test.testuser1003.uuid %]"
+        ]
+  - exit|ROUTE_OUTBOUND:
 sip_in:
   - '^SIP/2.0 302 Moved Temporarily'
   - 'From: <sip:4311002@'
