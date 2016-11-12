@@ -36,9 +36,13 @@ flow:
   - start|ROUTE_CHECK_PBX:
   - return|ROUTE_CHECK_PBX:
   - start|ROUTE_VOICEBOX:
+  - start|ROUTE_CNT_DLG_CHECK:
+  - return|ROUTE_CNT_DLG_CHECK:
   - start|ROUTE_OUTBOUND:
       $avp(lua_dlg_profile): ["peer:voicebox", "local"]
   - start|ROUTE_SET_CALLER_DIALOG:
+  - start|ROUTE_CNT_DLG_CHECK:
+  - return|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_SET_CALLER_DIALOG:
       $avp(lua_dlg_profile): [
         "totalaccountout:[% customer_test.id %]",
