@@ -11,6 +11,10 @@ flow:
   - return|ROUTE_CLEAR_CALLEE_DOMAIN_PREF:
   - return|ROUTE_LOAD_CALLEE_DOMAIN_PREF:
   - start|ROUTE_FIND_CALLER:
+  - start|ROUTE_CNT_DLG_CHECK:
+  - start|ROUTE_DLG_MANAGE:
+  - return|ROUTE_DLG_MANAGE:
+  - return|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_FIND_CALLER:
   - start|ROUTE_LOAD_CALLER_PREF:
   - start|ROUTE_CLEAR_CALLER_PREF:
@@ -18,6 +22,8 @@ flow:
   - start|ROUTE_LOAD_CALLER_CONTRACT_PREF:
   - return|ROUTE_LOAD_CALLER_CONTRACT_PREF:
   - return|ROUTE_LOAD_CALLER_PREF:
+  - start|ROUTE_DLG_MANAGE:
+  - return|ROUTE_DLG_MANAGE:
   - start|ROUTE_GET_CALLER_CLI:
   - return|ROUTE_GET_CALLER_CLI:
   - start|ROUTE_GET_FORWARDER_CLI:
@@ -35,6 +41,8 @@ flow:
   - start|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
   - return|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
   - start|ROUTE_SET_CALLEE_DIALOG:
+  - start|ROUTE_CNT_DLG_CHECK:
+  - return|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_SET_CALLEE_DIALOG:
       $avp(lua_dlg_profile): [
         "total"
@@ -47,17 +55,23 @@ flow:
   - start|ROUTE_CHECK_PBX:
   - return|ROUTE_CHECK_PBX:
   - start|ROUTE_INVITE_TO_INT:
+  - start|ROUTE_CNT_DLG_CHECK:
+  - return|ROUTE_CNT_DLG_CHECK:
   - start|ROUTE_OUTBOUND:
       $avp(lua_dlg_profile): [
         "local",
         "total"
       ]
   - start|ROUTE_SET_CALLER_DIALOG:
+  - start|ROUTE_CNT_DLG_CHECK:
+  - return|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_SET_CALLER_DIALOG:
   - start|BRANCH_ROUTE_SBC:
   - start|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
   - return|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
   - start|ROUTE_SET_CALLEE_DIALOG:
+  - start|ROUTE_CNT_DLG_CHECK:
+  - return|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_SET_CALLEE_DIALOG:
   - start|ROUTE_BRANCH_ACC_RTP:
   - return|ROUTE_BRANCH_ACC_RTP:
@@ -95,7 +109,7 @@ flow:
 sip_in:
   - 'INVITE sip:testuser1003@'
   - 'From: <sip:testuser1002@'
-  - 'To: <sip:testuser1003@'
+  - 'To: <sip:1003@'
   - 'CSeq: \d+ INVITE'
   - 'Max-Forwards: 70'
   - 'P-NGCP-Lookup-Ext: 1003'
@@ -119,14 +133,14 @@ sip_out:
       'SIP/2.0 100 Trying',
       'Via: SIP/2.0/UDP 127.0.0.1:5085;branch=',
       'From: <sip:testuser1002@',
-      'To: <sip:testuser1003@',
+      'To: <sip:1003@',
       'CSeq: \d+ INVITE',
       'Content-Length: 0'
    ]
   - [
        'INVITE sip:testuser1003@',
        'From: <sip:4311002@',
-       'To: <sip:testuser1003@',
+       'To: <sip:1003@',
        'CSeq: \d+ INVITE',
        'Max-Forwards: 69',
        'P-NGCP-Lookup-Ext: 1003',

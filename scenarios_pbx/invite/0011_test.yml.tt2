@@ -15,5 +15,5 @@ sip_out:
       '^SIP/2.0 200 OK',
       'CSeq: \d+ INVITE',
       'From: <sip:testuser1002@',
-      'To: <sip:testuser1003@'
+      'To: <sip:1003@'
     ]
