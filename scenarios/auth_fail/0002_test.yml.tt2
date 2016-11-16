@@ -13,6 +13,10 @@ flow:
       $avp(orig_acc_caller_user): ['testuser1003']
       $avp(orig_acc_caller_domain): ['spce.test']
   - start|ROUTE_ADD_CALLINFO_REPLY:
+  - start|ROUTE_ADD_CALLINFO_CALLER:
+  - return|ROUTE_ADD_CALLINFO_CALLER:
+  - start|ROUTE_ADD_CALLINFO_CALLEE:
+  - return|ROUTE_ADD_CALLINFO_CALLEE:
   - return|ROUTE_ADD_CALLINFO_REPLY:
   - exit|ROUTE_AUTH:
 sip_in:
