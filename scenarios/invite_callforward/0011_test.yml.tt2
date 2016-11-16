@@ -137,6 +137,10 @@ flow:
   - start|ROUTE_SET_CALLEE:
   - return|ROUTE_SET_CALLEE:
   - start|ROUTE_ADD_CALLINFO:
+  - start|ROUTE_ADD_CALLINFO_CALLER:
+  - return|ROUTE_ADD_CALLINFO_CALLER:
+  - start|ROUTE_ADD_CALLINFO_CALLEE:
+  - return|ROUTE_ADD_CALLINFO_CALLEE:
   - return|ROUTE_ADD_CALLINFO:
   - return|BRANCH_ROUTE_SBC:
   # branch ??
