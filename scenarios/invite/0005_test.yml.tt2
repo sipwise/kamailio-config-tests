@@ -20,6 +20,8 @@ flow:
       $avp(orig_acc_caller_user): ['testuser1002']
       $avp(orig_acc_caller_domain): ['spce.test']
   - start|ROUTE_ADD_CALLINFO_REPLY:
+  - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
   - return|ROUTE_ADD_CALLINFO_REPLY:
   - return|ROUTE_AUTH:
   - return|ROUTE_FIND_CALLER:
@@ -145,6 +147,10 @@ flow:
   - start|ROUTE_SET_CALLEE:
   - return|ROUTE_SET_CALLEE:
   - start|ROUTE_ADD_CALLINFO:
+  - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
+  - start|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
   - return|ROUTE_ADD_CALLINFO:
   - return|BRANCH_ROUTE_SBC:
   - return|BRANCH_ROUTE_SBC:

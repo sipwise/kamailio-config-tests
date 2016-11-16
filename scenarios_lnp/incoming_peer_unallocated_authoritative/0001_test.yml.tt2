@@ -44,6 +44,10 @@ flow:
   - return|ROUTE_ACC_FAILURE:
   - start|ROUTE_EARLY_REJECT:
   - start|ROUTE_ADD_CALLINFO_REPLY:
+  - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
+  - start|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
   - return|ROUTE_ADD_CALLINFO_REPLY:
   - start|dialog:failed:
   - return|dialog:failed:
