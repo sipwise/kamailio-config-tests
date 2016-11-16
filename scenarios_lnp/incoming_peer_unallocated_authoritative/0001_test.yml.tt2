@@ -44,6 +44,10 @@ flow:
   - return|ROUTE_ACC_FAILURE:
   - start|ROUTE_EARLY_REJECT:
   - start|ROUTE_ADD_CALLINFO_REPLY:
+  - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
+  - start|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
   - return|ROUTE_ADD_CALLINFO_REPLY:
   - start|dialog:failed:
   - return|dialog:failed:
@@ -79,7 +83,7 @@ sip_out:
       'CSeq: 1 INVITE',
       'P-Out-Socket: udp:127.0.0.1:5060',
       'P-NGCP-Auth-IP: 127.0.2.1',
-      'P-NGCP-Caller-Info: <sip:004411001@127.0.2.1>;ip=127.0.2.1;port=\d+;',
-      'P-NGCP-Callee-Info: <sip:4321001@spce.test>;ip=spce.test;port=5060;',
+      'P-NGCP-Caller-Info: <sip:004411001@127.0.2.1>;ip=127.0.2.1;port=\d+',
+      'P-NGCP-Callee-Info: <sip:4321001@spce.test>;ip=spce.test;port=5060',
       'Content-Length:\s+0'
     ]

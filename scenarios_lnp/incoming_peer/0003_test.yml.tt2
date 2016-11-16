@@ -132,6 +132,10 @@ flow:
       $var(lnp_rn): 0
   - return|ROUTE_SET_CALLEE:
   - start|ROUTE_ADD_CALLINFO:
+  - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
+  - start|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
   - return|ROUTE_ADD_CALLINFO:
   - return|BRANCH_ROUTE_SBC:
   # branch ?
