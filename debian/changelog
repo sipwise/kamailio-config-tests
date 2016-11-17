@@ -1,3 +1,41 @@
+kamailio-config-tests (5.1.0.0+0~mr5.1.0.0) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [c1a8200] TT#4856 scenarios/incoming_hih: add counter info
+  * [0c3e341] TT#4856 scenarios/incoming_peer: add counter info
+  * [354dbbe] TT#4856 scenarios/invite: add counter info
+  * [2dc1a88] TT#4856 scenarios/invite_allowedcli_match: add counter info
+  * [9d4d650] TT#4856 scenarios: add counter info
+  * [193c3fd] TT#4938 bin/restart_log.sh touch expected logs after remove them
+  * [b499e0a] TT#5103 TT#4856 invite_voicebox: fix template, use dynamic id
+  * [550a9d3] TT#5105 bin/check.sh: check media port+2, sipp uses media port +2
+  * [5633995] TT#5200 scenarios*: fix default peer host port
+  * [08e18b6] TT#5105 bin/check.sh: restore previous behavior with static ports for sender
+  * [0a863a2] TT#5200 register_bria: do not use port where not really needed
+  * [a255bed] TT#5105 bin/check.sh: restore previous behavior for responders
+  * [47eb36c] MT#19053 bin/config_debug.pl: use GROUP if defined as default value
+  * [97c3500] TT#5412 test: add yaml format test for XXXX_test.yml.tt2 files
+  * [3640257] TT#4938 bin/restart_log.sh: fix delete previous logs
+  * [ea2ff64] TT#4856 scenarios_lnp: add counters info
+  * [3ed5d82] TT#4856 scenarios_pbx: add counters info
+  * [6d10bef] TT#4110 scenarios_pbx: is_pbx_pilot order is important
+  * [4e7cf79] TT#4760 move scenario_ids.yml to log just after run_sipp
+  * [f047ffd] TT#6350 update new routes ROUTE_DLG_MANAGE/ROUTE_CNT_DLG_CHECK
+  * [ed076a6] TT#6350 scenarios_pbx: We call ROUTE_DLG_MANAGE twice!!
+
+  [ Alexander Lutay ]
+  * [4e42a6f] TT#5200 Fix 563399: register_bria used old ports, moved to new one
+  * [85e44bb] TT#5200 Fix 4e42a6: Change port to 51603 as it is currently in use since 550a9d3
+
+  [ Andrew Pogrebennyk ]
+  * [93f5dbc] TT#5404 fix flows after moving ROUTE_LOAD_CALLEE_PREF before ROUTE_NCOS
+  * [561070c] TT#5404 fix flows after fix cf432cb (missed trailing colon)
+  * [a26d8c1] TT#5154 add ROUTE_ADD_CALLINFO_CALLE[RE]_PRIMARY to kamailio-config-tests
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 17 Nov 2016 23:13:17 +0100
+
 kamailio-config-tests (5.0.0.0+0~mr5.0.0.0) unstable; urgency=medium
 
   [ Andrew Pogrebennyk ]
