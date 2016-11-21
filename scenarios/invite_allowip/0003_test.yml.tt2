@@ -22,6 +22,8 @@ flow:
   - end|ROUTE_LOAD_CALLER_PREF:
       $xavp(caller_usr_prefs[0]=>allowed_ips_grp[*]): '\d+'
       $xavp(caller_real_prefs[0]=>allowed_ips_grp[*]): '\d+'
+  - start|ROUTE_DLG_MANAGE:
+  - end|ROUTE_DLG_MANAGE:
   - start|ROUTE_ACC_FAILURE:
   - start|ROUTE_ACC_CALLER:
   - end|ROUTE_ACC_CALLER:

@@ -11,8 +11,6 @@ flow:
   - exit|ROUTE_OUTBOUND:
   - start|REPLY_ROUTE_NAT:
   - exit|REPLY_ROUTE_NAT:
-  - start|REPLY_ROUTE_NAT:
-  - exit|REPLY_ROUTE_NAT:
 sip_in:
   - '^INVITE sip:127.0.0.1:5080'
   - 'Contact: sip:testuser1002@'
@@ -38,13 +36,4 @@ sip_out:
       'Content-Type: application/sdp',
       'Proxy-Authorization: Digest username="testuser1002"',
       'a=sendonly'
-    ]
-  - [
-      '^SIP/2.0 200 OK',
-      'From: <sip:testuser1002@',
-      'To: <sip:testuser1003@',
-      'CSeq: 3 INVITE',
-      'Contact: <sip:(testuser1003@)?127.0.0.1:5080(;transport=udp)?>',
-      'Content-Type: application/sdp',
-      'a=recvonly'
     ]
