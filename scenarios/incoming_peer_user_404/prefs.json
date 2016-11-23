@@ -1,0 +1,9 @@
+{
+    "peer_00_host0": {
+        "concurrent_max": 1
+    },
+    "testuser1003@spce.test": {
+        "e164_to_ruri": true,
+        "serial_forking_by_q_value": true
+    }
+}
