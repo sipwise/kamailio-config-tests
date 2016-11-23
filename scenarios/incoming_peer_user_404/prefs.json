@@ -1,0 +1,11 @@
+{
+    "peer_00_host0": {
+        "concurrent_max": 1
+    },
+    "@spce.test": {
+        "sound_set": "default_soundset"
+    },
+    "testuser1003@spce.test": {
+        "e164_to_ruri": true
+    }
+}
