@@ -9,10 +9,8 @@ flow:
   - end|ROUTE_RESTORE_CLUSTERSET:
   - start|ROUTE_OUTBOUND:
   - exit|ROUTE_OUTBOUND:
-[% IF not PRO -%]
   - start|REPLY_ROUTE_NAT:
   - exit|REPLY_ROUTE_NAT:
-[% END -%]
   - start|REPLY_ROUTE_NAT:
   - exit|REPLY_ROUTE_NAT:
 sip_in:
@@ -41,7 +39,6 @@ sip_out:
       'Proxy-Authorization: Digest username="testuser1002"',
       'a=sendonly'
     ]
-[% IF not PRO -%]
   - [
       '^SIP/2.0 200 OK',
       'From: <sip:testuser1002@',
@@ -51,4 +48,3 @@ sip_out:
       'Content-Type: application/sdp',
       'a=recvonly'
     ]
-[% END -%]
