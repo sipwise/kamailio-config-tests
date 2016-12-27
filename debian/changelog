@@ -1,3 +1,17 @@
+kamailio-config-tests (0.15.4.0+0~mr4.5.4.0) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [5850649] TT#4753 send proper ACK after 4xx
+  * [f728e7d] TT#6350 update new routes ROUTE_DLG_MANAGE/ROUTE_CNT_DLG_CHECK
+
+  [ Andrew Pogrebennyk ]
+  * [c55f4a6] TT#5404 fix flows after moving ROUTE_LOAD_CALLEE_PREF before ROUTE_NCOS
+  * [f499400] TT#5404 fix flows after fix cf432cb (missed trailing colon)
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 27 Dec 2016 11:14:35 +0100
+
 kamailio-config-tests (0.15.3.0+0~mr4.5.3.0) unstable; urgency=medium
 
   [ Andrew Pogrebennyk ]
