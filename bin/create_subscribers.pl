@@ -234,6 +234,27 @@ sub manage_pbx_groups
   return;
 }
 
+sub manage_soundsets
+{
+  my $data = shift;
+  foreach my $st (sort keys %{$data->{soundsets}})
+  {
+    my $st_data = {
+      name => $st,
+      reseller_id => $data->{soundsets}->{$st}->{reseller_id}
+    };
+    $st_data->{id} = $api->check_soundset_exists($st_data);
+    if(defined $st_data->{id}) {
+      print "soundset [$st] already there [$st_data->{id}]\n";
+    } else {
+      $st_data->{id} = $api->create_soundset($st_data);
+      print "soundset [$st]: created [$st_data->{id}]\n";
+    }
+    $ids->{soundsets}->{$st}->{id} = $st_data->{id};
+  }
+  return;
+}
+
 sub main
 {
     my $data = shift;
@@ -241,6 +262,7 @@ sub main
     manage_domains($data);
     manage_pbx_pilot($data);
     manage_pbx_groups($data);
+    manage_soundsets($data);
 
     foreach my $domain (sort keys %{$data->{subscribers}})
     {

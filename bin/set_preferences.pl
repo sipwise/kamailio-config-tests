@@ -32,6 +32,8 @@ use Data::Dumper;
 
 my $config =  Config::Tiny->read('/etc/default/ngcp-api');
 my $opts;
+my $ids_path;
+my $ids;
 if ($config) {
 	$opts = {};
 	$opts->{host} = $config->{_}->{NGCP_API_IP};
@@ -53,6 +55,23 @@ GetOptions ("h|help" => \$help, "d|debug" => \$opts->{verbose})
 
 die(usage()) unless (!$help);
 die("Error: wrong number of arguments\n".usage()) unless ($#ARGV == 0);
+
+sub resolve_ids {
+	my $prefs = shift;
+	return $prefs;
+	my $key;
+	if(defined $prefs->{sound_set}) {
+		$key = $prefs->{sound_set};
+		my $id = $api->check_soundset_exists({name => $key});
+		if($id) {
+			$prefs->{sound_set} = $id;
+			print "soundset[$key] => $prefs->{sound_set}\n";
+		} else {
+			die("soundset[$key] not found\n");
+		}
+	}
+	return $prefs;
+}
 
 sub merge
 {
@@ -163,21 +182,20 @@ sub set_peer_preferences
 
 sub main {
 	my $prefs = shift;
-	my $peers;
-	my $rule_set;
 
 	for my $key (keys %{$prefs})
 	{
+		my $prefs_id = resolve_ids($prefs->{$key});
 		print "processing $key\n";
 		if ( $key =~ /@/ ) {
 			my @fields = split /@/, $key;
 			if (!$fields[0]) {
-				set_domain_preferences($fields[1], $prefs->{$key});
+				set_domain_preferences($fields[1], $prefs_id);
 			} else {
-				set_subscriber_preferences($fields[0], $fields[1], $prefs->{$key});
+				set_subscriber_preferences($fields[0], $fields[1], $prefs_id);
 			}
 		} else {
-			set_peer_preferences($key, $prefs->{$key});
+			set_peer_preferences($key, $prefs_id);
 		}
 	}
 	exit;
@@ -197,5 +215,4 @@ sub get_json {
 }
 
 my $cf = get_json($ARGV[0]);
-
 main($cf);
