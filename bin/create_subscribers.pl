@@ -28,6 +28,7 @@ use Getopt::Long;
 use List::MoreUtils qw{ none };
 use Config::Tiny;
 use Sipwise::API qw(all);
+use File::Basename qw{ basename };
 
 my $config =  Config::Tiny->read('/etc/default/ngcp-api');
 my $opts;
@@ -234,6 +235,45 @@ sub manage_pbx_groups
   return;
 }
 
+sub manage_soundfiles
+{
+  my ($data, $id) = @_;
+
+  foreach my $sf (sort keys %{$data->{sounds}})
+  {
+    my $sf_data = $data->{sounds}->{$sf};
+    my $filename = $sf_data->{filename};
+    $sf_data->{set_id} = $data->{id};
+    $sf_data->{handle} = $sf;
+    $sf_data->{filename} = basename($filename, '.wav');
+    $api->upload_soundfile($sf_data, abs_path($filename));
+    print "[$filename] uploaded\n";
+  }
+  return;
+}
+
+sub manage_soundsets
+{
+  my $data = shift;
+  foreach my $st (sort keys %{$data->{soundsets}})
+  {
+    my $st_data = {
+      name => $st,
+      reseller_id => $data->{soundsets}->{$st}->{reseller_id}
+    };
+    $data->{soundsets}->{$st}->{id} = $api->check_soundset_exists($st_data);
+    if(defined $data->{soundsets}->{$st}->{id}) {
+      $api->delete_soundset($data->{soundsets}->{$st}->{id});
+      print "delete soundset[$st] -> [$data->{soundsets}->{$st}->{id}]\n";
+    }
+    $data->{soundsets}->{$st}->{id} = $api->create_soundset($st_data);
+    print "soundset [$st]: created [$data->{soundsets}->{$st}->{id}]\n";
+    manage_soundfiles($data->{soundsets}->{$st});
+    $ids->{soundsets}->{$st}->{id} = $data->{soundsets}->{$st}->{id};
+  }
+  return;
+}
+
 sub main
 {
     my $data = shift;
@@ -241,6 +281,7 @@ sub main
     manage_domains($data);
     manage_pbx_pilot($data);
     manage_pbx_groups($data);
+    manage_soundsets($data);
 
     foreach my $domain (sort keys %{$data->{subscribers}})
     {
