@@ -645,4 +645,26 @@ sub delete_ncoslnpcarrier {
 	return $self->_delete($urldata);
 }
 
+sub check_soundset_exists {
+	my ($self, $data) = @_;
+	my $urldata = "/api/soundsets/";
+	my $collection_id = 'ngcp:soundsets';
+
+	return $self->_exists($data, $urldata, $collection_id);
+}
+
+sub create_soundset {
+	my ($self, $data) = @_;
+	my $urldata = '/api/soundsets/';
+
+	return $self->_create($data, $urldata);
+}
+
+sub delete_soundset {
+	my ($self, $id) = @_;
+	my $urldata = "/api/soundsets/${id}";
+
+	return $self->_delete($urldata);
+}
+
 1;
