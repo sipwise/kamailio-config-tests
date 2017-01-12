@@ -11,6 +11,7 @@ Package: kamailio-config-tests
 Architecture: all
 Depends:
  curl,
+ libfile-slurp-perl,
  libgraphviz-perl,
  libjson-perl,
  libtemplate-perl,

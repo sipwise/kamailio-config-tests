@@ -29,6 +29,7 @@ use LWP::UserAgent;
 use IO::Socket::SSL;
 use URI;
 use Data::Dumper;
+use File::Slurp;
 
 my $opts_default = {
 	host => '127.0.0.1',
@@ -86,6 +87,21 @@ sub do_request {
 	if(!$res->is_success) {
 		print "$url\n";
 		print Dumper $data unless $self->{opts}->{verbose};
+	}
+	return $res;
+}
+
+sub _do_binary_request {
+	my ($self, $ua, $url, $filename, $ct) = @_;
+	my $content;
+
+	my $req = HTTP::Request->new('POST', $url);
+	$req->header('Content-Type' => $ct);
+	$req->header('Prefer' => 'return=representation');
+	$req->content(read_file($filename));
+	my $res = $ua->request($req);
+	if(!$res->is_success) {
+		print "$url\n";
 	}
 	return $res;
 }
@@ -643,6 +659,44 @@ sub delete_ncoslnpcarrier {
 	my $urldata = "/api/ncoslnpcarriers/${id}";
 
 	return $self->_delete($urldata);
+}
+
+sub check_soundset_exists {
+	my ($self, $data) = @_;
+	my $urldata = "/api/soundsets/";
+	my $collection_id = 'ngcp:soundsets';
+
+	return $self->_exists($data, $urldata, $collection_id);
+}
+
+sub create_soundset {
+	my ($self, $data) = @_;
+	my $urldata = '/api/soundsets/';
+
+	return $self->_create($data, $urldata);
+}
+
+sub delete_soundset {
+	my ($self, $id) = @_;
+	my $urldata = "/api/soundsets/${id}";
+
+	return $self->_delete($urldata);
+}
+
+sub upload_soundfile {
+	my ($self, $data, $filepath) = @_;
+	my $urldata = "/api/soundfiles/?".
+		"filename=$data->{filename}&handle=$data->{handle}".
+		"&set_id=$data->{set_id}&loopplay=$data->{loopplay}";
+	my $urlbase = 'https://'.$self->{opts}->{host}.':'.$self->{opts}->{port};
+
+	my $ua = $self->create_ua();
+	my $res = $self->_do_binary_request($ua, $urlbase.$urldata,
+		$filepath, 'audio/x-wav');
+	if(! $res->is_success) {
+		die $res->as_string;
+	}
+	return;
 }
 
 1;
