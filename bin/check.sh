@@ -125,6 +125,12 @@ function create_voip_prefs
     "${BIN_DIR}/create_ncos.pl" "${SCEN_CHECK_DIR}/ncos.yml"
   fi
 
+  if [ -f "${SCEN_CHECK_DIR}/soundsets.yml" ]; then
+    echo "$(date) - Creating soundsets"
+    "${BIN_DIR}/create_soundsets.pl" \
+      "${SCEN_CHECK_DIR}/soundsets.yml" "${SCEN_CHECK_DIR}/scenario_ids.yml"
+  fi
+
   if [ -f "${SCEN_CHECK_DIR}/peer.yml" ]; then
     echo "$(date) - Creating peers"
     "${BIN_DIR}/create_peers.pl" \
@@ -175,6 +181,11 @@ function delete_voip
     echo "$(date) - Deleting foreign domains"
     sed -e "s:$(cat "${SCEN_CHECK_DIR}/hosts")::" -i /etc/hosts
     rm "${SCEN_CHECK_DIR}/hosts"
+  fi
+
+  if [ -f "${SCEN_CHECK_DIR}/soundsets.yml" ]; then
+    echo "$(date) - Deleting soundsets"
+    "${BIN_DIR}/create_soundsets.pl" -delete "${SCEN_CHECK_DIR}/soundsets.yml"
   fi
 }
 
