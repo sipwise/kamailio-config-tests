@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a561d44_ef76dcd7",
+        "filename": "bin/create_soundsets.pl",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-01-16T14:56:11Z",
+      "side": 1,
+      "message": "Perhaps too late now, but I think this should have been Sipwise::NGCP::API instead?",
+      "revId": "1e66618bede422537cc6a55366c284b55c2afa83",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
