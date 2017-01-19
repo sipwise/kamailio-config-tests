@@ -98,6 +98,9 @@ sub _do_binary_request {
 	my $req = HTTP::Request->new('POST', $url);
 	$req->header('Content-Type' => $ct);
 	$req->header('Prefer' => 'return=representation');
+	if(! -f $filename) {
+		die "$filename not found\n";
+	}
 	$req->content(read_file($filename));
 	my $res = $ua->request($req);
 	if(!$res->is_success) {
