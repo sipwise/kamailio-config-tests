@@ -71,11 +71,16 @@ sub manage_soundfiles
   {
     my $sf_data = $data->{sounds}->{$sf};
     my $filename = $sf_data->{filename};
+    my $filepath = abs_path($filename);
     $sf_data->{set_id} = $data->{id};
     $sf_data->{handle} = $sf;
     $sf_data->{filename} = basename($filename, '.wav');
-    $api->upload_soundfile($sf_data, abs_path($filename));
-    print "[$filename] uploaded\n";
+    if(-f $filepath) {
+      $api->upload_soundfile($sf_data, $filepath);
+      print "$filename at [$filepath] uploaded\n";
+    } else {
+      die("$filename at [$filepath] not found");
+    }
   }
   return;
 }
