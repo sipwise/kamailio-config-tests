@@ -22,6 +22,30 @@
       "revId": "9f60a7bbd508249f382837cc440d34226405bf4c",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a622d24_42188c84",
+        "filename": "run_tests.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2017-01-23T10:09:18Z",
+      "side": 1,
+      "message": "Yes, that is a mistake. Will fix in next review",
+      "parentUuid": "5a682502_a4640ce6",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 29
+      },
+      "revId": "9f60a7bbd508249f382837cc440d34226405bf4c",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
