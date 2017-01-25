@@ -2,6 +2,7 @@
     "peer_00_host0": {
         "lnp_to_rn": true,
         "lnp_add_npdi": true,
+        "outbound_to_user_is_phone": true,
         "concurrent_max": 1
     }
 }
