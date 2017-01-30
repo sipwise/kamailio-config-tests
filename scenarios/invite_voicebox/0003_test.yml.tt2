@@ -80,6 +80,7 @@ flow:
   - return|ROUTE_BLOCK_OUT:
   - start|ROUTE_CHECK_PBX:
   - return|ROUTE_CHECK_PBX:
+  - start|ROUTE_CALLEE_DISPATCH:
   - start|ROUTE_INVITE_TO_INT:
   - start|ROUTE_LOAD_CF_MAP:
   - return|ROUTE_LOAD_CF_MAP:
