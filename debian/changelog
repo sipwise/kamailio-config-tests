@@ -1,3 +1,13 @@
+kamailio-config-tests (0.9.10.0+0~mr3.8.10.0) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [33d1b96] TT#6350 update new routes ROUTE_DLG_MANAGE/ROUTE_CNT_DLG_CHECK
+  * [1415d4b] TT#6350 invite_concurrent_max_out: fix PRO scenario
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 30 Jan 2017 15:32:05 +0100
+
 kamailio-config-tests (0.9.9.0+0~mr3.8.9.0) unstable; urgency=medium
 
   [ Andrew Pogrebennyk ]
