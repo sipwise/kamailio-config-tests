@@ -1,5 +1,7 @@
 flow:
   - start|REPLY_ROUTE_NAT:
+  - start|REPLY_ROUTE_RTPENGINE:
+  - return|REPLY_ROUTE_RTPENGINE:
   - exit|REPLY_ROUTE_NAT:
 sip_in:
   - '^SIP/2.0 200 OK'
