@@ -20,6 +20,8 @@ flow:
       $avp(orig_acc_caller_user): ['testuser1002']
       $avp(orig_acc_caller_domain): ['spce.test']
   - start|ROUTE_ADD_CALLINFO_REPLY:
+  - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
   - return|ROUTE_ADD_CALLINFO_REPLY:
   - return|ROUTE_AUTH:
   - return|ROUTE_FIND_CALLER:
@@ -110,6 +112,10 @@ flow:
   - start|ROUTE_LOAD_PBXSRV:
   - return|ROUTE_LOAD_PBXSRV:
   - start|ROUTE_ADD_CALLINFO:
+  - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
+  - start|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
   - return|ROUTE_ADD_CALLINFO:
   - return|BRANCH_ROUTE_NO_SBC:
   - return|BRANCH_ROUTE_NO_SBC:
@@ -153,7 +159,7 @@ sip_out:
       'Content-Type: application/sdp',
       'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
       'P-Callee-UUID: [% spce_test.testuser1003.uuid %]',
-      'P-NGCP-Lookup-Ext: 1003',
+      'P-NGCP-Lookup-Type: ext',
       'P-NGCP-Orig-User: 43110021003',
       'P-NGCP-Orig-Dialed: 1003',
       'P-App-Param: ;aleg_sst_enable=no;sst_enable=no;a_park_domain=\d+;b_park_domain=\d+',
