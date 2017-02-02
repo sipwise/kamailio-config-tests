@@ -1,3 +1,28 @@
+kamailio-config-tests (5.1.1.0+0~mr5.1.1.0) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [8e263c9] TT#7338 scenario.yml: support q value for REGISTER
+  * [1e66618] TT#8901 support soundsets
+  * [9f60a7b] TT#8901 soundsets: add sounds file to package
+  * [8573448] TT#8901 run_tests.sh: remove debug change
+
+  [ Andrew Pogrebennyk ]
+  * [ed64ff9] TT#8183 fix scenarios_lnp/invite_ncos_white broken due to rewrite rule
+  * [0616197] TT#2651 add ROUTE_SET_BRANCH_HDRS to scenarios, pbx/lnp flows
+  * [3b3d024] TT#5508 update kamailio-config-tests flows for new rtpengine routes
+
+  [ Sergii Kipot ]
+  * [05fbd1e] TT#8635 set umask for files created by docker
+  * [c3afdea] Revert "TT#8635 set umask for files created by docker"
+
+  [ Kirill Solomko ]
+  * [3126113] TT#2651 add ROUTE_CALLEE_DISPATCH
+  * [a2a9224] TT#2651 add ROUTE_CALLEE_DISPATCH for lnp scenarios
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 03 Feb 2017 00:33:04 +0100
+
 kamailio-config-tests (5.1.0.0+0~mr5.1.0.0) unstable; urgency=medium
 
   [ Victor Seva ]
