@@ -1,0 +1,57 @@
+---
+peer_00:
+  contact:
+    company: peer_00
+    email: peer_00@host0.not
+  contract:
+    billing_profile_id: 1
+    status: active
+    type: sippeering
+  groups:
+    - name: peer_00_group
+      priority: 3
+      description:
+    - name: peer_01_group
+      priority: 2
+      description:
+    - name: peer_02_group
+      priority: 1
+      description:
+  rules:
+    - group_id: peer_00_group
+      callee_prefix: ""
+      callee_pattern: ""
+      caller_pattern: "^sip:.+@spce.test"
+      description: ""
+    - group_id: peer_01_group
+      callee_prefix: ""
+      callee_pattern: ""
+      caller_pattern: "^sip:.+@spce.test"
+      description: ""
+    - group_id: peer_02_group
+      callee_prefix: ""
+      callee_pattern: ""
+      caller_pattern: "^sip:.+@spce.test"
+      description: ""
+  hosts:
+    - group_id: peer_00_group
+      name: peer_00_host0
+      ip: 127.0.2.1
+      port: 51602
+      host:
+      transport: 1
+      weight: 1
+    - group_id: peer_01_group
+      name: peer_01_host0
+      ip: 127.0.3.1
+      port: 51602
+      host:
+      transport: 1
+      weight: 1
+    - group_id: peer_02_group
+      name: peer_02_host0
+      ip: 127.0.4.1
+      port: 51602
+      host:
+      transport: 1
+      weight: 1
