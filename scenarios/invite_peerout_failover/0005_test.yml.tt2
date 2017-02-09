@@ -130,7 +130,7 @@ flow:
   - "^SIP/2.0 408 Timeout"
 "sip_out":
   - [
-      "^ACK sip:004321001@127.0.4.1:50603;transport=udp SIP/2.0",
+      "^ACK sip:004321001@127.0.4.1:\d+;transport=udp SIP/2.0",
       "From: <sip:4311002@spce.test>;tag=",
       "To: <sip:004321001@spce.test>;tag=",
       "CSeq: 2 ACK",
