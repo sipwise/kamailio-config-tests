@@ -145,7 +145,7 @@ flow:
       'P-Callee-UUID: [% spce_test.testuser1001.uuid %]',
       'P-Asserted-Identity: <sip:4311002@spce.test>',
       'P-Called-Party-ID: <sip:004321001@127.0.4.1>',
-      'P-App-Param: aleg_sst_enable=no;sst_enable=no',
+      'P-App-Param: ;aleg_sst_enable=no;sst_enable=no',
       'P-App-Name: sbc',
       'P-NGCP-Caller-Info: <sip:testuser1002@spce.test>;ip=127.126.0.1;port=\d+;primary=4311002',
       'P-NGCP-Callee-Info: <sip:004321001@spce.test>;ip=127.0.2.1;port=\d+',
