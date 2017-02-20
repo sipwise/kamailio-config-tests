@@ -1,3 +1,19 @@
+kamailio-config-tests (5.0.3.0+0~mr5.0.3.0) unstable; urgency=medium
+
+  [ Andrew Pogrebennyk ]
+  * [ef35268] TT#8183 fix scenarios_lnp/invite_ncos_white broken due to rewrite rule
+
+  [ Victor Seva ]
+  * [8d460e9] TT#10351 add invite_peerout_[max_out|failover]
+  * [ea7fcc1] TT#10351 fix invite_peerout_failover check
+  * [8421709] TT#10351 fix invite_peerout_failover check, take two
+  * [506db04] TT#10351 fix invite_peerout_failover check, take three
+  * [54d9f00] TT#10351 fix invite_peerout_failover responder
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 20 Feb 2017 20:58:17 +0100
+
 kamailio-config-tests (5.0.2.0+0~mr5.0.2.0) unstable; urgency=medium
 
   * New release.
