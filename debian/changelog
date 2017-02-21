@@ -1,3 +1,12 @@
+kamailio-config-tests (0.13.2.2+0~mr4.3.2.2) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [f638d92] TT#4938 TT#4753 send proper ACK after 4xx
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 21 Feb 2017 09:22:05 +0100
+
 kamailio-config-tests (0.13.2.1+0~mr4.3.2.1) unstable; urgency=medium
 
   * New release.
