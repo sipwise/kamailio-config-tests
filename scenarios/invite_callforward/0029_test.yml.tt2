@@ -73,6 +73,8 @@ flow:
   - return|ROUTE_CHECK_PBX:
   - start|ROUTE_CALLEE_DISPATCH:
   - start|ROUTE_INVITE_TO_INT:
+  - start|ROUTE_CF_CFU:
+  - return|ROUTE_CF_CFU:
   - start|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_CNT_DLG_CHECK:
   - start|ROUTE_OUTBOUND:
