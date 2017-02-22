@@ -1,0 +1,7 @@
+Verified+1: Jenkins Jenkins
+Code-Review+2: Kirill Solomko <ksolomko@sipwise.com>
+Submitted-by: Kirill Solomko <ksolomko@sipwise.com>
+Submitted-at: Wed, 22 Feb 2017 17:14:13 +0100
+Reviewed-on: http://gerrit.mgm.sipwise.com/11519
+Project: kamailio-config-tests
+Branch: refs/heads/master
