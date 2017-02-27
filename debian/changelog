@@ -1,3 +1,14 @@
+kamailio-config-tests (0.15.4.1+0~mr4.5.4.1) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [3764ca0] TT#10351 add invite_peerout_[max_out|failover] for mr4.5
+  * [b2408ee] TT#10351 fix invite_peerout_failover check, take two
+  * [9bc2c6c] TT#10351 fix invite_peerout_failover responder
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 27 Feb 2017 21:26:50 +0100
+
 kamailio-config-tests (0.15.4.0+0~mr4.5.4.0) unstable; urgency=medium
 
   [ Victor Seva ]
