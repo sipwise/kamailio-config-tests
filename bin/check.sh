@@ -269,7 +269,7 @@ function check_port
   local step=${2:-1}
 
   until [ $status -eq 1 ]; do
-    if netstat -n | grep -q ":$port " ; then
+    if netstat -an | grep -q ":$port " ; then
       port=$((port + step))
     else
       status=1
@@ -287,9 +287,9 @@ function check_mport
   local step=${2:-3}
   local mport2
   until [ $status -eq 1 ]; do
-    if ! (netstat -n | grep -q ":${mport} ") ; then
+    if ! (netstat -an | grep -q ":${mport} ") ; then
       mport2=$((mport + 2))
-      if ! (netstat -n | grep -q ":${mport2} "); then
+      if ! (netstat -an | grep -q ":${mport2} "); then
         status=1
       fi
     fi
