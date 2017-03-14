@@ -213,7 +213,7 @@ sub _exists {
 	my $collection = $self->_get_content($data, $urldata);
 
 	if (defined $collection && $collection->{total_count} == 1) {
-		my $links = $collection->{_embedded}->{$collection_id}->{_links};
+		my $links = $collection->{_embedded}->{$collection_id}[0]->{_links};
 		my $href = $links->{self}->{href};
 		return _get_id($urldata, $href);
 	}
