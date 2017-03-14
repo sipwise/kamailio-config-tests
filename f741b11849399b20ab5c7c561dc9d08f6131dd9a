@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aed85c8_6d3b15ec",
+        "filename": "lib/Sipwise/API.pm",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-03-14T17:13:08Z",
+      "side": 1,
+      "message": "Is only the first element of interest? Or is this always a one element array? Or? :)",
+      "revId": "f741b11849399b20ab5c7c561dc9d08f6131dd9a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
