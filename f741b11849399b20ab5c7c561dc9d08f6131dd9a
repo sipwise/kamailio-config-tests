@@ -34,6 +34,24 @@
       "revId": "f741b11849399b20ab5c7c561dc9d08f6131dd9a",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa2559ec_cac4a361",
+        "filename": "lib/Sipwise/API.pm",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-03-15T08:56:23Z",
+      "side": 1,
+      "message": "I believe it is a bug on NGCP side.\nWe are changing espablished API then which will brake backward compatibility. People will stops using our API then.\n\nIs it confirmed changes for REST API?",
+      "parentUuid": "fa2559ec_4ab9d3e8",
+      "revId": "f741b11849399b20ab5c7c561dc9d08f6131dd9a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
