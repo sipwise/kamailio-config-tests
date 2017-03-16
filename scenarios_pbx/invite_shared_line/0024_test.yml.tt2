@@ -1,5 +1,7 @@
 flow:
   - start|REPLY_ROUTE_NAT:
+  - start|REPLY_SCA_UPDATE:
+  - return|REPLY_SCA_UPDATE:
   - start|REPLY_ROUTE_RTPENGINE:
   - return|REPLY_ROUTE_RTPENGINE:
   - start|dialog:start:
@@ -28,7 +30,7 @@ sip_out:
       'From: <sip:testuser1002@spce.test>;tag=',
       'CSeq: 5 NOTIFY',
       'Contact: sip:127.0.0.1:5062',
-      'Call-Info: <sip:spce.test>;appearance-index=1;appearance-state=active;appearance-uri=\"<sip:1003@spce.test>\",<sip:spce.test>;appearance-index=\*;appearance-state=idle',
+      'Call-Info: <sip:spce.test>;appearance-index=1;appearance-state=active;appearance-uri=\"<sip:testuser1003@spce.test>\",<sip:spce.test>;appearance-index=\*;appearance-state=idle',
       'Event: call-info',
       'Subscription-State: active;expires=\d+'
     ]
@@ -40,6 +42,6 @@ sip_out:
       'Contact: <sip:127.0.0.1:5085;transport=udp>',
       'Content-Type: application/sdp',
       'P-COLP-Identity: \"1003\" <sip:1003@spce.test>',
-      'P-Asserted-Identity:  <sip:1003@spce.test>',
+      'P-Asserted-Identity:  <sip:testuser1003@spce.test>',
       'P-Out-Socket: udp:127.0.0.1:5060'
     ]

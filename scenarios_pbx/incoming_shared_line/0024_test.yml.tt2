@@ -1,0 +1,26 @@
+flow:
+  - start|REPLY_ROUTE_NAT:
+  - start|REPLY_SCA_UPDATE:
+  - return|REPLY_SCA_UPDATE:
+  - exit|REPLY_ROUTE_NAT:
+sip_in:
+  - '^SIP/2.0 180 Ringing'
+  - 'From: <sip:testuser1003@spce.test>;tag='
+  - 'To: <sip:1002@spce.test>;tag='
+  - 'CSeq: 2 INVITE'
+  - 'Allow: INVITE, INFO, PRACK, ACK, BYE, CANCEL, OPTIONS, NOTIFY, REGISTER, SUBSCRIBE, REFER, PUBLISH, UPDATE, MESSAGE'
+  - 'Call-Info: <sip:spce\.test>;appearance-index=1'
+  - 'Contact: <sip:127.0.0.1:5085;transport=udp>'
+  - 'Content-Length: 0'
+sip_out:
+  - [
+      '^SIP/2.0 180 Ringing',
+      'From: <sip:testuser1003@spce.test>;tag=',
+      'To: <sip:1002@spce.test>;tag=',
+      'CSeq: 2 INVITE',
+      'Allow: INVITE, INFO, PRACK, ACK, BYE, CANCEL, OPTIONS, NOTIFY, REGISTER, SUBSCRIBE, REFER, PUBLISH, UPDATE, MESSAGE',
+      'Contact: <sip:127.0.0.1:5085;transport=udp>',
+      'Content-Length: 0',
+      'P-COLP-Identity: \"1002\" <sip:1002@spce.test>',
+      'P-Out-Socket: udp:127.0.0.1:5060',
+    ]

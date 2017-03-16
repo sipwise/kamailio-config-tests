@@ -1,5 +1,7 @@
 flow:
   - start|REPLY_ROUTE_NAT:
+  - start|REPLY_SCA_UPDATE:
+  - return|REPLY_SCA_UPDATE:
   - start|REPLY_ROUTE_RTPENGINE:
   - return|REPLY_ROUTE_RTPENGINE:
   - 'start|dialog:start':

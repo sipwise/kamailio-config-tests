@@ -218,6 +218,18 @@ function delete_locations
   fi
 }
 
+function release_appearance
+{
+  local values
+  values=$(mktemp)
+  ngcp-sercmd proxy sca.all_appearances > "${values}"
+  while read -r sca idx rest; do
+    echo "$(date) release_appearance for ${sca} ${idx}"
+    ngcp-sercmd proxy sca.release_appearance "${sca}" "${idx}" || true
+  done < "${values}"
+  rm "${values}"
+}
+
 # $1 msg to echo
 # $2 exit value
 function error_helper
@@ -360,6 +372,9 @@ function run_sipp
   mkdir -p "${LOG_DIR}"
 
   delete_locations
+  if [ "${PROFILE}" = "PRO" ] ; then
+    release_appearance
+  fi
 
   if ! "${BIN_DIR}/restart_log.sh" ; then
     copy_logs
@@ -451,6 +466,9 @@ function run_sipp
   fi
 
   delete_locations
+  if [ "${PROFILE}" = "PRO" ] ; then
+    release_appearance
+  fi
 
   if [[ $status -ne 0 ]]; then
     error_helper "error in sipp" 2
