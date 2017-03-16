@@ -14,7 +14,7 @@
       Contact: <sip:[field0 file="caller.csv" line=0]@[local_ip]:[local_port]>
       Allow: INVITE,ACK,CANCEL,BYE,PRACK,INFO,UPDATE,OPTIONS,MESSAGE,NOTIFY,REFER
       Max-Forwards: 70
-      Expires: 10
+      Expires: 20
       Event: call-info
       Content-Length: [len]
 
@@ -34,7 +34,7 @@
       [last_From:]
       [last_To:]
       [last_Call-ID:]
-      [last_CSeq:]
+      CSeq: 1 ACK
       Contact: <sip:[local_ip]:[local_port];transport=[transport]>
       Content-Length: 0
 
@@ -54,7 +54,7 @@
       Contact: <sip:[field0 file="caller.csv" line=0]@[local_ip]:[local_port]>
       Allow: INVITE,ACK,CANCEL,BYE,PRACK,INFO,UPDATE,OPTIONS,MESSAGE,NOTIFY,REFER
       Max-Forwards: 70
-      Expires: 10
+      Expires: 20
       Event: call-info
       Content-Length: [len]
 
@@ -145,13 +145,13 @@
 
       ACK sip:[field0 file="caller.csv" line=0]@[field3 file="caller.csv" line=0] SIP/2.0
       [last_Via:]
-      From: <sip:[field0 file="caller.csv" line=0]@[field2 file="caller.csv" line=0]>;tag=[pid]SIPpTag00[call_number]
-      To: <sip:[field0 file="caller.csv" line=0]@[field3 file="caller.csv" line=0]>[peer_tag_param]
-      Call-ID: NGCP%[field4 file="caller.csv" line=0]%///[call_id]
+      [last_From:]
+      [last_To:]
+      [last_Call-ID:]
       CSeq: 1 ACK
       Contact: <sip:[field0 file="caller.csv" line=0]@[local_ip]:[local_port]>
       Max-Forwards: 70
-      Content-Length: [len]
+      Content-Length: 0
 
     ]]>
   </send>
