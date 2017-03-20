@@ -216,9 +216,9 @@ sub _exists {
 		my $tmp = $collection->{_embedded}->{$collection_id};
 		my $links;
 		if (ref $tmp eq 'ARRAY') {
-			$links = $tmp[0]->{links};
+			$links = @{$tmp}[0]->{_links};
 		} else {
-			$links = $tmp->{links};
+			$links = $tmp->{_links};
 		}
 		my $href = $links->{self}->{href};
 		return _get_id($urldata, $href);
