@@ -30,6 +30,7 @@ use IO::Socket::SSL;
 use URI;
 use Data::Dumper;
 use File::Slurp;
+use IO::Uncompress::Unzip;
 
 my $opts_default = {
 	host => '127.0.0.1',
@@ -38,7 +39,8 @@ my $opts_default = {
 	auth_pwd => 'administrator',
 	verbose => 0,
 	sslverify => 'no',
-	admin => 0
+	admin => 0,
+	crt_path => '/tmp/apicert.pem'
 };
 
 sub _get_id {
@@ -127,6 +129,47 @@ sub do_query {
 	return $res;
 }
 
+sub _init_ssl_cert {
+	my ($self, $ua, $urlbase) = @_;
+	unless(-f $self->{opts}->{crt_path}) {
+		my $res = $ua->post(
+			$urlbase . '/api/admincerts/',
+			Content_Type => 'application/json',
+			Content => '{}'
+		);
+		unless($res->is_success) {
+			die "failed to fetch client certificate: " . $res->status_line . "\n";
+		}
+		my $zip = $res->decoded_content;
+		my $z = IO::Uncompress::Unzip->new(\$zip, MultiStream => 0, Append => 1);
+		my $data;
+		while(!$z->eof() && (my $hdr = $z->getHeaderInfo())) {
+			unless($hdr->{Name} =~ /\.pem$/) {
+				# wrong file, just read stream, clear buffer and try next
+				while($z->read($data) > 0) {}
+				$data = undef;
+				$z->nextStream();
+				next;
+			}
+			while($z->read($data) > 0) {}
+			last;
+		}
+		$z->close();
+		unless($data) {
+			die "failed to find PEM file in client certificate zip file\n";
+		}
+		open my $fh, ">:raw",
+			$self->{opts}->{crt_path} or
+			die "failed to open " . $self->{opts}->{crt_path} . ": $!\n";
+		print $fh $data;
+		close $fh;
+	}
+	$ua->ssl_opts(
+		SSL_cert_file => $self->{opts}->{crt_path},
+		SSL_key_file => $self->{opts}->{crt_path},
+	);
+}
+
 sub create_ua {
 	my $self = shift;
 	my $ua = LWP::UserAgent->new();
@@ -157,6 +200,7 @@ sub _create {
 	my $urlbase = 'https://'.$self->{opts}->{host}.':'.$self->{opts}->{port};
 
 	my $ua = $self->create_ua();
+	$self->_init_ssl_cert($ua, $urlbase);
 	my $res = $self->do_request($ua, $urlbase.$urldata, $data);
 	if($res->is_success) {
 		if($self->{opts}->{verbose}) {
@@ -174,6 +218,7 @@ sub _delete {
 	my $urlbase = 'https://'.$self->{opts}->{host}.':'.$self->{opts}->{port};
 
 	my $ua = $self->create_ua();
+	$self->_init_ssl_cert($ua, $urlbase);
 	my $res = $self->do_query($ua, $urlbase.$urldata, undef, 'DELETE');
 	return $res->is_success;
 }
@@ -182,7 +227,7 @@ sub _get_content {
 	my ($self, $data, $urldata) = @_;
 	my $urlbase = 'https://'.$self->{opts}->{host}.':'.$self->{opts}->{port};
 	my $ua = $self->create_ua();
-
+	$self->_init_ssl_cert($ua, $urlbase);
 	my $res = $self->do_query($ua, $urlbase.$urldata, $data);
 	if($res->is_success) {
 		return JSON::from_json( $res->decoded_content );
@@ -197,7 +242,7 @@ sub _set_content {
 	my ($self, $data, $urldata) = @_;
 	my $urlbase = 'https://'.$self->{opts}->{host}.':'.$self->{opts}->{port};
 	my $ua = $self->create_ua();
-
+	$self->_init_ssl_cert($ua, $urlbase);
 	my $res = $self->do_request($ua, $urlbase.$urldata, $data, 'PUT');
 	if($res->is_success) {
 		return JSON::from_json( $res->decoded_content );
