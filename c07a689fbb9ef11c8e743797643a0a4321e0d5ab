@@ -45,6 +45,30 @@
       "revId": "c07a689fbb9ef11c8e743797643a0a4321e0d5ab",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_8ad90b86",
+        "filename": "lib/Sipwise/API.pm",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000007
+      },
+      "writtenOn": "2017-03-21T12:13:03Z",
+      "side": 1,
+      "message": "Well, the code works in a way that if the cert is there, it will use it, even if it\u0027s generated from another test or component, which is good.\n\nI do see some theoretical race conditions when you want to use different API users other than admin or performing the tests against different hosts, can\u0027t think of a practical implication though.",
+      "parentUuid": "9a245df4_ea61a7d4",
+      "range": {
+        "startLine": 43,
+        "startChar": 14,
+        "endLine": 43,
+        "endChar": 30
+      },
+      "revId": "c07a689fbb9ef11c8e743797643a0a4321e0d5ab",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
