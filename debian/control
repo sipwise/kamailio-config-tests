@@ -13,6 +13,7 @@ Depends:
  curl,
  libfile-slurp-perl,
  libgraphviz-perl,
+ libio-compress-perl,
  libjson-perl,
  libtemplate-perl,
  libtext-csv-perl,
