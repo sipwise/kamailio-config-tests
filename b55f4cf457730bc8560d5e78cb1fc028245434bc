@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a245df4_6af3f70a",
+        "filename": "lib/Sipwise/API.pm",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-03-21T12:07:15Z",
+      "side": 1,
+      "message": "Why not merge this into create_ua? it\u0027s in part initializing the UA for the certs, and needs to be called by anything calling create_ua anyway no? Or perhaps the part that is fetching the cert from urlbase could be split instead into a fetch_cert (or similar) and then called from create_ua when the cert is not found on the path?",
+      "revId": "b55f4cf457730bc8560d5e78cb1fc028245434bc",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_ea8fe773",
+        "filename": "lib/Sipwise/API.pm",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-03-21T12:07:15Z",
+      "side": 1,
+      "message": "I see that other functions are using die too, but in general it\u0027s better to use croak (from Carp) to die from inside a module, because that prints also where it was called from. But I guess this could be fixed independently.",
+      "revId": "b55f4cf457730bc8560d5e78cb1fc028245434bc",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_2ae9ff1a",
+        "filename": "lib/Sipwise/API.pm",
+        "patchSetId": 3
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-03-21T12:07:15Z",
+      "side": 1,
+      "message": "Very minor nit pick, but why the newline? :)",
+      "revId": "b55f4cf457730bc8560d5e78cb1fc028245434bc",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_ca8ca382",
+        "filename": "lib/Sipwise/API.pm",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-03-21T12:07:15Z",
+      "side": 1,
+      "message": "perlcritic recommends using \"print { $fh } $data\" to make it very obvious this is the special old \"method call\" form that acts on the handle.",
+      "revId": "b55f4cf457730bc8560d5e78cb1fc028245434bc",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
