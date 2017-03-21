@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a245df4_ea61a7d4",
+        "filename": "lib/Sipwise/API.pm",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-03-21T11:09:37Z",
+      "side": 1,
+      "message": "maybe we should NOT use the same name like ngcp-panel rest test, otherwise we can\u0027t run test in parallel as cert can disappears.  Maybe random name it good here?",
+      "range": {
+        "startLine": 43,
+        "startChar": 14,
+        "endLine": 43,
+        "endChar": 30
+      },
+      "revId": "c07a689fbb9ef11c8e743797643a0a4321e0d5ab",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
