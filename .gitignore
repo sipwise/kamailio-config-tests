@@ -9,3 +9,4 @@ sipp_scenario_responder*_reg.xml
 *.csv
 presence_*xml
 presence.sh
+apicert.pem
