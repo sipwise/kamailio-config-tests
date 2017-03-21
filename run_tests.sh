@@ -51,6 +51,8 @@ function get_scenarios
 function cfg_debug_off
 {
   if [ -z "$SKIP" ]; then
+    echo "$(date) - Removed apicert.pem"
+    rm -f "${BASE_DIR}/apicert.pem"
     echo "$(date) - Setting config debug off"
     "${BIN_DIR}/config_debug.pl" -g "${GROUP}" off ${DOMAIN}
     if ! ngcpcfg apply "config debug off via kamailio-config-tests" ; then
