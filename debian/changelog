@@ -1,3 +1,26 @@
+kamailio-config-tests (5.2.1.0+0~mr5.2.1.0) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [fce607a] TT#10351 invite_peerout_max_out
+  * [dc5cbba] TT#21817 add calltimer sbc parameter
+  * [805c288] TT#10351 invite_peerout_failover
+  * [0a8d92c] TT#10351 fix invite_peerout_failover check
+  * [618662c] TT#10351 fix invite_peerout_failover check, take two
+  * [93e63f1] TT#10351 fix invite_peerout_failover responder
+  * [fc2c190] TT#10702 pid_watcher.py: wait for ngcp-witnessd instead of colelctd
+  * [0db6e54] TT#10833 bin/check.sh: use netstat (-a) when checking for used ports
+  * [a23e957] TT#12860 scenarios_pbx: add shared_line(sca) scenario
+  * [dc99e07] TT#12906 ngcp-panel API will change, '_embedded' will be an array
+  * [d43f25c] TT#12906 fix typo introduced at dc99e073b850
+  * [a45af5e] TT#13257 use API to generate client cert and use it on next calls
+
+  [ Kirill Solomko ]
+  * [350a68f] TT#11317 fix the tests for the callforward proxy logic split
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 22 Mar 2017 10:53:14 +0100
+
 kamailio-config-tests (5.2.0.0+0~mr5.2.0.0) unstable; urgency=medium
 
   [ Victor Seva ]
