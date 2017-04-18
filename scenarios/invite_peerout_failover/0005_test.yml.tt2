@@ -40,8 +40,6 @@ flow:
         "total",
         "outgoing"
       ]
-  - start|ROUTE_CHECK_PEER_PROBE:
-  - return|ROUTE_CHECK_PEER_PROBE:
   - start|ROUTE_PSTN_SELECT_PEER_FAILURE:
   - start|ROUTE_CHECK_PEER_PROBE:
   - return|ROUTE_CHECK_PEER_PROBE:
@@ -62,8 +60,6 @@ flow:
         "total",
         "outgoing"
       ]
-  - start|ROUTE_CHECK_PEER_PROBE:
-  - return|ROUTE_CHECK_PEER_PROBE:
   - start|ROUTE_OUTBOUND:
       $avp(lua_dlg_profile): [
         "relay",
