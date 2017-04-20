@@ -21,6 +21,8 @@ flow:
   - return|ROUTE_ADD_CALLINFO_REPLY:
   - return|ROUTE_AUTH:
   - start|ROUTE_PREFERENCES:
+  - start|ROUTE_CHECK_UA:
+  - return|ROUTE_CHECK_UA:
   - return|ROUTE_PREFERENCES:
       $xavp(caller_dom_prefs[0]=>dummy[*]): ['caller']
       $xavp(caller_dom_prefs[0]=>ac[*]): None

@@ -23,6 +23,8 @@ flow:
       $xavp(caller_peer_prefs): None
       $xavp(caller_real_prefs): None
       $xavp(caller_usr_prefs): None
+  - start|ROUTE_CHECK_UA:
+  - return|ROUTE_CHECK_UA:
   - return|ROUTE_PREFERENCES:
       $xavp(callee_dom_prefs): None
       $xavp(callee_peer_prefs): None
