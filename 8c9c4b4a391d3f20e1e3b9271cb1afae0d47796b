@@ -1,0 +1,7 @@
+Code-Review+2: Alexander Lutay <alutay@sipwise.com>
+Verified+1: Jenkins Jenkins
+Submitted-by: Víctor Seva <vseva@sipwise.com>
+Submitted-at: Mon, 24 Apr 2017 12:22:58 +0200
+Reviewed-on: http://gerrit.mgm.sipwise.com/12811
+Project: kamailio-config-tests
+Branch: refs/heads/master
