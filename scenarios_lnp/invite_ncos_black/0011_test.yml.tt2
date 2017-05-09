@@ -100,6 +100,8 @@ flow:
         "outgoing"
       ]
   - start|ROUTE_ACC_CALLER:
+  - start|ROUTE_APPLY_REWRITE_RULE:
+  - return|ROUTE_APPLY_REWRITE_RULE:
   - return|ROUTE_ACC_CALLER:
   - start|ROUTE_ACC_CALLEE:
   - return|ROUTE_ACC_CALLEE:
