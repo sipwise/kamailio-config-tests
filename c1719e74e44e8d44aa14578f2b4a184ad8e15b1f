@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a1371a2_67204c9c",
+        "filename": "scenarios_lnp/invite_ncos_black/0011_test.yml.tt2",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-05-09T13:51:33Z",
+      "side": 1,
+      "message": "no need to apply PS4 changes here?",
+      "revId": "c1719e74e44e8d44aa14578f2b4a184ad8e15b1f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
