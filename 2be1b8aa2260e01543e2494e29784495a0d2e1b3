@@ -22,6 +22,23 @@
       "revId": "2be1b8aa2260e01543e2494e29784495a0d2e1b3",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_a4cd2289",
+        "filename": "scenarios/invite_peerout_rewrite_pv_regex/0003_test.yml.tt2",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000006
+      },
+      "writtenOn": "2017-05-09T11:30:48Z",
+      "side": 1,
+      "message": "AFAICS there is no out-rwr for callee in this scenario.",
+      "revId": "2be1b8aa2260e01543e2494e29784495a0d2e1b3",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
