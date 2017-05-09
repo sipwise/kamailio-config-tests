@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a1371a2_c4edbef1",
+        "filename": "scenarios/invite_peerout_rewrite_pv_regex/0003_test.yml.tt2",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-05-09T11:12:45Z",
+      "side": 1,
+      "message": "remove tariling?",
+      "range": {
+        "startLine": 109,
+        "startChar": 36,
+        "endLine": 109,
+        "endChar": 38
+      },
+      "revId": "2be1b8aa2260e01543e2494e29784495a0d2e1b3",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
