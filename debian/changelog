@@ -1,3 +1,24 @@
+kamailio-config-tests (5.3.1.0+0~mr5.3.1.0) unstable; urgency=medium
+
+  [ Guillem Jover ]
+  * [605916a] TT#5420 Update packaging
+
+  [ Andreas Granig ]
+  * [a237c33] TT#8704 Add peer probing route to peer-out scenarios
+  * [31252ce] TT#14800 Implement User-Agent filtering
+
+  [ Victor Seva ]
+  * [8b25f6f] TT#14582 TT#8704 fix a237c33e492b0. Add peer probing route to peer-out scenarios
+  * [0a47606] TT#14582 TT#8704 fix a237c33e492b0. Add peer probing route to peer-out scenarios
+  * [8c9c4b4] TT#14850 kamailio.(lb|proxy).cfgt config option
+
+  [ Rene Krenn ]
+  * [100ce18] TT#8162 adjust tests for *_user_out fields
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 16 May 2017 21:35:16 +0200
+
 kamailio-config-tests (5.3.0.0+0~mr5.3.0.0) unstable; urgency=medium
 
   [ Victor Seva ]
