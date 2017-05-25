@@ -63,7 +63,7 @@ function cfg_debug_off
   fi
 }
 
-while getopts 'hlcp:Kx:t:' opt; do
+while getopts 'hlcp:Kx:t:m' opt; do
   case $opt in
     h) usage; exit 0;;
     l) SHOW_SCENARIOS=1;;
@@ -72,6 +72,7 @@ while getopts 'hlcp:Kx:t:' opt; do
     K) SKIP_CAPTURE=1;;
     x) GROUP=$OPTARG;;
     t) TIMEOUT=$OPTARG;;
+    m) MEMDBG=1;;
   esac
 done
 shift $((OPTIND - 1))
@@ -142,8 +143,13 @@ VERSION="${PROFILE}_$(cut -f1 -d' '< /etc/ngcp_version)_"
 get_scenarios
 
 if [[ ${SKIP_CAPTURE} = 1 ]] ; then
-  echo "$(date) enable capture"
+  echo "$(date) - enable capture"
   OPTS+="-K"
+fi
+
+if [[ ${MEMDBG} = 1 ]] ; then
+  echo "$(date) - enable memdbg"
+  OPTS+="-m"
 fi
 
 for t in ${SCENARIOS}; do
