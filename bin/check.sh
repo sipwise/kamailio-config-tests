@@ -338,6 +338,15 @@ function copy_logs
   cp "${KAMLB_LOG}" "${LOG_DIR}/kamailio-lb.log"
 }
 
+function memdbg
+{
+  if [ -x /usr/share/ngcp-system-tools/kamcmd/memdbg ] ; then
+    ngcp-sercmd proxy memdbg all >/dev/null
+    mkdir -p "${MLOG_DIR}"
+    ngcp-memdbg-csv "${KAM_LOG}" "${MLOG_DIR}" >/dev/null
+  fi
+}
+
 # $1 sipp xml scenario file
 function run_sipp
 {
@@ -443,6 +452,9 @@ function run_sipp
   if [ "${CAPTURE}" = "1" ] ; then
     stop_capture
   fi
+  if [[ ${MEMDBG} = 1 ]] ; then
+    memdbg
+  fi
   copy_logs
   # if any scenario has a log... error
   if [ "$(find "${SCEN_CHECK_DIR}" -name 'sipp_scenario*errors.log' 2>/dev/null|wc -l)" -ne 0 ]; then
@@ -472,7 +484,7 @@ function test_filepath
 
 function usage
 {
-  echo "Usage: check.sh [-hCDRTGgJ] [-d DOMAIN ] [-p PROFILE ] -s [GROUP] check_name"
+  echo "Usage: check.sh [-hCDRTGgJKm] [-d DOMAIN ] [-p PROFILE ] -s [GROUP] check_name"
   echo "Options:"
   echo -e "\t-C: skip creation of domain and subscribers"
   echo -e "\t-R: skip run sipp"
@@ -486,11 +498,12 @@ function usage
   echo -e "\t-J kamailio json output ON. PARSE skipped"
   echo -e "\t-K enable tcpdump capture"
   echo -e "\t-s scenario group. Default: scenarios"
+  echo -e "\t-m enable memdbg csv"
   echo "Arguments:"
   echo -e "\tcheck_name. Scenario name to check. This is the name of the directory on GROUP dir."
 }
 
-while getopts 'hCd:p:Rs:DTPGgJK' opt; do
+while getopts 'hCd:p:Rs:DTPGgJKm' opt; do
   case $opt in
     h) usage; exit 0;;
     C) SKIP=1;;
@@ -505,6 +518,7 @@ while getopts 'hCd:p:Rs:DTPGgJK' opt; do
     G) GRAPH=1;;
     g) GRAPH_FAIL=1;;
     J) JSON_KAM=1;;
+    m) MEMDBG=1;;
   esac
 done
 shift $((OPTIND - 1))
@@ -530,6 +544,7 @@ SCEN_DIR="${BASE_DIR}/${GROUP}"
 SCEN_CHECK_DIR="${SCEN_DIR}/${NAME_CHECK}"
 DOMAIN=${DOMAIN:-"spce.test"}
 PROFILE="${PROFILE:-CE}"
+MLOG_DIR="${BASE_DIR}/mem"
 
 if [ "${PROFILE}" != "CE" ] && [ "${PROFILE}" != "PRO" ]; then
   echo "PROFILE ${PROFILE} unknown"
