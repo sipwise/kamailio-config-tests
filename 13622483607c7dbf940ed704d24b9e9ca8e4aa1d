@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a106d94_1868d1f4",
+        "filename": "bin/check.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-05-29T11:07:16Z",
+      "side": 1,
+      "message": "Can you please share why do you need to call memdbg twice here (using the same output filename)?",
+      "revId": "13622483607c7dbf940ed704d24b9e9ca8e4aa1d",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
