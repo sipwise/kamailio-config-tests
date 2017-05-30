@@ -16,6 +16,24 @@
       "revId": "13622483607c7dbf940ed704d24b9e9ca8e4aa1d",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a106d94_cc5dde4a",
+        "filename": "bin/check.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2017-05-30T09:22:48Z",
+      "side": 1,
+      "message": "files are incremental. But yes, maybe it\u0027s too much and I don\u0027t need to call it twice since previous scenario call it already and run_tests.sh is calling it before and after executing all the scenarios",
+      "parentUuid": "1a106d94_1868d1f4",
+      "revId": "13622483607c7dbf940ed704d24b9e9ca8e4aa1d",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
