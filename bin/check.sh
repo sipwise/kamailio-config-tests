@@ -384,6 +384,11 @@ function run_sipp
     capture
   fi
 
+  if [ ! -L "${SCEN_CHECK_DIR}/media181sec.pcap" ] ; then
+    echo "$(date) - media181sec.pcap link created"
+    ln -s "${BASE_DIR}/scenarios/media181sec.pcap" "${SCEN_CHECK_DIR}"
+  fi
+
   if [ -e "${SCEN_CHECK_DIR}/presence.sh" ]; then
     echo "$(date) - Presence xcap"
     if ! "${SCEN_CHECK_DIR}/presence.sh" ; then
