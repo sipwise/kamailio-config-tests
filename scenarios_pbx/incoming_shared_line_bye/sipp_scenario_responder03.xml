@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<scenario name="Sipwise NGCP Benchmark UAS Responder">
+
+  <recv request="INVITE" rss="true">
+  <!--
+    <action>
+      <ereg regexp=": *(.*)" search_in="hdr" header="Record-Route" assign_to="_,4"/>
+    </action>
+  -->
+  </recv>
+
+  <send>
+    <![CDATA[
+
+      SIP/2.0 180 Ringing
+      [last_Via:]
+      [last_From:]
+      [last_To:];tag=45A3403F-593FEDA100069185-63159700
+      [last_Call-ID:]
+      [last_CSeq:]
+      Allow: INVITE, INFO, PRACK, ACK, BYE, CANCEL, OPTIONS, NOTIFY, REGISTER, SUBSCRIBE, REFER, PUBLISH, UPDATE, MESSAGE
+      Call-Info: <sip:spce.test>;appearance-index=1
+      Allow-Events: talk,hold,conference,refer,check-sync
+      Contact: <sip:[local_ip]:[local_port];transport=[transport]>
+      Content-Length: 0
+
+    ]]>
+  </send>
+
+  <pause milliseconds="500"/>
+
+  <send>
+    <![CDATA[
+
+      SIP/2.0 200 OK
+      [last_Via:]
+      [last_From:]
+      [last_To:];tag=45A3403F-593FEDA100069185-63159700
+      [last_Call-ID:]
+      [last_CSeq:]
+      [last_Record-Route:]
+      [last_Route:]
+      Allow: INVITE, INFO, PRACK, ACK, BYE, CANCEL, OPTIONS, NOTIFY, REGISTER, SUBSCRIBE, REFER, PUBLISH, UPDATE, MESSAGE
+      Call-Info: <sip:spce.test>;appearance-index=1
+      Allow-Events: talk,hold,conference,refer,check-sync
+      Contact: <sip:[local_ip]:[local_port];transport=[transport]>
+      Content-Type: application/sdp
+      Content-Length: [len]
+
+      v=0
+      o=user1 53655765 2353687637 IN IP[local_ip_type] [local_ip]
+      s=-
+      c=IN IP[media_ip_type] [media_ip]
+      t=0 0
+      m=audio [media_port] RTP/AVP 8
+      a=rtpmap:8 PCMA/8000
+      a=ptime:50
+
+    ]]>
+  </send>
+
+  <recv request="ACK" rss="true">
+    <action>
+      <!-- get From To header values with tags -->
+      <ereg regexp=": *(.*)" search_in="hdr" header="To" assign_to="_,1"/>
+      <ereg regexp=": *(.*)" search_in="hdr" header="From" assign_to="_,2"/>
+      <!-- [next_url] doesn't work ?? -->
+      <ereg regexp=": <(.*)>" search_in="hdr" header="Contact" assign_to="_,3"/>
+    </action>
+  </recv>
+  <Reference variables="_"/>
+
+  <send start_txn="bye">
+    <![CDATA[
+
+      BYE [$3] SIP/2.0
+      [last_Via:]
+      From: [$1]
+      To: [$2]
+      Call-ID: NGCP%[field4 file="callee.csv" line=3]%///[call_id]
+      CSeq: [cseq] BYE
+      Contact: <sip:[field0 file="callee.csv" line=3]@[local_ip]:[local_port]>
+      [last_Record-Route:]
+      [last_Route:]
+      Max-Forwards: 70
+      Content-Length: 0
+
+    ]]>
+  </send>
+
+  <recv response="100" response_txn="bye" optional="true"/>
+
+  <recv response="200" response_txn="bye"/>
+
+</scenario>
+
