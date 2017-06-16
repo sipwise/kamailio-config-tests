@@ -222,7 +222,12 @@ function release_appearance
 {
   local values
   values=$(mktemp)
-  ngcp-sercmd proxy sca.all_appearances > "${values}"
+  ngcp-sercmd proxy sca.all_appearances >"${values}" 2>&1
+  if grep -q error "${values}" ; then
+    # sca not enabled, not pbx scenario
+    rm "${values}"
+    return
+  fi
   while read -r sca idx rest; do
     echo "$(date) release_appearance for ${sca} ${idx}"
     ngcp-sercmd proxy sca.release_appearance "${sca}" "${idx}" || true
