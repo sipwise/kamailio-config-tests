@@ -22,7 +22,7 @@ use strict;
 use warnings;
 
 use English;
-use YAML;
+use YAML::XS;
 use Getopt::Long;
 use Cwd 'abs_path';
 use Config::Tiny;
@@ -106,7 +106,7 @@ sub set_subscriber_voicemailsettings
 }
 
 sub main {
-    my $r = YAML::LoadFile(abs_path($ARGV[0]));
+    my $r = YAML::XS::LoadFile(abs_path($ARGV[0]));
 
     for my $key (keys %{$r})
     {

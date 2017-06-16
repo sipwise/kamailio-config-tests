@@ -63,8 +63,8 @@ if($json_in) {
   $inlog = decode_json($json);
 }
 else {
-  use YAML;
-  $inlog = YAML::LoadFile($filename);
+  use YAML::XS;
+  $inlog = YAML::XS::LoadFile($filename);
 }
 my @prevs = ();
 my $name = '';
