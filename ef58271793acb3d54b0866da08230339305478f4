@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dacfb570_4dfffc01",
+        "filename": "bin/check.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-06-16T09:04:05Z",
+      "side": 1,
+      "message": "who will remove symlink? I believe /usr/share/kamailio-config-test will not be removed cleanly then.\n\nMaybe debina/kamailio-config-test.postinst should create necessary links for you?",
+      "range": {
+        "startLine": 389,
+        "startChar": 3,
+        "endLine": 389,
+        "endChar": 10
+      },
+      "revId": "ef58271793acb3d54b0866da08230339305478f4",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
