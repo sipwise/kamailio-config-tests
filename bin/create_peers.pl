@@ -26,7 +26,7 @@ use Getopt::Long;
 use Cwd 'abs_path';
 use Config::Tiny;
 use Sipwise::API qw(all);
-use YAML qw{ DumpFile LoadFile };
+use YAML::XS qw(DumpFile LoadFile);
 
 my $config =  Config::Tiny->read('/etc/default/ngcp-api');
 my $opts;
