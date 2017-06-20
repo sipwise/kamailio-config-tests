@@ -22,7 +22,7 @@ use strict;
 use warnings;
 
 use English;
-use YAML:XS qw();
+use YAML::XS qw();
 use Getopt::Long;
 use Cwd 'abs_path';
 use Config::Tiny;
