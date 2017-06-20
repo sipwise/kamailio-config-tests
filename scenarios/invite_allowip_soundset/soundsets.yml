@@ -4,4 +4,4 @@ soundsets:
       sounds:
         unauth_caller_ip:
           filename: sounds/no_sh.wav
-          loopplay: false
+          loopplay: 'false'
