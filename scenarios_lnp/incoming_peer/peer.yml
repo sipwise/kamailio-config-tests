@@ -40,8 +40,8 @@ peer_01:
   rules:
     - group_id: peer_01_group
       callee_prefix: ""
-      callee_pattern: ""
-      caller_pattern: "^sip:.+@spce.test"
+      callee_pattern: ''
+      caller_pattern: '^sip:.+@spce.test'
       description: ""
   hosts:
     - group_id: peer_01_group
