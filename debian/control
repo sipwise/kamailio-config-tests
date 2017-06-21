@@ -4,19 +4,25 @@ Priority: extra
 Maintainer: Sipwise Development Team <support@sipwise.com>
 Build-Depends:
  debhelper (>= 9),
+ devscripts,
+ libconfig-tiny-perl,
+ libhash-merge-perl,
+ liblist-allutils-perl,
+ libyaml-libyaml-perl,
 Standards-Version: 3.9.8
 Homepage: https://www.sipwise.com/
 
 Package: kamailio-config-tests
 Architecture: all
 Depends:
- ${misc:Depends},
- ${perl:Depends},
  curl,
+ libconfig-tiny-perl,
  libfile-slurp-perl,
  libgraphviz-perl,
+ libhash-merge-perl,
  libio-compress-perl,
  libjson-perl,
+ liblist-allutils-perl,
  libtemplate-perl,
  libtext-csv-perl,
  libyaml-libyaml-perl,
@@ -27,5 +33,7 @@ Depends:
  python-yaml,
  sip-tester (>= 1:3.3-1~),
  tcpdump,
+ ${misc:Depends},
+ ${perl:Depends},
 Description: Kamailio configuration tests
  Scripts and tests scenarios to check Kamailio configuration.
