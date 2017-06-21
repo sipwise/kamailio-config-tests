@@ -14,7 +14,7 @@ peer_00:
   inboundrules:
     - group_id: peer_00_group
       field: "ruri_uri"
-      pattern: ".*"
+      pattern: '.*'
       priority: 50
       enabled: 1
   hosts:

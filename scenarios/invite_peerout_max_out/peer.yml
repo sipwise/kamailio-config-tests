@@ -17,13 +17,13 @@ peer_00:
   rules:
     - group_id: peer_00_group
       callee_prefix: ""
-      callee_pattern: ""
-      caller_pattern: "^sip:.+@spce.test"
+      callee_pattern: ''
+      caller_pattern: '^sip:.+@spce.test'
       description: ""
     - group_id: peer_01_group
       callee_prefix: ""
-      callee_pattern: ""
-      caller_pattern: "^sip:.+@spce.test"
+      callee_pattern: ''
+      caller_pattern: '^sip:.+@spce.test'
       description: ""
   hosts:
     - group_id: peer_00_group
