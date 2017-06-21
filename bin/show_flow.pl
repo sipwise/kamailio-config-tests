@@ -61,8 +61,8 @@ if($json_in) {
   $inlog = decode_json($json);
 }
 else {
-  use YAML::XS;
-  $inlog = YAML::XS::LoadFile($filename);
+  use YAML;
+  $inlog = YAML::LoadFile($filename);
 }
 
 foreach my $i (@{$inlog->{'flow'}})

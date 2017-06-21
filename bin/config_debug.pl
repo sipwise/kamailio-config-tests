@@ -25,7 +25,7 @@ use Getopt::Long;
 use strict;
 use Tie::File;
 use warnings;
-use YAML::XS qw(LoadFile DumpFile);
+use YAML qw/LoadFile DumpFile/;
 use Hash::Merge qw(merge);
 
 sub usage

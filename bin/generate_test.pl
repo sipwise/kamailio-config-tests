@@ -23,7 +23,7 @@ use warnings;
 use Getopt::Long;
 use Cwd 'abs_path';
 use Template;
-use YAML::XS qw(LoadFile);
+use YAML qw{ LoadFile };
 
 sub usage
 {

@@ -19,7 +19,7 @@ Depends:
  libjson-perl,
  libtemplate-perl,
  libtext-csv-perl,
- libyaml-libyaml-perl,
+ libyaml-perl,
  ngcp-provisioning-tools,
  parallel,
  python,

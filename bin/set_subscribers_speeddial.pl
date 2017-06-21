@@ -22,7 +22,7 @@ use strict;
 use warnings;
 
 use English;
-use YAML::XS;
+use YAML;
 use Getopt::Long;
 use Cwd 'abs_path';
 use Config::Tiny;
@@ -82,7 +82,7 @@ sub set_subscriber_speeddial
 
 
 sub main {
-  my $r = YAML::XS::LoadFile(abs_path($ARGV[0]));
+  my $r = YAML::LoadFile(abs_path($ARGV[0]));
 
   for my $key (keys %{$r})
   {

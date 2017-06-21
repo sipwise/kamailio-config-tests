@@ -23,7 +23,7 @@ use strict;
 use warnings;
 use English;
 use JSON;
-use YAML::XS;
+use YAML;
 use File::Spec;
 use Cwd 'abs_path';
 use Data::Dumper;
@@ -73,7 +73,7 @@ sub save_data
   {
     if (!$data->{'sip_out'}) { print "no sip_out\n"; }
     $path = File::Spec->catfile( $output_dir, (sprintf "%04i", $data->{'msgid'}).".yml");
-    YAML::XS::DumpFile($path, $data);
+    YAML::DumpFile($path, $data);
     #print "$data->{'msgid'} saved\n";
     # This tries to fix problems with string values '-' being saved
     # without quotes.
