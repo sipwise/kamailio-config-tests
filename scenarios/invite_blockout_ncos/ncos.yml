@@ -5,5 +5,5 @@ ncos_test_00:
     description: test ncos level
     reseller_id: 1
   patterns:
-    - pattern: "^431"
+    - pattern: '^431'
       description: block local area calls
