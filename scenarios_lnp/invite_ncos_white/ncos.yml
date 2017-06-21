@@ -5,7 +5,7 @@ ncos_black:
     description: test ncos level
     reseller_id: 1
   patterns:
-    - pattern: "^439991"
+    - pattern: '^439991'
       description: block LNP call
 ncos_white:
   data:
@@ -14,5 +14,5 @@ ncos_white:
     description: test ncos level
     reseller_id: 1
   patterns:
-    - pattern: "^439991"
+    - pattern: '^439991'
       description: allow LNP call
