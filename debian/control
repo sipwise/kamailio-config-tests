@@ -4,6 +4,9 @@ Priority: extra
 Maintainer: Sipwise Development Team <support@sipwise.com>
 Build-Depends:
  debhelper (>= 9),
+ devscripts,
+ libhash-merge-perl,
+ libyaml-libyaml-perl,
 Standards-Version: 3.9.8
 Homepage: https://www.sipwise.com/
 
@@ -15,6 +18,7 @@ Depends:
  curl,
  libfile-slurp-perl,
  libgraphviz-perl,
+ libhash-merge-perl,
  libio-compress-perl,
  libjson-perl,
  libtemplate-perl,
