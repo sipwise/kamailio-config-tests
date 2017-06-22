@@ -22,6 +22,30 @@
       "revId": "6ab579610ca442a6ae95ead11e4b4fccbe5cedc1",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ad9bd40_1fee038c",
+        "filename": "bin/ulog_parser.pl",
+        "patchSetId": 3
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-06-22T12:28:51Z",
+      "side": 1,
+      "message": "ah, nice, thx4info :)",
+      "parentUuid": "9ad9bd40_9fda13e8",
+      "range": {
+        "startLine": 151,
+        "startChar": 0,
+        "endLine": 155,
+        "endChar": 1
+      },
+      "revId": "6ab579610ca442a6ae95ead11e4b4fccbe5cedc1",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
