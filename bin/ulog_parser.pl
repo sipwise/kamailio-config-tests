@@ -148,10 +148,10 @@ sub next_line
   return ($line ne '');
 }
 
-given($#ARGV)
-{
-  when (1) { $filename = $ARGV[0]; $output_dir = $ARGV[1]; }
-  when (0) { $filename = $ARGV[0]; }
+if ($#ARGV eq 1) {
+  $filename = $ARGV[0]; $output_dir = $ARGV[1];
+} elsif ($#ARGV eq 0) {
+  $filename = $ARGV[0];
 }
 $filename = abs_path($filename);
 $output_dir = abs_path($output_dir);
@@ -172,7 +172,7 @@ do
         if($data->{'callid'} eq $callid)
         {
           $msg =~ s/#015#012/\n/g;
-          push($data->{'sip_out'}, $msg);
+          push @{$data->{'sip_out'}}, $msg;
         }
         else
         {
@@ -212,7 +212,7 @@ do
       if(($json) = ($line =~ m/.+dbg_dump_json\(\): (\{.*\})$/))
       {
         $pjson = from_json($json);
-        push($data->{'flow'}, { $mode."|".$route => $pjson });
+        push @{$data->{'flow'}}, { $mode."|".$route => $pjson };
         if ($route eq "MAIN" && $mode eq "start")
         {
           ($msg) = $method;
