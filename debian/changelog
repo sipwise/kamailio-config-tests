@@ -1,3 +1,34 @@
+kamailio-config-tests (5.5.0.0+0~mr5.5.0.0) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [3f1f939] TT#16696 invite_wrong_reg from MT#24372
+  * [846a70b] TT#12860 scenarios_pbx: add incoming_shared_line
+  * [ef58271] TT#17550 sipp doesn't support subdirectories at exec play_pcap_audio action
+  * [58a89e4] TT#17550 create the links for media181
+  * [a38c623] TT#12860 bin/check.sh: fix non pbx scenarios
+
+  [ Guillem Jover ]
+  * [31f441a] TT#17650 Switch to use YAML::XS instead of YAML
+  * [0045d1e] TT#17650 Fix YAML::XS import
+  * [0174cd7] TT#17650 Use single-quotes for patterns in YAML files
+  * [d127610] TT#17650 Do not consider undef result from YAML::XS functions an error
+
+  [ Andrew Pogrebennyk ]
+  * [ea0a7fb] TT#17435 To-Header should not include ;npdi;rn parameter
+
+  [ Alexander Lutay ]
+  * [a32adb9] TT#17550 Fix 58a89e4a: re-create the broken link for media181sec.pcap
+  * [18f33b4] TT#17550 Fix 58a89e4a: removed unnecessary folder from sipp scenarios
+  * [522b0df] TT#17650 Add liblist-moreutils-perl to (build)dependencies of kamailio-config-tests
+
+  [ Michael Prokop ]
+  * [7629fad] TT#17650 Create syntaxcheck to identify bash/perl/python errors during build time
+  * [6ab5796] TT#17650 Fix experimental features in bin/ulog_parser.pl
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 17 Jul 2017 22:43:28 +0200
+
 kamailio-config-tests (5.4.0.0+0~mr5.4.0.0) unstable; urgency=medium
 
   [ Guillem Jover ]
