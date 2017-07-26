@@ -1,0 +1,7 @@
+---
+testuser1001@spce.test:
+  cfu:
+    destinations:
+      - destination: conference
+        priority: 0
+        timeout: 2
