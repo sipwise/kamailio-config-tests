@@ -1,0 +1,33 @@
+flow:
+  - start|DEFAULT_ROUTE:
+  - start|ROUTE_NET_INFO:
+  - return|ROUTE_NET_INFO:
+  - start|ROUTE_PRX_REQUEST:
+  - start|ROUTE_INITVARS:
+  - return|ROUTE_INITVARS:
+  - exit|ROUTE_PRX_REQUEST:
+sip_in:
+[% IF PRO %]
+  - '^UPDATE sip:conf=4311001@127.0.0.1:5080 SIP/2.0'
+[% ELSE %]
+  - '^UPDATE sip:127.0.0.1:5080;transport=udp SIP/2.0'
+[% END %]
+  - 'CSeq: 11 UPDATE'
+  - 'Content-Length: 0'
+  - 'From: <sip:testuser1002@'
+  - 'To: <sip:testuser1001@'
+sip_out:
+  - [
+      '^SIP/2.0 100 Trying',
+      'CSeq: 11 UPDATE',
+      'Content-Length: 0',
+      'From: <sip:testuser1002@',
+      'To: <sip:testuser1001@'
+    ]
+  - [
+      '^SIP/2.0 200 OK',
+      'CSeq: 11 UPDATE',
+      'Content-Length: 0',
+      'From: <sip:testuser1002@',
+      'To: <sip:testuser1001@'
+    ]
