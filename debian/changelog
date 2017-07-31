@@ -1,3 +1,12 @@
+kamailio-config-tests (5.4.1.1+0~mr5.4.1.1) unstable; urgency=medium
+
+  [ Andrew Pogrebennyk ]
+  * [5155302] TT#14802 add new test to check UPDATE behavior during conference call
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 31 Jul 2017 14:34:51 +0200
+
 kamailio-config-tests (5.4.1.0+0~mr5.4.1.0) unstable; urgency=medium
 
   [ Victor Seva ]
