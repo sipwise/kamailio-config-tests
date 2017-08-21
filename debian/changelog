@@ -1,3 +1,16 @@
+kamailio-config-tests (5.3.2.1+0~mr5.3.2.1) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [2b910e7] TT#16696 invite_wrong_reg from MT#24372
+
+  [ Andrew Pogrebennyk ]
+  * [69ef531] TT#17435 To-Header should not include ;npdi;rn parameter
+  * [cdcb601] TT#20009 fix scenario invite_peerout_failover to reflect the updated To header
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 21 Aug 2017 12:40:40 +0200
+
 kamailio-config-tests (5.3.2.0+0~mr5.3.2.0) unstable; urgency=medium
 
   * New release.
