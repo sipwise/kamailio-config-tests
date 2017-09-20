@@ -162,18 +162,18 @@ flow:
 sip_in:
   - '^INVITE sip:4311005@'
   - 'Contact: <sip:(testuser1003@)?127.0.0.1:5080(;transport=udp)?>'
-  - 'CSeq: 10 INVITE'
+  - 'CSeq: \d+ INVITE'
   - 'Content-Type: application/sdp'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
-      'CSeq: 10 INVITE',
+      'CSeq: \d+ INVITE',
       'From: <sip:testuser1002@',
       'To: <sip:testuser1004@'
     ]
   - [
       '^INVITE sip:testuser1005@',
-      'CSeq: 10 INVITE',
+      'CSeq: \d+ INVITE',
       'From: <sip:4311002@',
       'To: <sip:testuser1004@',
       'Content-Type: application/sdp',
@@ -182,9 +182,5 @@ sip_out:
       'P-App-Name: sbc',
       'P-NGCP-Caller-Info: <sip:testuser1004@',
       'P-NGCP-Callee-Info: <sip:4311005@',
-[% IF PRO %]
-      'Max-Forwards: 70'
-[% ELSE %]
       'Max-Forwards: 69'
-[% END %]
     ]

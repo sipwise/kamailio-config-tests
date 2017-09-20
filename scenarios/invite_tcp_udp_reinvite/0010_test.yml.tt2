@@ -15,18 +15,18 @@ flow:
 sip_in:
   - '^INVITE'
   - 'Contact: <sip:(testuser1003@)?127.0.0.1:5080(;transport=udp)?>'
-  - 'CSeq: 10 INVITE'
+  - 'CSeq: \d+ INVITE'
   - 'Content-Type: application/sdp'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
-      'CSeq: 10 INVITE',
+      'CSeq: \d+ INVITE',
       'From: <sip:testuser1003@',
       'To: <sip:4311002@'
     ]
   - [
       '^INVITE sip:testuser1002@',
-      'CSeq: 10 INVITE',
+      'CSeq: \d+ INVITE',
       'From: <sip:testuser1003@',
       'To: <sip:testuser1002@',
       'Content-Type: application/sdp'
