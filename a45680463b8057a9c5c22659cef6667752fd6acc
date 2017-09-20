@@ -1,0 +1,8 @@
+Verified+1: Jenkins Jenkins
+Code-Review+1: Roman Romanchenko <rromanchenko@sipwise.com>
+Code-Review+2: Alexander Lutay <alutay@sipwise.com>
+Submitted-by: Andrii Pogrebennyk <apogrebennyk@sipwise.com>
+Submitted-at: Wed, 20 Sep 2017 15:57:22 +0200
+Reviewed-on: http://gerrit.mgm.sipwise.com/15506
+Project: kamailio-config-tests
+Branch: refs/heads/master
