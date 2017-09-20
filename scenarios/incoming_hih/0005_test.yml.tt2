@@ -172,7 +172,7 @@ flow:
 sip_in:
   - '^INVITE sip:4311002@'
   - 'Contact: <sip:127.0.0.1:5080'
-  - 'CSeq: 10 INVITE'
+  - 'CSeq: \d+ INVITE'
   - 'Content-Type: application/sdp'
   - 'P-Caller-UUID: \w+'
   - 'P-First-Caller-UPN: 004321001'
@@ -184,13 +184,13 @@ sip_in:
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
-      'CSeq: 10 INVITE',
+      'CSeq: \d+ INVITE',
       'From: <sip:004321001@',
       'To: <sip:4311003@'
     ]
   - [
       '^INVITE sip:testuser1002@',
-      'CSeq: 10 INVITE',
+      'CSeq: \d+ INVITE',
       'From: <sip:004321001@',
       'Contact: <sip:127.0.0.1:5080(;transport=udp)?>',
       'To: <sip:4311003@',
