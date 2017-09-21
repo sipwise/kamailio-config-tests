@@ -5,7 +5,7 @@ sip_in:
   - '^SIP/2.0 200 OK'
   - 'From: <sip:\*55\*1420@spce.test>;tag='
   - 'To: <sip:testuser1001@spce.test>;tag='
-  - 'CSeq: 10 BYE'
+  - 'CSeq: \d+ BYE'
   - 'Content-Length:\s+0'
   - 'P-NGCP-Src-Ip: 127.126.0.1'
   - 'P-NGCP-Src-Port: \d+'
@@ -14,5 +14,5 @@ sip_in:
 sip_out:
   - [
        '^SIP/2.0 200 OK',
-       'CSeq: 10 BYE'
+       'CSeq: \d+ BYE'
     ]
