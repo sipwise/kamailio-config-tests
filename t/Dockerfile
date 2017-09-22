@@ -29,8 +29,7 @@ WORKDIR /code/
 #
 # you need to put the proper NGCP sources at t/sources.list.d/builddeps.list
 # for instance, trunk:
-# echo "deb https://deb.sipwise.com/autobuild/ release-trunk-stretch main" > /
-#  t/sources.list.d/builddeps.list
+# echo "deb https://deb.sipwise.com/autobuild/ release-trunk-stretch main" > t/sources.list.d/builddeps.list
 #
 # % docker build --tag="kamailio-config-tests-stretch" .
 # % docker run --rm -i -t -v $(pwd)/..:/code:rw kamailio-config-tests-stretch:latest bash
