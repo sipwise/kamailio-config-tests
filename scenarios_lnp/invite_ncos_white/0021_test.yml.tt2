@@ -74,9 +74,9 @@ flow:
   - start|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
   - return|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
   - return|ROUTE_ADD_CALLINFO_REPLY:
-  - 'start|dialog:failed':
-  - 'return|dialog:failed':
-  - 'return|dialog:failed':
+  - start|dialog:failed:
+  - return|dialog:failed:
+  - return|dialog:failed:
   - exit|ROUTE_EARLY_REJECT:
 sip_in:
   - '^INVITE sip:43999300@'

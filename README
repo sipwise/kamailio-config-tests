@@ -35,7 +35,7 @@ Usage:
       - sipp error logs
       - a pcap file for each interface
 
-  #bash ./get_result.sh [-p PROFILE ] [-g]
+  #bash ./get_results.sh [-p PROFILE ] [-g]
 
   This will create:
     - $BASE_DIR/result
