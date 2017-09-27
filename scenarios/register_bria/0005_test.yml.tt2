@@ -1,5 +1,7 @@
 flow:
   - start|DEFAULT_ROUTE:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
       $fU: testuser1003
       $tU: testuser1003
   - start|ROUTE_NET_INFO:
@@ -9,7 +11,10 @@ flow:
   - start|ROUTE_REG_REQUEST:
   - start|ROUTE_REG_HANDLE:
   - start|ROUTE_AUTH:
-  - exit|ROUTE_AUTH:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
 sip_in:
   - '^REGISTER'
   - 'Contact: "TestBria" <sip:testuser1003@127.126.0.1:\d+;ob>;reg-id=1;\+sip.instance="<urn:uuid:C3DD6013-20E8-40E3-8EA2-5849B02ED0C4>"'

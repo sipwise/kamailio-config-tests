@@ -1,7 +1,12 @@
 flow:
   - start|REPLY_ROUTE_NAT:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
   - start|REPLY_ROUTE_RTPENGINE:
   - return|REPLY_ROUTE_RTPENGINE:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
   - start|dialog:start:
   - return|dialog:start:
       $avp(lua_dlg_profile): [
@@ -19,7 +24,10 @@ flow:
         "user:[% spce_test.testuser1005.uuid %]"
       ]
   - return|dialog:start:
-#  - exit|REPLY_ROUTE_NAT:
+#  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
 sip_in:
   - '^SIP/2.0 200 OK'
   - 'CSeq: \d+ INVITE'
