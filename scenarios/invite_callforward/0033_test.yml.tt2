@@ -19,7 +19,10 @@ flow:
         "user:[% spce_test.testuser1005.uuid %]"
       ]
   - return|dialog:start:
-#  - exit|REPLY_ROUTE_NAT:
+#  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
 sip_in:
   - '^SIP/2.0 200 OK'
   - 'CSeq: \d+ INVITE'

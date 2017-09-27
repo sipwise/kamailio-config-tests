@@ -1,7 +1,10 @@
 # INVITE_OFFLINE scenario
 flow:
   - start|REPLY_ROUTE_NAT:
-  - exit|REPLY_ROUTE_NAT:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
 sip_in:
   - '^SIP/2.0 180 Ringing'
   - 'CSeq: 1 INVITE'

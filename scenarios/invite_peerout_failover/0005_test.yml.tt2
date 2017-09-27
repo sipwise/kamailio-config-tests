@@ -113,7 +113,10 @@ flow:
   - return|ROUTE_ADD_CALLINFO:
   - return|BRANCH_ROUTE_SBC:
   - return|BRANCH_ROUTE_SBC:
-  - exit|ROUTE_OUTBOUND:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
       $avp(lua_dlg_profile): [
         "relay",
         "peerout:[% peer_00_host0.id %]",
@@ -129,7 +132,10 @@ flow:
         "total",
         "outgoing"
       ]
-  - exit|ROUTE_OUTBOUND:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
 "sip_in":
   - '^SIP/2.0 408 Timeout'
 "sip_out":

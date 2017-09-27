@@ -20,8 +20,14 @@ flow:
 - return|dialog:failed:
     $avp(lua_dlg_profile): None
 - return|dialog:failed:
-- exit|ROUTE_EARLY_REJECT:
-- exit|ROUTE_EARLY_REJECT:
+- start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+- start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
 sip_in:
   - '^SIP/2.0 302 Moved Temporarily'
   - 'From: <sip:4311002@'

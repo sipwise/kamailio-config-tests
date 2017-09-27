@@ -1,5 +1,7 @@
 flow:
   - start|DEFAULT_ROUTE:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
   - start|ROUTE_NET_INFO:
   - return|ROUTE_NET_INFO:
   - start|ROUTE_PRX_REQUEST:
@@ -114,7 +116,10 @@ flow:
   - return|ROUTE_ACC_CALLEE:
   - start|ROUTE_STOP_RTPPROXY_BRANCH:
   - return|ROUTE_STOP_RTPPROXY_BRANCH:
-  - exit|ROUTE_OUTBOUND:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
       $avp(lua_dlg_profile): None
 sip_in:
   - '^INVITE sip:testuser1003@'
