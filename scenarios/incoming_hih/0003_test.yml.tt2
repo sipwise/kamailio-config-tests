@@ -1,5 +1,7 @@
 flow:
   - start|DEFAULT_ROUTE:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
   - start|ROUTE_NET_INFO:
   - return|ROUTE_NET_INFO:
   - start|ROUTE_PRX_REQUEST:
@@ -109,7 +111,10 @@ flow:
   - return|ROUTE_ADD_CALLINFO:
   - return|BRANCH_ROUTE_FWD_LOOP:
   - return|BRANCH_ROUTE_FWD_LOOP:
-  - exit|ROUTE_EXECUTE_CF_LOOP:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
 sip_in:
   - '^INVITE sip:4311003@'
   - 'Contact: sip:004321001@'

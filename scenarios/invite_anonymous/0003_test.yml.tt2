@@ -1,5 +1,7 @@
 flow:
   - start|DEFAULT_ROUTE:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
   - start|ROUTE_NET_INFO:
   - return|ROUTE_NET_INFO:
   - start|ROUTE_PRX_REQUEST:
@@ -12,7 +14,10 @@ flow:
   - return|ROUTE_LOAD_CALLEE_DOMAIN_PREF:
   - start|ROUTE_FIND_CALLER:
   - start|ROUTE_AUTH:
-  - exit|ROUTE_AUTH:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
       $fU: anonymous
       $fd: anonymous.invalid
       $var(realm_user): testuser1002

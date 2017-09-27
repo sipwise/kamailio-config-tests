@@ -1,5 +1,7 @@
 flow:
   - start|DEFAULT_ROUTE:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
       $fU: testuser1003
       $tU: testuser1003
   - start|ROUTE_NET_INFO:
@@ -17,7 +19,10 @@ flow:
   - start|ROUTE_PREFERENCES:
   - start|ROUTE_CHECK_UA:
   - return|ROUTE_CHECK_UA:
-  - exit|ROUTE_PREFERENCES:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
       $xavp(callee_dom_prefs): None
       $xavp(callee_peer_prefs): None
       $xavp(callee_real_prefs): None
