@@ -1,6 +1,11 @@
 flow:
   - start|REPLY_ROUTE_NAT:
-  - 'start|tm:branch-failure:redirect':
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - start|tm:branch-failure:redirect:
   - start|ROUTE_STOP_RTPPROXY_BRANCH:
   - start|ROUTE_RESTORE_CLUSTERSET:
   - return|ROUTE_RESTORE_CLUSTERSET:
@@ -140,7 +145,10 @@ flow:
   - return|ROUTE_ADD_CALLINFO:
   - return|BRANCH_ROUTE_SBC:
   - return|BRANCH_ROUTE_SBC:
-  - exit|ROUTE_OUTBOUND:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
       $avp(lua_dlg_profile): [
           'accountout:[% customer_test.id %]',
           'userout:[% spce_test.testuser1003.uuid %]',
@@ -165,7 +173,7 @@ flow:
           "account:[% customer_test.id %]",
           "user:[% spce_test.testuser1003.uuid %]"
         ]
-  - exit|ROUTE_OUTBOUND:
+  - exit|ROUTE_EXIT:
 sip_in:
   - '^SIP/2.0 302 Moved Temporarily'
   - 'From: <sip:4311002@'

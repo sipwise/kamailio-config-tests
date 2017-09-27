@@ -2,13 +2,16 @@ flow:
   - start|REPLY_ROUTE_NAT:
   - start|REPLY_ROUTE_RTPENGINE:
   - return|REPLY_ROUTE_RTPENGINE:
-  - 'start|dialog:start':
-  - 'return|dialog:start':
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - start|dialog:start:
+  - return|dialog:start:
       $avp(lua_dlg_profile): [
         "local",
         "total"
       ]
-  - 'return|dialog:start':
+  - return|dialog:start:
 sip_in:
   - '^SIP/2.0 200 OK'
   - 'CSeq: \d+ INVITE'

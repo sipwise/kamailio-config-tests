@@ -1,5 +1,7 @@
 flow:
   - start|DEFAULT_ROUTE:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
   - start|ROUTE_NET_INFO:
   - return|ROUTE_NET_INFO:
   - start|ROUTE_REG_REQUEST:
@@ -14,7 +16,10 @@ flow:
       $avp(orig_acc_caller_domain): ['spce.test']
   - start|ROUTE_ADD_CALLINFO_REPLY:
   - return|ROUTE_ADD_CALLINFO_REPLY:
-  - exit|ROUTE_AUTH:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
 sip_in:
   - '^REGISTER'
   - 'Contact: sip:testuser1003@'

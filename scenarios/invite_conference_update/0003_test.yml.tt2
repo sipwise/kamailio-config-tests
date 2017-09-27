@@ -1,6 +1,8 @@
 # INVITE_OFFLINE scenario
 flow:
   - start|DEFAULT_ROUTE:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
   - start|ROUTE_NET_INFO:
   - return|ROUTE_NET_INFO:
   - start|ROUTE_PRX_REQUEST:
@@ -131,7 +133,10 @@ flow:
   - return|BRANCH_ROUTE_FWD_LOOP:
   # branch ??
   - return|BRANCH_ROUTE_FWD_LOOP:
-  - exit|ROUTE_EXECUTE_CF_LOOP:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
 sip_in:
   - '^INVITE'
   - 'Contact: sip:testuser1002@'

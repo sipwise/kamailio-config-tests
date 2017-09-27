@@ -1,5 +1,7 @@
 flow:
   - start|DEFAULT_ROUTE:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
   - start|ROUTE_NET_INFO:
   - return|ROUTE_NET_INFO:
   - start|ROUTE_PRX_REQUEST:
@@ -152,7 +154,10 @@ flow:
   - return|BRANCH_ROUTE_SBC:
   # branch ??
   - return|BRANCH_ROUTE_SBC:
-  - exit|ROUTE_OUTBOUND:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
       $avp(lua_dlg_profile): [
         "accountout:[% customer_test.id %]",
         "userout:[% spce_test.testuser1001.uuid %]",
