@@ -1,5 +1,7 @@
 flow:
   - start|DEFAULT_ROUTE:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
   - start|ROUTE_NET_INFO:
   - return|ROUTE_NET_INFO:
   - start|ROUTE_PRX_REQUEST:
@@ -173,7 +175,10 @@ flow:
         "account:[% customer_test.id %]",
         "user:[% spce_test.testuser1003.uuid %]"
       ]
-  - exit|ROUTE_OUTBOUND:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
 sip_in:
   - '^INVITE'
   - 'Contact: sip:testuser1002@'

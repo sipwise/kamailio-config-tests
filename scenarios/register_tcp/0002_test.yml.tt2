@@ -1,5 +1,7 @@
 flow:
   - start|DEFAULT_ROUTE:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
       $fU: testuser1003
       $tU: testuser1003
   - start|ROUTE_NET_INFO:
@@ -36,7 +38,10 @@ flow:
       $xavp(caller_usr_prefs[0]=>ac[*]): [1]
       $xavp(caller_usr_prefs[0]=>cc[*]): [43]
       $xavp(caller_usr_prefs[0]=>cli[*]): [4311003]
-  - exit|ROUTE_REG_HANDLE:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
 sip_in:
   - '^REGISTER'
   - 'Contact: sip:testuser1003@'
