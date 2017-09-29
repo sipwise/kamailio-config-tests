@@ -1,7 +1,4 @@
 flow:
-  - start|ROUTE_EXIT:
-  - start|ROUTE_RUNTIME:
-  - return|ROUTE_RUNTIME:
   - start|dialog:start:
   - return|dialog:start:
       $avp(lua_dlg_profile): [
