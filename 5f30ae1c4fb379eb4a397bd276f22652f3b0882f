@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dab895d6_3bb67add",
+        "filename": "bin/check.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-10-02T19:28:34Z",
+      "side": 1,
+      "message": "I prefer\n\n      for i in \"${KAM_DIR}/${NAME_CHECK}\"/*.json ; do\n        expand -t1 \"$i\" \u003e \"${LOG_DIR}/$(printf \u0027%04d.json\u0027 \"$(basename \"$i\" .json)\")\"\n        rm \"$i\"\n      done\n      rmdir \"${KAM_DIR:?}/${NAME_CHECK:?}\"",
+      "revId": "5f30ae1c4fb379eb4a397bd276f22652f3b0882f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
