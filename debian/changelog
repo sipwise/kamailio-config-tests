@@ -1,3 +1,30 @@
+kamailio-config-tests (5.5.1.0+0~mr5.5.1.0) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [ad3ae5c] TT#16800 support memdbg csv report
+
+  [ Andrew Pogrebennyk ]
+  * [dd25e4b] TT#14802 add new test to check UPDATE behavior during conference call
+  * [b413238] TT#20009 fix scenario invite_peerout_failover to reflect the updated To header
+  * [a456804] TT#21894 fix kamailio-config-tests for new sems in PRO
+  * [aaa64e5] TT#21894 fix the reminder test for new SEMS in Pro
+  * [d5e7322] TT#23001 remove cfgt data after getting test results
+
+  [ Kirill Solomko ]
+  * [7f2f6ad] TT#21007 fix media181sec.pcap global header size
+
+  [ Alexander Lutay ]
+  * [5786436] TT#21905 Switch kamailio-config-tests Dockerfile to Debian stretch
+  * [78d6fae] TT#22410 Fix typo in Dockerfile 'Instructions for usage'
+
+  [ Andreas Granig ]
+  * [6088364] TT#22659 Adapt to match runtime profiling
+  * [61f2e3d] TT#22659 Fix lnp regarding runtime profiling
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 02 Oct 2017 23:39:19 +0200
+
 kamailio-config-tests (5.5.0.0+0~mr5.5.0.0) unstable; urgency=medium
 
   [ Victor Seva ]
