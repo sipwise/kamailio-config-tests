@@ -634,6 +634,7 @@ else
       for i in "${KAM_DIR}/${NAME_CHECK}"/*.json ; do
         expand -t1 "$i" > "${LOG_DIR}/$(printf '%04d.json' "$(basename "$i" .json)")"
       done
+      rm -rf "${KAM_DIR:?}/${NAME_CHECK:?}"
     else
       echo "no cfgt files found"
     fi
