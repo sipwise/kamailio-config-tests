@@ -23,7 +23,6 @@ use strict;
 use warnings;
 use Cwd 'abs_path';
 use Data::Dumper;
-use GraphViz;
 use Getopt::Long;
 use English;
 
@@ -45,6 +44,14 @@ if($#ARGV!=1)
 {
   die(usage());
 }
+
+my $rc = eval
+{
+  require GraphViz;
+  GraphViz->import();
+  1;
+};
+return unless $rc;
 
 my $g = GraphViz->new();
 my $filename = abs_path($ARGV[0]);

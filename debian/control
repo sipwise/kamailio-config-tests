@@ -6,7 +6,6 @@ Build-Depends:
  debhelper (>= 9),
  devscripts,
  libconfig-tiny-perl,
- libgraphviz-perl,
  libhash-merge-perl,
  libjson-perl,
  liblist-allutils-perl,
@@ -15,6 +14,8 @@ Build-Depends:
  libtext-csv-perl,
  libyaml-libyaml-perl,
  python,
+Recommends:
+ libgraphviz-perl,
 Standards-Version: 3.9.8
 Homepage: https://www.sipwise.com/
 
@@ -24,7 +25,6 @@ Depends:
  curl,
  libconfig-tiny-perl,
  libfile-slurp-perl,
- libgraphviz-perl,
  libhash-merge-perl,
  libio-compress-perl,
  libjson-perl,
@@ -42,5 +42,7 @@ Depends:
  tcpdump,
  ${misc:Depends},
  ${perl:Depends},
+Recommends:
+ libgraphviz-perl,
 Description: Kamailio configuration tests
  Scripts and tests scenarios to check Kamailio configuration.
