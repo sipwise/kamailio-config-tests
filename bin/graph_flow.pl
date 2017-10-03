@@ -45,13 +45,12 @@ if($#ARGV!=1)
   die(usage());
 }
 
-my $rc = eval
+eval
 {
   require GraphViz;
   GraphViz->import();
   1;
-};
-return unless $rc;
+} or die "You need package libgraphviz-perl to run this program\n";
 
 my $g = GraphViz->new();
 my $filename = abs_path($ARGV[0]);
