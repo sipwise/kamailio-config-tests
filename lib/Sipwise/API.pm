@@ -108,7 +108,9 @@ sub _do_binary_request {
 	if(! -f $filename) {
 		die "$filename not found\n";
 	}
-	$req->content(read_file($filename));
+	my $data_ref;
+	read_file($filename, buf_ref => \$data_ref);
+	$req->content(${data_ref});
 	my $res = $ua->request($req);
 	if(!$res->is_success) {
 		print "$url\n";
