@@ -1,9 +1,9 @@
 Source: kamailio-config-tests
 Section: devel
-Priority: extra
+Priority: optional
 Maintainer: Sipwise Development Team <support@sipwise.com>
 Build-Depends:
- debhelper (>= 9),
+ debhelper (>= 10),
  devscripts,
  libconfig-tiny-perl,
  libhash-merge-perl,
