@@ -105,6 +105,7 @@ else
   $yaml->{kamailio}{lb}{use_dns_cache} = 'off';
   $yaml->{kamailio}{proxy}{children} = 1;
   $yaml->{kamailio}{proxy}{cfgt} = 'yes';
+  $yaml->{sems}{cfgt} = 'yes';
   $yaml->{sems}{debug} = 'yes';
   $yaml->{checktools}{sip_check_enable} = 0;
   $yaml->{security}->{ngcp_panel}->{scripts}->{restapi}->{sslverify} = 'no';
