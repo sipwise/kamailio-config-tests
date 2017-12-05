@@ -1,3 +1,23 @@
+kamailio-config-tests (6.1.0.0+0~mr6.1.0.0) unstable; urgency=medium
+
+  [ Andrew Pogrebennyk ]
+  * [6d4f69b] TT#22250 debian/control: move libgraphviz-perl to Recommends
+  * [7324fea] TT#22250 bin/graph_flow.pl: die in case libgraphviz-perl is not present
+
+  [ Kirill Solomko ]
+  * [0957fd6] TT#23588 fix sound file upload read_file() usage
+  * [d865a76] TT#23588 transcoded sounds/no_sh.wav into 8k rate
+
+  [ Guillem Jover ]
+  * [7e1631e] TT#22072 Update packaging
+
+  [ Marco Capetta ]
+  * [942d0ac] TT#4593 Set sems.cfgt to yes before start the test
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 06 Dec 2017 00:04:06 +0100
+
 kamailio-config-tests (6.0.0.0+0~mr6.0.0.0) unstable; urgency=medium
 
   [ Victor Seva ]
