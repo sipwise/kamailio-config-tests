@@ -18,6 +18,9 @@
 # On Debian systems, the complete text of the GNU General
 # Public License version 3 can be found in "/usr/share/common-licenses/GPL-3".
 #
+from check import check_sip, check_sip_out
+from check import XAvp, Test, check_flow, check_flow_vars
+from check import load_json, load_yaml
 import os
 import sys
 import junitxml
@@ -25,9 +28,6 @@ import unittest
 import re
 lib_path = os.path.abspath('bin')
 sys.path.append(lib_path)
-from check import check_sip, check_sip_out
-from check import XAvp, Test, check_flow, check_flow_vars
-from check import load_json, load_yaml
 
 not_ok = re.compile('^not ok.*', re.MULTILINE)
 
