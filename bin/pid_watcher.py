@@ -39,7 +39,6 @@ base_path = "/var/run"
 files we want to watch
 """
 services = [
-    'fastcgi/ngcp-panel.pid',
     'kamailio/kamailio.lb.pid',
     'kamailio/kamailio.proxy.pid',
     'ngcp-sems/ngcp-sems.pid',
