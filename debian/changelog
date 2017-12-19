@@ -1,3 +1,9 @@
+kamailio-config-tests (0.15.7.1+0~mr4.5.7.1) unstable; urgency=medium
+
+  * New release.
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 19 Dec 2017 15:51:10 +0100
+
 kamailio-config-tests (0.15.7.0+0~mr4.5.7.0) unstable; urgency=medium
 
   [ Andrew Pogrebennyk ]
