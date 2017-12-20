@@ -1,3 +1,12 @@
+kamailio-config-tests (6.0.1.3+0~mr6.0.1.3) unstable; urgency=medium
+
+  [ Manuel Montecelo ]
+  * [84d2488] TT#28353 Revert "The tests should wait for ngcp-panel to be available"
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 20 Dec 2017 11:35:20 +0100
+
 kamailio-config-tests (6.0.1.2+0~mr6.0.1.2) unstable; urgency=medium
 
   [ Manuel Montecelo ]
