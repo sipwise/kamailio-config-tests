@@ -7,6 +7,7 @@ BIN_DIR="${BASE_DIR}/bin"
 GROUP="${GROUP:-scenarios}"
 LOG_DIR="${BASE_DIR}/log/${GROUP}"
 MLOG_DIR="${BASE_DIR}/mem"
+KAM_DIR="/tmp/cfgtest"
 PROFILE="CE"
 DOMAIN="spce.test"
 TIMEOUT=${TIMEOUT:-300}
@@ -105,6 +106,13 @@ else
   PIDWATCH_OPTS=""
 fi
 
+echo "$(date) - Create temporary folder for json files"
+rm -rf "${KAM_DIR}"
+mkdir -p "${KAM_DIR}"
+if [ -d "${KAM_DIR}" ]; then
+  chown kamailio "${KAM_DIR}"
+fi
+
 echo "$(date) - Clean mem log dir"
 rm -rf "${MLOG_DIR}"
 mkdir -p "${MLOG_DIR}" "${LOG_DIR}"
@@ -174,6 +182,11 @@ echo "$(date) - Final mem stats"
   --share_file="${MLOG_DIR}/${VERSION}_${GROUP}_final_shm.cvs"
 if [[ ${MEMDBG} = 1 ]] ; then
   ngcp-memdbg-csv /var/log/ngcp/kamailio-proxy.log "${MLOG_DIR}" >/dev/null
+fi
+
+if [ -d "${KAM_DIR}" ]; then
+  echo "$(date) - Removing temporary json dir"
+  rm -rf "${KAM_DIR}"
 fi
 
 cfg_debug_off
