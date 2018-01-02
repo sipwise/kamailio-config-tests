@@ -554,7 +554,8 @@ fi
 
 GROUP="${GROUP:-scenarios}"
 NAME_CHECK="$1"
-KAM_DIR="${KAM_DIR:-/var/run/kamailio/cfgtest}"
+KAM_DIR="${KAM_DIR:-/tmp/cfgtest}"
+JSON_DIR="${KAM_DIR}/${NAME_CHECK}"
 BASE_DIR="${BASE_DIR:-/usr/share/kamailio-config-tests}"
 BIN_DIR="${BASE_DIR}/bin"
 LOG_DIR="${BASE_DIR}/log/${GROUP}/${NAME_CHECK}"
@@ -602,9 +603,9 @@ if [ -z "$SKIP_RUNSIPP" ]; then
       mkdir -p "${KAM_DIR}"
       chown -R kamailio:kamailio "${KAM_DIR}"
     else
-      echo "$(date) - remove ${KAM_DIR}/${NAME_CHECK}"
+      echo "$(date) - remove ${JSON_DIR}"
       # shellcheck disable=SC2115
-      rm -rf "${KAM_DIR}/${NAME_CHECK}"
+      rm -rf "${JSON_DIR}"
     fi
   fi
   echo "$(date) - Cleaning csv/reg.xml files"
@@ -627,17 +628,18 @@ if [ -z "$SKIP_RUNSIPP" ]; then
   echo "$(date) - move scenario_ids.yml file"
   mv "${SCEN_CHECK_DIR}/scenario_ids.yml" "${LOG_DIR}"
   echo "$(date) - Done"
-else
+
   if [ -n "${JSON_KAM}" ] ; then
-    echo "$(date) - get kamailio cfgt files"
-    if [ -d "${KAM_DIR}/${NAME_CHECK}" ] ; then
-      for i in "${KAM_DIR}/${NAME_CHECK}"/*.json ; do
+    echo "$(date) - Move kamailio json files"
+    if [ -d "${JSON_DIR}" ] ; then
+      for i in "${JSON_DIR}"/*.json ; do
         expand -t1 "$i" > "${LOG_DIR}/$(printf '%04d.json' "$(basename "$i" .json)")"
         rm "$i"
       done
-      rmdir "${KAM_DIR:?}/${NAME_CHECK:?}"
+      rm -rf "${JSON_DIR}"
+      echo "$(date) - Done"
     else
-      echo "no cfgt files found"
+      echo "$(date) - No json files found"
     fi
   fi
 fi
