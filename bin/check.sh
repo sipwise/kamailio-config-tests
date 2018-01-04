@@ -75,17 +75,49 @@ function check_test
     kam_type="--json"
   fi
 
-  echo -n "$(date) - Testing $(basename "$1") againts $(basename "$2") -> $(basename "$3")"
-  if ! "${BIN_DIR}/check.py" ${kam_type} "$1" "$2" > "$3" ; then
-    echo " NOT ok"
-    ERR_FLAG=1
-    if [ -z "${GRAPH}" ] && [ -n "${GRAPH_FAIL}" ]; then
-      echo "$(date) - Generating flow image: ${dest}.png"
-      graph "$msg" "${dest}.png"
-      echo "$(date) - Done"
-    fi
-  else
+  echo -n "$(date) - Testing $(basename "$1") against $(basename "$2") -> $(basename "$3")"
+  if "${BIN_DIR}/check.py" ${kam_type} "$1" "$2" > "$3" ; then
     echo " ok"
+    return
+  fi
+
+  echo " NOT ok"
+
+  if [ -n "${FIX_RETRANS}" ] ; then
+    echo "$(date) - Fix retransmissions enabled: try to test the next json file"
+    local next_msg
+    local next_tap
+    next_test_filepath "$1"
+    # shellcheck disable=SC2001
+    next_tap=$(echo "$3"|sed 's/_test\.tap/_test_retry\.tap/')
+
+    if [ -a "$next_msg" ] ; then
+      echo -n "$(date) - Testing $(basename "$1") against $(basename "$next_msg") -> $(basename "$next_tap")"
+      if "${BIN_DIR}/check.py" ${kam_type} "$1" "$next_msg" > "$next_tap" ; then
+        # Tests using the next json file was fine. That means that, with high probability, there was a retransmission.
+        # Next step is to backup the failed tap test and overwrite it with the working one
+        mv "${3}" "${3}_retrans"
+        mv "${next_tap}" "${3}"
+        echo " ok"
+        return
+      fi
+
+      if [ -a "$next_tap" ] ; then
+        # Tests using the next json file was a failure.
+        # Next step is remove $next_tap file to don't create confusion during the additional checks
+        rm "${next_tap}"
+      fi
+    fi
+
+    echo " NOT ok"
+  fi
+
+  ERR_FLAG=1
+  if [ -z "${GRAPH}" ] && [ -n "${GRAPH_FAIL}" ]; then
+    echo "$(date) - Generating flow image: ${dest}.png"
+    # In any failure case only the graph related to the original json file will be created
+    graph "$msg" "${dest}.png"
+    echo "$(date) - Done"
   fi
 }
 
@@ -505,6 +537,29 @@ function test_filepath
   msg=${LOG_DIR}/$(basename "$msg_name")
 }
 
+# shellcheck disable=SC2001
+function next_test_filepath
+{
+  local msg_name
+  local old_json
+  local new_json
+
+  if [ -z "${JSON_KAM}" ]; then
+    msg_name=$(echo "$1"|sed 's/_test\.yml/\.yml/')
+  else
+    msg_name=$(echo "$1"|sed 's/_test\.yml/\.json/')
+  fi
+
+  msg_name=$(basename "${msg_name}")
+  old_json="${msg_name:0:4}"
+  old_json=$(echo "${old_json}" | sed 's/^0*//')
+  new_json=$((old_json+1))
+  new_json=$(printf %04d ${new_json})
+  msg_name="${new_json}${msg_name:4}"
+
+  next_msg=${LOG_DIR}/"$msg_name"
+}
+
 function usage
 {
   echo "Usage: check.sh [-hCDRTGgJKm] [-d DOMAIN ] [-p PROFILE ] -s [GROUP] check_name"
@@ -516,6 +571,7 @@ function usage
   echo -e "\t-P: skip parse"
   echo -e "\t-G: creation of graphviz image"
   echo -e "\t-g: creation of graphviz image only if test fails"
+  echo -e "\t-r: fix retransmission issues"
   echo -e "\t-d: DOMAIN"
   echo -e "\t-p CE|PRO default is CE"
   echo -e "\t-J kamailio json output ON. PARSE skipped"
@@ -526,7 +582,7 @@ function usage
   echo -e "\tcheck_name. Scenario name to check. This is the name of the directory on GROUP dir."
 }
 
-while getopts 'hCd:p:Rs:DTPGgJKm' opt; do
+while getopts 'hCd:p:Rs:DTPGgrJKm' opt; do
   case $opt in
     h) usage; exit 0;;
     C) SKIP=1;;
@@ -540,6 +596,7 @@ while getopts 'hCd:p:Rs:DTPGgJKm' opt; do
     K) CAPTURE=1;;
     G) GRAPH=1;;
     g) GRAPH_FAIL=1;;
+    r) FIX_RETRANS=1;;
     J) JSON_KAM=1;;
     m) MEMDBG=1;;
   esac
@@ -642,7 +699,42 @@ if [ -z "$SKIP_RUNSIPP" ]; then
       echo "$(date) - No json files found"
     fi
   fi
+
+  if [ -n "${FIX_RETRANS}" ] ; then
+    echo "$(date) - Checking retransmission issues"
+    RETRANS_ISSUE=false
+    file_find=($(find "${LOG_DIR}" -maxdepth 1 -name '*.json' | sort))
+    for json_file in "${file_find[@]}" ; do
+      file_find=("${file_find[@]:1}")
+      if ! [ -a "${json_file}" ] ; then
+        continue
+      fi
+      for next_json_file in "${file_find[@]}" ; do
+        if ! [ -a "${next_json_file}" ] ; then
+          continue
+        fi
+        if ( diff -q -u <(tail -n3 "${json_file}") <(tail -n3 "${next_json_file}") &> /dev/null ) ; then
+          echo "$(basename "${next_json_file}") seems a retransmission of $(basename "${json_file}") ---> renaming the file in ${next_json_file}_retransmission"
+          mv -f "${next_json_file}" "${next_json_file}_retransmission"
+          RETRANS_ISSUE=true
+        fi
+      done
+    done
+
+    if "${RETRANS_ISSUE}" ; then
+      echo "$(date) - Reordering kamailio json files"
+      file_find=($(find "${LOG_DIR}" -maxdepth 1 -name '*.json' | sort))
+      a=1
+      for json_file in "${file_find[@]}" ; do
+        new_name=$(printf "%04d.json" "${a}")
+        mv -n "${json_file}" "${LOG_DIR}/${new_name}" &> /dev/null
+        let a=a+1
+      done
+    fi
+  fi
+
 fi
+
 
 if [ -z "${SKIP_DELDOMAIN}" ]; then
   echo "$(date) - Deleting domain:${DOMAIN}"
@@ -666,6 +758,7 @@ if [ -z "${SKIP_TESTS}" ]; then
     rm -rf "${RESULT_DIR}"
   fi
   mkdir -p "${RESULT_DIR}"
+
   echo "$(date) - Cleaning tests files"
   find "${SCEN_CHECK_DIR}" -type f -name '*test.yml' -exec rm {} \;
   echo "$(date) - Generating tests files"

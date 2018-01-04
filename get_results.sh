@@ -15,6 +15,7 @@ function usage
   echo "-h this help"
   echo "-P parse only will disable test"
   echo "-T test only will disable parse"
+  echo "-r fix retransmission issues"
   echo "-x set GROUP scenario. Default: scenarios"
   echo "BASE_DIR:${BASE_DIR}"
   echo "BIN_DIR:${BIN_DIR}"
@@ -41,13 +42,14 @@ function get_scenarios
   fi
 }
 
-while getopts 'hgGp:TPx:' opt; do
+while getopts 'hgGp:TPrx:' opt; do
   case $opt in
     h) usage; exit 0;;
     G) GRAPH="-G";;
     g) GRAPH="-g";;
     P) OPTS="-T";;
     T) OPTS="-P";;
+    r) OPTS="-r";;
     p) PROFILE=$OPTARG;;
     x) GROUP=$OPTARG;;
   esac
