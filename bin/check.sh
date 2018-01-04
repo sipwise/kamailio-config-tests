@@ -19,15 +19,28 @@
 # Public License version 3 can be found in "/usr/share/common-licenses/GPL-3".
 #
 
+CAPTURE=false
+SKIP=false
+MEMDBG=false
+SKIP_DELDOMAIN=false
+SKIP_TESTS=false
+SKIP_PARSE=false
+SKIP_RUNSIPP=false
+FIX_RETRANS=false
+GRAPH=false
+GRAPH_FAIL=false
+JSON_KAM=false
+
+
 # sipwise password for mysql connections
 . /etc/mysql/sipwise.cnf
 
+
 # $1 kamailio msg parsed to yml
 # $2 destination png filename
-function graph
-{
+graph() {
   local OPTS
-  if [ -n "${JSON_KAM}" ]; then
+  if "${JSON_KAM}" ; then
     OPTS="--json"
   fi
   if [ -f "$1" ]; then
@@ -40,8 +53,7 @@ function graph
 
 # $1 destination tap file
 # $2 file path
-function generate_error_tap
-{
+generate_error_tap() {
   local tap_file="$1"
   cat <<EOF > "$tap_file"
 1..1
@@ -53,8 +65,7 @@ echo "$(date) - $(basename "$2") NOT ok"
 # $1 unit test yml
 # $2 kamailio msg parsed to yml
 # $3 destination tap filename
-function check_test
-{
+check_test() {
   local dest
   local kam_type="--yaml"
 
@@ -71,27 +82,57 @@ function check_test
     return
   fi
 
-  if [ -n "${JSON_KAM}" ]; then
+  if "${JSON_KAM}" ; then
     kam_type="--json"
   fi
 
-  echo -n "$(date) - Testing $(basename "$1") againts $(basename "$2") -> $(basename "$3")"
-  if ! "${BIN_DIR}/check.py" ${kam_type} "$1" "$2" > "$3" ; then
-    echo " NOT ok"
-    ERR_FLAG=1
-    if [ -z "${GRAPH}" ] && [ -n "${GRAPH_FAIL}" ]; then
-      echo "$(date) - Generating flow image: ${dest}.png"
-      graph "$msg" "${dest}.png"
-      echo "$(date) - Done"
-    fi
-  else
+  echo -n "$(date) - Testing $(basename "$1") against $(basename "$2") -> $(basename "$3")"
+  if "${BIN_DIR}/check.py" ${kam_type} "$1" "$2" > "$3" ; then
     echo " ok"
+    return
+  fi
+
+  echo " NOT ok"
+
+  if "${FIX_RETRANS}" ; then
+    echo "$(date) - Fix retransmissions enabled: try to test the next json file"
+    local next_msg
+    local next_tap
+    next_test_filepath "$1"
+    next_tap=${3/_test.tap/_test_retry.tap}
+
+    if [ -a "$next_msg" ] ; then
+      echo -n "$(date) - Testing $(basename "$1") against $(basename "$next_msg") -> $(basename "$next_tap")"
+      if "${BIN_DIR}/check.py" ${kam_type} "$1" "$next_msg" > "$next_tap" ; then
+        # Test using the next json file was fine. That means that, with high probability, there was a retransmission.
+        # Next step is to backup the failed tap test and overwrite it with the working one
+        mv "${3}" "${3}_retrans"
+        mv "${next_tap}" "${3}"
+        echo " ok"
+        return
+      fi
+
+      if [ -a "$next_tap" ] ; then
+        # Test using the next json file was a failure.
+        # Next step is remove $next_tap file to don't create confusion during the additional checks
+        rm "${next_tap}"
+      fi
+    fi
+
+    echo " NOT ok"
+  fi
+
+  ERR_FLAG=1
+  if ( ! "${GRAPH}" ) && "${GRAPH_FAIL}" ; then
+    echo "$(date) - Generating flow image: ${dest}.png"
+    # In any failure case only the graph related to the original json file will be created
+    graph "$msg" "${dest}.png"
+    echo "$(date) - Done"
   fi
 }
 
 # $1 domain
-function create_voip
-{
+create_voip() {
   if ! "${BIN_DIR}/create_subscribers.pl" \
     "${SCEN_CHECK_DIR}/scenario.yml" "${SCEN_CHECK_DIR}/scenario_ids.yml"
   then
@@ -103,8 +144,7 @@ function create_voip
 }
 
 # $1 prefs yml file
-function create_voip_prefs
-{
+create_voip_prefs() {
   if [ -f "${SCEN_CHECK_DIR}/rewrite.yml" ]; then
     echo "$(date) - Creating rewrite rules"
     "${BIN_DIR}/create_rewrite_rules.pl" "${SCEN_CHECK_DIR}/rewrite.yml"
@@ -151,8 +191,7 @@ function create_voip_prefs
 }
 
 # $1 domain
-function delete_voip
-{
+delete_voip() {
   /usr/bin/ngcp-delete_domain "$1" >/dev/null 2>&1
 
   if [ -f "${SCEN_CHECK_DIR}/peer.yml" ]; then
@@ -189,8 +228,7 @@ function delete_voip
   fi
 }
 
-function delete_locations
-{
+delete_locations() {
   local f
   local sub
 
@@ -218,8 +256,7 @@ function delete_locations
   fi
 }
 
-function release_appearance
-{
+release_appearance() {
   local values
   values=$(mktemp)
   ngcp-sercmd proxy sca.all_appearances >"${values}" 2>&1
@@ -237,10 +274,9 @@ function release_appearance
 
 # $1 msg to echo
 # $2 exit value
-function error_helper
-{
+error_helper() {
   echo "$1"
-  if [ -z "${SKIP_DELDOMAIN}" ]; then
+  if ! "${SKIP_DELDOMAIN}" ; then
     echo "$(date) - Deleting domain:${DOMAIN}"
     delete_voip "${DOMAIN}"
   fi
@@ -250,8 +286,7 @@ function error_helper
   exit "$2"
 }
 
-function capture
-{
+capture() {
   local name
   name=$(basename "${SCEN_CHECK_DIR}")
   echo "$(date) - Begin capture"
@@ -261,8 +296,7 @@ function capture
   done
 }
 
-function stop_capture
-{
+stop_capture() {
   local inter=""
   local temp_pid=""
   if [ -n "${capture_pid}" ]; then
@@ -279,8 +313,7 @@ function stop_capture
 }
 
 # $1 port to check
-function check_port
-{
+check_port() {
   local status=0
   local port=$1
   local step=${2:-1}
@@ -297,8 +330,7 @@ function check_port
 
 # $1 media port to check
 # sipp uses media_port and media_port+2
-function check_mport
-{
+check_mport() {
   local status=0
   local mport=$1
   local step=${2:-3}
@@ -318,8 +350,7 @@ function check_mport
 }
 
 #$1 is filename
-function get_ip
-{
+get_ip() {
   transport=$(grep "$1" "${SCEN_CHECK_DIR}/scenario.csv"|cut -d\; -f2| tr -d '\n')
   ip=$(grep "$1" "${SCEN_CHECK_DIR}/scenario.csv"|cut -d\; -f3| tr -d '\n')
   if [[ $? -ne 0 ]]; then
@@ -329,18 +360,7 @@ function get_ip
   foreign_dom=$(grep "$1" "${SCEN_CHECK_DIR}/scenario.csv"|cut -d\; -f5| tr -d '\n')
 }
 
-#$1 is filename
-function is_enabled
-{
-  if ! grep -q "$1" "${SCEN_CHECK_DIR}/scenario.csv" ; then
-    echo "$(date) $1 deactivated"
-    # shellcheck disable=SC2104
-    continue
-  fi
-}
-
-function copy_logs
-{
+copy_logs() {
   # copy the kamailio log
   cp "${KAM_LOG}" "${LOG_DIR}/kamailio.log"
   if [ -f "${SEMS_LOG}" ] ; then
@@ -355,8 +375,7 @@ function copy_logs
   cp "${KAMLB_LOG}" "${LOG_DIR}/kamailio-lb.log"
 }
 
-function memdbg
-{
+memdbg() {
   if [ -x /usr/share/ngcp-system-tools/kamcmd/memdbg ] ; then
     ngcp-sercmd proxy memdbg all >/dev/null
     mkdir -p "${MLOG_DIR}"
@@ -365,8 +384,7 @@ function memdbg
 }
 
 # $1 sipp xml scenario file
-function run_sipp
-{
+run_sipp() {
   local PORT
   local MPORT
   PORT=$(check_port 50603)
@@ -394,7 +412,7 @@ function run_sipp
     copy_logs
     error_helper "Restart error" 16
   fi
-  if [ "${CAPTURE}" = "1" ] ; then
+  if "${CAPTURE}" ; then
     capture
   fi
 
@@ -407,7 +425,10 @@ function run_sipp
 
   for res in $(find "${SCEN_CHECK_DIR}" -type f -name 'sipp_scenario_responder[0-9][0-9].xml'| sort); do
     base=$(basename "$res" .xml)
-    is_enabled "$(basename "$res")"
+    if ! grep -q "$(basename "$res")" "${SCEN_CHECK_DIR}/scenario.csv" ; then
+      echo "$(date) $(basename "$res") deactivated"
+      continue
+    fi
     get_ip "$(basename "$res")"
     if [ "${peer_host}" != "" ]; then
       echo "$(date) - Update peer_host:${peer_host} ${ip}:${PORT} info"
@@ -445,7 +466,10 @@ function run_sipp
   # let's fire sipp scenarios
   for send in $(find "${SCEN_CHECK_DIR}" -type f -name 'sipp_scenario[0-9][0-9].xml'| sort); do
     base=$(basename "$send" .xml)
-    is_enabled "$(basename "$send")"
+    if ! grep -q "$(basename "$send")" "${SCEN_CHECK_DIR}/scenario.csv" ; then
+      echo "$(date) $(basename "$send") deactivated"
+      continue
+    fi
     get_ip "$(basename "$send")"
     PORT=$(check_port )
     MPORT=$(check_mport )
@@ -469,10 +493,10 @@ function run_sipp
     fi
   done
 
-  if [ "${CAPTURE}" = "1" ] ; then
+  if "${CAPTURE}" ; then
     stop_capture
   fi
-  if [[ ${MEMDBG} = 1 ]] ; then
+  if "${MEMDBG}" ; then
     memdbg
   fi
   copy_logs
@@ -492,21 +516,40 @@ function run_sipp
   fi
 }
 
-# shellcheck disable=SC2001
-function test_filepath
-{
+test_filepath() {
   local msg_name
 
-  if [ -z "${JSON_KAM}" ]; then
-    msg_name=$(echo "$1"|sed 's/_test\.yml/\.yml/')
+  if ! "${JSON_KAM}" ; then
+    msg_name=${1/_test.yml/.yml}
   else
-    msg_name=$(echo "$1"|sed 's/_test\.yml/\.json/')
+    msg_name=${1/_test.yml/.json}
   fi
-  msg=${LOG_DIR}/$(basename "$msg_name")
+  msg="${LOG_DIR}/$(basename "$msg_name")"
 }
 
-function usage
-{
+next_test_filepath() {
+  local msg_name
+  local old_json
+  local new_json
+
+  if ! "${JSON_KAM}" ; then
+    msg_name=${1/_test.yml/.yml}
+  else
+    msg_name=${1/_test.yml/.json}
+  fi
+
+  msg_name=$(basename "${msg_name}")
+  old_json="${msg_name:0:4}"
+  # shellcheck disable=SC2001
+  old_json=$(echo "${old_json}" | sed 's/^0*//')
+  new_json=$((old_json+1))
+  new_json=$(printf %04d ${new_json})
+  msg_name="${new_json}${msg_name:4}"
+
+  next_msg="${LOG_DIR}/${msg_name}"
+}
+
+usage() {
   echo "Usage: check.sh [-hCDRTGgJKm] [-d DOMAIN ] [-p PROFILE ] -s [GROUP] check_name"
   echo "Options:"
   echo -e "\t-C: skip creation of domain and subscribers"
@@ -516,6 +559,7 @@ function usage
   echo -e "\t-P: skip parse"
   echo -e "\t-G: creation of graphviz image"
   echo -e "\t-g: creation of graphviz image only if test fails"
+  echo -e "\t-r: fix retransmission issues"
   echo -e "\t-d: DOMAIN"
   echo -e "\t-p CE|PRO default is CE"
   echo -e "\t-J kamailio json output ON. PARSE skipped"
@@ -526,22 +570,23 @@ function usage
   echo -e "\tcheck_name. Scenario name to check. This is the name of the directory on GROUP dir."
 }
 
-while getopts 'hCd:p:Rs:DTPGgJKm' opt; do
+while getopts 'hCd:p:Rs:DTPGgrJKm' opt; do
   case $opt in
     h) usage; exit 0;;
-    C) SKIP=1;;
+    C) SKIP=true;;
     d) DOMAIN=$OPTARG;;
     p) PROFILE=$OPTARG;;
-    R) SKIP_RUNSIPP=1; SKIP_DELDOMAIN=1;;
+    R) SKIP_RUNSIPP=true; SKIP_DELDOMAIN=true;;
     s) GROUP=$OPTARG;;
-    D) SKIP_DELDOMAIN=1;;
-    T) SKIP_TESTS=1;;
-    P) SKIP_PARSE=1;;
-    K) CAPTURE=1;;
-    G) GRAPH=1;;
-    g) GRAPH_FAIL=1;;
-    J) JSON_KAM=1;;
-    m) MEMDBG=1;;
+    D) SKIP_DELDOMAIN=true;;
+    T) SKIP_TESTS=true;;
+    P) SKIP_PARSE=true;;
+    K) CAPTURE=true;;
+    G) GRAPH=true;;
+    g) GRAPH_FAIL=true;;
+    r) FIX_RETRANS=true;;
+    J) JSON_KAM=true;;
+    m) MEMDBG=true;;
   esac
 done
 shift $((OPTIND - 1))
@@ -587,7 +632,7 @@ if ! [ -f "${SCEN_CHECK_DIR}/scenario.yml" ]; then
   exit 14
 fi
 
-if [ -z "$SKIP" ]; then
+if ! "$SKIP" ; then
   echo "$(date) - Deleting all info for ${DOMAIN} domain"
   delete_voip "${DOMAIN}" # just to be sure nothing is there
   echo "$(date) - Creating ${DOMAIN}"
@@ -596,15 +641,14 @@ if [ -z "$SKIP" ]; then
   create_voip_prefs
 fi
 
-if [ -z "$SKIP_RUNSIPP" ]; then
-  if [ -n "${JSON_KAM}" ] ; then
+if ! "$SKIP_RUNSIPP" ; then
+  if "${JSON_KAM}" ; then
     if ! [ -d "${KAM_DIR}" ] ; then
       echo "$(date) - dir and perms for ${KAM_DIR}"
       mkdir -p "${KAM_DIR}"
       chown -R kamailio:kamailio "${KAM_DIR}"
     else
       echo "$(date) - remove ${JSON_DIR}"
-      # shellcheck disable=SC2115
       rm -rf "${JSON_DIR}"
     fi
   fi
@@ -629,7 +673,7 @@ if [ -z "$SKIP_RUNSIPP" ]; then
   mv "${SCEN_CHECK_DIR}/scenario_ids.yml" "${LOG_DIR}"
   echo "$(date) - Done"
 
-  if [ -n "${JSON_KAM}" ] ; then
+  if "${JSON_KAM}" ; then
     echo "$(date) - Move kamailio json files"
     if [ -d "${JSON_DIR}" ] ; then
       for i in "${JSON_DIR}"/*.json ; do
@@ -642,16 +686,53 @@ if [ -z "$SKIP_RUNSIPP" ]; then
       echo "$(date) - No json files found"
     fi
   fi
+
+  if "${FIX_RETRANS}" ; then
+    echo "$(date) - Checking retransmission issues"
+    RETRANS_ISSUE=false
+    file_find=($(find "${LOG_DIR}" -maxdepth 1 -name '*.json' | sort))
+    for json_file in "${file_find[@]}" ; do
+      file_find=("${file_find[@]:1}")
+      if ! [ -a "${json_file}" ] ; then
+        continue
+      fi
+      for next_json_file in "${file_find[@]}" ; do
+        if ! [ -a "${next_json_file}" ] ; then
+          continue
+        fi
+        if ( diff -q -u <(tail -n3 "${json_file}") <(tail -n3 "${next_json_file}") &> /dev/null ) ; then
+          echo "$(basename "${next_json_file}") seems a retransmission of $(basename "${json_file}") ---> renaming the file in ${next_json_file}_retransmission"
+          mv -f "${next_json_file}" "${next_json_file}_retransmission"
+          RETRANS_ISSUE=true
+        fi
+      done
+    done
+
+    if "${RETRANS_ISSUE}" ; then
+      echo "$(date) - Reordering kamailio json files"
+      file_find=($(find "${LOG_DIR}" -maxdepth 1 -name '*.json' | sort))
+      a=1
+      for json_file in "${file_find[@]}" ; do
+        new_name=$(printf "%04d.json" "${a}")
+        mv -n "${json_file}" "${LOG_DIR}/${new_name}" &> /dev/null
+        let a=a+1
+      done
+    fi
+
+    echo "$(date) - Done"
+  fi
+
 fi
 
-if [ -z "${SKIP_DELDOMAIN}" ]; then
+
+if ! "${SKIP_DELDOMAIN}" ; then
   echo "$(date) - Deleting domain:${DOMAIN}"
   delete_voip "${DOMAIN}"
   echo "$(date) - Done"
 fi
 
-if [ -z "${SKIP_PARSE}" ]; then
-  if [ -z "${JSON_KAM}" ]; then
+if ! "${SKIP_PARSE}" ; then
+  if ! "${JSON_KAM}" ; then
     echo "$(date) - Parsing ${LOG_DIR}/kamailio.log"
     "${BIN_DIR}/ulog_parser.pl" "${LOG_DIR}/kamailio.log ${LOG_DIR}"
     echo "$(date) - Done"
@@ -660,12 +741,13 @@ fi
 
 # let's check the results
 ERR_FLAG=0
-if [ -z "${SKIP_TESTS}" ]; then
+if ! "${SKIP_TESTS}" ; then
   if [ -d "${RESULT_DIR}" ]; then
     echo "$(date) - Cleaning result dir"
     rm -rf "${RESULT_DIR}"
   fi
   mkdir -p "${RESULT_DIR}"
+
   echo "$(date) - Cleaning tests files"
   find "${SCEN_CHECK_DIR}" -type f -name '*test.yml' -exec rm {} \;
   echo "$(date) - Generating tests files"
@@ -678,7 +760,7 @@ if [ -z "${SKIP_TESTS}" ]; then
     dest=${RESULT_DIR}/$(basename "$t" .yml)
     check_test "$t" "$msg" "${dest}.tap"
     echo "$(date) - Done"
-    if [ -n "${GRAPH}" ]; then
+    if "${GRAPH}" ; then
       echo "$(date) - Generating flow image: ${dest}.png"
       graph "$msg" "${dest}.png"
       echo "$(date) - Done"
