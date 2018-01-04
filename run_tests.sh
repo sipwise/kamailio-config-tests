@@ -21,6 +21,7 @@ function usage
   echo "-K capture messages with tcpdump"
   echo "-x set GROUP scenario. Default: scenarios"
   echo "-t set timeout in secs for pid_watcher.py [PRO]. Default: 300"
+  echo "-r fix retransmission issues"
   echo "-h this help"
 
   echo "BASE_DIR:${BASE_DIR}"
@@ -63,7 +64,7 @@ function cfg_debug_off
   fi
 }
 
-while getopts 'hlcp:Kx:t:m' opt; do
+while getopts 'hlcp:Kx:t:rm' opt; do
   case $opt in
     h) usage; exit 0;;
     l) SHOW_SCENARIOS=1;;
@@ -72,6 +73,7 @@ while getopts 'hlcp:Kx:t:m' opt; do
     K) SKIP_CAPTURE=1;;
     x) GROUP=$OPTARG;;
     t) TIMEOUT=$OPTARG;;
+    r) SKIP_RETRANS=1;;
     m) MEMDBG=1;;
   esac
 done
@@ -153,6 +155,11 @@ fi
 if [[ ${MEMDBG} = 1 ]] ; then
   echo "$(date) - enable memdbg"
   OPTS+="-m"
+fi
+
+if [[ ${SKIP_RETRANS} = 1 ]] ; then
+  echo "$(date) - enable skip retransmissions"
+  OPTS+="-r"
 fi
 
 for t in ${SCENARIOS}; do
