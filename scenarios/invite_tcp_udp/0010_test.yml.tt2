@@ -23,7 +23,7 @@ flow:
       $avp(proto): ["tcp"]
 sip_in:
   - '^BYE sip:127.0.0.1:5080(;prxroute=1)? SIP/2.0'
-  - 'Contact: sip:testuser1002@'
+  - 'Contact: <sip:testuser1002@'
   - 'CSeq: 3 BYE'
   - 'Max-Forwards: 69'
   - 'Content-Length: 0'
@@ -40,7 +40,7 @@ sip_out:
     ]
   - [
       '^BYE sip:127.0.0.1:5080(;prxroute=1)? SIP/2.0',
-      'Contact: sip:testuser1002@',
+      'Contact: <sip:testuser1002@',
       'CSeq: 3 BYE',
       'Max-Forwards: 68',
       'Content-Length: 0',
