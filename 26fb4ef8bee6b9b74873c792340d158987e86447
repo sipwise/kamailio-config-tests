@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "baa201ad_f3518ad9",
+        "filename": "bin/check.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-01-11T16:50:44Z",
+      "side": 1,
+      "message": "should it be removed? Otherwise you will have \n\n\u003e NOT ok\n\u003e ok\n\nor\n\n\u003e NOT ok\n\u003e NOT ok\n\nsee line 112. Fine for me if it is expected way.",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 16
+      },
+      "revId": "26fb4ef8bee6b9b74873c792340d158987e86447",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baa201ad_535896fa",
+        "filename": "bin/check.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-01-11T16:50:44Z",
+      "side": 1,
+      "message": "No need for shellcheck mute here, he is correct:\n\nnext_tap\u003d${3/_test.tap/_test_retry.tap}\n\n17:46:19 ✔ taurus:~$ a\u003d\"aaa_test.tap\" ; b\u003d${a/_test.tap/_test_retrans.tap} ; echo $b\naaa_test_retrans.tap\n17:46:24 ✔ taurus:~$",
+      "range": {
+        "startLine": 92,
+        "startChar": 3,
+        "endLine": 92,
+        "endChar": 62
+      },
+      "revId": "26fb4ef8bee6b9b74873c792340d158987e86447",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baa201ad_93711e7a",
+        "filename": "bin/check.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-01-11T16:50:44Z",
+      "side": 1,
+      "message": "please avoid shellcheck disable.\nsee the sample above.",
+      "range": {
+        "startLine": 539,
+        "startChar": 0,
+        "endLine": 540,
+        "endChar": 27
+      },
+      "revId": "26fb4ef8bee6b9b74873c792340d158987e86447",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baa201ad_d36ba683",
+        "filename": "bin/check.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-01-11T16:50:44Z",
+      "side": 1,
+      "message": "JFYI, modern way is:\n\nnext_test_filepath() {\n...",
+      "range": {
+        "startLine": 541,
+        "startChar": 0,
+        "endLine": 542,
+        "endChar": 1
+      },
+      "revId": "26fb4ef8bee6b9b74873c792340d158987e86447",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baa201ad_b36e2295",
+        "filename": "bin/check.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-01-11T16:50:44Z",
+      "side": 1,
+      "message": "You have mix of styles here, sure old code is ugly, while produce new nice one:\n\n\n  next_msg\u003d\"${LOG_DIR}/${msg_name}\"\n\nIMHO",
+      "range": {
+        "startLine": 560,
+        "startChar": 0,
+        "endLine": 560,
+        "endChar": 33
+      },
+      "revId": "26fb4ef8bee6b9b74873c792340d158987e86447",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baa201ad_5341760a",
+        "filename": "run_tests.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-01-11T16:50:44Z",
+      "side": 1,
+      "message": "why not\n\n  OPTS+\u003d(\"-K\")\n\nor\n\n  OPTS+\u003d(-K)\n\n?",
+      "range": {
+        "startLine": 161,
+        "startChar": 0,
+        "endLine": 161,
+        "endChar": 26
+      },
+      "revId": "26fb4ef8bee6b9b74873c792340d158987e86447",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baa201ad_73467a25",
+        "filename": "run_tests.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-01-11T16:50:44Z",
+      "side": 1,
+      "message": "same as above",
+      "range": {
+        "startLine": 166,
+        "startChar": 0,
+        "endLine": 166,
+        "endChar": 26
+      },
+      "revId": "26fb4ef8bee6b9b74873c792340d158987e86447",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baa201ad_934afe25",
+        "filename": "run_tests.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-01-11T16:50:44Z",
+      "side": 1,
+      "message": "why not boolean? otherwise good to compare as string, otherwise you will have warning/error if $SKIP_RETRANS is not defined for some reason.\n\n\u003e if [ \"${SKIP_RETRANS}\" \u003d \"1\" ] ; then\n\nis safer here . P.S. not need for [[]]",
+      "range": {
+        "startLine": 169,
+        "startChar": 0,
+        "endLine": 169,
+        "endChar": 35
+      },
+      "revId": "26fb4ef8bee6b9b74873c792340d158987e86447",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baa201ad_b347021d",
+        "filename": "run_tests.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-01-11T16:50:44Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 171,
+        "startChar": 0,
+        "endLine": 171,
+        "endChar": 26
+      },
+      "revId": "26fb4ef8bee6b9b74873c792340d158987e86447",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
