@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "baa201ad_b692909d",
+        "filename": "bin/check.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-01-12T16:10:11Z",
+      "side": 1,
+      "message": "AFAIK,\n  \n    if ( ! \"${GRAPH}\" ) \u0026\u0026 \"${GRAPH_FAIL}\" ; then\nis equal to \n  \n    if ! \"${GRAPH}\" \u0026\u0026 \"${GRAPH_FAIL}\" ; then\nin this particular case.",
+      "range": {
+        "startLine": 92,
+        "startChar": 0,
+        "endLine": 92,
+        "endChar": 49
+      },
+      "revId": "070c808debc79f01e85e278a486a5b2ebde9a5f8",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
