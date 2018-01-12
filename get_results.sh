@@ -6,8 +6,7 @@ PROFILE="CE"
 DOMAIN="spce.test"
 GROUP="${GROUP:-scenarios}"
 
-function usage
-{
+usage() {
   echo "Usage: get_results.sh [-p PROFILE] [-h] [-g]"
   echo "-p CE|PRO default is CE"
   echo "-g generate png flow graphs if test fails"
@@ -20,8 +19,7 @@ function usage
   echo "BIN_DIR:${BIN_DIR}"
 }
 
-function get_scenarios
-{
+get_scenarios() {
   local t
   local flag
   flag=0
