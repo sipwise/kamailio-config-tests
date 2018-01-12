@@ -22,10 +22,10 @@
 # sipwise password for mysql connections
 . /etc/mysql/sipwise.cnf
 
+
 # $1 kamailio msg parsed to yml
 # $2 destination png filename
-function graph
-{
+graph() {
   local OPTS
   if [ -n "${JSON_KAM}" ]; then
     OPTS="--json"
@@ -40,8 +40,7 @@ function graph
 
 # $1 destination tap file
 # $2 file path
-function generate_error_tap
-{
+generate_error_tap() {
   local tap_file="$1"
   cat <<EOF > "$tap_file"
 1..1
@@ -53,8 +52,7 @@ echo "$(date) - $(basename "$2") NOT ok"
 # $1 unit test yml
 # $2 kamailio msg parsed to yml
 # $3 destination tap filename
-function check_test
-{
+check_test() {
   local dest
   local kam_type="--yaml"
 
@@ -90,8 +88,7 @@ function check_test
 }
 
 # $1 domain
-function create_voip
-{
+create_voip() {
   if ! "${BIN_DIR}/create_subscribers.pl" \
     "${SCEN_CHECK_DIR}/scenario.yml" "${SCEN_CHECK_DIR}/scenario_ids.yml"
   then
@@ -103,8 +100,7 @@ function create_voip
 }
 
 # $1 prefs yml file
-function create_voip_prefs
-{
+create_voip_prefs() {
   if [ -f "${SCEN_CHECK_DIR}/rewrite.yml" ]; then
     echo "$(date) - Creating rewrite rules"
     "${BIN_DIR}/create_rewrite_rules.pl" "${SCEN_CHECK_DIR}/rewrite.yml"
@@ -151,8 +147,7 @@ function create_voip_prefs
 }
 
 # $1 domain
-function delete_voip
-{
+delete_voip() {
   /usr/bin/ngcp-delete_domain "$1" >/dev/null 2>&1
 
   if [ -f "${SCEN_CHECK_DIR}/peer.yml" ]; then
@@ -189,8 +184,7 @@ function delete_voip
   fi
 }
 
-function delete_locations
-{
+delete_locations() {
   local f
   local sub
 
@@ -218,8 +212,7 @@ function delete_locations
   fi
 }
 
-function release_appearance
-{
+release_appearance() {
   local values
   values=$(mktemp)
   ngcp-sercmd proxy sca.all_appearances >"${values}" 2>&1
@@ -237,8 +230,7 @@ function release_appearance
 
 # $1 msg to echo
 # $2 exit value
-function error_helper
-{
+error_helper() {
   echo "$1"
   if [ -z "${SKIP_DELDOMAIN}" ]; then
     echo "$(date) - Deleting domain:${DOMAIN}"
@@ -250,8 +242,7 @@ function error_helper
   exit "$2"
 }
 
-function capture
-{
+capture() {
   local name
   name=$(basename "${SCEN_CHECK_DIR}")
   echo "$(date) - Begin capture"
@@ -261,8 +252,7 @@ function capture
   done
 }
 
-function stop_capture
-{
+stop_capture() {
   local inter=""
   local temp_pid=""
   if [ -n "${capture_pid}" ]; then
@@ -279,8 +269,7 @@ function stop_capture
 }
 
 # $1 port to check
-function check_port
-{
+check_port() {
   local status=0
   local port=$1
   local step=${2:-1}
@@ -297,8 +286,7 @@ function check_port
 
 # $1 media port to check
 # sipp uses media_port and media_port+2
-function check_mport
-{
+check_mport() {
   local status=0
   local mport=$1
   local step=${2:-3}
@@ -318,8 +306,7 @@ function check_mport
 }
 
 #$1 is filename
-function get_ip
-{
+get_ip() {
   transport=$(grep "$1" "${SCEN_CHECK_DIR}/scenario.csv"|cut -d\; -f2| tr -d '\n')
   ip=$(grep "$1" "${SCEN_CHECK_DIR}/scenario.csv"|cut -d\; -f3| tr -d '\n')
   if [[ $? -ne 0 ]]; then
@@ -329,18 +316,7 @@ function get_ip
   foreign_dom=$(grep "$1" "${SCEN_CHECK_DIR}/scenario.csv"|cut -d\; -f5| tr -d '\n')
 }
 
-#$1 is filename
-function is_enabled
-{
-  if ! grep -q "$1" "${SCEN_CHECK_DIR}/scenario.csv" ; then
-    echo "$(date) $1 deactivated"
-    # shellcheck disable=SC2104
-    continue
-  fi
-}
-
-function copy_logs
-{
+copy_logs() {
   # copy the kamailio log
   cp "${KAM_LOG}" "${LOG_DIR}/kamailio.log"
   if [ -f "${SEMS_LOG}" ] ; then
@@ -355,8 +331,7 @@ function copy_logs
   cp "${KAMLB_LOG}" "${LOG_DIR}/kamailio-lb.log"
 }
 
-function memdbg
-{
+memdbg() {
   if [ -x /usr/share/ngcp-system-tools/kamcmd/memdbg ] ; then
     ngcp-sercmd proxy memdbg all >/dev/null
     mkdir -p "${MLOG_DIR}"
@@ -365,8 +340,7 @@ function memdbg
 }
 
 # $1 sipp xml scenario file
-function run_sipp
-{
+run_sipp() {
   local PORT
   local MPORT
   PORT=$(check_port 50603)
@@ -407,7 +381,10 @@ function run_sipp
 
   for res in $(find "${SCEN_CHECK_DIR}" -type f -name 'sipp_scenario_responder[0-9][0-9].xml'| sort); do
     base=$(basename "$res" .xml)
-    is_enabled "$(basename "$res")"
+    if ! grep -q "$(basename "$res")" "${SCEN_CHECK_DIR}/scenario.csv" ; then
+      echo "$(date) $(basename "$res") deactivated"
+      continue
+    fi
     get_ip "$(basename "$res")"
     if [ "${peer_host}" != "" ]; then
       echo "$(date) - Update peer_host:${peer_host} ${ip}:${PORT} info"
@@ -445,7 +422,10 @@ function run_sipp
   # let's fire sipp scenarios
   for send in $(find "${SCEN_CHECK_DIR}" -type f -name 'sipp_scenario[0-9][0-9].xml'| sort); do
     base=$(basename "$send" .xml)
-    is_enabled "$(basename "$send")"
+    if ! grep -q "$(basename "$send")" "${SCEN_CHECK_DIR}/scenario.csv" ; then
+      echo "$(date) $(basename "$send") deactivated"
+      continue
+    fi
     get_ip "$(basename "$send")"
     PORT=$(check_port )
     MPORT=$(check_mport )
@@ -493,8 +473,7 @@ function run_sipp
 }
 
 # shellcheck disable=SC2001
-function test_filepath
-{
+test_filepath() {
   local msg_name
 
   if [ -z "${JSON_KAM}" ]; then
@@ -505,8 +484,7 @@ function test_filepath
   msg=${LOG_DIR}/$(basename "$msg_name")
 }
 
-function usage
-{
+usage() {
   echo "Usage: check.sh [-hCDRTGgJKm] [-d DOMAIN ] [-p PROFILE ] -s [GROUP] check_name"
   echo "Options:"
   echo -e "\t-C: skip creation of domain and subscribers"
