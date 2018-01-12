@@ -13,8 +13,7 @@ DOMAIN="spce.test"
 TIMEOUT=${TIMEOUT:-300}
 error_flag=0
 
-function usage
-{
+usage() {
   echo "Usage: run_test.sh [-p PROFILE] [-c] [-t]"
   echo "-p CE|PRO default is CE"
   echo "-l print available SCENARIOS in GROUP"
@@ -28,8 +27,7 @@ function usage
   echo "BIN_DIR:${BIN_DIR}"
 }
 
-function get_scenarios
-{
+get_scenarios() {
   local t
   local flag
   flag=0
@@ -49,8 +47,7 @@ function get_scenarios
   fi
 }
 
-function cfg_debug_off
-{
+cfg_debug_off() {
   if [ -z "$SKIP" ]; then
     echo "$(date) - Removed apicert.pem"
     rm -f "${BASE_DIR}/apicert.pem"
