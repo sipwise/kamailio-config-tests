@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "baa201ad_93767ed7",
+        "filename": "bin/check.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2018-01-12T14:47:28Z",
+      "side": 1,
+      "message": "not necessary anymore",
+      "range": {
+        "startLine": 487,
+        "startChar": 0,
+        "endLine": 487,
+        "endChar": 27
+      },
+      "revId": "04c362714476f30d1381f13718e7643651970909",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
