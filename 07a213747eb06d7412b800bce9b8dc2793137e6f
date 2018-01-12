@@ -46,6 +46,30 @@
       "revId": "07a213747eb06d7412b800bce9b8dc2793137e6f",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baa201ad_f38fcaca",
+        "filename": "bin/check.sh",
+        "patchSetId": 11
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-01-12T14:31:30Z",
+      "side": 1,
+      "message": "sed \u0027s/^0*//\u0027\n\nIMHO is not  \"I need to remove leading zero the string\"\nthis will remove everything starting from 0... isn\u0027t it?",
+      "parentUuid": "baa201ad_f3d7caeb",
+      "range": {
+        "startLine": 543,
+        "startChar": 0,
+        "endLine": 544,
+        "endChar": 48
+      },
+      "revId": "07a213747eb06d7412b800bce9b8dc2793137e6f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
