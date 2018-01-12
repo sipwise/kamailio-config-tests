@@ -9,8 +9,13 @@ LOG_DIR="${BASE_DIR}/log/${GROUP}"
 MLOG_DIR="${BASE_DIR}/mem"
 KAM_DIR="/tmp/cfgtest"
 PROFILE="CE"
+OPTS=(-J -P -T)
 DOMAIN="spce.test"
 TIMEOUT=${TIMEOUT:-300}
+SHOW_SCENARIOS=false
+SKIP=false
+SKIP_CAPTURE=false
+MEMDBG=false
 error_flag=0
 
 usage() {
@@ -48,7 +53,7 @@ get_scenarios() {
 }
 
 cfg_debug_off() {
-  if [ -z "$SKIP" ]; then
+  if ! "${SKIP}" ; then
     echo "$(date) - Removed apicert.pem"
     rm -f "${BASE_DIR}/apicert.pem"
     echo "$(date) - Setting config debug off"
@@ -64,13 +69,13 @@ cfg_debug_off() {
 while getopts 'hlcp:Kx:t:m' opt; do
   case $opt in
     h) usage; exit 0;;
-    l) SHOW_SCENARIOS=1;;
-    c) SKIP=1;;
+    l) SHOW_SCENARIOS=true;;
+    c) SKIP=true;;
     p) PROFILE=$OPTARG;;
-    K) SKIP_CAPTURE=1;;
+    K) SKIP_CAPTURE=true;;
     x) GROUP=$OPTARG;;
     t) TIMEOUT=$OPTARG;;
-    m) MEMDBG=1;;
+    m) MEMDBG=true;;
   esac
 done
 shift $((OPTIND - 1))
@@ -81,7 +86,7 @@ if [[ $# -ne 0 ]]; then
   exit 1
 fi
 
-if [[ ${SHOW_SCENARIOS} = 1 ]] ; then
+if "${SHOW_SCENARIOS}"  ; then
   get_scenarios
   echo "${SCENARIOS}"
   exit 0
@@ -114,7 +119,7 @@ echo "$(date) - Clean mem log dir"
 rm -rf "${MLOG_DIR}"
 mkdir -p "${MLOG_DIR}" "${LOG_DIR}"
 
-if [ -z $SKIP ]; then
+if ! "${SKIP}" ; then
   echo "$(date) - Setting config debug on"
   "${BIN_DIR}/config_debug.pl" -g "${GROUP}" on ${DOMAIN}
   if [ "${PROFILE}" == "PRO" ]; then
@@ -144,20 +149,20 @@ echo "$(date) - Initial mem stats"
 VERSION="${PROFILE}_$(cut -f1 -d' '< /etc/ngcp_version)_"
 "${BIN_DIR}/mem_stats.py" --private_file="${MLOG_DIR}/${VERSION}_${GROUP}_initial_pvm.cvs" \
   --share_file="${MLOG_DIR}/${VERSION}_${GROUP}_initial_shm.cvs"
-if [[ ${MEMDBG} = 1 ]] ; then
+if "${MEMDBG}" ; then
   ngcp-memdbg-csv /var/log/ngcp/kamailio-proxy.log "${MLOG_DIR}" >/dev/null
 fi
 
 get_scenarios
 
-if [[ ${SKIP_CAPTURE} = 1 ]] ; then
+if "${SKIP_CAPTURE}" ; then
   echo "$(date) - enable capture"
-  OPTS+="-K"
+  OPTS+=(-K)
 fi
 
-if [[ ${MEMDBG} = 1 ]] ; then
+if "${MEMDBG}" ; then
   echo "$(date) - enable memdbg"
-  OPTS+="-m"
+  OPTS+=(-m)
 fi
 
 for t in ${SCENARIOS}; do
@@ -167,7 +172,7 @@ for t in ${SCENARIOS}; do
     echo "$(date) - Clean log dir"
     rm -rf "${log_temp}"
   fi
-  if ! "${BIN_DIR}/check.sh" ${OPTS} -J -P -T -d ${DOMAIN} -p "${PROFILE}" -s "${GROUP}" "$t" ; then
+  if ! "${BIN_DIR}/check.sh" "${OPTS[@]}" -d ${DOMAIN} -p "${PROFILE}" -s "${GROUP}" "$t" ; then
     echo "ERROR: $t"
     error_flag=1
   fi
