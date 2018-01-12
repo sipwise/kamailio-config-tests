@@ -19,6 +19,18 @@
 # Public License version 3 can be found in "/usr/share/common-licenses/GPL-3".
 #
 
+CAPTURE=false
+SKIP=false
+MEMDBG=false
+SKIP_DELDOMAIN=false
+SKIP_TESTS=false
+SKIP_PARSE=false
+SKIP_RUNSIPP=false
+GRAPH=false
+GRAPH_FAIL=false
+JSON_KAM=false
+
+
 # sipwise password for mysql connections
 . /etc/mysql/sipwise.cnf
 
@@ -27,7 +39,7 @@
 # $2 destination png filename
 graph() {
   local OPTS
-  if [ -n "${JSON_KAM}" ]; then
+  if "${JSON_KAM}" ; then
     OPTS="--json"
   fi
   if [ -f "$1" ]; then
@@ -69,7 +81,7 @@ check_test() {
     return
   fi
 
-  if [ -n "${JSON_KAM}" ]; then
+  if "${JSON_KAM}" ; then
     kam_type="--json"
   fi
 
@@ -77,7 +89,7 @@ check_test() {
   if ! "${BIN_DIR}/check.py" ${kam_type} "$1" "$2" > "$3" ; then
     echo " NOT ok"
     ERR_FLAG=1
-    if [ -z "${GRAPH}" ] && [ -n "${GRAPH_FAIL}" ]; then
+    if ( ! "${GRAPH}" ) && "${GRAPH_FAIL}" ; then
       echo "$(date) - Generating flow image: ${dest}.png"
       graph "$msg" "${dest}.png"
       echo "$(date) - Done"
@@ -232,7 +244,7 @@ release_appearance() {
 # $2 exit value
 error_helper() {
   echo "$1"
-  if [ -z "${SKIP_DELDOMAIN}" ]; then
+  if ! "${SKIP_DELDOMAIN}" ; then
     echo "$(date) - Deleting domain:${DOMAIN}"
     delete_voip "${DOMAIN}"
   fi
@@ -368,7 +380,7 @@ run_sipp() {
     copy_logs
     error_helper "Restart error" 16
   fi
-  if [ "${CAPTURE}" = "1" ] ; then
+  if "${CAPTURE}" ; then
     capture
   fi
 
@@ -449,10 +461,10 @@ run_sipp() {
     fi
   done
 
-  if [ "${CAPTURE}" = "1" ] ; then
+  if "${CAPTURE}" ; then
     stop_capture
   fi
-  if [[ ${MEMDBG} = 1 ]] ; then
+  if "${MEMDBG}" ; then
     memdbg
   fi
   copy_logs
@@ -472,16 +484,15 @@ run_sipp() {
   fi
 }
 
-# shellcheck disable=SC2001
 test_filepath() {
   local msg_name
 
-  if [ -z "${JSON_KAM}" ]; then
-    msg_name=$(echo "$1"|sed 's/_test\.yml/\.yml/')
+  if ! "${JSON_KAM}" ; then
+    msg_name=${1/_test.yml/.yml}
   else
-    msg_name=$(echo "$1"|sed 's/_test\.yml/\.json/')
+    msg_name=${1/_test.yml/.json}
   fi
-  msg=${LOG_DIR}/$(basename "$msg_name")
+  msg="${LOG_DIR}/$(basename "$msg_name")"
 }
 
 usage() {
@@ -507,19 +518,19 @@ usage() {
 while getopts 'hCd:p:Rs:DTPGgJKm' opt; do
   case $opt in
     h) usage; exit 0;;
-    C) SKIP=1;;
+    C) SKIP=true;;
     d) DOMAIN=$OPTARG;;
     p) PROFILE=$OPTARG;;
-    R) SKIP_RUNSIPP=1; SKIP_DELDOMAIN=1;;
+    R) SKIP_RUNSIPP=true; SKIP_DELDOMAIN=true;;
     s) GROUP=$OPTARG;;
-    D) SKIP_DELDOMAIN=1;;
-    T) SKIP_TESTS=1;;
-    P) SKIP_PARSE=1;;
-    K) CAPTURE=1;;
-    G) GRAPH=1;;
-    g) GRAPH_FAIL=1;;
-    J) JSON_KAM=1;;
-    m) MEMDBG=1;;
+    D) SKIP_DELDOMAIN=true;;
+    T) SKIP_TESTS=true;;
+    P) SKIP_PARSE=true;;
+    K) CAPTURE=true;;
+    G) GRAPH=true;;
+    g) GRAPH_FAIL=true;;
+    J) JSON_KAM=true;;
+    m) MEMDBG=true;;
   esac
 done
 shift $((OPTIND - 1))
@@ -565,7 +576,7 @@ if ! [ -f "${SCEN_CHECK_DIR}/scenario.yml" ]; then
   exit 14
 fi
 
-if [ -z "$SKIP" ]; then
+if ! "$SKIP" ; then
   echo "$(date) - Deleting all info for ${DOMAIN} domain"
   delete_voip "${DOMAIN}" # just to be sure nothing is there
   echo "$(date) - Creating ${DOMAIN}"
@@ -574,15 +585,14 @@ if [ -z "$SKIP" ]; then
   create_voip_prefs
 fi
 
-if [ -z "$SKIP_RUNSIPP" ]; then
-  if [ -n "${JSON_KAM}" ] ; then
+if ! "$SKIP_RUNSIPP" ; then
+  if "${JSON_KAM}" ; then
     if ! [ -d "${KAM_DIR}" ] ; then
       echo "$(date) - dir and perms for ${KAM_DIR}"
       mkdir -p "${KAM_DIR}"
       chown -R kamailio:kamailio "${KAM_DIR}"
     else
       echo "$(date) - remove ${JSON_DIR}"
-      # shellcheck disable=SC2115
       rm -rf "${JSON_DIR}"
     fi
   fi
@@ -607,7 +617,7 @@ if [ -z "$SKIP_RUNSIPP" ]; then
   mv "${SCEN_CHECK_DIR}/scenario_ids.yml" "${LOG_DIR}"
   echo "$(date) - Done"
 
-  if [ -n "${JSON_KAM}" ] ; then
+  if "${JSON_KAM}" ; then
     echo "$(date) - Move kamailio json files"
     if [ -d "${JSON_DIR}" ] ; then
       for i in "${JSON_DIR}"/*.json ; do
@@ -622,14 +632,15 @@ if [ -z "$SKIP_RUNSIPP" ]; then
   fi
 fi
 
-if [ -z "${SKIP_DELDOMAIN}" ]; then
+
+if ! "${SKIP_DELDOMAIN}" ; then
   echo "$(date) - Deleting domain:${DOMAIN}"
   delete_voip "${DOMAIN}"
   echo "$(date) - Done"
 fi
 
-if [ -z "${SKIP_PARSE}" ]; then
-  if [ -z "${JSON_KAM}" ]; then
+if ! "${SKIP_PARSE}" ; then
+  if ! "${JSON_KAM}" ; then
     echo "$(date) - Parsing ${LOG_DIR}/kamailio.log"
     "${BIN_DIR}/ulog_parser.pl" "${LOG_DIR}/kamailio.log ${LOG_DIR}"
     echo "$(date) - Done"
@@ -638,12 +649,13 @@ fi
 
 # let's check the results
 ERR_FLAG=0
-if [ -z "${SKIP_TESTS}" ]; then
+if ! "${SKIP_TESTS}" ; then
   if [ -d "${RESULT_DIR}" ]; then
     echo "$(date) - Cleaning result dir"
     rm -rf "${RESULT_DIR}"
   fi
   mkdir -p "${RESULT_DIR}"
+
   echo "$(date) - Cleaning tests files"
   find "${SCEN_CHECK_DIR}" -type f -name '*test.yml' -exec rm {} \;
   echo "$(date) - Generating tests files"
@@ -656,7 +668,7 @@ if [ -z "${SKIP_TESTS}" ]; then
     dest=${RESULT_DIR}/$(basename "$t" .yml)
     check_test "$t" "$msg" "${dest}.tap"
     echo "$(date) - Done"
-    if [ -n "${GRAPH}" ]; then
+    if "${GRAPH}" ; then
       echo "$(date) - Generating flow image: ${dest}.png"
       graph "$msg" "${dest}.png"
       echo "$(date) - Done"
