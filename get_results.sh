@@ -5,6 +5,7 @@ BIN_DIR="${BASE_DIR}/bin"
 PROFILE="CE"
 DOMAIN="spce.test"
 GROUP="${GROUP:-scenarios}"
+RETRANS=""
 
 usage() {
   echo "Usage: get_results.sh [-p PROFILE] [-h] [-g]"
@@ -14,6 +15,7 @@ usage() {
   echo "-h this help"
   echo "-P parse only will disable test"
   echo "-T test only will disable parse"
+  echo "-r fix retransmission issues"
   echo "-x set GROUP scenario. Default: scenarios"
   echo "BASE_DIR:${BASE_DIR}"
   echo "BIN_DIR:${BIN_DIR}"
@@ -39,13 +41,14 @@ get_scenarios() {
   fi
 }
 
-while getopts 'hgGp:TPx:' opt; do
+while getopts 'hgGp:TPrx:' opt; do
   case $opt in
     h) usage; exit 0;;
     G) GRAPH="-G";;
     g) GRAPH="-g";;
     P) OPTS="-T";;
     T) OPTS="-P";;
+    r) RETRANS="-r";;
     p) PROFILE=$OPTARG;;
     x) GROUP=$OPTARG;;
   esac
@@ -67,7 +70,7 @@ fi
 get_scenarios
 
 echo "${SCENARIOS}" |  tr ' ' '\n' \
- | parallel "${BIN_DIR}/check.sh ${GRAPH} -J -C -R ${OPTS} -d ${DOMAIN} -p ${PROFILE} -s ${GROUP}"
+ | parallel "${BIN_DIR}/check.sh ${GRAPH} -J -C -R ${OPTS} ${RETRANS} -d ${DOMAIN} -p ${PROFILE} -s ${GROUP}"
 status=$?
 echo "$(date) - All done[$status]"
 exit $status
