@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "baa201ad_5399766d",
+        "filename": "bin/check.sh",
+        "patchSetId": 11
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-01-12T11:32:41Z",
+      "side": 1,
+      "message": "?\n  \n12:28:11 ✔ taurus:(master)~$ a\u003d\"123\" ; b\u003d\"${a##0*}\"; echo $b\n123\n12:28:19 ✔ taurus:(master)~$ a\u003d\"0123\" ; b\u003d\"${a##0*}\"; echo $b\n\n12:28:22 ✔ taurus:(master)~$",
+      "range": {
+        "startLine": 543,
+        "startChar": 0,
+        "endLine": 544,
+        "endChar": 48
+      },
+      "revId": "07a213747eb06d7412b800bce9b8dc2793137e6f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
