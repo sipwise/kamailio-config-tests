@@ -22,6 +22,30 @@
       "revId": "07a213747eb06d7412b800bce9b8dc2793137e6f",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baa201ad_f3d7caeb",
+        "filename": "bin/check.sh",
+        "patchSetId": 11
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2018-01-12T12:38:05Z",
+      "side": 1,
+      "message": "I need to remove leading zero the string and convert it to a number.\n\nI found this that should work:\n   old_json\u003d$((10#$old_json))\n\nand I can integrate directly with the next line in:\n   new_json\u003d$(((10#$old_json)+1))",
+      "parentUuid": "baa201ad_5399766d",
+      "range": {
+        "startLine": 543,
+        "startChar": 0,
+        "endLine": 544,
+        "endChar": 48
+      },
+      "revId": "07a213747eb06d7412b800bce9b8dc2793137e6f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
