@@ -102,7 +102,7 @@ else
   copy($file, $file.".orig") or die "Copy failed: $ERRNO" unless(-e $file.".orig");
   $yaml = LoadFile($file);
   $yaml->{kamailio}{lb}{cfgt} = 'yes';
-  $yaml->{kamailio}{lb}{use_dns_cache} = 'off';
+  $yaml->{kamailio}{lb}{dns}{use_dns_cache} = 'off';
   $yaml->{kamailio}{proxy}{children} = 1;
   $yaml->{kamailio}{proxy}{cfgt} = 'yes';
   $yaml->{sems}{cfgt} = 'yes';
