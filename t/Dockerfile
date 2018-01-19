@@ -9,8 +9,9 @@ ENV REFRESHED_AT 2018-01-18
 
 RUN apt-get update
 RUN apt-get install --assume-yes python-yaml python-junitxml \
-	make libtemplate-perl libyaml-perl python-xmlrunner
+	make libtemplate-perl libyaml-perl python-pip
 
+RUN pip install unittest-xml-reporting
 RUN echo './t/testrunner' >>/root/.bash_history
 
 WORKDIR /code/
@@ -21,7 +22,7 @@ WORKDIR /code/
 # When you want to build the base image from scratch
 # (jump to the next section if you don't want to build yourself!):
 #
-# % docker build --tag="kamailio-config-tests-jessie" -f t//Dockerfile .
+# % docker build --tag="kamailio-config-tests-jessie" -f t/Dockerfile .
 # % docker run --rm -i -t -v $(pwd):/code:rw kamailio-config-tests-jessie:latest bash
 #
 # Use the existing docker image:
