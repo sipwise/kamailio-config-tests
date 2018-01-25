@@ -1,0 +1,5 @@
+TODO:
+
+1. Create all the test
+
+2. Insert also failure cases? For example where the session is not refreshed on porpuse to test if SEMS close the call properly?

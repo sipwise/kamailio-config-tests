@@ -1,0 +1,1 @@
+This should be created as a separated scenarios becasue I have to set off session timers in config.yml
