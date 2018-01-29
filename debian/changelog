@@ -1,3 +1,30 @@
+kamailio-config-tests (6.1.1.0+0~mr6.1.1.0) unstable; urgency=medium
+
+  [ Michael Prokop ]
+  * [f0d6b34] TT#26831 tests/test_check.py: ignore module level imports at top of file
+
+  [ Manuel Montecelo ]
+  * [2d5434e] TT#28353 The tests should wait for ngcp-panel to be available
+  * [ae6e049] TT#28353 Revert "The tests should wait for ngcp-panel to be available"
+
+  [ Marco Capetta ]
+  * [cdc7428] TT#29068 Move kamailio's json output after each test
+  * [8b5d6a4] TT#29852 Fix contact validation in invite_tcp_udp scenario
+  * [058787c] TT#30352 Scenario invite_retrans fails due to timeout
+  * [132a414] TT#30353 Fix function definitions in all bash scripts
+  * [070c808] TT#30354 Migration of flags to boolean variables
+  * [74c16ee] TT#26452 Improve kamailio-config-test to be re-transmission safe
+  * [9a4bf03] TT#30652 Fix new path of use_dns_cache parameter
+
+  [ Sergii Kipot ]
+  * [70fa17b] TT#29456 Add python-xmlrunner kamailio-config-tests-jessie
+  * [7661af4] TT#29456 Install unittest-xml-reporting using pip
+  * [969d68d] TT#29456 Restore kamailio-config-tests-stretch Dockerfile
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 29 Jan 2018 21:53:11 +0100
+
 kamailio-config-tests (6.1.0.0+0~mr6.1.0.0) unstable; urgency=medium
 
   [ Andrew Pogrebennyk ]
