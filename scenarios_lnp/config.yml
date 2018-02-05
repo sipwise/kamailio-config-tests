@@ -6,5 +6,5 @@ kamailio:
         port: 8991
         request_timeout: 1000
         server: localhost
-      enabled: yes
+      enable: yes
       type: local
