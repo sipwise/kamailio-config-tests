@@ -234,7 +234,7 @@ delete_locations() {
 
   for f in ${SCEN_CHECK_DIR}/callee.csv ${SCEN_CHECK_DIR}/caller.csv; do
     for sub in $(uniq "$f" | grep "${DOMAIN}" | cut -d\; -f1 | xargs); do
-      ngcp-kamctl proxy ul rm "$sub@${DOMAIN}"
+      ngcp-kamctl proxy fifo ul.rm location "$sub@${DOMAIN}"
       # delete possible banned user
       ngcp-sercmd lb htable.delete auth "$sub@${DOMAIN}::auth_count"
     done
@@ -249,7 +249,7 @@ delete_locations() {
       -e 'select concat(username, "@", domain) as user from kamailio.location;' \
       -r -s | head| uniq|xargs)
     for f in $sub; do
-      ngcp-kamctl proxy ul rm "$f"
+      ngcp-kamctl proxy fifo ul.rm location "$f"
     done
     mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" \
       -e 'delete from kamailio.location;' || true
