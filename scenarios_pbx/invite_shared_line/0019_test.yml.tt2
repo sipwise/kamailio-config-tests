@@ -1,5 +1,7 @@
 flow:
   - start|REPLY_ROUTE_NAT:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
   - exit|REPLY_ROUTE_NAT:
 sip_in:
   - '^SIP/2.0 180 Ringing'
