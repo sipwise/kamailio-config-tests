@@ -179,6 +179,7 @@ flow:
         "account:[% customer_test.id %]",
         "user:[% spce_test.testuser1003.uuid %]"
       ]
+  - return|BRANCH_ROUTE_SBC:
   - start|ROUTE_EXIT:
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:

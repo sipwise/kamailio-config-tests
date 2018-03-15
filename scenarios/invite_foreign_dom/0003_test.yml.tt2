@@ -15,7 +15,7 @@ flow:
   - start|ROUTE_FIND_CALLER:
   - start|ROUTE_AUTH:
   - start|ROUTE_AUTH_HELPER:
-      $fd: spce.test
+      $xavp(headers[0]=>From): spce.test
       $var(realm_user): testuser1002
       $var(realm_domain): spce.test
   - return|ROUTE_AUTH_HELPER:
@@ -127,6 +127,7 @@ flow:
   - start|DEFAULT_SEND:
   - exit|DEFAULT_SEND:
   - exit|DEFAULT_SEND:
+  - return|BRANCH_ROUTE_SBC:
   - start|ROUTE_EXIT:
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:
