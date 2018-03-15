@@ -147,8 +147,6 @@ sip_in:
   - 'P-NGCP-Orig-Dialed: 1003'
   - 'P-NGCP-Orig-PBX-Ext: 1003'
   - 'P-First-Caller-Cloud-PBX: \d+'
-  - 'P-AA-Caller-CLIR: <null>'
-  - 'P-AA-Caller-CLIR-IntraPBX: <null>'
   - 'P-NGCP-Lookup-Type: ext'
   - 'P-NGCP-BlockOut-Override: 0'
   - 'P-NGCP-AdmBlockOut-Override: 0'
@@ -179,7 +177,6 @@ sip_out:
       'P-NGCP-Acc-Dst-Leg: \w+',
       'Content-Type: application/sdp',
       'Contact: <sip:127.0.0.1:5085;transport=udp>',
-      'Call-Info: <sip:spce.test>;appearance-index=1',
       'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
       'P-Callee-UUID: [% spce_test.testuser1003.uuid %]',
       'P-Asserted-Identity: <sip:4311002@spce.test>',
