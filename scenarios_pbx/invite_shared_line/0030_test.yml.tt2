@@ -30,7 +30,6 @@ sip_in:
   - 'From: <sip:testuser1002@spce.test>;tag='
   - 'To: <sip:1003@spce.test>;tag='
   - 'CSeq: \d+ BYE'
-  - 'P-Asserted-Identity: \"1003\" <sip:1003@spce.test>'
   - 'Content-Length: 0'
 sip_out:
   - [

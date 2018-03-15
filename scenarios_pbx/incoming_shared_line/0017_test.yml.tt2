@@ -173,8 +173,6 @@ sip_out:
       'P-NGCP-Orig-Dialed: 1002',
       'P-NGCP-Orig-PBX-Ext: 1002',
       'P-First-Caller-Cloud-PBX: \d+',
-      'P-AA-Caller-CLIR: <null>',
-      'P-AA-Caller-CLIR-IntraPBX: <null>',
       'P-NGCP-Lookup-Type: ext',
       'P-NGCP-BlockOut-Override: 0',
       'P-NGCP-AdmBlockOut-Override: 0',

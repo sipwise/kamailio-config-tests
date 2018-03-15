@@ -69,5 +69,4 @@ sip_out:
       'CSeq: 3 BYE',
       'Contact: sip:testuser1002@127.126.0.1:\d+',
       'Content-Length: 0',
-      'P-Asserted-Identity: \"1003\" <sip:1003@spce.test>'
     ]

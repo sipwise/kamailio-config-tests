@@ -83,5 +83,4 @@ sip_out:
       'Contact: sip:testuser1003@127.126.0.3:\d+',
       'Max-Forwards: 68',
       'Content-Length: 0',
-      'P-Asserted-Identity: \"1002\" <sip:1002@spce.test>',
     ]

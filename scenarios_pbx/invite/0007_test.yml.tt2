@@ -167,7 +167,6 @@ sip_out:
        'Max-Forwards: 69',
        'Content-Type: application/sdp',
        'Contact: <sip:127.0.0.1:5085;transport=udp>',
-       'Call-Info: <sip:spce.test>;appearance-index=1',
        'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
        'P-Callee-UUID: [% spce_test.testuser1003.uuid %]',
        'P-Asserted-Identity: <sip:4311002@',
