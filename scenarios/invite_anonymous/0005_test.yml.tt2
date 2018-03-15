@@ -15,8 +15,8 @@ flow:
   - start|ROUTE_FIND_CALLER:
   - start|ROUTE_AUTH:
   - start|ROUTE_AUTH_HELPER:
-      $fU: anonymous
-      $fd: anonymous.invalid
+      $xavp(headers[0]=>From): sip:anonymous@
+      $xavp(headers[0]=>From): anonymous.invalid
       $var(realm_user): testuser1002
       $var(realm_domain): spce.test
   - return|ROUTE_AUTH_HELPER:
@@ -164,6 +164,7 @@ flow:
   - start|DEFAULT_SEND:
   - exit|DEFAULT_SEND:
   - exit|DEFAULT_SEND:
+  - return|BRANCH_ROUTE_SBC:
   - start|ROUTE_EXIT:
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:
@@ -209,7 +210,7 @@ sip_out:
   - [
       '^INVITE sip:testuser1003@',
       'CSeq: 2 INVITE',
-      'From: "Anonymous" <sip:anonymous@anonymous.invalid>;tag=',
+      'From: "Anonymous"  <sip:anonymous@anonymous.invalid>;tag=',
       'To: <sip:testuser1003@',
       'Content-Type: application/sdp',
       'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',

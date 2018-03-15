@@ -120,6 +120,7 @@ flow:
   - start|DEFAULT_SEND:
   - exit|DEFAULT_SEND:
   - exit|DEFAULT_SEND:
+  - return|BRANCH_ROUTE_SBC:
   - start|ROUTE_EXIT:
       $avp(lua_dlg_profile): [
         "local",

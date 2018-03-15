@@ -97,6 +97,7 @@ flow:
   - start|DEFAULT_SEND:
   - exit|DEFAULT_SEND:
   - exit|DEFAULT_SEND:
+  - return|BRANCH_ROUTE_NO_SBC:
   - start|ROUTE_EXIT:
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:

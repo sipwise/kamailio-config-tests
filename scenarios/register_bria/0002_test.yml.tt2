@@ -2,17 +2,15 @@ flow:
   - start|DEFAULT_ROUTE:
   - start|ROUTE_ENTRY:
   - return|ROUTE_ENTRY:
-      $fU: testuser1004
-      $tU: testuser1004
   - start|ROUTE_NET_INFO:
-      $fU: testuser1004
-      $tU: testuser1004
+      $xavp(headers[0]=>From): sip:testuser1004@
+      $xavp(headers[0]=>To): sip:testuser1004@
   - return|ROUTE_NET_INFO:
   - start|ROUTE_REG_REQUEST:
   - start|ROUTE_REG_HANDLE:
   - start|ROUTE_AUTH:
   - start|ROUTE_AUTH_HELPER:
-      $fd: spce.test
+      $xavp(headers[0]=>From): spce.test
       $var(realm_user): testuser1004
       $var(realm_domain): spce.test
   - return|ROUTE_AUTH_HELPER:
