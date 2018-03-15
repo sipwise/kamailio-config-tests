@@ -16,7 +16,7 @@ flow:
   - start|ROUTE_FIND_CALLER:
   - start|ROUTE_AUTH:
   - start|ROUTE_AUTH_HELPER:
-      $fd: spce.test
+      $xavp(headers[0]=>From): spce.test
       $var(realm_user): testuser1002
       $var(realm_domain): spce.test
   - return|ROUTE_AUTH_HELPER:
@@ -218,7 +218,7 @@ sip_out:
   - [
       '^INVITE sip:testuser1003@',
       'CSeq: 2 INVITE',
-      'From:  <sip:43122122@',
+      'From: <sip:43122122@',
       'To: <sip:testuser1003@',
       'Content-Type: application/sdp',
       'P-Caller-UUID: \w+',
