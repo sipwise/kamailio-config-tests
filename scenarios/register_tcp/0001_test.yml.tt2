@@ -2,11 +2,8 @@ flow:
   - start|DEFAULT_ROUTE:
   - start|ROUTE_ENTRY:
   - return|ROUTE_ENTRY:
-      $fU: testuser1003
-      $tU: testuser1003
   - start|ROUTE_NET_INFO:
-      $fU: testuser1003
-      $tU: testuser1003
+      $x_hdr(From): sip:testuser1003@
   - return|ROUTE_NET_INFO:
       $avp(proto): ["tcp"]
   - start|ROUTE_REG_REQUEST:

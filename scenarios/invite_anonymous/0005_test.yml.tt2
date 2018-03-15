@@ -15,8 +15,8 @@ flow:
   - start|ROUTE_FIND_CALLER:
   - start|ROUTE_AUTH:
   - start|ROUTE_AUTH_HELPER:
-      $fU: anonymous
-      $fd: anonymous.invalid
+      $x_hdr(From): sip:anonymous@
+      $x_hdr(From): anonymous.invalid
       $var(realm_user): testuser1002
       $var(realm_domain): spce.test
   - return|ROUTE_AUTH_HELPER:
@@ -213,7 +213,7 @@ sip_out:
   - [
       '^INVITE sip:testuser1003@',
       'CSeq: 2 INVITE',
-      'From: "Anonymous" <sip:anonymous@anonymous.invalid>;tag=',
+      'From: "Anonymous"  <sip:anonymous@anonymous.invalid>;tag=',
       'To: <sip:testuser1003@',
       'Content-Type: application/sdp',
       'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
