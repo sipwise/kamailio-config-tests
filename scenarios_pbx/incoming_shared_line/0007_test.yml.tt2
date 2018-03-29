@@ -1,5 +1,7 @@
 flow:
   - start|DEFAULT_ROUTE:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
   - start|ROUTE_NET_INFO:
   - return|ROUTE_NET_INFO:
   - start|ROUTE_IMP_REQUEST:
@@ -12,7 +14,10 @@ flow:
   - return|ROUTE_ADD_CALLINFO_REPLY:
   - return|ROUTE_AUTH:
   - start|ROUTE_IMP_PRESENCE:
-  - exit|ROUTE_IMP_PRESENCE:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
 sip_in:
   - '^SUBSCRIBE sip:testuser1002@spce.test SIP/2.0'
   - 'From: <sip:testuser1002@spce.test>;tag='
