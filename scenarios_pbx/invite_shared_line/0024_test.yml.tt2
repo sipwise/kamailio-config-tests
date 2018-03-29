@@ -1,7 +1,14 @@
 flow:
   - start|REPLY_ROUTE_NAT:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|REPLY_SCA_UPDATE:
+  - return|REPLY_SCA_UPDATE:
   - start|REPLY_ROUTE_RTPENGINE:
   - return|REPLY_ROUTE_RTPENGINE:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
   - start|dialog:start:
   - return|dialog:start:
       $avp(lua_dlg_profile): [
@@ -40,6 +47,6 @@ sip_out:
       'Contact: <sip:127.0.0.1:5085;transport=udp>',
       'Content-Type: application/sdp',
       'P-COLP-Identity: \"1003\" <sip:1003@spce.test>',
-      'P-Asserted-Identity:  <sip:1003@spce.test>',
+      'P-Asserted-Identity:  <sip:testuser1003@spce.test>',
       'P-Out-Socket: udp:127.0.0.1:5060'
     ]

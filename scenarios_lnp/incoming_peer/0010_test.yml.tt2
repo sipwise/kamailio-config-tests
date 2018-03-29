@@ -10,7 +10,7 @@ flow:
   - start|ROUTE_WITHINDLG_RTPENGINE:
   - return|ROUTE_WITHINDLG_RTPENGINE:
   - start|ROUTE_OUTBOUND:
-  - return|ROUTE_OUTBOUND:
+  - exit|ROUTE_OUTBOUND:
 sip_in:
   - '^ACK sip:(4318881003@)?127.0.0.1:5080(;transport=udp)? SIP/2.0'
   - 'CSeq: 10 ACK'
