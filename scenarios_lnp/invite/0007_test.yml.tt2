@@ -10,7 +10,10 @@ flow:
   - start|ROUTE_WITHINDLG_RTPENGINE:
   - return|ROUTE_WITHINDLG_RTPENGINE:
   - start|ROUTE_OUTBOUND:
-  - return|ROUTE_OUTBOUND:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
 sip_in:
   - '^ACK sip:127.0.0.1:5080(;prxroute=1)? SIP/2.0'
   - 'Contact: sip:testuser1002@'
