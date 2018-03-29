@@ -10,7 +10,7 @@ flow:
   - start|ROUTE_WITHINDLG_RTPENGINE:
   - return|ROUTE_WITHINDLG_RTPENGINE:
   - start|ROUTE_OUTBOUND:
-  - return|ROUTE_OUTBOUND:
+  - exit|ROUTE_OUTBOUND:
 sip_in:
   - '^ACK sip:127.0.0.1:5085(;prxroute=1)? SIP/2.0'
   - 'From: <sip:testuser1002@spce.test>;tag='
