@@ -1,5 +1,7 @@
 flow:
   - start|DEFAULT_ROUTE:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
   - start|ROUTE_NET_INFO:
   - return|ROUTE_NET_INFO:
   - start|ROUTE_PRX_REQUEST:
@@ -112,11 +114,14 @@ flow:
   - return|ROUTE_ADD_CALLINFO:
   - return|BRANCH_ROUTE_SBC:
   - return|BRANCH_ROUTE_SBC:
-  - exit|ROUTE_OUTBOUND:
+  - start|ROUTE_EXIT:
       $avp(lua_dlg_profile): [
         "local",
         "total"
       ]
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
 sip_in:
   - '^INVITE sip:testuser1003@spce.test SIP/2.0'
   - 'From: <sip:testuser1002@spce.test>;tag='
