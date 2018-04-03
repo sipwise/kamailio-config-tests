@@ -107,12 +107,12 @@ flow:
   - return|ROUTE_BRANCH_ACC_RTP:
   - start|ROUTE_SET_BRANCH_HDRS:
   - return|ROUTE_SET_BRANCH_HDRS:
+  - start|ROUTE_SET_RUSER:
+  - return|ROUTE_SET_RUSER:
   - start|ROUTE_FILTER_PRACK:
   - return|ROUTE_FILTER_PRACK:
   - start|ROUTE_PREPARE_MOH_PBX:
   - return|ROUTE_PREPARE_MOH_PBX:
-  - start|ROUTE_PREPARE_SST:
-  - return|ROUTE_PREPARE_SST:
   - start|ROUTE_LOAD_PBXSRV:
   - return|ROUTE_LOAD_PBXSRV:
   - start|ROUTE_ADD_CALLINFO:
@@ -135,7 +135,7 @@ flow:
       ]
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:
-  - exit|ROUTE_EXIT
+  - exit|ROUTE_EXIT:
 sip_in:
   - '^INVITE sip:1003'
   - 'Contact: sip:testuser1002@'
@@ -169,6 +169,6 @@ sip_out:
       'P-NGCP-Lookup-Type: ext',
       'P-NGCP-Orig-User: 43110021003',
       'P-NGCP-Orig-Dialed: 1003',
-      'P-App-Param: (;calltimer=21600)?;aleg_sst_enable=no;sst_enable=no;a_park_domain=\d+;b_park_domain=\d+',
+      'P-App-Param: (;calltimer=21600)?;a_park_domain=\d+;b_park_domain=\d+',
       'P-App-Name: sbc'
     ]

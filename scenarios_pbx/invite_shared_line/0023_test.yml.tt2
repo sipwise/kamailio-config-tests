@@ -19,7 +19,7 @@ sip_in:
   - 'From: <sip:4311002@spce.test>;tag='
   - 'To: <sip:1003@spce.test>;tag='
   - 'CSeq: \d+ INVITE'
-  - 'Contact: <sip:testuser1003@127.0.0.1:5080>'
+  - 'Contact: <sip:127.0.0.1:5080;transport=udp>'
   - 'Content-Type: application/sdp'
 sip_out:
   - [
@@ -27,6 +27,6 @@ sip_out:
       'From: <sip:testuser1002@spce.test>;tag=',
       'To: <sip:1003@spce.test>;tag=',
       'CSeq: \d+ INVITE',
-      'Contact: <sip:testuser1003@127.0.0.1:5080>',
+      'Contact: <sip:127.0.0.1:5080;transport=udp>',
       'Content-Type: application/sdp'
     ]
