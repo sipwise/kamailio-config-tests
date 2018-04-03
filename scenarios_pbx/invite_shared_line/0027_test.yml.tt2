@@ -15,7 +15,7 @@ flow:
   - start|ROUTE_EXIT:
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:
-  - exit|ROUTE_EXIT
+  - exit|ROUTE_EXIT:
 sip_in:
   - '^ACK sip:testuser1003@127.0.0.1:5080 SIP/2.0'
   - 'From: <sip:testuser1002@spce.test>;tag='

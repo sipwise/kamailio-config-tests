@@ -5,7 +5,7 @@ flow:
   - start|ROUTE_EXIT:
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:
-  - exit|ROUTE_EXIT
+  - exit|ROUTE_EXIT:
 sip_in:
   - '^SIP/2.0 180 Ringing'
   - 'From: <sip:43110021003@spce.test>;tag='
