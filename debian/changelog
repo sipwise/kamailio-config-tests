@@ -1,3 +1,18 @@
+kamailio-config-tests (6.3.0.0+0~mr6.3.0.0) unstable; urgency=medium
+
+  [ Andrew Pogrebennyk ]
+  * [e30608d] TT#17987 fix LNP tests (rename lnp.enabled->lnp.enable)
+
+  [ Manuel Montecelo ]
+  * [6427edc] TT#32220 Use "service" instead of "invoke-rc.d" to allow use of "policy-rc.d"
+
+  [ Marco Capetta ]
+  * [dc9aba8] TT#33301 Upgrade to work properly with kamalio 5.1.2
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 03 Apr 2018 22:27:48 +0200
+
 kamailio-config-tests (6.2.0.0+0~mr6.2.0.0) unstable; urgency=medium
 
   [ Michael Prokop ]
