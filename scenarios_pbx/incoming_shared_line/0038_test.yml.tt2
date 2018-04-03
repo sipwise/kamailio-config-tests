@@ -2,10 +2,12 @@ flow:
   - start|REPLY_ROUTE_NAT:
   - start|ROUTE_ENTRY:
   - return|ROUTE_ENTRY:
+  - start|REPLY_SCA_UPDATE:
+  - return|REPLY_SCA_UPDATE:
   - start|ROUTE_EXIT:
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:
-  - exit|ROUTE_EXIT
+  - exit|ROUTE_EXIT:
 sip_in:
   - '^SIP/2.0 200 OK'
   - 'From: <sip:testuser1003@spce.test>;tag='
