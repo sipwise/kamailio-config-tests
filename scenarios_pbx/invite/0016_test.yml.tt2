@@ -19,9 +19,9 @@ flow:
   - start|ROUTE_EXIT:
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:
-  - exit|ROUTE_EXIT
+  - exit|ROUTE_EXIT:
 sip_in:
-  - '^BYE sip:testuser1003@127.0.0.1:5080(;prxroute=1)? SIP/2.0'
+  - '^BYE sip:127.0.0.1:5080;transport=udp SIP/2.0'
   - 'CSeq: \d+ BYE'
   - 'Max-Forwards: 70'
   - 'Content-Length: 0'
@@ -38,7 +38,7 @@ sip_out:
       'To: <sip:1003@'
     ]
   - [
-      '^BYE sip:testuser1003@127.0.0.1:5080(;prxroute=1)? SIP/2.0',
+      '^BYE sip:127.0.0.1:5080;transport=udp SIP/2.0',
       'CSeq: \d+ BYE',
       'Max-Forwards: 69',
       'Content-Length: 0',
