@@ -130,7 +130,7 @@ flow:
       ]
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:
-  - exit|ROUTE_EXIT
+  - exit|ROUTE_EXIT:
 sip_in:
   - '^INVITE sip:1003@spce.test SIP/2.0'
   - 'From: <sip:testuser1002@spce.test>;tag='
@@ -208,7 +208,7 @@ sip_out:
       'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
       'P-Callee-UUID: [% spce_test.testuser1003.uuid %]',
       'P-App-Name: sbc',
-      'P-App-Param: ;aleg_sst_enable=no;sst_enable=no;a_park_domain=\d+;b_park_domain=\d+',
+      'P-App-Param: ;a_park_domain=\d+;b_park_domain=\d+',
       'P-NGCP-Acc-Src-Leg: \w+',
       'P-NGCP-Acc-Dst-Leg: \w+',
       'P-NGCP-Caller-Info: <sip:testuser1002@spce.test>;ip=127.126.0.1;port=\d+;primary=4311002',

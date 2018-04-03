@@ -12,12 +12,9 @@ flow:
   - start|ROUTE_WITHINDLG_RTPENGINE:
   - return|ROUTE_WITHINDLG_RTPENGINE:
   - start|ROUTE_OUTBOUND:
-  - start|ROUTE_EXIT:
-  - start|ROUTE_RUNTIME:
-  - return|ROUTE_RUNTIME:
-  - exit|ROUTE_EXIT
+  - return|ROUTE_OUTBOUND:
 sip_in:
-  - '^ACK sip:testuser1003@127.0.0.1:5080 SIP/2.0'
+  - '^ACK sip:127.0.0.1:5080;transport=udp SIP/2.0'
   - 'From: <sip:testuser1002@spce.test>;tag='
   - 'To: <sip:1003@spce.test>;tag='
   - 'CSeq: \d+ ACK'
@@ -26,7 +23,7 @@ sip_in:
   - 'Contact: <sip:127.0.0.1:5085;transport=udp>'
 sip_out:
   - [
-      '^ACK sip:testuser1003@127.0.0.1:5080 SIP/2.0',
+      '^ACK sip:127.0.0.1:5080;transport=udp SIP/2.0',
       'From: <sip:4311002@spce.test>;tag=',
       'To: <sip:1003@spce.test>;tag=',
       'CSeq: \d+ ACK',
