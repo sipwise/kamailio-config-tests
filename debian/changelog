@@ -1,3 +1,12 @@
+kamailio-config-tests (6.0.1.5+0~mr6.0.1.5) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [c8c0f71] TT#35606 Update tests to fit kamalio 4.4.7 flow
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 19 Apr 2018 15:16:53 +0200
+
 kamailio-config-tests (6.0.1.4+0~mr6.0.1.4) unstable; urgency=medium
 
   [ Marco Capetta ]
