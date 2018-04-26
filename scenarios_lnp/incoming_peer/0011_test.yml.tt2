@@ -14,6 +14,8 @@ flow:
   - start|ROUTE_STOP_RTPPROXY:
   - return|ROUTE_STOP_RTPPROXY:
   - start|ROUTE_OUTBOUND:
+  - start|ROUTE_PREPARE_UA:
+  - return|ROUTE_PREPARE_UA:
   - start|ROUTE_EXIT:
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:
