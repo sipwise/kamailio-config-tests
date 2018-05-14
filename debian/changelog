@@ -1,3 +1,13 @@
+kamailio-config-tests (6.1.2.1+0~mr6.1.2.1) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [add8c79] TT#34851 Update tests to fit kamalio 4.4.7 flow
+  * [15b714a] TT#35910 Fix UA header changes in in-dialog messages
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 14 May 2018 23:01:52 +0200
+
 kamailio-config-tests (6.1.2.0+0~mr6.1.2.0) unstable; urgency=medium
 
   * New release.
