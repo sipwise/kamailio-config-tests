@@ -160,7 +160,9 @@ flow:
   - return|ROUTE_ADD_CALLINFO:
   - return|BRANCH_ROUTE_SBC:
   # branch ??
-  - return|BRANCH_ROUTE_SBC:
+  - start|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
       $avp(lua_dlg_profile): [
         "accountout:[% customer_test.id %]",
         "userout:[% spce_test.testuser1002.uuid %]",

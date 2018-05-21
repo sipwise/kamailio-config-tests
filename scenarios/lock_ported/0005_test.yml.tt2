@@ -131,7 +131,9 @@ flow:
   - return|ROUTE_ADD_CALLINFO:
   - return|BRANCH_ROUTE_FWD_LOOP:
   # branch ??
-  - return|BRANCH_ROUTE_FWD_LOOP:
+  - start|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
   - start|ROUTE_EXIT:
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:
