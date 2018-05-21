@@ -119,7 +119,9 @@ flow:
   - return|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
   - return|ROUTE_ADD_CALLINFO:
   - return|BRANCH_ROUTE_NO_SBC:
-  - return|BRANCH_ROUTE_NO_SBC:
+  - start|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
   - start|ROUTE_EXIT:
       $avp(lua_dlg_profile): [
         "totalaccountout:[% customerpbx_test.id %]",
