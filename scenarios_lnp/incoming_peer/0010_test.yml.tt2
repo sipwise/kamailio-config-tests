@@ -14,6 +14,9 @@ flow:
   - start|ROUTE_WITHINDLG_RTPENGINE:
   - return|ROUTE_WITHINDLG_RTPENGINE:
   - start|ROUTE_OUTBOUND:
+  - start|DEFAULT_SEND:
+  - return|DEFAULT_SEND:
+  - return|DEFAULT_SEND:
   - start|ROUTE_EXIT:
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:

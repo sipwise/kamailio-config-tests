@@ -15,6 +15,9 @@ flow:
   - start|ROUTE_PREPARE_UA:
   - return|ROUTE_PREPARE_UA:
   - start|ROUTE_OUTBOUND:
+  - start|DEFAULT_SEND:
+  - return|DEFAULT_SEND:
+  - return|DEFAULT_SEND:
   - start|ROUTE_EXIT:
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:
