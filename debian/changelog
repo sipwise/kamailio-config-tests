@@ -1,3 +1,17 @@
+kamailio-config-tests (6.4.0.0+0~mr6.4.0.0) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [dbd35e9] TT#34900 Fix failing kamailio-config-tests for PBX scenarios
+  * [9bd0dfe] TT#35910 Fix UA header changes in in-dialog messages
+  * [0941ac4] TT#36275 Increase wait time in invite_callforward scenario
+
+  [ Andrew Pogrebennyk ]
+  * [b94aee2] TT#36172 update scenario incoming_hih due to reordering
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 29 May 2018 10:04:09 +0200
+
 kamailio-config-tests (6.3.0.0+0~mr6.3.0.0) unstable; urgency=medium
 
   [ Andrew Pogrebennyk ]
