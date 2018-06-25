@@ -24,7 +24,7 @@ use warnings;
 use English;
 use JSON qw();
 use Getopt::Long;
-use List::MoreUtils qw{ none };
+use List::Util qw(none);
 use Config::Tiny;
 use Sipwise::API qw(all);
 use Storable 'dclone';
