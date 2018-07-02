@@ -91,6 +91,8 @@ flow:
   - start|ROUTE_CHECK_CF:
   - start|ROUTE_CHECK_CF_SOURCES:
   - return|ROUTE_CHECK_CF_SOURCES:
+  - start|ROUTE_CHECK_CF_BNUMBERS:
+  - return|ROUTE_CHECK_CF_BNUMBERS:
   - start|ROUTE_CHECK_CF_PERIOD:
   - return|ROUTE_CHECK_CF_PERIOD:
   - return|ROUTE_CHECK_CF:
