@@ -31,8 +31,6 @@
 
   <recv response="407" rtd="2" auth="true"/>
 
-  <pause milliseconds="500"/>
-
   <send>
     <![CDATA[
 
