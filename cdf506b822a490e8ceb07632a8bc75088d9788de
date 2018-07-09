@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ad0253b_512c014a",
+        "filename": "scenarios/invite_no_refer/0008_test.yml.tt2",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000006
+      },
+      "writtenOn": "2018-07-09T13:08:55Z",
+      "side": 0,
+      "message": "we can keep it if we decide to remove Allow filtering from ROUTE_REPLY_FROM_INBOUND.\n\nthere is also a related templates change in http://gerrit.mgm.sipwise.com/22450",
+      "revId": "cdf506b822a490e8ceb07632a8bc75088d9788de",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
