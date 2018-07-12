@@ -152,7 +152,12 @@ create_voip_prefs() {
 
   if [ -f "${SCEN_CHECK_DIR}/callforward.yml" ]; then
    echo "$(date) - Setting callforward config"
-   "${BIN_DIR}/set_subscribers_callforward.pl" "${SCEN_CHECK_DIR}/callforward.yml"
+   "${BIN_DIR}/set_subscribers_callforward_advanced.pl" "${SCEN_CHECK_DIR}/callforward.yml"
+  fi
+
+  if [ -f "${SCEN_CHECK_DIR}/trusted.yml" ]; then
+   echo "$(date) - Setting trusted sources"
+   "${BIN_DIR}/set_subscribers_trusted_sources.pl" "${SCEN_CHECK_DIR}/trusted.yml"
   fi
 
   if [ -f "${SCEN_CHECK_DIR}/speeddial.yml" ]; then
@@ -199,6 +204,13 @@ delete_voip() {
     "${BIN_DIR}/create_peers.pl" -delete "${SCEN_CHECK_DIR}/peer.yml"
   fi
 
+  if [ -f "${SCEN_CHECK_DIR}/trusted.yml" ]; then
+   echo "$(date) - Deleting trusted sources"
+   # Trusted sources are not deleted from kamailio cache when the domain is removed
+   # therefore better reload them from the database
+   ngcp-sercmd proxy permissions.trustedReload
+  fi
+
   if [ -f "${SCEN_CHECK_DIR}/lnp.yml" ]; then
     echo "$(date) - Deleting lnp carrier/number"
     "${BIN_DIR}/create_lnp.pl" -delete "${SCEN_CHECK_DIR}/lnp.yml"
@@ -234,7 +246,7 @@ delete_locations() {
 
   for f in ${SCEN_CHECK_DIR}/callee.csv ${SCEN_CHECK_DIR}/caller.csv; do
     for sub in $(uniq "$f" | grep "${DOMAIN}" | cut -d\; -f1 | xargs); do
-      ngcp-kamctl proxy fifo ul.rm location "$sub@${DOMAIN}"
+      ngcp-kamctl proxy fifo ul.rm location "$sub@${DOMAIN}" >/dev/null
       # delete possible banned user
       ngcp-sercmd lb htable.delete auth "$sub@${DOMAIN}::auth_count"
     done
@@ -249,7 +261,7 @@ delete_locations() {
       -e 'select concat(username, "@", domain) as user from kamailio.location;' \
       -r -s | head| uniq|xargs)
     for f in $sub; do
-      ngcp-kamctl proxy fifo ul.rm location "$f"
+      ngcp-kamctl proxy fifo ul.rm location "$f" >/dev/null
     done
     mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" \
       -e 'delete from kamailio.location;' || true
