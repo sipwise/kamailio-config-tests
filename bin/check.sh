@@ -152,7 +152,12 @@ create_voip_prefs() {
 
   if [ -f "${SCEN_CHECK_DIR}/callforward.yml" ]; then
    echo "$(date) - Setting callforward config"
-   "${BIN_DIR}/set_subscribers_callforward.pl" "${SCEN_CHECK_DIR}/callforward.yml"
+   "${BIN_DIR}/set_subscribers_callforward_advanced.pl" "${SCEN_CHECK_DIR}/callforward.yml"
+  fi
+
+  if [ -f "${SCEN_CHECK_DIR}/trusted.yml" ]; then
+   echo "$(date) - Setting trusted sources config"
+   "${BIN_DIR}/set_subscribers_trusted_sources.pl" "${SCEN_CHECK_DIR}/trusted.yml"
   fi
 
   if [ -f "${SCEN_CHECK_DIR}/speeddial.yml" ]; then
