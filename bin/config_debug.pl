@@ -109,6 +109,7 @@ else
   $yaml->{sems}{debug} = 'yes';
   $yaml->{checktools}{sip_check_enable} = 0;
   $yaml->{security}->{ngcp_panel}->{scripts}->{restapi}->{sslverify} = 'no';
+  $yaml->{mediator}{interval} = '1';
 
   my $group_yml_file = $base_dir."/".$group."/config.yml";
   if ( -e  $group_yml_file )
