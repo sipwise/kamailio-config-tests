@@ -30,6 +30,7 @@ FIX_RETRANS=false
 GRAPH=false
 GRAPH_FAIL=false
 JSON_KAM=false
+CDR=false
 
 
 # sipwise password for mysql connections
@@ -559,6 +560,24 @@ next_test_filepath() {
   next_msg="${LOG_DIR}/${msg_name}"
 }
 
+export_cdr() {
+  mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" accounting \
+      -e "select * from cdr where call_id like 'NGCP\%${1}\%%' and start_time > unix_timestamp(date_sub(now(), interval 1 minute)) order by id desc limit 3\G" > "${2}/cdr.txt" || true
+}
+
+cdr_check() {
+  if [ -f "$1" ] ; then
+    echo -n "$(date) - Testing $(basename "$1") against $(basename "$2") -> $(basename "$3")"
+    if "${BIN_DIR}/cdr_check.py" "--text" "$1" "$2" > "$3" ; then
+      echo " ok"
+      return
+    fi
+    echo " NOT ok"
+  else
+    echo "$(date) - CDR test file $1 doesn't exist, skipping CDR test"
+  fi
+}
+
 usage() {
   echo "Usage: check.sh [-hCDRTGgJKm] [-d DOMAIN ] [-p PROFILE ] -s [GROUP] check_name"
   echo "Options:"
@@ -576,11 +595,12 @@ usage() {
   echo -e "\t-K enable tcpdump capture"
   echo -e "\t-s scenario group. Default: scenarios"
   echo -e "\t-m enable memdbg csv"
+  echo -e "\t-c enable cdr validation"
   echo "Arguments:"
   echo -e "\tcheck_name. Scenario name to check. This is the name of the directory on GROUP dir."
 }
 
-while getopts 'hCd:p:Rs:DTPGgrJKm' opt; do
+while getopts 'hCd:p:Rs:DTPGgrcJKm' opt; do
   case $opt in
     h) usage; exit 0;;
     C) SKIP=true;;
@@ -597,6 +617,7 @@ while getopts 'hCd:p:Rs:DTPGgrJKm' opt; do
     r) FIX_RETRANS=true;;
     J) JSON_KAM=true;;
     m) MEMDBG=true;;
+    c) CDR=true;;
   esac
 done
 shift $((OPTIND - 1))
@@ -741,6 +762,17 @@ if ! "${SKIP_DELDOMAIN}" ; then
   echo "$(date) - Done"
 fi
 
+
+if ! "$SKIP_RUNSIPP" && "${CDR}" ; then
+#  if "${CDR}" ; then
+    echo "$(date) - Exporting generated CDRs"
+    sleep 1
+    export_cdr "${NAME_CHECK}" "${LOG_DIR}"
+    echo "$(date) - Done"
+#  fi
+fi
+
+
 if ! "${SKIP_PARSE}" ; then
   if ! "${JSON_KAM}" ; then
     echo "$(date) - Parsing ${LOG_DIR}/kamailio.log"
@@ -748,6 +780,7 @@ if ! "${SKIP_PARSE}" ; then
     echo "$(date) - Done"
   fi
 fi
+
 
 # let's check the results
 ERR_FLAG=0
@@ -764,7 +797,7 @@ if ! "${SKIP_TESTS}" ; then
   "${BIN_DIR}/generate_tests.sh" -d \
     "${SCEN_CHECK_DIR}" "${LOG_DIR}/scenario_ids.yml" "${PROFILE}"
 
-  for t in ${SCEN_CHECK_DIR}/*_test.yml; do
+  for t in ${SCEN_CHECK_DIR}/[0-9][0-9][0-9][0-9]_test.yml; do
     test_filepath "$t"
     echo "$(date) - check test $t on $msg"
     dest=${RESULT_DIR}/$(basename "$t" .yml)
@@ -776,6 +809,16 @@ if ! "${SKIP_TESTS}" ; then
       echo "$(date) - Done"
     fi
   done
+
+  if "${CDR}" ; then
+    echo "$(date) - Validating CDRs"
+    t_cdr="${SCEN_CHECK_DIR}/cdr_test.yml"
+    msg="${LOG_DIR}/cdr.txt"
+    dest="${RESULT_DIR}/cdr_test.tap"
+    echo "$(date) - check test $t_cdr on $msg"
+    cdr_check "$t_cdr" "$msg" "${dest}"
+    echo "$(date) - Done"
+  fi
 fi
 exit ${ERR_FLAG}
 #EOF
