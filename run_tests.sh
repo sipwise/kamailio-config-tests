@@ -17,17 +17,19 @@ SKIP=false
 SKIP_CAPTURE=false
 SKIP_RETRANS=false
 MEMDBG=false
+CDR=false
 error_flag=0
 
 usage() {
-  echo "Usage: run_test.sh [-p PROFILE] [-c] [-t]"
+  echo "Usage: run_test.sh [-p PROFILE] [-C] [-t]"
   echo "-p CE|PRO default is CE"
   echo "-l print available SCENARIOS in GROUP"
-  echo "-c skips configuration of the environment"
+  echo "-C skips configuration of the environment"
   echo "-K capture messages with tcpdump"
   echo "-x set GROUP scenario. Default: scenarios"
   echo "-t set timeout in secs for pid_watcher.py [PRO]. Default: 300"
   echo "-r fix retransmission issues"
+  echo "-c export CDRs at the end of the test"
   echo "-h this help"
 
   echo "BASE_DIR:${BASE_DIR}"
@@ -72,12 +74,13 @@ while getopts 'hlcp:Kx:t:rm' opt; do
   case $opt in
     h) usage; exit 0;;
     l) SHOW_SCENARIOS=true;;
-    c) SKIP=true;;
+    C) SKIP=true;;
     p) PROFILE=$OPTARG;;
     K) SKIP_CAPTURE=true;;
     x) GROUP=$OPTARG;;
     t) TIMEOUT=$OPTARG;;
     r) SKIP_RETRANS=true;;
+    c) CDR=true;;
     m) MEMDBG=true;;
   esac
 done
@@ -171,6 +174,11 @@ fi
 if "${SKIP_RETRANS}" ; then
   echo "$(date) - enable skip retransmissions"
   OPTS+=(-r)
+fi
+
+if "${CDR}" ; then
+  echo "$(date) - enable cdr export"
+  OPTS+=(-c)
 fi
 
 for t in ${SCENARIOS}; do
