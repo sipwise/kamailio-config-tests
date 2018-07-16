@@ -1,0 +1,12 @@
+cdr:
+  - source_user: 'testuser1003'
+    source_domain: 'spce.test'
+    source_cli: '43110021003'
+    source_user_out: '43110021003'
+    destination_user: 'testuser1002'
+    destination_domain: 'spce.test'
+    destination_user_dialed: '1002'
+    destination_user_in: '4311002'
+    call_type: 'call'
+    call_status: 'ok'
+    call_code: '200'
