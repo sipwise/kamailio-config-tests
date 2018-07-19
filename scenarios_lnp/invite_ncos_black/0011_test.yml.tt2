@@ -205,7 +205,7 @@ sip_out:
       'From: <sip:4311002@',
       'To: <sip:43999300@',
       'CSeq: 2 INVITE',
-      'Contact: sip:testuser1002@127.126.0.3:\d+',
+      'Contact: <sip:[\w-]+@',
       'Max-Forwards: 68',
       'Content-Type: application/sdp',
       'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',

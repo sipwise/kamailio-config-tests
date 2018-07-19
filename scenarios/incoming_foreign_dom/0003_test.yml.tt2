@@ -176,7 +176,7 @@ flow:
 sip_in:
   - '^INVITE sip:4311003@'
   - 'From: <sip:external@external.test>'
-  - 'Contact: sip:external@'
+  - 'Contact: <sip:[\w-]+@'
   - 'CSeq: 1 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
@@ -202,7 +202,7 @@ sip_out:
       'CSeq: 1 INVITE',
       'From: <sip:external@external.test>',
       'To: <sip:4311003@',
-      'Contact: sip:external@',
+      'Contact: <sip:[\w-]+@',
       'Content-Type: application/sdp',
       'P-Caller-UUID: 0',
       'P-Callee-UUID: [% spce_test.testuser1003.uuid %]',
