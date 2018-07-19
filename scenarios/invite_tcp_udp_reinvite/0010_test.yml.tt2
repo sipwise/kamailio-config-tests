@@ -35,7 +35,7 @@ sip_out:
       'To: <sip:4311002@'
     ]
   - [
-      '^INVITE sip:testuser1002@',
+      '^INVITE sip:[\w-]+@',
       'CSeq: \d+ INVITE',
       'From: <sip:testuser1003@',
       'To: <sip:testuser1002@',
