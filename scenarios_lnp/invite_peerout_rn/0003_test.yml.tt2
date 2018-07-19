@@ -178,7 +178,7 @@ flow:
       ]
 sip_in:
   - '^INVITE sip:004321001@'
-  - 'Contact: sip:testuser1002@'
+  - 'Contact: <sip:[\w-]+@'
   - 'CSeq: 2 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
