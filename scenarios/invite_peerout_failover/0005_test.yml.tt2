@@ -159,7 +159,7 @@ flow:
       'From: <sip:4311002@spce.test>;tag=',
       'To: <sip:004321001@spce.test>',
       'CSeq: 2 INVITE',
-      'Contact: sip:testuser1002@',
+      'Contact: <sip:[\w-]+@',
       'Content-Type: application/sdp',
       'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
       'P-Callee-UUID: [% spce_test.testuser1001.uuid %]',
