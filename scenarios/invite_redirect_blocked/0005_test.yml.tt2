@@ -193,7 +193,7 @@ sip_in:
   - 'From: <sip:testuser1002@'
   - 'To: <sip:testuser1003@'
   - 'CSeq: 2 INVITE'
-  - 'Contact: sip:testuser1002@'
+  - 'Contact: \w+'
   - 'Max-Forwards: 69'
   - 'Proxy-Authorization: Digest username="testuser1002"'
   - 'Content-Type: application/sdp'
@@ -219,7 +219,7 @@ sip_out:
       'From: <sip:4311002@',
       'To: <sip:testuser1003@',
       'CSeq: 2 INVITE',
-      'Contact: sip:testuser1002@',
+      'Contact: \w+',
       'Content-Type: application/sdp',
       'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
       'P-Callee-UUID: [% spce_test.testuser1003.uuid %]',

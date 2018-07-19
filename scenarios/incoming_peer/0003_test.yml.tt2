@@ -154,7 +154,7 @@ flow:
       ]
 sip_in:
   - '^INVITE sip:4311003@'
-  - 'Contact: sip:004321001@'
+  - 'Contact: \w+'
   - 'CSeq: 1 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
@@ -170,7 +170,7 @@ sip_out:
       'CSeq: 1 INVITE',
       'From: <sip:004321001@',
       'To: <sip:4311003@',
-      'Contact: sip:004321001@',
+      'Contact: \w+',
       'Content-Type: application/sdp',
       'P-Caller-UUID: 0',
       'P-Callee-UUID: \w+',

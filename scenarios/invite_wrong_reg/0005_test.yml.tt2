@@ -123,7 +123,7 @@ flow:
       $avp(lua_dlg_profile): None
 sip_in:
   - '^INVITE sip:testuser1003@'
-  - 'Contact: sip:testuser1002@'
+  - 'Contact: \w+'
   - 'CSeq: 2 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'

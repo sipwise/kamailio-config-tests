@@ -121,7 +121,7 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - '^INVITE sip:4311003@'
-  - 'Contact: sip:004321001@'
+  - 'Contact: \w+'
   - 'CSeq: 1 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'

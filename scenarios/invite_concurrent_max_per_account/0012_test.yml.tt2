@@ -20,7 +20,7 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - '^INVITE'
-  - 'Contact: sip:testuser1002@'
+  - 'Contact: \w+'
   - 'To: <sip:testuser1004@'
   - 'CSeq: 1 INVITE'
   - 'Max-Forwards: 69'

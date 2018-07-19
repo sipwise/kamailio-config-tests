@@ -123,7 +123,7 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - '^INVITE sip:004421003@'
-  - 'Contact: sip:testuser1002@'
+  - 'Contact: \w+'
   - 'From: <sip:testuser1002@'
   - 'To: <sip:004421003@'
   - 'CSeq: 2 INVITE'
