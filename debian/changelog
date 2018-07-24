@@ -1,3 +1,21 @@
+kamailio-config-tests (6.4.1.0+0~mr6.4.1.0) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [22f47af] TT#35352 Add onsend_route to support log parser
+  * [cdf506b] TT#39049 Implement test for B-number based Call Forwardings
+  * [a281bcf] TT#40258 Add scenario for allow trusted with anonymous From
+  * [e1bd92a] TT#28824 Add scenarios CDR export and validation
+
+  [ Guillem Jover ]
+  * [f8cf9ab] TT#39401 Use List::Util in perl core instead of List::MoreUtils
+
+  [ Andrew Pogrebennyk ]
+  * [98afa19] TT#36304 fix kamailio-config-tests after migration to stateful lb
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 24 Jul 2018 13:34:56 +0200
+
 kamailio-config-tests (6.4.0.0+0~mr6.4.0.0) unstable; urgency=medium
 
   [ Marco Capetta ]
