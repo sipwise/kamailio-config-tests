@@ -560,11 +560,6 @@ next_test_filepath() {
   next_msg="${LOG_DIR}/${msg_name}"
 }
 
-export_cdr() {
-  mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" accounting \
-      -e "select * from cdr where call_id like 'NGCP\%${1}\%%' and start_time > unix_timestamp(date_sub(now(), interval 1 minute)) order by id desc limit 3\G" > "${2}/cdr.txt" || true
-}
-
 cdr_check() {
   if [ -f "$1" ] ; then
     echo -n "$(date) - Testing $(basename "$1") against $(basename "$2") -> $(basename "$3")"
@@ -760,16 +755,6 @@ if ! "${SKIP_DELDOMAIN}" ; then
   echo "$(date) - Deleting domain:${DOMAIN}"
   delete_voip "${DOMAIN}"
   echo "$(date) - Done"
-fi
-
-
-if ! "$SKIP_RUNSIPP" && "${CDR}" ; then
-#  if "${CDR}" ; then
-    echo "$(date) - Exporting generated CDRs"
-    sleep 1.5
-    export_cdr "${NAME_CHECK}" "${LOG_DIR}"
-    echo "$(date) - Done"
-#  fi
 fi
 
 
