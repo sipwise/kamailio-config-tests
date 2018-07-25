@@ -18,6 +18,7 @@ SKIP_CAPTURE=false
 SKIP_RETRANS=false
 MEMDBG=false
 CDR=false
+START_TIME=$(date +%s)
 error_flag=0
 
 usage() {
@@ -177,12 +178,11 @@ if "${SKIP_RETRANS}" ; then
 fi
 
 if "${CDR}" ; then
-  echo "$(date) - enable cdr export"
-  OPTS+=(-c)
+  echo "$(date) - enable cdr export at the end of the execution"
 fi
 
 for t in ${SCENARIOS}; do
-  echo "$(date) - Run[${GROUP}/${PROFILE}]: $t ================================================="
+  echo "$(date) - Run [${GROUP}/${PROFILE}]: $t ================================================="
   log_temp="${LOG_DIR}/${t}"
   if [ -d "${log_temp}" ]; then
     echo "$(date) - Clean log dir"
@@ -194,6 +194,18 @@ for t in ${SCENARIOS}; do
   fi
   echo "$(date) - ================================================================================="
 done
+
+if "${CDR}" ; then
+  sleep 2
+  for t in ${SCENARIOS}; do
+    echo "$(date) - Extract CDRs for [${GROUP}/${PROFILE}]: $t ===================================="
+    if ! "${BIN_DIR}/cdr_extract.sh" -t "${START_TIME}" -s "${GROUP}" "$t" ; then
+      echo "ERROR: $t"
+      error_flag=1
+    fi
+    echo "$(date) - ================================================================================="
+  done
+fi
 
 echo "$(date) - Final mem stats"
 "${BIN_DIR}/mem_stats.py" --private_file="${MLOG_DIR}/${VERSION}_${GROUP}_final_pvm.cvs" \
