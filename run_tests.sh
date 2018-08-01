@@ -71,7 +71,7 @@ cfg_debug_off() {
   fi
 }
 
-while getopts 'hlcp:Kx:t:rm' opt; do
+while getopts 'hlCcp:Kx:t:rm' opt; do
   case $opt in
     h) usage; exit 0;;
     l) SHOW_SCENARIOS=true;;
