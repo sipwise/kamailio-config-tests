@@ -703,7 +703,11 @@ if ! "$SKIP_RUNSIPP" ; then
     echo "$(date) - Move kamailio json files"
     if [ -d "${JSON_DIR}" ] ; then
       for i in "${JSON_DIR}"/*.json ; do
-        expand -t1 "$i" > "${LOG_DIR}/$(printf '%04d.json' "$(basename "$i" .json)")"
+        json_size_before=$(stat -c%s "${i}")
+        moved_file="${LOG_DIR}\/$(printf "%04d.json" "$(basename "$i" .json)")"
+        expand -t1 "$i" > "${moved_file}"
+        json_size_after=$(stat -c%s "${moved_file}")
+        echo "$(date) - Moved file ${i} with size before: ${json_size_before} and after: ${json_size_after}"
         rm "$i"
       done
       rm -rf "${JSON_DIR}"
