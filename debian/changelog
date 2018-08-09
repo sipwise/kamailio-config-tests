@@ -1,3 +1,16 @@
+kamailio-config-tests (6.4.1.1+0~mr6.4.1.1) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [0bf2223] TT#41208 Move CDRs dump at the end of the test loop
+  * [25078d6] TT#41604 Add missing fourth CDR for call-forward scenario
+  * [f9e8814] TT#42008 Fix missing '-C' option in getopts of run_tests.sh
+  * [83d94ab] TT#42150 Add log lines to investigate empty json issue
+  * [089083f] TT#42150 Fix typo in added in commit 83d94ab5800
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 09 Aug 2018 12:20:22 +0200
+
 kamailio-config-tests (6.4.1.0+0~mr6.4.1.0) unstable; urgency=medium
 
   [ Marco Capetta ]
