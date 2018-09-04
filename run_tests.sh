@@ -71,6 +71,89 @@ cfg_debug_off() {
   fi
 }
 
+capture() {
+  echo "$(date) - Begin capture"
+  for inter in $(ip link | grep '^[0-9]' | cut -d: -f2 | sed 's/ //' | xargs); do
+    tcpdump -i "${inter}" -n -s 65535 -w "${LOG_DIR}/traces_${inter}.pcap" &
+    capture_pid="$capture_pid ${inter}:$!"
+  done
+}
+
+stop_capture() {
+  local inter=""
+  local temp_pid=""
+  if [ -n "${capture_pid}" ]; then
+    for temp in ${capture_pid}; do
+      inter=$(echo "$temp"|cut -d: -f1)
+      temp_pid=$(echo "$temp"|cut -d: -f2)
+      #echo "inter:${inter} temp_pid:${temp_pid}"
+      if ps -p"${temp_pid}" &> /dev/null ; then
+        echo "$(date) - End ${inter}[$temp_pid] capture"
+        kill -15 "${temp_pid}"
+      fi
+    done
+  fi
+}
+
+move_json_file() {
+  echo "$(date) - Move kamailio json files"
+  for t in ${SCENARIOS}; do
+    echo "$(date) - Scenarios $t ================================================="
+    json_dir="${KAM_DIR}/${t}"
+    if [ -d "${json_dir}" ] ; then
+      for i in "${json_dir}"/*.json ; do
+        json_size_before=$(stat -c%s "${i}")
+        moved_file="${LOG_DIR}/${t}/$(printf "%04d.json" "$(basename "$i" .json)")"
+        expand -t1 "$i" > "${moved_file}"
+        json_size_after=$(stat -c%s "${moved_file}")
+        echo "$(date) - Moved file ${i} with size before: ${json_size_before} and after: ${json_size_after}"
+        rm "$i"
+      done
+      rm -rf "${json_dir}"
+    fi
+  done
+
+  echo "$(date) - Done"
+}
+
+fix_retransmissions() {
+  echo "$(date) - Checking retransmission issues"
+  for t in ${SCENARIOS}; do
+    echo "$(date) - Scenarios $t ================================================="
+    RETRANS_ISSUE=false
+    file_find=($(find "${LOG_DIR}/${t}" -maxdepth 1 -name '*.json' | sort))
+    for json_file in "${file_find[@]}" ; do
+      file_find=("${file_find[@]:1}")
+      if ! [ -a "${json_file}" ] ; then
+        continue
+      fi
+      for next_json_file in "${file_find[@]}" ; do
+        if ! [ -a "${next_json_file}" ] ; then
+          continue
+        fi
+        if ( diff -q -u <(tail -n3 "${json_file}") <(tail -n3 "${next_json_file}") &> /dev/null ) ; then
+          echo "$(basename "${next_json_file}") seems a retransmission of $(basename "${json_file}") ---> renaming the file in ${next_json_file}_retransmission"
+          mv -f "${next_json_file}" "${next_json_file}_retransmission"
+          RETRANS_ISSUE=true
+        fi
+      done
+    done
+
+    if "${RETRANS_ISSUE}" ; then
+      echo "$(date) - Reordering kamailio json files"
+      file_find=($(find "${LOG_DIR}/${t}" -maxdepth 1 -name '*.json' | sort))
+      a=1
+      for json_file in "${file_find[@]}" ; do
+        new_name=$(printf "%04d.json" "${a}")
+        mv -n "${json_file}" "${LOG_DIR}/${t}/${new_name}" &> /dev/null
+        let a=a+1
+      done
+    fi
+  done
+
+  echo "$(date) - Done"
+}
+
 while getopts 'hlCcp:Kx:t:rm' opt; do
   case $opt in
     h) usage; exit 0;;
@@ -114,6 +197,8 @@ if [ "$GROUP" = "scenarios_pbx" ] ; then
 else
   PIDWATCH_OPTS=""
 fi
+
+LOG_DIR="${BASE_DIR}/log/${GROUP}"
 
 echo "$(date) - Create temporary folder for json files"
 rm -rf "${KAM_DIR}"
@@ -162,23 +247,17 @@ fi
 
 get_scenarios
 
-if "${SKIP_CAPTURE}" ; then
-  echo "$(date) - enable capture"
-  OPTS+=(-K)
-fi
-
 if "${MEMDBG}" ; then
   echo "$(date) - enable memdbg"
   OPTS+=(-m)
 fi
 
-if "${SKIP_RETRANS}" ; then
-  echo "$(date) - enable skip retransmissions"
-  OPTS+=(-r)
-fi
-
 if "${CDR}" ; then
   echo "$(date) - enable cdr export at the end of the execution"
+fi
+
+if "${SKIP_CAPTURE}" ; then
+  capture
 fi
 
 for t in ${SCENARIOS}; do
@@ -188,12 +267,26 @@ for t in ${SCENARIOS}; do
     echo "$(date) - Clean log dir"
     rm -rf "${log_temp}"
   fi
-  if ! "${BIN_DIR}/check.sh" "${OPTS[@]}" -d ${DOMAIN} -p "${PROFILE}" -s "${GROUP}" "$t" ; then
+  if ! "${BIN_DIR}/check.sh" "${OPTS[@]}" -d "${DOMAIN}" -p "${PROFILE}" -s "${GROUP}" "$t" ; then
     echo "ERROR: $t"
     error_flag=1
   fi
   echo "$(date) - ================================================================================="
 done
+
+# Hack to allow tcpdump to capture all the packages and kamailio to write all the json files
+sleep 2
+
+
+if "${SKIP_CAPTURE}" ; then
+  stop_capture
+fi
+
+move_json_file
+
+if "${SKIP_RETRANS}" ; then
+  fix_retransmissions
+fi
 
 if "${CDR}" ; then
   sleep 2
