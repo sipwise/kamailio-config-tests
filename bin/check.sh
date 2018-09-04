@@ -698,60 +698,6 @@ if ! "$SKIP_RUNSIPP" ; then
   echo "$(date) - move scenario_ids.yml file"
   mv "${SCEN_CHECK_DIR}/scenario_ids.yml" "${LOG_DIR}"
   echo "$(date) - Done"
-
-  if "${JSON_KAM}" ; then
-    echo "$(date) - Move kamailio json files"
-    if [ -d "${JSON_DIR}" ] ; then
-      for i in "${JSON_DIR}"/*.json ; do
-        json_size_before=$(stat -c%s "${i}")
-        moved_file="${LOG_DIR}/$(printf "%04d.json" "$(basename "$i" .json)")"
-        expand -t1 "$i" > "${moved_file}"
-        json_size_after=$(stat -c%s "${moved_file}")
-        echo "$(date) - Moved file ${i} with size before: ${json_size_before} and after: ${json_size_after}"
-        rm "$i"
-      done
-      rm -rf "${JSON_DIR}"
-      echo "$(date) - Done"
-    else
-      echo "$(date) - No json files found"
-    fi
-  fi
-
-  if "${FIX_RETRANS}" ; then
-    echo "$(date) - Checking retransmission issues"
-    RETRANS_ISSUE=false
-    file_find=($(find "${LOG_DIR}" -maxdepth 1 -name '*.json' | sort))
-    for json_file in "${file_find[@]}" ; do
-      file_find=("${file_find[@]:1}")
-      if ! [ -a "${json_file}" ] ; then
-        continue
-      fi
-      for next_json_file in "${file_find[@]}" ; do
-        if ! [ -a "${next_json_file}" ] ; then
-          continue
-        fi
-        if ( diff -q -u <(tail -n3 "${json_file}") <(tail -n3 "${next_json_file}") &> /dev/null ) ; then
-          echo "$(basename "${next_json_file}") seems a retransmission of $(basename "${json_file}") ---> renaming the file in ${next_json_file}_retransmission"
-          mv -f "${next_json_file}" "${next_json_file}_retransmission"
-          RETRANS_ISSUE=true
-        fi
-      done
-    done
-
-    if "${RETRANS_ISSUE}" ; then
-      echo "$(date) - Reordering kamailio json files"
-      file_find=($(find "${LOG_DIR}" -maxdepth 1 -name '*.json' | sort))
-      a=1
-      for json_file in "${file_find[@]}" ; do
-        new_name=$(printf "%04d.json" "${a}")
-        mv -n "${json_file}" "${LOG_DIR}/${new_name}" &> /dev/null
-        let a=a+1
-      done
-    fi
-
-    echo "$(date) - Done"
-  fi
-
 fi
 
 
