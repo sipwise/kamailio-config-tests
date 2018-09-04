@@ -506,6 +506,9 @@ run_sipp() {
     fi
   done
 
+  # Hack to allow tcpdump to capture all the packages and kamailio to write all the json files
+  sleep 2
+
   if "${CAPTURE}" ; then
     stop_capture
   fi
