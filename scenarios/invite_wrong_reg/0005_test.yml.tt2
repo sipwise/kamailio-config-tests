@@ -114,6 +114,8 @@ flow:
   - return|ROUTE_ACC_CALLER:
   - start|ROUTE_ACC_CALLEE:
   - return|ROUTE_ACC_CALLEE:
+  - start|ROUTE_ADD_AOC_HEADER:
+  - return|ROUTE_ADD_AOC_HEADER:
   - start|ROUTE_STOP_RTPPROXY_BRANCH:
   - return|ROUTE_STOP_RTPPROXY_BRANCH:
   - start|ROUTE_EXIT:
