@@ -2,22 +2,22 @@ flow:
   - start|DEFAULT_ROUTE:
   - start|ROUTE_ENTRY:
   - return|ROUTE_ENTRY:
-      $fU: testuser1003
-      $tU: testuser1003
+      $fU: AU_testuser1003
+      $tU: AU_testuser1003
   - start|ROUTE_NET_INFO:
-      $fU: testuser1003
-      $tU: testuser1003
+      $fU: AU_testuser1003
+      $tU: AU_testuser1003
   - return|ROUTE_NET_INFO:
   - start|ROUTE_REG_REQUEST:
   - start|ROUTE_REG_HANDLE:
   - start|ROUTE_AUTH:
   - start|ROUTE_AUTH_HELPER:
-      $fd: spce.test
-      $var(realm_user): testuser1003
-      $var(realm_domain): spce.test
+      $fd: dom.register_bria.test
+      $var(realm_user): AU_testuser1003
+      $var(realm_domain): dom.register_bria.test
   - return|ROUTE_AUTH_HELPER:
-      $avp(orig_acc_caller_user): ['testuser1003']
-      $avp(orig_acc_caller_domain): ['spce.test']
+      $avp(orig_acc_caller_user): ['AU_testuser1003']
+      $avp(orig_acc_caller_domain): ['dom.register_bria.test']
   - start|ROUTE_ADD_CALLINFO_REPLY:
   - return|ROUTE_ADD_CALLINFO_REPLY:
   - return|ROUTE_AUTH:
@@ -31,10 +31,10 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - '^REGISTER'
-  - 'Contact: "TestBria" <sip:testuser1003@127.126.0.1:6666;ob>;reg-id=1;\+sip.instance="<urn:uuid:C3DD6013-20E8-40E3-8EA2-5849B02ED0C4>"'
+  - 'Contact: "TestBria" <sip:AU_testuser1003@127.47.126.1:6666;ob>;reg-id=1;\+sip.instance="<urn:uuid:C3DD6013-20E8-40E3-8EA2-5849B02ED0C4>"'
   - 'Content-Length: 0'
   - 'Expires: 600'
-  - 'Authorization: Digest username="testuser1003"'
+  - 'Authorization: Digest username="AU_testuser1003"'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
@@ -42,8 +42,8 @@ sip_out:
     ]
   - [
       '^SIP/2.0 200 OK',
-      'Contact: <sip:testuser1003@127.126.0.1:6666;ob>;expires=\d{3};\+sip.instance="<urn:uuid:C3DD6013-20E8-40E3-8EA2-5849B02ED0C4>";reg-id=1',
+      'Contact: <sip:AU_testuser1003@127.47.126.1:6666;ob>;expires=\d{3};\+sip.instance="<urn:uuid:C3DD6013-20E8-40E3-8EA2-5849B02ED0C4>";reg-id=1',
       'Content-Length: 0',
-      'P-NGCP-Authorization: testuser1003@',
+      'P-NGCP-Authorization: AU_testuser1003@',
       'P-NGCP-Authorized: 1'
     ]

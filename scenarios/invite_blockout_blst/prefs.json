@@ -1,8 +1,8 @@
 {
-    "testuser1002@spce.test": {
+    "P_testuser1002@dom.invite_blockout_blst.test": {
         "block_out_list": [
-            "4311003",
-            "4311001"
+            "43161003",
+            "43161001"
         ]
     }
 }

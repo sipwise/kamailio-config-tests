@@ -1,7 +1,7 @@
 cdr:
-  - source_user: 'testuser1002'
-    source_domain: 'spce.test'
-    source_cli: '4311002'
+  - source_user: 'Z_testuser1002'
+    source_domain: 'dom.invite_foreign_dom.test'
+    source_cli: '43261002'
     destination_user: '004321001'
     destination_domain: 'external.test'
     destination_user_dialed: '004321001'

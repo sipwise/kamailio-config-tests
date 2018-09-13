@@ -10,11 +10,11 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - '^SIP/2.0 200 OK'
-  - 'From: <sip:\*55\*1420@spce.test>;tag='
-  - 'To: <sip:testuser1001@spce.test>;tag='
+  - 'From: <sip:\*55\*1420@dom.reminder.test>;tag='
+  - 'To: <sip:AX_testuser1001@dom.reminder.test>;tag='
   - 'CSeq: \d+ BYE'
   - 'Content-Length:\s+0'
-  - 'P-NGCP-Src-Ip: 127.126.0.1'
+  - 'P-NGCP-Src-Ip: 127.50.126.1'
   - 'P-NGCP-Src-Port: \d+'
   - 'P-NGCP-Src-Proto: udp'
   - 'P-NGCP-Src-Af: 4'

@@ -1,5 +1,5 @@
 soundsets:
-  'default_soundset':
+  'Y_default_soundset':
       reseller_id: 1
       sounds:
         conference_first:

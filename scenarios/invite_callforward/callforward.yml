@@ -1,11 +1,11 @@
 ---
-testuser1001@spce.test:
+T_testuser1001@dom.invite_callforward.test:
   destinations:
     destinations:
-      - destination: sip:4311003@spce.test
+      - destination: sip:4311003@dom.invite_callforward.test
         priority: 0
         timeout: 2
-      - destination: sip:testuser1003@spce.test
+      - destination: sip:T_testuser1003@dom.invite_callforward.test
         priority: 1
         timeout: 2
     name: dest1001
@@ -20,13 +20,13 @@ testuser1001@spce.test:
     cft: []
     cfs: []
     cfr: []
-testuser1004@spce.test:
+T_testuser1004@dom.invite_callforward.test:
   destinations:
     destinations:
-      - destination: sip:4311005@spce.test
+      - destination: sip:4311005@dom.invite_callforward.test
         priority: 0
         timeout: 2
-      - destination: sip:testuser1005@spce.test
+      - destination: sip:T_testuser1005@dom.invite_callforward.test
         priority: 1
         timeout: 2
     name: dest1004

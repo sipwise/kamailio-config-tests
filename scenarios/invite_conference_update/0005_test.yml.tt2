@@ -53,10 +53,10 @@ flow:
   - return|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_SET_CALLER_DIALOG:
       $avp(lua_dlg_profile): [
-        "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% spce_test.testuser1001.uuid %]",
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1001.uuid %]",
+        "totalaccountout:[% cst.invite_conference_update.test.id %]",
+        "totaluserout:[% dom.invite_conference_update.test.Y_testuser1001.uuid %]",
+        "totalaccount:[% cst.invite_conference_update.test.id %]",
+        "totaluser:[% dom.invite_conference_update.test.Y_testuser1001.uuid %]",
         "peer:appsrv",
         "local"
       ]
@@ -102,35 +102,35 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
       $avp(lua_dlg_profile): [
-        "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% spce_test.testuser1001.uuid %]",
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1001.uuid %]",
+        "totalaccountout:[% cst.invite_conference_update.test.id %]",
+        "totaluserout:[% dom.invite_conference_update.test.Y_testuser1001.uuid %]",
+        "totalaccount:[% cst.invite_conference_update.test.id %]",
+        "totaluser:[% dom.invite_conference_update.test.Y_testuser1001.uuid %]",
         "peer:appsrv",
         "local"
       ]
 sip_in:
-  - '^INVITE sip:conf=4311001@conference.local SIP/2.0'
+  - '^INVITE sip:conf=43251001@conference.local SIP/2.0'
   - 'Contact: <sip:127.0.0.1:5080(;transport=udp)?>'
   - 'CSeq: \d+ INVITE'
   - 'Content-Type: application/sdp'
-  - 'P-Caller-UUID: [% spce_test.testuser1001.uuid %]'
-  - 'P-First-Caller-UPN: 4311002'
-  - 'P-First-Caller-NPN: 4311002'
-  - 'P-Acc-Caller-User: testuser1001'
+  - 'P-Caller-UUID: [% dom.invite_conference_update.test.Y_testuser1001.uuid %]'
+  - 'P-First-Caller-UPN: 43251002'
+  - 'P-First-Caller-NPN: 43251002'
+  - 'P-Acc-Caller-User: Y_testuser1001'
   - 'P-Acc-State: cfu'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: \d+ INVITE',
-      'From: <sip:testuser1002@',
-      'To: <sip:testuser1001@'
+      'From: <sip:Y_testuser1002@',
+      'To: <sip:Y_testuser1001@'
     ]
   - [
-      '^INVITE sip:conf=4311001@conference.local SIP/2.0',
+      '^INVITE sip:conf=43251001@conference.local SIP/2.0',
       'CSeq: \d+ INVITE',
-      'From: <sip:4311002@',
-      'To: <sip:testuser1001@',
+      'From: <sip:43251002@',
+      'To: <sip:Y_testuser1001@',
       'Contact: <sip:127.0.0.1:5080(;transport=udp)?>',
       'Content-Type: application/sdp'
     ]

@@ -52,11 +52,11 @@ flow:
   - return|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_SET_CALLEE_DIALOG:
       $avp(lua_dlg_profile): [
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "totalaccount:[% cst.incoming_foreign_dom.test.id %]",
+        "totaluser:[% dom.incoming_foreign_dom.test.B_testuser1003.uuid %]",
         "total",
-        "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1003.uuid %]"
+        "account:[% cst.incoming_foreign_dom.test.id %]",
+        "user:[% dom.incoming_foreign_dom.test.B_testuser1003.uuid %]"
       ]
   - start|ROUTE_BLOCK_IN:
   - return|ROUTE_BLOCK_IN:
@@ -98,11 +98,11 @@ flow:
         "totalaccount:0",
         "totaluser:0",
         "local",
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "totalaccount:[% cst.incoming_foreign_dom.test.id %]",
+        "totaluser:[% dom.incoming_foreign_dom.test.B_testuser1003.uuid %]",
         "total",
-        "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1003.uuid %]"
+        "account:[% cst.incoming_foreign_dom.test.id %]",
+        "user:[% dom.incoming_foreign_dom.test.B_testuser1003.uuid %]"
       ]
   - start|ROUTE_ACC_CALLER:
   - return|ROUTE_ACC_CALLER:
@@ -169,14 +169,14 @@ flow:
         "totalaccount:0",
         "totaluser:0",
         "local",
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "totalaccount:[% cst.incoming_foreign_dom.test.id %]",
+        "totaluser:[% dom.incoming_foreign_dom.test.B_testuser1003.uuid %]",
         "total",
-        "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1003.uuid %]"
+        "account:[% cst.incoming_foreign_dom.test.id %]",
+        "user:[% dom.incoming_foreign_dom.test.B_testuser1003.uuid %]"
       ]
 sip_in:
-  - '^INVITE sip:4311003@'
+  - '^INVITE sip:43021003@'
   - 'From: <sip:external@external.test>'
   - 'Contact: sip:external@'
   - 'CSeq: 1 INVITE'
@@ -187,28 +187,28 @@ sip_out:
       '^SIP/2.0 100 Trying',
       'CSeq: 1 INVITE',
       'From: <sip:external@external.test>',
-      'To: <sip:4311003@',
+      'To: <sip:43021003@',
       'Content-Length: 0'
     ]
   - [
       '^SIP/2.0 101 Connecting',
       'CSeq: 1 INVITE',
       'From: <sip:external@external.test>',
-      'To: <sip:4311003@',
+      'To: <sip:43021003@',
       'P-NGCP-Caller-Info: <sip:external@external.test>',
       'P-Caller-UUID: 0',
       'Content-Length: 0'
     ]
   - [
-      '^INVITE sip:testuser1003@',
+      '^INVITE sip:B_testuser1003@',
       'CSeq: 1 INVITE',
       'From: <sip:external@external.test>',
-      'To: <sip:4311003@',
+      'To: <sip:43021003@',
       'Contact: sip:external@',
       'Content-Type: application/sdp',
       'P-Caller-UUID: 0',
-      'P-Callee-UUID: [% spce_test.testuser1003.uuid %]',
+      'P-Callee-UUID: [% dom.incoming_foreign_dom.test.B_testuser1003.uuid %]',
       'P-Asserted-Identity: <sip:external@external.test>',
-      'P-Called-Party-ID: <sip:testuser1003@',
+      'P-Called-Party-ID: <sip:B_testuser1003@',
       'P-App-Name: sbc'
     ]

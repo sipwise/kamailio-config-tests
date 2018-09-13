@@ -2,11 +2,11 @@ flow:
   - start|DEFAULT_ROUTE:
   - start|ROUTE_ENTRY:
   - return|ROUTE_ENTRY:
-      $fU: testuser1003
-      $tU: testuser1003
+      $fU: AU_testuser1003
+      $tU: AU_testuser1003
   - start|ROUTE_NET_INFO:
-      $fU: testuser1003
-      $tU: testuser1003
+      $fU: AU_testuser1003
+      $tU: AU_testuser1003
   - return|ROUTE_NET_INFO:
   - start|ROUTE_REG_REQUEST:
   - start|ROUTE_REG_HANDLE:
@@ -17,8 +17,8 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - '^REGISTER'
-  - 'Contact: "TestBria" <sip:testuser1003@127.126.0.1:\d+;ob>;reg-id=1;\+sip.instance="<urn:uuid:C3DD6013-20E8-40E3-8EA2-5849B02ED0C4>"'
-  - 'Contact: "TestBria" <sip:testuser1003@127.126.0.1:6666;ob>;expires=0'
+  - 'Contact: "TestBria" <sip:AU_testuser1003@127.47.126.1:\d+;ob>;reg-id=1;\+sip.instance="<urn:uuid:C3DD6013-20E8-40E3-8EA2-5849B02ED0C4>"'
+  - 'Contact: "TestBria" <sip:AU_testuser1003@127.47.126.1:6666;ob>;expires=0'
   - 'Content-Length: 0'
   - 'Expires: 600'
 sip_out:

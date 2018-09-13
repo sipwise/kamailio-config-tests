@@ -24,20 +24,20 @@ flow:
       $avp(proto): ["udp"]
 sip_in:
   - '^INVITE'
-  - 'Contact: <sip:(testuser1003@)?127.0.0.1:5080(;transport=udp)?>'
+  - 'Contact: <sip:(AN_testuser1003@)?127.0.0.1:5080(;transport=udp)?>'
   - 'CSeq: \d+ INVITE'
   - 'Content-Type: application/sdp'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: \d+ INVITE',
-      'From: <sip:testuser1003@',
-      'To: <sip:4311002@'
+      'From: <sip:AN_testuser1003@',
+      'To: <sip:43401002@'
     ]
   - [
-      '^INVITE sip:testuser1002@',
+      '^INVITE sip:AN_testuser1002@',
       'CSeq: \d+ INVITE',
-      'From: <sip:testuser1003@',
-      'To: <sip:testuser1002@',
+      'From: <sip:AN_testuser1003@',
+      'To: <sip:AN_testuser1002@',
       'Content-Type: application/sdp'
     ]

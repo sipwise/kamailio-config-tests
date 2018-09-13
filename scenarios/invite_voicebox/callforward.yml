@@ -1,5 +1,5 @@
 ---
-testuser1001@spce.test:
+AP_testuser1001@dom.invite_voicebox.test:
   destinations:
     destinations:
       - destination: voicebox

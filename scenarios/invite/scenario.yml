@@ -1,11 +1,11 @@
 test_uuid: invite
 domains:
-  'spce.test':
+  'dom.invite.test':
     reseller_id: 1
 customers:
-  'customer.test':
+  'cst.invite.test':
     contacts:
-      - email: "customer.test@spce.test"
+      - email: "cst.invite.test@spce.test"
         reseller_id: 1
     details:
       status: 'active'
@@ -13,29 +13,29 @@ customers:
       billing_profile_id: 1
       reseller_id: 1
 subscribers:
-  spce.test:
-    testuser1003:
-      customer: 'customer.test'
-      password: testuser
+  dom.invite.test:
+    E_testuser1003:
+      customer: 'cst.invite.test'
+      password: E_testuser
       cc: 43
-      ac: 1
+      ac: 05
       sn: 1003
-    testuser1002:
-      customer: 'customer.test'
-      password: testuser
+    E_testuser1002:
+      customer: 'cst.invite.test'
+      password: E_testuser
       cc: 43
-      ac: 1
+      ac: 05
       sn: 1002
       alias_numbers:
         - cc: 34
-          ac: 96
+          ac: 05
           sn: 5711941
 scenarios:
-  - ip: 127.126.0.1
-    username: testuser1002
-    domain: spce.test
+  - ip: 127.5.126.1
+    username: E_testuser1002
+    domain: dom.invite.test
     responders:
-      - ip: 127.1.0.1
-        username: testuser1003
-        domain: spce.test
+      - ip: 127.5.10.1
+        username: E_testuser1003
+        domain: dom.invite.test
         register: yes

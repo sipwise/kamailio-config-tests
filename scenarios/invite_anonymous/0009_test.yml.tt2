@@ -26,12 +26,12 @@ sip_in:
   - 'CSeq: 2 ACK'
   - '_:NOT:_P-Asserted-Identity: \w+'
   - 'From: "Anonymous" <sip:anonymous@anonymous.invalid>'
-  - 'To: <sip:testuser1003@'
+  - 'To: <sip:L_testuser1003@'
 sip_out:
   - [
       '^ACK sip:127.0.0.1:5080;prxroute=1 SIP/2.0',
       'CSeq: 2 ACK',
       '_:NOT:_P-Asserted-Identity: \w+',
       'From: "Anonymous" <sip:anonymous@anonymous.invalid>',
-      'To: <sip:testuser1003@'
+      'To: <sip:L_testuser1003@'
     ]

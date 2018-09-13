@@ -19,9 +19,9 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^INVITE sip:004321001@'
-  - 'Contact: sip:testuser1002@'
-  - 'To: <sip:004321001@'
+  - '^INVITE sip:004377001@'
+  - 'Contact: sip:G_testuser1002@'
+  - 'To: <sip:004377001@'
   - 'CSeq: 1 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
@@ -29,12 +29,12 @@ sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: 1 INVITE',
-      'From: <sip:testuser1002@',
-      'To: <sip:004321001@'
+      'From: <sip:G_testuser1002@',
+      'To: <sip:004377001@'
     ]
   - [
       '^SIP/2.0 407 Proxy Authentication Required',
       'CSeq: 1 INVITE',
-      'From: <sip:testuser1002@',
-      'To: <sip:004321001@'
+      'From: <sip:G_testuser1002@',
+      'To: <sip:004377001@'
     ]

@@ -12,18 +12,18 @@ flow:
   - start|dialog:start:
   - return|dialog:start:
       $avp(lua_dlg_profile): [
-        "accountout:[% customer_test.id %]",
-        "userout:[% spce_test.testuser1004.uuid %]",
-        "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1004.uuid %]",
-        "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% spce_test.testuser1004.uuid %]",
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1004.uuid %]",
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1005.uuid %]",
-        "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1005.uuid %]"
+        "accountout:[% cst.invite_callforward.test.id %]",
+        "userout:[% dom.invite_callforward.test.T_testuser1004.uuid %]",
+        "account:[% cst.invite_callforward.test.id %]",
+        "user:[% dom.invite_callforward.test.T_testuser1004.uuid %]",
+        "totalaccountout:[% cst.invite_callforward.test.id %]",
+        "totaluserout:[% dom.invite_callforward.test.T_testuser1004.uuid %]",
+        "totalaccount:[% cst.invite_callforward.test.id %]",
+        "totaluser:[% dom.invite_callforward.test.T_testuser1004.uuid %]",
+        "totalaccount:[% cst.invite_callforward.test.id %]",
+        "totaluser:[% dom.invite_callforward.test.T_testuser1005.uuid %]",
+        "account:[% cst.invite_callforward.test.id %]",
+        "user:[% dom.invite_callforward.test.T_testuser1005.uuid %]"
       ]
   - return|dialog:start:
 sip_in:
@@ -31,14 +31,14 @@ sip_in:
   - 'CSeq: \d+ INVITE'
   - 'Content-Length: \d+'
   - 'Content-Type: application/sdp'
-  - 'From: <sip:4311002@'
-  - 'To: <sip:testuser1004@'
+  - 'From: <sip:43201002@'
+  - 'To: <sip:T_testuser1004@'
 sip_out:
   - [
       '^SIP/2.0 200 OK',
       'CSeq: \d+ INVITE',
       'Content-Length: \d+',
       'Content-Type: application/sdp',
-      'From: <sip:testuser1002@',
-      'To: <sip:testuser1004@'
+      'From: <sip:T_testuser1002@',
+      'To: <sip:T_testuser1004@'
     ]

@@ -55,7 +55,7 @@ Usage:
     #./bin/config_debug.pl on
     #ngcpcfg apply 'cfgtest'
   and run the check that you want:
-    #PERL5LIB="$$(pwd)/lib" ./bin/check.sh <checkname>
+    #PERL5LIB="$(pwd)/lib" ./bin/check.sh <checkname>
   this will run the test and the result taps
   or run all the tests as many times you want with:
     #./bin/bench.sh $NUM

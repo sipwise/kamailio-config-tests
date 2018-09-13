@@ -15,12 +15,12 @@ flow:
   - start|ROUTE_FIND_CALLER:
   - start|ROUTE_AUTH:
   - start|ROUTE_AUTH_HELPER:
-      $fd: spce.test
-      $var(realm_user): testuser1002
-      $var(realm_domain): spce.test
+      $fd: dom.invite_wrong_reg.test
+      $var(realm_user): AQ_testuser1002
+      $var(realm_domain): dom.invite_wrong_reg.test
   - return|ROUTE_AUTH_HELPER:
-      $avp(orig_acc_caller_user): ['testuser1002']
-      $avp(orig_acc_caller_domain): ['spce.test']
+      $avp(orig_acc_caller_user): ['AQ_testuser1002']
+      $avp(orig_acc_caller_domain): ['dom.invite_wrong_reg.test']
   - start|ROUTE_ADD_CALLINFO_REPLY:
   - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
   - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
@@ -58,11 +58,11 @@ flow:
   - return|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_SET_CALLEE_DIALOG:
       $avp(lua_dlg_profile): [
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "totalaccount:[% cst.invite_wrong_reg.test.id %]",
+        "totaluser:[% dom.invite_wrong_reg.test.AQ_testuser1003.uuid %]",
         "total",
-        "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1003.uuid %]"
+        "account:[% cst.invite_wrong_reg.test.id %]",
+        "user:[% dom.invite_wrong_reg.test.AQ_testuser1003.uuid %]"
       ]
   - start|ROUTE_BLOCK_IN:
   - return|ROUTE_BLOCK_IN:
@@ -95,20 +95,20 @@ flow:
   - return|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_SET_CALLER_DIALOG:
       $avp(lua_dlg_profile): [
-        "accountout:[% customer_test.id %]",
-        "userout:[% spce_test.testuser1002.uuid %]",
-        "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1002.uuid %]",
-        "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% spce_test.testuser1002.uuid %]",
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1002.uuid %]",
+        "accountout:[% cst.invite_wrong_reg.test.id %]",
+        "userout:[% dom.invite_wrong_reg.test.AQ_testuser1002.uuid %]",
+        "account:[% cst.invite_wrong_reg.test.id %]",
+        "user:[% dom.invite_wrong_reg.test.AQ_testuser1002.uuid %]",
+        "totalaccountout:[% cst.invite_wrong_reg.test.id %]",
+        "totaluserout:[% dom.invite_wrong_reg.test.AQ_testuser1002.uuid %]",
+        "totalaccount:[% cst.invite_wrong_reg.test.id %]",
+        "totaluser:[% dom.invite_wrong_reg.test.AQ_testuser1002.uuid %]",
         "local",
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "totalaccount:[% cst.invite_wrong_reg.test.id %]",
+        "totaluser:[% dom.invite_wrong_reg.test.AQ_testuser1003.uuid %]",
         "total",
-        "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1003.uuid %]"
+        "account:[% cst.invite_wrong_reg.test.id %]",
+        "user:[% dom.invite_wrong_reg.test.AQ_testuser1003.uuid %]"
       ]
   - start|ROUTE_ACC_CALLER:
   - return|ROUTE_ACC_CALLER:
@@ -124,29 +124,29 @@ flow:
   - exit|ROUTE_EXIT:
       $avp(lua_dlg_profile): None
 sip_in:
-  - '^INVITE sip:testuser1003@'
-  - 'Contact: sip:testuser1002@'
+  - '^INVITE sip:AQ_testuser1003@'
+  - 'Contact: sip:AQ_testuser1002@'
   - 'CSeq: 2 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
-  - 'Proxy-Authorization: Digest username="testuser1002"'
+  - 'Proxy-Authorization: Digest username="AQ_testuser1002"'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: 2 INVITE',
-      'From: <sip:testuser1002@'
+      'From: <sip:AQ_testuser1002@'
     ]
   - [
       '^SIP/2.0 101 Connecting',
       'CSeq: 2 INVITE',
-      'From: <sip:testuser1002@',
-      'P-NGCP-Authorization: testuser1002',
+      'From: <sip:AQ_testuser1002@',
+      'P-NGCP-Authorization: AQ_testuser1002',
       'P-NGCP-Authorized: 1'
     ]
   - [
       '^SIP/2.0 479',
       'CSeq: 2 INVITE',
-      'From: <sip:testuser1002@',
-      'P-NGCP-Authorization: testuser1002',
+      'From: <sip:AQ_testuser1002@',
+      'P-NGCP-Authorization: AQ_testuser1002',
       'P-NGCP-Authorized: 1'
     ]

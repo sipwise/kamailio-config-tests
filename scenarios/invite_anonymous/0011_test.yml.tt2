@@ -13,7 +13,7 @@ sip_in:
   - 'CSeq: 3 BYE'
   - 'Content-Length: 0'
   - 'From: "Anonymous" <sip:anonymous@anonymous.invalid>'
-  - 'To: <sip:testuser1003@'
+  - 'To: <sip:L_testuser1003@'
 sip_out:
   - [
       '^SIP/2.0 200 OK',
@@ -21,5 +21,5 @@ sip_out:
       'Content-Length: 0',
       '_:NOT:_P-Asserted-Identity: \w+',
       'From: "Anonymous" <sip:anonymous@anonymous.invalid>',
-      'To: <sip:testuser1003@'
+      'To: <sip:L_testuser1003@'
     ]
