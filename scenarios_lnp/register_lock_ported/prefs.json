@@ -1,7 +1,7 @@
 {
-    "testuser1003@spce.test": {
+    "H_testuser1003@dom.register_lock_ported.test": {
         "allowed_ips": [
-            "127.126.0.1"
+            "127.8.126.1"
         ],
         "lock": 5
     }
