@@ -1,11 +1,11 @@
 ---
-testuser1001@spce.test:
+AR_testuser1001@dom.lock_ported.test:
   destinations:
     destinations:
-      - destination: sip:4311003@spce.test
+      - destination: sip:4311003@dom.lock_ported.test
         priority: 0
         timeout: 2
-      - destination: sip:testuser1003@spce.test
+      - destination: sip:AR_testuser1003@dom.lock_ported.test
         priority: 1
         timeout: 2
     name: dest1001

@@ -1,11 +1,11 @@
 test_uuid: invite_conference_update
 domains:
-  'spce.test':
+  'dom.invite_conference_update.test':
     reseller_id: 1
 customers:
-  'customer.test':
+  'cst.invite_conference_update.test':
     contacts:
-      - email: "customer.test@spce.test"
+      - email: "cst.invite_conference_update.test@spce.test"
         reseller_id: 1
     details:
       status: 'active'
@@ -13,26 +13,26 @@ customers:
       billing_profile_id: 1
       reseller_id: 1
 subscribers:
-  spce.test:
-    testuser1001:
-      customer: 'customer.test'
-      password: testuser
+  dom.invite_conference_update.test:
+    Y_testuser1001:
+      customer: 'cst.invite_conference_update.test'
+      password: Y_testuser
       cc: 43
-      ac: 1
+      ac: 25
       sn: 1001
-    testuser1002:
-      customer: 'customer.test'
-      password: testuser
+    Y_testuser1002:
+      customer: 'cst.invite_conference_update.test'
+      password: Y_testuser
       cc: 43
-      ac: 1
+      ac: 25
       sn: 1002
 scenarios:
-  - ip: 127.126.0.1
-    username: testuser1002
-    domain: spce.test
+  - ip: 127.25.126.1
+    username: Y_testuser1002
+    domain: dom.invite_conference_update.test
     responders:
-      - ip: 127.1.0.1
-        username: testuser1001
-        domain: spce.test
+      - ip: 127.25.10.1
+        username: Y_testuser1001
+        domain: dom.invite_conference_update.test
         register: no
         active: no

@@ -15,12 +15,12 @@ flow:
   - start|ROUTE_FIND_CALLER:
   - start|ROUTE_AUTH:
   - start|ROUTE_AUTH_HELPER:
-      $fd: spce.test
-      $var(realm_user): testuser1004
-      $var(realm_domain): spce.test
+      $fd: dom.invite_concurrent_max.test
+      $var(realm_user): U_testuser1004
+      $var(realm_domain): dom.invite_concurrent_max.test
   - return|ROUTE_AUTH_HELPER:
-      $avp(orig_acc_caller_user): ['testuser1004']
-      $avp(orig_acc_caller_domain): ['spce.test']
+      $avp(orig_acc_caller_user): ['U_testuser1004']
+      $avp(orig_acc_caller_domain): ['dom.invite_concurrent_max.test']
   - start|ROUTE_ADD_CALLINFO_REPLY:
   - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
   - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
@@ -58,11 +58,11 @@ flow:
   - return|ROUTE_CNT_DLG_CHECK:
   - start|ROUTE_CNT_CALLEE_REJECT:
       $avp(lua_dlg_profile): [
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "totalaccount:[% cst.invite_concurrent_max.test.id %]",
+        "totaluser:[% dom.invite_concurrent_max.test.U_testuser1003.uuid %]",
         "total",
-        "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1003.uuid %]"
+        "account:[% cst.invite_concurrent_max.test.id %]",
+        "user:[% dom.invite_concurrent_max.test.U_testuser1003.uuid %]"
       ]
   - start|ROUTE_ACC_FAILURE:
       $xavp(callee_real_prefs[0]=>concurrent_max[*]): [1]
@@ -91,29 +91,29 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^INVITE sip:testuser1003@'
-  - 'Contact: sip:testuser1004@'
+  - '^INVITE sip:U_testuser1003@'
+  - 'Contact: sip:U_testuser1004@'
   - 'CSeq: 2 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
-  - 'Proxy-Authorization: Digest username="testuser1004"'
+  - 'Proxy-Authorization: Digest username="U_testuser1004"'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: 2 INVITE',
-      'From: <sip:testuser1004@',
-      'To: <sip:testuser1003@'
+      'From: <sip:U_testuser1004@',
+      'To: <sip:U_testuser1003@'
     ]
   - [
       '^SIP/2.0 101 Connecting',
       'CSeq: 2 INVITE',
-      'From: <sip:testuser1004@',
-      'To: <sip:testuser1003@'
+      'From: <sip:U_testuser1004@',
+      'To: <sip:U_testuser1003@'
     ]
   - [
       '^SIP/2.0 486 Busy',
       'CSeq: 2 INVITE',
-      'From: <sip:testuser1004@',
-      'To: <sip:testuser1003@',
-      'P-NGCP-Authorization: testuser1004@'
+      'From: <sip:U_testuser1004@',
+      'To: <sip:U_testuser1003@',
+      'P-NGCP-Authorization: U_testuser1004@'
     ]

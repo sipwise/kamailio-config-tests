@@ -13,12 +13,12 @@ sip_in:
   - 'CSeq: 3 BYE'
   - 'Content-Length: 0'
   - 'From: "431100299" <sip:431100299@'
-  - 'To: <sip:testuser1003@'
+  - 'To: <sip:F_testuser1003@'
 sip_out:
   - [
       '^SIP/2.0 200 OK',
       'CSeq: 3 BYE',
       'Content-Length: 0',
-      'From: "431100299" <sip:testuser1002@',
-      'To: <sip:testuser1003@'
+      'From: "431100299" <sip:F_testuser1002@',
+      'To: <sip:F_testuser1003@'
     ]

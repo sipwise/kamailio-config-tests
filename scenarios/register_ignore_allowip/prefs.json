@@ -1,5 +1,5 @@
 {
-    "testuser1003@spce.test": {
+    "AV_testuser1003@dom.register_ignore_allowip.test": {
         "allowed_ips": [
             "1.2.3.4"
         ],

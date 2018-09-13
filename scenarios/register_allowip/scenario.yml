@@ -1,11 +1,11 @@
 test_uuid: register_allowip
 domains:
-  'spce.test':
+  'dom.register_allowip.test':
     reseller_id: 1
 customers:
-  'customer.test':
+  'cst.register_allowip.test':
     contacts:
-      - email: "customer.test@spce.test"
+      - email: "cst.register_allowip.test@spce.test"
         reseller_id: 1
     details:
       status: 'active'
@@ -13,20 +13,20 @@ customers:
       billing_profile_id: 1
       reseller_id: 1
 subscribers:
-  spce.test:
-    testuser1003:
-      customer: 'customer.test'
-      password: testuser
+  dom.register_allowip.test:
+    AT_testuser1003:
+      customer: 'cst.register_allowip.test'
+      password: AT_testuser
       cc: 43
-      ac: 1
+      ac: 46
       sn: 1003
 scenarios:
-  - ip: 127.126.0.1
-    domain: spce.test
-    username: testuser1003
+  - ip: 127.46.126.1
+    domain: dom.register_allowip.test
+    username: AT_testuser1003
     responders:
-      - ip: 127.1.0.1
-        domain: spce.test
+      - ip: 127.46.10.1
+        domain: dom.register_allowip.test
         register: no
-        username: testuser1003
+        username: AT_testuser1003
         active: no

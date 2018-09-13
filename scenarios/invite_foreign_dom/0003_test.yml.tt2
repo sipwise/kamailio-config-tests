@@ -15,12 +15,12 @@ flow:
   - start|ROUTE_FIND_CALLER:
   - start|ROUTE_AUTH:
   - start|ROUTE_AUTH_HELPER:
-      $fd: spce.test
-      $var(realm_user): testuser1002
-      $var(realm_domain): spce.test
+      $fd: dom.invite_foreign_dom.test
+      $var(realm_user): Z_testuser1002
+      $var(realm_domain): dom.invite_foreign_dom.test
   - return|ROUTE_AUTH_HELPER:
-      $avp(orig_acc_caller_user): ['testuser1002']
-      $avp(orig_acc_caller_domain): ['spce.test']
+      $avp(orig_acc_caller_user): ['Z_testuser1002']
+      $avp(orig_acc_caller_domain): ['dom.invite_foreign_dom.test']
   - start|ROUTE_ADD_CALLINFO_REPLY:
   - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
   - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
@@ -74,14 +74,14 @@ flow:
   - return|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_SET_CALLER_DIALOG:
       $avp(lua_dlg_profile): [
-        "accountout:[% customer_test.id %]",
-        "userout:[% spce_test.testuser1002.uuid %]",
-        "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1002.uuid %]",
-        "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% spce_test.testuser1002.uuid %]",
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1002.uuid %]",
+        "accountout:[% cst.invite_foreign_dom.test.id %]",
+        "userout:[% dom.invite_foreign_dom.test.Z_testuser1002.uuid %]",
+        "account:[% cst.invite_foreign_dom.test.id %]",
+        "user:[% dom.invite_foreign_dom.test.Z_testuser1002.uuid %]",
+        "totalaccountout:[% cst.invite_foreign_dom.test.id %]",
+        "totaluserout:[% dom.invite_foreign_dom.test.Z_testuser1002.uuid %]",
+        "totalaccount:[% cst.invite_foreign_dom.test.id %]",
+        "totaluser:[% dom.invite_foreign_dom.test.Z_testuser1002.uuid %]",
         "total",
         "outgoing"
       ]
@@ -134,35 +134,35 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
       $avp(lua_dlg_profile): [
-        "accountout:[% customer_test.id %]",
-        "userout:[% spce_test.testuser1002.uuid %]",
-        "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1002.uuid %]",
-        "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% spce_test.testuser1002.uuid %]",
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1002.uuid %]",
+        "accountout:[% cst.invite_foreign_dom.test.id %]",
+        "userout:[% dom.invite_foreign_dom.test.Z_testuser1002.uuid %]",
+        "account:[% cst.invite_foreign_dom.test.id %]",
+        "user:[% dom.invite_foreign_dom.test.Z_testuser1002.uuid %]",
+        "totalaccountout:[% cst.invite_foreign_dom.test.id %]",
+        "totaluserout:[% dom.invite_foreign_dom.test.Z_testuser1002.uuid %]",
+        "totalaccount:[% cst.invite_foreign_dom.test.id %]",
+        "totaluser:[% dom.invite_foreign_dom.test.Z_testuser1002.uuid %]",
         "total",
         "outgoing"
       ]
 sip_in:
   - '^INVITE sip:004321001@'
-  - 'Contact: sip:testuser1002@'
+  - 'Contact: sip:Z_testuser1002@'
   - 'CSeq: 2 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
-  - 'Proxy-Authorization: Digest username="testuser1002"'
+  - 'Proxy-Authorization: Digest username="Z_testuser1002"'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: 2 INVITE',
-      'From: <sip:testuser1002@',
+      'From: <sip:Z_testuser1002@',
       'To: <sip:004321001@'
     ]
   - [
       '^SIP/2.0 101 Connecting',
       'CSeq: 2 INVITE',
-      'From: <sip:testuser1002@',
+      'From: <sip:Z_testuser1002@',
       'To: <sip:004321001@'
     ]
   - [
@@ -171,7 +171,7 @@ sip_out:
       'From: <sip:4311002@',
       'To: <sip:004321001@',
       'Content-Type: application/sdp',
-      'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
+      'P-Caller-UUID: [% dom.invite_foreign_dom.test.Z_testuser1002.uuid %]',
       'P-Callee-UUID: 0',
       'P-Called-Party-ID: <sip:004321001@',
       'P-App-Name: sbc'

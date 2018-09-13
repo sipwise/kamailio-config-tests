@@ -22,15 +22,15 @@ flow:
   - return|dialog:failed:
 sip_in:
   - '^SIP/2.0 403 Unauthorized IP detected'
-  - 'From: <sip:testuser1002@spce.test>;tag='
-  - 'To: <sip:testuser1003@spce.test>;tag='
+  - 'From: <sip:K_testuser1002@dom.invite_allowip_soundset.test>;tag='
+  - 'To: <sip:K_testuser1003@dom.invite_allowip_soundset.test>;tag='
   - 'CSeq: 2 INVITE'
   - 'Content-Length: 0'
 sip_out:
   - [
       '^ACK sip:earlyannounce@app.local SIP/2.0',
-      'From: <sip:testuser1002@spce.test>;tag=',
-      'To: <sip:testuser1003@spce.test>;tag=',
+      'From: <sip:K_testuser1002@dom.invite_allowip_soundset.test>;tag=',
+      'To: <sip:K_testuser1003@dom.invite_allowip_soundset.test>;tag=',
       'CSeq: 2 ACK',
       'Max-Forwards: 68',
       'Content-Length: 0'

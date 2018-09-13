@@ -1,11 +1,11 @@
 test_uuid: incoming_hih
 domains:
-  'spce.test':
+  'dom.incoming_hih.test':
     reseller_id: 1
 customers:
-  'customer.test':
+  'cst.incoming_hih.test':
     contacts:
-      - email: "customer.test@spce.test"
+      - email: "cst.incoming_hih.test@spce.test"
         reseller_id: 1
     details:
       status: 'active'
@@ -13,30 +13,30 @@ customers:
       billing_profile_id: 1
       reseller_id: 1
 subscribers:
-  spce.test:
-    testuser1002:
-      customer: 'customer.test'
-      password: testuser
+  dom.incoming_hih.test:
+    C_testuser1002:
+      customer: 'cst.incoming_hih.test'
+      password: C_testuser
       cc: 43
-      ac: 1
+      ac: 03
       sn: 1002
-    testuser1003:
-      customer: 'customer.test'
-      password: testuser
+    C_testuser1003:
+      customer: 'cst.incoming_hih.test'
+      password: C_testuser
       cc: 43
-      ac: 1
+      ac: 03
       sn: 1003
 scenarios:
-  - ip: 127.0.2.1
+  - ip: 127.3.2.1
     username: 004321001
-    domain: 127.0.2.1
+    domain: 127.3.2.1
     responders:
-      - ip: 127.1.0.1
-        username: testuser1003
-        domain: spce.test
+      - ip: 127.3.10.1
+        username: C_testuser1003
+        domain: dom.incoming_hih.test
         register: no
         active: no
-      - ip: 127.1.0.2
-        username: testuser1002 
-        domain: spce.test
+      - ip: 127.3.10.2
+        username: C_testuser1002 
+        domain: dom.incoming_hih.test
         register: yes

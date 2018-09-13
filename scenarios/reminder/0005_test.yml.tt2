@@ -24,7 +24,7 @@ flow:
 sip_in:
   - '^ACK sip:127.0.0.1:5080;prxroute=1 SIP/2.0'
   - 'CSeq: 2 ACK'
-  - 'From: <sip:testuser1001@'
+  - 'From: <sip:AX_testuser1001@'
   - 'To: <sip:\*55\*\d{4}@'
 sip_out:
   - [

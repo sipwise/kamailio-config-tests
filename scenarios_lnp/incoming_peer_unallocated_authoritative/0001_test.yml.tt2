@@ -21,7 +21,7 @@ flow:
   - start|ROUTE_DLG_MANAGE:
   - return|ROUTE_DLG_MANAGE:
   - return|ROUTE_LOAD_PEER_IN_PREF:
-      $avp(lua_dlg_profile): ["peer:[% peer_00_host0.id %]", "total"]
+      $avp(lua_dlg_profile): ["peer:[% B_peer_00_host0.id %]", "total"]
   - return|ROUTE_FIND_CALLER:
   - start|ROUTE_GET_CALLER_CLI:
   - return|ROUTE_GET_CALLER_CLI:
@@ -60,13 +60,13 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^INVITE sip:4321001@'
-  - 'From: <sip:004411001@127.0.2.1>'
-  - 'To: <sip:4321001@'
+  - '^INVITE sip:4322001@'
+  - 'From: <sip:004411001@127.2.2.1>'
+  - 'To: <sip:4322001@'
   - 'CSeq: 1 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
-  - 'P-NGCP-Src-Ip: 127.0.2.1'
+  - 'P-NGCP-Src-Ip: 127.2.2.1'
   - 'P-NGCP-Src-Port: \d+'
   - 'P-NGCP-Src-Proto: udp'
   - 'P-NGCP-Src-Af: 4'
@@ -74,21 +74,21 @@ sip_in:
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
-      'From: <sip:004411001@127.0.2.1>',
-      'To: <sip:4321001',
+      'From: <sip:004411001@127.2.2.1>',
+      'To: <sip:4322001',
       'CSeq: 1 INVITE',
       'P-Out-Socket: udp:127.0.0.1:5060',
-      'P-NGCP-Auth-IP: 127.0.2.1',
+      'P-NGCP-Auth-IP: 127.2.2.1',
       'Content-Length:\s+0'
     ]
   - [
       '^SIP/2.0 404 Not Found',
-      'From: <sip:004411001@127.0.2.1>',
-      'To: <sip:4321001@',
+      'From: <sip:004411001@127.2.2.1>',
+      'To: <sip:4322001@',
       'CSeq: 1 INVITE',
       'P-Out-Socket: udp:127.0.0.1:5060',
-      'P-NGCP-Auth-IP: 127.0.2.1',
-      'P-NGCP-Caller-Info: <sip:004411001@127.0.2.1>;ip=127.0.2.1;port=\d+',
-      'P-NGCP-Callee-Info: <sip:4321001@spce.test>;ip=spce.test;port=5060',
+      'P-NGCP-Auth-IP: 127.2.2.1',
+      'P-NGCP-Caller-Info: <sip:004411001@127.2.2.1>;ip=127.2.2.1;port=\d+',
+      'P-NGCP-Callee-Info: <sip:4322001@dom.incoming_peer_unallocated_authoritative.test>;ip=dom.incoming_peer_unallocated_authoritative.test;port=5060',
       'Content-Length:\s+0'
     ]

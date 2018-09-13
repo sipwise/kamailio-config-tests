@@ -1,11 +1,11 @@
 test_uuid: invite_foreign_dom
 domains:
-  'spce.test':
+  'dom.invite_foreign_dom.test':
     reseller_id: 1
 customers:
-  'customer.test':
+  'cst.invite_foreign_dom.test':
     contacts:
-      - email: "customer.test@spce.test"
+      - email: "cst.invite_foreign_dom.test@spce.test"
         reseller_id: 1
     details:
       status: 'active'
@@ -13,19 +13,19 @@ customers:
       billing_profile_id: 1
       reseller_id: 1
 subscribers:
-  spce.test:
-    testuser1002:
-      customer: 'customer.test'
-      password: testuser
+  dom.invite_foreign_dom.test:
+    Z_testuser1002:
+      customer: 'cst.invite_foreign_dom.test'
+      password: Z_testuser
       cc: 43
-      ac: 1
+      ac: 26
       sn: 1002
 scenarios:
-  - ip: 127.126.0.1
-    username: testuser1002
-    domain: spce.test
+  - ip: 127.26.126.1
+    username: Z_testuser1002
+    domain: dom.invite_foreign_dom.test
     responders:
-      - ip: 127.0.2.1
+      - ip: 127.26.2.1
         username: 004321001
         domain: external.test
         foreign: yes

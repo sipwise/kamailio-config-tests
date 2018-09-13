@@ -19,6 +19,6 @@ sip_out:
       '^SIP/2.0 200 OK',
       'CSeq: 3 BYE',
       'Content-Length: 0',
-      'From: <sip:testuser1002@',
+      'From: <sip:AI_testuser1002@',
       'To: <sip:004321001@'
     ]

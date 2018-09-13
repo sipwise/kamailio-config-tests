@@ -17,11 +17,11 @@ flow:
   - start|ROUTE_AUTH_HELPER:
       $fU: anonymous
       $fd: anonymous.invalid
-      $var(realm_user): testuser1002
-      $var(realm_domain): spce.test
+      $var(realm_user): L_testuser1002
+      $var(realm_domain): dom.invite_anonymous.test
   - return|ROUTE_AUTH_HELPER:
-      $avp(orig_acc_caller_user): ['testuser1002']
-      $avp(orig_acc_caller_domain): ['spce.test']
+      $avp(orig_acc_caller_user): ['L_testuser1002']
+      $avp(orig_acc_caller_domain): ['dom.invite_anonymous.test']
   - start|ROUTE_ADD_CALLINFO_REPLY:
   - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
   - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
@@ -59,11 +59,11 @@ flow:
   - return|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_SET_CALLEE_DIALOG:
       $avp(lua_dlg_profile): [
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "totalaccount:[% cst.invite_anonymous.test.id %]",
+        "totaluser:[% dom.invite_anonymous.test.L_testuser1003.uuid %]",
         "total",
-        "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1003.uuid %]"
+        "account:[% cst.invite_anonymous.test.id %]",
+        "user:[% dom.invite_anonymous.test.L_testuser1003.uuid %]"
       ]
   - start|ROUTE_BLOCK_IN:
   - return|ROUTE_BLOCK_IN:
@@ -94,30 +94,30 @@ flow:
   - start|ROUTE_SET_CALLER_DIALOG:
       $avp(lua_dlg_profile): [
         "local",
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "totalaccount:[% cst.invite_anonymous.test.id %]",
+        "totaluser:[% dom.invite_anonymous.test.L_testuser1003.uuid %]",
         "total",
-        "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1003.uuid %]"
+        "account:[% cst.invite_anonymous.test.id %]",
+        "user:[% dom.invite_anonymous.test.L_testuser1003.uuid %]"
       ]
   - start|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_SET_CALLER_DIALOG:
       $avp(lua_dlg_profile): [
-        'accountout:[% customer_test.id %]',
-        'userout:[% spce_test.testuser1002.uuid %]',
-        'account:[% customer_test.id %]',
-        'user:[% spce_test.testuser1002.uuid %]',
-        'totalaccountout:[% customer_test.id %]',
-        'totaluserout:[% spce_test.testuser1002.uuid %]',
-        'totalaccount:[% customer_test.id %]',
-        'totaluser:[% spce_test.testuser1002.uuid %]',
+        'accountout:[% cst.invite_anonymous.test.id %]',
+        'userout:[% dom.invite_anonymous.test.L_testuser1002.uuid %]',
+        'account:[% cst.invite_anonymous.test.id %]',
+        'user:[% dom.invite_anonymous.test.L_testuser1002.uuid %]',
+        'totalaccountout:[% cst.invite_anonymous.test.id %]',
+        'totaluserout:[% dom.invite_anonymous.test.L_testuser1002.uuid %]',
+        'totalaccount:[% cst.invite_anonymous.test.id %]',
+        'totaluser:[% dom.invite_anonymous.test.L_testuser1002.uuid %]',
         "local",
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "totalaccount:[% cst.invite_anonymous.test.id %]",
+        "totaluser:[% dom.invite_anonymous.test.L_testuser1003.uuid %]",
         "total",
-        "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1003.uuid %]"
+        "account:[% cst.invite_anonymous.test.id %]",
+        "user:[% dom.invite_anonymous.test.L_testuser1003.uuid %]"
       ]
   - start|ROUTE_ACC_CALLER:
   - return|ROUTE_ACC_CALLER:
@@ -171,53 +171,53 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
       $avp(lua_dlg_profile): [
-        'accountout:[% customer_test.id %]',
-        'userout:[% spce_test.testuser1002.uuid %]',
-        'account:[% customer_test.id %]',
-        'user:[% spce_test.testuser1002.uuid %]',
-        'totalaccountout:[% customer_test.id %]',
-        'totaluserout:[% spce_test.testuser1002.uuid %]',
-        'totalaccount:[% customer_test.id %]',
-        'totaluser:[% spce_test.testuser1002.uuid %]',
+        'accountout:[% cst.invite_anonymous.test.id %]',
+        'userout:[% dom.invite_anonymous.test.L_testuser1002.uuid %]',
+        'account:[% cst.invite_anonymous.test.id %]',
+        'user:[% dom.invite_anonymous.test.L_testuser1002.uuid %]',
+        'totalaccountout:[% cst.invite_anonymous.test.id %]',
+        'totaluserout:[% dom.invite_anonymous.test.L_testuser1002.uuid %]',
+        'totalaccount:[% cst.invite_anonymous.test.id %]',
+        'totaluser:[% dom.invite_anonymous.test.L_testuser1002.uuid %]',
         "local",
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "totalaccount:[% cst.invite_anonymous.test.id %]",
+        "totaluser:[% dom.invite_anonymous.test.L_testuser1003.uuid %]",
         "total",
-        "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1003.uuid %]"
+        "account:[% cst.invite_anonymous.test.id %]",
+        "user:[% dom.invite_anonymous.test.L_testuser1003.uuid %]"
       ]
 sip_in:
   - '^INVITE'
-  - 'Contact: sip:testuser1002@'
+  - 'Contact: sip:L_testuser1002@'
   - 'CSeq: 2 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
-  - 'Proxy-Authorization: Digest username="testuser1002"'
+  - 'Proxy-Authorization: Digest username="L_testuser1002"'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: 2 INVITE',
       '_:NOT:_P-Asserted-Identity: \w+',
       'From: "Anonymous" <sip:anonymous@anonymous.invalid>;tag=',
-      'To: <sip:testuser1003@'
+      'To: <sip:L_testuser1003@'
     ]
   - [
       '^SIP/2.0 101 Connecting',
       'CSeq: 2 INVITE',
       '_:NOT:_P-Asserted-Identity: \w+',
       'From: "Anonymous" <sip:anonymous@anonymous.invalid>;tag=',
-      'To: <sip:testuser1003@'
+      'To: <sip:L_testuser1003@'
     ]
   - [
-      '^INVITE sip:testuser1003@',
+      '^INVITE sip:L_testuser1003@',
       'CSeq: 2 INVITE',
       'From: "Anonymous" <sip:anonymous@anonymous.invalid>;tag=',
-      'To: <sip:testuser1003@',
+      'To: <sip:L_testuser1003@',
       'Content-Type: application/sdp',
-      'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
-      'P-Callee-UUID: [% spce_test.testuser1003.uuid %]',
+      'P-Caller-UUID: [% dom.invite_anonymous.test.L_testuser1002.uuid %]',
+      'P-Callee-UUID: [% dom.invite_anonymous.test.L_testuser1003.uuid %]',
       '_:NOT:_P-Asserted-Identity: \w+',
-      'P-Called-Party-ID: <sip:testuser1003@',
+      'P-Called-Party-ID: <sip:L_testuser1003@',
       'P-App-Param: ;calltimer=21600;aleg_sst_enable=no;sst_enable=no',
       'P-App-Name: sbc'
     ]

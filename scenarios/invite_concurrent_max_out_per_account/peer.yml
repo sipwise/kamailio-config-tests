@@ -1,52 +1,52 @@
 ---
-peer_00:
+W_peer_00:
   contact:
-    company: peer_00
-    email: peer_00@host0.not
+    company: W_peer_00
+    email: W_peer_00@host0.not
   contract:
     billing_profile_id: 1
     status: active
     type: sippeering
   groups:
-    - name: peer_00_group
+    - name: W_peer_00_group
       priority: 1
       description:
   rules:
-    - group_id: peer_00_group
+    - group_id: W_peer_00_group
       callee_prefix: ""
       callee_pattern: ''
-      caller_pattern: '^sip:.+@spce.test'
+      caller_pattern: '^sip:.+@dom.invite_concurrent_max_out_per_account.test'
       description: ""
   hosts:
-    - group_id: peer_00_group
-      name: peer_00_host0
-      ip: 127.0.2.1
+    - group_id: W_peer_00_group
+      name: W_peer_00_host0
+      ip: 127.23.2.1
       port: 51602
       host:
       transport: 1
       weight: 1
-peer_01:
+W_peer_01:
   contact:
-    company: peer_01
-    email: peer_01@host1.not
+    company: W_peer_01
+    email: W_peer_01@host1.not
   contract:
     billing_profile_id: 1
     status: active
     type: sippeering
   groups:
-    - name: peer_01_group
+    - name: W_peer_01_group
       priority: 1
       description:
   rules:
-    - group_id: peer_01_group
+    - group_id: W_peer_01_group
       callee_prefix: ""
       callee_pattern: '^44.+'
-      caller_pattern: '^sip:.+@spce.test'
+      caller_pattern: '^sip:.+@dom.invite_concurrent_max_out_per_account.test'
       description: ""
   hosts:
-    - group_id: peer_01_group
-      name: peer_01_host0
-      ip: 127.0.3.1
+    - group_id: W_peer_01_group
+      name: W_peer_01_host0
+      ip: 127.23.3.1
       port: 50607
       host:
       transport: 1

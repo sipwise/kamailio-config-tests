@@ -1,9 +1,9 @@
 {
-    "@spce.test": {
-        "rewrite_rule_set": "rw_00"
+    "@dom.invite_peerout_rewrite_pv_regex.test": {
+        "rewrite_rule_set": "AI_rw_00"
     },
-    "peer_00_host0": {
-        "rewrite_rule_set": "rw_00",
+    "AI_peer_00_host0": {
+        "rewrite_rule_set": "AI_rw_00",
         "concurrent_max": 1
     }
 }
