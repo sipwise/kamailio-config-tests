@@ -1,8 +1,8 @@
 {
-    "testuser1002@spce.test": {
+    "G_testuser1002@dom.invite_allowedcli_match_alias.test": {
         "allowed_clis": [
-            "43110029*",
-            "43110021*"
+            "430710029*",
+            "430710021*"
         ],
         "user_cli": 43122122,
         "inbound_upn": "from_display",

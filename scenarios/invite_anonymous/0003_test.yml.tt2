@@ -20,14 +20,14 @@ flow:
   - exit|ROUTE_EXIT:
       $fU: anonymous
       $fd: anonymous.invalid
-      $var(realm_user): testuser1002
-      $var(realm_domain): spce.test
+      $var(realm_user): L_testuser1002
+      $var(realm_domain): dom.invite_anonymous.test
 sip_in:
   - '^INVITE'
-  - 'P-Asserted-Identity: "long name here" <sip:testuser1002@spce.test>'
+  - 'P-Asserted-Identity: "long name here" <sip:L_testuser1002@dom.invite_anonymous.test>'
   - 'From: "Anonymous" <sip:anonymous@anonymous.invalid>;tag='
-  - 'Contact: sip:testuser1002@'
-  - 'To: <sip:testuser1003@'
+  - 'Contact: sip:L_testuser1002@'
+  - 'To: <sip:L_testuser1003@'
   - 'CSeq: 1 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
@@ -37,12 +37,12 @@ sip_out:
       'CSeq: 1 INVITE',
       '_:NOT:_P-Asserted-Identity: \w+',
       'From: "Anonymous" <sip:anonymous@anonymous.invalid>;tag=',
-      'To: <sip:testuser1003@'
+      'To: <sip:L_testuser1003@'
     ]
   - [
       '^SIP/2.0 407 Proxy Authentication Required',
       'CSeq: 1 INVITE',
       '_:NOT:_P-Asserted-Identity: \w+',
       'From: "Anonymous" <sip:anonymous@anonymous.invalid>;tag=',
-      'To: <sip:testuser1003@'
+      'To: <sip:L_testuser1003@'
     ]

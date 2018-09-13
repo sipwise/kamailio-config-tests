@@ -12,11 +12,11 @@ flow:
         "totalaccount:0",
         "totaluser:0",
         "local",
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "totalaccount:[% cst.incoming_foreign_dom.test.id %]",
+        "totaluser:[% dom.incoming_foreign_dom.test.B_testuser1003.uuid %]",
         "total",
-        "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1003.uuid %]"
+        "account:[% cst.incoming_foreign_dom.test.id %]",
+        "user:[% dom.incoming_foreign_dom.test.B_testuser1003.uuid %]"
       ]
   - start|ROUTE_PREPARE_UA:
   - return|ROUTE_PREPARE_UA:

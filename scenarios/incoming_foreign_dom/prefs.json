@@ -1,5 +1,5 @@
 {
-  "@spce.test": {
+  "@dom.incoming_foreign_dom.test": {
     "unauth_inbound_calls": true
   }
 }

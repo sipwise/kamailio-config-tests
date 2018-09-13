@@ -11,14 +11,14 @@ flow:
 sip_in:
   - '^SIP/2.0 200 OK'
   - 'CSeq: \d+ BYE'
-  - 'From: <sip:4311002@'
+  - 'From: <sip:43251002@'
   - 'Content-Length: 0'
-  - 'To: <sip:testuser1001@'
+  - 'To: <sip:Y_testuser1001@'
 sip_out:
   - [
       '^SIP/2.0 200 OK',
       'CSeq: \d+ BYE',
       'Content-Length: 0',
-      'From: <sip:testuser1002@',
-      'To: <sip:testuser1001@'
+      'From: <sip:Y_testuser1002@',
+      'To: <sip:Y_testuser1001@'
     ]

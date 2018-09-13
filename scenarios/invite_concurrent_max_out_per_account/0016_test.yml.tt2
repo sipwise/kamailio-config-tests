@@ -26,8 +26,8 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - '^BYE'
-  - 'Contact: sip:testuser1002@'
-  - 'From: <sip:testuser1002@'
+  - 'Contact: sip:W_testuser1002@'
+  - 'From: <sip:W_testuser1002@'
   - 'To: <sip:004321001@'
   - 'CSeq: 6 BYE'
   - 'Max-Forwards: 69'
@@ -36,13 +36,13 @@ sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: 6 BYE',
-      'From: <sip:testuser1002@',
+      'From: <sip:W_testuser1002@',
       'To: <sip:004321001@',
       'Content-Length: 0'
     ]
   - [
       '^BYE',
-      'From: <sip:4311002@',
+      'From: <sip:43231002@',
       'To: <sip:004321001@',
       'CSeq: 6 BYE',
       'Content-Length: 0'

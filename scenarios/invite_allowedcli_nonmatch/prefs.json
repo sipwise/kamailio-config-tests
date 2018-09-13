@@ -1,10 +1,10 @@
 {
-    "testuser1002@spce.test": {
+    "H_testuser1002@dom.invite_allowedcli_nonmatch.test": {
         "allowed_clis": [
-            "43110029*",
-            "43110021*"
+            "430810029*",
+            "430810021*"
         ],
-        "cli": 4311002,
+        "cli": 43081002,
         "user_cli": 43122122,
         "inbound_upn": "from_display"
     }

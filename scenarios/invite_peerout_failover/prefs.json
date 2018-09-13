@@ -1,8 +1,8 @@
 {
-    "peer_00_host0": {
+    "AF_peer_00_host0": {
         "concurrent_max": 1
     },
-    "peer_01_host0": {
+    "AF_peer_01_host0": {
         "concurrent_max_out": -1
     }
 }

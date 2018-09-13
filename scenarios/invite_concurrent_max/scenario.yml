@@ -1,11 +1,11 @@
 test_uuid: invite_concurrent_max
 domains:
-  'spce.test':
+  'dom.invite_concurrent_max.test':
     reseller_id: 1
 customers:
-  'customer.test':
+  'cst.invite_concurrent_max.test':
     contacts:
-      - email: "customer.test@spce.test"
+      - email: "cst.invite_concurrent_max.test@spce.test"
         reseller_id: 1
     details:
       status: 'active'
@@ -13,35 +13,35 @@ customers:
       billing_profile_id: 1
       reseller_id: 1
 subscribers:
-  spce.test:
-    testuser1003:
-      customer: 'customer.test'
-      password: testuser
+  dom.invite_concurrent_max.test:
+    U_testuser1003:
+      customer: 'cst.invite_concurrent_max.test'
+      password: U_testuser
       cc: 43
-      ac: 1
+      ac: 21
       sn: 1003
-    testuser1002:
-      customer: 'customer.test'
-      password: testuser
+    U_testuser1002:
+      customer: 'cst.invite_concurrent_max.test'
+      password: U_testuser
       cc: 43
-      ac: 1
+      ac: 21
       sn: 1002
-    testuser1004:
-      customer: 'customer.test'
-      password: testuser
+    U_testuser1004:
+      customer: 'cst.invite_concurrent_max.test'
+      password: U_testuser
       cc: 43
-      ac: 1
+      ac: 21
       sn: 1004
 scenarios:
-  - ip: 127.126.0.1
-    username: testuser1002
-    domain: spce.test
+  - ip: 127.21.126.1
+    username: U_testuser1002
+    domain: dom.invite_concurrent_max.test
     responders:
-      - ip: 127.1.0.1
-        username: testuser1003
-        domain: spce.test
+      - ip: 127.21.10.1
+        username: U_testuser1003
+        domain: dom.invite_concurrent_max.test
         register: yes
-      - ip: 127.2.0.1
-        username: testuser1004
-        domain: spce.test
+      - ip: 127.21.20.1
+        username: U_testuser1004
+        domain: dom.invite_concurrent_max.test
         register: yes

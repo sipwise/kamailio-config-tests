@@ -32,7 +32,7 @@ sip_in:
   - 'Max-Forwards: 69'
   - 'Content-Length: 0'
   - 'From: <sip:external@'
-  - 'To: <sip:4311003@'
+  - 'To: <sip:43021003@'
 
 sip_out:
   - [
@@ -40,7 +40,7 @@ sip_out:
       'CSeq: 2 BYE',
       'Content-Length: 0',
       'From: <sip:external@',
-      'To: <sip:4311003@'
+      'To: <sip:43021003@'
     ]
   - [
       '^BYE sip:127.0.0.1:5080(;prxroute=1)? SIP/2.0',
@@ -49,5 +49,5 @@ sip_out:
       'Max-Forwards: 68',
       'Content-Length: 0',
       'From: <sip:external@',
-      'To: <sip:4311003@'
+      'To: <sip:43021003@'
     ]

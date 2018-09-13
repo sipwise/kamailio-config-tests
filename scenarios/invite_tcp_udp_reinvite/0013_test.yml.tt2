@@ -28,27 +28,27 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - '^BYE sip:127.0.0.1:5080(;prxroute=1)? SIP/2.0'
-  - 'Contact: <sip:testuser1002@'
+  - 'Contact: <sip:AN_testuser1002@'
   - 'CSeq: \d+ BYE'
   - 'Max-Forwards: 69'
   - 'Content-Length: 0'
-  - 'From: <sip:testuser1002@'
-  - 'To: <sip:testuser1003@'
+  - 'From: <sip:AN_testuser1002@'
+  - 'To: <sip:AN_testuser1003@'
 
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: \d+ BYE',
       'Content-Length: 0',
-      'From: <sip:testuser1002@',
-      'To: <sip:testuser1003@'
+      'From: <sip:AN_testuser1002@',
+      'To: <sip:AN_testuser1003@'
     ]
   - [
       '^BYE sip:127.0.0.1:5080(;prxroute=1)? SIP/2.0',
-      'Contact: <sip:testuser1002@',
+      'Contact: <sip:AN_testuser1002@',
       'CSeq: \d+ BYE',
       'Max-Forwards: 68',
       'Content-Length: 0',
-      'From: <sip:4311002@',
-      'To: <sip:testuser1003@'
+      'From: <sip:43401002@',
+      'To: <sip:AN_testuser1003@'
     ]

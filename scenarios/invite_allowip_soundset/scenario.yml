@@ -1,11 +1,11 @@
 test_uuid: invite_allowip_soundset
 domains:
-  'spce.test':
+  'dom.invite_allowip_soundset.test':
     reseller_id: 1
 customers:
-  'customer.test':
+  'cst.invite_allowip_soundset.test':
     contacts:
-      - email: "customer.test@spce.test"
+      - email: "cst.invite_allowip_soundset.test@spce.test"
         reseller_id: 1
     details:
       status: 'active'
@@ -13,26 +13,26 @@ customers:
       billing_profile_id: 1
       reseller_id: 1
 subscribers:
-  spce.test:
-    testuser1003:
-      customer: 'customer.test'
-      password: testuser
+  dom.invite_allowip_soundset.test:
+    K_testuser1003:
+      customer: 'cst.invite_allowip_soundset.test'
+      password: K_testuser
       cc: 43
-      ac: 1
+      ac: 11
       sn: 1003
-    testuser1002:
-      customer: 'customer.test'
-      password: testuser
+    K_testuser1002:
+      customer: 'cst.invite_allowip_soundset.test'
+      password: K_testuser
       cc: 43
-      ac: 1
+      ac: 11
       sn: 1002
 scenarios:
-  - ip: 127.126.0.1
-    username: testuser1002
-    domain: spce.test
+  - ip: 127.11.126.1
+    username: K_testuser1002
+    domain: dom.invite_allowip_soundset.test
     responders:
-      - ip: 127.1.0.1
-        username: testuser1003
-        domain: spce.test
+      - ip: 127.11.10.1
+        username: K_testuser1003
+        domain: dom.invite_allowip_soundset.test
         register: no
         active: no

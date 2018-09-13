@@ -21,8 +21,8 @@ flow:
       $avp(proto): ["tcp"]
 sip_in:
   - '^INVITE'
-  - 'Contact: <sip:testuser1002@'
-  - 'To: <sip:testuser1003@'
+  - 'Contact: <sip:AN_testuser1002@'
+  - 'To: <sip:AN_testuser1003@'
   - 'CSeq: 1 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
@@ -30,12 +30,12 @@ sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: 1 INVITE',
-      'From: <sip:testuser1002@',
-      'To: <sip:testuser1003@'
+      'From: <sip:AN_testuser1002@',
+      'To: <sip:AN_testuser1003@'
     ]
   - [
       '^SIP/2.0 407 Proxy Authentication Required',
       'CSeq: 1 INVITE',
-      'From: <sip:testuser1002@',
-      'To: <sip:testuser1003@'
+      'From: <sip:AN_testuser1002@',
+      'To: <sip:AN_testuser1003@'
     ]
