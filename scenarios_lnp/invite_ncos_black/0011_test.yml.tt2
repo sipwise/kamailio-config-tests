@@ -78,8 +78,8 @@ flow:
   - start|ROUTE_OUTBOUND:
       $avp(lua_dlg_profile): [
         "relay",
-        "peerout:[% peer_00_host0.id %]",
-        "peer:[% peer_00_host0.id %]",
+        "peerout:[% D_peer_00_host0.id %]",
+        "peer:[% D_peer_00_host0.id %]",
         "outgoing"
       ]
   - start|ROUTE_SET_CALLER_DIALOG:
@@ -87,18 +87,18 @@ flow:
   - return|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_SET_CALLER_DIALOG:
       $avp(lua_dlg_profile): [
-        "accountout:[% customer_test.id %]",
-        "userout:[% spce_test.testuser1002.uuid %]",
-        "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1002.uuid %]",
-        "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% spce_test.testuser1002.uuid %]",
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1002.uuid %]",
+        "accountout:[% cst.invite_ncos_black.test.id %]",
+        "userout:[% dom.invite_ncos_black.test.D_testuser1002.uuid %]",
+        "account:[% cst.invite_ncos_black.test.id %]",
+        "user:[% dom.invite_ncos_black.test.D_testuser1002.uuid %]",
+        "totalaccountout:[% cst.invite_ncos_black.test.id %]",
+        "totaluserout:[% dom.invite_ncos_black.test.D_testuser1002.uuid %]",
+        "totalaccount:[% cst.invite_ncos_black.test.id %]",
+        "totaluser:[% dom.invite_ncos_black.test.D_testuser1002.uuid %]",
         "total",
         "relay",
-        "peerout:[% peer_00_host0.id %]",
-        "peer:[% peer_00_host0.id %]",
+        "peerout:[% D_peer_00_host0.id %]",
+        "peer:[% D_peer_00_host0.id %]",
         "outgoing"
       ]
   - start|ROUTE_ACC_CALLER:
@@ -163,60 +163,60 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
       $avp(lua_dlg_profile): [
-        "accountout:[% customer_test.id %]",
-        "userout:[% spce_test.testuser1002.uuid %]",
-        "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1002.uuid %]",
-        "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% spce_test.testuser1002.uuid %]",
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1002.uuid %]",
+        "accountout:[% cst.invite_ncos_black.test.id %]",
+        "userout:[% dom.invite_ncos_black.test.D_testuser1002.uuid %]",
+        "account:[% cst.invite_ncos_black.test.id %]",
+        "user:[% dom.invite_ncos_black.test.D_testuser1002.uuid %]",
+        "totalaccountout:[% cst.invite_ncos_black.test.id %]",
+        "totaluserout:[% dom.invite_ncos_black.test.D_testuser1002.uuid %]",
+        "totalaccount:[% cst.invite_ncos_black.test.id %]",
+        "totaluser:[% dom.invite_ncos_black.test.D_testuser1002.uuid %]",
         "total",
         "relay",
-        "peerout:[% peer_00_host0.id %]",
-        "peer:[% peer_00_host0.id %]",
+        "peerout:[% D_peer_00_host0.id %]",
+        "peer:[% D_peer_00_host0.id %]",
         "outgoing"
       ]
 sip_in:
-  - '^INVITE sip:43999300'
-  - 'From: <sip:testuser1002@'
-  - 'To: <sip:43999300@'
+  - '^INVITE sip:43444300'
+  - 'From: <sip:D_testuser1002@'
+  - 'To: <sip:43444300@'
   - 'CSeq: 2 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
-  - 'P-NGCP-Src-Ip: 127.126.0.3'
+  - 'P-NGCP-Src-Ip: 127.4.126.3'
   - 'P-NGCP-Src-Port: \d+'
   - 'P-NGCP-Src-Proto: udp'
   - 'P-NGCP-Src-Af: 4'
-  - 'P-Sock-Info: udp:127.0.0.1:5060'
+  - 'P-Sock-Info: udp:127.4.0.1:5060'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
-      'From: <sip:testuser1002@',
-      'To: <sip:43999300@',
+      'From: <sip:D_testuser1002@',
+      'To: <sip:43444300@',
       'CSeq: 2 INVITE',
-      'P-Out-Socket: udp:127.0.0.1:5060',
-      'P-NGCP-Auth-IP: 127.126.0.3',
+      'P-Out-Socket: udp:127.4.0.1:5060',
+      'P-NGCP-Auth-IP: 127.4.126.3',
       'Content-Length: 0'
     ]
   - [
       '^SIP/2.0 101 Connecting'
     ]
   - [
-      '^INVITE sip:43999300@127.0.2.1:\d+;transport=udp SIP/2.0',
-      'From: <sip:4311002@',
-      'To: <sip:43999300@',
+      '^INVITE sip:43444300@127.4.2.1:\d+;transport=udp SIP/2.0',
+      'From: <sip:4341002@',
+      'To: <sip:43444300@',
       'CSeq: 2 INVITE',
-      'Contact: sip:testuser1002@127.126.0.3:\d+',
+      'Contact: sip:D_testuser1002@127.4.126.3:\d+',
       'Max-Forwards: 68',
       'Content-Type: application/sdp',
-      'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
+      'P-Caller-UUID: [% dom.invite_ncos_black.test.D_testuser1002.uuid %]',
       'P-Callee-UUID: 0',
-      'P-Asserted-Identity: <sip:4311002@spce.test>',
-      'P-Called-Party-ID: <sip:43999300@127.0.2.1>',
+      'P-Asserted-Identity: <sip:4341002@dom.invite_ncos_black.test>',
+      'P-Called-Party-ID: <sip:43444300@127.4.2.1>',
       'P-App-Param: ;calltimer=21600;aleg_sst_enable=no;sst_enable=no',
       'P-App-Name: sbc',
-      'P-NGCP-Caller-Info: <sip:testuser1002@spce.test>;ip=127.126.0.3;port=\d+',
-      'P-NGCP-Callee-Info: <sip:43999300@spce.test>;ip=127.0.2.1;port=\d+',
+      'P-NGCP-Caller-Info: <sip:D_testuser1002@dom.invite_ncos_black.test>;ip=127.4.126.3;port=\d+',
+      'P-NGCP-Callee-Info: <sip:43444300@dom.invite_ncos_black.test>;ip=127.4.2.1;port=\d+',
       'P-D-Uri:'
     ]

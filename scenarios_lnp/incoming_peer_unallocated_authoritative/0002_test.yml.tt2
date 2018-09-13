@@ -10,9 +10,9 @@ flow:
   - start|ROUTE_LOCAL:
   - return|ROUTE_LOCAL:
 sip_in:
-  - '^ACK sip:4321001@'
-  - 'From: <sip:004411001@127.0.2.1>'
-  - 'To: <sip:4321001@'
+  - '^ACK sip:4322001@'
+  - 'From: <sip:004411001@127.2.2.1>'
+  - 'To: <sip:4322001@'
   - 'CSeq: 1 ACK'
   - 'Max-Forwards: 69'
   - 'Content-Length:\s+0'

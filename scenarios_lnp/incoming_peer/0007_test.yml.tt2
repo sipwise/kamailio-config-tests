@@ -12,17 +12,17 @@ flow:
   - start|dialog:start:
   - return|dialog:start:
       $avp(lua_dlg_profile): [
-        "accountout:[% customer_test.id %]",
-        "userout:[% spce_test.testuser1003.uuid %]",
-        "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1003.uuid %]",
-        "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% spce_test.testuser1003.uuid %]",
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "accountout:[% cst.incoming_peer.test.id %]",
+        "userout:[% dom.incoming_peer.test.A_testuser1003.uuid %]",
+        "account:[% cst.incoming_peer.test.id %]",
+        "user:[% dom.incoming_peer.test.A_testuser1003.uuid %]",
+        "totalaccountout:[% cst.incoming_peer.test.id %]",
+        "totaluserout:[% dom.incoming_peer.test.A_testuser1003.uuid %]",
+        "totalaccount:[% cst.incoming_peer.test.id %]",
+        "totaluser:[% dom.incoming_peer.test.A_testuser1003.uuid %]",
         "relay",
-        "peerout:[% peer_01_host1.id %]",
-        "peer:[% peer_01_host1.id %]",
+        "peerout:[% A_peer_01_host1.id %]",
+        "peer:[% A_peer_01_host1.id %]",
         "outgoing"
       ]
   - return|dialog:start:
