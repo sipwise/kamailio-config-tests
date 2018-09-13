@@ -85,7 +85,7 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - '^INVITE sip:43999200@'
-  - 'From: <sip:testuser1002@'
+  - 'From: <sip:D_testuser1002@'
   - 'To: <sip:43999200@'
   - 'CSeq: 2 INVITE'
   - 'Max-Forwards: 69'
@@ -106,22 +106,22 @@ sip_out:
       'CSeq: 2 INVITE',
       'P-Out-Socket: udp:127.0.0.1:5060',
       'P-NGCP-Auth-IP: 127.126.0.2',
-      'P-NGCP-Authorization: testuser1002@',
+      'P-NGCP-Authorization: D_testuser1002@',
       'P-NGCP-Authorized: 1',
       'P-NGCP-Caller-Info:',
-      'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
+      'P-Caller-UUID: [% dom.invite_ncos_black.test.D_testuser1002.uuid %]',
       'Content-Length: 0'
     ]
   - [
       '^SIP/2.0 403 Blocked by NCOS level',
-      'From: <sip:testuser1002@',
+      'From: <sip:D_testuser1002@',
       'To: <sip:43999200@',
       'CSeq: 2 INVITE',
       'P-Out-Socket: udp:127.0.0.1:5060',
       'P-NGCP-Auth-IP: 127.126.0.2',
-      'P-NGCP-Authorization: testuser1002@',
+      'P-NGCP-Authorization: D_testuser1002@',
       'P-NGCP-Authorized: 1',
       'P-NGCP-Caller-Info:',
-      'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
+      'P-Caller-UUID: [% dom.invite_ncos_black.test.D_testuser1002.uuid %]',
       'Content-Length: 0'
     ]

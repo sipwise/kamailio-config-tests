@@ -85,8 +85,8 @@ flow:
   - start|ROUTE_OUTBOUND:
       $avp(lua_dlg_profile): [
         "relay",
-        "peerout:[% peer_00_host0.id %]",
-        "peer:[% peer_00_host0.id %]",
+        "peerout:[% G_peer_00_host0.id %]",
+        "peer:[% G_peer_00_host0.id %]",
         "outgoing"
       ]
   - start|ROUTE_SET_CALLER_DIALOG:
@@ -94,18 +94,18 @@ flow:
   - return|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_SET_CALLER_DIALOG:
       $avp(lua_dlg_profile): [
-        "accountout:[% customer_test.id %]",
-        "userout:[% spce_test.testuser1002.uuid %]",
-        "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1002.uuid %]",
-        "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% spce_test.testuser1002.uuid %]",
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1002.uuid %]",
+        "accountout:[% cst.invite_peerout_rn.test.id %]",
+        "userout:[% dom.invite_peerout_rn.test.G_testuser1002.uuid %]",
+        "account:[% cst.invite_peerout_rn.test.id %]",
+        "user:[% dom.invite_peerout_rn.test.G_testuser1002.uuid %]",
+        "totalaccountout:[% cst.invite_peerout_rn.test.id %]",
+        "totaluserout:[% dom.invite_peerout_rn.test.G_testuser1002.uuid %]",
+        "totalaccount:[% cst.invite_peerout_rn.test.id %]",
+        "totaluser:[% dom.invite_peerout_rn.test.G_testuser1002.uuid %]",
         "total",
         "relay",
-        "peerout:[% peer_00_host0.id %]",
-        "peer:[% peer_00_host0.id %]",
+        "peerout:[% G_peer_00_host0.id %]",
+        "peer:[% G_peer_00_host0.id %]",
         "outgoing"
       ]
   - start|ROUTE_ACC_CALLER:
@@ -164,38 +164,38 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
       $avp(lua_dlg_profile): [
-        "accountout:[% customer_test.id %]",
-        "userout:[% spce_test.testuser1002.uuid %]",
-        "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1002.uuid %]",
-        "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% spce_test.testuser1002.uuid %]",
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1002.uuid %]",
+        "accountout:[% cst.invite_peerout_rn.test.id %]",
+        "userout:[% dom.invite_peerout_rn.test.G_testuser1002.uuid %]",
+        "account:[% cst.invite_peerout_rn.test.id %]",
+        "user:[% dom.invite_peerout_rn.test.G_testuser1002.uuid %]",
+        "totalaccountout:[% cst.invite_peerout_rn.test.id %]",
+        "totaluserout:[% dom.invite_peerout_rn.test.G_testuser1002.uuid %]",
+        "totalaccount:[% cst.invite_peerout_rn.test.id %]",
+        "totaluser:[% dom.invite_peerout_rn.test.G_testuser1002.uuid %]",
         "total",
         "relay",
-        "peerout:[% peer_00_host0.id %]",
-        "peer:[% peer_00_host0.id %]",
+        "peerout:[% G_peer_00_host0.id %]",
+        "peer:[% G_peer_00_host0.id %]",
         "outgoing"
       ]
 sip_in:
   - '^INVITE sip:004321001@'
-  - 'Contact: sip:testuser1002@'
+  - 'Contact: sip:G_testuser1002@'
   - 'CSeq: 2 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
-  - 'Proxy-Authorization: Digest username="testuser1002"'
+  - 'Proxy-Authorization: Digest username="G_testuser1002"'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: 2 INVITE',
-      'From: <sip:testuser1002@',
+      'From: <sip:G_testuser1002@',
       'To: <sip:004321001@'
     ]
   - [
       '^SIP/2.0 101 Connecting',
       'CSeq: 2 INVITE',
-      'From: <sip:testuser1002@',
+      'From: <sip:G_testuser1002@',
       'To: <sip:004321001@'
     ]
   - [
@@ -204,7 +204,7 @@ sip_out:
       'From: <sip:4311002@',
       'To: <sip:004321001@',
       'Content-Type: application/sdp',
-      'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
+      'P-Caller-UUID: [% dom.invite_peerout_rn.test.G_testuser1002.uuid %]',
       'P-Callee-UUID: 0',
       'P-Asserted-Identity: <sip:4311002@',
       'P-Called-Party-ID: <sip:004321001@',

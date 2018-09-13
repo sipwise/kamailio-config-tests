@@ -1,7 +1,7 @@
 ---
-lnp_test_00:
+E_lnp_test_00:
   data:
-    name: lnp_test_00
+    name: E_lnp_test_00
     prefix: AA
   numbers:
     - number: '439992'
