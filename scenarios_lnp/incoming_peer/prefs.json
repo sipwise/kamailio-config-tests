@@ -1,10 +1,10 @@
 {
-    "peer_00_host0": {
+    "A_peer_00_host0": {
     	"lnp_add_npdi": true,
     	"lnp_to_rn": true,
         "concurrent_max": 1
     },
-    "testuser1001@spce.test": {
+    "A_testuser1001@dom.incoming_peer.test": {
         "lock": 5
     }
 }

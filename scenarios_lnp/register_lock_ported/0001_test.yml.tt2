@@ -2,11 +2,11 @@ flow:
   - start|DEFAULT_ROUTE:
   - start|ROUTE_ENTRY:
   - return|ROUTE_ENTRY:
-      $fU: testuser1003
-      $tU: testuser1003
+      $fU: H_testuser1003
+      $tU: H_testuser1003
   - start|ROUTE_NET_INFO:
-      $fU: testuser1003
-      $tU: testuser1003
+      $fU: H_testuser1003
+      $tU: H_testuser1003
   - return|ROUTE_NET_INFO:
   - start|ROUTE_REG_REQUEST:
   - start|ROUTE_REG_HANDLE:
@@ -17,7 +17,7 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - '^REGISTER'
-  - 'Contact: sip:testuser1003@'
+  - 'Contact: sip:H_testuser1003@'
   - 'Content-Length: 0'
   - 'Expires: 600'
 sip_out:

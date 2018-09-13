@@ -1,26 +1,26 @@
 ---
-peer_00:
+G_peer_00:
   contact:
-    company: peer_00
-    email: peer_00@host0.not
+    company: G_peer_00
+    email: G_peer_00@host0.not
   contract:
     billing_profile_id: 1
     status: active
     type: sippeering
   groups:
-    - name: peer_00_group
+    - name: G_peer_00_group
       priority: 1
       description:
   rules:
-    - group_id: peer_00_group
+    - group_id: G_peer_00_group
       callee_prefix: ""
       callee_pattern: ''
-      caller_pattern: '^sip:.+@spce.test'
+      caller_pattern: '^sip:.+@dom.invite_peerout_rn.test'
       description: ""
   hosts:
-    - group_id: peer_00_group
-      name: peer_00_host0
-      ip: 127.0.2.1
+    - group_id: G_peer_00_group
+      name: G_peer_00_host0
+      ip: 127.7.2.1
       port: 51602
       host:
       transport: 1
