@@ -26,24 +26,24 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^BYE sip:127.0.0.1:5080;transport=udp SIP/2.0'
+  - '^BYE sip:127.25.0.1:5080;transport=udp SIP/2.0'
   - 'CSeq: \d+ BYE'
   - 'Content-Length: 0'
-  - 'From: <sip:testuser1002@'
-  - 'To: <sip:testuser1001@'
+  - 'From: <sip:Y_testuser1002@'
+  - 'To: <sip:Y_testuser1001@'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: \d+ BYE',
       'Content-Length: 0',
-      'From: <sip:testuser1002@',
-      'To: <sip:testuser1001@'
+      'From: <sip:Y_testuser1002@',
+      'To: <sip:Y_testuser1001@'
     ]
   - [
-      '^BYE sip:127.0.0.1:5080;transport=udp SIP/2.0',
+      '^BYE sip:127.25.0.1:5080;transport=udp SIP/2.0',
       'CSeq: \d+ BYE',
       'Max-Forwards: 69',
       'Content-Length: 0',
       'From: <sip:4311002@',
-      'To: <sip:testuser1001@'
+      'To: <sip:Y_testuser1001@'
     ]

@@ -1,11 +1,11 @@
 test_uuid: invite_voicebox
 domains:
-  'spce.test':
+  'dom.invite_voicebox.test':
     reseller_id: 1
 customers:
-  'customer.test':
+  'cst.invite_voicebox.test':
     contacts:
-      - email: "customer.test@spce.test"
+      - email: "cst.invite_voicebox.test@dom.invite_voicebox.test"
         reseller_id: 1
     details:
       status: 'active'
@@ -13,26 +13,26 @@ customers:
       billing_profile_id: 1
       reseller_id: 1
 subscribers:
-  spce.test:
-    testuser1001:
-      customer: 'customer.test'
-      password: testuser
+  dom.invite_voicebox.test:
+    AP_testuser1001:
+      customer: 'cst.invite_voicebox.test'
+      password: AP_testuser
       cc: 43
-      ac: 1
+      ac: 42
       sn: 1001
-    testuser1002:
-      customer: 'customer.test'
-      password: testuser
+    AP_testuser1002:
+      customer: 'cst.invite_voicebox.test'
+      password: AP_testuser
       cc: 43
-      ac: 1
+      ac: 42
       sn: 1002
 scenarios:
-  - ip: 127.126.0.1
-    username: testuser1002
-    domain: spce.test
+  - ip: 127.42.126.1
+    username: AP_testuser1002
+    domain: dom.invite_voicebox.test
     responders:
-      - ip: 127.1.0.1
-        username: testuser1001
-        domain: spce.test
+      - ip: 127.42.10.1
+        username: AP_testuser1001
+        domain: dom.invite_voicebox.test
         register: no
         active: no

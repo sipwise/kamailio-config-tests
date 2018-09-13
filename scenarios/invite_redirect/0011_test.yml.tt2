@@ -12,11 +12,11 @@ sip_in:
   - '^SIP/2.0 180 Ringing'
   - 'CSeq: 2 INVITE'
   - 'From: <sip:4311002@'
-  - 'To: <sip:testuser1003@'
+  - 'To: <sip:AJ_testuser1003@'
 sip_out:
   - [
       '^SIP/2.0 180 Ringing',
       'CSeq: 2 INVITE',
-      'From: <sip:testuser1002@',
-      'To: <sip:testuser1003@',
+      'From: <sip:AJ_testuser1002@',
+      'To: <sip:AJ_testuser1003@',
     ]

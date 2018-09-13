@@ -1,8 +1,8 @@
 {
-    "testuser1003@spce.test": {
+    "X_testuser1003@dom.invite_concurrent_max_per_account.test": {
         "concurrent_max_per_account": 2
     },
-    "testuser1004@spce.test": {
+    "X_testuser1004@dom.invite_concurrent_max_per_account.test": {
         "concurrent_max_per_account": 2
     }
 }

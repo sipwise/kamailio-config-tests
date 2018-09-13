@@ -1,8 +1,8 @@
 ---
-testuser1003@spce.test:
+C_testuser1003@dom.incoming_hih.test:
   destinations:
     destinations:
-      - destination: sip:4311002@spce.test
+      - destination: sip:4311002@dom.incoming_hih.test
         priority: 0
         timeout: 25
     name: dest1003

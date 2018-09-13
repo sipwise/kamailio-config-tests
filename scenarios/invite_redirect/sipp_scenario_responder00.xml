@@ -14,7 +14,7 @@
       [last_To:];tag=[pid]SIPpTag01[call_number]
       [last_Call-ID:]
       [last_CSeq:]
-      Contact: <sip:testuser1004@spce.test;transport=[transport]>
+      Contact: <sip:AJ_testuser1004@dom.invite_redirect.test;transport=[transport]>
       Content-Length: 0
 
     ]]>

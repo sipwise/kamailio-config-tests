@@ -1,11 +1,11 @@
 test_uuid: incoming_peer
 domains:
-  'spce.test':
+  'dom.incoming_peer.test':
     reseller_id: 1
 customers:
-  'customer.test':
+  'cst.incoming_peer.test':
     contacts:
-      - email: "customer.test@spce.test"
+      - email: "cst.incoming_peer.test@dom.incoming_peer.test"
         reseller_id: 1
     details:
       status: 'active'
@@ -13,19 +13,19 @@ customers:
       billing_profile_id: 1
       reseller_id: 1
 subscribers:
-  spce.test:
-    testuser1003:
-      customer: 'customer.test'
-      password: testuser
+  dom.incoming_peer.test:
+    D_testuser1003:
+      customer: 'cst.incoming_peer.test'
+      password: D_testuser
       cc: 43
-      ac: 1
+      ac: 04
       sn: 1003
 scenarios:
-  - ip: 127.0.2.1
+  - ip: 127.4.2.1
     username: 004321001
-    domain: 127.0.2.1
+    domain: 127.4.2.1
     responders:
-      - ip: 127.1.0.1
-        username: testuser1003
-        domain: spce.test
+      - ip: 127.4.10.1
+        username: D_testuser1003
+        domain: dom.incoming_peer.test
         register: yes

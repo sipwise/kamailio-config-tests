@@ -12,17 +12,17 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - '^SIP/2.0 183 Progress'
-  - 'From: <sip:testuser1002@'
-  - 'To: <sip:testuser1003@'
+  - 'From: <sip:K_testuser1002@'
+  - 'To: <sip:K_testuser1003@'
   - 'CSeq: 2 INVITE'
-  - 'Contact: <sip:(earlyannounce@)?127.0.0.1:5080(;transport=udp)?>'
+  - 'Contact: <sip:(earlyannounce@)?127.11.0.1:5080(;transport=udp)?>'
   - 'Content-Type: application/sdp'
   - 'Content-Length: \d+'
 sip_out:
   - [
       '^SIP/2.0 183 Progress',
-      'Contact: <sip:(earlyannounce@)?127.0.0.1:5080(;transport=udp)?>',
+      'Contact: <sip:(earlyannounce@)?127.11.0.1:5080(;transport=udp)?>',
       'Content-Type: application/sdp',
       'Content-Length: \d+',
-      'P-Out-Socket: udp:127.0.0.1:5060'
+      'P-Out-Socket: udp:127.11.0.1:5060'
     ]

@@ -1,11 +1,11 @@
 test_uuid: invite_peerout
 domains:
-  'spce.test':
+  'dom.invite_peerout.test':
     reseller_id: 1
 customers:
-  'customer.test':
+  'cst.invite_peerout.test':
     contacts:
-      - email: "customer.test@spce.test"
+      - email: "cst.invite_peerout.test@dom.invite_peerout.test"
         reseller_id: 1
     details:
       status: 'active'
@@ -13,21 +13,21 @@ customers:
       billing_profile_id: 1
       reseller_id: 1
 subscribers:
-  spce.test:
-    testuser1002:
-      customer: 'customer.test'
-      password: testuser
+  dom.invite_peerout.test:
+    AE_testuser1002:
+      customer: 'cst.invite_peerout.test'
+      password: AE_testuser
       cc: 43
-      ac: 1
+      ac: 31
       sn: 1002
 scenarios:
-  - ip: 127.126.0.1
-    username: testuser1002
-    domain: spce.test
+  - ip: 127.31.126.1
+    username: AE_testuser1002
+    domain: dom.invite_peerout.test
     responders:
-      - ip: 127.0.2.1
+      - ip: 127.31.2.1
         number: 004321001
         username: 004321001
-        domain: spce.test
-        peer_host: peer_00_host0
+        domain: dom.invite_peerout.test
+        peer_host: AE_peer_00_host0
         register: no

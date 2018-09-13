@@ -15,12 +15,12 @@ flow:
   - start|ROUTE_FIND_CALLER:
   - start|ROUTE_AUTH:
   - start|ROUTE_AUTH_HELPER:
-      $fd: spce.test
-      $var(realm_user): testuser1001
-      $var(realm_domain): spce.test
+      $fd: dom.lock_ported.test
+      $var(realm_user): AR_testuser1001
+      $var(realm_domain): dom.lock_ported.test
   - return|ROUTE_AUTH_HELPER:
-      $avp(orig_acc_caller_user): ['testuser1001']
-      $avp(orig_acc_caller_domain): ['spce.test']
+      $avp(orig_acc_caller_user): ['AR_testuser1001']
+      $avp(orig_acc_caller_domain): ['dom.lock_ported.test']
   - start|ROUTE_ADD_CALLINFO_REPLY:
   - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
   - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
@@ -73,28 +73,28 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^INVITE sip:testuser1004@'
-  - 'Contact: sip:testuser1001@'
+  - '^INVITE sip:AR_testuser1004@'
+  - 'Contact: sip:AR_testuser1001@'
   - 'CSeq: 2 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
-  - 'Proxy-Authorization: Digest username="testuser1001"'
+  - 'Proxy-Authorization: Digest username="AR_testuser1001"'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: 2 INVITE',
-      'From: <sip:testuser1001@',
-      'To: <sip:testuser1004@'
+      'From: <sip:AR_testuser1001@',
+      'To: <sip:AR_testuser1004@'
     ]
   - [
       '^SIP/2.0 101 Connecting',
       'CSeq: 2 INVITE',
-      'From: <sip:testuser1001@',
-      'To: <sip:testuser1004@'
+      'From: <sip:AR_testuser1001@',
+      'To: <sip:AR_testuser1004@'
     ]
   - [
       '^SIP/2.0 403 Caller locked',
       'CSeq: 2 INVITE',
-      'From: <sip:testuser1001@',
-      'To: <sip:testuser1004@'
+      'From: <sip:AR_testuser1001@',
+      'To: <sip:AR_testuser1004@'
     ]

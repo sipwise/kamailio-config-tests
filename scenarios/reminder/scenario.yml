@@ -1,11 +1,11 @@
 test_uuid: reminder
 domains:
-  'spce.test':
+  'dom.reminder.test':
     reseller_id: 1
 customers:
-  'customer.test':
+  'cst.reminder.test':
     contacts:
-      - email: "customer.test@spce.test"
+      - email: "cst.reminder.test@dom.reminder.test"
         reseller_id: 1
     details:
       status: 'active'
@@ -13,26 +13,26 @@ customers:
       billing_profile_id: 1
       reseller_id: 1
 subscribers:
-  spce.test:
-    testuser1003:
-      customer: 'customer.test'
-      password: testuser
+  dom.reminder.test:
+    AX_testuser1003:
+      customer: 'cst.reminder.test'
+      password: AX_testuser
       cc: 43
-      ac: 1
+      ac: 50
       sn: 1003
-    testuser1001:
-      customer: 'customer.test'
-      password: testuser
+    AX_testuser1001:
+      customer: 'cst.reminder.test'
+      password: AX_testuser
       cc: 43
-      ac: 1
+      ac: 50
       sn: 1001
 scenarios:
-  - ip: 127.126.0.1
-    domain: spce.test
-    username: testuser1001
+  - ip: 127.50.126.1
+    domain: dom.reminder.test
+    username: AX_testuser1001
     responders:
-      - ip: 127.1.0.1
-        domain: spce.test
+      - ip: 127.50.10.1
+        domain: dom.reminder.test
         register: no
-        username: testuser1003
+        username: AX_testuser1003
         active: no

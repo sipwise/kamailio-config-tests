@@ -1,11 +1,11 @@
 {
-    "testuser1002@spce.test": {
+    "W_testuser1002@dom.invite_concurrent_max_out_per_account.test": {
         "concurrent_max_out_per_account": 1
     },
-    "peer_00_host0": {
+    "W_peer_00_host0": {
         "concurrent_max": 10
     },
-    "peer_01_host0": {
+    "W_peer_01_host0": {
         "concurrent_max": 10
     }
 }

@@ -1,11 +1,11 @@
 test_uuid: auth_fail
 domains:
-  'spce.test':
+  'dom.auth_fail.test':
     reseller_id: 1
 customers:
-  'customer.test':
+  'cst.auth_fail.test':
     contacts:
-      - email: "customer.test@spce.test"
+      - email: "cst.auth_fail.test@dom.auth_fail.test"
         reseller_id: 1
     details:
       status: 'active'
@@ -13,21 +13,21 @@ customers:
       billing_profile_id: 1
       reseller_id: 1
 subscribers:
-  spce.test:
-    testuser1003:
-      customer: 'customer.test'
-      password: testuser
+  dom.auth_fail.test:
+    A_testuser1003:
+      customer: 'cst.auth_fail.test'
+      password: A_testuser
       cc: 43
-      ac: 1
+      ac: 01
       sn: 1003
 scenarios:
   - ip: 127.126.254.1
-    domain: spce.test
-    username: testuser1003
+    domain: dom.auth_fail.test
+    username: A_testuser1003
     password_wrong: yes
     responders:
-      - ip: 127.1.0.1
-        domain: spce.test
+      - ip: 127.1.10.1
+        domain: dom.auth_fail.test
         register: no
-        username: testuser1003
+        username: A_testuser1003
         active: no

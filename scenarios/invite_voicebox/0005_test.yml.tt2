@@ -51,10 +51,10 @@ flow:
   - return|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_SET_CALLER_DIALOG:
       $avp(lua_dlg_profile): [
-        "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% spce_test.testuser1001.uuid %]",
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1001.uuid %]",
+        "totalaccountout:[% cst.invite_voicebox.test.id %]",
+        "totaluserout:[% dom.invite_voicebox.test.AP_testuser1001.uuid %]",
+        "totalaccount:[% cst.invite_voicebox.test.id %]",
+        "totaluser:[% dom.invite_voicebox.test.AP_testuser1001.uuid %]",
         "peer:voicebox",
         "local"
       ]
@@ -100,35 +100,35 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
       $avp(lua_dlg_profile): [
-        "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% spce_test.testuser1001.uuid %]",
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1001.uuid %]",
+        "totalaccountout:[% cst.invite_voicebox.test.id %]",
+        "totaluserout:[% dom.invite_voicebox.test.AP_testuser1001.uuid %]",
+        "totalaccount:[% cst.invite_voicebox.test.id %]",
+        "totaluser:[% dom.invite_voicebox.test.AP_testuser1001.uuid %]",
         "peer:voicebox",
         "local"
       ]
 sip_in:
   - '^INVITE sip:vmu4311001@voicebox.local SIP/2.0'
-  - 'Contact: <sip:127.0.0.1:5080(;transport=udp)?>'
+  - 'Contact: <sip:127.42.0.1:5080(;transport=udp)?>'
   - 'CSeq: \d+ INVITE'
   - 'Content-Type: application/sdp'
-  - 'P-Caller-UUID: [% spce_test.testuser1001.uuid %]'
+  - 'P-Caller-UUID: [% dom.invite_voicebox.test.AP_testuser1001.uuid %]'
   - 'P-First-Caller-UPN: 4311002'
   - 'P-First-Caller-NPN: 4311002'
-  - 'P-Acc-Caller-User: testuser1001'
+  - 'P-Acc-Caller-User: AP_testuser1001'
   - 'P-Acc-State: cfu'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: \d+ INVITE',
-      'From: <sip:testuser1002@',
-      'To: <sip:testuser1001@'
+      'From: <sip:AP_testuser1002@',
+      'To: <sip:AP_testuser1001@'
     ]
   - [
       '^INVITE sip:vmu4311001@voicebox.local SIP/2.0',
       'CSeq: \d+ INVITE',
       'From: <sip:4311002@',
-      'To: <sip:testuser1001@',
-      'Contact: <sip:127.0.0.1:5080(;transport=udp)?>',
+      'To: <sip:AP_testuser1001@',
+      'Contact: <sip:127.42.0.1:5080(;transport=udp)?>',
       'Content-Type: application/sdp'
     ]

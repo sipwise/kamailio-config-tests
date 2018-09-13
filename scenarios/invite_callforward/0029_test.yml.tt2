@@ -49,10 +49,10 @@ flow:
   - return|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_SET_CALLEE_DIALOG:
       $avp(lua_dlg_profile): [
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1005.uuid %]",
-        "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1005.uuid %]"
+        "totalaccount:[% cst.invite_callforward.test.id %]",
+        "totaluser:[% dom.invite_callforward.test.T_testuser1005.uuid %]",
+        "account:[% cst.invite_callforward.test.id %]",
+        "user:[% dom.invite_callforward.test.T_testuser1005.uuid %]"
       ]
   - start|ROUTE_BLOCK_IN:
   - return|ROUTE_BLOCK_IN:
@@ -87,18 +87,18 @@ flow:
   - return|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_SET_CALLER_DIALOG:
       $avp(lua_dlg_profile): [
-        "accountout:[% customer_test.id %]",
-        "userout:[% spce_test.testuser1004.uuid %]",
-        "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1004.uuid %]",
-        "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% spce_test.testuser1004.uuid %]",
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1004.uuid %]",
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1005.uuid %]",
-        "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1005.uuid %]"
+        "accountout:[% cst.invite_callforward.test.id %]",
+        "userout:[% dom.invite_callforward.test.T_testuser1004.uuid %]",
+        "account:[% cst.invite_callforward.test.id %]",
+        "user:[% dom.invite_callforward.test.T_testuser1004.uuid %]",
+        "totalaccountout:[% cst.invite_callforward.test.id %]",
+        "totaluserout:[% dom.invite_callforward.test.T_testuser1004.uuid %]",
+        "totalaccount:[% cst.invite_callforward.test.id %]",
+        "totaluser:[% dom.invite_callforward.test.T_testuser1004.uuid %]",
+        "totalaccount:[% cst.invite_callforward.test.id %]",
+        "totaluser:[% dom.invite_callforward.test.T_testuser1005.uuid %]",
+        "account:[% cst.invite_callforward.test.id %]",
+        "user:[% dom.invite_callforward.test.T_testuser1005.uuid %]"
       ]
   - start|ROUTE_ACC_CALLER:
   - return|ROUTE_ACC_CALLER:
@@ -157,41 +157,41 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
       $avp(lua_dlg_profile): [
-        "accountout:[% customer_test.id %]",
-        "userout:[% spce_test.testuser1004.uuid %]",
-        "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1004.uuid %]",
-        "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% spce_test.testuser1004.uuid %]",
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1004.uuid %]",
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1005.uuid %]",
-        "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1005.uuid %]"
+        "accountout:[% cst.invite_callforward.test.id %]",
+        "userout:[% dom.invite_callforward.test.T_testuser1004.uuid %]",
+        "account:[% cst.invite_callforward.test.id %]",
+        "user:[% dom.invite_callforward.test.T_testuser1004.uuid %]",
+        "totalaccountout:[% cst.invite_callforward.test.id %]",
+        "totaluserout:[% dom.invite_callforward.test.T_testuser1004.uuid %]",
+        "totalaccount:[% cst.invite_callforward.test.id %]",
+        "totaluser:[% dom.invite_callforward.test.T_testuser1004.uuid %]",
+        "totalaccount:[% cst.invite_callforward.test.id %]",
+        "totaluser:[% dom.invite_callforward.test.T_testuser1005.uuid %]",
+        "account:[% cst.invite_callforward.test.id %]",
+        "user:[% dom.invite_callforward.test.T_testuser1005.uuid %]"
       ]
 sip_in:
   - '^INVITE sip:4311005@'
-  - 'Contact: <sip:(testuser1003@)?127.0.0.1:5080(;transport=udp)?>'
+  - 'Contact: <sip:(T_testuser1003@)?127.20.0.1:5080(;transport=udp)?>'
   - 'CSeq: \d+ INVITE'
   - 'Content-Type: application/sdp'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: \d+ INVITE',
-      'From: <sip:testuser1002@',
-      'To: <sip:testuser1004@'
+      'From: <sip:T_testuser1002@',
+      'To: <sip:T_testuser1004@'
     ]
   - [
-      '^INVITE sip:testuser1005@',
+      '^INVITE sip:T_testuser1005@',
       'CSeq: \d+ INVITE',
       'From: <sip:4311002@',
-      'To: <sip:testuser1004@',
+      'To: <sip:T_testuser1004@',
       'Content-Type: application/sdp',
-      'P-Callee-UUID: [% spce_test.testuser1005.uuid %]',
+      'P-Callee-UUID: [% dom.invite_callforward.test.T_testuser1005.uuid %]',
       'P-Asserted-Identity: <sip:4311002@',
       'P-App-Name: sbc',
-      'P-NGCP-Caller-Info: <sip:testuser1004@',
+      'P-NGCP-Caller-Info: <sip:T_testuser1004@',
       'P-NGCP-Callee-Info: <sip:4311005@',
       'Max-Forwards: 69'
     ]
