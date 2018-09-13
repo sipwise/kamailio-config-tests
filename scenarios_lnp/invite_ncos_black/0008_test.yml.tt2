@@ -11,7 +11,7 @@ flow:
   - return|ROUTE_LOCAL:
 sip_in:
   - '^ACK sip:43999200@'
-  - 'From: <sip:testuser1002@'
+  - 'From: <sip:D_testuser1002@'
   - 'To: <sip:43999200@'
   - 'CSeq: 2 ACK'
   - 'Max-Forwards: 69'
