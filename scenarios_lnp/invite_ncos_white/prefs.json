@@ -1,12 +1,12 @@
 {
-    "@spce.test": {
+    "@dom.invite_ncos_white.test": {
         "lnp_for_local_sub": true,
         "ncos": "ncos_white"
     },
-    "peer_00_host0": {
+    "E_peer_00_host0": {
         "concurrent_max": 1
     },
-    "peer_00_host1": {
+    "E_peer_00_host1": {
         "concurrent_max": 1
     }
 }

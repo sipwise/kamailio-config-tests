@@ -1,11 +1,11 @@
 test_uuid: invite_ncos_black
 domains:
-  'spce.test':
+  'dom.invite_ncos_black.test':
     reseller_id: 1
 customers:
-  'customer.test':
+  'cst.invite_ncos_black.test':
     contacts:
-      - email: "customer.test@spce.test"
+      - email: "cst.invite_ncos_black.test@dom.invite_ncos_black.test"
         reseller_id: 1
     details:
       status: 'active'
@@ -13,49 +13,49 @@ customers:
       billing_profile_id: 1
       reseller_id: 1
 subscribers:
-  spce.test:
-    testuser1001:
-      customer: 'customer.test'
-      password: testuser
+  dom.invite_ncos_black.test:
+    3_D_testuser1001:
+      customer: 'cst.invite_ncos_black.test'
+      password: 3_D_testuser
       cc: 43
-      ac: 1
+      ac: 3
       sn: 1001
-    testuser1002:
-      customer: 'customer.test'
-      password: testuser
+    3_D_testuser1002:
+      customer: 'cst.invite_ncos_black.test'
+      password: 3_D_testuser
       cc: 43
-      ac: 1
+      ac: 3
       sn: 1002
 scenarios:
   - ip: 127.126.0.1
-    username: testuser1002
-    domain: spce.test
+    username: 3_D_testuser1002
+    domain: dom.invite_ncos_black.test
     responders:
       - ip: 127.0.2.1
         number: 43999100
-        username: testuser1001
-        domain: spce.test
-        peer_host: peer_00_host0
+        username: 3_D_testuser1001
+        domain: dom.invite_ncos_black.test
+        peer_host: 3_D_peer_00_host0
         register: no
         active: no
   - ip: 127.126.0.2
-    username: testuser1002
-    domain: spce.test
+    username: 3_D_testuser1002
+    domain: dom.invite_ncos_black.test
     responders:
       - ip: 127.0.2.1
         number: 43999200
-        username: testuser1001
-        domain: spce.test
-        peer_host: peer_00_host0
+        username: 3_D_testuser1001
+        domain: dom.invite_ncos_black.test
+        peer_host: 3_D_peer_00_host0
         register: no
         active: no
   - ip: 127.126.0.3
-    username: testuser1002
-    domain: spce.test
+    username: 3_D_testuser1002
+    domain: dom.invite_ncos_black.test
     responders:
       - ip: 127.0.2.1
         number: 43999300
-        username: testuser1001
-        domain: spce.test
-        peer_host: peer_00_host0
+        username: 3_D_testuser1001
+        domain: dom.invite_ncos_black.test
+        peer_host: 3_D_peer_00_host0
         register: no

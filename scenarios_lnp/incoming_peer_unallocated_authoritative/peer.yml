@@ -1,25 +1,25 @@
 ---
-peer_00:
+2_peer_00:
   contact:
-    company: peer_00
-    email: peer_00@host0.not
+    company: 2_peer_00
+    email: 2_peer_00@host0.not
   contract:
     billing_profile_id: 1
     status: active
     type: sippeering
   groups:
-    - name: peer_00_group
+    - name: 2_peer_00_group
       priority: 1
       description:
   inboundrules:
-    - group_id: peer_00_group
+    - group_id: 2_peer_00_group
       field: "ruri_uri"
       pattern: '.*'
       priority: 50
       enabled: 1
   hosts:
-    - group_id: peer_00_group
-      name: peer_00_host0
+    - group_id: 2_peer_00_group
+      name: 2_peer_00_host0
       ip: 127.0.2.1
       port: 51602
       host:

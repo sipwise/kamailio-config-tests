@@ -1,6 +1,6 @@
 cdr:
-  - source_user: 'testuser1002'
-    source_domain: 'spce.test'
+  - source_user: 'F_testuser1002'
+    source_domain: 'dom.invite_peerout.test'
     source_cli: '4311002'
     destination_user: '0043test28881001'
     destination_domain: '127.0.2.1'

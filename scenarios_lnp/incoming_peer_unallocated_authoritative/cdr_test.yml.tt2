@@ -3,7 +3,7 @@ cdr:
     source_domain: '127.0.2.1'
     source_cli: '004411001'
     destination_user: '4321001'
-    destination_domain: 'spce.test'
+    destination_domain: 'dom.incoming_peer_unallocated_authoritative.test'
     destination_user_dialed: '4321001'
     call_type: 'call'
     call_status: 'offline'

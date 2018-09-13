@@ -20,7 +20,7 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - '^INVITE sip:43999100@'
-  - 'From: <sip:testuser1002'
+  - 'From: <sip:E_testuser1002'
   - 'To: <sip:43999100@'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'

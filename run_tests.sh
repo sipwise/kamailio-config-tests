@@ -18,20 +18,23 @@ SKIP_CAPTURE=false
 SKIP_RETRANS=false
 MEMDBG=false
 CDR=false
+PARALLEL=false
 START_TIME=$(date +%s)
 error_flag=0
 
 usage() {
   echo "Usage: run_test.sh [-p PROFILE] [-C] [-t]"
-  echo "-p CE|PRO default is CE"
-  echo "-l print available SCENARIOS in GROUP"
-  echo "-C skips configuration of the environment"
-  echo "-K capture messages with tcpdump"
-  echo "-x set GROUP scenario. Default: scenarios"
-  echo "-t set timeout in secs for pid_watcher.py [PRO]. Default: 300"
-  echo "-r fix retransmission issues"
-  echo "-c export CDRs at the end of the test"
-  echo "-h this help"
+  echo "Options:"
+  echo -e "\t-p CE|PRO default is CE"
+  echo -e "\t-l print available SCENARIOS in GROUP"
+  echo -e "\t-C skips configuration of the environment"
+  echo -e "\t-K capture messages with tcpdump"
+  echo -e "\t-x set GROUP scenario. Default: scenarios"
+  echo -e "\t-t set timeout in secs for pid_watcher.py [PRO]. Default: 300"
+  echo -e "\t-r fix retransmission issues"
+  echo -e "\t-c export CDRs at the end of the test"
+  echo -e "\t-L execute scenarios in parallel"
+  echo -e "\t-h this help"
 
   echo "BASE_DIR:${BASE_DIR}"
   echo "BIN_DIR:${BIN_DIR}"
@@ -62,7 +65,7 @@ cfg_debug_off() {
     echo "$(date) - Removed apicert.pem"
     rm -f "${BASE_DIR}/apicert.pem"
     echo "$(date) - Setting config debug off"
-    "${BIN_DIR}/config_debug.pl" -g "${GROUP}" off ${DOMAIN}
+    "${BIN_DIR}/config_debug.pl" -g "${GROUP}" off "${DOMAIN}"      # TODO: why DOMAIN is necessary here?????
     if ! ngcpcfg apply "config debug off via kamailio-config-tests" ; then
       echo "$(date) - ngcpcfg apply returned $?"
       error_flag=4
@@ -71,7 +74,97 @@ cfg_debug_off() {
   fi
 }
 
-while getopts 'hlCcp:Kx:t:rm' opt; do
+serial_execution() {
+  if "${SKIP_CAPTURE}" ; then
+    echo "$(date) - enable capture"
+    OPTS+=(-K)
+  fi
+
+  for t in ${SCENARIOS}; do
+    echo "$(date) - Run [${GROUP}/${PROFILE}]: $t ================================================="
+    log_temp="${LOG_DIR}/${t}"
+    if [ -d "${log_temp}" ]; then
+      echo "$(date) - Clean log dir"
+      rm -rf "${log_temp}"
+    fi
+
+    DOMAIN="dom.${t}.test"
+    
+    if ! "${BIN_DIR}/check.sh" "${OPTS[@]}" -d "${DOMAIN}" -p "${PROFILE}" -s "${GROUP}" "$t" ; then
+      echo "ERROR: $t"
+      error_flag=1
+    fi
+    echo "$(date) - ================================================================================="
+  done
+}
+
+parallel_execution() {
+  if "${SKIP_CAPTURE}" ; then
+    capture
+  fi
+
+  echo "$(date) - Restart log files"
+  if ! "${BIN_DIR}/restart_log.sh" ; then
+    error_helper "Restart error" 16
+  fi
+
+  for t in ${SCENARIOS}; do
+    echo "$(date) - Run [${GROUP}/${PROFILE}]: $t ================================================="
+    log_temp="${LOG_DIR}/${t}"
+    if [ -d "${log_temp}" ]; then
+      echo "$(date) - Clean log dir"
+      rm -rf "${log_temp}"
+    fi
+
+    DOMAIN="dom.${t}.test"
+    
+    # TODO: logs should be saved somewhere and then moved in the proper directory.....
+    #"${BIN_DIR}/check.sh" "${OPTS[@]}" -d ${DOMAIN} -p "${PROFILE}" -s "${GROUP}" "$t" > "${log_temp}/execution.log" 2>&1 &
+    "${BIN_DIR}/check.sh" "${OPTS[@]}" -d "${DOMAIN}" -p "${PROFILE}" -s "${GROUP}" "$t" > "/root/${t}_execution.log" 2>&1 &
+
+    echo "$(date) - ================================================================================="
+
+    sleep 2
+  done
+
+  while true; do
+    if ! ps -C sipp &> /dev/null ; then
+      break
+    fi
+  done
+
+  # TODO: check if some SIPP process is still running before stop everything...
+
+  if "${SKIP_CAPTURE}" ; then
+    stop_capture
+  fi
+}
+
+capture() {
+  echo "$(date) - Begin capture"
+  for inter in $(ip link | grep '^[0-9]' | cut -d: -f2 | sed 's/ //' | xargs); do
+    tcpdump -i "${inter}" -n -s 65535 -w "${LOG_DIR}/traces_${inter}.pcap" &
+    capture_pid="$capture_pid ${inter}:$!"
+  done
+}
+
+stop_capture() {
+  local inter=""
+  local temp_pid=""
+  if [ -n "${capture_pid}" ]; then
+    for temp in ${capture_pid}; do
+      inter=$(echo "$temp"|cut -d: -f1)
+      temp_pid=$(echo "$temp"|cut -d: -f2)
+      #echo "inter:${inter} temp_pid:${temp_pid}"
+      if ps -p"${temp_pid}" &> /dev/null ; then
+        echo "$(date) - End ${inter}[$temp_pid] capture"
+        kill -15 "${temp_pid}"
+      fi
+    done
+  fi
+}
+
+while getopts 'hlCcp:Kx:t:rmL' opt; do
   case $opt in
     h) usage; exit 0;;
     l) SHOW_SCENARIOS=true;;
@@ -83,6 +176,7 @@ while getopts 'hlCcp:Kx:t:rm' opt; do
     r) SKIP_RETRANS=true;;
     c) CDR=true;;
     m) MEMDBG=true;;
+    L) PARALLEL=true;;
   esac
 done
 shift $((OPTIND - 1))
@@ -128,7 +222,7 @@ mkdir -p "${MLOG_DIR}" "${LOG_DIR}"
 
 if ! "${SKIP}" ; then
   echo "$(date) - Setting config debug on"
-  "${BIN_DIR}/config_debug.pl" -g "${GROUP}" on ${DOMAIN}
+  "${BIN_DIR}/config_debug.pl" -g "${GROUP}" on "${DOMAIN}"      # TODO: why DOMAIN is necessary here?????
   if [ "${PROFILE}" == "PRO" ]; then
     echo "$(date) - Exec pid_watcher with timeout[$TIMEOUT]"
     ( timeout "${TIMEOUT}" "${BIN_DIR}/pid_watcher.py" ${PIDWATCH_OPTS} )&
@@ -162,11 +256,6 @@ fi
 
 get_scenarios
 
-if "${SKIP_CAPTURE}" ; then
-  echo "$(date) - enable capture"
-  OPTS+=(-K)
-fi
-
 if "${MEMDBG}" ; then
   echo "$(date) - enable memdbg"
   OPTS+=(-m)
@@ -181,19 +270,13 @@ if "${CDR}" ; then
   echo "$(date) - enable cdr export at the end of the execution"
 fi
 
-for t in ${SCENARIOS}; do
-  echo "$(date) - Run [${GROUP}/${PROFILE}]: $t ================================================="
-  log_temp="${LOG_DIR}/${t}"
-  if [ -d "${log_temp}" ]; then
-    echo "$(date) - Clean log dir"
-    rm -rf "${log_temp}"
-  fi
-  if ! "${BIN_DIR}/check.sh" "${OPTS[@]}" -d ${DOMAIN} -p "${PROFILE}" -s "${GROUP}" "$t" ; then
-    echo "ERROR: $t"
-    error_flag=1
-  fi
-  echo "$(date) - ================================================================================="
-done
+if "${PARALLEL}" ; then
+  echo "$(date) - parallel execution of scenarios"
+  parallel_execution
+else
+  echo "$(date) - standard execution of scenarios"
+  serial_execution
+fi
 
 if "${CDR}" ; then
   sleep 2
