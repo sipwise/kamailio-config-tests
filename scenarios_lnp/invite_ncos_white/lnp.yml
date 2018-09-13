@@ -1,13 +1,13 @@
 ---
-lnp_test_00:
+E_lnp_test_00:
   data:
-    name: lnp_test_00
-    prefix: AA
+    name: E_lnp_test_00
+    prefix: EE
   numbers:
-    - number: '439992'
-      routing_number: '4318881001'
+    - number: '435552'
+      routing_number: '4355551001'
   ncos:
-    - level: ncos_black
+    - level: ncos_black_5
       reseller_id: 1
-    - level: ncos_white
+    - level: ncos_white_5
       reseller_id: 1

@@ -12,34 +12,34 @@ flow:
   - start|dialog:start:
   - return|dialog:start:
       $avp(lua_dlg_profile): [
-        "accountout:[% customer_test.id %]",
-        "userout:[% spce_test.testuser1002.uuid %]",
-        "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1002.uuid %]",
-        "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% spce_test.testuser1002.uuid %]",
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1002.uuid %]",
+        "accountout:[% cst.invite.test.id %]",
+        "userout:[% dom.invite.test.C_testuser1002.uuid %]",
+        "account:[% cst.invite.test.id %]",
+        "user:[% dom.invite.test.C_testuser1002.uuid %]",
+        "totalaccountout:[% cst.invite.test.id %]",
+        "totaluserout:[% dom.invite.test.C_testuser1002.uuid %]",
+        "totalaccount:[% cst.invite.test.id %]",
+        "totaluser:[% dom.invite.test.C_testuser1002.uuid %]",
         "relay",
-        "peerout:[% peer_00_host0.id %]",
-        "peer:[% peer_00_host0.id %]",
+        "peerout:[% C_peer_00_host0.id %]",
+        "peer:[% C_peer_00_host0.id %]",
         "outgoing",
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1001.uuid %]",
+        "totalaccount:[% cst.invite.test.id %]",
+        "totaluser:[% dom.invite.test.C_testuser1001.uuid %]",
         "total",
-        "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1001.uuid %]"
+        "account:[% cst.invite.test.id %]",
+        "user:[% dom.invite.test.C_testuser1001.uuid %]"
       ]
   - return|dialog:start:
 sip_in:
   - '^SIP/2.0 200 OK'
   - 'CSeq: 2 INVITE'
-  - 'From: <sip:4311002@'
-  - 'To: <sip:4311001@'
+  - 'From: <sip:4331002@'
+  - 'To: <sip:4333001@'
 sip_out:
   - [
       '^SIP/2.0 200 OK',
       'CSeq: 2 INVITE',
-      'From: <sip:testuser1002@',
-      'To: <sip:4311001@',
+      'From: <sip:C_testuser1002@',
+      'To: <sip:4333001@',
     ]
