@@ -15,12 +15,12 @@ flow:
   - start|ROUTE_FIND_CALLER:
   - start|ROUTE_AUTH:
   - start|ROUTE_AUTH_HELPER:
-      $fd: spce.test
-      $var(realm_user): testuser1002
-      $var(realm_domain): spce.test
+      $fd: dom.invite_ncos_white.test
+      $var(realm_user): 5_testuser1002
+      $var(realm_domain): dom.invite_ncos_white.test
   - return|ROUTE_AUTH_HELPER:
-      $avp(orig_acc_caller_user): ['testuser1002']
-      $avp(orig_acc_caller_domain): ['spce.test']
+      $avp(orig_acc_caller_user): ['5_testuser1002']
+      $avp(orig_acc_caller_domain): ['dom.invite_ncos_white.test']
   - start|ROUTE_ADD_CALLINFO_REPLY:
   - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
   - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
@@ -85,24 +85,24 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - '^INVITE sip:43999300@'
-  - 'Contact: sip:testuser1002@'
+  - 'Contact: sip:5_testuser1002@'
   - 'CSeq: 2 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
-  - 'Proxy-Authorization: Digest username="testuser1002"'
+  - 'Proxy-Authorization: Digest username="5_testuser1002"'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: 2 INVITE',
-      'From: <sip:testuser1002@'
+      'From: <sip:5_testuser1002@'
     ]
   - [
       '^SIP/2.0 101 Connecting',
       'CSeq: 2 INVITE',
-      'From: <sip:testuser1002@'
+      'From: <sip:5_testuser1002@'
     ]
   - [
       '^SIP/2.0 403 Blocked by NCOS level',
       'CSeq: 2 INVITE',
-      'From: <sip:testuser1002@'
+      'From: <sip:5_testuser1002@'
     ]

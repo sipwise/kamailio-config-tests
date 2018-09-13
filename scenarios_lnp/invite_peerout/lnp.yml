@@ -1,8 +1,8 @@
 ---
-lnp_test_00:
+6_lnp_test_00:
   data:
-    name: lnp_test_00
-    prefix: test
+    name: 6_lnp_test_00
+    prefix: 6_test
   numbers:
     - number: '004321001'
       routing_number: '004328881001'

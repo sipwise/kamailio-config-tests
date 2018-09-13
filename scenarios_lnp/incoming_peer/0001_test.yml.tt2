@@ -21,7 +21,7 @@ flow:
   - start|ROUTE_DLG_MANAGE:
   - return|ROUTE_DLG_MANAGE:
   - return|ROUTE_LOAD_PEER_IN_PREF:
-      $avp(lua_dlg_profile): ["peer:[% peer_00_host0.id %]", "total"]
+      $avp(lua_dlg_profile): ["peer:[% 1_peer_00_host0.id %]", "total"]
   - return|ROUTE_FIND_CALLER:
   - start|ROUTE_GET_CALLER_CLI:
   - return|ROUTE_GET_CALLER_CLI:
@@ -42,11 +42,11 @@ flow:
   - return|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_SET_CALLEE_DIALOG:
         $avp(lua_dlg_profile): [
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1003.uuid %]",
-        "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1003.uuid %]",
-        "peer:[% peer_00_host0.id %]",
+        "totalaccount:[% cst.incoming_peer.test.id %]",
+        "totaluser:[% dom.incoming_peer.test.1_testuser1003.uuid %]",
+        "account:[% cst.incoming_peer.test.id %]",
+        "user:[% dom.incoming_peer.test.1_testuser1003.uuid %]",
+        "peer:[% 1_peer_00_host0.id %]",
         "total"
       ]
   - start|ROUTE_BLOCK_IN:
@@ -111,11 +111,11 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
       $avp(lua_dlg_profile): [
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1003.uuid %]",
-        "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1003.uuid %]",
-        "peer:[% peer_00_host0.id %]",
+        "totalaccount:[% cst.incoming_peer.test.id %]",
+        "totaluser:[% dom.incoming_peer.test.1_testuser1003.uuid %]",
+        "account:[% cst.incoming_peer.test.id %]",
+        "user:[% dom.incoming_peer.test.1_testuser1003.uuid %]",
+        "peer:[% 1_peer_00_host0.id %]",
         "total"
       ]
 sip_in:
@@ -140,10 +140,10 @@ sip_out:
       'Content-Type: application/sdp',
       'P-HIH-Cause: 302',
       'P-From-Peer: 1',
-      'P-Caller-UUID: [% spce_test.testuser1003.uuid %]',
+      'P-Caller-UUID: [% dom.incoming_peer.test.1_testuser1003.uuid %]',
       'P-First-Caller-UPN: 004321001',
       'P-First-Caller-NPN: 004321001',
-      'P-Acc-Caller-User: testuser1001',
+      'P-Acc-Caller-User: 1_testuser1001',
       'P-CF-Depth: 1',
       'P-Orig-Callee-Dialed: 4311001',
       'P-App-Param: ;profile=ngcp_cf',

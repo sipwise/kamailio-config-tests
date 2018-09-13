@@ -1,8 +1,8 @@
 {
-    "testuser1002@spce.test": {
+    "6_testuser1002@dom.invite_peerout.test": {
         "rewrite_rule_set": "rw_00"
     },
-    "peer_00_host0": {
+    "6_peer_00_host0": {
         "concurrent_max": 1,
         "rewrite_rule_set": "rw_00",
         "lnp_add_npdi": true
