@@ -1,13 +1,13 @@
 ---
-lnp_test_00:
+D_lnp_test_00:
   data:
-    name: lnp_test_00
-    prefix: AA
+    name: D_lnp_test_00
+    prefix: DD
   numbers:
-    - number: '439992'
-      routing_number: '4318881001'
+    - number: '434442'
+      routing_number: '4344441001'
   ncos:
-    - level: ncos_black
+    - level: ncos_black_4
       reseller_id: 1
-    - level: ncos_white
+    - level: ncos_white_4
       reseller_id: 1
