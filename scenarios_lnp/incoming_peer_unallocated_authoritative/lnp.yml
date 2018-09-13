@@ -1,8 +1,8 @@
 ---
-lnp_test_00:
+B_lnp_test_00:
   data:
-    name: lnp_test_00
-    prefix: test
+    name: B_lnp_test_00
+    prefix: B_test
     authoritative: 1
   numbers:
     - number: '4321001'

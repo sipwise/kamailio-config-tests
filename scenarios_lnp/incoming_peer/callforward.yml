@@ -1,8 +1,8 @@
 ---
-testuser1001@spce.test:
+A_testuser1001spce.test:
   destinations:
     destinations:
-      - destination: sip:4311003@spce.test
+      - destination: sip:4311003spce.test
         priority: 0
         timeout: 2
     name: dest1001
