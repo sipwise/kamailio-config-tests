@@ -15,12 +15,12 @@ flow:
   - start|ROUTE_FIND_CALLER:
   - start|ROUTE_AUTH:
   - start|ROUTE_AUTH_HELPER:
-      $fd: spce.test
-      $var(realm_user): testuser1002
-      $var(realm_domain): spce.test
+      $fd: dom.invite_allowedcli_nonmatch_reject.test
+      $var(realm_user): I_testuser1002
+      $var(realm_domain): dom.invite_allowedcli_nonmatch_reject.test
   - return|ROUTE_AUTH_HELPER:
-      $avp(orig_acc_caller_user): ['testuser1002']
-      $avp(orig_acc_caller_domain): ['spce.test']
+      $avp(orig_acc_caller_user): ['I_testuser1002']
+      $avp(orig_acc_caller_domain): ['dom.invite_allowedcli_nonmatch_reject.test']
   - start|ROUTE_ADD_CALLINFO_REPLY:
   - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
   - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
@@ -57,8 +57,8 @@ flow:
       $avp(caller_clir): ['']
   - start|ROUTE_ACC_CALLEE:
   - return|ROUTE_ACC_CALLEE:
-      $avp(acc_callee_user): ['testuser1003']
-      $avp(acc_callee_domain): ["spce.test"]
+      $avp(acc_callee_user): ['I_testuser1003']
+      $avp(acc_callee_domain): ["dom.invite_allowedcli_nonmatch_reject.test"]
       $avp(acc_callee_user_in): ['']
       $avp(acc_callee_domain_in): ['']
   - return|ROUTE_ACC_FAILURE:
@@ -79,27 +79,27 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - '^INVITE'
-  - 'Contact: sip:testuser1002@'
+  - 'Contact: sip:I_testuser1002@'
   - 'CSeq: 2 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
-  - 'Proxy-Authorization: Digest username="testuser1002"'
+  - 'Proxy-Authorization: Digest username="I_testuser1002"'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: 2 INVITE',
-      'From: "431100222" <sip:testuser1002@',
-      'To: <sip:testuser1003@'
+      'From: "431100222" <sip:I_testuser1002@',
+      'To: <sip:I_testuser1003@'
     ]
   - [
       '^SIP/2.0 101 Connecting',
       'CSeq: 2 INVITE',
-      'From: "431100222" <sip:testuser1002@',
-      'To: <sip:testuser1003@'
+      'From: "431100222" <sip:I_testuser1002@',
+      'To: <sip:I_testuser1003@'
     ]
   - [
       '^SIP/2.0 403 Forbidden',
       'CSeq: 2 INVITE',
-      'From: "431100222" <sip:testuser1002@',
-      'To: <sip:testuser1003@',
+      'From: "431100222" <sip:I_testuser1002@',
+      'To: <sip:I_testuser1003@',
     ]

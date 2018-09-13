@@ -23,17 +23,17 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - '^INVITE'
-  - 'Contact: sip:testuser1002@'
+  - 'Contact: sip:V_testuser1002@'
   - 'CSeq: 3 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
-  - 'Proxy-Authorization: Digest username="testuser1002"'
+  - 'Proxy-Authorization: Digest username="V_testuser1002"'
   - 'a=sendonly'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: 3 INVITE',
-      'From: <sip:testuser1002@',
+      'From: <sip:V_testuser1002@',
       'To: <sip:004321001@'
     ]
   - [
@@ -42,7 +42,7 @@ sip_out:
       'From: <sip:4311002@',
       'To: <sip:004321001@',
       'Content-Type: application/sdp',
-      'Proxy-Authorization: Digest username="testuser1002"',
+      'Proxy-Authorization: Digest username="V_testuser1002"',
       'Max-Forwards: 68',
       'Content-Type: application/sdp',
       'a=sendonly'

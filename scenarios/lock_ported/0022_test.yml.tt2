@@ -10,9 +10,9 @@ flow:
   - start|ROUTE_LOCAL:
   - return|ROUTE_LOCAL:
 sip_in:
-  - 'ACK sip:testuser1004@'
-  - 'From: <sip:testuser1001@spce.test>;tag='
-  - 'To: <sip:testuser1004@spce.test>;tag='
+  - 'ACK sip:AR_testuser1004@'
+  - 'From: <sip:AR_testuser1001@dom.lock_ported.test>;tag='
+  - 'To: <sip:AR_testuser1004@dom.lock_ported.test>;tag='
   - 'CSeq: 2 ACK'
   - 'Max-Forwards: 69'
   - 'Content-Length: 0'

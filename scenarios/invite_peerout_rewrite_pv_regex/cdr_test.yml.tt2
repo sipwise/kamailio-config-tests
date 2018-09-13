@@ -1,10 +1,10 @@
 cdr:
-  - source_user: 'testuser1002'
-    source_domain: 'spce.test'
+  - source_user: 'AI_testuser1002'
+    source_domain: 'dom.invite_peerout_rewrite_pv_regex.test'
     source_cli: '4311002'
     source_user_out: '1002'
     destination_user: '4321001'
-    destination_domain: '127.0.2.1'
+    destination_domain: '127.35.2.1'
     destination_user_dialed: '4321001'
     call_type: 'call'
     call_status: 'ok'

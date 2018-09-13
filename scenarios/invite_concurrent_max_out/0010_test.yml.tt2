@@ -17,6 +17,6 @@ sip_out:
   - [
       '^SIP/2.0 200 OK',
       'CSeq: 3 INVITE',
-      'From: <sip:testuser1002@',
+      'From: <sip:V_testuser1002@',
       'To: <sip:004321001@'
     ]

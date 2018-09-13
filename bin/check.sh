@@ -31,6 +31,7 @@ GRAPH=false
 GRAPH_FAIL=false
 JSON_KAM=false
 CDR=false
+PARALLEL=false
 
 
 # sipwise password for mysql connections
@@ -295,7 +296,9 @@ error_helper() {
   fi
   find "${SCEN_CHECK_DIR}/" -type f -name 'sipp_scenario*errors.log' \
     -exec mv {} "${LOG_DIR}" \;
-  stop_capture
+  if "${CAPTURE}" ; then
+    stop_capture
+  fi
   exit "$2"
 }
 
@@ -388,6 +391,23 @@ copy_logs() {
   cp "${KAMLB_LOG}" "${LOG_DIR}/kamailio-lb.log"
 }
 
+grep_logs() {
+  #Creating the used call-id
+  call_id=NGCP%$(basename "${SCEN_CHECK_DIR}")%
+  # grep the kamailio log
+  grep "${call_id}" "${KAM_LOG}" > "${LOG_DIR}/kamailio.log"
+  if [ -f "${SEMS_LOG}" ] ; then
+    # grep the sems log
+    grep "${call_id}" "${SEMS_LOG}" > "${LOG_DIR}/sems.log"
+  fi
+  if [ -f "${SEMS_PBX_LOG}" ] ; then
+    # grep the sems-pbx log
+    grep "${call_id}" "${SEMS_PBX_LOG}" > "${LOG_DIR}/sems-pbx.log"
+  fi
+  # grep the kamailio-lb log
+  grep "${call_id}" "${KAMLB_LOG}" > "${LOG_DIR}/kamailio-lb.log"
+}
+
 memdbg() {
   if [ -x /usr/share/ngcp-system-tools/kamcmd/memdbg ] ; then
     ngcp-sercmd proxy memdbg all >/dev/null
@@ -416,17 +436,20 @@ run_sipp() {
   echo "$(date) - create ${LOG_DIR}"
   mkdir -p "${LOG_DIR}"
 
+  # TODO: SHOULD WE DELETE LOCATIONS ANS APPEARANCE?????
   delete_locations
   if [ "${PROFILE}" = "PRO" ] ; then
     release_appearance
   fi
 
-  if ! "${BIN_DIR}/restart_log.sh" ; then
-    copy_logs
-    error_helper "Restart error" 16
-  fi
-  if "${CAPTURE}" ; then
-    capture
+  if ! "${PARALLEL}" ; then 
+    if ! "${BIN_DIR}/restart_log.sh" ; then
+      copy_logs
+      error_helper "Restart error" 16
+    fi
+    if "${CAPTURE}" ; then
+      capture
+    fi
   fi
 
   if [ -e "${SCEN_CHECK_DIR}/presence.sh" ]; then
@@ -506,19 +529,26 @@ run_sipp() {
     fi
   done
 
-  if "${CAPTURE}" ; then
-    stop_capture
+  if "${PARALLEL}" ; then
+    grep_logs
+  else
+    if "${CAPTURE}" ; then
+      stop_capture
+    fi
+    copy_logs
   fi
+
   if "${MEMDBG}" ; then
     memdbg
   fi
-  copy_logs
+
   # if any scenario has a log... error
   if [ "$(find "${SCEN_CHECK_DIR}" -name 'sipp_scenario*errors.log' 2>/dev/null|wc -l)" -ne 0 ]; then
     find "${SCEN_CHECK_DIR}/" -type f -name 'sipp_scenario*errors.log' -exec mv {} "${LOG_DIR}" \;
     status=1
   fi
 
+  # TODO: SHOULD WE DELETE LOCATIONS ANS APPEARANCE?????
   delete_locations
   if [ "${PROFILE}" = "PRO" ] ; then
     release_appearance
@@ -591,11 +621,12 @@ usage() {
   echo -e "\t-s scenario group. Default: scenarios"
   echo -e "\t-m enable memdbg csv"
   echo -e "\t-c enable cdr validation"
+  echo -e "\t-L execute scenarios in parallel"
   echo "Arguments:"
   echo -e "\tcheck_name. Scenario name to check. This is the name of the directory on GROUP dir."
 }
 
-while getopts 'hCd:p:Rs:DTPGgrcJKm' opt; do
+while getopts 'hCd:p:Rs:DTPGgrcJKmL' opt; do
   case $opt in
     h) usage; exit 0;;
     C) SKIP=true;;
@@ -613,6 +644,7 @@ while getopts 'hCd:p:Rs:DTPGgrcJKm' opt; do
     J) JSON_KAM=true;;
     m) MEMDBG=true;;
     c) CDR=true;;
+    L) PARALLEL=true;;
   esac
 done
 shift $((OPTIND - 1))

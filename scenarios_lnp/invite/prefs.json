@@ -1,8 +1,8 @@
 {
-    "@spce.test": {
+    "@dom.invite.test": {
         "lnp_for_local_sub": true
     },
-    "peer_00_host0": {
+    "C_peer_00_host0": {
         "concurrent_max": 1
     }
 }

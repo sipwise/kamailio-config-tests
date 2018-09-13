@@ -1,9 +1,9 @@
 cdr:
   - source_user: '004321001'
-    source_domain: '127.0.2.1'
+    source_domain: '127.4.2.1'
     source_cli: '004321001'
-    destination_user: 'testuser1003'
-    destination_domain: 'spce.test'
+    destination_user: 'D_testuser1003'
+    destination_domain: 'dom.incoming_peer.test'
     destination_user_dialed: '4311003'
     call_type: 'call'
     call_status: 'ok'

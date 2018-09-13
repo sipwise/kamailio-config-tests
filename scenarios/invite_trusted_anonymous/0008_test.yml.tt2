@@ -26,13 +26,13 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^BYE sip:127.0.0.1:5080(;prxroute=1)? SIP/2.0'
-  - 'Contact: sip:testuser1002@'
+  - '^BYE sip:127.41.0.1:5080(;prxroute=1)? SIP/2.0'
+  - 'Contact: sip:AO_testuser1002@'
   - 'CSeq: 2 BYE'
   - 'Max-Forwards: 69'
   - 'Content-Length: 0'
   - 'From: "Anonymous" <sip:anonymous@anonymous.invalid>'
-  - 'To: <sip:testuser1003@'
+  - 'To: <sip:AO_testuser1003@'
 
 sip_out:
   - [
@@ -40,16 +40,16 @@ sip_out:
       'CSeq: 2 BYE',
       'Content-Length: 0',
       'From: "Anonymous" <sip:anonymous@anonymous.invalid>',
-      'To: <sip:testuser1003@',
+      'To: <sip:AO_testuser1003@',
       '_:NOT:_P-Asserted-Identity: \w+'
     ]
   - [
-      '^BYE sip:127.0.0.1:5080(;prxroute=1)? SIP/2.0',
-      'Contact: sip:testuser1002@',
+      '^BYE sip:127.41.0.1:5080(;prxroute=1)? SIP/2.0',
+      'Contact: sip:AO_testuser1002@',
       'CSeq: 2 BYE',
       'Max-Forwards: 68',
       'Content-Length: 0',
       'From: "Anonymous" <sip:anonymous@anonymous.invalid>',
-      'To: <sip:testuser1003@',
+      'To: <sip:AO_testuser1003@',
       '_:NOT:_P-Asserted-Identity: \w+'
     ]

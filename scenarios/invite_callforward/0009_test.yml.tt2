@@ -15,12 +15,12 @@ flow:
   - start|ROUTE_FIND_CALLER:
   - start|ROUTE_AUTH:
   - start|ROUTE_AUTH_HELPER:
-      $fd: spce.test
-      $var(realm_user): testuser1002
-      $var(realm_domain): spce.test
+      $fd: dom.invite_callforward.test
+      $var(realm_user): T_testuser1002
+      $var(realm_domain): dom.invite_callforward.test
   - return|ROUTE_AUTH_HELPER:
-      $avp(orig_acc_caller_user): ['testuser1002']
-      $avp(orig_acc_caller_domain): ['spce.test']
+      $avp(orig_acc_caller_user): ['T_testuser1002']
+      $avp(orig_acc_caller_domain): ['dom.invite_callforward.test']
   - start|ROUTE_ADD_CALLINFO_REPLY:
   - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
   - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
@@ -58,11 +58,11 @@ flow:
   - return|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_SET_CALLEE_DIALOG:
       $avp(lua_dlg_profile): [
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1001.uuid %]",
+        "totalaccount:[% cst.invite_callforward.test.id %]",
+        "totaluser:[% dom.invite_callforward.test.T_testuser1001.uuid %]",
         "total",
-        "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1001.uuid %]"
+        "account:[% cst.invite_callforward.test.id %]",
+        "user:[% dom.invite_callforward.test.T_testuser1001.uuid %]"
       ]
   - start|ROUTE_BLOCK_IN:
   - return|ROUTE_BLOCK_IN:
@@ -108,19 +108,19 @@ flow:
   - return|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_SET_CALLER_DIALOG:
       $avp(lua_dlg_profile): [
-        "accountout:[% customer_test.id %]",
-        "userout:[% spce_test.testuser1002.uuid %]",
-        "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1002.uuid %]",
-        "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% spce_test.testuser1002.uuid %]",
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1002.uuid %]",
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1001.uuid %]",
+        "accountout:[% cst.invite_callforward.test.id %]",
+        "userout:[% dom.invite_callforward.test.T_testuser1002.uuid %]",
+        "account:[% cst.invite_callforward.test.id %]",
+        "user:[% dom.invite_callforward.test.T_testuser1002.uuid %]",
+        "totalaccountout:[% cst.invite_callforward.test.id %]",
+        "totaluserout:[% dom.invite_callforward.test.T_testuser1002.uuid %]",
+        "totalaccount:[% cst.invite_callforward.test.id %]",
+        "totaluser:[% dom.invite_callforward.test.T_testuser1002.uuid %]",
+        "totalaccount:[% cst.invite_callforward.test.id %]",
+        "totaluser:[% dom.invite_callforward.test.T_testuser1001.uuid %]",
         "total",
-        "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1001.uuid %]"
+        "account:[% cst.invite_callforward.test.id %]",
+        "user:[% dom.invite_callforward.test.T_testuser1001.uuid %]"
       ]
   - start|BRANCH_ROUTE_FWD_LOOP:
   - start|ROUTE_APPEND_CF_HDRS:
@@ -141,42 +141,42 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^INVITE sip:testuser1001@'
-  - 'Contact: sip:testuser1002@'
+  - '^INVITE sip:T_testuser1001@'
+  - 'Contact: sip:T_testuser1002@'
   - 'CSeq: 2 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
-  - 'Proxy-Authorization: Digest username="testuser1002"'
+  - 'Proxy-Authorization: Digest username="T_testuser1002"'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: 2 INVITE',
-      'From: <sip:testuser1002@',
-      'To: <sip:testuser1001@'
+      'From: <sip:T_testuser1002@',
+      'To: <sip:T_testuser1001@'
     ]
   - [
       '^SIP/2.0 101 Connecting',
       'CSeq: 2 INVITE',
-      'From: <sip:testuser1002@',
-      'To: <sip:testuser1001@',
-      'P-Caller-UUID: [% spce_test.testuser1002.uuid %]'
+      'From: <sip:T_testuser1002@',
+      'To: <sip:T_testuser1001@',
+      'P-Caller-UUID: [% dom.invite_callforward.test.T_testuser1002.uuid %]'
     ]
   - [
       '^INVITE sip:4311003@',
       'CSeq: 2 INVITE',
-      'From: <sip:testuser1002@',
-      'To: <sip:testuser1001@',
+      'From: <sip:T_testuser1002@',
+      'To: <sip:T_testuser1001@',
       'Content-Type: application/sdp',
-      'P-Caller-UUID: [% spce_test.testuser1001.uuid %]',
+      'P-Caller-UUID: [% dom.invite_callforward.test.T_testuser1001.uuid %]',
       'P-First-Caller-UPN: 4311002',
       'P-First-Caller-NPN: 4311002',
-      'P-Acc-Caller-User: testuser1001',
+      'P-Acc-Caller-User: T_testuser1001',
       'P-Acc-State: cfu',
       'P-From-Peer: 0',
       'P-CF-Depth: 1',
       'P-App-Param: ;profile=ngcp_cf',
       'P-App-Name: sbc',
-      'P-NGCP-Forward-Info: <sip:testuser1001@',
+      'P-NGCP-Forward-Info: <sip:T_testuser1001@',
       'P-NGCP-Callee-Info: <sip:4311003@'
     ]
 

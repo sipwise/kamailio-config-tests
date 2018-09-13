@@ -1,8 +1,8 @@
 {
-    "testuser1002@spce.test": {
+    "N_testuser1002@dom.invite_blockin_clir.test": {
         "clir": true
     },
-    "testuser1003@spce.test": {
+    "N_testuser1003@dom.invite_blockin_clir.test": {
         "block_in_list": [
             "4311001"
         ],

@@ -11,12 +11,12 @@ flow:
 sip_in:
   - '^SIP/2.0 180 Ringing'
   - 'CSeq: 2 INVITE'
-  - 'From: <sip:4311002@'
-  - 'To: <sip:004321001@'
+  - 'From: <sip:4371002@'
+  - 'To: <sip:004377001@'
 sip_out:
   - [
       '^SIP/2.0 180 Ringing',
       'CSeq: 2 INVITE',
-      'From: <sip:testuser1002@',
-      'To: <sip:004321001@',
+      'From: <sip:G_testuser1002@',
+      'To: <sip:004377001@',
     ]

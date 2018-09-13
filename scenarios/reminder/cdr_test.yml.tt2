@@ -1,6 +1,6 @@
 cdr:
-  - source_user: 'testuser1001'
-    source_domain: 'spce.test'
+  - source_user: 'AX_testuser1001'
+    source_domain: 'dom.reminder.test'
     source_cli: '4311001'
     destination_user: '\*55\*1420'
     destination_domain: 'vsc.local'

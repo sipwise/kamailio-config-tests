@@ -26,24 +26,24 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^BYE sip:vmu4311001@127.0.0.1:5070 SIP/2.0'
+  - '^BYE sip:vmu4311001@127.42.0.1:5070 SIP/2.0'
   - 'CSeq: \d+ BYE'
   - 'Content-Length: 0'
-  - 'From: <sip:testuser1002@'
-  - 'To: <sip:testuser1001@'
+  - 'From: <sip:AP_testuser1002@'
+  - 'To: <sip:AP_testuser1001@'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: \d+ BYE',
       'Content-Length: 0',
-      'From: <sip:testuser1002@',
-      'To: <sip:testuser1001@'
+      'From: <sip:AP_testuser1002@',
+      'To: <sip:AP_testuser1001@'
     ]
   - [
-      '^BYE sip:vmu4311001@127.0.0.1:5070 SIP/2.0',
+      '^BYE sip:vmu4311001@127.42.0.1:5070 SIP/2.0',
       'CSeq: \d+ BYE',
       'Max-Forwards: 69',
       'Content-Length: 0',
       'From: <sip:4311002@',
-      'To: <sip:testuser1001@'
+      'To: <sip:AP_testuser1001@'
     ]

@@ -12,29 +12,29 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^REGISTER sip:testuser1003@spce.test SIP/2.0'
-  - 'From: <sip:testuser1003@spce.test>;tag='
-  - 'To: <sip:testuser1003@spce.test>'
+  - '^REGISTER sip:AQ_testuser1003@dom.invite_wrong_reg.test SIP/2.0'
+  - 'From: <sip:AQ_testuser1003@dom.invite_wrong_reg.test>;tag='
+  - 'To: <sip:AQ_testuser1003@dom.invite_wrong_reg.test>'
   - 'CSeq: 1 REGISTER'
-  - 'Contact: sip:testuser1003@@127.1.0.1:\d+'
+  - 'Contact: sip:AQ_testuser1003@@127.43.10.1:\d+'
   - 'Expires: 600'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
-      'From: <sip:testuser1003@spce.test>;tag=',
-      'To: <sip:testuser1003@spce.test>',
+      'From: <sip:AQ_testuser1003@dom.invite_wrong_reg.test>;tag=',
+      'To: <sip:AQ_testuser1003@dom.invite_wrong_reg.test>',
       'CSeq: 1 REGISTER',
-      'P-Out-Socket: udp:127.0.0.1:5060',
-      'P-NGCP-Auth-IP: 127.1.0.1',
+      'P-Out-Socket: udp:127.43.0.1:5060',
+      'P-NGCP-Auth-IP: 127.43.10.1',
       'Content-Length: 0'
     ]
   - [
       '^SIP/2.0 401 Unauthorized',
-      'From: <sip:testuser1003@spce.test>;tag=',
-      'To: <sip:testuser1003@spce.test>;tag=',
+      'From: <sip:AQ_testuser1003@dom.invite_wrong_reg.test>;tag=',
+      'To: <sip:AQ_testuser1003@dom.invite_wrong_reg.test>;tag=',
       'CSeq: 1 REGISTER',
-      'P-Out-Socket: udp:127.0.0.1:5060',
-      'P-NGCP-Auth-IP: 127.1.0.1',
+      'P-Out-Socket: udp:127.43.0.1:5060',
+      'P-NGCP-Auth-IP: 127.43.10.1',
       'WWW-Authenticate: Digest',
       'Content-Length: 0'
     ]
