@@ -98,14 +98,14 @@ flow:
   - start|ROUTE_SCA_UPDATE:
   - return|ROUTE_SCA_UPDATE:
   - start|BRANCH_ROUTE_NO_SBC:
-  - start|ROUTE_BRANCH_ACC_RTP:
-  - return|ROUTE_BRANCH_ACC_RTP:
   - start|ROUTE_SET_BRANCH_HDRS:
   - start|ROUTE_PREPARE_UA:
   - return|ROUTE_PREPARE_UA:
   - return|ROUTE_SET_BRANCH_HDRS:
   - start|ROUTE_SET_RUSER:
   - return|ROUTE_SET_RUSER:
+  - start|ROUTE_BRANCH_ACC_RTP:
+  - return|ROUTE_BRANCH_ACC_RTP:
   - start|ROUTE_FILTER_PRACK:
   - return|ROUTE_FILTER_PRACK:
   - start|ROUTE_PREPARE_MOH_PBX:
