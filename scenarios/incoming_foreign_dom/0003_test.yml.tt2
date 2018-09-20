@@ -117,14 +117,14 @@ flow:
   - start|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_SET_CALLEE_DIALOG:
-  - start|ROUTE_BRANCH_ACC_RTP:
-  - return|ROUTE_BRANCH_ACC_RTP:
   - start|ROUTE_SET_BRANCH_HDRS:
   - start|ROUTE_PREPARE_UA:
   - return|ROUTE_PREPARE_UA:
   - return|ROUTE_SET_BRANCH_HDRS:
   - start|ROUTE_SET_RUSER:
   - return|ROUTE_SET_RUSER:
+  - start|ROUTE_BRANCH_ACC_RTP:
+  - return|ROUTE_BRANCH_ACC_RTP:
   - start|ROUTE_FILTER_PRACK:
   - return|ROUTE_FILTER_PRACK:
   - start|ROUTE_PREPARE_SST:
