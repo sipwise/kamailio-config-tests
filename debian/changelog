@@ -1,3 +1,21 @@
+kamailio-config-tests (7.0.0.0+0~mr7.0.0.0) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [c3635a3] TT#41208 Move CDRs dump at the end of the test loop
+  * [0fa98de] TT#41604 Add missing fourth CDR for call-forward scenario
+  * [d1c0cdc] TT#42008 Fix missing '-C' option in getopts of run_tests.sh
+  * [66810f2] TT#42150 Add log lines to investigate empty json issue
+  * [94a19a4] TT#42150 Fix typo in added in commit 66810f2c66
+  * [55bd3fd] TT#44079 Add Advice of Charge route to the involved scenarios
+  * [0e3a6df] TT#44062 Stop rtpproxy session when dropping local branch
+
+  [ Michael Prokop ]
+  * [26ebb5d] TT#44157 bin/ulog_parser.pl: fix regex for perl >=5.26
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 24 Sep 2018 18:53:56 +0200
+
 kamailio-config-tests (6.5.0.0+0~mr6.5.0.0) unstable; urgency=medium
 
   [ Marco Capetta ]
