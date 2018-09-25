@@ -21,6 +21,7 @@
 
 
 START_TIME=""
+MUTE=false
 
 
 # sipwise password for mysql connections
@@ -32,15 +33,17 @@ usage() {
   echo "Options:"
   echo -e "\t-t Tests start time in order to better tune the mysql query."
   echo -e "\t-s scenario group. Default: scenarios"
+  echo -e "\t-m mute the console output"
   echo "Arguments:"
   echo -e "\tcheck_name. Scenario name to check. This is the name of the directory on GROUP dir."
 }
 
-while getopts 'ht:s:' opt; do
+while getopts 'ht:s:m' opt; do
   case $opt in
     h) usage; exit 0;;
     t) START_TIME=$OPTARG;;
     s) GROUP=$OPTARG;;
+    m) MUTE=true;;
   esac
 done
 shift $((OPTIND - 1))
@@ -64,11 +67,14 @@ BASE_DIR="${BASE_DIR:-/usr/share/kamailio-config-tests}"
 LOG_DIR="${BASE_DIR}/log/${GROUP}/${NAME_CHECK}"
 
 
-echo "$(date) - Exporting generated CDRs"
+if ! "${MUTE}" ; then
+  echo "$(date) - Exporting generated CDRs"
+fi
 mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" accounting \
       -e "select * from cdr where call_id like 'NGCP\%${NAME_CHECK}\%%' and start_time > ${START_TIME} order by id desc limit 10\G" > "${LOG_DIR}/cdr.txt" || true
+if ! "${MUTE}" ; then
 echo "$(date) - Done"
-
+fi
 
 exit 0
 #EOF
