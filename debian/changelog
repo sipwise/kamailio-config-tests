@@ -1,3 +1,13 @@
+kamailio-config-tests (6.4.1.2+0~mr6.4.1.2) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [d4352b7] TT#42150 Increased pause in some complex scenarios
+  * [f94f54d] TT#42150 Improve tests execution script
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 27 Sep 2018 10:57:20 +0200
+
 kamailio-config-tests (6.4.1.1+0~mr6.4.1.1) unstable; urgency=medium
 
   [ Marco Capetta ]
