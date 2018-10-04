@@ -264,7 +264,7 @@ VERSION="${PROFILE}_$(cut -f1 -d' '< /etc/ngcp_version)_"
 "${BIN_DIR}/mem_stats.py" --private_file="${MLOG_DIR}/${VERSION}_${GROUP}_initial_pvm.cvs" \
   --share_file="${MLOG_DIR}/${VERSION}_${GROUP}_initial_shm.cvs"
 if "${MEMDBG}" ; then
-  ngcp-memdbg-csv /var/log/ngcp/kamailio-proxy.log "${MLOG_DIR}" >/dev/null
+  ngcp-memdbg-csv /ngcp-data/logs/kamailio-proxy.log "${MLOG_DIR}" >/dev/null
 fi
 
 get_scenarios
@@ -327,7 +327,7 @@ echo "$(date) - Final mem stats"
 "${BIN_DIR}/mem_stats.py" --private_file="${MLOG_DIR}/${VERSION}_${GROUP}_final_pvm.cvs" \
   --share_file="${MLOG_DIR}/${VERSION}_${GROUP}_final_shm.cvs"
 if [[ ${MEMDBG} = 1 ]] ; then
-  ngcp-memdbg-csv /var/log/ngcp/kamailio-proxy.log "${MLOG_DIR}" >/dev/null
+  ngcp-memdbg-csv /ngcp-data/logs/kamailio-proxy.log "${MLOG_DIR}" >/dev/null
 fi
 
 if [ -d "${KAM_DIR}" ]; then

@@ -30,7 +30,7 @@ use Data::Dumper;
 use Tie::File;
 use Getopt::Long;
 
-my $filename = "/var/log/ngcp/kamailio-proxy.log";
+my $filename = "/ngcp-data/logs/kamailio-proxy.log";
 my $output_dir = "log";
 
 sub usage
