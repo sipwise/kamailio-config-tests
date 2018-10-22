@@ -47,6 +47,10 @@ flow:
   - return|ROUTE_GET_CALLER_CLI:
   - start|ROUTE_GET_FORWARDER_CLI:
   - return|ROUTE_GET_FORWARDER_CLI:
+  - start|ROUTE_CLIR:
+  - return|ROUTE_CLIR:
+  - start|ROUTE_CALLER_BLOCK_CLI:
+  - return|ROUTE_CALLER_BLOCK_CLI:
   - start|ROUTE_CHECK_USERPROV_CLI:
   - start|ROUTE_CHECK_CLI_ALLOWED:
       $xavp(caller_real_prefs[0]=>allowed_clis[*]): ['43110021*', '43110029*']
