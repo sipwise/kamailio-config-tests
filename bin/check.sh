@@ -96,11 +96,12 @@ check_test() {
   echo " NOT ok"
 
   if "${FIX_RETRANS}" ; then
+    # testing next json file, if exist. Necessary in case of retransmissions or wrong timing/order.
     echo "$(date) - Fix retransmissions enabled: try to test the next json file"
     local next_msg
     local next_tap
     next_test_filepath "$1"
-    next_tap=${3/_test.tap/_test_retry.tap}
+    next_tap=${3/_test.tap/_test_next.tap}
 
     if [ -a "$next_msg" ] ; then
       echo -n "$(date) - Testing $(basename "$1") against $(basename "$next_msg") -> $(basename "$next_tap")"
@@ -118,6 +119,37 @@ check_test() {
         # Next step is remove $next_tap file to don't create confusion during the additional checks
         rm "${next_tap}"
       fi
+    else
+      echo -n "$(date) - File $(basename "$next_msg") doesn't exists. Result"
+    fi
+
+    echo " NOT ok"
+
+    # testing previous json file, if exist. Necessary in case of wrong timing/order.
+    echo "$(date) - Fix retransmissions enabled: try to test the previous json file"
+    local prev_msg
+    local prev_tap
+    prev_test_filepath "$1"
+    prev_tap=${3/_test.tap/_test_prev.tap}
+
+    if [ -a "$prev_msg" ] ; then
+      echo -n "$(date) - Testing $(basename "$1") against $(basename "$prev_msg") -> $(basename "$prev_tap")"
+      if "${BIN_DIR}/check.py" ${kam_type} "$1" "$prev_msg" > "$prev_tap" ; then
+        # Test using the previous json file was fine. That means that, with high probability, there was a wrong timing/order.
+        # Next step is to backup the failed tap test and overwrite it with the working one
+        mv "${3}" "${3}_retrans"
+        mv "${prev_tap}" "${3}"
+        echo " ok"
+        return
+      fi
+
+      if [ -a "$prev_tap" ] ; then
+        # Test using the previous json file was a failure.
+        # Next step is remove $prev_tap file to don't create confusion during the additional checks
+        rm "${prev_tap}"
+      fi
+    else
+      echo -n "$(date) - File $(basename "$prev_msg") doesn't exists. Result"
     fi
 
     echo " NOT ok"
@@ -302,7 +334,7 @@ error_helper() {
 capture() {
   local name
   name=$(basename "${SCEN_CHECK_DIR}")
-  echo "$(date) - Begin capture"
+  echo "$(date) - Start tcpdump captures"
   for inter in $(ip link | grep '^[0-9]' | cut -d: -f2 | sed 's/ //' | xargs); do
     tcpdump -i "${inter}" -n -s 65535 -w "${LOG_DIR}/${name}_${inter}.pcap" &
     capture_pid="$capture_pid ${inter}:$!"
@@ -310,6 +342,7 @@ capture() {
 }
 
 stop_capture() {
+  echo "$(date) - Stop tcpdump captures"
   local inter=""
   local temp_pid=""
   if [ -n "${capture_pid}" ]; then
@@ -560,6 +593,26 @@ next_test_filepath() {
   next_msg="${LOG_DIR}/${msg_name}"
 }
 
+prev_test_filepath() {
+  local msg_name
+  local old_json
+  local new_json
+
+  if ! "${JSON_KAM}" ; then
+    msg_name=${1/_test.yml/.yml}
+  else
+    msg_name=${1/_test.yml/.json}
+  fi
+
+  msg_name=$(basename "${msg_name}")
+  old_json="${msg_name:0:4}"
+  new_json=$(((10#$old_json)-1))  #There should't be any problem since they start from 0001
+  new_json=$(printf %04d ${new_json})
+  msg_name="${new_json}${msg_name:4}"
+
+  prev_msg="${LOG_DIR}/${msg_name}"
+}
+
 cdr_check() {
   if [ -f "$1" ] ; then
     echo -n "$(date) - Testing $(basename "$1") against $(basename "$2") -> $(basename "$3")"
@@ -731,7 +784,7 @@ if ! "$SKIP_RUNSIPP" ; then
           continue
         fi
         if ( diff -q -u <(tail -n3 "${json_file}") <(tail -n3 "${next_json_file}") &> /dev/null ) ; then
-          echo "$(basename "${next_json_file}") seems a retransmission of $(basename "${json_file}") ---> renaming the file in ${next_json_file}_retransmission"
+          echo "$(date) - $(basename "${next_json_file}") seems a retransmission of $(basename "${json_file}") ---> renaming the file in $(basename "${next_json_file}")_retransmission"
           mv -f "${next_json_file}" "${next_json_file}_retransmission"
           RETRANS_ISSUE=true
         fi
@@ -774,6 +827,9 @@ fi
 # let's check the results
 ERR_FLAG=0
 if ! "${SKIP_TESTS}" ; then
+  echo "$(date) - ================================================================================="
+  echo "$(date) - Check [${GROUP}/${PROFILE}]: ${NAME_CHECK}"
+
   if [ -d "${RESULT_DIR}" ]; then
     echo "$(date) - Cleaning result dir"
     rm -rf "${RESULT_DIR}"
@@ -788,7 +844,7 @@ if ! "${SKIP_TESTS}" ; then
 
   for t in ${SCEN_CHECK_DIR}/[0-9][0-9][0-9][0-9]_test.yml; do
     test_filepath "$t"
-    echo "$(date) - check test $t on $msg"
+    echo "$(date) - Check test $t on $msg"
     dest=${RESULT_DIR}/$(basename "$t" .yml)
     check_test "$t" "$msg" "${dest}.tap"
     echo "$(date) - Done"
@@ -804,10 +860,11 @@ if ! "${SKIP_TESTS}" ; then
     t_cdr="${SCEN_CHECK_DIR}/cdr_test.yml"
     msg="${LOG_DIR}/cdr.txt"
     dest="${RESULT_DIR}/cdr_test.tap"
-    echo "$(date) - check test $t_cdr on $msg"
+    echo "$(date) - Check test $t_cdr on $msg"
     cdr_check "$t_cdr" "$msg" "${dest}"
     echo "$(date) - Done"
   fi
+  echo "$(date) - ================================================================================="
 fi
 exit ${ERR_FLAG}
 #EOF
