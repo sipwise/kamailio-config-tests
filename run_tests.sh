@@ -32,7 +32,7 @@ get_scenarios() {
         flag=1
       fi
     done
-    if [ $flag != 0 ]; then
+    if [ ${flag} != 0 ]; then
       exit 1
     fi
   else
@@ -51,20 +51,25 @@ cfg_debug_off() {
       echo "$(date) - ngcpcfg apply returned $?"
       error_flag=4
     fi
-    echo "$(date) - Setting config debug off. Done[$error_flag]"
+    echo "$(date) - Setting config debug off. Done[${error_flag}]"
   fi
 }
 
 capture() {
-  echo "$(date) - Begin capture"
+  echo "$(date) - ================================================================================="
+  echo "$(date) - Start tcpdump captures"
   datetime=$(date '+%y%m%d_%H%M')
   for inter in $(ip link | grep '^[0-9]' | cut -d: -f2 | sed 's/ //' | xargs); do
     tcpdump -i "${inter}" -n -s 65535 -w "${LOG_DIR}/_traces_${inter}_${datetime}.pcap" &
-    capture_pid="$capture_pid ${inter}:$!"
+    capture_pid="${capture_pid} ${inter}:$!"
   done
+  echo "$(date) - Done"
+  echo "$(date) - ================================================================================="
 }
 
 stop_capture() {
+  echo "$(date) - ================================================================================="
+  echo "$(date) - Stop tcpdump captures"
   local inter=""
   local temp_pid=""
   if [ -n "${capture_pid}" ]; then
@@ -73,27 +78,29 @@ stop_capture() {
       temp_pid=$(echo "$temp"|cut -d: -f2)
       #echo "inter:${inter} temp_pid:${temp_pid}"
       if ps -p"${temp_pid}" &> /dev/null ; then
-        echo "$(date) - End ${inter}[$temp_pid] capture"
+        echo "$(date) - End ${inter}[${temp_pid}] capture"
         kill -15 "${temp_pid}"
       fi
     done
   fi
+  echo "$(date) - Done"
+  echo "$(date) - ================================================================================="
 }
 
 move_json_file() {
   echo "$(date) - ================================================================================="
   echo "$(date) - Move kamailio json files"
   for t in ${SCENARIOS}; do
-    echo "$(date) - - Scenarios $t ================================================="
+    echo "$(date) - - Scenario: ${t}"
     json_dir="${KAM_DIR}/${t}"
     if [ -d "${json_dir}" ] ; then
       for i in "${json_dir}"/*.json ; do
         json_size_before=$(stat -c%s "${i}")
         moved_file="${LOG_DIR}/${t}/$(printf "%04d.json" "$(basename "$i" .json)")"
-        expand -t1 "$i" > "${moved_file}"
+        expand -t1 "${i}" > "${moved_file}"
         json_size_after=$(stat -c%s "${moved_file}")
         echo "$(date) - - - Moved file ${i} with size before: ${json_size_before} and after: ${json_size_after}"
-        rm "$i"
+        rm "${i}"
       done
       rm -rf "${json_dir}"
     fi
@@ -107,7 +114,7 @@ fix_retransmissions() {
   echo "$(date) - ================================================================================="
   echo "$(date) - Checking retransmission issues"
   for t in ${SCENARIOS}; do
-    echo "$(date) - - Scenarios $t ================================================="
+    echo "$(date) - - Scenario: ${t}"
     RETRANS_ISSUE=false
     file_find=($(find "${LOG_DIR}/${t}" -maxdepth 1 -name '*.json' | sort))
     for json_file in "${file_find[@]}" ; do
@@ -120,7 +127,7 @@ fix_retransmissions() {
           continue
         fi
         if ( diff -q -u <(tail -n3 "${json_file}") <(tail -n3 "${next_json_file}") &> /dev/null ) ; then
-          echo "$(basename "${next_json_file}") seems a retransmission of $(basename "${json_file}") ---> renaming the file in ${next_json_file}_retransmission"
+          echo "$(date) - - - $(basename "${next_json_file}") seems a retransmission of $(basename "${json_file}") ---> renaming the file in $(basename "${next_json_file}")_retransmission"
           mv -f "${next_json_file}" "${next_json_file}_retransmission"
           RETRANS_ISSUE=true
         fi
@@ -128,7 +135,7 @@ fix_retransmissions() {
     done
 
     if "${RETRANS_ISSUE}" ; then
-      echo "$(date) - Reordering kamailio json files"
+      echo "$(date) - - - Reordering kamailio json files"
       file_find=($(find "${LOG_DIR}/${t}" -maxdepth 1 -name '*.json' | sort))
       a=1
       for json_file in "${file_find[@]}" ; do
@@ -147,9 +154,9 @@ cdr_export() {
   echo "$(date) - ================================================================================="
   echo "$(date) - Extracting CDRs"
   for t in ${SCENARIOS}; do
-    echo "$(date) - - Scenarios $t ================================================="
-    if ! "${BIN_DIR}/cdr_extract.sh" -m -t "${START_TIME}" -s "${GROUP}" "$t" ; then
-      echo "ERROR: $t"
+    echo "$(date) - - Scenario: $t"
+    if ! "${BIN_DIR}/cdr_extract.sh" -m -t "${START_TIME}" -s "${GROUP}" "${t}" ; then
+      echo "ERROR: ${t}"
       error_flag=1
     fi
   done
@@ -181,10 +188,10 @@ while getopts 'hlCcp:Kx:t:rm' opt; do
     h) usage; exit 0;;
     l) SHOW_SCENARIOS=true;;
     C) SKIP_CONFIG=true;;
-    p) PROFILE=$OPTARG;;
+    p) PROFILE=${OPTARG};;
     K) CAPTURE=true;;
-    x) GROUP=$OPTARG;;
-    t) TIMEOUT=$OPTARG;;
+    x) GROUP=${OPTARG};;
+    t) TIMEOUT=${OPTARG};;
     r) FIX_RETRANS=true;;
     c) CDR=true;;
     m) MEMDBG=true;;
@@ -210,7 +217,7 @@ if [ "${PROFILE}" != "CE" ] && [ "${PROFILE}" != "PRO" ]; then
   exit 2
 fi
 
-if [ "$GROUP" = "scenarios_pbx" ] ; then
+if [ "${GROUP}" = "scenarios_pbx" ] ; then
   PIDWATCH_OPTS="--pbx"
   # hack for pid_watcher ( sems-pbx was not active )
   mkdir -p /var/run/sems-pbx/
@@ -237,7 +244,7 @@ if ! "${SKIP_CONFIG}" ; then
   echo "$(date) - Setting config debug on"
   "${BIN_DIR}/config_debug.pl" -g "${GROUP}" on ${DOMAIN}
   if [ "${PROFILE}" == "PRO" ]; then
-    echo "$(date) - Exec pid_watcher with timeout[$TIMEOUT]"
+    echo "$(date) - Exec pid_watcher with timeout[${TIMEOUT}]"
     ( timeout "${TIMEOUT}" "${BIN_DIR}/pid_watcher.py" ${PIDWATCH_OPTS} )&
   fi
   if ! ngcpcfg apply "config debug on via kamailio-config-tests" ; then
@@ -256,7 +263,7 @@ if ! "${SKIP_CONFIG}" ; then
       exit 1
     fi
   fi
-  echo "$(date) - Setting config debug on. Done[$error_flag]."
+  echo "$(date) - Setting config debug on. Done[${error_flag}]."
 fi
 
 echo "$(date) - Initial mem stats"
@@ -283,7 +290,8 @@ if "${CAPTURE}" ; then
 fi
 
 for t in ${SCENARIOS}; do
-  echo "$(date) - Run [${GROUP}/${PROFILE}]: $t ================================================="
+  echo "$(date) - ================================================================================="
+  echo "$(date) - Run [${GROUP}/${PROFILE}]: ${t}"
 
   log_temp="${LOG_DIR}/${t}"
   if [ -d "${log_temp}" ]; then
@@ -297,8 +305,8 @@ for t in ${SCENARIOS}; do
     rm -rf "${json_temp}"
   fi
 
-  if ! "${BIN_DIR}/check.sh" "${OPTS[@]}" -d "${DOMAIN}" -p "${PROFILE}" -s "${GROUP}" "$t" ; then
-    echo "ERROR: $t"
+  if ! "${BIN_DIR}/check.sh" "${OPTS[@]}" -d "${DOMAIN}" -p "${PROFILE}" -s "${GROUP}" "${t}" ; then
+    echo "ERROR: ${t}"
     error_flag=1
   fi
 
@@ -337,5 +345,5 @@ fi
 
 cfg_debug_off
 
-echo "$(date) - Done[$error_flag]"
-exit $error_flag
+echo "$(date) - Done[${error_flag}]"
+exit ${error_flag}

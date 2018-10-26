@@ -44,10 +44,10 @@ graph() {
   if "${JSON_KAM}" ; then
     OPTS="--json"
   fi
-  if [ -f "$1" ]; then
-    "${BIN_DIR}/graph_flow.pl" $OPTS "$1" "$2"
+  if [ -f "${1}" ]; then
+    "${BIN_DIR}/graph_flow.pl" $OPTS "${1}" "${2}"
   else
-    echo "No $1 found"
+    echo "No ${1} found"
     ERR_FLAG=1
   fi
 }
@@ -55,12 +55,12 @@ graph() {
 # $1 destination tap file
 # $2 file path
 generate_error_tap() {
-  local tap_file="$1"
-  cat <<EOF > "$tap_file"
+  local tap_file="${1}"
+  cat <<EOF > "${tap_file}"
 1..1
-not ok 1 - ERROR: File $2 does not exists
+not ok 1 - ERROR: File ${2} does not exists
 EOF
-echo "$(date) - $(basename "$2") NOT ok"
+echo "$(date) - $(basename "${2}") NOT ok"
 }
 
 # $1 unit test yml
@@ -70,15 +70,15 @@ check_test() {
   local dest
   local kam_type="--yaml"
 
-  dest=${RESULT_DIR}/$(basename "$3" .tap)
+  dest=${RESULT_DIR}/$(basename "${3}" .tap)
 
-  if ! [ -f "$1" ]; then
-    generate_error_tap "$3" "$1"
+  if ! [ -f "${1}" ]; then
+    generate_error_tap "${3}" "${1}"
     ERR_FLAG=1
     return
   fi
-  if ! [ -f "$2" ]; then
-    generate_error_tap "$3" "$2"
+  if ! [ -f "${2}" ]; then
+    generate_error_tap "${3}" "${2}"
     ERR_FLAG=1
     return
   fi
@@ -87,8 +87,8 @@ check_test() {
     kam_type="--json"
   fi
 
-  echo -n "$(date) - Testing $(basename "$1") against $(basename "$2") -> $(basename "$3")"
-  if "${BIN_DIR}/check.py" ${kam_type} "$1" "$2" > "$3" ; then
+  echo -n "$(date) - Testing $(basename "${1}") against $(basename "${2}") -> $(basename "${3}")"
+  if "${BIN_DIR}/check.py" ${kam_type} "${1}" "${2}" > "${3}" ; then
     echo " ok"
     return
   fi
@@ -96,15 +96,16 @@ check_test() {
   echo " NOT ok"
 
   if "${FIX_RETRANS}" ; then
+    # testing next json file, if exist. Necessary in case of retransmissions or wrong timing/order.
     echo "$(date) - Fix retransmissions enabled: try to test the next json file"
     local next_msg
     local next_tap
-    next_test_filepath "$1"
-    next_tap=${3/_test.tap/_test_retry.tap}
+    next_test_filepath "${1}"
+    next_tap=${3/_test.tap/_test_next.tap}
 
-    if [ -a "$next_msg" ] ; then
-      echo -n "$(date) - Testing $(basename "$1") against $(basename "$next_msg") -> $(basename "$next_tap")"
-      if "${BIN_DIR}/check.py" ${kam_type} "$1" "$next_msg" > "$next_tap" ; then
+    if [ -a "${next_msg}" ] ; then
+      echo -n "$(date) - Testing $(basename "${1}") against $(basename "${next_msg}") -> $(basename "${next_tap}")"
+      if "${BIN_DIR}/check.py" ${kam_type} "${1}" "${next_msg}" > "${next_tap}" ; then
         # Test using the next json file was fine. That means that, with high probability, there was a retransmission.
         # Next step is to backup the failed tap test and overwrite it with the working one
         mv "${3}" "${3}_retrans"
@@ -113,11 +114,42 @@ check_test() {
         return
       fi
 
-      if [ -a "$next_tap" ] ; then
+      if [ -a "${next_tap}" ] ; then
         # Test using the next json file was a failure.
         # Next step is remove $next_tap file to don't create confusion during the additional checks
         rm "${next_tap}"
       fi
+    else
+      echo -n "$(date) - File $(basename "${next_msg}") doesn't exists. Result"
+    fi
+
+    echo " NOT ok"
+
+    # testing previous json file, if exist. Necessary in case of wrong timing/order.
+    echo "$(date) - Fix retransmissions enabled: try to test the previous json file"
+    local prev_msg
+    local prev_tap
+    prev_test_filepath "${1}"
+    prev_tap=${3/_test.tap/_test_prev.tap}
+
+    if [ -a "${prev_msg}" ] ; then
+      echo -n "$(date) - Testing $(basename "${1}") against $(basename "${prev_msg}") -> $(basename "${prev_tap}")"
+      if "${BIN_DIR}/check.py" ${kam_type} "${1}" "${prev_msg}" > "${prev_tap}" ; then
+        # Test using the previous json file was fine. That means that, with high probability, there was a wrong timing/order.
+        # Next step is to backup the failed tap test and overwrite it with the working one
+        mv "${3}" "${3}_retrans"
+        mv "${prev_tap}" "${3}"
+        echo " ok"
+        return
+      fi
+
+      if [ -a "${prev_tap}" ] ; then
+        # Test using the previous json file was a failure.
+        # Next step is remove $prev_tap file to don't create confusion during the additional checks
+        rm "${prev_tap}"
+      fi
+    else
+      echo -n "$(date) - File $(basename "${prev_msg}") doesn't exists. Result"
     fi
 
     echo " NOT ok"
@@ -138,7 +170,7 @@ create_voip() {
     "${SCEN_CHECK_DIR}/scenario.yml" "${SCEN_CHECK_DIR}/scenario_ids.yml"
   then
     echo "$(date) - Deleting domain:${DOMAIN}"
-    delete_voip "$1"
+    delete_voip "${1}"
     echo "$(date) - Cannot create domain subscribers"
     exit 1
   fi
@@ -198,7 +230,7 @@ create_voip_prefs() {
 
 # $1 domain
 delete_voip() {
-  /usr/bin/ngcp-delete_domain "$1" >/dev/null 2>&1
+  /usr/bin/ngcp-delete_domain "${1}" >/dev/null 2>&1
 
   if [ -f "${SCEN_CHECK_DIR}/peer.yml" ]; then
     echo "$(date) - Deleting peers"
@@ -246,23 +278,23 @@ delete_locations() {
   local sub
 
   for f in ${SCEN_CHECK_DIR}/callee.csv ${SCEN_CHECK_DIR}/caller.csv; do
-    for sub in $(uniq "$f" | grep "${DOMAIN}" | cut -d\; -f1 | xargs); do
-      ngcp-kamctl proxy fifo ul.rm location "$sub@${DOMAIN}" >/dev/null
+    for sub in $(uniq "${f}" | grep "${DOMAIN}" | cut -d\; -f1 | xargs); do
+      ngcp-kamctl proxy fifo ul.rm location "${sub}@${DOMAIN}" >/dev/null
       # delete possible banned user
-      ngcp-sercmd lb htable.delete auth "$sub@${DOMAIN}::auth_count"
+      ngcp-sercmd lb htable.delete auth "${sub}@${DOMAIN}::auth_count"
     done
   done
 
   # check what's in the DDBB
   f=$(mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" \
       kamailio -e 'select count(*) from location;' -s -r | head)
-  if [ "$f" != "0" ]; then
+  if [ "${f}" != "0" ]; then
     echo "$(date) Cleaning location table"
     sub=$(mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" \
       -e 'select concat(username, "@", domain) as user from kamailio.location;' \
       -r -s | head| uniq|xargs)
     for f in $sub; do
-      ngcp-kamctl proxy fifo ul.rm location "$f" >/dev/null
+      ngcp-kamctl proxy fifo ul.rm location "${f}" >/dev/null
     done
     mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" \
       -e 'delete from kamailio.location;' || true
@@ -288,7 +320,7 @@ release_appearance() {
 # $1 msg to echo
 # $2 exit value
 error_helper() {
-  echo "$1"
+  echo "${1}"
   if ! "${SKIP_DELDOMAIN}" ; then
     echo "$(date) - Deleting domain:${DOMAIN}"
     delete_voip "${DOMAIN}"
@@ -296,13 +328,13 @@ error_helper() {
   find "${SCEN_CHECK_DIR}/" -type f -name 'sipp_scenario*errors.log' \
     -exec mv {} "${LOG_DIR}" \;
   stop_capture
-  exit "$2"
+  exit "${2}"
 }
 
 capture() {
   local name
   name=$(basename "${SCEN_CHECK_DIR}")
-  echo "$(date) - Begin capture"
+  echo "$(date) - Start tcpdump captures"
   for inter in $(ip link | grep '^[0-9]' | cut -d: -f2 | sed 's/ //' | xargs); do
     tcpdump -i "${inter}" -n -s 65535 -w "${LOG_DIR}/${name}_${inter}.pcap" &
     capture_pid="$capture_pid ${inter}:$!"
@@ -310,6 +342,7 @@ capture() {
 }
 
 stop_capture() {
+  echo "$(date) - Stop tcpdump captures"
   local inter=""
   local temp_pid=""
   if [ -n "${capture_pid}" ]; then
@@ -328,27 +361,27 @@ stop_capture() {
 # $1 port to check
 check_port() {
   local status=0
-  local port=$1
+  local port=${1}
   local step=${2:-1}
 
-  until [ $status -eq 1 ]; do
-    if netstat -an | grep -q ":$port " ; then
+  until [ ${status} -eq 1 ]; do
+    if netstat -an | grep -q ":${port} " ; then
       port=$((port + step))
     else
       status=1
     fi
   done
-  echo $port
+  echo ${port}
 }
 
 # $1 media port to check
 # sipp uses media_port and media_port+2
 check_mport() {
   local status=0
-  local mport=$1
+  local mport=${1}
   local step=${2:-3}
   local mport2
-  until [ $status -eq 1 ]; do
+  until [ ${status} -eq 1 ]; do
     if ! (netstat -aun | grep -q ":${mport} ") ; then
       mport2=$((mport + 2))
       if ! (netstat -aun | grep -q ":${mport2} "); then
@@ -359,18 +392,18 @@ check_mport() {
       mport=$((mport + step))
     fi
   done
-  echo $mport
+  echo ${mport}
 }
 
 #$1 is filename
 get_ip() {
   transport=$(grep "$1" "${SCEN_CHECK_DIR}/scenario.csv"|cut -d\; -f2| tr -d '\n')
-  ip=$(grep "$1" "${SCEN_CHECK_DIR}/scenario.csv"|cut -d\; -f3| tr -d '\n')
+  ip=$(grep "${1}" "${SCEN_CHECK_DIR}/scenario.csv"|cut -d\; -f3| tr -d '\n')
   if [[ $? -ne 0 ]]; then
-    error_helper "cannot find $1 ip on ${SCEN_CHECK_DIR}/scenario.csv" 10
+    error_helper "cannot find ${1} ip on ${SCEN_CHECK_DIR}/scenario.csv" 10
   fi
-  peer_host=$(grep "$1" "${SCEN_CHECK_DIR}/scenario.csv"|cut -d\; -f4| tr -d '\n')
-  foreign_dom=$(grep "$1" "${SCEN_CHECK_DIR}/scenario.csv"|cut -d\; -f5| tr -d '\n')
+  peer_host=$(grep "${1}" "${SCEN_CHECK_DIR}/scenario.csv"|cut -d\; -f4| tr -d '\n')
+  foreign_dom=$(grep "${1}" "${SCEN_CHECK_DIR}/scenario.csv"|cut -d\; -f5| tr -d '\n')
 }
 
 copy_logs() {
@@ -438,11 +471,11 @@ run_sipp() {
 
   for res in $(find "${SCEN_CHECK_DIR}" -type f -name 'sipp_scenario_responder[0-9][0-9].xml'| sort); do
     base=$(basename "$res" .xml)
-    if ! grep -q "$(basename "$res")" "${SCEN_CHECK_DIR}/scenario.csv" ; then
-      echo "$(date) $(basename "$res") deactivated"
+    if ! grep -q "$(basename "${res}")" "${SCEN_CHECK_DIR}/scenario.csv" ; then
+      echo "$(date) $(basename "${res}") deactivated"
       continue
     fi
-    get_ip "$(basename "$res")"
+    get_ip "$(basename "${res}")"
     if [ "${peer_host}" != "" ]; then
       echo "$(date) - Update peer_host:${peer_host} ${ip}:${PORT} info"
       if ! "${BIN_DIR}/update_peer_host.pl" --ip="${ip}" --port="${PORT}" \
@@ -460,11 +493,11 @@ run_sipp() {
     fi
 
     if [ -f "${SCEN_CHECK_DIR}/${base}_reg.xml" ]; then
-      echo "$(date) - Register ${base} $ip:${PORT}-${MPORT}"
-      "${BIN_DIR}/sipp.sh" -T "$transport" -i "$ip" -p "${PORT}" \
+      echo "$(date) - Register ${base} ${ip}:${PORT}-${MPORT}"
+      "${BIN_DIR}/sipp.sh" -T "$transport" -i "${ip}" -p "${PORT}" \
         -r "${SCEN_CHECK_DIR}/${base}_reg.xml"
     fi
-    pid=$("${BIN_DIR}/sipp.sh" -b -T "$transport" -i "$ip" -p "${PORT}" \
+    pid=$("${BIN_DIR}/sipp.sh" -b -T "$transport" -i "${ip}" -p "${PORT}" \
       -m "${MPORT}" -r "${SCEN_CHECK_DIR}/${base}.xml")
     echo "$(date) - Running ${base}[${pid}] ${ip}:${PORT}-${MPORT}"
     responder_pid="${responder_pid} ${base}:${pid}"
@@ -479,28 +512,28 @@ run_sipp() {
   # let's fire sipp scenarios
   for send in $(find "${SCEN_CHECK_DIR}" -type f -name 'sipp_scenario[0-9][0-9].xml'| sort); do
     base=$(basename "$send" .xml)
-    if ! grep -q "$(basename "$send")" "${SCEN_CHECK_DIR}/scenario.csv" ; then
-      echo "$(date) $(basename "$send") deactivated"
+    if ! grep -q "$(basename "${send}")" "${SCEN_CHECK_DIR}/scenario.csv" ; then
+      echo "$(date) $(basename "${send}") deactivated"
       continue
     fi
-    get_ip "$(basename "$send")"
+    get_ip "$(basename "${send}")"
     PORT=$(check_port )
     MPORT=$(check_mport )
     echo "$(date) - Running ${base} $ip:51602-45003"
-    if ! "${BIN_DIR}/sipp.sh" -T "$transport" -i "$ip" -p 51602 -m 45003 "$send" ; then
-      echo "$(date) - $base error"
+    if ! "${BIN_DIR}/sipp.sh" -T "${transport}" -i "${ip}" -p 51602 -m 45003 "${send}" ; then
+      echo "$(date) - ${base} error"
       status=1
     fi
   done
 
   for res in ${responder_pid}; do
-    base=$(echo "$res"| cut -d: -f1)
-    pid=$(echo "$res"| cut -d: -f2)
+    base=$(echo "${res}"| cut -d: -f1)
+    pid=$(echo "${res}"| cut -d: -f2)
     if ps -p"${pid}" &> /dev/null ; then
-      echo "$(date) - sipp responder $base pid $pid not finished yet. Waiting 5 secs"
+      echo "$(date) - sipp responder ${base} pid ${pid} not finished yet. Waiting 5 secs"
       sleep 5
       if ps -p"${pid}" &> /dev/null ; then
-        echo "$(date) - sipp responder $base pid $pid not finished yet. Killing it"
+        echo "$(date) - sipp responder ${base} pid ${pid} not finished yet. Killing it"
         kill -SIGUSR1 "${pid}"
       fi
     fi
@@ -524,7 +557,7 @@ run_sipp() {
     release_appearance
   fi
 
-  if [[ $status -ne 0 ]]; then
+  if [[ ${status} -ne 0 ]]; then
     error_helper "error in sipp" 2
   fi
 }
@@ -537,7 +570,7 @@ test_filepath() {
   else
     msg_name=${1/_test.yml/.json}
   fi
-  msg="${LOG_DIR}/$(basename "$msg_name")"
+  msg="${LOG_DIR}/$(basename "${msg_name}")"
 }
 
 next_test_filepath() {
@@ -560,16 +593,36 @@ next_test_filepath() {
   next_msg="${LOG_DIR}/${msg_name}"
 }
 
+prev_test_filepath() {
+  local msg_name
+  local old_json
+  local new_json
+
+  if ! "${JSON_KAM}" ; then
+    msg_name=${1/_test.yml/.yml}
+  else
+    msg_name=${1/_test.yml/.json}
+  fi
+
+  msg_name=$(basename "${msg_name}")
+  old_json="${msg_name:0:4}"
+  new_json=$(((10#$old_json)-1))  #There should't be any problem since they start from 0001
+  new_json=$(printf %04d ${new_json})
+  msg_name="${new_json}${msg_name:4}"
+
+  prev_msg="${LOG_DIR}/${msg_name}"
+}
+
 cdr_check() {
-  if [ -f "$1" ] ; then
-    echo -n "$(date) - Testing $(basename "$1") against $(basename "$2") -> $(basename "$3")"
-    if "${BIN_DIR}/cdr_check.py" "--text" "$1" "$2" > "$3" ; then
+  if [ -f "${1}" ] ; then
+    echo -n "$(date) - Testing $(basename "${1}") against $(basename "${2}") -> $(basename "${3}")"
+    if "${BIN_DIR}/cdr_check.py" "--text" "${1}" "${2}" > "${3}" ; then
       echo " ok"
       return
     fi
     echo " NOT ok"
   else
-    echo "$(date) - CDR test file $1 doesn't exist, skipping CDR test"
+    echo "$(date) - CDR test file ${1} doesn't exist, skipping CDR test"
   fi
 }
 
@@ -599,10 +652,10 @@ while getopts 'hCd:p:Rs:DTPGgrcJKm' opt; do
   case $opt in
     h) usage; exit 0;;
     C) SKIP=true;;
-    d) DOMAIN=$OPTARG;;
-    p) PROFILE=$OPTARG;;
+    d) DOMAIN=${OPTARG};;
+    p) PROFILE=${OPTARG};;
     R) SKIP_RUNSIPP=true; SKIP_DELDOMAIN=true;;
-    s) GROUP=$OPTARG;;
+    s) GROUP=${OPTARG};;
     D) SKIP_DELDOMAIN=true;;
     T) SKIP_TESTS=true;;
     P) SKIP_PARSE=true;;
@@ -624,7 +677,7 @@ if [[ $# != 1 ]]; then
 fi
 
 GROUP="${GROUP:-scenarios}"
-NAME_CHECK="$1"
+NAME_CHECK="${1}"
 KAM_DIR="${KAM_DIR:-/tmp/cfgtest}"
 JSON_DIR="${KAM_DIR}/${NAME_CHECK}"
 BASE_DIR="${BASE_DIR:-/usr/share/kamailio-config-tests}"
@@ -704,11 +757,11 @@ if ! "$SKIP_RUNSIPP" ; then
     if [ -d "${JSON_DIR}" ] ; then
       for i in "${JSON_DIR}"/*.json ; do
         json_size_before=$(stat -c%s "${i}")
-        moved_file="${LOG_DIR}/$(printf "%04d.json" "$(basename "$i" .json)")"
-        expand -t1 "$i" > "${moved_file}"
+        moved_file="${LOG_DIR}/$(printf "%04d.json" "$(basename "${i}" .json)")"
+        expand -t1 "${i}" > "${moved_file}"
         json_size_after=$(stat -c%s "${moved_file}")
         echo "$(date) - Moved file ${i} with size before: ${json_size_before} and after: ${json_size_after}"
-        rm "$i"
+        rm "${i}"
       done
       rm -rf "${JSON_DIR}"
       echo "$(date) - Done"
@@ -731,7 +784,7 @@ if ! "$SKIP_RUNSIPP" ; then
           continue
         fi
         if ( diff -q -u <(tail -n3 "${json_file}") <(tail -n3 "${next_json_file}") &> /dev/null ) ; then
-          echo "$(basename "${next_json_file}") seems a retransmission of $(basename "${json_file}") ---> renaming the file in ${next_json_file}_retransmission"
+          echo "$(date) - $(basename "${next_json_file}") seems a retransmission of $(basename "${json_file}") ---> renaming the file in $(basename "${next_json_file}")_retransmission"
           mv -f "${next_json_file}" "${next_json_file}_retransmission"
           RETRANS_ISSUE=true
         fi
@@ -774,6 +827,9 @@ fi
 # let's check the results
 ERR_FLAG=0
 if ! "${SKIP_TESTS}" ; then
+  echo "$(date) - ================================================================================="
+  echo "$(date) - Check [${GROUP}/${PROFILE}]: ${NAME_CHECK}"
+
   if [ -d "${RESULT_DIR}" ]; then
     echo "$(date) - Cleaning result dir"
     rm -rf "${RESULT_DIR}"
@@ -787,14 +843,14 @@ if ! "${SKIP_TESTS}" ; then
     "${SCEN_CHECK_DIR}" "${LOG_DIR}/scenario_ids.yml" "${PROFILE}"
 
   for t in ${SCEN_CHECK_DIR}/[0-9][0-9][0-9][0-9]_test.yml; do
-    test_filepath "$t"
-    echo "$(date) - check test $t on $msg"
-    dest=${RESULT_DIR}/$(basename "$t" .yml)
-    check_test "$t" "$msg" "${dest}.tap"
+    test_filepath "${t}"
+    echo "$(date) - Check test ${t} on ${msg}"
+    dest=${RESULT_DIR}/$(basename "${t}" .yml)
+    check_test "${t}" "${msg}" "${dest}.tap"
     echo "$(date) - Done"
     if "${GRAPH}" ; then
       echo "$(date) - Generating flow image: ${dest}.png"
-      graph "$msg" "${dest}.png"
+      graph "${msg}" "${dest}.png"
       echo "$(date) - Done"
     fi
   done
@@ -804,10 +860,11 @@ if ! "${SKIP_TESTS}" ; then
     t_cdr="${SCEN_CHECK_DIR}/cdr_test.yml"
     msg="${LOG_DIR}/cdr.txt"
     dest="${RESULT_DIR}/cdr_test.tap"
-    echo "$(date) - check test $t_cdr on $msg"
-    cdr_check "$t_cdr" "$msg" "${dest}"
+    echo "$(date) - Check test ${t_cdr} on ${msg}"
+    cdr_check "${t_cdr}" "${msg}" "${dest}"
     echo "$(date) - Done"
   fi
+  echo "$(date) - ================================================================================="
 fi
 exit ${ERR_FLAG}
 #EOF

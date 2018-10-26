@@ -52,8 +52,8 @@ while getopts 'hgGp:TPrcx:' opt; do
     T) OPTS="-P";;
     r) RETRANS="-r";;
     c) CDR="-c";;
-    p) PROFILE=$OPTARG;;
-    x) GROUP=$OPTARG;;
+    p) PROFILE=${OPTARG};;
+    x) GROUP=${OPTARG};;
   esac
 done
 shift $((OPTIND-1))
@@ -76,5 +76,5 @@ echo "${SCENARIOS}" |  tr ' ' '\n' \
  | parallel "${BIN_DIR}/check.sh ${GRAPH} -J -C -R ${OPTS} ${RETRANS} ${CDR} -d ${DOMAIN} -p ${PROFILE} -s ${GROUP}"
 status=$?
 echo "$(date) - All done[$status]"
-exit $status
+exit ${status}
 
