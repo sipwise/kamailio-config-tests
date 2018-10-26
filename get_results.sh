@@ -29,7 +29,7 @@ get_scenarios() {
   flag=0
   if [ -n "${SCENARIOS}" ]; then
     for t in ${SCENARIOS}; do
-      if [ ! -d "${BASE_DIR}/${GROUP}/$t" ]; then
+      if [ ! -d "${BASE_DIR}/${GROUP}/${t}" ]; then
         echo "$(date) - scenario: $t not found"
         flag=1
       fi
@@ -52,8 +52,8 @@ while getopts 'hgGp:TPrcx:' opt; do
     T) OPTS="-P";;
     r) RETRANS="-r";;
     c) CDR="-c";;
-    p) PROFILE=$OPTARG;;
-    x) GROUP=$OPTARG;;
+    p) PROFILE=${OPTARG};;
+    x) GROUP=${OPTARG};;
   esac
 done
 shift $((OPTIND-1))
@@ -75,6 +75,6 @@ get_scenarios
 echo "${SCENARIOS}" |  tr ' ' '\n' \
  | parallel "${BIN_DIR}/check.sh ${GRAPH} -J -C -R ${OPTS} ${RETRANS} ${CDR} -d ${DOMAIN} -p ${PROFILE} -s ${GROUP}"
 status=$?
-echo "$(date) - All done[$status]"
-exit $status
+echo "$(date) - All done[${status}]"
+exit ${status}
 
