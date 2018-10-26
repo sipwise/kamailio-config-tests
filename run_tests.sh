@@ -56,15 +56,20 @@ cfg_debug_off() {
 }
 
 capture() {
-  echo "$(date) - Begin capture"
+  echo "$(date) - ================================================================================="
+  echo "$(date) - Start tcpdump captures"
   datetime=$(date '+%y%m%d_%H%M')
   for inter in $(ip link | grep '^[0-9]' | cut -d: -f2 | sed 's/ //' | xargs); do
     tcpdump -i "${inter}" -n -s 65535 -w "${LOG_DIR}/_traces_${inter}_${datetime}.pcap" &
     capture_pid="$capture_pid ${inter}:$!"
   done
+  echo "$(date) - Done"
+  echo "$(date) - ================================================================================="
 }
 
 stop_capture() {
+  echo "$(date) - ================================================================================="
+  echo "$(date) - Stop tcpdump captures"
   local inter=""
   local temp_pid=""
   if [ -n "${capture_pid}" ]; then
@@ -78,13 +83,15 @@ stop_capture() {
       fi
     done
   fi
+  echo "$(date) - Done"
+  echo "$(date) - ================================================================================="
 }
 
 move_json_file() {
   echo "$(date) - ================================================================================="
   echo "$(date) - Move kamailio json files"
   for t in ${SCENARIOS}; do
-    echo "$(date) - - Scenarios $t ================================================="
+    echo "$(date) - - Scenario: $t"
     json_dir="${KAM_DIR}/${t}"
     if [ -d "${json_dir}" ] ; then
       for i in "${json_dir}"/*.json ; do
@@ -107,7 +114,7 @@ fix_retransmissions() {
   echo "$(date) - ================================================================================="
   echo "$(date) - Checking retransmission issues"
   for t in ${SCENARIOS}; do
-    echo "$(date) - - Scenarios $t ================================================="
+    echo "$(date) - - Scenario: $t"
     RETRANS_ISSUE=false
     file_find=($(find "${LOG_DIR}/${t}" -maxdepth 1 -name '*.json' | sort))
     for json_file in "${file_find[@]}" ; do
@@ -120,7 +127,7 @@ fix_retransmissions() {
           continue
         fi
         if ( diff -q -u <(tail -n3 "${json_file}") <(tail -n3 "${next_json_file}") &> /dev/null ) ; then
-          echo "$(basename "${next_json_file}") seems a retransmission of $(basename "${json_file}") ---> renaming the file in ${next_json_file}_retransmission"
+          echo "$(date) - - - $(basename "${next_json_file}") seems a retransmission of $(basename "${json_file}") ---> renaming the file in $(basename "${next_json_file}")_retransmission"
           mv -f "${next_json_file}" "${next_json_file}_retransmission"
           RETRANS_ISSUE=true
         fi
@@ -128,7 +135,7 @@ fix_retransmissions() {
     done
 
     if "${RETRANS_ISSUE}" ; then
-      echo "$(date) - Reordering kamailio json files"
+      echo "$(date) - - - Reordering kamailio json files"
       file_find=($(find "${LOG_DIR}/${t}" -maxdepth 1 -name '*.json' | sort))
       a=1
       for json_file in "${file_find[@]}" ; do
@@ -147,7 +154,7 @@ cdr_export() {
   echo "$(date) - ================================================================================="
   echo "$(date) - Extracting CDRs"
   for t in ${SCENARIOS}; do
-    echo "$(date) - - Scenarios $t ================================================="
+    echo "$(date) - - Scenario: $t"
     if ! "${BIN_DIR}/cdr_extract.sh" -m -t "${START_TIME}" -s "${GROUP}" "$t" ; then
       echo "ERROR: $t"
       error_flag=1
@@ -283,7 +290,8 @@ if "${CAPTURE}" ; then
 fi
 
 for t in ${SCENARIOS}; do
-  echo "$(date) - Run [${GROUP}/${PROFILE}]: $t ================================================="
+  echo "$(date) - ================================================================================="
+  echo "$(date) - Run [${GROUP}/${PROFILE}]: $t"
 
   log_temp="${LOG_DIR}/${t}"
   if [ -d "${log_temp}" ]; then

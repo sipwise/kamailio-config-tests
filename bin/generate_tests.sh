@@ -86,10 +86,10 @@ for t in $(find "${DIR}" -not -regex '.+customtt.tt2' -type f -name '*.tt2' | so
   custom_template="$(basename "$t" .tt2).customtt.tt2"
 
   if [ -f "${origdir}/${custom_template}" ]; then
-    echo "Custom detected"
+    echo "$(date) - - Custom detected"
     template=${custom_template}
   fi
-  echo "generating: ${destdir}/${destfile}"
+  echo "$(date) - - Generating: ${destdir}/${destfile}"
   # shellcheck disable=SC2086
   if ! "${BIN_DIR}/generate_test.pl" ${ARGS} "${origdir}/${template}" ${IDS} > "${destdir}/${destfile}" ; then
     error_flag=1
