@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ad58531_a0f9b7ca",
+        "filename": "bin/check.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-10-29T15:15:26Z",
+      "side": 1,
+      "message": "https://google.github.io/styleguide/shell.xml?showone\u003dVariable_expansion#Variable_expansion",
+      "range": {
+        "startLine": 58,
+        "startChar": 18,
+        "endLine": 58,
+        "endChar": 22
+      },
+      "revId": "ab6137649b39ff85bd8aaf55bc6bc389e7894f72",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
