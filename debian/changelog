@@ -1,3 +1,18 @@
+kamailio-config-tests (7.0.1.0+0~mr7.0.1.0) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [f6e69a6] TT#42150 Increased pause in some complex scenarios
+  * [53b3257] TT#42150 Improve tests execution script
+  * [7200e5d] TT#34026 Adapt tests to support pv_headers based templates logic
+  * [a9f01cc] TT#46501 Check previous SIP message in case of wrong packet ordering
+
+  [ Andrew Pogrebennyk ]
+  * [89bbba4] TT#40618 fix flows because of UPN-based call blocking
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 12 Nov 2018 22:35:24 +0100
+
 kamailio-config-tests (7.0.0.0+0~mr7.0.0.0) unstable; urgency=medium
 
   [ Marco Capetta ]
