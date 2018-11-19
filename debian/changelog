@@ -1,3 +1,15 @@
+kamailio-config-tests (5.5.7.1+0~mr5.5.7.1) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [cf7a17c] TT#30353 Fix function definitions in all bash scripts
+  * [898787f] TT#30354 Migration of flags to boolean variables
+  * [92babb5] TT#26452 Improve kamailio-config-test to be re-transmission safe
+  * [a98d100] TT#42150 Increased pause in some complex scenarios
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 19 Nov 2018 17:56:54 +0100
+
 kamailio-config-tests (5.5.7.0+0~mr5.5.7.0) unstable; urgency=medium
 
   * New release.
