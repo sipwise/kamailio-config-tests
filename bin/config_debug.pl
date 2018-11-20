@@ -19,7 +19,7 @@
 # Public License version 3 can be found in "/usr/share/common-licenses/GPL-3".
 #
 use English;
-use File::Copy qw(cp move);
+use File::Copy qw(cp mv);
 use File::Spec;
 use Getopt::Long;
 use strict;
@@ -79,7 +79,7 @@ $domain = 'spce.test' unless defined($domain);
 
 if (lc($action) eq "off")
 {
-  move("$file.orig", $file) or die "Can't restore the orig config";
+  mv("$file.orig", $file) or die "Can't restore the orig config";
   tie @array, 'Tie::File', '/etc/hosts' or die ('Can set test domain on /etc/hosts');
   for (@array)
   {
