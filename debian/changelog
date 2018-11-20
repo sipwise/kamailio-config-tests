@@ -1,3 +1,12 @@
+kamailio-config-tests (6.5.2.2+0~mr6.5.2.2) unstable; urgency=medium
+
+  [ Alexander Lutay ]
+  * [f1067bf] TT#47373 Preserve config.yml attributes on copying for debug_mode
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 20 Nov 2018 17:10:41 +0100
+
 kamailio-config-tests (6.5.2.1+0~mr6.5.2.1) unstable; urgency=medium
 
   [ Marco Capetta ]
