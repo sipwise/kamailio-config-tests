@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1adf8d57_b16c7809",
+        "filename": "bin/config_debug.pl",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2018-11-20T13:23:54Z",
+      "side": 1,
+      "message": "use File::Copy qw(cp move);",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 20
+      },
+      "revId": "76e6827b41ccacaf7728abf2522d1e27b0855ed8",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
