@@ -1,3 +1,12 @@
+kamailio-config-tests (6.5.1.2+0~mr6.5.1.2) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [ec8a899] TT#46501 Check previous SIP message in case of wrong packet ordering
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 22 Nov 2018 11:52:36 +0100
+
 kamailio-config-tests (6.5.1.1+0~mr6.5.1.1) unstable; urgency=medium
 
   [ Marco Capetta ]
