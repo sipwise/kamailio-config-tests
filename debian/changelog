@@ -1,3 +1,12 @@
+kamailio-config-tests (5.5.7.2+0~mr5.5.7.2) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [8f9982d] TT#47750 Fix invite_concurrent_max_per_account timing issue
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 22 Nov 2018 10:54:44 +0100
+
 kamailio-config-tests (5.5.7.1+0~mr5.5.7.1) unstable; urgency=medium
 
   [ Marco Capetta ]
