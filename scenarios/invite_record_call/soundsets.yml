@@ -1,0 +1,7 @@
+soundsets:
+  'default_soundset':
+      reseller_id: 1
+      sounds:
+        announce_before_recording:
+          filename: sounds/no_sh.wav
+          loopplay: 'false'

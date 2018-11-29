@@ -1,0 +1,9 @@
+{
+    "@spce.test": {
+        "sound_set": "default_soundset"
+    },
+    "testuser1003@spce.test": {
+        "play_announce_before_recording": true,
+        "record_call": true
+    }
+}
