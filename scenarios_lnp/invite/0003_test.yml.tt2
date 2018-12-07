@@ -84,9 +84,11 @@ flow:
   - start|ROUTE_INVITE_TO_INT:
   - start|ROUTE_LNP:
       $avp(callee_cli): ['4311001']
+  - start|ROUTE_APPLY_CALLEE_LNP_RWR:
   - start|ROUTE_LNP_SET_URI:
       $var(lnp_dst): 4318881001
   - return|ROUTE_LNP_SET_URI:
+  - return|ROUTE_APPLY_CALLEE_LNP_RWR:
   - return|ROUTE_LNP:
   - start|ROUTE_CHECK_PBX:
   - return|ROUTE_CHECK_PBX:

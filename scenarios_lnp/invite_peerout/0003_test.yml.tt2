@@ -57,11 +57,13 @@ flow:
   - start|ROUTE_LNP:
       $avp(callee_cli): ['004321001']
       $xavp(caller_real_prefs[0]=>lnp_to_rn): None
+  - start|ROUTE_APPLY_CALLEE_LNP_RWR:
   - start|ROUTE_APPLY_REWRITE_RULE:
   - return|ROUTE_APPLY_REWRITE_RULE:
   - start|ROUTE_LNP_SET_URI:
       $var(lnp_dst): 0043test28881001
   - return|ROUTE_LNP_SET_URI:
+  - return|ROUTE_APPLY_CALLEE_LNP_RWR:
   - return|ROUTE_LNP:
   - start|ROUTE_FIND_CALLEE_POST:
   - start|ROUTE_NCOS_CHECK:

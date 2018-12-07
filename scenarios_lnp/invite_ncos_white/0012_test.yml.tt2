@@ -48,8 +48,10 @@ flow:
   - start|ROUTE_CLEAR_CALLEE_PREF:
   - return|ROUTE_CLEAR_CALLEE_PREF:
   - start|ROUTE_LNP:
+  - start|ROUTE_APPLY_CALLEE_LNP_RWR:
   - start|ROUTE_LNP_SET_URI:
   - return|ROUTE_LNP_SET_URI:
+  - return|ROUTE_APPLY_CALLEE_LNP_RWR:
   - return|ROUTE_LNP:
   - start|ROUTE_FIND_CALLEE_POST:
   - start|ROUTE_NCOS_CHECK:
