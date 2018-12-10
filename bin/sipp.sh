@@ -18,8 +18,7 @@
 # On Debian systems, the complete text of the GNU General
 # Public License version 3 can be found in "/usr/share/common-licenses/GPL-3".
 #
-function usage
-{
+usage() {
   echo "Usage: sipp.sh [-p PORT] [-m MPORT] [-t TIMEOUT] [-r] [-T TRANSPORT] scenario.xml"
   echo "Options:"
   echo -e "\t-p: sip port. default 50602/50603(responder)"

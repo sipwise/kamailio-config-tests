@@ -108,7 +108,9 @@ sub _do_binary_request {
 	if(! -f $filename) {
 		die "$filename not found\n";
 	}
-	$req->content(read_file($filename));
+	my $data_ref;
+	read_file($filename, buf_ref => \$data_ref);
+	$req->content(${data_ref});
 	my $res = $ua->request($req);
 	if(!$res->is_success) {
 		print "$url\n";
@@ -252,6 +254,22 @@ sub _set_content {
 	my $res = $self->do_request($ua, $urlbase.$urldata, $data, 'PUT');
 	if($res->is_success) {
 		return JSON::from_json( $res->decoded_content );
+	}
+	else {
+		die $res->as_string;
+	}
+	return;
+}
+
+sub _post_content {
+	my ($self, $data, $urldata) = @_;
+	my $urlbase = 'https://'.$self->{opts}->{host}.':'.$self->{opts}->{port};
+	my $ua = $self->create_ua($urlbase);
+
+	my $res = $self->do_request($ua, $urlbase.$urldata, $data, 'POST');
+	if($res->is_success) {
+		return $res->status_line
+		#return JSON::from_json( $res->decoded_content );
 	}
 	else {
 		die $res->as_string;
@@ -443,6 +461,86 @@ sub get_subscriber_voicemailsettings {
 	my ($self, $id) = @_;
 	my $urldata = "/api/voicemailsettings/${id}";
 	my $collection_id = 'ngcp:voicemailsettings';
+
+	return $self->_get_content(undef, $urldata);
+}
+
+sub set_subscriber_cf_destinationset {
+	my ($self, $id, $data) = @_;
+	my $urldata = "/api/cfdestinationsets/";
+	my $collection_id = 'ngcp:cfdestinationsets';
+
+	return $self->_post_content($data, $urldata);
+}
+
+sub get_subscriber_cf_destinationset {
+	my ($self, $id) = @_;
+	my $urldata = "/api/cfdestinationsets/${id}";
+	my $collection_id = 'ngcp:cfdestinationsets';
+
+	return $self->_get_content(undef, $urldata);
+}
+
+sub set_subscriber_cf_sourceset {
+	my ($self, $id, $data) = @_;
+	my $urldata = "/api/cfsourcesets/";
+	my $collection_id = 'ngcp:cfsourcesets';
+
+	return $self->_post_content($data, $urldata);
+}
+
+sub get_subscriber_cf_sourceset {
+	my ($self, $id) = @_;
+	my $urldata = "/api/cfsourcesets/${id}";
+	my $collection_id = 'ngcp:cfsourcesets';
+
+	return $self->_get_content(undef, $urldata);
+}
+
+sub set_subscriber_cf_timeset {
+	my ($self, $id, $data) = @_;
+	my $urldata = "/api/cftimesets/";
+	my $collection_id = 'ngcp:cftimesets';
+
+	return $self->_post_content($data, $urldata);
+}
+
+sub get_subscriber_cf_timeset {
+	my ($self, $id) = @_;
+	my $urldata = "/api/cftimesets/${id}";
+	my $collection_id = 'ngcp:cftimesets';
+
+	return $self->_get_content(undef, $urldata);
+}
+
+sub set_subscriber_cf_mapping {
+	my ($self, $id, $data) = @_;
+	my $urldata = "/api/cfmappings/${id}";
+	my $collection_id = 'ngcp:cfmappings';
+
+	return $self->_set_content($data, $urldata);
+}
+
+sub get_subscriber_cf_mapping {
+	my ($self, $id) = @_;
+	my $urldata = "/api/cfmappings/${id}";
+	my $collection_id = 'ngcp:cfmappings';
+
+	return $self->_get_content(undef, $urldata);
+}
+
+sub set_subscriber_trusted_sources {
+	my ($self, $id, $data) = @_;
+	my $urldata = "/api/trustedsources/";
+	my $collection_id = 'ngcp:trustedsources';
+
+	return $self->_post_content($data, $urldata);
+}
+
+sub get_subscriber_trusted_sources {
+	my ($self, $id) = @_;
+	my $urldata = "/api/trustedsources/${id}";
+	my $collection_id = 'ngcp:trustedsources';
 
 	return $self->_get_content(undef, $urldata);
 }
