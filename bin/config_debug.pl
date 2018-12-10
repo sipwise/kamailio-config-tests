@@ -19,7 +19,7 @@
 # Public License version 3 can be found in "/usr/share/common-licenses/GPL-3".
 #
 use English;
-use File::Copy;
+use File::Copy qw(cp move);
 use File::Spec;
 use Getopt::Long;
 use strict;
@@ -99,7 +99,7 @@ if (lc($action) eq "off")
 }
 else
 {
-  copy($file, $file.".orig") or die "Copy failed: $ERRNO" unless(-e $file.".orig");
+  cp($file, $file.".orig") or die "Copy failed: $ERRNO" unless(-e $file.".orig");
   $yaml = LoadFile($file);
   $yaml->{kamailio}{lb}{cfgt} = 'yes';
   $yaml->{kamailio}{lb}{use_dns_cache} = 'off';
@@ -108,6 +108,7 @@ else
   $yaml->{sems}{debug} = 'yes';
   $yaml->{checktools}{sip_check_enable} = 0;
   $yaml->{security}->{ngcp_panel}->{scripts}->{restapi}->{sslverify} = 'no';
+  $yaml->{mediator}{interval} = '1';
 
   my $group_yml_file = $base_dir."/".$group."/config.yml";
   if ( -e  $group_yml_file )
