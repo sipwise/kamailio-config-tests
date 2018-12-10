@@ -163,7 +163,7 @@ do
 {
   my ($mode, $route, $msgid, $msgid_t, $json, $msg, $pjson, $callid, $method);
   # Jun 25 14:52:16 spce proxy[11248]: DEBUG: debugger [debugger_api.c:427]: dbg_cfg_dump(): msg out:{
-  if(($msg) = ($line =~ m/.+msg out:{(.+)}$/))
+  if(($msg) = ($line =~ m/.+msg out:\{(.+)\}$/))
   {
     do
     {
@@ -184,7 +184,7 @@ do
         print "No Call-ID\n";
       }
       next_line();
-    }while(($msg) = ($line =~ m/.+msg out:{(.+)}$/));
+    }while(($msg) = ($line =~ m/.+msg out:\{(.+)\}$/));
     #print "msg_out\n";
   }
 
