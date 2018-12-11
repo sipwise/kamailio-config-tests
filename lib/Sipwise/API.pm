@@ -29,6 +29,7 @@ use LWP::UserAgent;
 use IO::Socket::SSL;
 use URI;
 use Data::Dumper;
+use File::Slurp;
 
 my $opts_default = {
 	host => '127.0.0.1',
@@ -41,8 +42,7 @@ my $opts_default = {
 };
 
 sub _get_id {
-	my $baseurl = shift;
-	my $location = shift;
+	my ($baseurl, $location) = @_;
 	my $id;
 
 	($id) = ($location =~ m/\Q$baseurl\E(\d+)/);
@@ -50,8 +50,7 @@ sub _get_id {
 }
 
 sub new {
-	my $class = shift;
-	my $opts = shift;
+	my ($class, $opts) = @_;
 	my $self = {};
 
 	$self->{opts} = merge($opts, $opts_default);
@@ -88,6 +87,24 @@ sub do_request {
 	if(!$res->is_success) {
 		print "$url\n";
 		print Dumper $data unless $self->{opts}->{verbose};
+	}
+	return $res;
+}
+
+sub _do_binary_request {
+	my ($self, $ua, $url, $filename, $ct) = @_;
+	my $content;
+
+	my $req = HTTP::Request->new('POST', $url);
+	$req->header('Content-Type' => $ct);
+	$req->header('Prefer' => 'return=representation');
+	if(! -f $filename) {
+		die "$filename not found\n";
+	}
+	$req->content(read_file($filename));
+	my $res = $ua->request($req);
+	if(!$res->is_success) {
+		print "$url\n";
 	}
 	return $res;
 }
@@ -136,9 +153,7 @@ sub create_ua {
 }
 
 sub _create {
-	my $self = shift;
-	my $data = shift;
-	my $urldata = shift;
+	my ($self, $data, $urldata) = @_;
 	my $urlbase = 'https://'.$self->{opts}->{host}.':'.$self->{opts}->{port};
 
 	my $ua = $self->create_ua();
@@ -155,8 +170,7 @@ sub _create {
 }
 
 sub _delete {
-	my $self = shift;
-	my $urldata = shift;
+	my ($self, $urldata) = @_;
 	my $urlbase = 'https://'.$self->{opts}->{host}.':'.$self->{opts}->{port};
 
 	my $ua = $self->create_ua();
@@ -165,9 +179,7 @@ sub _delete {
 }
 
 sub _get_content {
-	my $self = shift;
-	my $data = shift;
-	my $urldata = shift;
+	my ($self, $data, $urldata) = @_;
 	my $urlbase = 'https://'.$self->{opts}->{host}.':'.$self->{opts}->{port};
 	my $ua = $self->create_ua();
 
@@ -182,9 +194,7 @@ sub _get_content {
 }
 
 sub _set_content {
-	my $self = shift;
-	my $data = shift;
-	my $urldata = shift;
+	my ($self, $data, $urldata) = @_;
 	my $urlbase = 'https://'.$self->{opts}->{host}.':'.$self->{opts}->{port};
 	my $ua = $self->create_ua();
 
@@ -198,11 +208,24 @@ sub _set_content {
 	return;
 }
 
+sub _post_content {
+	my ($self, $data, $urldata) = @_;
+	my $urlbase = 'https://'.$self->{opts}->{host}.':'.$self->{opts}->{port};
+	my $ua = $self->create_ua($urlbase);
+
+	my $res = $self->do_request($ua, $urlbase.$urldata, $data, 'POST');
+	if($res->is_success) {
+		return $res->status_line
+		#return JSON::from_json( $res->decoded_content );
+	}
+	else {
+		die $res->as_string;
+	}
+	return;
+}
+
 sub _exists {
-	my $self = shift;
-	my $data = shift;
-	my $urldata = shift;
-	my $collection_id = shift;
+	my ($self, $data, $urldata, $collection_id) = @_;
 	my $collection = $self->_get_content($data, $urldata);
 
 	if (defined $collection && $collection->{total_count} == 1) {
@@ -214,9 +237,7 @@ sub _exists {
 }
 
 sub check_contact_exists {
-	my $self = shift;
-	my $data = shift;
-	my $type = shift;
+	my ($self, $data, $type) = @_;
 	my $urldata = "/api/${type}contacts/";
 	my $collection_id = "ngcp:${type}contacts";
 
@@ -224,17 +245,14 @@ sub check_contact_exists {
 }
 
 sub create_contact {
-	my $self = shift;
-	my $data = shift;
-	my $type = shift;
+	my ($self, $data, $type) = @_;
 	my $urldata = "/api/${type}contacts/";
 
 	return $self->_create($data, $urldata);
 }
 
 sub check_contract_exists {
-	my $self = shift;
-	my $data = shift;
+	my ($self, $data) = @_;
 	my $urldata = '/api/contracts/';
 	my $collection_id = 'ngcp:contracts';
 
@@ -242,16 +260,14 @@ sub check_contract_exists {
 }
 
 sub create_contract {
-	my $self = shift;
-	my $data = shift;
+	my ($self, $data) = @_;
 	my $urldata = '/api/contracts/';
 
 	return $self->_create($data, $urldata);
 }
 
 sub check_reseller_exists {
-	my $self = shift;
-	my $data = shift;
+	my ($self, $data) = @_;
 	my $urldata = '/api/resellers/';
 	my $collection_id = 'ngcp:resellers';
 
@@ -259,16 +275,14 @@ sub check_reseller_exists {
 }
 
 sub create_reseller {
-	my $self = shift;
-	my $data = shift;
+	my ($self, $data) = @_;
 	my $urldata = '/api/resellers/';
 
 	return $self->_create($data, $urldata);
 }
 
 sub check_domain_exists {
-	my $self = shift;
-	my $data = shift;
+	my ($self, $data) = @_;
 	my $urldata = "/api/domains/";
 	my $collection_id = 'ngcp:domains';
 
@@ -276,8 +290,7 @@ sub check_domain_exists {
 }
 
 sub get_domain_preferences {
-	my $self = shift;
-	my $id = shift;
+	my ($self, $id) = @_;
 	my $urldata = "/api/domainpreferences/${id}";
 	my $collection_id = 'ngcp:domainpreferences';
 
@@ -285,9 +298,7 @@ sub get_domain_preferences {
 }
 
 sub set_domain_preferences {
-	my $self = shift;
-	my $id = shift;
-	my $data = shift;
+	my ($self, $id, $data) = @_;
 	my $urldata = "/api/domainpreferences/${id}";
 	my $collection_id = 'ngcp:domainpreferences';
 
@@ -295,16 +306,14 @@ sub set_domain_preferences {
 }
 
 sub create_domain {
-	my $self = shift;
-	my $data = shift;
+	my ($self, $data) = @_;
 	my $urldata = '/api/domains/';
 
 	return $self->_create($data, $urldata);
 }
 
 sub check_customer_exists {
-	my $self = shift;
-	my $data = shift;
+	my ($self, $data) = @_;
 	my $urldata = '/api/customers/';
 	my $collection_id = 'ngcp:customers';
 
@@ -312,25 +321,29 @@ sub check_customer_exists {
 }
 
 sub create_customer {
-	my $self = shift;
-	my $data = shift;
+	my ($self, $data) = @_;
 	my $urldata = '/api/customers/';
 
 	return $self->_create($data, $urldata);
 }
 
 sub check_subscriber_exists {
-	my $self = shift;
-	my $data = shift;
+	my ($self, $data) = @_;
 	my $urldata = '/api/subscribers/';
 	my $collection_id = 'ngcp:subscribers';
 
 	return $self->_exists($data, $urldata, $collection_id);
 }
 
+sub get_subscriber {
+	my ($self, $id) = @_;
+	my $urldata = "/api/subscribers/${id}";
+
+	return $self->_get_content(undef, $urldata);
+}
+
 sub get_subscriber_preferences {
-	my $self = shift;
-	my $id = shift;
+	my ($self, $id) = @_;
 	my $urldata = "/api/subscriberpreferences/${id}";
 	my $collection_id = 'ngcp:subscriberpreferences';
 
@@ -338,9 +351,7 @@ sub get_subscriber_preferences {
 }
 
 sub set_subscriber_preferences {
-	my $self = shift;
-	my $id = shift;
-	my $data = shift;
+	my ($self, $id, $data) = @_;
 	my $urldata = "/api/subscriberpreferences/${id}";
 	my $collection_id = 'ngcp:subscriberpreferences';
 
@@ -348,9 +359,7 @@ sub set_subscriber_preferences {
 }
 
 sub set_subscriber_speeddial {
-	my $self = shift;
-	my $id = shift;
-	my $data = shift;
+	my ($self, $id, $data) = @_;
 	my $urldata = "/api/speeddials/${id}";
 	my $collection_id = 'ngcp:speeddials';
 
@@ -358,8 +367,7 @@ sub set_subscriber_speeddial {
 }
 
 sub get_subscriber_speeddial {
-	my $self = shift;
-	my $id = shift;
+	my ($self, $id) = @_;
 	my $urldata = "/api/speeddials/${id}";
 	my $collection_id = 'ngcp:speeddials';
 
@@ -367,9 +375,7 @@ sub get_subscriber_speeddial {
 }
 
 sub set_subscriber_callforward {
-	my $self = shift;
-	my $id = shift;
-	my $data = shift;
+	my ($self, $id, $data) = @_;
 	my $urldata = "/api/callforwards/${id}";
 	my $collection_id = 'ngcp:callforwards';
 
@@ -377,8 +383,7 @@ sub set_subscriber_callforward {
 }
 
 sub get_subscriber_callforward {
-	my $self = shift;
-	my $id = shift;
+	my ($self, $id) = @_;
 	my $urldata = "/api/callforwards/${id}";
 	my $collection_id = 'ngcp:callforwards';
 
@@ -386,9 +391,7 @@ sub get_subscriber_callforward {
 }
 
 sub set_subscriber_voicemailsettings {
-	my $self = shift;
-	my $id = shift;
-	my $data = shift;
+	my ($self, $id, $data) = @_;
 	my $urldata = "/api/voicemailsettings/${id}";
 	my $collection_id = 'ngcp:voicemailsettings';
 
@@ -396,25 +399,102 @@ sub set_subscriber_voicemailsettings {
 }
 
 sub get_subscriber_voicemailsettings {
-	my $self = shift;
-	my $id = shift;
+	my ($self, $id) = @_;
 	my $urldata = "/api/voicemailsettings/${id}";
 	my $collection_id = 'ngcp:voicemailsettings';
 
 	return $self->_get_content(undef, $urldata);
 }
 
+sub set_subscriber_cf_destinationset {
+	my ($self, $id, $data) = @_;
+	my $urldata = "/api/cfdestinationsets/";
+	my $collection_id = 'ngcp:cfdestinationsets';
+
+	return $self->_post_content($data, $urldata);
+}
+
+sub get_subscriber_cf_destinationset {
+	my ($self, $id) = @_;
+	my $urldata = "/api/cfdestinationsets/${id}";
+	my $collection_id = 'ngcp:cfdestinationsets';
+
+	return $self->_get_content(undef, $urldata);
+}
+
+sub set_subscriber_cf_sourceset {
+	my ($self, $id, $data) = @_;
+	my $urldata = "/api/cfsourcesets/";
+	my $collection_id = 'ngcp:cfsourcesets';
+
+	return $self->_post_content($data, $urldata);
+}
+
+sub get_subscriber_cf_sourceset {
+	my ($self, $id) = @_;
+	my $urldata = "/api/cfsourcesets/${id}";
+	my $collection_id = 'ngcp:cfsourcesets';
+
+	return $self->_get_content(undef, $urldata);
+}
+
+sub set_subscriber_cf_timeset {
+	my ($self, $id, $data) = @_;
+	my $urldata = "/api/cftimesets/";
+	my $collection_id = 'ngcp:cftimesets';
+
+	return $self->_post_content($data, $urldata);
+}
+
+sub get_subscriber_cf_timeset {
+	my ($self, $id) = @_;
+	my $urldata = "/api/cftimesets/${id}";
+	my $collection_id = 'ngcp:cftimesets';
+
+	return $self->_get_content(undef, $urldata);
+}
+
+sub set_subscriber_cf_mapping {
+	my ($self, $id, $data) = @_;
+	my $urldata = "/api/cfmappings/${id}";
+	my $collection_id = 'ngcp:cfmappings';
+
+	return $self->_set_content($data, $urldata);
+}
+
+sub get_subscriber_cf_mapping {
+	my ($self, $id) = @_;
+	my $urldata = "/api/cfmappings/${id}";
+	my $collection_id = 'ngcp:cfmappings';
+
+	return $self->_get_content(undef, $urldata);
+}
+
+sub set_subscriber_trusted_sources {
+	my ($self, $id, $data) = @_;
+	my $urldata = "/api/trustedsources/";
+	my $collection_id = 'ngcp:trustedsources';
+
+	return $self->_post_content($data, $urldata);
+}
+
+sub get_subscriber_trusted_sources {
+	my ($self, $id) = @_;
+	my $urldata = "/api/trustedsources/${id}";
+	my $collection_id = 'ngcp:trustedsources';
+
+	return $self->_get_content(undef, $urldata);
+}
+
 sub create_subscriber {
-	my $self = shift;
-	my $data = shift;
+	my ($self, $data) = @_;
 	my $urldata = '/api/subscribers/';
 
 	return $self->_create($data, $urldata);
 }
 
 sub check_rewriterule_exists {
-	my $self = shift;
-	my $data = shift;
+	my ($self, $data) = @_;
 	my $urldata = '/api/rewriterules/';
 	my $collection_id = 'ngcp:rewriterules';
 
@@ -422,16 +502,14 @@ sub check_rewriterule_exists {
 }
 
 sub create_rewriterule {
-	my $self = shift;
-	my $data = shift;
+	my ($self, $data) = @_;
 	my $urldata = '/api/rewriterules/';
 
 	return $self->_create($data, $urldata);
 }
 
 sub check_rewriteruleset_exists {
-	my $self = shift;
-	my $data = shift;
+	my ($self, $data) = @_;
 	my $urldata = '/api/rewriterulesets/';
 	my $collection_id = 'ngcp:rewriterulesets';
 
@@ -439,24 +517,21 @@ sub check_rewriteruleset_exists {
 }
 
 sub create_rewriteruleset {
-	my $self = shift;
-	my $data = shift;
+	my ($self, $data) = @_;
 	my $urldata = '/api/rewriterulesets/';
 
 	return $self->_create($data, $urldata);
 }
 
 sub delete_rewriteruleset {
-	my $self = shift;
-	my $id = shift;
+	my ($self, $id) = @_;
 	my $urldata = "/api/rewriterulesets/${id}";
 
 	return $self->_delete($urldata);
 }
 
 sub check_peeringgroup_exists {
-	my $self = shift;
-	my $data = shift;
+	my ($self, $data) = @_;
 	my $urldata = '/api/peeringgroups/';
 	my $collection_id = 'ngcp:peeringgroups';
 
@@ -464,24 +539,21 @@ sub check_peeringgroup_exists {
 }
 
 sub create_peeringgroup {
-	my $self = shift;
-	my $data = shift;
+	my ($self, $data) = @_;
 	my $urldata = '/api/peeringgroups/';
 
 	return $self->_create($data, $urldata);
 }
 
 sub delete_peeringgroup {
-	my $self = shift;
-	my $id = shift;
+	my ($self, $id) = @_;
 	my $urldata = "/api/peeringgroups/${id}";
 
 	return $self->_delete($urldata);
 }
 
 sub check_peeringserver_exists {
-	my $self = shift;
-	my $data = shift;
+	my ($self, $data) = @_;
 	my $urldata = '/api/peeringservers/';
 	my $collection_id = 'ngcp:peeringservers';
 
@@ -489,8 +561,7 @@ sub check_peeringserver_exists {
 }
 
 sub get_peeringserver_preferences {
-	my $self = shift;
-	my $id = shift;
+	my ($self, $id) = @_;
 	my $urldata = "/api/peeringserverpreferences/${id}";
 	my $collection_id = 'ngcp:peeringserverpreferences';
 
@@ -498,9 +569,7 @@ sub get_peeringserver_preferences {
 }
 
 sub set_peeringserver_preferences {
-	my $self = shift;
-	my $id = shift;
-	my $data = shift;
+	my ($self, $id, $data) = @_;
 	my $urldata = "/api/peeringserverpreferences/${id}";
 	my $collection_id = 'ngcp:peeringserverpreferences';
 
@@ -508,17 +577,14 @@ sub set_peeringserver_preferences {
 }
 
 sub create_peeringserver {
-	my $self = shift;
-	my $data = shift;
+	my ($self, $data) = @_;
 	my $urldata = '/api/peeringservers/';
 
 	return $self->_create($data, $urldata);
 }
 
 sub set_peeringserver {
-	my $self = shift;
-	my $id = shift;
-	my $data = shift;
+	my ($self, $id, $data) = @_;
 	my $urldata = "/api/peeringservers/${id}";
 	my $collection_id = 'ngcp:peeringservers';
 
@@ -526,8 +592,7 @@ sub set_peeringserver {
 }
 
 sub get_peeringserver {
-	my $self = shift;
-	my $id = shift;
+	my ($self, $id) = @_;
 	my $urldata = "/api/peeringservers/${id}";
 	my $collection_id = 'ngcp:peeringservers';
 
@@ -535,16 +600,14 @@ sub get_peeringserver {
 }
 
 sub delete_peeringserver {
-	my $self = shift;
-	my $id = shift;
+	my ($self, $id) = @_;
 	my $urldata = "/api/peeringservers/${id}";
 
 	return $self->_delete($urldata);
 }
 
 sub check_peeringrule_exists {
-	my $self = shift;
-	my $data = shift;
+	my ($self, $data) = @_;
 	my $urldata = '/api/peeringrules/';
 	my $collection_id = 'ngcp:peeringrules';
 
@@ -552,24 +615,43 @@ sub check_peeringrule_exists {
 }
 
 sub create_peeringrule {
-	my $self = shift;
-	my $data = shift;
+	my ($self, $data) = @_;
 	my $urldata = '/api/peeringrules/';
 
 	return $self->_create($data, $urldata);
 }
 
 sub delete_peeringrule {
-	my $self = shift;
-	my $id = shift;
+	my ($self, $id) = @_;
 	my $urldata = "/api/peeringrules/${id}";
 
 	return $self->_delete($urldata);
 }
 
+sub check_peeringinboundrule_exists {
+	my ($self, $data) = @_;
+	my $urldata = '/api/peeringinboundrules/';
+	my $collection_id = 'ngcp:peeringinboundrules';
+
+	return $self->_exists($data, $urldata, $collection_id);
+}
+
+sub create_peeringinboundrule {
+	my ($self, $data) = @_;
+	my $urldata = '/api/peeringinboundrules/';
+
+	return $self->_create($data, $urldata);
+}
+
+sub delete_peeringinboundrule {
+	my ($self, $id) = @_;
+	my $urldata = "/api/peeringinboundrules/${id}";
+
+	return $self->_delete($urldata);
+}
+
 sub check_ncoslevel_exists {
-	my $self = shift;
-	my $data = shift;
+	my ($self, $data) = @_;
 	my $urldata = "/api/ncoslevels/";
 	my $collection_id = 'ngcp:ncoslevels';
 
@@ -577,24 +659,21 @@ sub check_ncoslevel_exists {
 }
 
 sub create_ncoslevel {
-	my $self = shift;
-	my $data = shift;
+	my ($self, $data) = @_;
 	my $urldata = '/api/ncoslevels/';
 
 	return $self->_create($data, $urldata);
 }
 
 sub delete_ncoslevel {
-	my $self = shift;
-	my $id = shift;
+	my ($self, $id) = @_;
 	my $urldata = "/api/ncoslevels/${id}";
 
 	return $self->_delete($urldata);
 }
 
 sub check_ncospattern_exists {
-	my $self = shift;
-	my $data = shift;
+	my ($self, $data) = @_;
 	my $urldata = "/api/ncospatterns/";
 	my $collection_id = 'ngcp:ncospatterns';
 
@@ -602,24 +681,21 @@ sub check_ncospattern_exists {
 }
 
 sub create_ncospattern {
-	my $self = shift;
-	my $data = shift;
+	my ($self, $data) = @_;
 	my $urldata = '/api/ncospatterns/';
 
 	return $self->_create($data, $urldata);
 }
 
 sub delete_ncospattern {
-	my $self = shift;
-	my $id = shift;
+	my ($self, $id) = @_;
 	my $urldata = "/api/ncospatterns/${id}";
 
 	return $self->_delete($urldata);
 }
 
 sub check_lnpcarrier_exists {
-	my $self = shift;
-	my $data = shift;
+	my ($self, $data) = @_;
 	my $urldata = "/api/lnpcarriers/";
 	my $collection_id = 'ngcp:lnpcarriers';
 
@@ -627,24 +703,21 @@ sub check_lnpcarrier_exists {
 }
 
 sub create_lnpcarrier {
-	my $self = shift;
-	my $data = shift;
+	my ($self, $data) = @_;
 	my $urldata = '/api/lnpcarriers/';
 
 	return $self->_create($data, $urldata);
 }
 
 sub delete_lnpcarrier {
-	my $self = shift;
-	my $id = shift;
+	my ($self, $id) = @_;
 	my $urldata = "/api/lnpcarriers/${id}";
 
 	return $self->_delete($urldata);
 }
 
 sub check_lnpnumber_exists {
-	my $self = shift;
-	my $data = shift;
+	my ($self, $data) = @_;
 	my $urldata = "/api/lnpnumbers/";
 	my $collection_id = 'ngcp:lnpnumbers';
 
@@ -652,19 +725,77 @@ sub check_lnpnumber_exists {
 }
 
 sub create_lnpnumber {
-	my $self = shift;
-	my $data = shift;
+	my ($self, $data) = @_;
 	my $urldata = '/api/lnpnumbers/';
 
 	return $self->_create($data, $urldata);
 }
 
 sub delete_lnpnumber {
-	my $self = shift;
-	my $id = shift;
+	my ($self, $id) = @_;
 	my $urldata = "/api/lnpnumbers/${id}";
 
 	return $self->_delete($urldata);
+}
+
+sub check_ncoslnpcarrier_exists {
+	my ($self, $data) = @_;
+	my $urldata = "/api/ncoslnpcarriers/";
+	my $collection_id = 'ngcp:ncoslnpcarriers';
+
+	return $self->_exists($data, $urldata, $collection_id);
+}
+
+sub create_ncoslnpcarrier {
+	my ($self, $data) = @_;
+	my $urldata = '/api/ncoslnpcarriers/';
+
+	return $self->_create($data, $urldata);
+}
+
+sub delete_ncoslnpcarrier {
+	my ($self, $id) = @_;
+	my $urldata = "/api/ncoslnpcarriers/${id}";
+
+	return $self->_delete($urldata);
+}
+
+sub check_soundset_exists {
+	my ($self, $data) = @_;
+	my $urldata = "/api/soundsets/";
+	my $collection_id = 'ngcp:soundsets';
+
+	return $self->_exists($data, $urldata, $collection_id);
+}
+
+sub create_soundset {
+	my ($self, $data) = @_;
+	my $urldata = '/api/soundsets/';
+
+	return $self->_create($data, $urldata);
+}
+
+sub delete_soundset {
+	my ($self, $id) = @_;
+	my $urldata = "/api/soundsets/${id}";
+
+	return $self->_delete($urldata);
+}
+
+sub upload_soundfile {
+	my ($self, $data, $filepath) = @_;
+	my $urldata = "/api/soundfiles/?".
+		"filename=$data->{filename}&handle=$data->{handle}".
+		"&set_id=$data->{set_id}&loopplay=$data->{loopplay}";
+	my $urlbase = 'https://'.$self->{opts}->{host}.':'.$self->{opts}->{port};
+
+	my $ua = $self->create_ua();
+	my $res = $self->_do_binary_request($ua, $urlbase.$urldata,
+		$filepath, 'audio/x-wav');
+	if(! $res->is_success) {
+		die $res->as_string;
+	}
+	return;
 }
 
 1;
