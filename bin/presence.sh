@@ -21,13 +21,11 @@
 BASE_DIR="${BASE_DIR:-/usr/share/kamailio-config-tests}"
 DIR="${BASE_DIR}/scenarios"
 
-function clean
-{
+clean() {
   find "${DIR}" -type f -name 'presence_*.xml' -exec rm {} \;
 }
 
-function usage
-{
+usage() {
   echo "Usage: generate_tests.sh [-h] [-c] [-d directory] digest presence_file.xml"
   echo "Options:"
   echo -e "\tc: clean. Removes all generated presence files"
