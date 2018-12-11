@@ -1,6 +1,6 @@
 ---
 testuser1001@spce.test:
-  cfu:
+  destinations:
     destinations:
       - destination: sip:4311003@spce.test
         priority: 0
@@ -8,8 +8,18 @@ testuser1001@spce.test:
       - destination: sip:testuser1003@spce.test
         priority: 1
         timeout: 2
+    name: dest1001
+  mappings:
+    cfu:
+      - destinationset: dest1001
+        sourceset: null
+        timeset: null
+    cfb: []
+    cfna: []
+    cft: []
+    cfs: []
 testuser1004@spce.test:
-  cfb:
+  destinations:
     destinations:
       - destination: sip:4311005@spce.test
         priority: 0
@@ -17,3 +27,13 @@ testuser1004@spce.test:
       - destination: sip:testuser1005@spce.test
         priority: 1
         timeout: 2
+    name: dest1004
+  mappings:
+    cfu: []
+    cfb:
+      - destinationset: dest1004
+        sourceset: null
+        timeset: null
+    cfna: []
+    cft: []
+    cfs: []
