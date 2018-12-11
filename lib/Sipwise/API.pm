@@ -29,6 +29,7 @@ use LWP::UserAgent;
 use IO::Socket::SSL;
 use URI;
 use Data::Dumper;
+use File::Slurp;
 
 my $opts_default = {
 	host => '127.0.0.1',
@@ -86,6 +87,24 @@ sub do_request {
 	if(!$res->is_success) {
 		print "$url\n";
 		print Dumper $data unless $self->{opts}->{verbose};
+	}
+	return $res;
+}
+
+sub _do_binary_request {
+	my ($self, $ua, $url, $filename, $ct) = @_;
+	my $content;
+
+	my $req = HTTP::Request->new('POST', $url);
+	$req->header('Content-Type' => $ct);
+	$req->header('Prefer' => 'return=representation');
+	if(! -f $filename) {
+		die "$filename not found\n";
+	}
+	$req->content(read_file($filename));
+	my $res = $ua->request($req);
+	if(!$res->is_success) {
+		print "$url\n";
 	}
 	return $res;
 }
@@ -182,6 +201,22 @@ sub _set_content {
 	my $res = $self->do_request($ua, $urlbase.$urldata, $data, 'PUT');
 	if($res->is_success) {
 		return JSON::from_json( $res->decoded_content );
+	}
+	else {
+		die $res->as_string;
+	}
+	return;
+}
+
+sub _post_content {
+	my ($self, $data, $urldata) = @_;
+	my $urlbase = 'https://'.$self->{opts}->{host}.':'.$self->{opts}->{port};
+	my $ua = $self->create_ua($urlbase);
+
+	my $res = $self->do_request($ua, $urlbase.$urldata, $data, 'POST');
+	if($res->is_success) {
+		return $res->status_line
+		#return JSON::from_json( $res->decoded_content );
 	}
 	else {
 		die $res->as_string;
@@ -367,6 +402,86 @@ sub get_subscriber_voicemailsettings {
 	my ($self, $id) = @_;
 	my $urldata = "/api/voicemailsettings/${id}";
 	my $collection_id = 'ngcp:voicemailsettings';
+
+	return $self->_get_content(undef, $urldata);
+}
+
+sub set_subscriber_cf_destinationset {
+	my ($self, $id, $data) = @_;
+	my $urldata = "/api/cfdestinationsets/";
+	my $collection_id = 'ngcp:cfdestinationsets';
+
+	return $self->_post_content($data, $urldata);
+}
+
+sub get_subscriber_cf_destinationset {
+	my ($self, $id) = @_;
+	my $urldata = "/api/cfdestinationsets/${id}";
+	my $collection_id = 'ngcp:cfdestinationsets';
+
+	return $self->_get_content(undef, $urldata);
+}
+
+sub set_subscriber_cf_sourceset {
+	my ($self, $id, $data) = @_;
+	my $urldata = "/api/cfsourcesets/";
+	my $collection_id = 'ngcp:cfsourcesets';
+
+	return $self->_post_content($data, $urldata);
+}
+
+sub get_subscriber_cf_sourceset {
+	my ($self, $id) = @_;
+	my $urldata = "/api/cfsourcesets/${id}";
+	my $collection_id = 'ngcp:cfsourcesets';
+
+	return $self->_get_content(undef, $urldata);
+}
+
+sub set_subscriber_cf_timeset {
+	my ($self, $id, $data) = @_;
+	my $urldata = "/api/cftimesets/";
+	my $collection_id = 'ngcp:cftimesets';
+
+	return $self->_post_content($data, $urldata);
+}
+
+sub get_subscriber_cf_timeset {
+	my ($self, $id) = @_;
+	my $urldata = "/api/cftimesets/${id}";
+	my $collection_id = 'ngcp:cftimesets';
+
+	return $self->_get_content(undef, $urldata);
+}
+
+sub set_subscriber_cf_mapping {
+	my ($self, $id, $data) = @_;
+	my $urldata = "/api/cfmappings/${id}";
+	my $collection_id = 'ngcp:cfmappings';
+
+	return $self->_set_content($data, $urldata);
+}
+
+sub get_subscriber_cf_mapping {
+	my ($self, $id) = @_;
+	my $urldata = "/api/cfmappings/${id}";
+	my $collection_id = 'ngcp:cfmappings';
+
+	return $self->_get_content(undef, $urldata);
+}
+
+sub set_subscriber_trusted_sources {
+	my ($self, $id, $data) = @_;
+	my $urldata = "/api/trustedsources/";
+	my $collection_id = 'ngcp:trustedsources';
+
+	return $self->_post_content($data, $urldata);
+}
+
+sub get_subscriber_trusted_sources {
+	my ($self, $id) = @_;
+	my $urldata = "/api/trustedsources/${id}";
+	my $collection_id = 'ngcp:trustedsources';
 
 	return $self->_get_content(undef, $urldata);
 }
@@ -643,6 +758,44 @@ sub delete_ncoslnpcarrier {
 	my $urldata = "/api/ncoslnpcarriers/${id}";
 
 	return $self->_delete($urldata);
+}
+
+sub check_soundset_exists {
+	my ($self, $data) = @_;
+	my $urldata = "/api/soundsets/";
+	my $collection_id = 'ngcp:soundsets';
+
+	return $self->_exists($data, $urldata, $collection_id);
+}
+
+sub create_soundset {
+	my ($self, $data) = @_;
+	my $urldata = '/api/soundsets/';
+
+	return $self->_create($data, $urldata);
+}
+
+sub delete_soundset {
+	my ($self, $id) = @_;
+	my $urldata = "/api/soundsets/${id}";
+
+	return $self->_delete($urldata);
+}
+
+sub upload_soundfile {
+	my ($self, $data, $filepath) = @_;
+	my $urldata = "/api/soundfiles/?".
+		"filename=$data->{filename}&handle=$data->{handle}".
+		"&set_id=$data->{set_id}&loopplay=$data->{loopplay}";
+	my $urlbase = 'https://'.$self->{opts}->{host}.':'.$self->{opts}->{port};
+
+	my $ua = $self->create_ua();
+	my $res = $self->_do_binary_request($ua, $urlbase.$urldata,
+		$filepath, 'audio/x-wav');
+	if(! $res->is_success) {
+		die $res->as_string;
+	}
+	return;
 }
 
 1;
