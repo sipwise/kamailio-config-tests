@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #
-# Copyright: 2013-2015 Sipwise Development Team <support@sipwise.com>
+# Copyright: 2013-2016 Sipwise Development Team <support@sipwise.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,11 +22,11 @@ use strict;
 use warnings;
 
 use English;
-use YAML;
+use Cwd 'abs_path';
+use YAML qw{ DumpFile LoadFile };
 use Getopt::Long;
 use List::MoreUtils qw{ none };
 use Config::Tiny;
-use Data::Dumper;
 use Sipwise::API qw(all);
 
 my $config =  Config::Tiny->read('/etc/default/ngcp-api');
@@ -39,9 +39,10 @@ if ($config) {
 }
 my $api = Sipwise::API->new($opts);
 $opts = $api->opts;
+my $ids = {};
 
 sub usage {
-  return "Usage:\n$PROGRAM_NAME scenario.yml\n".
+  return "Usage:\n$PROGRAM_NAME scenario.yml scenario_ids.yml\n".
         "Options:\n".
         "  -d debug\n".
         "  -h this help\n";
@@ -51,7 +52,7 @@ GetOptions ("h|help" => \$help, "d|debug" => \$opts->{verbose})
   or die("Error in command line arguments\n".usage());
 
 die(usage()) unless (!$help);
-die("Wrong number of arguments\n".usage()) unless ($#ARGV == 0);
+die("Wrong number of arguments\n".usage()) unless ($#ARGV == 1);
 
 sub get_data {
   my $val = shift;
@@ -61,6 +62,10 @@ sub get_data {
     customer_id => $val->{customer_id},
     username => $val->{username},
     password => $val->{password},
+    is_pbx_group => $val->{is_pbx_group},
+    is_pbx_pilot => $val->{is_pbx_pilot},
+    pbx_extension => $val->{pbx_extension},
+    pbx_group_ids => $val->{pbx_group_ids},
     primary_number => {
       cc => $val->{cc},
       ac => $val->{ac},
@@ -122,7 +127,7 @@ sub manage_contracts
 sub manage_domains
 {
   my $data = shift;
-  foreach my $domain (keys %{$data->{domains}})
+  foreach my $domain (sort keys %{$data->{domains}})
   {
     my $domain_data = $data->{domains}->{$domain};
     my $d_data = {
@@ -144,7 +149,7 @@ sub manage_domains
 sub manage_customers
 {
   my $data = shift;
-  foreach my $customer (keys %{$data->{customers}})
+  foreach my $customer (sort keys %{$data->{customers}})
   {
     my $customer_data = $data->{customers}->{$customer};
     manage_contacts($customer_data, 'customer');
@@ -156,6 +161,75 @@ sub manage_customers
       $customer_data->{customer_id} = $api->create_customer($customer_data->{details});
       print "customer [$customer]: created [$customer_data->{customer_id}]\n";
     }
+    my $key = $customer =~ tr/\./_/r;
+    $ids->{$key}->{id} = $customer_data->{customer_id};
+  }
+  return;
+}
+
+sub create_subscriber
+{
+  my ($username, $domain , $data , $s) = @_;
+  my $pbx_groups = $data->{pbx_groups};
+
+  $s->{pbx_group_ids} = [];
+  $s->{username} = $username;
+  $s->{domain_id} = $data->{domains}->{$domain}->{domain_id};
+  $s->{customer_id} = $data->{customers}->{$s->{customer}}->{customer_id};
+  foreach my $group (@{$s->{pbx_groups}}) {
+    if (defined $pbx_groups->{$group}) {
+      push @{$s->{pbx_group_ids}}, $pbx_groups->{$group};
+    }
+    else {
+      print "pbx_group[$group] not defined!\n";
+    }
+  }
+  delete $s->{pbx_groups};
+  $s->{id} = $api->create_subscriber(get_data($s));
+  my $tmp = $api->get_subscriber($s->{id});
+  my $key = $username =~ tr/\./_/r;
+  my $key_dom = $domain =~ tr/\./_/r;
+  $ids->{$key_dom}->{$key}->{uuid} = $tmp->{uuid};
+  return;
+}
+
+sub manage_pbx_pilot
+{
+  my $data = shift;
+  foreach my $domain (sort keys %{$data->{subscribers}})
+  {
+    my $d_data = $data->{subscribers}->{$domain};
+    foreach my $username (sort keys %{$d_data})
+    {
+      my $s = $d_data->{$username};
+      next unless $s->{is_pbx_pilot};
+      # TODO: support pbx_groups for pbx_pilot
+      if (exists $s->{pbx_groups}) {
+        print("WARN: pbx_groups not supported for pbx_pilot. Skipped\n");
+        delete $s->{pbx_groups};
+      }
+      create_subscriber($username, $domain, $data, $s);
+      print("$username\@$domain is a pbx_pilot[$s->{id}]\n");
+    }
+  }
+  return;
+}
+
+sub manage_pbx_groups
+{
+  my $data = shift;
+  $data->{pbx_groups} = {};
+  foreach my $domain (sort keys %{$data->{subscribers}})
+  {
+    my $d_data = $data->{subscribers}->{$domain};
+    foreach my $username (sort keys %{$d_data})
+    {
+      my $s = $d_data->{$username};
+      next unless $s->{is_pbx_group};
+      create_subscriber($username, $domain, $data, $s);
+      $data->{pbx_groups}->{$username} = $s->{id};
+      print("$username\@$domain is a pbx_group[$s->{id}]\n");
+    }
   }
   return;
 }
@@ -165,23 +239,22 @@ sub main
     my $data = shift;
     manage_customers($data);
     manage_domains($data);
+    manage_pbx_pilot($data);
+    manage_pbx_groups($data);
 
-    foreach my $domain (keys %{$data->{subscribers}})
+    foreach my $domain (sort keys %{$data->{subscribers}})
     {
       my $d_data = $data->{subscribers}->{$domain};
-      foreach my $username (keys %{$d_data})
+      foreach my $username (sort keys %{$d_data})
       {
         my $s = $d_data->{$username};
-        $s->{username} = $username;
-        $s->{domain_id} = $data->{domains}->{$domain}->{domain_id};
-        $s->{customer_id} = $data->{customers}->{$s->{customer}}->{customer_id};
-        my $id = $api->create_subscriber(get_data($s));
-        print("$username\@$domain created [$id]\n");
+        next if ($s->{is_pbx_group} || $s->{is_pbx_pilot});
+        create_subscriber($username, $domain, $data, $s);
+        print("$username\@$domain created [$s->{id}]\n");
       }
     }
     return;
 }
 
-my $cf = YAML::LoadFile($ARGV[0]);
-
-main($cf);
+main(LoadFile(abs_path($ARGV[0])));
+DumpFile(abs_path($ARGV[1]), $ids);
