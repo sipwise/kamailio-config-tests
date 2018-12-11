@@ -30,6 +30,12 @@ use IO::Socket::SSL;
 use URI;
 use Data::Dumper;
 use File::Slurp;
+use IO::Uncompress::Unzip;
+
+my $default_crt_path = '/usr/share/kamailio-config-tests/apicert.pem';
+if(exists $ENV{'BASE_DIR'}){
+	$default_crt_path = $ENV{'BASE_DIR'}.'/apicert.pem';
+}
 
 my $opts_default = {
 	host => '127.0.0.1',
@@ -38,7 +44,8 @@ my $opts_default = {
 	auth_pwd => 'administrator',
 	verbose => 0,
 	sslverify => 'no',
-	admin => 0
+	admin => 0,
+	crt_path => $default_crt_path
 };
 
 sub _get_id {
@@ -101,7 +108,9 @@ sub _do_binary_request {
 	if(! -f $filename) {
 		die "$filename not found\n";
 	}
-	$req->content(read_file($filename));
+	my $data_ref;
+	read_file($filename, buf_ref => \$data_ref);
+	$req->content(${data_ref});
 	my $res = $ua->request($req);
 	if(!$res->is_success) {
 		print "$url\n";
@@ -127,8 +136,43 @@ sub do_query {
 	return $res;
 }
 
+sub _fetch_cert {
+	my ($self, $ua, $urlbase) = @_;
+	my $res = $ua->post(
+		$urlbase . '/api/admincerts/',
+		Content_Type => 'application/json',
+		Content => '{}'
+	);
+
+	unless($res->is_success) {
+		die "failed to fetch client certificate: " . $res->status_line . "\n";
+	}
+	my $zip = $res->decoded_content;
+	my $z = IO::Uncompress::Unzip->new(\$zip, MultiStream => 0, Append => 1);
+	my $data;
+	while(!$z->eof() && (my $hdr = $z->getHeaderInfo())) {
+		unless($hdr->{Name} =~ /\.pem$/) {
+			# wrong file, just read stream, clear buffer and try next
+			while($z->read($data) > 0) {}
+			$data = undef;
+			$z->nextStream();
+			next;
+		}
+		while($z->read($data) > 0) {}
+		last;
+	}
+	$z->close();
+	unless($data) {
+		die "failed to find PEM file in client certificate zip file\n";
+	}
+	open my $fh, ">:raw", $self->{opts}->{crt_path} or
+		die "failed to open " . $self->{opts}->{crt_path} . ": $!\n";
+	print { $fh } $data;
+	close $fh;
+}
+
 sub create_ua {
-	my $self = shift;
+	my ($self, $urlbase) = @_;
 	my $ua = LWP::UserAgent->new();
 
 	if($self->{opts}->{sslverify} eq 'no') {
@@ -149,6 +193,13 @@ sub create_ua {
 		$ua->add_handler("request_send",  sub { shift->dump; return });
 		$ua->add_handler("response_done", sub { shift->dump; return });
 	}
+	unless (-f $self->{opts}->{crt_path}) {
+		$self->_fetch_cert($ua, $urlbase);
+	}
+	$ua->ssl_opts(
+		SSL_cert_file => $self->{opts}->{crt_path},
+		SSL_key_file => $self->{opts}->{crt_path},
+	);
 	return $ua;
 }
 
@@ -156,7 +207,8 @@ sub _create {
 	my ($self, $data, $urldata) = @_;
 	my $urlbase = 'https://'.$self->{opts}->{host}.':'.$self->{opts}->{port};
 
-	my $ua = $self->create_ua();
+	my $ua = $self->create_ua($urlbase);
+
 	my $res = $self->do_request($ua, $urlbase.$urldata, $data);
 	if($res->is_success) {
 		if($self->{opts}->{verbose}) {
@@ -173,7 +225,8 @@ sub _delete {
 	my ($self, $urldata) = @_;
 	my $urlbase = 'https://'.$self->{opts}->{host}.':'.$self->{opts}->{port};
 
-	my $ua = $self->create_ua();
+	my $ua = $self->create_ua($urlbase);
+
 	my $res = $self->do_query($ua, $urlbase.$urldata, undef, 'DELETE');
 	return $res->is_success;
 }
@@ -181,7 +234,7 @@ sub _delete {
 sub _get_content {
 	my ($self, $data, $urldata) = @_;
 	my $urlbase = 'https://'.$self->{opts}->{host}.':'.$self->{opts}->{port};
-	my $ua = $self->create_ua();
+	my $ua = $self->create_ua($urlbase);
 
 	my $res = $self->do_query($ua, $urlbase.$urldata, $data);
 	if($res->is_success) {
@@ -196,11 +249,27 @@ sub _get_content {
 sub _set_content {
 	my ($self, $data, $urldata) = @_;
 	my $urlbase = 'https://'.$self->{opts}->{host}.':'.$self->{opts}->{port};
-	my $ua = $self->create_ua();
+	my $ua = $self->create_ua($urlbase);
 
 	my $res = $self->do_request($ua, $urlbase.$urldata, $data, 'PUT');
 	if($res->is_success) {
 		return JSON::from_json( $res->decoded_content );
+	}
+	else {
+		die $res->as_string;
+	}
+	return;
+}
+
+sub _post_content {
+	my ($self, $data, $urldata) = @_;
+	my $urlbase = 'https://'.$self->{opts}->{host}.':'.$self->{opts}->{port};
+	my $ua = $self->create_ua($urlbase);
+
+	my $res = $self->do_request($ua, $urlbase.$urldata, $data, 'POST');
+	if($res->is_success) {
+		return $res->status_line
+		#return JSON::from_json( $res->decoded_content );
 	}
 	else {
 		die $res->as_string;
@@ -213,7 +282,13 @@ sub _exists {
 	my $collection = $self->_get_content($data, $urldata);
 
 	if (defined $collection && $collection->{total_count} == 1) {
-		my $links = $collection->{_embedded}->{$collection_id}->{_links};
+		my $tmp = $collection->{_embedded}->{$collection_id};
+		my $links;
+		if (ref $tmp eq 'ARRAY') {
+			$links = @{$tmp}[0]->{_links};
+		} else {
+			$links = $tmp->{_links};
+		}
 		my $href = $links->{self}->{href};
 		return _get_id($urldata, $href);
 	}
@@ -386,6 +461,86 @@ sub get_subscriber_voicemailsettings {
 	my ($self, $id) = @_;
 	my $urldata = "/api/voicemailsettings/${id}";
 	my $collection_id = 'ngcp:voicemailsettings';
+
+	return $self->_get_content(undef, $urldata);
+}
+
+sub set_subscriber_cf_destinationset {
+	my ($self, $id, $data) = @_;
+	my $urldata = "/api/cfdestinationsets/";
+	my $collection_id = 'ngcp:cfdestinationsets';
+
+	return $self->_post_content($data, $urldata);
+}
+
+sub get_subscriber_cf_destinationset {
+	my ($self, $id) = @_;
+	my $urldata = "/api/cfdestinationsets/${id}";
+	my $collection_id = 'ngcp:cfdestinationsets';
+
+	return $self->_get_content(undef, $urldata);
+}
+
+sub set_subscriber_cf_sourceset {
+	my ($self, $id, $data) = @_;
+	my $urldata = "/api/cfsourcesets/";
+	my $collection_id = 'ngcp:cfsourcesets';
+
+	return $self->_post_content($data, $urldata);
+}
+
+sub get_subscriber_cf_sourceset {
+	my ($self, $id) = @_;
+	my $urldata = "/api/cfsourcesets/${id}";
+	my $collection_id = 'ngcp:cfsourcesets';
+
+	return $self->_get_content(undef, $urldata);
+}
+
+sub set_subscriber_cf_timeset {
+	my ($self, $id, $data) = @_;
+	my $urldata = "/api/cftimesets/";
+	my $collection_id = 'ngcp:cftimesets';
+
+	return $self->_post_content($data, $urldata);
+}
+
+sub get_subscriber_cf_timeset {
+	my ($self, $id) = @_;
+	my $urldata = "/api/cftimesets/${id}";
+	my $collection_id = 'ngcp:cftimesets';
+
+	return $self->_get_content(undef, $urldata);
+}
+
+sub set_subscriber_cf_mapping {
+	my ($self, $id, $data) = @_;
+	my $urldata = "/api/cfmappings/${id}";
+	my $collection_id = 'ngcp:cfmappings';
+
+	return $self->_set_content($data, $urldata);
+}
+
+sub get_subscriber_cf_mapping {
+	my ($self, $id) = @_;
+	my $urldata = "/api/cfmappings/${id}";
+	my $collection_id = 'ngcp:cfmappings';
+
+	return $self->_get_content(undef, $urldata);
+}
+
+sub set_subscriber_trusted_sources {
+	my ($self, $id, $data) = @_;
+	my $urldata = "/api/trustedsources/";
+	my $collection_id = 'ngcp:trustedsources';
+
+	return $self->_post_content($data, $urldata);
+}
+
+sub get_subscriber_trusted_sources {
+	my ($self, $id) = @_;
+	my $urldata = "/api/trustedsources/${id}";
+	my $collection_id = 'ngcp:trustedsources';
 
 	return $self->_get_content(undef, $urldata);
 }
@@ -693,7 +848,7 @@ sub upload_soundfile {
 		"&set_id=$data->{set_id}&loopplay=$data->{loopplay}";
 	my $urlbase = 'https://'.$self->{opts}->{host}.':'.$self->{opts}->{port};
 
-	my $ua = $self->create_ua();
+	my $ua = $self->create_ua($urlbase);
 	my $res = $self->_do_binary_request($ua, $urlbase.$urldata,
 		$filepath, 'audio/x-wav');
 	if(! $res->is_success) {
