@@ -100,21 +100,21 @@ if (lc($action) eq "off")
 else
 {
   copy($file, $file.".orig") or die "Copy failed: $ERRNO" unless(-e $file.".orig");
-  $yaml = LoadFile($file) or die "File $file could not be read";
-  $yaml->{kamailio}{lb}{debug} = 'yes';
+  $yaml = LoadFile($file);
+  $yaml->{kamailio}{lb}{cfgt} = 'yes';
   $yaml->{kamailio}{lb}{use_dns_cache} = 'off';
   $yaml->{kamailio}{proxy}{children} = 1;
-  $yaml->{kamailio}{proxy}{debug} = 'yes';
+  $yaml->{kamailio}{proxy}{cfgt} = 'yes';
   $yaml->{sems}{debug} = 'yes';
   $yaml->{checktools}{sip_check_enable} = 0;
   $yaml->{security}->{ngcp_panel}->{scripts}->{restapi}->{sslverify} = 'no';
+  $yaml->{mediator}{interval} = '1';
 
   my $group_yml_file = $base_dir."/".$group."/config.yml";
   if ( -e  $group_yml_file )
   {
     print "load $group_yml_file config file\n";
-    my $group_yml = LoadFile($group_yml_file) or
-      die "File $group_yml_file could not be read";
+    my $group_yml = LoadFile($group_yml_file);
     my $hm = Hash::Merge->new('RIGHT_PRECEDENT');
     my $config = {};
     $config = $hm->merge( $config, $yaml);
@@ -139,7 +139,7 @@ else
     }
     untie @array;
   }
-  DumpFile($file, $yaml) or die "Could not write YAML to $file";
+  DumpFile($file, $yaml);
 }
 
 #EOF
