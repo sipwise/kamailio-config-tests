@@ -1,10 +1,18 @@
 ---
 testuser1001@spce.test:
-  cfu:
+  destinations:
     destinations:
       - destination: voicebox
         priority: 0
         timeout: 2
+    name: dest1001
+  mappings:
+    cfu:
+      - destinationset: dest1001
+        timeset: null
+    cfb: []
+    cfna: []
+    cft: []
   voicebox:
     pin: 0000
     email: root@spce.test

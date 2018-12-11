@@ -1,12 +1,13 @@
 Kamailio configuration tests
 ----------------------------
 
-Requeriments:
+Requiriments:
 -------------
  - A working NGCP
  - sip-tester. sipp with ssl enabled ( needed for auth ).
    We provide a version backported to wheezy
  See debian/control for the actual list of dependences
+
 
 Usage:
 ------
@@ -23,7 +24,7 @@ Usage:
 
   PROFILE: "CE" the default
            "PRO"
-  #bash ./run_tests.sh [-p PROFILE ] [-K]
+  #bash ./run_tests.sh [-p PROFILE ] [-K] [-c] [-r]
 
   This will create:
     - $BASE_DIR/log
@@ -31,32 +32,40 @@ Usage:
       - kamailio.log
       - kamailio-lb.log
       - sems.log
-      - parsed messages (XXXX.json)
-      - sipp error logs
-      - a pcap file for each interface
+      - sems-pbx.log
+      - XXXX.json  (parsed messages)
+      - a pcap file for each interface (if -K option is used)
+      - cdr.txt (if -c option is used)
+      - sipp error logs (if any)
 
-  #bash ./get_result.sh [-p PROFILE ] [-g]
+  #bash ./get_results.sh [-p PROFILE ] [-g] [-c] [-r]
 
   This will create:
     - $BASE_DIR/result
       with a directory per test with:
-      - a tap file ( test results )
-      - a png file ( routes flow ) If you use -g option
+      - a tap file with the test results
+      - a png file containing the routes flow (if -g option is used)
 
- If you want to run test manually just exec this onces:
-  #./bin/config_debug.pl on
-  #ngcpcfg apply 'cfgtest'
- and run the check that you want:
-  #PERL5LIB="$$(pwd)/lib" ./bin/check.sh <checkname>
- this will run the test and the result taps
- or run all the tests as many times you want with:
-  #./bin/bench.sh $NUM
+  If you want to run tests that belongs to a different scenarios set, use the
+  -x option followed by the scenario's name:
+    #bash ./run_tests.sh [-p PROFILE ] [-K] [-c] [-r] -x scenarios_lnp
+    #bash ./get_results.sh [-p PROFILE ] [-g] [-c] [-r] -x scenarios_lnp
+
+  If you want to run test manually just exec this onces:
+    #./bin/config_debug.pl on
+    #ngcpcfg apply 'cfgtest'
+  and run the check that you want:
+    #PERL5LIB="$$(pwd)/lib" ./bin/check.sh <checkname>
+  this will run the test and the result taps
+  or run all the tests as many times you want with:
+    #./bin/bench.sh $NUM
 
 If you want to test just a set of scenarios, set the SCENARIOS
 environment var.
 
-#bash SCENARIOS="invite invite_callforward" ./run_tests.sh -c
+#bash SCENARIOS="invite invite_callforward" ./run_tests.sh -C
 #bash SCENARIOS="invite invite_callforward" ./get_results.sh
+
 
 Development:
 ------------
@@ -70,13 +79,16 @@ Every test has to be located at the scenarios directory. It must include:
 
 And can optionally include:
  - sipp_scenario_responderXX.xml
+ - cdr_test.yml.tt2
  - prefs.json
  - callforward.yml
  - speeddial.yml
  - peer.yml
+ - trusted.yml
 
-Test file syntax:
------------------
+
+Test file syntax (XXXX_test.yml.tt2 files):
+-------------------------------------------
 
 The test file is divided in tree different parts:
  - flow:
@@ -136,6 +148,34 @@ The test file is divided in tree different parts:
     ]
 
  [0] http://docs.python.org/2/library/re.html#regular-expression-syntax
+
+
+Cdr test file syntax (cdr_test.yml.tt2):
+----------------------------------------
+
+The test file contains only one part:
+ - cdr:
+  Dictionary of cdr fields that should be contained in the exported CDR. The
+  value will be treated as a regular expression rule[0]. If the value
+  starts with '_:NOT:_' it will fail if the rule matches.
+
+  Example:
+  cdr:
+    - call_id: 'abcdefg@1.1.1.1'
+      source_domain: 'spce.test'
+      destination_user: '*55*1420'
+      call_type: 'call'
+      call_status: 'ok'
+      call_code: 200
+    - destination_user: 'testuser1004'
+      destination_user_in: 'testuser1004'
+      duration: 0
+      call_type: '_:NOT:_call'
+      call_status: 'other'
+      call_code: '403'
+
+ [0] http://docs.python.org/2/library/re.html#regular-expression-syntax
+
 
 scenario.yml file syntax:
 -------------------------
@@ -228,6 +268,7 @@ scenario.yml file syntax:
           peer_host: peer_00_host0
           register: no
 
+
 peer.yml file syntax:
 ---------------------
 
@@ -248,9 +289,15 @@ peer_00:
   rules:
     - group_id: peer_00_group
       callee_prefix: ""
-      callee_pattern: ""
-      caller_pattern: "^sip:.+@spce.test"
+      callee_pattern: ''
+      caller_pattern: '^sip:.+@spce.test'
       description: ""
+  inboundrules:
+    - group_id: peer_00_group
+      field: "ruri_uri"
+      pattern: '.*'
+      priority: 50
+      enabled: 1
   hosts:
     - group_id: peer_00_group
       name: peer_00_host0
@@ -259,6 +306,63 @@ peer_00:
       host:
       transport: 1
       weight: 1
+
+
+callforward.yml file syntax:
+---------------------
+
+testuser1001@spce.test:
+  destinations:
+    destinations:
+      - destination: sip:4311003@spce.test
+        priority: 0
+        timeout: 2
+      - destination: sip:testuser1003@spce.test
+        priority: 1
+        timeout: 2
+    name: dest1001
+  mappings:
+    cfu:
+      - bnumberset: null
+        destinationset: dest1001
+        sourceset: null
+        timeset: null
+    cfb: []
+    cfna: []
+    cft: []
+    cfs: []
+    cfr: []
+testuser1004@spce.test:
+  destinations:
+    destinations:
+      - destination: sip:4311005@spce.test
+        priority: 0
+        timeout: 2
+      - destination: sip:testuser1005@spce.test
+        priority: 1
+        timeout: 2
+    name: dest1004
+  mappings:
+    cfu: []
+    cfb:
+      - bnumberset: null
+        destinationset: dest1004
+        sourceset: null
+        timeset: null
+    cfna: []
+    cft: []
+    cfs: []
+    cfr: []
+
+
+trusted.yml file syntax:
+---------------------
+
+testuser1002@spce.test:
+  from_pattern: 1002
+  protocol: UDP
+  src_ip: 127.126.0.1
+
 
 prefs.json file syntax:
 ----------------------
