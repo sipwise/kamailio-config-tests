@@ -26,7 +26,7 @@ use Getopt::Long;
 use Cwd 'abs_path';
 use Config::Tiny;
 use Sipwise::API qw(all);
-use YAML;
+use YAML::XS;
 
 my $config =  Config::Tiny->read('/etc/default/ngcp-api');
 my $opts;
@@ -121,4 +121,4 @@ sub main {
     }
 }
 
-main(YAML::LoadFile(abs_path($ARGV[0])));
+main(YAML::XS::LoadFile(abs_path($ARGV[0])));

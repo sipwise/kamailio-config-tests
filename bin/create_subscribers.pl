@@ -23,9 +23,9 @@ use warnings;
 
 use English;
 use Cwd 'abs_path';
-use YAML qw{ DumpFile LoadFile };
+use YAML::XS qw(DumpFile LoadFile);
 use Getopt::Long;
-use List::MoreUtils qw{ none };
+use List::Util qw(none);
 use Config::Tiny;
 use Sipwise::API qw(all);
 

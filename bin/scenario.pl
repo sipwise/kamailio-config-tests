@@ -26,7 +26,7 @@ use Cwd 'abs_path';
 use File::Basename;
 use File::Spec;
 use IO::File;
-use YAML;
+use YAML::XS;
 use Text::CSV;
 use Template;
 use Data::Dumper;
@@ -49,7 +49,7 @@ die("Wrong number of arguments\n".usage()) unless ($#ARGV == 0);
 
 my $filename = abs_path($ARGV[0]);
 our $base_check_dir = dirname($filename);
-my $cf = YAML::LoadFile($filename);
+my $cf = YAML::XS::LoadFile($filename);
 
 our $bin_dir = '/usr/share/kamailio-config-tests/bin';
 our $template_dir = '/usr/share/kamailio-config-tests/scenarios/templates';

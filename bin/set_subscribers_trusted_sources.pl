@@ -28,6 +28,7 @@ use Cwd 'abs_path';
 use Config::Tiny;
 use Sipwise::API qw(all);
 use Data::Dumper;
+use JSON qw();
 
 my $config =  Config::Tiny->read('/etc/default/ngcp-api');
 my $opts;
@@ -41,7 +42,7 @@ my $api = Sipwise::API->new($opts);
 $opts = $api->opts;
 
 sub usage {
-  return  "Usage:\n$PROGRAM_NAME speeddial.yml\n".
+  return  "Usage:\n$PROGRAM_NAME trusted.yml\n".
           "Options:\n".
           "  -d debug\n".
           "  -h this help\n";
@@ -53,26 +54,17 @@ GetOptions(
 ) or die("Error in command line arguments\n".usage());
 
 die(usage()) unless (!$help);
-die("Error: wrong number of arguments\n".usage()) unless ($#ARGV == 0);
+die("Wrong number of arguments\n".usage()) unless ($#ARGV == 0);
 
-sub set_subscriber_speeddial
+sub get_subscriber_id
 {
   my $subscriber = shift;
   my $domain = shift;
-  my $prefs = shift;
   my $subs_id = $api->check_subscriber_exists({
                           domain => $domain,
                           username => $subscriber});
   if($subs_id) {
-    my $res = $api->set_subscriber_speeddial($subs_id, {speeddials => $prefs});
-    if($opts->{verbose}) {
-      print Dumper $res;
-    }
-    if($res) {
-      print "speeddial created for ${subscriber}\@${domain} [$subs_id]\n";
-    } else {
-      die("Error: speeddial failed for ${subscriber}\@${domain} [$subs_id]");
-    }
+    return $subs_id;
   }
   else {
     die("Error: No subscriber ${subscriber}\@${domain} found");
@@ -80,16 +72,37 @@ sub set_subscriber_speeddial
   return;
 }
 
+sub set_subscriber_trusted
+{
+  my $subs_id = shift;
+  my $prefs = shift;
+
+  my $res = $api->set_subscriber_trusted_sources($subs_id, $prefs);
+  if($opts->{verbose}) {
+    print Dumper $res;
+  }
+  if($res) {
+    print "trusted sources created for subscriber with id $subs_id\n";
+  } else {
+    die("Error: trusted sources failed for subscriber with id $subs_id");
+  }
+  return;
+}
 
 sub main {
-  my $r = YAML::XS::LoadFile(abs_path($ARGV[0]));
+    my $r = YAML::XS::LoadFile(abs_path($ARGV[0]));
 
-  for my $key (keys %{$r})
-  {
-    my @fields = split /@/, $key;
-    set_subscriber_speeddial($fields[0], $fields[1], $r->{$key});
-  }
-  exit;
+    for my $key (keys %{$r})
+    {
+        my @fields = split /@/, $key;
+        my $subscriber_id = get_subscriber_id($fields[0], $fields[1]);
+
+        my $values = $r->{$key} //= {};
+        $values->{subscriber_id} //= $subscriber_id;
+
+        set_subscriber_trusted($subscriber_id, $values);
+    }
+    return;
 }
 
 main();

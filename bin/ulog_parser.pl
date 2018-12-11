@@ -23,7 +23,7 @@ use strict;
 use warnings;
 use English;
 use JSON;
-use YAML;
+use YAML::XS;
 use File::Spec;
 use Cwd 'abs_path';
 use Data::Dumper;
@@ -73,7 +73,7 @@ sub save_data
   {
     if (!$data->{'sip_out'}) { print "no sip_out\n"; }
     $path = File::Spec->catfile( $output_dir, (sprintf "%04i", $data->{'msgid'}).".yml");
-    YAML::DumpFile($path, $data);
+    YAML::XS::DumpFile($path, $data);
     #print "$data->{'msgid'} saved\n";
     # This tries to fix problems with string values '-' being saved
     # without quotes.
@@ -148,10 +148,10 @@ sub next_line
   return ($line ne '');
 }
 
-given($#ARGV)
-{
-  when (1) { $filename = $ARGV[0]; $output_dir = $ARGV[1]; }
-  when (0) { $filename = $ARGV[0]; }
+if (@ARGV == 2) {
+  $filename = $ARGV[0]; $output_dir = $ARGV[1];
+} elsif (@ARGV == 1) {
+  $filename = $ARGV[0];
 }
 $filename = abs_path($filename);
 $output_dir = abs_path($output_dir);
@@ -163,7 +163,7 @@ do
 {
   my ($mode, $route, $msgid, $msgid_t, $json, $msg, $pjson, $callid, $method);
   # Jun 25 14:52:16 spce proxy[11248]: DEBUG: debugger [debugger_api.c:427]: dbg_cfg_dump(): msg out:{
-  if(($msg) = ($line =~ m/.+msg out:{(.+)}$/))
+  if(($msg) = ($line =~ m/.+msg out:\{(.+)\}$/))
   {
     do
     {
@@ -172,7 +172,7 @@ do
         if($data->{'callid'} eq $callid)
         {
           $msg =~ s/#015#012/\n/g;
-          push($data->{'sip_out'}, $msg);
+          push @{$data->{'sip_out'}}, $msg;
         }
         else
         {
@@ -184,7 +184,7 @@ do
         print "No Call-ID\n";
       }
       next_line();
-    }while(($msg) = ($line =~ m/.+msg out:{(.+)}$/));
+    }while(($msg) = ($line =~ m/.+msg out:\{(.+)\}$/));
     #print "msg_out\n";
   }
 
@@ -212,7 +212,7 @@ do
       if(($json) = ($line =~ m/.+dbg_dump_json\(\): (\{.*\})$/))
       {
         $pjson = from_json($json);
-        push($data->{'flow'}, { $mode."|".$route => $pjson });
+        push @{$data->{'flow'}}, { $mode."|".$route => $pjson };
         if ($route eq "MAIN" && $mode eq "start")
         {
           ($msg) = $method;

@@ -22,7 +22,7 @@ use strict;
 use warnings;
 
 use English;
-use YAML;
+use YAML::XS qw();
 use Getopt::Long;
 use Cwd 'abs_path';
 use Config::Tiny;
@@ -168,7 +168,7 @@ sub do_create
   exit;
 }
 
-my $r = YAML::LoadFile(abs_path($ARGV[0]));
+my $r = YAML::XS::LoadFile(abs_path($ARGV[0]));
 if ($del) {
   do_delete($r);
 }
