@@ -106,7 +106,7 @@
     ]]>
   </send>
 
-  <pause milliseconds="500"/>
+  <pause milliseconds="600"/>
 
   <send start_txn="reinvite0">
     <![CDATA[
@@ -164,7 +164,7 @@
     ]]>
   </send>
 
-  <pause milliseconds="500"/>
+  <pause milliseconds="600"/>
 
   <send start_txn="invite2">
     <![CDATA[
@@ -213,7 +213,7 @@
     ]]>
   </send>
 
-  <pause milliseconds="500"/>
+  <pause milliseconds="600"/>
 
   <send start_txn="invite3">
     <![CDATA[
@@ -273,7 +273,7 @@
     ]]>
   </send>
 
-  <pause milliseconds="500"/>
+  <pause milliseconds="600"/>
 
   <send start_txn="reinvite0">
     <![CDATA[

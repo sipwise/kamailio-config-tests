@@ -20,16 +20,17 @@
 #
 import os
 import sys
+import junitxml
 import unittest
-import xmlrunner
 import re
 lib_path = os.path.abspath('bin')
 sys.path.append(lib_path)
-from check import check_sip, check_sip_out
-from check import XAvp, Test, check_flow, check_flow_vars
-from check import load_json, load_yaml
+from check import check_sip, check_sip_out  # noqa
+from check import XAvp, Test, check_flow, check_flow_vars  # noqa
+from check import load_json, load_yaml  # noqa
 
 not_ok = re.compile('^not ok.*', re.MULTILINE)
+
 
 class TestXAvp(unittest.TestCase):
 
@@ -93,7 +94,7 @@ class TestCheckFlowVars(unittest.TestCase):
             {'R1': {'$xavp(v0)': [{'k0': [1, 2]}]}},
         ]
         self.check_ko = [
-            {'R0': {'$xavp(v0)': [{'k0': ['a', 'b']}] }},
+            {'R0': {'$xavp(v0)': [{'k0': ['a', 'b']}]}},
         ]
         self.scen_ko = [
             {'R0': {'$xavp(v0[0]=>k0[*])': ['a']}},
@@ -196,8 +197,17 @@ class TestJson(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    unittest.main(
-        testRunner=xmlrunner.XMLTestRunner(output=sys.stdout),
-        # these make sure that some options that are not applicable
-        # remain hidden from the help menu.
-        failfast=False, buffer=False, catchbreak=False)
+
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.defaultTestLoader.loadTestsFromTestCase(TestXAvp))
+    suite.addTest(
+        unittest.defaultTestLoader.loadTestsFromTestCase(TestCheckFlowVars))
+    suite.addTest(
+        unittest.defaultTestLoader.loadTestsFromTestCase(TestCheckSipIn))
+    suite.addTest(
+        unittest.defaultTestLoader.loadTestsFromTestCase(TestCheckSipOut))
+    suite.addTest(unittest.defaultTestLoader.loadTestsFromTestCase(TestJson))
+    result = junitxml.JUnitXmlResult(sys.stdout)
+    result.startTestRun()
+    suite.run(result)
+    result.stopTestRun()

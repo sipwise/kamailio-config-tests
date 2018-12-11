@@ -24,7 +24,7 @@ flow:
   - exit|ROUTE_REG_HANDLE:
 sip_in:
   - '^REGISTER'
-  - 'Contact: "TestBria" <sip:testuser1003@127.126.0.1:50602;ob>;reg-id=1;\+sip.instance="<urn:uuid:C3DD6013-20E8-40E3-8EA2-5849B02ED0C4>"'
+  - 'Contact: "TestBria" <sip:testuser1003@127.126.0.1:51602;ob>;reg-id=1;\+sip.instance="<urn:uuid:C3DD6013-20E8-40E3-8EA2-5849B02ED0C4>"'
   - 'Contact: "TestBria" <sip:testuser1003@127.126.0.1:6666;ob>;expires=0'
   - 'Content-Length: 0'
   - 'Expires: 600'
@@ -36,7 +36,7 @@ sip_out:
     ]
   - [
       '^SIP/2.0 200 OK',
-      'Contact: <sip:testuser1003@127.126.0.1:50602;ob>;expires=\d{3};\+sip.instance="<urn:uuid:C3DD6013-20E8-40E3-8EA2-5849B02ED0C4>";reg-id=1',
+      'Contact: <sip:testuser1003@127.126.0.1:51602;ob>;expires=\d{3};\+sip.instance="<urn:uuid:C3DD6013-20E8-40E3-8EA2-5849B02ED0C4>";reg-id=1',
       '_:NOT:_Contact: <sip:testuser1003@127.126.0.1:6666;ob>;expires=\d+',
       'Content-Length: 0',
       'P-NGCP-Authorization: testuser1003@',

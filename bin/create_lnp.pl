@@ -93,6 +93,31 @@ sub manage_lnpnumbers
   return;
 }
 
+sub manage_ncoslnpcarriers
+{
+  my ($data, $lnp_id) = @_;
+
+  foreach my $ncos (@{$data}) {
+    my $ncos_id = $api->check_ncoslevel_exists($ncos);
+    if(!$ncos_id) {
+      die("No ncoslevel[$ncos->{level}] found\n");
+    }
+    my $param = {
+      ncos_level_id => $ncos_id,
+      carrier_id => $lnp_id
+    };
+    my $id = $api->check_ncoslnpcarrier_exists($param);
+    if($id) {
+      print "ncoslnpcarriers [$ncos->{level}] for [$lnp_id] already there [$id]\n";
+    } else {
+      $ncos->{id} = $api->create_ncoslnpcarrier($param);
+      print "ncoslnpcarriers [$ncos->{level}] for [$lnp_id]: created [$ncos->{id}]\n";
+    }
+  }
+  return;
+}
+
+
 sub do_delete
 {
   my ($data) = @_;
@@ -138,6 +163,7 @@ sub do_create
     my $lnp = $data->{$_}->{data};
     manage_lnp($lnp);
     manage_lnpnumbers($data->{$_}->{numbers}, $lnp->{id});
+    manage_ncoslnpcarriers($data->{$_}->{ncos}, $lnp->{id});
   }
   exit;
 }
