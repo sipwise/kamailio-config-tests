@@ -1,0 +1,7 @@
+Verified+1: Jenkins Jenkins
+Code-Review+2: Alexander Lutay <alutay@sipwise.com>
+Submitted-by: Marco Capetta <mcapetta@sipwise.com>
+Submitted-at: Thu, 13 Dec 2018 09:17:19 +0100
+Reviewed-on: http://gerrit.mgm.sipwise.com/25513
+Project: kamailio-config-tests
+Branch: refs/heads/mr5.0
