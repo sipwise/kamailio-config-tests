@@ -102,13 +102,14 @@ else
   copy($file, $file.".orig") or die "Copy failed: $ERRNO" unless(-e $file.".orig");
   $yaml = LoadFile($file);
   $yaml->{kamailio}{lb}{cfgt} = 'yes';
-  $yaml->{kamailio}{lb}{use_dns_cache} = 'off';
+  $yaml->{kamailio}{lb}{dns}{use_dns_cache} = 'off';
   $yaml->{kamailio}{proxy}{children} = 1;
   $yaml->{kamailio}{proxy}{cfgt} = 'yes';
   $yaml->{sems}{cfgt} = 'yes';
   $yaml->{sems}{debug} = 'yes';
   $yaml->{checktools}{sip_check_enable} = 0;
   $yaml->{security}->{ngcp_panel}->{scripts}->{restapi}->{sslverify} = 'no';
+  $yaml->{mediator}{interval} = '1';
 
   my $group_yml_file = $base_dir."/".$group."/config.yml";
   if ( -e  $group_yml_file )

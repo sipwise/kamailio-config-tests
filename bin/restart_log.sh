@@ -23,7 +23,7 @@ LOGS="/var/log/ngcp/kamailio-proxy.log /var/log/ngcp/sems.log \
  /var/log/ngcp/sems-pbx.log /var/log/ngcp/kamailio-lb.log"
 # shellcheck disable=SC2086
 rm -rf $LOGS
-invoke-rc.d rsyslog restart
+service rsyslog restart
 for l in $LOGS ; do
   touch --reference=/var/log/ngcp/panel.log "$l"
 done

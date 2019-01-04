@@ -25,9 +25,9 @@ import unittest
 import re
 lib_path = os.path.abspath('bin')
 sys.path.append(lib_path)
-from check import check_sip, check_sip_out
-from check import XAvp, Test, check_flow, check_flow_vars
-from check import load_json, load_yaml
+from check import check_sip, check_sip_out  # noqa
+from check import XAvp, Test, check_flow, check_flow_vars  # noqa
+from check import load_json, load_yaml  # noqa
 
 not_ok = re.compile('^not ok.*', re.MULTILINE)
 
