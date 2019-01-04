@@ -45,7 +45,7 @@ while getopts 'hcd:' opt; do
   case $opt in
     h) usage; exit 0;;
     c) clean; exit 0;;
-    d) DIR=$OPTARG;;
+    d) DIR=${OPTARG};;
   esac
 done
 shift $((OPTIND - 1))
@@ -74,27 +74,27 @@ if [ ! -x "${BIN_DIR}/generate_test.pl" ]; then
 fi
 
 for t in $(find "${DIR}" -not -regex '.+customtt.tt2' -type f -name '*.tt2' | sort); do
-  origdir="$(dirname "$t")"
-  template="$(basename "$t")"
-  if [ -n "$DEST_DIR" ] ; then
-    destdir="$DEST_DIR/$(dirname "$t")"
+  origdir="$(dirname "${t}")"
+  template="$(basename "${t}")"
+  if [ -n "${DEST_DIR}" ] ; then
+    destdir="${DEST_DIR}/$(dirname "${t}")"
     mkdir -p "${destdir}"
   else
-    destdir="$(dirname "$t")"
+    destdir="$(dirname "${t}")"
   fi
-  destfile="$(basename "$t" .tt2)"
-  custom_template="$(basename "$t" .tt2).customtt.tt2"
+  destfile="$(basename "${t}" .tt2)"
+  custom_template="$(basename "${t}" .tt2).customtt.tt2"
 
   if [ -f "${origdir}/${custom_template}" ]; then
-    echo "Custom detected"
+    echo "$(date) - - Custom detected"
     template=${custom_template}
   fi
-  echo "generating: ${destdir}/${destfile}"
+  echo "$(date) - - Generating: ${destdir}/${destfile}"
   # shellcheck disable=SC2086
   if ! "${BIN_DIR}/generate_test.pl" ${ARGS} "${origdir}/${template}" ${IDS} > "${destdir}/${destfile}" ; then
     error_flag=1
   fi
 done
 
-exit $error_flag
+exit ${error_flag}
 #EOF
