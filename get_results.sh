@@ -6,6 +6,7 @@ PROFILE="CE"
 DOMAIN="spce.test"
 GROUP="${GROUP:-scenarios}"
 RETRANS=""
+CDR=""
 
 usage() {
   echo "Usage: get_results.sh [-p PROFILE] [-h] [-g]"
@@ -16,6 +17,7 @@ usage() {
   echo "-P parse only will disable test"
   echo "-T test only will disable parse"
   echo "-r fix retransmission issues"
+  echo "-c enable cdr validation"
   echo "-x set GROUP scenario. Default: scenarios"
   echo "BASE_DIR:${BASE_DIR}"
   echo "BIN_DIR:${BIN_DIR}"
@@ -27,7 +29,7 @@ get_scenarios() {
   flag=0
   if [ -n "${SCENARIOS}" ]; then
     for t in ${SCENARIOS}; do
-      if [ ! -d "${BASE_DIR}/${GROUP}/$t" ]; then
+      if [ ! -d "${BASE_DIR}/${GROUP}/${t}" ]; then
         echo "$(date) - scenario: $t not found"
         flag=1
       fi
@@ -41,7 +43,7 @@ get_scenarios() {
   fi
 }
 
-while getopts 'hgGp:TPrx:' opt; do
+while getopts 'hgGp:TPrcx:' opt; do
   case $opt in
     h) usage; exit 0;;
     G) GRAPH="-G";;
@@ -49,8 +51,9 @@ while getopts 'hgGp:TPrx:' opt; do
     P) OPTS="-T";;
     T) OPTS="-P";;
     r) RETRANS="-r";;
-    p) PROFILE=$OPTARG;;
-    x) GROUP=$OPTARG;;
+    c) CDR="-c";;
+    p) PROFILE=${OPTARG};;
+    x) GROUP=${OPTARG};;
   esac
 done
 shift $((OPTIND-1))
@@ -70,7 +73,8 @@ fi
 get_scenarios
 
 echo "${SCENARIOS}" |  tr ' ' '\n' \
- | parallel "${BIN_DIR}/check.sh ${GRAPH} -J -C -R ${OPTS} ${RETRANS} -d ${DOMAIN} -p ${PROFILE} -s ${GROUP}"
+ | parallel "${BIN_DIR}/check.sh ${GRAPH} -J -C -R ${OPTS} ${RETRANS} ${CDR} -d ${DOMAIN} -p ${PROFILE} -s ${GROUP}"
 status=$?
-echo "$(date) - All done[$status]"
-exit $status
+echo "$(date) - All done[${status}]"
+exit ${status}
+
