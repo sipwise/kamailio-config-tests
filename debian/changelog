@@ -1,3 +1,12 @@
+kamailio-config-tests (5.2.2.2+0~mr5.2.2.2) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [54ffa85] TT#48618 Backport test improvements to old versions
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 09 Jan 2019 11:00:37 +0100
+
 kamailio-config-tests (5.2.2.1+0~mr5.2.2.1) unstable; urgency=medium
 
   [ Victor Seva ]
