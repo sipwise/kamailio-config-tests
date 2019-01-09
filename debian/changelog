@@ -1,3 +1,19 @@
+kamailio-config-tests (7.1.1.0+0~mr7.1.1.0) unstable; urgency=medium
+
+  [ Alexander Lutay ]
+  * [fb92f29] TT#47373 Preserve config.yml attributes on copying for debug_mode
+
+  [ Marco Capetta ]
+  * [bbca0ab] TT#46863 Add invite_record_call scenario
+  * [7e331d1] TT#49202 Fix errors in 'invite_record_call' scenario
+
+  [ Andrew Pogrebennyk ]
+  * [8d07965] TT#47743 adjust k-c-t for new route ROUTE_APPLY_CALLEE_LNP_RWR
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 09 Jan 2019 21:57:16 +0100
+
 kamailio-config-tests (7.1.0.0+0~mr7.1.0.0) unstable; urgency=medium
 
   [ Marco Capetta ]
