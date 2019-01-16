@@ -115,6 +115,9 @@ fix_retransmissions() {
   echo "$(date) - Checking retransmission issues"
   for t in ${SCENARIOS}; do
     echo "$(date) - - Scenario: ${t}"
+    if [ "${t}" == "invite_retrans" ] ; then
+      continue
+    fi
     RETRANS_ISSUE=false
     file_find=($(find "${LOG_DIR}/${t}" -maxdepth 1 -name '*.json' | sort))
     for json_file in "${file_find[@]}" ; do
