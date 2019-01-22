@@ -1,0 +1,23 @@
+---
+testuser1001@spce.test:
+  cfu:
+    destinations:
+      - destination: sip:4311003@spce.test
+        priority: 0
+        timeout: 2
+      - destination: sip:testuser1003@spce.test
+        priority: 1
+        timeout: 2
+    sources:
+      - source: testuser1001
+testuser1004@spce.test:
+  cfb:
+    destinations:
+      - destination: sip:4311005@spce.test
+        priority: 0
+        timeout: 2
+      - destination: sip:testuser1005@spce.test
+        priority: 1
+        timeout: 2
+    sources:
+      - source: testuser1002
