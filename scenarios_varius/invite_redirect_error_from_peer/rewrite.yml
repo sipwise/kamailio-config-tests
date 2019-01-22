@@ -1,0 +1,26 @@
+rw_00:
+  - direction: in
+    field: callee
+    match_pattern: '^(.*)$'
+    replace_pattern: '\1'
+    priority: 1
+    description: International to E.164
+  - direction: in
+    field: caller
+    match_pattern: '^(.*)$'
+    replace_pattern: '\1'
+    priority: 1
+    description: International to E.164
+rw_01:
+  - direction: in
+    field: callee
+    match_pattern: '^(.*)$'
+    replace_pattern: '\1'
+    priority: 1
+    description: Intern to E.164
+  - direction: in
+    field: caller
+    match_pattern: '^(.*)$'
+    replace_pattern: '\1'
+    priority: 1
+    description: Intern to E.164
