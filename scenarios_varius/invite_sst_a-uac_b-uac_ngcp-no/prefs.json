@@ -1,0 +1,16 @@
+{
+    "testuser1002@spce.test": {
+        "sst_enable": "no",
+        "sst_expires": 30,
+        "sst_min_timer": 30,
+        "sst_max_timer": 300,
+        "sst_refresh_method" : "INVITE"
+    },
+    "testuser1003@spce.test": {
+        "sst_enable": "no",
+        "sst_expires": 30,
+        "sst_min_timer": 30,
+        "sst_max_timer": 300,
+        "sst_refresh_method" : "INVITE"
+    }
+}

@@ -1,0 +1,8 @@
+{
+    "testuser1002@spce.test": {
+        "allowed_clis": [
+            "11111111"
+        ],
+        "skip_upn_check_on_diversion": "yes"
+    }
+}
