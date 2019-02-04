@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da1255d7_17521614",
+        "filename": "bin/cdr_extract.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000020
+      },
+      "writtenOn": "2019-02-04T12:56:17Z",
+      "side": 1,
+      "message": "indent the line",
+      "revId": "1c178a5cf170027507c16f29591dc000538d37f9",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
