@@ -1,3 +1,13 @@
+kamailio-config-tests (7.0.2.1+0~mr7.0.2.1) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [992c60e] TT#50152 Fix re-transmission issues in cases where only part of the json are duplicated
+  * [2e6d86a] TT#50152 Skip invite_retrans scenarios from retransmission check
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 11 Feb 2019 12:28:04 +0100
+
 kamailio-config-tests (7.0.2.0+0~mr7.0.2.0) unstable; urgency=medium
 
   [ Alexander Lutay ]
