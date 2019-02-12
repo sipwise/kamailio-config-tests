@@ -1,3 +1,18 @@
+kamailio-config-tests (5.5.8.1+0~mr5.5.8.1) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [7ba9fda] TT#47750 Fix invite_concurrent_max_per_account timing issue
+  * [06faebb] TT#48618 Backport test improvements to old versions
+  * [7f11d98] TT#50152 Fix re-transmission issues in cases where only part of the json are duplicated
+  * [37473b0] TT#50152 Skip invite_retrans scenarios from retransmission check
+
+  [ Andrew Pogrebennyk ]
+  * [c2e38c2] TT#36172 update scenario incoming_hih due to reordering
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 12 Feb 2019 18:26:49 +0100
+
 kamailio-config-tests (5.5.8.0+0~mr5.5.8.0) unstable; urgency=medium
 
   [ Marco Capetta ]
