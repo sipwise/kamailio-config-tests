@@ -1,0 +1,42 @@
+flow:
+  - start|DEFAULT_ROUTE:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_COLLECT_HDR:
+  - return|ROUTE_COLLECT_HDR:
+  - start|ROUTE_NET_INFO:
+  - return|ROUTE_NET_INFO:
+  - start|ROUTE_PRX_REQUEST:
+  - start|ROUTE_INITVARS:
+  - return|ROUTE_INITVARS:
+  - start|ROUTE_INVITE:
+  - start|ROUTE_LOAD_CALLEE_DOMAIN_PREF:
+  - start|ROUTE_CLEAR_CALLEE_DOMAIN_PREF:
+  - return|ROUTE_CLEAR_CALLEE_DOMAIN_PREF:
+  - return|ROUTE_LOAD_CALLEE_DOMAIN_PREF:
+  - start|ROUTE_FIND_CALLER:
+  - start|ROUTE_AUTH:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+sip_in:
+  - '^INVITE sip:testuser1001@'
+  - 'Contact: sip:testuser1002@'
+  - 'To: <sip:testuser1001@'
+  - 'CSeq: 1 INVITE'
+  - 'Max-Forwards: 69'
+  - 'Content-Type: application/sdp'
+sip_out:
+  - [
+      '^SIP/2.0 100 Trying',
+      'CSeq: 1 INVITE',
+      'From: <sip:testuser1002@',
+      'To: <sip:testuser1001@'
+    ]
+  - [
+      '^SIP/2.0 407 Proxy Authentication Required',
+      'CSeq: 1 INVITE',
+      'From: <sip:testuser1002@',
+      'To: <sip:testuser1001@'
+    ]
