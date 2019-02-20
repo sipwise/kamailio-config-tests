@@ -1,0 +1,11 @@
+{
+    "testuser1001@spce.test": {
+        "header_rule_set": "hm_00"
+    },
+    "testuser1003@spce.test": {
+        "header_rule_set": "hm_01"
+    },
+    "testuser1004@spce.test": {
+        "header_rule_set": "hm_02"
+    }
+}

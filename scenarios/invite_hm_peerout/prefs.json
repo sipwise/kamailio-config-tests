@@ -1,0 +1,9 @@
+{
+    "testuser1002@spce.test": {
+        "header_rule_set": "hm_00"
+    },
+    "peer_00_host0": {
+        "concurrent_max": 1,
+	    "header_rule_set": "hm_01"
+    }
+}
