@@ -1,0 +1,19 @@
+---
+testuser1004@spce.test:
+  destinations:
+    destinations:
+      - destination: sip:testuser1003@spce.test
+        priority: 0
+        timeout: 10
+    name: dest1004
+  mappings:
+    cfu:
+      - bnumberset: null
+        destinationset: dest1004
+        sourceset: null
+        timeset: null
+    cfb: []
+    cfna: []
+    cft: []
+    cfs: []
+    cfr: []
