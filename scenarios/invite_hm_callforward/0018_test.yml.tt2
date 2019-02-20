@@ -1,0 +1,32 @@
+flow:
+  - start|DEFAULT_ONREPLY:
+  - start|REPLY_ROUTE_NAT:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_COLLECT_HDR:
+  - return|ROUTE_COLLECT_HDR:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - start|ROUTE_PREPARE_UA:
+  - return|ROUTE_PREPARE_UA:
+  - start|REPLY_ROUTE_NAT_CONTINUE:
+  - start|ROUTE_APPLY_HDR:
+  - return|ROUTE_APPLY_HDR:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+sip_in:
+  - '^SIP/2.0 200 OK'
+  - 'Content-Length: 0'
+  - 'CSeq: 3 BYE'
+  - 'From: <sip:testuser1002@'
+  - 'To: <sip:testuser1001@'
+sip_out:
+  - [
+      '^SIP/2.0 200 OK',
+      'CSeq: 3 BYE',
+      'Content-Length: 0',
+      'From: <sip:testuser1002@',
+      'To: <sip:testuser1001@'
+    ]
