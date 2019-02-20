@@ -1,0 +1,108 @@
+hm_00:
+  header_rules:
+  - data:
+      direction: inbound
+      description: add TestTest eader
+      name: hm_00_01
+      stopper: 0
+      enabled: 1
+      priority: 50
+    conditions:
+    - enabled: 1
+      match_name: From
+      match_part: username
+      match_type: header
+      expression: is
+      expression_negation: 0
+      value_type: input
+      values:
+      - value: 'testuser1002'
+      rwr_set_id: 
+    actions:
+    - enabled: 1
+      action_type: add
+      header: TestTest
+      header_part: full
+      value: new header testtest
+      value_part: full
+      rwr_set_id: 
+  - data:
+      direction: local
+      description: add TestTest eader
+      name: hm_00_02
+      stopper: 0
+      enabled: 1
+      priority: 50
+    conditions:
+    - enabled: 1
+      match_name: From
+      match_part: username
+      match_type: header
+      expression: is
+      expression_negation: 0
+      value_type: input
+      values:
+      - value: 'testuser1002'
+      rwr_set_id: 
+    actions:
+    - enabled: 1
+      action_type: add
+      header: TestTest
+      header_part: full
+      value: new header testtest
+      value_part: full
+      rwr_set_id: 
+  - data:
+      direction: peer
+      description: add TestTest eader
+      name: hm_00_03
+      stopper: 0
+      enabled: 1
+      priority: 50
+    conditions:
+    - enabled: 1
+      match_name: From
+      match_part: username
+      match_type: header
+      expression: is
+      expression_negation: 0
+      value_type: input
+      values:
+      - value: 'testuser1002'
+      rwr_set_id: 
+    actions:
+    - enabled: 1
+      action_type: add
+      header: TestTest
+      header_part: full
+      value: new header testtest
+      value_part: full
+      rwr_set_id: 
+hm_01:
+  header_rules:
+  - data:
+      direction: outbound
+      description: add Test header
+      name: hm_01_01
+      stopper: 0
+      enabled: 1
+      priority: 50
+    conditions:
+    - enabled: 1
+      match_name: From
+      match_part: full
+      match_type: header
+      expression: is
+      expression_negation: 0
+      value_type: input
+      values:
+      - value: '.*'
+      rwr_set_id: 
+    actions:
+    - enabled: 1
+      action_type: remove
+      header: Test
+      header_part: full
+      value: header test
+      value_part: full
+      rwr_set_id: 

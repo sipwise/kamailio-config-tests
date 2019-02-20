@@ -1,0 +1,31 @@
+hm_00:
+  header_rule:
+    direction: inbound
+    description: add Test header
+    name: hm_00_01
+    stopper: 0
+    enabled: 1
+    priority: 50
+  conditions:
+  - values:
+    - './*'
+    - 'sss'
+    match_name: From
+    match_part: full
+    match_type: header
+    expression_negation: 0
+    value_type: input
+    enabled: 1
+    rwr_set_id: ""
+    rwr_dp: ""
+    match_type: header
+    expression: is
+  actions:
+  - action_type: set
+    enabled: 1
+    header: Test
+    header_part: full
+    value: header test
+    value_part: full
+    rwr_set_id: ""
+    rwr_dp: ""
