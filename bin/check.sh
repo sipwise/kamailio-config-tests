@@ -222,6 +222,11 @@ create_voip_prefs() {
     "${BIN_DIR}/create_lnp.pl" "${SCEN_CHECK_DIR}/lnp.yml"
   fi
 
+  if [ -f "${SCEN_CHECK_DIR}/header.yml" ]; then
+    echo "$(date) - Creating header manipulations"
+    "${BIN_DIR}/create_header_manipulation.pl" "${SCEN_CHECK_DIR}/header.yml"
+  fi
+
   if [ -f "${SCEN_CHECK_DIR}/prefs.json" ]; then
     echo "$(date) - Setting preferences"
     "${BIN_DIR}/set_preferences.pl" "${SCEN_CHECK_DIR}/prefs.json"
@@ -242,6 +247,11 @@ delete_voip() {
    # Trusted sources are not deleted from kamailio cache when the domain is removed
    # therefore better reload them from the database
    ngcp-kamcmd proxy permissions.trustedReload
+  fi
+
+  if [ -f "${SCEN_CHECK_DIR}/header.yml" ]; then
+    echo "$(date) - Deleting header manipulations"
+    "${BIN_DIR}/create_header_manipulation.pl" -delete "${SCEN_CHECK_DIR}/header.yml"
   fi
 
   if [ -f "${SCEN_CHECK_DIR}/lnp.yml" ]; then
@@ -709,6 +719,12 @@ fi
 if ! [ -f "${SCEN_CHECK_DIR}/scenario.yml" ]; then
   echo "${SCEN_CHECK_DIR}/scenario.yml not found"
   exit 14
+fi
+
+if [ -f "${SCEN_CHECK_DIR}/pro.yml" ] && [ "${PROFILE}" == "CE" ]; then
+  echo "${SCEN_CHECK_DIR}/pro.yml found but PROFILE ${PROFILE}"
+  echo "Skipping the tests because not in scope"
+  exit 0
 fi
 
 if ! "$SKIP" ; then

@@ -605,6 +605,73 @@ sub delete_rewriteruleset {
 	return $self->_delete($urldata);
 }
 
+sub check_headerrulecondition_exists {
+	my ($self, $data) = @_;
+	my $urldata = '/api/headerruleconditions/';
+	my $collection_id = 'ngcp:headerruleconditions';
+
+	return $self->_exists($data, $urldata, $collection_id);
+}
+
+sub create_headerrulecondition {
+	my ($self, $data) = @_;
+	my $urldata = '/api/headerruleconditions/';
+
+	return $self->_create($data, $urldata);
+}
+
+sub check_headerruleaction_exists {
+	my ($self, $data) = @_;
+	my $urldata = '/api/headerruleactions/';
+	my $collection_id = 'ngcp:headerruleactions';
+
+	return $self->_exists($data, $urldata, $collection_id);
+}
+
+sub create_headerruleaction {
+	my ($self, $data) = @_;
+	my $urldata = '/api/headerruleactions/';
+
+	return $self->_create($data, $urldata);
+}
+
+sub check_headerrule_exists {
+	my ($self, $data) = @_;
+	my $urldata = '/api/headerrules/';
+	my $collection_id = 'ngcp:headerrules';
+
+	return $self->_exists($data, $urldata, $collection_id);
+}
+
+sub create_headerrule {
+	my ($self, $data) = @_;
+	my $urldata = '/api/headerrules/';
+
+	return $self->_create($data, $urldata);
+}
+
+sub check_headerruleset_exists {
+	my ($self, $data) = @_;
+	my $urldata = '/api/headerrulesets/';
+	my $collection_id = 'ngcp:headerrulesets';
+
+	return $self->_exists($data, $urldata, $collection_id);
+}
+
+sub create_headerruleset {
+	my ($self, $data) = @_;
+	my $urldata = '/api/headerrulesets/';
+
+	return $self->_create($data, $urldata);
+}
+
+sub delete_headerruleset {
+	my ($self, $id) = @_;
+	my $urldata = "/api/headerrulesets/${id}";
+
+	return $self->_delete($urldata);
+}
+
 sub check_peeringgroup_exists {
 	my ($self, $data) = @_;
 	my $urldata = '/api/peeringgroups/';

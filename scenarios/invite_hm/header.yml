@@ -1,0 +1,216 @@
+hm_00:
+  header_rules:
+  - data:
+      direction: inbound
+      description: Empty Manipulation
+      name: hm_00_00
+      stopper: 0
+      enabled: 0
+      priority: 48
+      conditions: []
+      actions: []
+  - data:
+      direction: inbound
+      description: Add TestTest Header
+      name: hm_00_01
+      stopper: 0
+      enabled: 1
+      priority: 50
+    conditions:
+    - enabled: 1
+      match_name: From
+      match_part: username
+      match_type: header
+      expression: contains
+      expression_negation: 0
+      value_type: input
+      values:
+      - value: testuser1002
+      rwr_set_id: 
+    actions:
+    - enabled: 1
+      action_type: add
+      header: TestTest
+      header_part: full
+      value: new_internal_header
+      value_part: full
+      rwr_set_id: 
+  - data:
+      direction: local
+      description: Edit TestTest Local Header
+      name: hm_00_02
+      stopper: 0
+      enabled: 1
+      priority: 51
+    conditions:
+    - enabled: 1
+      match_name: TestTest
+      match_part: full
+      match_type: header
+      expression: is
+      expression_negation: 0
+      value_type: input
+      values:
+      - value: new_internal_header
+      rwr_set_id: 
+    actions:
+    - enabled: 1
+      action_type: set
+      header: TestTest
+      header_part: full
+      value: updated_local_header
+      value_part: full
+      rwr_set_id: 
+  - data:
+      direction: peer
+      description: Edit TestTest Peer Header
+      name: hm_00_03
+      stopper: 0
+      enabled: 1
+      priority: 52
+    conditions:
+    - enabled: 1
+      match_name: TestTest
+      match_part: full
+      match_type: header
+      expression: regexp
+      expression_negation: 0
+      value_type: input
+      values:
+      - value: '^new[\w]+$'
+      rwr_set_id: 
+    actions:
+    - enabled: 1
+      action_type: remove
+      header: TestTest
+      header_part: full
+      value: 
+      value_part: full
+      rwr_set_id: 
+  - data:
+      direction: reply
+      description: Add ReplyOnly Headers
+      name: hm_00_04
+      stopper: 0
+      enabled: 1
+      priority: 53
+    conditions:
+    - enabled: 1
+      match_name: From
+      match_part: full
+      match_type: header
+      expression: regexp
+      expression_negation: 0
+      value_type: input
+      values:
+      - value: '^.*$'
+      rwr_set_id: 
+    actions:
+    - enabled: 1
+      action_type: add
+      header: ReplyOnlyFirst
+      header_part: full
+      value: this_is_first_reply
+      value_part: full
+      rwr_set_id: 
+    - enabled: 1
+      action_type: add
+      header: ReplyOnlySecond
+      header_part: full
+      value: this_is_second_reply
+      value_part: full
+      rwr_set_id: 
+hm_01:
+  header_rules:
+  - data:
+      direction: outbound
+      description: Edit P-Asserted-Identity
+      name: hm_01_00
+      stopper: 1
+      enabled: 1
+      priority: 60
+    conditions:
+    - enabled: 1
+      match_name: To
+      match_part: full
+      match_type: header
+      expression: is
+      expression_negation: 0
+      value_type: input
+      values:
+      - value: '<sip:testuser1003@spce.test>'
+      rwr_set_id: 
+    actions:
+    - enabled: 1
+      action_type: set
+      header: P-Asserted-Identity
+      header_part: username
+      value: 11111111
+      value_part: full
+      rwr_set_id: 
+  - data:
+      direction: outbound
+      description: Should not be executed
+      name: hm_01_01
+      stopper: 0
+      enabled: 1
+      priority: 61
+    conditions:
+    - enabled: 1
+      match_name: To
+      match_part: full
+      match_type: header
+      expression: regexp
+      expression_negation: 0
+      value_type: input
+      values:
+      - value: '.*'
+      rwr_set_id: 
+    actions:
+    - enabled: 1
+      action_type: remove
+      header: From
+      header_part: full
+      value: 
+      value_part: full
+      rwr_set_id: 
+    - enabled: 1
+      action_type: remove
+      header: To
+      header_part: full
+      value: 
+      value_part: full
+      rwr_set_id: 
+  - data:
+      direction: reply
+      description: Add NO_ReplyOnly Headers
+      name: hm_01_02
+      stopper: 0
+      enabled: 1
+      priority: 62
+    conditions:
+    - enabled: 1
+      match_name: From
+      match_part: full
+      match_type: header
+      expression: regexp
+      expression_negation: 0
+      value_type: input
+      values:
+      - value: '^.*$'
+      rwr_set_id: 
+    actions:
+    - enabled: 1
+      action_type: add
+      header: NO_ReplyOnlyFirst
+      header_part: full
+      value: no this_is_first_reply
+      value_part: full
+      rwr_set_id: 
+    - enabled: 1
+      action_type: add
+      header: NO_ReplyOnlySecond
+      header_part: full
+      value: no this_is_second_reply
+      value_part: full
+      rwr_set_id: 
