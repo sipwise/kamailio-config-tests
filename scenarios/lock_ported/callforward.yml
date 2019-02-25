@@ -4,10 +4,10 @@ testuser1001@spce.test:
     destinations:
       - destination: sip:4311003@spce.test
         priority: 0
-        timeout: 2
+        timeout: 5
       - destination: sip:testuser1003@spce.test
         priority: 1
-        timeout: 2
+        timeout: 5
     name: dest1001
   mappings:
     cfu:
