@@ -73,7 +73,7 @@ if [ -z "${RESP}" ]; then
     MPORT_ARG="-mp ${MPORT}"
   fi
   PORT=${PORT:-"50602"}
-  TIMEOUT=${TIMEOUT:-"10"}
+  TIMEOUT=${TIMEOUT:-"15"}
 
   sipp -max_socket $MAX ${TRANSPORT_ARG}\
     -inf "${BASE_DIR}/callee.csv" -inf "${BASE_DIR}/caller.csv" \
