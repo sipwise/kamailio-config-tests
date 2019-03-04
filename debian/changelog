@@ -1,3 +1,14 @@
+kamailio-config-tests (0.15.13.0+0~mr4.5.13.0) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [a35b57b] TT#48618 Backport test improvements to old versions
+  * [282fb60] TT#50152 Fix re-transmission issues in cases where only part of the json are duplicated
+  * [9366001] TT#50152 Skip invite_retrans scenarios from retransmission check
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 04 Mar 2019 19:33:34 +0100
+
 kamailio-config-tests (0.15.12.0+0~mr4.5.12.0) unstable; urgency=medium
 
   * New release.
