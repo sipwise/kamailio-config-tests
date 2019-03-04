@@ -1,3 +1,12 @@
+kamailio-config-tests (6.4.2.3+0~mr6.4.2.3) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [754676a] TT#53373 Increase timeout time for callforwards
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 04 Mar 2019 09:36:32 +0100
+
 kamailio-config-tests (6.4.2.2+0~mr6.4.2.2) unstable; urgency=medium
 
   [ Marco Capetta ]
