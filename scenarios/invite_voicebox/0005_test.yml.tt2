@@ -45,6 +45,8 @@ flow:
   - start|ROUTE_CNT_DLG_CHECK:
   - start|ROUTE_DLG_MANAGE:
   - return|ROUTE_DLG_MANAGE:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
   - return|ROUTE_CNT_DLG_CHECK:
   - start|ROUTE_OUTBOUND:
       $avp(lua_dlg_profile): ["peer:voicebox", "local"]
@@ -93,6 +95,8 @@ flow:
   - start|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
   - return|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
   - return|ROUTE_ADD_CALLINFO:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
   - return|BRANCH_ROUTE_NO_SBC:
   - start|DEFAULT_SEND:
   - exit|DEFAULT_SEND:
