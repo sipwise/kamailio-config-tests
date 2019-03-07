@@ -39,6 +39,8 @@ flow:
       $xavp(caller_real_prefs[0]=>allowed_ips_grp[*]): '\d+'
   - start|ROUTE_DLG_MANAGE:
   - return|ROUTE_DLG_MANAGE:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
   - start|ROUTE_ACC_FAILURE:
   - start|ROUTE_ACC_CALLER:
   - return|ROUTE_ACC_CALLER:
@@ -67,6 +69,8 @@ flow:
   - start|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
   - return|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
   - return|ROUTE_ADD_CALLINFO:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
   - return|BRANCH_ROUTE_NO_SBC:
   - start|DEFAULT_SEND:
   - exit|DEFAULT_SEND:
