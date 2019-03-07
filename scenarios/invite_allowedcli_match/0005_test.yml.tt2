@@ -43,6 +43,8 @@ flow:
       $xavp(caller_real_prefs[0]=>inbound_upn[*]): ['from_display']
   - start|ROUTE_DLG_MANAGE:
   - return|ROUTE_DLG_MANAGE:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
   - start|ROUTE_GET_CALLER_CLI:
   - return|ROUTE_GET_CALLER_CLI:
   - start|ROUTE_GET_FORWARDER_CLI:

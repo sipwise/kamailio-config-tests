@@ -23,6 +23,8 @@ flow:
   - return|ROUTE_LOAD_PEER_IN_PREF:
       $avp(lua_dlg_profile): ["peer:[% peer_00_host0.id %]", "total"]
   - return|ROUTE_FIND_CALLER:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
   - start|ROUTE_GET_CALLER_CLI:
   - return|ROUTE_GET_CALLER_CLI:
   - start|ROUTE_GET_CALLER_CLI:

@@ -50,6 +50,8 @@ flow:
   - start|ROUTE_CNT_DLG_CHECK:
   - start|ROUTE_DLG_MANAGE:
   - return|ROUTE_DLG_MANAGE:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
   - return|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_SET_CALLEE_DIALOG:
       $avp(lua_dlg_profile): [
