@@ -50,6 +50,8 @@ flow:
   - start|ROUTE_CNT_DLG_CHECK:
   - start|ROUTE_DLG_MANAGE:
   - return|ROUTE_DLG_MANAGE:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
   - return|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_SET_CALLEE_DIALOG:
       $avp(lua_dlg_profile): [
@@ -81,6 +83,8 @@ flow:
   - return|ROUTE_CHECK_PBX:
   - start|ROUTE_CALLEE_DISPATCH:
   - start|ROUTE_INVITE_TO_INT:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
   - start|ROUTE_CF_CFU:
   - return|ROUTE_CF_CFU:
   - start|ROUTE_CNT_DLG_CHECK:
@@ -159,6 +163,8 @@ flow:
   - start|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
   - return|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
   - return|ROUTE_ADD_CALLINFO:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
   - return|BRANCH_ROUTE_SBC:
   - start|DEFAULT_SEND:
   - exit|DEFAULT_SEND:

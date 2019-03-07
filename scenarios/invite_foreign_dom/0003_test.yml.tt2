@@ -39,6 +39,8 @@ flow:
   - return|ROUTE_DLG_MANAGE:
   - start|ROUTE_GET_CALLER_CLI:
   - return|ROUTE_GET_CALLER_CLI:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
   - start|ROUTE_GET_FORWARDER_CLI:
   - return|ROUTE_GET_FORWARDER_CLI:
   - start|ROUTE_CLIR:
@@ -126,6 +128,8 @@ flow:
   - start|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
   - return|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
   - return|ROUTE_ADD_CALLINFO:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
   - return|BRANCH_ROUTE_SBC:
   # branch ??
   - start|DEFAULT_SEND:
