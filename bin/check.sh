@@ -214,7 +214,7 @@ create_voip_prefs() {
     "${BIN_DIR}/create_peers.pl" \
       "${SCEN_CHECK_DIR}/peer.yml" "${SCEN_CHECK_DIR}/scenario_ids.yml"
     # REMOVE ME!! fix for REST API
-    ngcp-sercmd proxy lcr.reload
+    ngcp-kamcmd proxy lcr.reload
   fi
 
   if [ -f "${SCEN_CHECK_DIR}/lnp.yml" ]; then
@@ -241,14 +241,14 @@ delete_voip() {
    echo "$(date) - Deleting trusted sources"
    # Trusted sources are not deleted from kamailio cache when the domain is removed
    # therefore better reload them from the database
-   ngcp-sercmd proxy permissions.trustedReload
+   ngcp-kamcmd proxy permissions.trustedReload
   fi
 
   if [ -f "${SCEN_CHECK_DIR}/lnp.yml" ]; then
     echo "$(date) - Deleting lnp carrier/number"
     "${BIN_DIR}/create_lnp.pl" -delete "${SCEN_CHECK_DIR}/lnp.yml"
     # REMOVE ME!! fix for REST API
-    ngcp-sercmd proxy lcr.reload
+    ngcp-kamcmd proxy lcr.reload
   fi
 
   if [ -f "${SCEN_CHECK_DIR}/ncos.yml" ]; then
@@ -281,7 +281,7 @@ delete_locations() {
     for sub in $(uniq "${f}" | grep "${DOMAIN}" | cut -d\; -f1 | xargs); do
       ngcp-kamctl proxy fifo ul.rm location "${sub}@${DOMAIN}" >/dev/null
       # delete possible banned user
-      ngcp-sercmd lb htable.delete auth "${sub}@${DOMAIN}::auth_count"
+      ngcp-kamcmd lb htable.delete auth "${sub}@${DOMAIN}::auth_count"
     done
   done
 
@@ -304,7 +304,7 @@ delete_locations() {
 release_appearance() {
   local values
   values=$(mktemp)
-  ngcp-sercmd proxy sca.all_appearances >"${values}" 2>&1
+  ngcp-kamcmd proxy sca.all_appearances >"${values}" 2>&1
   if grep -q error "${values}" ; then
     # sca not enabled, not pbx scenario
     rm "${values}"
@@ -312,7 +312,7 @@ release_appearance() {
   fi
   while read -r sca idx rest; do
     echo "$(date) release_appearance for ${sca} ${idx}"
-    ngcp-sercmd proxy sca.release_appearance "${sca}" "${idx}" || true
+    ngcp-kamcmd proxy sca.release_appearance "${sca}" "${idx}" || true
   done < "${values}"
   rm "${values}"
 }
@@ -423,7 +423,7 @@ copy_logs() {
 
 memdbg() {
   if [ -x /usr/share/ngcp-system-tools/kamcmd/memdbg ] ; then
-    ngcp-sercmd proxy memdbg all >/dev/null
+    ngcp-kamcmd proxy memdbg all >/dev/null
     mkdir -p "${MLOG_DIR}"
     ngcp-memdbg-csv "${KAM_LOG}" "${MLOG_DIR}" >/dev/null
   fi
@@ -484,7 +484,7 @@ run_sipp() {
         error_helper "$(date) - error updating peer info" 15
       else
         # REMOVE ME!! fix for REST API
-          ngcp-sercmd proxy lcr.reload
+          ngcp-kamcmd proxy lcr.reload
       fi
     fi
     if [ "${foreign_dom}" == "yes" ]; then
