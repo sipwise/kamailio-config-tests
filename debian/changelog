@@ -1,3 +1,13 @@
+kamailio-config-tests (7.1.2.1+0~mr7.1.2.1) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [0e92a9b] TT#53373 Increase timeout time for callforwards
+  * [1e4d299] TT#56156 Increase delay of second call in invite_concurrent_max scenarios
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 01 Apr 2019 16:29:19 +0200
+
 kamailio-config-tests (7.1.2.0+0~mr7.1.2.0) unstable; urgency=medium
 
   [ Marco Capetta ]
