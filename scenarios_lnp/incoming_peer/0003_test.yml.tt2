@@ -114,8 +114,6 @@ flow:
   - return|ROUTE_ACC_CALLER:
   - start|ROUTE_ACC_CALLEE:
   - return|ROUTE_ACC_CALLEE:
-  - start|ROUTE_ADD_AOC_HEADER:
-  - return|ROUTE_ADD_AOC_HEADER:
   - start|BRANCH_ROUTE_SBC:
   - start|ROUTE_SET_BRANCH_HDRS:
   - start|ROUTE_PREPARE_UA:
