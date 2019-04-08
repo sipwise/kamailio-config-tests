@@ -1,3 +1,12 @@
+kamailio-config-tests (6.5.4.2+0~mr6.5.4.2) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [704106b] TT#56156 Increase delay of second call in invite_concurrent_max scenarios
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 08 Apr 2019 17:52:59 +0200
+
 kamailio-config-tests (6.5.4.1+0~mr6.5.4.1) unstable; urgency=medium
 
   [ Marco Capetta ]
