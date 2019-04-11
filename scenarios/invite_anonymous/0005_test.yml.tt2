@@ -219,7 +219,7 @@ sip_out:
   - [
       '^INVITE sip:testuser1003@',
       'CSeq: 2 INVITE',
-      'From: "Anonymous"  <sip:anonymous@anonymous.invalid>;tag=',
+      'From: "Anonymous" <sip:anonymous@anonymous.invalid>;tag=',
       'To: <sip:testuser1003@',
       'Content-Type: application/sdp',
       'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
