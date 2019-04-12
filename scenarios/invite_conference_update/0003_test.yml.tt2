@@ -129,6 +129,8 @@ flow:
         "account:[% customer_test.id %]",
         "user:[% spce_test.testuser1001.uuid %]"
       ]
+  - start|ROUTE_ADD_AOC_HEADER:
+  - return|ROUTE_ADD_AOC_HEADER:
   - start|BRANCH_ROUTE_FWD_LOOP:
   - start|ROUTE_APPEND_CF_HDRS:
   - return|ROUTE_APPEND_CF_HDRS:

@@ -106,6 +106,8 @@ flow:
         "user:[% spce_test.testuser1003.uuid %]",
         "peer:[% peer_00_host0.id %]", "total"
       ]
+  - start|ROUTE_ADD_AOC_HEADER:
+  - return|ROUTE_ADD_AOC_HEADER:
   - start|BRANCH_ROUTE_FWD_LOOP:
   - start|ROUTE_PROCESS_INCOMING_HIH:
   - return|ROUTE_PROCESS_INCOMING_HIH:
