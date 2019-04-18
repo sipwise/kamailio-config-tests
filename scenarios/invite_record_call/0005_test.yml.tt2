@@ -131,10 +131,6 @@ flow:
         "account:[% customer_test.id %]",
         "user:[% spce_test.testuser1003.uuid %]"
       ]
-  - start|ROUTE_ACC_CALLER:
-  - return|ROUTE_ACC_CALLER:
-  - start|ROUTE_ACC_CALLEE:
-  - return|ROUTE_ACC_CALLEE:
   - start|BRANCH_ROUTE_NO_SBC:
   - start|ROUTE_BRANCH_ACC_RTP:
   - return|ROUTE_BRANCH_ACC_RTP:
