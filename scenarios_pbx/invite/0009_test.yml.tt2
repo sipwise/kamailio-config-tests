@@ -6,8 +6,14 @@ flow:
       ]
   - start|ROUTE_ENTRY:
   - return|ROUTE_ENTRY:
+  - start|ROUTE_COLLECT_HDR:
+  - return|ROUTE_COLLECT_HDR:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
   - start|ROUTE_PREPARE_UA:
   - return|ROUTE_PREPARE_UA:
+  - start|ROUTE_APPLY_HDR:
+  - return|ROUTE_APPLY_HDR:
   - start|ROUTE_EXIT:
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:
