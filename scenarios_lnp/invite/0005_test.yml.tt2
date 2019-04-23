@@ -21,6 +21,8 @@ flow:
         "account:[% customer_test.id %]",
         "user:[% spce_test.testuser1001.uuid %]"
       ]
+  - start|ROUTE_COLLECT_HDR:
+  - return|ROUTE_COLLECT_HDR:
   - start|ROUTE_PREPARE_UA:
   - return|ROUTE_PREPARE_UA:
   - start|ROUTE_EXIT:

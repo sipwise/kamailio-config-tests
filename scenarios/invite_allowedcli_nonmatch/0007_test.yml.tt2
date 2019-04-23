@@ -2,6 +2,8 @@ flow:
   - start|REPLY_ROUTE_NAT:
   - start|ROUTE_ENTRY:
   - return|ROUTE_ENTRY:
+  - start|ROUTE_COLLECT_HDR:
+  - return|ROUTE_COLLECT_HDR:
       $avp(lua_dlg_profile) : [
         'accountout:[% customer_test.id %]',
         'userout:[% spce_test.testuser1002.uuid %]',
