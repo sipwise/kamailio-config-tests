@@ -1,3 +1,12 @@
+kamailio-config-tests (7.2.1.2+0~mr7.2.1.2) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [93dbab9] TT#57702 Fix double CDR in case of pre-call announcement
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 24 Apr 2019 12:29:31 +0200
+
 kamailio-config-tests (7.2.1.1+0~mr7.2.1.1) unstable; urgency=medium
 
   [ Marco Capetta ]
