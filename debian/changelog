@@ -1,3 +1,26 @@
+kamailio-config-tests (7.3.1.0+0~mr7.3.1.0) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [2a83e24] TT#53373 Increase timeout time for callforwards
+  * [ac50af2] TT#47010 Fix tests after ROUTE_APPLY_HEADER_RULES introduction
+  * [6fd49a5] TT#56156 Increase delay of second call in invite_concurrent_max scenarios
+  * [eda6154] TT#56952 Fix calls to AoC ROUTE
+  * [c9bc5a1] TT#56008 Adjust scenarios after redirect route changes
+  * [277632a] TT#39166 add ROUTE_ADD_AOC_HEADER in EXECUTE_CF_LOOP
+  * [a991098] TT#57702 Fix double CDR in case of pre-call announcement
+
+  [ Guillem Jover ]
+  * [394c9bb] TT#53665 Rename checktools.sip_check_enable to witnessd.gather.sip_responsiveness
+  * [9ee15f5] TT#56550 Rename ngcp-sercmd to ngcp-kamcmd
+
+  [ Kirill Solomko ]
+  * [29f749d] TT#57502 fix invite anonymous tests
+  * [96c68c9] TT#39166 add ROUTE_ADD_AOC_HEADER in EXECUTE_CF_LOOP
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 25 Apr 2019 14:27:55 +0200
+
 kamailio-config-tests (7.3.0.0+0~mr7.3.0.0) unstable; urgency=medium
 
   [ Marco Capetta ]
