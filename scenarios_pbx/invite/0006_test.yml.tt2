@@ -1,4 +1,5 @@
 flow:
+  - start|DEFAULT_ONREPLY:
   - start|REPLY_ROUTE_NAT:
       $avp(lua_dlg_profile): [
         "totalaccountout:[% customerpbx_test.id %]",
@@ -13,6 +14,7 @@ flow:
   - return|ROUTE_ENTRY:
   - start|ROUTE_PREPARE_UA:
   - return|ROUTE_PREPARE_UA:
+  - start|REPLY_ROUTE_NAT_CONTINUE:
   - start|ROUTE_EXIT:
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:
