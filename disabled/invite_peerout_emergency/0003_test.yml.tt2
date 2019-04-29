@@ -91,10 +91,13 @@ flow:
   - end|ROUTE_ADD_CALLINFO:
   - end|BRANCH_ROUTE_SBC:
   - exit|ROUTE_OUTBOUND:
+  - start|DEFAULT_ONREPLY:
   - start|REPLY_ROUTE_NAT:
   - exit|REPLY_ROUTE_NAT:
+  - start|DEFAULT_ONREPLY:
   - start|REPLY_ROUTE_NAT:
   - exit|REPLY_ROUTE_NAT:
+  - start|DEFAULT_ONREPLY:
   - start|REPLY_ROUTE_NAT:
   - exit|REPLY_ROUTE_NAT:
 sip_in:
