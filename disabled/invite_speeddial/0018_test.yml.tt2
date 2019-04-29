@@ -1,4 +1,5 @@
 flow:
+  - start|DEFAULT_ONREPLY:
   - start|REPLY_ROUTE_NAT:
   - exit|REPLY_ROUTE_NAT:
 sip_in:

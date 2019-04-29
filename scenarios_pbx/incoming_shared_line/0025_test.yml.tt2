@@ -1,4 +1,5 @@
 flow:
+  - start|DEFAULT_ONREPLY:
   - start|REPLY_ROUTE_NAT:
   - start|ROUTE_ENTRY:
   - return|ROUTE_ENTRY:

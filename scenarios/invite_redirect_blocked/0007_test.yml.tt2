@@ -1,5 +1,6 @@
 flow:
-    - start|REPLY_ROUTE_NAT:
+    - start|DEFAULT_ONREPLY:
+  - start|REPLY_ROUTE_NAT:
     - start|ROUTE_ENTRY:
     - return|ROUTE_ENTRY:
     - start|ROUTE_PREPARE_UA:
