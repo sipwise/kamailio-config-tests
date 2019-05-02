@@ -64,6 +64,7 @@ sub do_delete
         my $param = { reseller_id => 1, name => $rule_set_name };
         my $rws_id = $api->check_rewriteruleset_exists($param);
         if(defined $rws_id) {
+            sleep(5);
             if($api->delete_rewriteruleset($rws_id)) {
                 print "rewriteruleset [$rule_set_name] deleted [$rws_id]\n";
             }
@@ -92,6 +93,7 @@ sub do_create
         }
         foreach my $param (@{$data->{$rule_set_name}}) {
             $param->{set_id} = $rws_id;
+            sleep(5);
             my $rw_id = $api->create_rewriterule($param);
             if(defined $rw_id) {
                 print "rewriterule [".
