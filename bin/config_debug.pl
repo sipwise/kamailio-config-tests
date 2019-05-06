@@ -107,7 +107,7 @@ else
   $yaml->{kamailio}{proxy}{cfgt} = 'yes';
   $yaml->{sems}{cfgt} = 'yes';
   $yaml->{sems}{debug} = 'yes';
-  $yaml->{witnessd}{gather}{sip_responsiveness} = 0;
+  $yaml->{witnessd}{gather}{sip_responsiveness} = 'no';
   $yaml->{security}->{ngcp_panel}->{scripts}->{restapi}->{sslverify} = 'no';
   $yaml->{mediator}{interval} = '1';
 
