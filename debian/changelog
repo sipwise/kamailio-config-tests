@@ -1,3 +1,12 @@
+kamailio-config-tests (7.3.1.1+0~mr7.3.1.1) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [9aa61af] TT#45811 Adapt tests to new suspend transaction feature
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 07 May 2019 10:54:54 +0200
+
 kamailio-config-tests (7.3.1.0+0~mr7.3.1.0) unstable; urgency=medium
 
   [ Marco Capetta ]
