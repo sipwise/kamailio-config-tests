@@ -1,3 +1,12 @@
+kamailio-config-tests (7.3.1.2+0~mr7.3.1.2) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [66757b2] TT#57701 Adapt scenarios HM changes in reply messages
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 10 May 2019 17:37:26 +0200
+
 kamailio-config-tests (7.3.1.1+0~mr7.3.1.1) unstable; urgency=medium
 
   [ Marco Capetta ]
