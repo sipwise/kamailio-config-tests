@@ -68,8 +68,6 @@ flow:
   - return|ROUTE_CNT_DLG_CHECK:
   - start|ROUTE_PSTN_SELECT_PEER:
       $avp(lua_dlg_profile): ["outgoing"]
-  - start|ROUTE_CHECK_PEER_PROBE:
-  - return|ROUTE_CHECK_PEER_PROBE:
   - start|ROUTE_CLEAR_PEER_OUT_PREF:
   - return|ROUTE_CLEAR_PEER_OUT_PREF:
   - start|ROUTE_LOAD_PEER_OUT_PREF:
