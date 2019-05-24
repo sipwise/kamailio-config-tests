@@ -8,6 +8,7 @@ GROUP="${GROUP:-scenarios}"
 LOG_DIR="${BASE_DIR}/log/${GROUP}"
 MLOG_DIR="${BASE_DIR}/mem"
 KAM_DIR="/tmp/cfgtest"
+COREDUMP_DIR="/ngcp-data/coredumps"
 PROFILE="CE"
 OPTS=(-P -T)
 DOMAIN="spce.test"
@@ -323,6 +324,18 @@ for t in ${SCENARIOS}; do
   fi
 
   echo "$(date) - ================================================================================="
+
+  # Check if core files have been geneared during the test execution
+  coredumps=$(ls -A "${COREDUMP_DIR}")
+  if [ -n "${coredumps}" ]; then
+    echo "$(date) - ================================================================================="
+    echo "$(date) - One or more coredump files have been generated during the test execution."
+    echo "$(date) - Check the following files under the folder '${COREDUMP_DIR}':"
+    echo "${coredumps}"
+    echo "$(date) - ================================================================================="
+    error_flag=1
+    break
+  fi
 done
 
 # Hack to allow tcpdump to capture all the packages and kamailio to write all the json files
