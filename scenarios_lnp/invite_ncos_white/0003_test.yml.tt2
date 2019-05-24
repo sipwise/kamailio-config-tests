@@ -2,8 +2,6 @@ flow:
   - start|DEFAULT_ROUTE:
   - start|ROUTE_ENTRY:
   - return|ROUTE_ENTRY:
-  - start|ROUTE_COLLECT_HDR:
-  - return|ROUTE_COLLECT_HDR:
   - start|ROUTE_NET_INFO:
   - return|ROUTE_NET_INFO:
   - start|ROUTE_PRX_REQUEST:
@@ -152,8 +150,6 @@ flow:
   - return|ROUTE_ADD_CALLINFO:
   - start|ROUTE_APPLY_HEADER_RULES:
   - return|ROUTE_APPLY_HEADER_RULES:
-  - start|ROUTE_APPLY_HDR:
-  - return|ROUTE_APPLY_HDR:
   - return|BRANCH_ROUTE_SBC:
   - start|DEFAULT_SEND:
   - exit|DEFAULT_SEND:

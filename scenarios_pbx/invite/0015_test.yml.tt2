@@ -2,8 +2,6 @@ flow:
   - start|DEFAULT_ROUTE:
   - start|ROUTE_ENTRY:
   - return|ROUTE_ENTRY:
-  - start|ROUTE_COLLECT_HDR:
-  - return|ROUTE_COLLECT_HDR:
   - start|ROUTE_NET_INFO:
   - return|ROUTE_NET_INFO:
   - start|ROUTE_PRX_REQUEST:
@@ -22,8 +20,6 @@ flow:
   - start|ROUTE_PREPARE_UA:
   - return|ROUTE_PREPARE_UA:
   - start|ROUTE_OUTBOUND:
-  - start|ROUTE_APPLY_HDR:
-  - return|ROUTE_APPLY_HDR:
   - start|DEFAULT_SEND:
   - exit|DEFAULT_SEND:
   - exit|DEFAULT_SEND:
