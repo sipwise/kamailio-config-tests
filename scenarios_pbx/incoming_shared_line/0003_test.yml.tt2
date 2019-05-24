@@ -2,8 +2,6 @@ flow:
   - start|DEFAULT_ROUTE:
   - start|ROUTE_ENTRY:
   - return|ROUTE_ENTRY:
-  - start|ROUTE_COLLECT_HDR:
-  - return|ROUTE_COLLECT_HDR:
   - start|ROUTE_NET_INFO:
   - return|ROUTE_NET_INFO:
   - start|ROUTE_IMP_REQUEST:
