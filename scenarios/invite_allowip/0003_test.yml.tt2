@@ -2,8 +2,6 @@ flow:
   - start|DEFAULT_ROUTE:
   - start|ROUTE_ENTRY:
   - return|ROUTE_ENTRY:
-  - start|ROUTE_COLLECT_HDR:
-  - return|ROUTE_COLLECT_HDR:
   - start|ROUTE_NET_INFO:
   - return|ROUTE_NET_INFO:
   - start|ROUTE_PRX_REQUEST:
@@ -41,8 +39,6 @@ flow:
       $xavp(caller_real_prefs[0]=>allowed_ips_grp[*]): '\d+'
   - start|ROUTE_DLG_MANAGE:
   - return|ROUTE_DLG_MANAGE:
-  - start|ROUTE_APPLY_HEADER_RULES:
-  - return|ROUTE_APPLY_HEADER_RULES:
   - start|ROUTE_ACC_FAILURE:
   - start|ROUTE_ACC_CALLER:
   - return|ROUTE_ACC_CALLER:
@@ -57,8 +53,6 @@ flow:
   - return|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
   - return|ROUTE_ADD_CALLINFO_REPLY:
   - start|ROUTE_LOCAL_REPLY:
-  - start|ROUTE_APPLY_HEADER_RULES:
-  - return|ROUTE_APPLY_HEADER_RULES:
   - start|dialog:failed:
   - return|dialog:failed:
       $avp(lua_dlg_profile): None

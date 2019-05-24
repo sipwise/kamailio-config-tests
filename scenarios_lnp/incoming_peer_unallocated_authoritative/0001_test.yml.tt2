@@ -2,8 +2,6 @@ flow:
   - start|DEFAULT_ROUTE:
   - start|ROUTE_ENTRY:
   - return|ROUTE_ENTRY:
-  - start|ROUTE_COLLECT_HDR:
-  - return|ROUTE_COLLECT_HDR:
   - start|ROUTE_NET_INFO:
   - return|ROUTE_NET_INFO:
   - start|ROUTE_PRX_REQUEST:
@@ -25,8 +23,6 @@ flow:
   - return|ROUTE_LOAD_PEER_IN_PREF:
       $avp(lua_dlg_profile): ["peer:[% peer_00_host0.id %]", "total"]
   - return|ROUTE_FIND_CALLER:
-  - start|ROUTE_APPLY_HEADER_RULES:
-  - return|ROUTE_APPLY_HEADER_RULES:
   - start|ROUTE_GET_CALLER_CLI:
   - return|ROUTE_GET_CALLER_CLI:
   - start|ROUTE_GET_CALLER_CLI:
@@ -58,8 +54,6 @@ flow:
   - return|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
   - return|ROUTE_ADD_CALLINFO_REPLY:
   - start|ROUTE_LOCAL_REPLY:
-  - start|ROUTE_APPLY_HEADER_RULES:
-  - return|ROUTE_APPLY_HEADER_RULES:
   - start|dialog:failed:
   - return|dialog:failed:
       $avp(lua_dlg_profile): None

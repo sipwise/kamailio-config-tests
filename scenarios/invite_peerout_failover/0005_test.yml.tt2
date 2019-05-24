@@ -3,10 +3,6 @@ flow:
   - start|REPLY_ROUTE_NAT:
   - start|ROUTE_ENTRY:
   - return|ROUTE_ENTRY:
-  - start|ROUTE_COLLECT_HDR:
-  - return|ROUTE_COLLECT_HDR:
-  - start|ROUTE_APPLY_HEADER_RULES:
-  - return|ROUTE_APPLY_HEADER_RULES:
       $avp(lua_dlg_profile): [
         "accountout:[% customer_test.id %]",
         "userout:[% spce_test.testuser1002.uuid %]",
@@ -31,8 +27,6 @@ flow:
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:
   - start|FAILURE_ROUTE_PSTN:
-  - start|ROUTE_COLLECT_HDR:
-  - return|ROUTE_COLLECT_HDR:
   - start|ROUTE_INITVARS:
   - return|ROUTE_INITVARS:
   - start|ROUTE_FILTER_FAILOVER:
@@ -128,8 +122,6 @@ flow:
   - start|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
   - return|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
   - return|ROUTE_ADD_CALLINFO:
-  - start|ROUTE_APPLY_HEADER_RULES:
-  - return|ROUTE_APPLY_HEADER_RULES:
   - start|ROUTE_APPLY_HDR:
   - return|ROUTE_APPLY_HDR:
   - return|BRANCH_ROUTE_SBC:

@@ -3,10 +3,6 @@ flow:
   - start|REPLY_ROUTE_NAT:
   - start|ROUTE_ENTRY:
   - return|ROUTE_ENTRY:
-  - start|ROUTE_COLLECT_HDR:
-  - return|ROUTE_COLLECT_HDR:
-  - start|ROUTE_APPLY_HEADER_RULES:
-  - return|ROUTE_APPLY_HEADER_RULES:
   - start|ROUTE_PREPARE_UA:
   - return|ROUTE_PREPARE_UA:
   - start|REPLY_ROUTE_NAT_CONTINUE:
@@ -16,8 +12,6 @@ flow:
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:
   - start|FAILURE_ROUTE_LOCAL:
-  - start|ROUTE_COLLECT_HDR:
-  - return|ROUTE_COLLECT_HDR:
   - start|ROUTE_INITVARS:
   - return|ROUTE_INITVARS:
   - start|ROUTE_STOP_RTPPROXY_BRANCH:
@@ -34,8 +28,6 @@ flow:
   - return|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
   - return|ROUTE_ADD_CALLINFO_REPLY:
   - start|ROUTE_LOCAL_REPLY:
-  - start|ROUTE_APPLY_HEADER_RULES:
-  - return|ROUTE_APPLY_HEADER_RULES:
   - start|dialog:failed:
   - return|dialog:failed:
       $avp(lua_dlg_profile): None

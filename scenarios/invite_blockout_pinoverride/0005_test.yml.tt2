@@ -2,8 +2,6 @@ flow:
   - start|DEFAULT_ROUTE:
   - start|ROUTE_ENTRY:
   - return|ROUTE_ENTRY:
-  - start|ROUTE_COLLECT_HDR:
-  - return|ROUTE_COLLECT_HDR:
   - start|ROUTE_NET_INFO:
   - return|ROUTE_NET_INFO:
   - start|ROUTE_PRX_REQUEST:
@@ -39,8 +37,6 @@ flow:
   - return|ROUTE_LOAD_CALLER_PREF:
   - start|ROUTE_DLG_MANAGE:
   - return|ROUTE_DLG_MANAGE:
-  - start|ROUTE_APPLY_HEADER_RULES:
-  - return|ROUTE_APPLY_HEADER_RULES:
   - start|ROUTE_GET_CALLER_CLI:
   - return|ROUTE_GET_CALLER_CLI:
   - start|ROUTE_GET_FORWARDER_CLI:
@@ -89,8 +85,6 @@ flow:
   - return|ROUTE_CHECK_PBX:
   - start|ROUTE_CALLEE_DISPATCH:
   - start|ROUTE_INVITE_TO_INT:
-  - start|ROUTE_APPLY_HEADER_RULES:
-  - return|ROUTE_APPLY_HEADER_RULES:
   - start|ROUTE_CF_CFU:
   - return|ROUTE_CF_CFU:
   - start|ROUTE_CNT_DLG_CHECK:
@@ -163,8 +157,6 @@ flow:
   - start|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
   - return|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
   - return|ROUTE_ADD_CALLINFO:
-  - start|ROUTE_APPLY_HEADER_RULES:
-  - return|ROUTE_APPLY_HEADER_RULES:
   - start|ROUTE_APPLY_HDR:
   - return|ROUTE_APPLY_HDR:
   - return|BRANCH_ROUTE_SBC:

@@ -12,8 +12,6 @@ flow:
       ]
   - start|ROUTE_ENTRY:
   - return|ROUTE_ENTRY:
-  - start|ROUTE_COLLECT_HDR:
-  - return|ROUTE_COLLECT_HDR:
   - start|REPLY_SCA_UPDATE:
   - return|REPLY_SCA_UPDATE:
   - start|ROUTE_PREPARE_UA:
