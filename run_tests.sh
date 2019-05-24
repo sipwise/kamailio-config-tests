@@ -7,6 +7,11 @@ BIN_DIR="${BASE_DIR}/bin"
 GROUP="${GROUP:-scenarios}"
 LOG_DIR="${BASE_DIR}/log/${GROUP}"
 MLOG_DIR="${BASE_DIR}/mem"
+KAM_LOG=${KAM_LOG:-"/var/log/ngcp/kamailio-proxy.log"}
+KAMLB_LOG=${KAMLB_LOG:-"/var/log/ngcp/kamailio-lb.log"}
+SEMS_LOG=${SEMS_LOG:-"/var/log/ngcp/sems.log"}
+SEMS_PBX_LOG=${SEMS_PBX_LOG:-"/var/log/ngcp/sems-pbx.log"}
+TMP_LOG_DIR="/tmp"
 KAM_DIR="/tmp/cfgtest"
 COREDUMP_DIR="/ngcp-data/coredumps"
 PROFILE="CE"
@@ -54,6 +59,36 @@ cfg_debug_off() {
     fi
     echo "$(date) - Setting config debug off. Done[${error_flag}]"
   fi
+}
+
+copy_logs_to_tmp() {
+  # copy the kamailio log
+  cp "${KAM_LOG}" "${TMP_LOG_DIR}/tmp_kamailio.log"
+  if [ -f "${SEMS_LOG}" ] ; then
+    # copy the sems log
+    cp "${SEMS_LOG}" "${TMP_LOG_DIR}/tmp_sems.log"
+  fi
+  if [ -f "${SEMS_PBX_LOG}" ] ; then
+    # copy the sems-pbx log
+    cp "${SEMS_PBX_LOG}" "${TMP_LOG_DIR}/tmp_sems-pbx.log"
+  fi
+  # copy the kamailio-lb log
+  cp "${KAMLB_LOG}" "${TMP_LOG_DIR}/tmp_kamailio-lb.log"
+}
+
+copy_logs_from_tmp() {
+  # copy the kamailio log
+  cp "${TMP_LOG_DIR}/tmp_kamailio.log" "${KAM_LOG}"
+  if [ -f "${SEMS_LOG}" ] ; then
+    # copy the sems log
+    cp "${TMP_LOG_DIR}/tmp_sems.log" "${SEMS_LOG}"
+  fi
+  if [ -f "${TMP_LOG_DIR}/tmp_sems-pbx.log" ] ; then
+    # copy the sems-pbx log
+    cp "${TMP_LOG_DIR}/tmp_sems-pbx.log" "${SEMS_PBX_LOG}"
+  fi
+  # copy the kamailio-lb log
+  cp "${TMP_LOG_DIR}/tmp_kamailio-lb.log" "${KAMLB_LOG}"
 }
 
 capture() {
@@ -298,6 +333,14 @@ if "${CDR}" ; then
   echo "$(date) - enable cdr export at the end of the execution"
 fi
 
+echo "$(date) - backup kamailio and sems logs to temp files"
+copy_logs_to_tmp
+if ! "${BIN_DIR}/restart_log.sh" ; then
+  echo "$(date) - error during initial restart of service logs"
+  copy_logs_from_tmp
+  exit 4
+fi
+
 if "${CAPTURE}" ; then
   capture
 fi
@@ -344,6 +387,10 @@ sleep 5
 if "${CAPTURE}" ; then
   stop_capture
 fi
+
+echo "$(date) - restore kamailio and sems logs with the original content"
+copy_logs_from_tmp
+service rsyslog restart
 
 move_json_file
 
