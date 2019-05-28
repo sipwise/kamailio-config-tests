@@ -16,6 +16,24 @@
       "revId": "27ef5c3973877b9f454ab3a8bdf9af5ad71e61af",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a46c9f1_9eff3234",
+        "filename": "run_tests.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-05-28T13:49:39Z",
+      "side": 1,
+      "message": "You will have to skip known problems... copy\u0026paste of system-tests.git/testrunner and two places to support code/list.\n\nOR \n\ncheck only necessary components... kamailio/sems/asterisk?",
+      "parentUuid": "7a46c9f1_deecda91",
+      "revId": "27ef5c3973877b9f454ab3a8bdf9af5ad71e61af",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
