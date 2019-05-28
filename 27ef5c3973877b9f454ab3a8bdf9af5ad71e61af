@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a46c9f1_deecda91",
+        "filename": "run_tests.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-05-28T13:47:31Z",
+      "side": 1,
+      "message": "bed idea... ngcp-panel often produce cores ;-)\n\nsee system-tests.git/testrunner  : \n  \nif ls /var/lib/systemd/coredump/core.perl-fcgi* \u003e/dev/null 2\u003e\u00261 ; then\n  diag \"\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d NOTE: CORE DUMP DETECTED \u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\"\n  diag \"\u003d Removing known cores to prevent failing for the known issues:\"\n  diag \"\u003d 1) MT#21791: Renaming ngcp-panel cores /var/lib/systemd/coredump/core.perl-fcgi*\"\n  ls -la /var/lib/systemd/coredump/core.perl-fcgi*\n  for file in /var/lib/systemd/coredump/core.perl-fcgi* ; do\n    mv \"${file}\" /var/lib/systemd/coredump/RENAMED_\"$(basename \"${file}\")\"\n  done\n  diag \"\u003d New cores names are:\"\n  ls -la /var/lib/systemd/coredump/RENAMED_core.perl-fcgi*\n  diag \"\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d DONE \u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\"\nfi",
+      "revId": "27ef5c3973877b9f454ab3a8bdf9af5ad71e61af",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
