@@ -1,3 +1,25 @@
+kamailio-config-tests (7.2.3.0+0~mr7.2.3.0) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [db7c738] TT#56156 Increase delay of second call in invite_concurrent_max scenarios
+  * [65f127f] TT#56952 Fix calls to AoC ROUTE
+  * [999eea6] TT#39166 add ROUTE_ADD_AOC_HEADER in EXECUTE_CF_LOOP
+  * [f630f45] TT#56008 Adjust scenarios after redirect route changes
+  * [f014989] Revert "TT#56008 Adjust scenarios after redirect route changes"
+  * [a9762b0] TT#57702 Fix double CDR in case of pre-call announcement
+  * [130d902] TT#57701 Adapt scenarios HM changes in reply messages
+
+  [ Kirill Solomko ]
+  * [3caae16] TT#57502 fix invite anonymous tests
+  * [d8bc8f3] TT#39166 add ROUTE_ADD_AOC_HEADER in EXECUTE_CF_LOOP
+
+  [ Andrew Pogrebennyk ]
+  * [b474030] TT#56512 fix k-c-t after skip peer probing if it's not enabled on the peer
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 03 Jun 2019 15:04:09 +0200
+
 kamailio-config-tests (7.2.2.0+0~mr7.2.2.0) unstable; urgency=medium
 
   [ Marco Capetta ]
