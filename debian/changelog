@@ -1,3 +1,23 @@
+kamailio-config-tests (7.4.1.0+0~mr7.4.1.0) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [13a94c0] TT#45811 Adapt tests to new suspend transaction feature
+  * [d47e184] TT#58566 Fix after introduction of EVENTMON routes
+  * [31aa171] TT#58569 Adjest witnessd configuration during tets setup
+  * [51ffe4a] TT#57701 Adapt scenarios HM changes in reply messages
+  * [811cbbd] TT#56951 Stop scenario execution if coredump file are generated
+  * [252f7d3] TT#59205 Backup and restore original content of kamailio/sems logs
+  * [497e26f] TT#60000 Move allow_ip check after CLI processing
+  * [e36b100] TT#60258 Fix after reworking of pre-call announcements
+  * [eb88477] TT#53329 Add some basic header manipulation tests
+
+  [ Andrew Pogrebennyk ]
+  * [012955d] TT#56512 fix k-c-t after skip peer probing if it's not enabled on the peer
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 17 Jun 2019 14:35:45 +0200
+
 kamailio-config-tests (7.4.0.0+0~mr7.4.0.0) unstable; urgency=medium
 
   [ Marco Capetta ]
