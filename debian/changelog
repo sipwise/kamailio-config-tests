@@ -1,3 +1,17 @@
+kamailio-config-tests (6.5.5.1+0~mr6.5.5.1) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [5b33f6e] TT#56156 Increase delay of second call in invite_concurrent_max scenarios
+  * [2b40b0e] TT#56008 Adjust scenarios after redirect route changes
+  * [153331f] Revert "TT#56008 Adjust scenarios after redirect route changes"
+
+  [ Andrew Pogrebennyk ]
+  * [556b21e] TT#56512 fix k-c-t after skip peer probing if it's not enabled on the peer
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 27 Jun 2019 15:50:25 +0200
+
 kamailio-config-tests (6.5.5.0+0~mr6.5.5.0) unstable; urgency=medium
 
   [ Marco Capetta ]
