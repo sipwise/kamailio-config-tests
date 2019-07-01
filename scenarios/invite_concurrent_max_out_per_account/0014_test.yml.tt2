@@ -31,7 +31,6 @@ flow:
   - return|ROUTE_CHECK_UA:
   - start|ROUTE_LOAD_CALLER_CONTRACT_PREF:
   - return|ROUTE_LOAD_CALLER_CONTRACT_PREF:
-  - return|ROUTE_LOAD_CALLER_PREF:
       $xavp(caller_real_prefs[0]=>concurrent_max_out_per_account[*]): [1]
   - start|ROUTE_DLG_MANAGE:
   - return|ROUTE_DLG_MANAGE:
