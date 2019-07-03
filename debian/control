@@ -3,7 +3,7 @@ Section: devel
 Priority: optional
 Maintainer: Sipwise Development Team <support@sipwise.com>
 Build-Depends:
- debhelper (>= 10),
+ debhelper-compat (= 12),
  devscripts,
  libconfig-tiny-perl,
  libhash-merge-perl,
