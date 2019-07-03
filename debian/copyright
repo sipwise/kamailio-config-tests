@@ -1,6 +1,6 @@
-Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: kamailio-config-tests
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Source: https://www.sipwise.com/
+Upstream-Name: kamailio-config-tests
 
 Files: *
 Copyright:
