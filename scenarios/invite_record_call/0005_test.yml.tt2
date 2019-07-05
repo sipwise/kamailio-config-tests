@@ -220,6 +220,6 @@ sip_out:
       'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
       'P-Callee-UUID: [% spce_test.testuser1003.uuid %]',
       'P-Asserted-Identity: <sip:4311002@',
-      'P-App-Param: audio_id=;audio2_id=[0-9]+;reply_180=no',
+      'P-App-Param: audio_id=;audio2_id=;audio3_id=[0-9]+;reply_180=no',
       'P-App-Name: pre_announce'
     ]
