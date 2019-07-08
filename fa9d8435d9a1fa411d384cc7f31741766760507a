@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa1b9901_37f3a475",
+        "filename": "bin/check.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2019-07-08T15:44:07Z",
+      "side": 1,
+      "message": "Both the commands are the same:\nIt should be:\n     ngcp-delete-domain || which ngcp-delete_domain\nor am I wrong?",
+      "range": {
+        "startLine": 238,
+        "startChar": 29,
+        "endLine": 238,
+        "endChar": 75
+      },
+      "revId": "fa9d8435d9a1fa411d384cc7f31741766760507a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
