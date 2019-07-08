@@ -6,6 +6,8 @@ flow:
   - return|ROUTE_COLLECT_HDR:
   - start|ROUTE_NET_INFO:
   - return|ROUTE_NET_INFO:
+  - start|ROUTE_CHECK_TEL_URI:
+  - return|ROUTE_CHECK_TEL_URI:
   - start|ROUTE_IMP_REQUEST:
   - start|ROUTE_IMP_WITHINDLG:
   - return|ROUTE_IMP_WITHINDLG:

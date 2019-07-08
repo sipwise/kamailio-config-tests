@@ -7,6 +7,8 @@ flow:
   - start|ROUTE_NET_INFO:
       $x_hdr(From): sip:testuser1003@
   - return|ROUTE_NET_INFO:
+  - start|ROUTE_CHECK_TEL_URI:
+  - return|ROUTE_CHECK_TEL_URI:
       $avp(proto): ["tcp"]
   - start|ROUTE_REG_REQUEST:
   - start|ROUTE_REG_HANDLE:
