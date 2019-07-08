@@ -22,6 +22,30 @@
       "revId": "fa9d8435d9a1fa411d384cc7f31741766760507a",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa1b9901_77f91c4d",
+        "filename": "bin/check.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-07-08T15:55:47Z",
+      "side": 1,
+      "message": "\u003e Both the commands are the same:\n \u003e It should be:\n \u003e ngcp-delete-domain || which ngcp-delete_domain\n \u003e or am I wrong?\n\nI think that you are right, or just to invoke directly \"ngcp-delete-domain\", because gjover is in the process of removing the other one (along many other commands named similarly with a mix of dashes and underscores).",
+      "parentUuid": "fa1b9901_37f3a475",
+      "range": {
+        "startLine": 238,
+        "startChar": 29,
+        "endLine": 238,
+        "endChar": 75
+      },
+      "revId": "fa9d8435d9a1fa411d384cc7f31741766760507a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
