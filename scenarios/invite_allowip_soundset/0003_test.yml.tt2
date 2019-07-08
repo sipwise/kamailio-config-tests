@@ -1,0 +1,127 @@
+flow:
+  - start|DEFAULT_ROUTE:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_COLLECT_HDR:
+  - return|ROUTE_COLLECT_HDR:
+  - start|ROUTE_NET_INFO:
+  - return|ROUTE_NET_INFO:
+  - start|ROUTE_CHECK_TEL_URI:
+  - return|ROUTE_CHECK_TEL_URI:
+  - start|ROUTE_PRX_REQUEST:
+  - start|ROUTE_INITVARS:
+  - return|ROUTE_INITVARS:
+  - start|ROUTE_INVITE:
+  - start|ROUTE_LOAD_CALLEE_DOMAIN_PREF:
+  - start|ROUTE_CLEAR_CALLEE_DOMAIN_PREF:
+  - return|ROUTE_CLEAR_CALLEE_DOMAIN_PREF:
+  - return|ROUTE_LOAD_CALLEE_DOMAIN_PREF:
+  - start|ROUTE_FIND_CALLER:
+  - start|ROUTE_AUTH:
+  - start|ROUTE_AUTH_HELPER:
+      $x_hdr(From): spce.test
+      $var(realm_user): testuser1002
+      $var(realm_domain): spce.test
+  - return|ROUTE_AUTH_HELPER:
+      $avp(orig_acc_caller_user): ['testuser1002']
+      $avp(orig_acc_caller_domain): ['spce.test']
+  - start|ROUTE_ADD_CALLINFO_REPLY:
+  - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_REPLY:
+  - return|ROUTE_AUTH:
+  - return|ROUTE_FIND_CALLER:
+  - start|ROUTE_LOAD_CALLER_PREF:
+  - start|ROUTE_CLEAR_CALLER_PREF:
+  - return|ROUTE_CLEAR_CALLER_PREF:
+  - start|ROUTE_CHECK_UA:
+  - return|ROUTE_CHECK_UA:
+  - start|ROUTE_LOAD_CALLER_CONTRACT_PREF:
+  - return|ROUTE_LOAD_CALLER_CONTRACT_PREF:
+  - return|ROUTE_LOAD_CALLER_PREF:
+      $xavp(caller_usr_prefs[0]=>allowed_ips_grp[*]): '\d+'
+      $xavp(caller_real_prefs[0]=>allowed_ips_grp[*]): '\d+'
+  - start|ROUTE_DLG_MANAGE:
+  - return|ROUTE_DLG_MANAGE:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - start|ROUTE_GET_CALLER_CLI:
+  - return|ROUTE_GET_CALLER_CLI:
+  - start|ROUTE_GET_FORWARDER_CLI:
+  - return|ROUTE_GET_FORWARDER_CLI:
+  - start|ROUTE_APPLY_REWRITE_RULE:
+  - return|ROUTE_APPLY_REWRITE_RULE:
+  - start|ROUTE_ACC_FAILURE:
+  - start|ROUTE_ACC_CALLER:
+  - return|ROUTE_ACC_CALLER:
+  - start|ROUTE_ACC_CALLEE:
+  - return|ROUTE_ACC_CALLEE:
+  - return|ROUTE_ACC_FAILURE:
+  - start|ROUTE_EARLY_REJECT:
+  - start|ROUTE_TO_APPSRV:
+  - start|ROUTE_LOAD_APPSRV:
+  - start|ROUTE_CNT_DLG_CHECK:
+  - return|ROUTE_CNT_DLG_CHECK:
+  - return|ROUTE_LOAD_APPSRV:
+  - start|ROUTE_OUTBOUND:
+  - start|BRANCH_ROUTE_NO_SBC:
+  - start|ROUTE_BRANCH_ACC_RTP:
+  - return|ROUTE_BRANCH_ACC_RTP:
+  - start|ROUTE_SET_BRANCH_HDRS:
+  - start|ROUTE_PREPARE_UA:
+  - return|ROUTE_PREPARE_UA:
+  - return|ROUTE_SET_BRANCH_HDRS:
+  - start|ROUTE_FILTER_PRACK:
+  - return|ROUTE_FILTER_PRACK:
+  - start|ROUTE_ADD_CALLINFO:
+  - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
+  - start|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - start|ROUTE_APPLY_HDR:
+  - return|ROUTE_APPLY_HDR:
+  - return|BRANCH_ROUTE_NO_SBC:
+  - start|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+sip_in:
+  - '^INVITE'
+  - 'Contact: sip:testuser1002@'
+  - 'CSeq: 2 INVITE'
+  - 'Max-Forwards: 69'
+  - 'Content-Type: application/sdp'
+  - 'Proxy-Authorization: Digest username="testuser1002"'
+sip_out:
+  - [
+      '^SIP/2.0 100 Trying',
+      'CSeq: 2 INVITE',
+      'From: <sip:testuser1002@'
+    ]
+  - [
+      '^SIP/2.0 101 Connecting',
+      'CSeq: 2 INVITE',
+      'From: <sip:testuser1002@'
+    ]
+  - [
+      '^INVITE sip:earlyannounce@app.local SIP/2.0',
+      'From: <sip:testuser1002@',
+      'To: <sip:testuser1003@',
+      'CSeq: 2 INVITE',
+      'Contact: sip:testuser1002@127.126.0.1:\d+',
+      'Max-Forwards: 68',
+      'Content-Type: application/sdp',
+      'Content-Length:   \d+',
+      'P-App-Param: audio_id=\d+;play_looped=no;fr_code=403;fr_reason=Unauthorized IP detected',
+      'P-App-Name: early_dbprompt',
+      'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
+      'P-Callee-UUID: [% spce_test.testuser1002.uuid %]',
+      'P-NGCP-Caller-Info: <sip:testuser1002@spce.test>;ip=127.126.0.1;port=\d+;primary=4311002',
+      'P-NGCP-Callee-Info: <sip:testuser1003@spce.test>;ip=127.0.0.1;port=5080;primary=4311002',
+    ]

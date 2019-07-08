@@ -1,0 +1,119 @@
+flow:
+  - start|DEFAULT_ROUTE:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_COLLECT_HDR:
+  - return|ROUTE_COLLECT_HDR:
+  - start|ROUTE_NET_INFO:
+  - return|ROUTE_NET_INFO:
+  - start|ROUTE_CHECK_TEL_URI:
+  - return|ROUTE_CHECK_TEL_URI:
+  - start|ROUTE_PRX_REQUEST:
+  - start|ROUTE_INITVARS:
+  - return|ROUTE_INITVARS:
+  - start|ROUTE_INVITE:
+  - start|ROUTE_LOAD_CALLEE_DOMAIN_PREF:
+  - start|ROUTE_CLEAR_CALLEE_DOMAIN_PREF:
+  - return|ROUTE_CLEAR_CALLEE_DOMAIN_PREF:
+  - return|ROUTE_LOAD_CALLEE_DOMAIN_PREF:
+  - start|ROUTE_FIND_CALLER:
+  - start|ROUTE_AUTH:
+  - start|ROUTE_AUTH_HELPER:
+      $x_hdr(From): spce.test
+      $var(realm_user): testuser1002
+      $var(realm_domain): spce.test
+  - return|ROUTE_AUTH_HELPER:
+      $avp(orig_acc_caller_user): ['testuser1002']
+      $avp(orig_acc_caller_domain): ['spce.test']
+  - start|ROUTE_ADD_CALLINFO_REPLY:
+  - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_REPLY:
+  - return|ROUTE_AUTH:
+  - return|ROUTE_FIND_CALLER:
+  - start|ROUTE_LOAD_CALLER_PREF:
+  - start|ROUTE_CLEAR_CALLER_PREF:
+  - return|ROUTE_CLEAR_CALLER_PREF:
+  - start|ROUTE_CHECK_UA:
+  - return|ROUTE_CHECK_UA:
+  - start|ROUTE_LOAD_CALLER_CONTRACT_PREF:
+  - return|ROUTE_LOAD_CALLER_CONTRACT_PREF:
+  - return|ROUTE_LOAD_CALLER_PREF:
+  - start|ROUTE_DLG_MANAGE:
+  - return|ROUTE_DLG_MANAGE:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - start|ROUTE_GET_CALLER_CLI:
+  - return|ROUTE_GET_CALLER_CLI:
+  - start|ROUTE_GET_FORWARDER_CLI:
+  - return|ROUTE_GET_FORWARDER_CLI:
+  - start|ROUTE_CLIR:
+  - return|ROUTE_CLIR:
+  - start|ROUTE_CALLER_BLOCK_CLI:
+  - return|ROUTE_CALLER_BLOCK_CLI:
+  - start|ROUTE_CHECK_USERPROV_CLI:
+  - start|ROUTE_CHECK_CLI_ALLOWED:
+  - return|ROUTE_CHECK_CLI_ALLOWED:
+  - return|ROUTE_CHECK_USERPROV_CLI:
+  - start|ROUTE_FIND_CALLEE:
+  - start|ROUTE_CLEAR_CALLEE_PREF:
+  - return|ROUTE_CLEAR_CALLEE_PREF:
+  - start|ROUTE_LNP:
+  - return|ROUTE_LNP:
+  - start|ROUTE_FIND_CALLEE_POST:
+  - start|ROUTE_NCOS_CHECK:
+  - start|ROUTE_NCOS:
+  - return|ROUTE_NCOS:
+  - start|ROUTE_NCOS:
+  - return|ROUTE_NCOS:
+  - start|ROUTE_NCOS:
+  - return|ROUTE_NCOS:
+  - start|ROUTE_NCOS:
+  - start|ROUTE_ACC_FAILURE:
+      $avp(ncos_result): ['0']
+      $avp(announce_reason): ["Blocked by NCOS level"]
+  - start|ROUTE_ACC_CALLER:
+  - return|ROUTE_ACC_CALLER:
+  - start|ROUTE_ACC_CALLEE:
+  - return|ROUTE_ACC_CALLEE:
+  - return|ROUTE_ACC_FAILURE:
+  - start|ROUTE_EARLY_REJECT:
+  - start|ROUTE_ADD_CALLINFO_REPLY:
+  - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
+  - start|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_REPLY:
+  - start|ROUTE_LOCAL_REPLY:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - start|dialog:failed:
+  - return|dialog:failed:
+  - return|dialog:failed:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+sip_in:
+  - '^INVITE sip:43999300@'
+  - 'Contact: sip:testuser1002@'
+  - 'CSeq: 2 INVITE'
+  - 'Max-Forwards: 69'
+  - 'Content-Type: application/sdp'
+  - 'Proxy-Authorization: Digest username="testuser1002"'
+sip_out:
+  - [
+      '^SIP/2.0 100 Trying',
+      'CSeq: 2 INVITE',
+      'From: <sip:testuser1002@'
+    ]
+  - [
+      '^SIP/2.0 101 Connecting',
+      'CSeq: 2 INVITE',
+      'From: <sip:testuser1002@'
+    ]
+  - [
+      '^SIP/2.0 403 Blocked by NCOS level',
+      'CSeq: 2 INVITE',
+      'From: <sip:testuser1002@'
+    ]

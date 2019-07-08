@@ -1,0 +1,59 @@
+flow:
+  - start|DEFAULT_ROUTE:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_COLLECT_HDR:
+  - return|ROUTE_COLLECT_HDR:
+  - start|ROUTE_NET_INFO:
+  - return|ROUTE_NET_INFO:
+  - start|ROUTE_CHECK_TEL_URI:
+  - return|ROUTE_CHECK_TEL_URI:
+  - start|ROUTE_IMP_REQUEST:
+  - start|ROUTE_IMP_WITHINDLG:
+  - return|ROUTE_IMP_WITHINDLG:
+  - start|ROUTE_AUTH:
+  - start|ROUTE_AUTH_HELPER:
+  - return|ROUTE_AUTH_HELPER:
+  - start|ROUTE_ADD_CALLINFO_REPLY:
+  - return|ROUTE_ADD_CALLINFO_REPLY:
+  - return|ROUTE_AUTH:
+  - start|ROUTE_IMP_PRESENCE:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+sip_in:
+  - '^SUBSCRIBE sip:testuser1002@spce.test SIP/2.0'
+  - 'From: <sip:testuser1002@spce.test>;tag='
+  - 'To: <sip:testuser1002@spce.test>'
+  - 'CSeq: 2 SUBSCRIBE'
+  - 'Contact: <sip:testuser1002@127.1.0.1:\d+>'
+  - 'Expires: 10'
+  - 'Event: call-info'
+  - 'Content-Length:\s+0'
+sip_out:
+  - [
+      '^SIP/2.0 100 Trying',
+      'CSeq: 2 SUBSCRIBE'
+    ]
+  - [
+      '^SIP/2.0 202 Accepted',
+      'P-NGCP-Authorized: 1',
+      'Event: call-info',
+      'Contact: sip:127.0.0.1:5062',
+      'Allow-Events: call-info, line-seize',
+      'Expires: 10',
+      'Content-Length: 0'
+    ]
+  - [
+      '^NOTIFY sip:testuser1002@127.1.0.1:\d+ SIP/2.0',
+      'To: <sip:testuser1002@spce.test>;tag=',
+      'From: <sip:testuser1002@spce.test>;tag=',
+      'CSeq: 1 NOTIFY',
+      'Max-Forwards: 70',
+      'Content-Length:\s+0',
+      'Contact: sip:127.0.0.1:5062',
+      'Call-Info: <sip:spce\.test>;appearance-index=\*;appearance-state=idle',
+      'Event: call-info',
+      'Subscription-State: active'
+    ]
