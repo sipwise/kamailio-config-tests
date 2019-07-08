@@ -8,6 +8,8 @@ flow:
       $fU: testuser1003
       $tU: testuser1003
   - return|ROUTE_NET_INFO:
+  - start|ROUTE_CHECK_TEL_URI:
+  - return|ROUTE_CHECK_TEL_URI:
       $fU: testuser1003
       $tU: testuser1003
   - start|ROUTE_REG_REQUEST:
