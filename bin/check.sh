@@ -235,7 +235,7 @@ create_voip_prefs() {
 
 # $1 domain
 delete_voip() {
-  /usr/bin/ngcp-delete_domain "$1" >/dev/null 2>&1
+  /usr/bin/ngcp-delete-domain "$1" >/dev/null 2>&1
 
   if [ -f "${SCEN_CHECK_DIR}/peer.yml" ]; then
     echo "$(date) - Deleting peers"
