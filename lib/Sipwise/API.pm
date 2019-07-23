@@ -902,6 +902,13 @@ sub delete_ncoslnpcarrier {
 	return $self->_delete($urldata);
 }
 
+sub create_ncoslnppattern {
+	my ($self, $data) = @_;
+	my $urldata = '/api/ncoslnppatterns/';
+
+	return $self->_create($data, $urldata);
+}
+
 sub check_soundset_exists {
 	my ($self, $data) = @_;
 	my $urldata = "/api/soundsets/";

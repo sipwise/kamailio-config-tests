@@ -14,5 +14,5 @@ ncos_white:
     description: test ncos level
     reseller_id: 1
   patterns:
-    - pattern: '^439991'
+    - pattern: '^(439991|4318881)'
       description: allow LNP call

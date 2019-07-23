@@ -113,10 +113,19 @@ sub manage_ncoslnpcarriers
       $ncos->{id} = $api->create_ncoslnpcarrier($param);
       print "ncoslnpcarriers [$ncos->{level}] for [$lnp_id]: created [$ncos->{id}]\n";
     }
+
+    my $patterns = $ncos->{patterns};
+    foreach my $pattern (@{$patterns}) {
+      my $param = {
+        ncos_lnp_list_id => $ncos->{id},
+        pattern => $pattern
+      };
+      my $pattern_id = $api->create_ncoslnppattern($param);
+      print "ncoslnppattern [$pattern] for [$lnp_id]: created [$pattern_id]\n";
+    }
   }
   return;
 }
-
 
 sub do_delete
 {

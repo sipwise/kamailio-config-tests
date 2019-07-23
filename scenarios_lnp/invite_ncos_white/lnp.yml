@@ -9,5 +9,9 @@ lnp_test_00:
   ncos:
     - level: ncos_black
       reseller_id: 1
+      patterns:
+        - '.*'
     - level: ncos_white
       reseller_id: 1
+      patterns:
+        - '.*'

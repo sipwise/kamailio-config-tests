@@ -62,6 +62,8 @@ flow:
   - start|ROUTE_NCOS:
   - return|ROUTE_NCOS:
   - start|ROUTE_NCOS:
+  - start|ROUTE_NCOS_LNP_CHECK:
+  - return|ROUTE_NCOS_LNP_CHECK:
   - return|ROUTE_NCOS:
   - return|ROUTE_NCOS_CHECK:
   - start|ROUTE_BLOCK_OUT:
