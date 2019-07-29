@@ -1,3 +1,18 @@
+kamailio-config-tests (7.3.2.1+0~mr7.3.2.1) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [af94510] TT#57701 Adapt scenarios HM changes in reply messages
+  * [f698b3e] TT#60000 Move allow_ip check after CLI processing
+  * [710c3d7] TT#60258 Fix after reworking of pre-call announcements
+  * [fe744f7] TT#61251 Add ROUTE_CHECK_TEL_URI
+
+  [ Andrew Pogrebennyk ]
+  * [1ef0928] TT#56512 fix k-c-t after skip peer probing if it's not enabled on the peer
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 29 Jul 2019 18:12:43 +0200
+
 kamailio-config-tests (7.3.2.0+0~mr7.3.2.0) unstable; urgency=medium
 
   [ Marco Capetta ]
