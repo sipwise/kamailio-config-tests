@@ -1,3 +1,28 @@
+kamailio-config-tests (8.0.0.0+0~mr8.0.0.0) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [8926b45] TT#60118 Temporary disable invite_voicebox scenario
+  * [1b012a0] TT#61150 Adjust P-App-Param in invite_record_call scenario
+  * [7c777c8] TT#61251 Add ROUTE_CHECK_TEL_URI
+  * [3b45b6d] TT#58628 Adapt test to auto collect/apply of pv_headers
+  * [ea21aee] TT#61251 Fix voicebox scenario tests
+  * [ce24a86] TT#60901 Add NCOS LNP patterns
+
+  [ Alexander Lutay ]
+  * [9a16410] TT#60950 Switch kamailio-config-tests docker to buster
+  * [aa06f80] Revert "TT#60118 Temporary disable invite_voicebox scenario"
+
+  [ Guillem Jover ]
+  * [43b75c5] TT#61954 Update copyright Format URL to use https
+  * [c8514f3] TT#61954 Update copyright years
+  * [5858934] TT#61954 Namespace debhelper fragment files
+  * [c3f91d9] TT#60750 Use modern commands in preference of deprecated ones
+  * [f9c68ea] TT#61954 Set debhelper compat level in Build-Depends instead of debian/compat
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 05 Aug 2019 20:54:34 +0200
+
 kamailio-config-tests (7.5.0.0+0~mr7.5.0.0) unstable; urgency=medium
 
   [ Marco Capetta ]
