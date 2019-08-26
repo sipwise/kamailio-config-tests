@@ -3,16 +3,21 @@ flow:
   - start|REPLY_ROUTE_NAT:
   - start|ROUTE_ENTRY:
   - return|ROUTE_ENTRY:
+  - start|ROUTE_COLLECT_HDR:
+  - return|ROUTE_COLLECT_HDR:
   - start|ROUTE_APPLY_HEADER_RULES:
   - return|ROUTE_APPLY_HEADER_RULES:
   - start|ROUTE_PREPARE_UA:
   - return|ROUTE_PREPARE_UA:
   - start|REPLY_ROUTE_NAT_CONTINUE:
+  - start|ROUTE_APPLY_HDR:
+  - return|ROUTE_APPLY_HDR:
   - start|ROUTE_EXIT:
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:
-  - exit|ROUTE_EXIT:
   - start|FAILURE_ROUTE_LOCAL:
+  - start|ROUTE_COLLECT_HDR:
+  - return|ROUTE_COLLECT_HDR:
   - start|ROUTE_INITVARS:
   - return|ROUTE_INITVARS:
   - start|ROUTE_STOP_RTPPROXY_BRANCH:
@@ -122,6 +127,8 @@ flow:
   - return|ROUTE_ADD_CALLINFO:
   - start|ROUTE_APPLY_HEADER_RULES:
   - return|ROUTE_APPLY_HEADER_RULES:
+  - start|ROUTE_APPLY_HDR:
+  - return|ROUTE_APPLY_HDR:
   - return|BRANCH_ROUTE_SBC:
   - start|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
   - return|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
