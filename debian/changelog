@@ -1,3 +1,13 @@
+kamailio-config-tests (7.5.2.0+0~mr7.5.2.0) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [dc96a03] TT#64362 Fix LNP NCOS whitelist case after
+  * [2c294ad] Revert "TT#58628 Adapt test to auto collect/apply of pv_headers"
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Sun, 01 Sep 2019 21:49:11 +0200
+
 kamailio-config-tests (7.5.1.0+0~mr7.5.1.0) unstable; urgency=medium
 
   [ Marco Capetta ]
