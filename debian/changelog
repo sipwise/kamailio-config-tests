@@ -1,3 +1,13 @@
+kamailio-config-tests (7.4.2.1+0~mr7.4.2.1) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [3764740] TT#61150 Adjust P-App-Param in invite_record_call scenario
+  * [a4606b5] TT#61251 Add ROUTE_CHECK_TEL_URI
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 18 Sep 2019 22:32:03 +0200
+
 kamailio-config-tests (7.4.2.0+0~mr7.4.2.0) unstable; urgency=medium
 
   * New release.
