@@ -1,3 +1,12 @@
+kamailio-config-tests (6.5.6.1+0~mr6.5.6.1) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [8b80665] TT#61251 Add ROUTE_CHECK_TEL_URI
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 19 Sep 2019 17:59:52 +0200
+
 kamailio-config-tests (6.5.6.0+0~mr6.5.6.0) unstable; urgency=medium
 
   [ Marco Capetta ]
