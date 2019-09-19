@@ -20,6 +20,7 @@ testuser1001@spce.test:
     cft: []
     cfs: []
     cfr: []
+    cfo: []
 testuser1004@spce.test:
   destinations:
     destinations:
@@ -41,3 +42,4 @@ testuser1004@spce.test:
     cft: []
     cfs: []
     cfr: []
+    cfo: []

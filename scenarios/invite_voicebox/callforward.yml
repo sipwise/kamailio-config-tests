@@ -17,6 +17,7 @@ testuser1001@spce.test:
     cft: []
     cfs: []
     cfr: []
+    cfo: []
   voicebox:
     pin: 0000
     email: root@spce.test
