@@ -14,7 +14,7 @@ COPY t/sources.list.d/builddeps.list /etc/apt/sources.list.d/
 COPY t/sources.list.d/preferences /etc/apt/preferences.d/
 
 RUN apt-get update
-RUN apt-get install --assume-yes python-yaml python-junitxml \
+RUN apt-get install --assume-yes python3-yaml python3-junitxml \
   make libtemplate-perl libyaml-perl
 
 RUN echo './t/testrunner' >>/root/.bash_history
