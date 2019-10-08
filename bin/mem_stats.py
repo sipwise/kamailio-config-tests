@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 #
 # Copyright: 2014 Sipwise Development Team <support@sipwise.com>
 #
@@ -22,12 +22,12 @@ import argparse
 import csv
 import os
 import sys
-import xmlrpclib
+import xmlrpc.client
 
 KAM_URL = 'http://127.0.0.1:5062'
 KAM_LINES = 10
 
-proxy = xmlrpclib.ServerProxy(KAM_URL)
+proxy = xmlrpc.client.ServerProxy(KAM_URL)
 
 
 def get_headers(l, prefix):
@@ -62,17 +62,17 @@ def get_pvm(private_file):
             row = proxy.pkg.stats("index", i)[0]
             res.append(row)
             sum_row(res[0], row)
-    except xmlrpclib.Fault as err:
-        print "A fault occurred"
-        print "Fault code: %d" % err.faultCode
-        print "Fault string: %s" % err.faultString
+    except xmlrpc.client.Fault as err:
+        print("A fault occurred")
+        print("Fault code: %d" % err.faultCode)
+        print("Fault string: %s" % err.faultString)
         sys.exit(-1)
-    except xmlrpclib.ProtocolError as err:
-        print "A protocol error occurred"
-        print "URL: %s" % err.url
-        print "HTTP/HTTPS headers: %s" % err.headers
-        print "Error code: %d" % err.errcode
-        print "Error message: %s" % err.errmsg
+    except xmlrpc.client.ProtocolError as err:
+        print("A protocol error occurred")
+        print("URL: %s" % err.url)
+        print("HTTP/HTTPS headers: %s" % err.headers)
+        print("Error code: %d" % err.errcode)
+        print("Error message: %s" % err.errmsg)
         sys.exit(-2)
     save_data(private_file, headers, prefix, res[:1])
     fileName, fileExtension = os.path.splitext(private_file)
@@ -87,17 +87,17 @@ def get_shm(share_file):
     prefix = 'shared_'
     try:
         res = proxy.core.shmmem('b')
-    except xmlrpclib.Fault as err:
-        print "A fault occurred"
-        print "Fault code: %d" % err.faultCode
-        print "Fault string: %s" % err.faultString
+    except xmlrpc.client.Fault as err:
+        print("A fault occurred")
+        print("Fault code: %d" % err.faultCode)
+        print("Fault string: %s" % err.faultString)
         sys.exit(-1)
-    except xmlrpclib.ProtocolError as err:
-        print "A protocol error occurred"
-        print "URL: %s" % err.url
-        print "HTTP/HTTPS headers: %s" % err.headers
-        print "Error code: %d" % err.errcode
-        print "Error message: %s" % err.errmsg
+    except xmlrpc.client.ProtocolError as err:
+        print("A protocol error occurred")
+        print("URL: %s" % err.url)
+        print("HTTP/HTTPS headers: %s" % err.headers)
+        print("Error code: %d" % err.errcode)
+        print("Error message: %s" % err.errmsg)
         sys.exit(-2)
     save_data(share_file, headers, prefix, [res, ])
 
