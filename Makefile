@@ -3,7 +3,6 @@ TESTS=$(addprefix test_,$(SCENARIOS))
 
 BASH_SCRIPTS = bench.sh get_results.sh run_tests.sh t/testrunner bin/*.sh
 PERL_SCRIPTS = bin/*.pl
-PYTHON_SCRIPTS = tests/test_check.py tests/test_yaml_format.py bin/*.py
 SHELL_SCRIPTS = tests/do_test_yaml_format.sh
 
 RESULTS ?= reports
@@ -35,10 +34,8 @@ perlcheck:
 
 pythoncheck:
 	@echo -n "Checking for python syntax errors: "; \
-	for SCRIPT in $(PYTHON_SCRIPTS); do \
-		python -m py_compile $${SCRIPT} || exit 1 ; \
-		rm $${SCRIPT}c # get rid of pyc files ; \
-	done; \
+	python3 -m compileall ./ || exit 1 ; \
+	py3clean ./ # get rid of pyc files and __pycache__ dirs ; \
 	echo "done."; \
 
 shellcheck:
