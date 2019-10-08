@@ -147,7 +147,7 @@ The test file is divided in tree different parts:
       'P-NGCP-Authorized: 1'
     ]
 
- [0] http://docs.python.org/2/library/re.html#regular-expression-syntax
+ [0] https://docs.python.org/3/library/re.html#regular-expression-syntax
 
 
 Cdr test file syntax (cdr_test.yml.tt2):
@@ -174,7 +174,7 @@ The test file contains only one part:
       call_status: 'other'
       call_code: '403'
 
- [0] http://docs.python.org/2/library/re.html#regular-expression-syntax
+ [0] https://docs.python.org/3/library/re.html#regular-expression-syntax
 
 
 scenario.yml file syntax:

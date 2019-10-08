@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 #
 # Copyright: 2013-2015 Sipwise Development Team <support@sipwise.com>
 #
@@ -45,7 +45,7 @@ class TestXAvp(unittest.TestCase):
 
     def test_init(self):
         self.assertEqual(self.name, self.xavp._name)
-        self.assertItemsEqual(self.data, self.xavp._data)
+        self.assertCountEqual(self.data, self.xavp._data)
 
     def test_init_wrong_type(self):
         self.assertRaises(Exception, self.xavp, '$var(whatever)', None)
@@ -77,7 +77,7 @@ class TestXAvp(unittest.TestCase):
         self.assertEqual(self.xavp.get('$xavp(test[2]=>lola[0])'), 7)
 
     def test_get_value_all(self):
-        self.assertItemsEqual(self.xavp.get('$xavp(test[1]=>koko[*])'), [1, 2])
+        self.assertCountEqual(self.xavp.get('$xavp(test[1]=>koko[*])'), [1, 2])
 
 
 class TestCheckFlowVars(unittest.TestCase):

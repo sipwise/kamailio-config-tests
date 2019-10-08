@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 #
 # Copyright: 2013-2015 Sipwise Development Team <support@sipwise.com>
 #
@@ -57,8 +57,8 @@ class Test:
     @classmethod
     def compare(cls, val0, val1):
         logging.debug("val0:[%s]:'%s' val1:[%s]:'%s'" %
-                      (type(val0), unicode(val0), type(val1),
-                       unicode(val1)))
+                      (type(val0), str(val0), type(val1),
+                       str(val1)))
         if isinstance(val0, basestring):
             if re.search(val0, str(val1)) is not None:
                 return True
@@ -77,7 +77,7 @@ class Test:
             for k in range(size):
                 try:
                     result = result and cls.compare(val0[k], val1[k])
-                except Exception, e:
+                except Exception as e:
                     logging.debug(e)
                     return False
         else:
@@ -219,12 +219,12 @@ def check_cdr_recursive(scen, msgs, test):
 
 
 def usage():
-    print 'Usage: mysql_check.py [OPTIONS] cdr_file cdr_test.yml'
-    print '-h: this help'
-    print '-d: debug'
-    print '-y: cdr_file in .yaml format'
-    print '-j: cdr_file in .json format'
-    print '-t: cdr_file in .text format'
+    print('Usage: mysql_check.py [OPTIONS] cdr_file cdr_test.yml')
+    print('-h: this help')
+    print('-d: debug')
+    print('-y: cdr_file in .yaml format')
+    print('-j: cdr_file in .json format')
+    print('-t: cdr_file in .text format')
 
 
 def load_yaml(filepath):
@@ -275,7 +275,7 @@ def main():
             sys.argv[1:], "hyjtd", ["help", "yaml", "json", "text", "debug"])
     except getopt.GetoptError as err:
         # print help information and exit:
-        print str(err)  # will print something like "option -a not recognized"
+        print(str(err))  # will print something like "option -a not recognized"
         usage()
         sys.exit(2)
     for o, a in opts:
@@ -309,7 +309,7 @@ def main():
 
     test.comment('check cdr record')
     check_cdr_recursive(scen['cdr'], check['cdr'], test)
-    print test
+    print(test)
     if test.isError():
         sys.exit(1)
 
