@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 #
 # Copyright: 2013-2015 Sipwise Development Team <support@sipwise.com>
 #
@@ -124,9 +124,9 @@ class Test:
     @classmethod
     def compare(cls, val0, val1):
         logging.debug("val0:[%s]:'%s' val1:[%s]:'%s'" %
-                      (type(val0), unicode(val0), type(val1),
-                       unicode(val1)))
-        if isinstance(val0, basestring):
+                      (type(val0), str(val0), type(val1),
+                       str(val1)))
+        if isinstance(val0, str):
             if re.search(val0, str(val1)) is not None:
                 return True
             else:
@@ -144,7 +144,7 @@ class Test:
             for k in range(size):
                 try:
                     result = result and cls.compare(val0[k], val1[k])
-                except Exception, e:
+                except Exception as e:
                     logging.debug(e)
                     return False
         else:
@@ -191,7 +191,7 @@ class Test:
 
 def check_flow_vars(sk, sv, cv, test):
     """ check the vars on a flow level"""
-    for k in sv.iterkeys():
+    for k in sv.keys():
         logging.debug("check k:'%s'" % k)
         if(k not in cv):
             try:
@@ -290,9 +290,9 @@ def check_sip_out(scen, msgs, test):
 
 
 def usage():
-    print 'Usage: check.py [-h] [-d] [-j] [-y] scenario_file test.yml'
-    print '-h: this help'
-    print '-d: debug'
+    print('Usage: check.py [-h] [-d] [-j] [-y] scenario_file test.yml')
+    print('-h: this help')
+    print('-d: debug')
 
 
 def load_yaml(filepath):
@@ -320,7 +320,7 @@ def main():
             sys.argv[1:], "hyjd", ["help", "yaml", "json", "debug"])
     except getopt.GetoptError as err:
         # print help information and exit:
-        print str(err)  # will print something like "option -a not recognized"
+        print(str(err))  # will print something like "option -a not recognized"
         usage()
         sys.exit(2)
     for o, a in opts:
@@ -356,7 +356,7 @@ def main():
     check_sip(scen['sip_in'], check['sip_in'], test)
     test.comment('check sip_out')
     check_sip_out(scen['sip_out'], check['sip_out'], test)
-    print test
+    print(test)
     if test.isError():
         sys.exit(1)
 
