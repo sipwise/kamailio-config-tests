@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 #
 # Copyright: 2013-2015 Sipwise Development Team <support@sipwise.com>
 #
@@ -63,7 +63,7 @@ class ParametrizedTestCase(unittest.TestCase):
 class TestYmlLint(ParametrizedTestCase):
 
     def setUp(self):
-        self.yaml = load(file(self.param, 'r'))
+        self.yaml = load(open(self.param, 'r'))
 
     def testFlow(self):
         self.assertTrue('flow' in self.yaml)
