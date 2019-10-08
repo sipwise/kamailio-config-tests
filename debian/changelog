@@ -1,3 +1,13 @@
+kamailio-config-tests (8.0.1.0+0~mr8.0.1.0) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [49c2cae] TT#64362 Fix LNP NCOS whitelist case after
+  * [112f788] TT#62270 Add cfo definition in callforward configuration
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 08 Oct 2019 09:07:33 +0200
+
 kamailio-config-tests (8.0.0.0+0~mr8.0.0.0) unstable; urgency=medium
 
   [ Marco Capetta ]
