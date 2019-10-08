@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 """
  Copyright: 2014 Sipwise Development Team <support@sipwise.com>
 

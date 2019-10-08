@@ -36,7 +36,7 @@ perlcheck:
 pythoncheck:
 	@echo -n "Checking for python syntax errors: "; \
 	for SCRIPT in $(PYTHON_SCRIPTS); do \
-		python -m py_compile $${SCRIPT} || exit 1 ; \
+		python3 -m py_compile $${SCRIPT} || exit 1 ; \
 		rm $${SCRIPT}c # get rid of pyc files ; \
 	done; \
 	echo "done."; \
