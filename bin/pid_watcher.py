@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 """
  Copyright: 2014 Sipwise Development Team <support@sipwise.com>
 
@@ -70,7 +70,7 @@ class Handler(pyinotify.ProcessEvent):
 
     def check_all(self):
         all = True
-        for k, v in self.watched.iteritems():
+        for k, v in self.watched.items():
             all = (all and (v['created'] or v['modified']))
             logging.info("checking: %s[%s] all:%s" % (k, v, all))
         return all
