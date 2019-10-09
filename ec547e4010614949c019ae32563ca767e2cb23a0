@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80bd79ca_8ca8deb8",
+        "filename": "Makefile",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2019-10-09T13:58:55Z",
+      "side": 1,
+      "message": "Instead of using legacy stuff, why not just adapt the next line to remove the __pycache__ dirs instead? One less thing to worry about in case they drop this legacy support at some point.",
+      "revId": "ec547e4010614949c019ae32563ca767e2cb23a0",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5fe061df_36e94b00",
+        "filename": "debian/control",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2019-10-09T13:58:55Z",
+      "side": 1,
+      "message": "make that python3:any",
+      "revId": "ec547e4010614949c019ae32563ca767e2cb23a0",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9d691163_ecfb499a",
+        "filename": "debian/control",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2019-10-09T13:58:55Z",
+      "side": 1,
+      "message": "same here python3:any",
+      "revId": "ec547e4010614949c019ae32563ca767e2cb23a0",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
