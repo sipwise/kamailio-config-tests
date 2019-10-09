@@ -34,7 +34,12 @@ CDR=false
 
 
 # sipwise password for mysql connections
-. /etc/mysql/sipwise.cnf
+declare -r SIPWISE_EXTRA_CNF="/etc/mysql/sipwise_extra.cnf"
+
+if [ ! -f "${SIPWISE_EXTRA_CNF}" ]; then
+  echo "Error: missing DB credentials file '${SIPWISE_EXTRA_CNF}'." >&2
+  exit 1
+fi
 
 
 # $1 kamailio msg parsed to yml
@@ -296,17 +301,17 @@ delete_locations() {
   done
 
   # check what's in the DDBB
-  f=$(mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" \
+  f=$(mysql --defaults-extra-file="${SIPWISE_EXTRA_CNF}" \
       kamailio -e 'select count(*) from location;' -s -r | head)
   if [ "${f}" != "0" ]; then
     echo "$(date) Cleaning location table"
-    sub=$(mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" \
+    sub=$(mysql --defaults-extra-file="${SIPWISE_EXTRA_CNF}" \
       -e 'select concat(username, "@", domain) as user from kamailio.location;' \
       -r -s | head| uniq|xargs)
     for f in $sub; do
       ngcp-kamctl proxy fifo ul.rm location "${f}" >/dev/null
     done
-    mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" \
+    mysql --defaults-extra-file="${SIPWISE_EXTRA_CNF}" \
       -e 'delete from kamailio.location;' || true
   fi
 }

@@ -25,7 +25,12 @@ MUTE=false
 
 
 # sipwise password for mysql connections
-. /etc/mysql/sipwise.cnf
+declare -r SIPWISE_EXTRA_CNF="/etc/mysql/sipwise_extra.cnf"
+
+if [ ! -f "${SIPWISE_EXTRA_CNF}" ]; then
+  echo "Error: missing DB credentials file '${SIPWISE_EXTRA_CNF}'." >&2
+  exit 1
+fi
 
 
 usage() {
@@ -70,7 +75,7 @@ LOG_DIR="${BASE_DIR}/log/${GROUP}/${NAME_CHECK}"
 if ! "${MUTE}" ; then
   echo "$(date) - Exporting generated CDRs"
 fi
-mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" accounting \
+mysql --defaults-extra-file="${SIPWISE_EXTRA_CNF}" accounting \
       -e "select * from cdr where call_id like 'NGCP\%${NAME_CHECK}\%%' and start_time > ${START_TIME} order by id desc limit 10\G" > "${LOG_DIR}/cdr.txt" || true
 if ! "${MUTE}" ; then
 echo "$(date) - Done"
