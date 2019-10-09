@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9c0760ac_310bb638",
+        "filename": "Makefile",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-10-09T15:20:42Z",
+      "side": 1,
+      "message": "Fine for me, I don\u0027t know how to iterate over the according directories of the underlying scripts inside $PYTHON_SCRIPTS without hardcoding them. Are we fine with hardcoding them?",
+      "parentUuid": "80bd79ca_8ca8deb8",
+      "revId": "ec547e4010614949c019ae32563ca767e2cb23a0",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5fe061df_36e94b00",
         "filename": "debian/control",
         "patchSetId": 7
