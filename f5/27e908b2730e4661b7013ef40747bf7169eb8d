@@ -1,0 +1,7 @@
+Verified+1: Jenkins Jenkins
+Code-Review+2: Guillem Jover <gjover@sipwise.com>
+Submitted-by: Marco Capetta <mcapetta@sipwise.com>
+Submitted-at: Tue, 15 Oct 2019 17:05:46 +0200
+Reviewed-on: http://gerrit.mgm.sipwise.com/c/kamailio-config-tests/+/34045
+Project: kamailio-config-tests
+Branch: refs/heads/master
