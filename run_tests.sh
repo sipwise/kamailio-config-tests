@@ -268,9 +268,9 @@ fi
 if [ "${GROUP}" = "scenarios_pbx" ] ; then
   PIDWATCH_OPTS="--pbx"
   # hack for pid_watcher ( sems-pbx was not active )
-  mkdir -p /var/run/sems-pbx/
-  touch /var/run/sems-pbx/sems-pbx.pid
-  chown -R sems-pbx:sems-pbx /var/run/sems-pbx/
+  mkdir -p /run/sems-pbx/
+  touch /run/sems-pbx/sems-pbx.pid
+  chown -R sems-pbx:sems-pbx /run/sems-pbx/
 else
   PIDWATCH_OPTS=""
 fi

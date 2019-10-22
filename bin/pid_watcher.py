@@ -33,7 +33,7 @@ filelog = os.path.join(BASE_DIR, 'log', 'pid_watcher.log')
 logging.basicConfig(
     filename=filelog, level=logging.DEBUG, format='%(asctime)s %(message)s')
 
-base_path = "/var/run"
+base_path = "/run"
 
 """
 files we want to watch
@@ -46,9 +46,9 @@ services = [
 ]
 
 watched_dirs = [
-    '/var/run/kamailio',
-    '/var/run/ngcp-sems',
-    '/var/run'
+    '/run/kamailio',
+    '/run/ngcp-sems',
+    '/run'
 ]
 
 watched = {}
@@ -110,8 +110,8 @@ args = parser.parse_args()
 
 if args.pbx:
     watched_dirs += [
-        '/var/run/sems-pbx',
-        '/var/run/fastcgi',
+        '/run/sems-pbx',
+        '/run/fastcgi',
     ]
     services += [
         'sems-pbx/sems-pbx.pid',
