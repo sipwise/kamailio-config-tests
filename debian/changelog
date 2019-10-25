@@ -1,3 +1,14 @@
+kamailio-config-tests (0.15.14.0+0~mr4.5.14.0) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [fb74d24] TT#61251 Add ROUTE_CHECK_TEL_URI
+  * [c005c9d] TT#61251 Fix tests for conversion tel2sip for From and PAI headers
+  * [3a4702d] TT#61251 Fix unparseble scenarios
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 25 Oct 2019 16:00:26 +0200
+
 kamailio-config-tests (0.15.13.0+0~mr4.5.13.0) unstable; urgency=medium
 
   [ Marco Capetta ]
