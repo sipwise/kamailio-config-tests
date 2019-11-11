@@ -111,6 +111,8 @@ else
   $yaml->{security}->{ngcp_panel}->{scripts}->{restapi}->{sslverify} = 'no';
   $yaml->{mediator}{interval} = '1';
 
+  $yaml->{prosody}{sipwise_log_debug}{enable} = 'yes';
+
   my $group_yml_file = $base_dir."/".$group."/config.yml";
   if ( -e  $group_yml_file )
   {
