@@ -23,7 +23,7 @@ bashismcheck:
 perlcheck:
 	@echo "Checking for perl syntax errors: "; \
 	mkdir -p perl-dummy/Sipwise ; \
-	for f in Sipwise/API.pm ; do \
+	for f in Sipwise/API.pm Sipwise/Prosody.pm ; do \
 		echo '1;' > perl-dummy/$$f ; \
 	done; \
 	for SCRIPT in $(PERL_SCRIPTS); do \
