@@ -28,6 +28,7 @@ use Getopt::Long;
 use List::Util qw(none);
 use Config::Tiny;
 use Sipwise::API qw(all);
+use Sipwise::Prosody;
 
 my $config =  Config::Tiny->read('/etc/default/ngcp-api');
 my $opts;
@@ -141,6 +142,7 @@ sub manage_domains
 
       $domain_data->{domain_id} = $api->create_domain($d_data);
       print "domain [$domain]: created [$domain_data->{domain_id}]\n";
+      Sipwise::Prosody::activate_domain($d_data->{domain})
     }
   }
   return;
