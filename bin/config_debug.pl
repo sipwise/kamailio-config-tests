@@ -110,6 +110,8 @@ else
   $yaml->{witnessd}{gather}{sip_responsiveness} = 'no';
   $yaml->{security}->{ngcp_panel}->{scripts}->{restapi}->{sslverify} = 'no';
   $yaml->{mediator}{interval} = '1';
+  $yaml->{prosody}{sipwise_log_debug}{enable} = 'yes';
+  $yaml->{prosody}{log_level} = 'debug';
 
   $net_yaml = LoadFile($file_net_yaml);
   $net_yaml->{hosts_common}->{etc_hosts_global_extra_entries} //= ();

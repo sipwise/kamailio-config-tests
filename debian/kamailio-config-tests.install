@@ -3,7 +3,9 @@ bin/ /usr/share/kamailio-config-tests/
 get_results.sh /usr/share/kamailio-config-tests/
 lib/ /usr/share/kamailio-config-tests/
 run_tests.sh /usr/share/kamailio-config-tests/
+run_xmpp_tests.sh /usr/share/kamailio-config-tests/
 scenarios/ /usr/share/kamailio-config-tests/
 scenarios_lnp /usr/share/kamailio-config-tests/
 scenarios_pbx /usr/share/kamailio-config-tests/
 sounds /usr/share/kamailio-config-tests/
+xmpp /usr/share/kamailio-config-tests/
