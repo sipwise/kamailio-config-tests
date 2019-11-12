@@ -60,7 +60,9 @@ if($#ARGV>1 || $help)
 
 my $base_dir;
 my $yaml;
-my $file  = "/etc/ngcp-config/config.yml";
+my $net_yaml;
+my $file_yaml = '/etc/ngcp-config/config.yml';
+my $file_net_yaml = '/etc/ngcp-config/network.yml';
 my @array;
 my $path;
 if (exists $ENV{'BASE_DIR'})
@@ -79,13 +81,9 @@ $domain = 'spce.test' unless defined($domain);
 
 if (lc($action) eq "off")
 {
-  move("$file.orig", $file) or die "Can't restore the orig config";
-  tie @array, 'Tie::File', '/etc/hosts' or die ('Can set test domain on /etc/hosts');
-  for (@array)
-  {
-    s/\Q$domain\E//;
+  for my $file ($file_yaml, $file_net_yaml) {
+    move("$file.orig", $file) or die "Can't restore the orig config $file";
   }
-  untie @array;
   for my $i ('caller.csv', 'callee.csv')
   {
     $path = File::Spec->catfile( $base_dir, 'scenarios', $i);
@@ -99,8 +97,10 @@ if (lc($action) eq "off")
 }
 else
 {
-  cp($file, $file.".orig") or die "Copy failed: $ERRNO" unless(-e $file.".orig");
-  $yaml = LoadFile($file);
+  for my $file ($file_yaml, $file_net_yaml) {
+    cp($file, $file.".orig") or die "Copy $file failed: $ERRNO" unless(-e $file.".orig");
+  }  
+  $yaml = LoadFile($file_yaml);
   $yaml->{kamailio}{lb}{cfgt} = 'yes';
   $yaml->{kamailio}{lb}{dns}{use_dns_cache} = 'off';
   $yaml->{kamailio}{proxy}{children} = 1;
@@ -110,6 +110,13 @@ else
   $yaml->{witnessd}{gather}{sip_responsiveness} = 'no';
   $yaml->{security}->{ngcp_panel}->{scripts}->{restapi}->{sslverify} = 'no';
   $yaml->{mediator}{interval} = '1';
+
+  $net_yaml = LoadFile($file_net_yaml);
+  $net_yaml->{hosts_common}->{etc_hosts_global_extra_entries} //= ();
+  my $entries = $net_yaml->{hosts_common}->{etc_hosts_global_extra_entries};
+  push @{$entries}, "127.0.0.1 $domain";
+  $net_yaml->{hosts_common}->{etc_hosts_global_extra_entries} = $entries;
+  DumpFile($file_net_yaml, $net_yaml);
 
   my $group_yml_file = $base_dir."/".$group."/config.yml";
   if ( -e  $group_yml_file )
@@ -124,11 +131,6 @@ else
     print "$group_yml_file not found\n";
   }
 
-  tie @array, 'Tie::File', '/etc/hosts' or die ('Can set test domain on /etc/hosts');
-  for (@array)
-  {
-    s/127.0.0.1[ \t]+localhost/127.0.0.1 localhost $domain/ unless($_ =~ /$domain/);
-  }
   untie @array;
   for my $i ('caller.csv', 'callee.csv')
   {
@@ -140,7 +142,7 @@ else
     }
     untie @array;
   }
-  DumpFile($file, $yaml);
+  DumpFile($file_yaml, $yaml);
 }
 
 #EOF
