@@ -1,0 +1,61 @@
+flow:
+  - start|DEFAULT_ONREPLY:
+  - start|REPLY_ROUTE_NAT:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - start|ROUTE_PREPARE_UA:
+  - return|ROUTE_PREPARE_UA:
+  - start|REPLY_ROUTE_NAT_CONTINUE:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+  - start|FAILURE_ROUTE_LOCAL:
+  - start|ROUTE_INITVARS:
+  - return|ROUTE_INITVARS:
+  - start|ROUTE_STOP_RTPPROXY_BRANCH:
+  - start|ROUTE_RESTORE_CLUSTERSET:
+  - return|ROUTE_RESTORE_CLUSTERSET:
+  - return|ROUTE_STOP_RTPPROXY_BRANCH:
+  - start|ROUTE_CF_CFB:
+  - return|ROUTE_CF_CFB:
+  - start|ROUTE_EARLY_REJECT:
+  - start|ROUTE_ADD_CALLINFO_REPLY:
+  - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
+  - start|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_REPLY:
+  - start|ROUTE_LOCAL_REPLY:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - start|dialog:failed:
+  - return|dialog:failed:
+  - return|dialog:failed:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+  - exit|ROUTE_EXIT:
+sip_in:
+  - '^SIP/2.0 487 Request terminated'
+  - 'CSeq: 2 INVITE'
+  - 'Content-Length: 0'
+  - 'From: <sip:4311002@'
+  - 'To: <sip:testuser1003@'
+sip_out:
+  - [
+      '^ACK sip:testuser1003@127.1.0.1',
+      'CSeq: 2 ACK',
+      'From: <sip:4311002@',
+      'To: <sip:testuser1003@'
+    ]
+  - [
+      '^SIP/2.0 486 Busy Here',
+      'CSeq: 2 INVITE',
+      'Content-Length: 0',
+      'From: <sip:testuser1002@',
+      'To: <sip:testuser1003@'
+    ]
