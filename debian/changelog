@@ -1,3 +1,23 @@
+kamailio-config-tests (8.2.0.0+0~mr8.2.0.0) unstable; urgency=medium
+
+  [ Alexander Lutay ]
+  * [693be79] TT#68026 Migrate k-c-t from /etc/mysql/sipwise.cnf to /etc/mysql/sipwise_extra.cnf
+
+  [ Marco Capetta ]
+  * [f527e90] TT#68004 Switch from python2 to python3
+  * [348d3cb] TT#70327 Add scenario invite_q_forking
+  * [3f5c27d] TT#70327 Fix issue in invite_q_forking scenario
+
+  [ Guillem Jover ]
+  * [a6a352d] TT#51701 Switch from deprecated /var/run to /run
+
+  [ Victor Seva ]
+  * [4fb43d4] TT#70351 change /etc/hosts via ngcpcfg
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 25 Nov 2019 14:54:18 +0100
+
 kamailio-config-tests (8.1.0.0+0~mr8.1.0.0) unstable; urgency=medium
 
   [ Marco Capetta ]
