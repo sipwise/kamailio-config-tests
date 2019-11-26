@@ -1,6 +1,6 @@
 {
     "testuser1003@spce.test": {
-        "serial_forking_by_q_value": true,
+        "serial_forking_by_q_value": "standard",
         "stop_forking_code_lists": [
             "486"
         ]
