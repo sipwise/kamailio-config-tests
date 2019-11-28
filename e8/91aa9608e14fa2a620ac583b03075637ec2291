@@ -1,0 +1,7 @@
+Verified+1: Jenkins Jenkins
+Code-Review+2: Víctor Seva <vseva@sipwise.com>
+Submitted-by: Víctor Seva <vseva@sipwise.com>
+Submitted-at: Thu, 28 Nov 2019 10:19:33 +0100
+Reviewed-on: http://gerrit.mgm.sipwise.com/c/kamailio-config-tests/+/35739
+Project: kamailio-config-tests
+Branch: refs/heads/mr7.5.2
