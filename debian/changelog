@@ -1,3 +1,15 @@
+kamailio-config-tests (7.5.1.2+0~mr7.5.1.2) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [6ee45ac] TT#71323 invite_hdr
+
+  [ Marco Capetta ]
+  * [6702fb4] TT#71323 Fix invite_hdr scenario when auto_collect is disabled
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 28 Nov 2019 10:24:25 +0100
+
 kamailio-config-tests (7.5.1.1+0~mr7.5.1.1) unstable; urgency=medium
 
   [ Marco Capetta ]
