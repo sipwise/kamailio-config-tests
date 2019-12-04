@@ -411,6 +411,8 @@ if [[ ${MEMDBG} = 1 ]] ; then
 fi
 
 if [ -d "${KAM_DIR}" ]; then
+  echo "$(date) - clean cfgt scenarios"
+  ngcp-kamcmd proxy cfgt.clean all
   echo "$(date) - Removing temporary json dir"
   rm -rf "${KAM_DIR}"
 fi
