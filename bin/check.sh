@@ -29,7 +29,7 @@ SKIP_RUNSIPP=false
 FIX_RETRANS=false
 GRAPH=false
 GRAPH_FAIL=false
-JSON_KAM=false
+JSON_KAM=true
 CDR=false
 
 
@@ -708,6 +708,7 @@ SCEN_CHECK_DIR="${SCEN_DIR}/${NAME_CHECK}"
 DOMAIN=${DOMAIN:-"spce.test"}
 PROFILE="${PROFILE:-CE}"
 MLOG_DIR="${BASE_DIR}/mem"
+test_uuid=$(grep test_uuid "${SCEN_CHECK_DIR}/scenario.yml" | awk '{print $2}')
 
 if [ "${PROFILE}" != "CE" ] && [ "${PROFILE}" != "PRO" ]; then
   echo "PROFILE ${PROFILE} unknown"
@@ -747,10 +748,9 @@ if ! "$SKIP_RUNSIPP" ; then
       echo "$(date) - dir and perms for ${KAM_DIR}"
       mkdir -p "${KAM_DIR}"
       chown -R kamailio:kamailio "${KAM_DIR}"
-    else
-      echo "$(date) - remove ${JSON_DIR}"
-      rm -rf "${JSON_DIR}"
     fi
+    echo "$(date) - clean scenario ${test_uuid}"
+    ngcp-kamcmd proxy cfgt.clean "${test_uuid}"
   fi
   echo "$(date) - Cleaning csv/reg.xml files"
   find "${SCEN_CHECK_DIR}" -name 'sipp_scenario_responder*_reg.xml' -exec rm {} \;
@@ -784,7 +784,8 @@ if ! "$SKIP_RUNSIPP" ; then
         echo "$(date) - Moved file ${i} with size before: ${json_size_before} and after: ${json_size_after}"
         rm "${i}"
       done
-      rm -rf "${JSON_DIR}"
+      echo "$(date) - clean scenario ${test_uuid}"
+      ngcp-kamcmd proxy cfgt.clean "${test_uuid}"
       echo "$(date) - Done"
     else
       echo "$(date) - No json files found"
