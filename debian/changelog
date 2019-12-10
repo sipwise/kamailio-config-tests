@@ -1,3 +1,16 @@
+kamailio-config-tests (8.1.1.1+0~mr8.1.1.1) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [4d16748] TT#71323 invite_hdr
+
+  [ Marco Capetta ]
+  * [d60310d] TT#71321 Fix invite_redirect scenario after kamailio config change
+  * [1b261d4] TT#72152 Check Diversion and HIH in invite_redirect scenario
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 10 Dec 2019 17:43:08 +0100
+
 kamailio-config-tests (8.1.1.0+0~mr8.1.1.0) unstable; urgency=medium
 
   [ Alexander Lutay ]
