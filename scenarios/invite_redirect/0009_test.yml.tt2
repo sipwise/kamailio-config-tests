@@ -198,5 +198,7 @@ sip_out:
       'P-Called-Party-ID: <sip:testuser1004@',
       'P-App-Name: sbc',
       'P-NGCP-Caller-Info: <sip:testuser1002@',
-      'P-NGCP-Callee-Info: <sip:testuser1004@'
+      'P-NGCP-Callee-Info: <sip:testuser1004@',
+      'Diversion: <sip:testuser1003@',
+      'History-Info: <sip:testuser1003@.*;cause=302>;index=1'
     ]
