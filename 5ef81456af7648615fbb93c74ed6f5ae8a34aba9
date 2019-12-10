@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48da3127_8dac469e",
+        "filename": "scenarios/invite_redirect/prefs.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2019-12-10T14:48:33Z",
+      "side": 1,
+      "message": "Perl doesn\u0027t like the additional comma :-(\nPython would be less restrictive on that :-D",
+      "range": {
+        "startLine": 4,
+        "startChar": 39,
+        "endLine": 4,
+        "endChar": 40
+      },
+      "revId": "5ef81456af7648615fbb93c74ed6f5ae8a34aba9",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
