@@ -58,6 +58,9 @@ flow:
   - start|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_SET_CALLEE_DIALOG:
+      $avp(lua_dlg_profile): [
+        "total"
+      ]
   - start|ROUTE_BLOCK_IN:
   - return|ROUTE_BLOCK_IN:
   - start|ROUTE_ORDER_CF_MAP_ID:
@@ -74,6 +77,10 @@ flow:
   - start|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_CNT_DLG_CHECK:
   - start|ROUTE_OUTBOUND:
+      $avp(lua_dlg_profile): [
+        "local",
+        "total"
+      ]
   - start|ROUTE_SET_CALLER_DIALOG:
   - start|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_CNT_DLG_CHECK:
@@ -124,141 +131,69 @@ flow:
   - start|ROUTE_APPLY_HEADER_RULES:
   - return|ROUTE_APPLY_HEADER_RULES:
   - return|BRANCH_ROUTE_SBC:
-  - start|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
-  - return|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
-  - start|ROUTE_SET_CALLEE_DIALOG:
-  - start|ROUTE_CNT_DLG_CHECK:
-  - return|ROUTE_CNT_DLG_CHECK:
-  - return|ROUTE_SET_CALLEE_DIALOG:
-  - start|ROUTE_SET_BRANCH_HDRS:
-  - start|ROUTE_PREPARE_UA:
-  - return|ROUTE_PREPARE_UA:
-  - return|ROUTE_SET_BRANCH_HDRS:
-  - start|ROUTE_SET_RUSER:
-  - return|ROUTE_SET_RUSER:
-  - start|ROUTE_BRANCH_ACC_RTP:
-  - return|ROUTE_BRANCH_ACC_RTP:
-  - start|ROUTE_FILTER_PRACK:
-  - return|ROUTE_FILTER_PRACK:
-  - start|ROUTE_PREPARE_SST:
-  - return|ROUTE_PREPARE_SST:
-  - start|ROUTE_PREPARE_MOH:
-  - return|ROUTE_PREPARE_MOH:
-  - start|ROUTE_SET_CALLER_CLI:
-  - start|ROUTE_PREPARE_CALLER_CLI:
-  - return|ROUTE_PREPARE_CALLER_CLI:
-  - start|ROUTE_PREPARE_CALLER_CLI:
-  - return|ROUTE_PREPARE_CALLER_CLI:
-  - start|ROUTE_PREPARE_CALLER_CLI:
-  - return|ROUTE_PREPARE_CALLER_CLI:
-  - start|ROUTE_PREPARE_CALLER_CLI:
-  - return|ROUTE_PREPARE_CALLER_CLI:
-  - start|ROUTE_PREPARE_CALLER_CLI:
-  - return|ROUTE_PREPARE_CALLER_CLI:
-  - return|ROUTE_SET_CALLER_CLI:
-  - start|ROUTE_SET_CALLEE:
-  - return|ROUTE_SET_CALLEE:
-  - start|ROUTE_ADD_CALLINFO:
-  - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
-  - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
-  - start|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
-  - return|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
-  - return|ROUTE_ADD_CALLINFO:
-  - start|ROUTE_APPLY_HEADER_RULES:
-  - return|ROUTE_APPLY_HEADER_RULES:
-  - return|BRANCH_ROUTE_SBC:
   - start|DEFAULT_SEND:
   - exit|DEFAULT_SEND:
   - exit|DEFAULT_SEND:
-  - exit|DEFAULT_SEND:
   - start|ROUTE_EXIT:
+      $avp(lua_dlg_profile): [
+        "local",
+        "total"
+      ]
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - 'INVITE sip:testuser1002@spce.test SIP/2.0'
-  - 'From: <sip:testuser1003@spce.test>;tag='
-  - 'To: <sip:1002@spce.test>'
-  - 'CSeq: \d+ INVITE'
-  - 'Route: <sip:127.0.0.1:5062;lr>'
-  - 'Max-Forwards: 70'
-  - 'P-NGCP-Src-Ip: 127.126.0.3'
+  - '^INVITE sip:testuser1003@spce.test SIP/2.0'
+  - 'From: <sip:testuser1002@spce.test>;tag='
+  - 'To: <sip:1003@spce.test>'
+  - 'P-NGCP-Src-Ip: 127.126.0.1'
   - 'P-NGCP-Src-Port: \d+'
   - 'P-NGCP-Src-Proto: udp'
   - 'P-NGCP-Src-Af: 4'
   - 'P-NGCP-Src-Nat: 0'
   - 'P-Caller-CLIR: 0'
-  - 'P-NGCP-Orig-User: 4311002'
+  - 'P-NGCP-Orig-User: 43110021003'
   - 'P-NGCP-Orig-Domain: spce.test'
-  - 'P-NGCP-Orig-Dialed: 1002'
-  - 'P-NGCP-Orig-PBX-Ext: 1002'
+  - 'P-NGCP-Orig-Dialed: 1003'
+  - 'P-NGCP-Orig-PBX-Ext: 1003'
   - 'P-First-Caller-Cloud-PBX: \d+'
   - 'P-NGCP-Lookup-Type: ext'
   - 'P-NGCP-BlockOut-Override: 0'
   - 'P-NGCP-AdmBlockOut-Override: 0'
   - 'P-NGCP-ContBlockOut-Override: 0'
   - 'P-NGCP-ContAdmBlockOut-Override: 0'
-  - 'P-Caller-UUID: [% spce_test.testuser1003.uuid %]'
-  - 'P-Callee-UUID: [% spce_test.testuser1002.uuid %]'
+  - 'P-Caller-UUID: [% spce_test.testuser1002.uuid %]'
+  - 'P-Callee-UUID: [% spce_test.testuser1003.uuid %]'
   - 'P-NGCP-Acc-Src-Leg: \w+'
   - 'P-NGCP-Acc-Dst-Leg: \w+'
-  - 'P-NGCP-Caller-Info: <sip:testuser1003@spce.test>;ip=127.126.0.3;port=\d+;primary=43110021003'
-  - 'P-NGCP-Callee-Info: <sip:4311002@spce.test>;ip=127.0.0.1;port=5085;primary=4311002'
+  - 'P-NGCP-Caller-Info: <sip:testuser1002@spce.test>;ip=127.126.0.1;port=\d+;primary=4311002'
+  - 'P-NGCP-Callee-Info: <sip:43110021003@spce.test>;ip=127.0.0.1;port=5085;primary=43110021003'
   - 'P-To-Device: 1'
   - 'Content-Type: application/sdp'
-  - 'Content-Length: \d+'
   - 'Contact: <sip:127.0.0.1:5085;transport=udp>'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
-      'From: <sip:testuser1003@spce.test>;tag=',
-      'To: <sip:1002@spce.test>',
-      'CSeq: \d+ INVITE',
-      'Content-Length: 0',
+      'From: <sip:testuser1002@spce.test>;tag=',
+      'To: <sip:1003@spce.test>',
+      'CSeq: \d+ INVITE'
     ]
   - [
-      '^INVITE sip:testuser1002@127.1.0.3:\d+ SIP/2.0',
-      'From: <sip:43110021003@spce.test>;tag=',
-      'To: <sip:1002@spce.test>',
-      'CSeq: \d+ INVITE',
-      'Route: <sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060>',
-      'Max-Forwards: 69',
-      'P-NGCP-Orig-PBX-Ext: 1002',
+      '^INVITE sip:testuser1003@127.1.0.3:\d+ SIP/2.0',
+      'From: <sip:4311002@spce.test>;tag=',
+      'To: <sip:1003@spce.test>',
+      'P-NGCP-Orig-PBX-Ext: 1003',
       'P-NGCP-Acc-Src-Leg: \w+',
       'P-NGCP-Acc-Dst-Leg: \w+',
       'Content-Type: application/sdp',
-      'Content-Length: \d+',
       'Contact: <sip:127.0.0.1:5085;transport=udp>',
-      'P-Caller-UUID: [% spce_test.testuser1003.uuid %]',
-      'P-Callee-UUID: [% spce_test.testuser1002.uuid %]',
-      'P-Asserted-Identity: <sip:43110021003@spce.test>',
-      'P-Called-Party-ID: <sip:testuser1002@spce.test>',
+      'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
+      'P-Callee-UUID: [% spce_test.testuser1003.uuid %]',
+      'P-Asserted-Identity: <sip:4311002@spce.test>',
+      'P-Called-Party-ID: <sip:testuser1003@spce.test>',
       'P-App-Param: ;calltimer=21600;aleg_sst_enable=no;sst_enable=no',
       'P-App-Name: sbc',
-      'P-NGCP-Caller-Info: <sip:testuser1003@spce.test>;ip=127.126.0.3;port=\d+;primary=43110021003',
-      'P-NGCP-Callee-Info: <sip:4311002@spce.test>;ip=127.0.0.1;port=5060;primary=4311002',
-      'P-D-Uri: sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060',
-    ]
-  - [
-      '^INVITE sip:testuser1002@127.1.0.4:\d+ SIP/2.0',
-      'From: <sip:43110021003@spce.test>;tag=',
-      'To: <sip:1002@spce.test>',
-      'CSeq: \d+ INVITE',
-      'Route: <sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060>',
-      'Max-Forwards: 69',
-      'P-NGCP-Orig-PBX-Ext: 1002',
-      'P-NGCP-Acc-Src-Leg: \w+',
-      'P-NGCP-Acc-Dst-Leg: \w+',
-      'Content-Type: application/sdp',
-      'Content-Length: \d+',
-      'Contact: <sip:127.0.0.1:5085;transport=udp>',
-      'P-Caller-UUID: [% spce_test.testuser1003.uuid %]',
-      'P-Callee-UUID: [% spce_test.testuser1002.uuid %]',
-      'P-Asserted-Identity: <sip:43110021003@spce.test>',
-      'P-Called-Party-ID: <sip:testuser1002@spce.test>',
-      'P-App-Param: ;calltimer=21600;aleg_sst_enable=no;sst_enable=no',
-      'P-App-Name: sbc',
-      'P-NGCP-Caller-Info: <sip:testuser1003@spce.test>;ip=127.126.0.3;port=\d+;primary=43110021003',
-      'P-NGCP-Callee-Info: <sip:4311002@spce.test>;ip=127.0.0.1;port=5060;primary=4311002',
-      'P-D-Uri: sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060',
+      'P-NGCP-Caller-Info: <sip:testuser1002@spce.test>;ip=127.126.0.1;port=51602;primary=4311002',
+      'P-NGCP-Callee-Info: <sip:43110021003@spce.test>;ip=127.0.0.1;port=5060;primary=43110021003',
+      'P-D-Uri: sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060'
     ]
