@@ -5,8 +5,6 @@ flow:
   - return|ROUTE_ENTRY:
   - start|ROUTE_APPLY_HEADER_RULES:
   - return|ROUTE_APPLY_HEADER_RULES:
-  - start|REPLY_SCA_UPDATE:
-  - return|REPLY_SCA_UPDATE:
   - start|ROUTE_PREPARE_UA:
   - return|ROUTE_PREPARE_UA:
   - start|REPLY_ROUTE_NAT_CONTINUE:
@@ -15,17 +13,20 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^SIP/2.0 200 OK'
-  - 'From: <sip:testuser1003@spce.test>;tag='
+  - '^SIP/2.0 180 Ringing'
+  - 'From: <sip:43110021003@spce.test>;tag='
   - 'To: <sip:1002@spce.test>;tag='
-  - 'CSeq: 3 BYE'
+  - 'CSeq: \d+ INVITE'
+  - 'Call-Info: <sip:spce\.test>;appearance-index=1'
+  - 'Contact: <sip:127.0.0.1:5080;transport=udp>'
   - 'Content-Length: 0'
 sip_out:
   - [
-      '^SIP/2.0 200 OK',
+      '^SIP/2.0 180 Ringing',
       'From: <sip:testuser1003@spce.test>;tag=',
       'To: <sip:1002@spce.test>;tag=',
-      'CSeq: 3 BYE',
+      'CSeq: \d+ INVITE',
+      'Call-Info: <sip:spce\.test>;appearance-index=1',
+      'Contact: <sip:127.0.0.1:5080;transport=udp>',
       'Content-Length: 0',
-      'P-Out-Socket: udp:127.0.0.1:5060',
     ]

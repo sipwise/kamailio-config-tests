@@ -9,7 +9,7 @@
       Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
       From: <sip:[field0 file="caller.csv" line=1]@[field2 file="caller.csv" line=1]>;tag=[pid]SIPpTag00[call_number]
       To: <sip:[field0 file="caller.csv" line=1]@[field2 file="caller.csv" line=1]>
-      Call-ID: NGCP%[field4 file="callee.csv" line=1]%///[call_id]
+      Call-ID: NGCP%[field4 file="callee.csv" line=1]_sub%///[call_id]
       CSeq: 1 SUBSCRIBE
       Contact: <sip:[field0 file="caller.csv" line=1]@[local_ip]:[local_port]>
       Allow: INVITE,ACK,CANCEL,BYE,PRACK,INFO,UPDATE,OPTIONS,MESSAGE,NOTIFY,REFER
@@ -29,15 +29,15 @@
   <send>
     <![CDATA[
 
-      ACK sip:[field0 file="caller.csv" line=1]@[field3 file="caller.csv" line=1] SIP/2.0
+      ACK sip:[field0 file="caller.csv" line=1]@[field2 file="caller.csv" line=1] SIP/2.0
       [last_Via:]
       [last_From:]
       [last_To:]
       [last_Call-ID:]
-      CSeq: 1 ACK
-      Contact: <sip:[field0 file="caller.csv" line=1]@[local_ip]:[local_port]>
-      Max-Forwards: 70
-      Content-Length: [len]
+      [last_CSeq:]
+      Contact: <sip:[local_ip]:[local_port];transport=[transport]>
+      Content-Length: 0
+
 
     ]]>
   </send>
@@ -50,7 +50,7 @@
       From: <sip:[field0 file="caller.csv" line=1]@[field2 file="caller.csv" line=1]>;tag=[pid]SIPpTag00[call_number]
       To: <sip:[field0 file="caller.csv" line=1]@[field2 file="caller.csv" line=1]>
       [field1 file="caller.csv" line=1]
-      Call-ID: NGCP%[field4 file="callee.csv" line=1]%///[call_id]
+      Call-ID: NGCP%[field4 file="callee.csv" line=1]_sub%///[call_id]
       CSeq: 2 SUBSCRIBE
       Contact: <sip:[field0 file="caller.csv" line=1]@[local_ip]:[local_port]>
       Allow: INVITE,ACK,CANCEL,BYE,PRACK,INFO,UPDATE,OPTIONS,MESSAGE,NOTIFY,REFER
@@ -124,7 +124,7 @@
       Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
       From: <sip:[field0 file="caller.csv" line=1]@[field2 file="caller.csv" line=1]>;tag=[pid]SIPpTag00[call_number]
       To: <sip:[field0 file="caller.csv" line=1]@[field2 file="caller.csv" line=1]>
-      Call-ID: NGCP%[field4 file="callee.csv" line=1]%///[call_id]
+      Call-ID: NGCP%[field4 file="callee.csv" line=1]_sub%///[call_id]
       CSeq: 1 SUBSCRIBE
       Contact: <sip:[field0 file="caller.csv" line=1]@[local_ip]:[local_port]>
       Allow: INVITE,ACK,CANCEL,BYE,PRACK,INFO,UPDATE,OPTIONS,MESSAGE,NOTIFY,REFER
@@ -144,7 +144,7 @@
   <send>
     <![CDATA[
 
-      ACK sip:[field0 file="caller.csv" line=1]@[field3 file="caller.csv" line=1] SIP/2.0
+      ACK sip:[field0 file="caller.csv" line=1]@[field2 file="caller.csv" line=1] SIP/2.0
       [last_Via:]
       [last_From:]
       [last_To:]
@@ -165,7 +165,7 @@
       From: <sip:[field0 file="caller.csv" line=1]@[field2 file="caller.csv" line=1]>;tag=[pid]SIPpTag00[call_number]
       To: <sip:[field0 file="caller.csv" line=1]@[field2 file="caller.csv" line=1]>
       [field1 file="caller.csv" line=1]
-      Call-ID: NGCP%[field4 file="callee.csv" line=1]%///[call_id]
+      Call-ID: NGCP%[field4 file="callee.csv" line=1]_sub%///[call_id]
       CSeq: 2 SUBSCRIBE
       Contact: <sip:[field0 file="caller.csv" line=1]@[local_ip]:[local_port]>
       Allow: INVITE,ACK,CANCEL,BYE,PRACK,INFO,UPDATE,OPTIONS,MESSAGE,NOTIFY,REFER
