@@ -29,15 +29,15 @@
   <send>
     <![CDATA[
 
-      ACK sip:[field0 file="caller.csv" line=1]@[field3 file="caller.csv" line=1] SIP/2.0
+      ACK sip:[field0 file="caller.csv" line=1]@[field2 file="caller.csv" line=1] SIP/2.0
       [last_Via:]
       [last_From:]
       [last_To:]
       [last_Call-ID:]
-      CSeq: 1 ACK
-      Contact: <sip:[field0 file="caller.csv" line=1]@[local_ip]:[local_port]>
-      Max-Forwards: 70
-      Content-Length: [len]
+      [last_CSeq:]
+      Contact: <sip:[local_ip]:[local_port];transport=[transport]>
+      Content-Length: 0
+
 
     ]]>
   </send>
@@ -144,7 +144,7 @@
   <send>
     <![CDATA[
 
-      ACK sip:[field0 file="caller.csv" line=1]@[field3 file="caller.csv" line=1] SIP/2.0
+      ACK sip:[field0 file="caller.csv" line=1]@[field2 file="caller.csv" line=1] SIP/2.0
       [last_Via:]
       [last_From:]
       [last_To:]

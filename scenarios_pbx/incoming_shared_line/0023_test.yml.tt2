@@ -13,20 +13,16 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^SIP/2.0 180 Ringing'
+  - '^SIP/2.0 200 OK'
   - 'From: <sip:43110021003@spce.test>;tag='
   - 'To: <sip:1002@spce.test>;tag='
-  - 'CSeq: \d+ INVITE'
-  - 'Call-Info: <sip:spce\.test>;appearance-index=1'
-  - 'Contact: <sip:127.0.0.1:5080;transport=udp>'
+  - 'CSeq: \d+ BYE'
   - 'Content-Length: 0'
 sip_out:
   - [
-      '^SIP/2.0 180 Ringing',
+      '^SIP/2.0 200 OK',
       'From: <sip:testuser1003@spce.test>;tag=',
       'To: <sip:1002@spce.test>;tag=',
-      'CSeq: \d+ INVITE',
-      'Call-Info: <sip:spce\.test>;appearance-index=1',
-      'Contact: <sip:127.0.0.1:5080;transport=udp>',
+      'CSeq: \d+ BYE',
       'Content-Length: 0',
     ]
