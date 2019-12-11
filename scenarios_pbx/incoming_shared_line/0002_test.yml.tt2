@@ -2,8 +2,6 @@ flow:
   - start|DEFAULT_ROUTE:
   - start|ROUTE_ENTRY:
   - return|ROUTE_ENTRY:
-  - start|ROUTE_COLLECT_HDR:
-  - return|ROUTE_COLLECT_HDR:
   - start|ROUTE_NET_INFO:
   - return|ROUTE_NET_INFO:
   - start|ROUTE_CHECK_TEL_URI:
@@ -30,11 +28,11 @@ sip_in:
   - 'To: <sip:testuser1002@spce.test>'
   - 'CSeq: 2 REGISTER'
   - 'Authorization: Digest'
-  - 'Contact: sip:testuser1002@127.1.0.4:\d+;transport=UDP'
+  - 'Contact: sip:testuser1002@127.1.0.3:\d+;transport=UDP'
   - 'Expires: 600'
   - 'Max-Forwards: 69'
   - 'Content-Length: 0'
-  - 'P-NGCP-Src-Ip: 127.1.0.4'
+  - 'P-NGCP-Src-Ip: 127.1.0.3'
   - 'P-NGCP-Src-Port: \d+'
   - 'P-NGCP-Src-Proto: udp'
   - 'P-NGCP-Src-Af: 4'
@@ -47,7 +45,7 @@ sip_out:
       'To: <sip:testuser1002@spce.test>',
       'CSeq: 2 REGISTER',
       'P-Out-Socket: udp:127.0.0.1:5060',
-      'P-NGCP-Auth-IP: 127.1.0.4',
+      'P-NGCP-Auth-IP: 127.1.0.3',
       'P-NGCP-Auth-UA: <null>',
       'Content-Length: 0',
     ]
@@ -57,11 +55,11 @@ sip_out:
       'To: <sip:testuser1002@spce.test>;tag=',
       'CSeq: 2 REGISTER',
       'P-Out-Socket: udp:127.0.0.1:5060',
-      'P-NGCP-Auth-IP: 127.1.0.4',
+      'P-NGCP-Auth-IP: 127.1.0.3',
       'P-NGCP-Auth-UA: <null>',
       'P-NGCP-Authorization: testuser1002@spce.test',
       'P-NGCP-Authorized: 1',
       'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
-      'Contact: <sip:testuser1002@127.1.0.3:\d+>;expires=\d+, <sip:testuser1002@127.1.0.4:\d+>;expires=\d+',
+      'Contact: <sip:testuser1002@127.1.0.3:\d+>;expires=\d+',
       'Content-Length: 0',
     ]

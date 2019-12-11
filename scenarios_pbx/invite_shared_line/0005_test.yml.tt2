@@ -2,8 +2,6 @@ flow:
   - start|DEFAULT_ROUTE:
   - start|ROUTE_ENTRY:
   - return|ROUTE_ENTRY:
-  - start|ROUTE_COLLECT_HDR:
-  - return|ROUTE_COLLECT_HDR:
   - start|ROUTE_NET_INFO:
   - return|ROUTE_NET_INFO:
   - start|ROUTE_CHECK_TEL_URI:
@@ -62,6 +60,11 @@ flow:
   - start|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_SET_CALLEE_DIALOG:
+      $avp(lua_dlg_profile): [
+        "totalaccount:[% customerpbx_test.id %]",
+        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "total"
+      ]
   - start|ROUTE_BLOCK_IN:
   - return|ROUTE_BLOCK_IN:
   - start|ROUTE_ORDER_CF_MAP_ID:
@@ -87,6 +90,15 @@ flow:
   - start|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_SET_CALLER_DIALOG:
+      $avp(lua_dlg_profile): [
+        "totalaccountout:[% customerpbx_test.id %]",
+        "totaluserout:[% spce_test.testuser1002.uuid %]",
+        "totalaccount:[% customerpbx_test.id %]",
+        "totaluser:[% spce_test.testuser1002.uuid %]",
+        "totalaccount:[% customerpbx_test.id %]",
+        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "total"
+      ]
   - start|ROUTE_ACC_CALLER:
   - return|ROUTE_ACC_CALLER:
   - start|ROUTE_ACC_CALLEE:
@@ -114,28 +126,32 @@ flow:
   - return|ROUTE_ADD_CALLINFO:
   - start|ROUTE_APPLY_HEADER_RULES:
   - return|ROUTE_APPLY_HEADER_RULES:
-  - start|ROUTE_APPLY_HDR:
-  - return|ROUTE_APPLY_HDR:
   - return|BRANCH_ROUTE_NO_SBC:
   - start|DEFAULT_SEND:
   - exit|DEFAULT_SEND:
   - exit|DEFAULT_SEND:
   - start|ROUTE_EXIT:
+      $avp(lua_dlg_profile): [
+        "totalaccountout:[% customerpbx_test.id %]",
+        "totaluserout:[% spce_test.testuser1002.uuid %]",
+        "totalaccount:[% customerpbx_test.id %]",
+        "totaluser:[% spce_test.testuser1002.uuid %]",
+        "totalaccount:[% customerpbx_test.id %]",
+        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "total"
+      ]
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^INVITE sip:1002@spce.test SIP/2.0'
-  - 'From: <sip:testuser1003@spce.test>;tag='
-  - 'To: <sip:1002@spce.test>'
-  - 'Call-Info: <sip:spce\.test>;appearance-index=1'
+  - '^INVITE sip:1003@spce.test SIP/2.0'
+  - 'From: <sip:testuser1002@spce.test>;tag='
+  - 'To: <sip:1003@spce.test>'
   - 'CSeq: 2 INVITE'
-  - 'Contact: sip:testuser1003@127.126.0.3:\d+'
-  - 'Max-Forwards: 69'
-  - 'Proxy-Authorization: Digest'
+  - 'Contact: sip:testuser1002@127.126.0.1:\d+'
   - 'Content-Type: application/sdp'
   - 'Content-Length:\s+\d+'
-  - 'P-NGCP-Src-Ip: 127.126.0.3'
+  - 'P-NGCP-Src-Ip: 127.126.0.1'
   - 'P-NGCP-Src-Port: \d+'
   - 'P-NGCP-Src-Proto: udp'
   - 'P-NGCP-Src-Af: 4'
@@ -143,59 +159,68 @@ sip_in:
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
-      'From: <sip:testuser1003@spce.test>;tag=',
-      'To: <sip:1002@spce.test>',
+      'From: <sip:testuser1002@spce.test>;tag=',
+      'To: <sip:1003@spce.test>',
       'CSeq: 2 INVITE',
       'P-Out-Socket: udp:127.0.0.1:5060',
-      'P-NGCP-Auth-IP: 127.126.0.3',
+      'P-NGCP-Auth-IP: 127.126.0.1',
       'P-NGCP-Auth-UA: <null>',
-      'Content-Length: 0',
+      'Content-Length: 0'
     ]
   - [
       '^SIP/2.0 101 Connecting',
-      'From: <sip:testuser1003@spce.test>;tag=',
-      'To: <sip:1002@spce.test>',
+      'From: <sip:testuser1002@spce.test>;tag=',
+      'To: <sip:1003@spce.test>',
       'CSeq: 2 INVITE',
       'P-Out-Socket: udp:127.0.0.1:5060',
-      'P-NGCP-Auth-IP: 127.126.0.3',
+      'P-NGCP-Auth-IP: 127.126.0.1',
       'P-NGCP-Auth-UA: <null>',
-      'P-NGCP-Authorization: testuser1003@spce.test',
+      'P-NGCP-Authorization: testuser1002@spce.test',
       'P-NGCP-Authorized: 1',
-      'P-NGCP-Caller-Info: <sip:testuser1003@spce.test>;ip=127.126.0.3;port=\d+;primary=43110021003',
-      'P-Caller-UUID: [% spce_test.testuser1003.uuid %]',
-      'Content-Length: 0',
+      'P-NGCP-Caller-Info: <sip:testuser1002@spce.test>;ip=127.126.0.1;port=\d+;primary=4311002',
+      'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
+      'Content-Length: 0'
     ]
   - [
-      '^INVITE sip:testuser1002@spce.test SIP/2.0',
-      'From: <sip:testuser1003@spce.test>;tag=',
-      'To: <sip:1002@spce.test>',
+      '^NOTIFY sip:testuser1002@127.1.0.1:\d+ SIP/2.0',
+      'To: <sip:testuser1002@spce.test>;tag=',
+      'From: <sip:testuser1002@spce.test>;tag=',
+      'CSeq: 3 NOTIFY',
+      'Content-Length: 0',
+      'Contact: sip:127.0.0.1:5062',
+      'Call-Info: <sip:spce.test>;appearance-index=1;appearance-state=seized,<sip:spce.test>;appearance-index=\*;appearance-state=idle',
+      'Event: call-info',
+      'Subscription-State: active;expires=\d+'
+    ]
+  - [
+      '^INVITE sip:testuser1003@spce.test SIP/2.0',
+      'From: <sip:testuser1002@spce.test>;tag=',
+      'To: <sip:1003@spce.test>',
       'CSeq: 2 INVITE',
-      'Contact: sip:testuser1003@127.126.0.3:\d+',
-      'Max-Forwards: 68',
+      'Contact: sip:testuser1002@127.126.0.1:\d+',
       'Content-Type: application/sdp',
-      'Content-Length:\s+\d+',
-      'P-NGCP-Src-Ip: 127.126.0.3',
+      'P-NGCP-Src-Ip: 127.126.0.1',
       'P-NGCP-Src-Port: \d+',
       'P-NGCP-Src-Proto: udp',
       'P-NGCP-Src-Af: 4',
       'P-NGCP-Src-Nat: 0',
       'P-Caller-CLIR: 0',
-      'P-NGCP-Orig-User: 4311002',
+      'P-NGCP-Orig-User: 43110021003',
       'P-NGCP-Orig-Domain: spce.test',
-      'P-NGCP-Orig-Dialed: 1002',
-      'P-NGCP-Orig-PBX-Ext: 1002',
+      'P-NGCP-Orig-Dialed: 1003',
+      'P-NGCP-Orig-PBX-Ext: 1003',
       'P-First-Caller-Cloud-PBX: \d+',
       'P-NGCP-Lookup-Type: ext',
       'P-NGCP-BlockOut-Override: 0',
       'P-NGCP-AdmBlockOut-Override: 0',
       'P-NGCP-ContBlockOut-Override: 0',
       'P-NGCP-ContAdmBlockOut-Override: 0',
-      'P-Caller-UUID: [% spce_test.testuser1003.uuid %]',
-      'P-Callee-UUID: [% spce_test.testuser1002.uuid %]',
+      'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
+      'P-Callee-UUID: [% spce_test.testuser1003.uuid %]',
       'P-App-Name: sbc',
       'P-App-Param: ;a_park_domain=\d+;b_park_domain=\d+',
       'P-NGCP-Acc-Src-Leg: \w+',
       'P-NGCP-Acc-Dst-Leg: \w+',
-      'P-NGCP-Caller-Info: <sip:testuser1003@spce.test>;ip=127.126.0.3;port=\d+;primary=43110021003',
-      'P-NGCP-Callee-Info: <sip:4311002@spce.test>;ip=127.0.0.1;port=5085;primary=4311002',
+      'P-NGCP-Caller-Info: <sip:testuser1002@spce.test>;ip=127.126.0.1;port=\d+;primary=4311002',
+      'P-NGCP-Callee-Info: <sip:43110021003@spce.test>;ip=127.0.0.1;port=5085;primary=43110021003',
     ]

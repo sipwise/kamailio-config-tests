@@ -2,8 +2,6 @@ flow:
   - start|DEFAULT_ROUTE:
   - start|ROUTE_ENTRY:
   - return|ROUTE_ENTRY:
-  - start|ROUTE_COLLECT_HDR:
-  - return|ROUTE_COLLECT_HDR:
   - start|ROUTE_NET_INFO:
   - return|ROUTE_NET_INFO:
   - start|ROUTE_CHECK_TEL_URI:
@@ -13,7 +11,6 @@ flow:
   - return|ROUTE_INITVARS:
   - start|dialog:end:
   - return|dialog:end:
-      $avp(lua_dlg_profile): None
   - return|dialog:end:
   - start|ROUTE_STOP_RTPPROXY:
   - start|ROUTE_RESTORE_CLUSTERSET:
@@ -24,8 +21,6 @@ flow:
   - start|ROUTE_PREPARE_UA:
   - return|ROUTE_PREPARE_UA:
   - start|ROUTE_OUTBOUND:
-  - start|ROUTE_APPLY_HDR:
-  - return|ROUTE_APPLY_HDR:
   - start|DEFAULT_SEND:
   - exit|DEFAULT_SEND:
   - exit|DEFAULT_SEND:
@@ -35,44 +30,59 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - '^BYE sip:127.0.0.1:5085;prxroute=1 SIP/2.0'
-  - 'From: <sip:testuser1002@spce.test>;tag='
-  - 'To: <sip:1003@spce.test>;tag='
-  - 'Call-Info: <sip:spce.test>;appearance-index=1'
+  - 'From: <sip:testuser1003@spce.test>;tag='
+  - 'To: <sip:1002@spce.test>;tag='
+  - 'Call-Info: <sip:spce\.test>;appearance-index=1'
   - 'CSeq: 3 BYE'
-  - 'Contact: sip:testuser1002@127.126.0.1:\d+'
-  - 'Content-Length:\s+0'
-  - 'P-NGCP-Src-Ip: 127.126.0.1'
-  - 'P-NGCP-Src-Port: \d+'
+  - 'Contact: sip:testuser1003@127.126.0.3:\d+'
+  - 'Max-Forwards: 69'
+  - 'Content-Length: 0'
+  - 'P-NGCP-Src-Ip: 127.126.0.3'
+  - 'P-NGCP-Src-Port: 51602'
   - 'P-NGCP-Src-Proto: udp'
   - 'P-NGCP-Src-Af: 4'
   - 'P-Sock-Info: udp:127.0.0.1:5060'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
-      'From: <sip:testuser1002@spce.test>;tag=',
-      'To: <sip:1003@spce.test>;tag=',
+      'From: <sip:testuser1003@spce.test>;tag=',
+      'To: <sip:1002@spce.test>;tag=',
       'CSeq: 3 BYE',
       'P-Out-Socket: udp:127.0.0.1:5060',
-      'P-NGCP-Auth-IP: 127.126.0.1',
+      'P-NGCP-Auth-IP: 127.126.0.3',
       'P-NGCP-Auth-UA: <null>',
-      'Content-Length: 0'
+      'Content-Length: 0',
+    ]
+  - [
+      '^NOTIFY sip:testuser1002@127.1.0.2:\d+ SIP/2.0',
+      'To: <sip:testuser1002@spce.test>;tag=',
+      'From: <sip:testuser1002@spce.test>;tag=',
+      'CSeq: 3 NOTIFY',
+      'Max-Forwards: 70',
+      'Content-Length: 0',
+      'Contact: sip:127.0.0.1:5062',
+      'Call-Info: <sip:spce\.test>;appearance-index=\*;appearance-state=idle',
+      'Event: call-info',
+      'Subscription-State: active;expires=\d+',
     ]
   - [
       '^NOTIFY sip:testuser1002@127.1.0.1:\d+ SIP/2.0',
       'To: <sip:testuser1002@spce.test>;tag=',
       'From: <sip:testuser1002@spce.test>;tag=',
-      'CSeq: 6 NOTIFY',
+      'CSeq: 3 NOTIFY',
+      'Max-Forwards: 70',
       'Content-Length: 0',
       'Contact: sip:127.0.0.1:5062',
-      'Call-Info: <sip:spce.test>;appearance-index=\*;appearance-state=idle',
+      'Call-Info: <sip:spce\.test>;appearance-index=\*;appearance-state=idle',
       'Event: call-info',
-      'Subscription-State: active;expires=\d+'
+      'Subscription-State: active;expires=\d+',
     ]
   - [
       '^BYE sip:127.0.0.1:5085;prxroute=1 SIP/2.0',
-      'From: <sip:testuser1002@spce.test>;tag=',
-      'To: <sip:1003@spce.test>;tag=',
+      'From: <sip:testuser1003@spce.test>;tag=',
+      'To: <sip:1002@spce.test>;tag=',
       'CSeq: 3 BYE',
-      'Contact: sip:testuser1002@127.126.0.1:\d+',
+      'Contact: sip:testuser1003@127.126.0.3:\d+',
+      'Max-Forwards: 68',
       'Content-Length: 0',
     ]

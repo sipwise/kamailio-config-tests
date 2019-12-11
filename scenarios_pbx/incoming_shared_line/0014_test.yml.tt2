@@ -3,19 +3,13 @@ flow:
   - start|REPLY_ROUTE_NAT:
   - start|ROUTE_ENTRY:
   - return|ROUTE_ENTRY:
-  - start|ROUTE_COLLECT_HDR:
-  - return|ROUTE_COLLECT_HDR:
   - start|ROUTE_APPLY_HEADER_RULES:
   - return|ROUTE_APPLY_HEADER_RULES:
-  - start|REPLY_SCA_UPDATE:
-  - return|REPLY_SCA_UPDATE:
   - start|ROUTE_PREPARE_UA:
   - return|ROUTE_PREPARE_UA:
   - start|REPLY_ROUTE_RTPENGINE:
   - return|REPLY_ROUTE_RTPENGINE:
   - start|REPLY_ROUTE_NAT_CONTINUE:
-  - start|ROUTE_APPLY_HDR:
-  - return|ROUTE_APPLY_HDR:
   - start|ROUTE_EXIT:
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:
@@ -24,11 +18,12 @@ flow:
   - return|dialog:start:
 sip_in:
   - '^SIP/2.0 200 OK'
-  - 'From: <sip:testuser1003@spce.test>;tag='
+  - 'From: <sip:43110021003@spce.test>;tag='
   - 'To: <sip:1002@spce.test>;tag='
-  - 'CSeq: 2 INVITE'
+  - 'CSeq: \d+ INVITE'
+  - 'Allow: INVITE, PRACK, ACK, BYE, CANCEL, OPTIONS, NOTIFY, REGISTER, SUBSCRIBE, REFER, PUBLISH, UPDATE, MESSAGE'
   - 'Call-Info: <sip:spce\.test>;appearance-index=1'
-  - 'Contact: <sip:127.0.0.1:5085;transport=udp>'
+  - 'Contact: <sip:127.0.0.1:5080;transport=udp>'
   - 'Content-Type: application/sdp'
   - 'Content-Length: \d+'
 sip_out:
@@ -36,10 +31,20 @@ sip_out:
       '^SIP/2.0 200 OK',
       'From: <sip:testuser1003@spce.test>;tag=',
       'To: <sip:1002@spce.test>;tag=',
-      'CSeq: 2 INVITE',
-      'Contact: <sip:127.0.0.1:5085;transport=udp>',
+      'CSeq: \d+ INVITE',
+      'Allow: INVITE, PRACK, ACK, BYE, CANCEL, OPTIONS, NOTIFY, REGISTER, SUBSCRIBE, REFER, PUBLISH, UPDATE, MESSAGE',
+      'Call-Info: <sip:spce\.test>;appearance-index=1',
+      'Contact: <sip:127.0.0.1:5080;transport=udp>',
       'Content-Type: application/sdp',
       'Content-Length: \d+',
-      'P-COLP-Identity: \"1002\" <sip:1002@spce.test>',
-      'P-Out-Socket: udp:127.0.0.1:5060',
+    ]
+  - [
+      '^CANCEL sip:testuser1002@127.1.0.3:\d+ SIP/2.0',
+      'From: <sip:43110021003@spce.test>;tag=',
+      'To: <sip:1002@spce.test>',
+      'CSeq: \d+ CANCEL',
+      'Route: <sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060>',
+      'Max-Forwards: 69',
+      'Content-Length: 0',
+      'Reason: SIP;cause=200;text=\"Call completed elsewhere\"',
     ]

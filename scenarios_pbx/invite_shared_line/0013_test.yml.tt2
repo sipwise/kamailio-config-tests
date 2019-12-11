@@ -2,8 +2,6 @@ flow:
   - start|DEFAULT_ROUTE:
   - start|ROUTE_ENTRY:
   - return|ROUTE_ENTRY:
-  - start|ROUTE_COLLECT_HDR:
-  - return|ROUTE_COLLECT_HDR:
   - start|ROUTE_NET_INFO:
   - return|ROUTE_NET_INFO:
   - start|ROUTE_CHECK_TEL_URI:
@@ -11,6 +9,8 @@ flow:
   - start|ROUTE_PRX_REQUEST:
   - start|ROUTE_INITVARS:
   - return|ROUTE_INITVARS:
+  - start|ROUTE_SCA_UPDATE:
+  - return|ROUTE_SCA_UPDATE:
   - start|ROUTE_PREPARE_UA:
   - return|ROUTE_PREPARE_UA:
   - start|ROUTE_RESTORE_CLUSTERSET:
@@ -18,8 +18,6 @@ flow:
   - start|ROUTE_WITHINDLG_RTPENGINE:
   - return|ROUTE_WITHINDLG_RTPENGINE:
   - start|ROUTE_OUTBOUND:
-  - start|ROUTE_APPLY_HDR:
-  - return|ROUTE_APPLY_HDR:
   - start|DEFAULT_SEND:
   - exit|DEFAULT_SEND:
   - exit|DEFAULT_SEND:
@@ -28,19 +26,25 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^ACK sip:127.0.0.1:5080;transport=udp SIP/2.0'
+  - '^ACK sip:127.0.0.1:5085(;prxroute=1)? SIP/2.0'
   - 'From: <sip:testuser1002@spce.test>;tag='
   - 'To: <sip:1003@spce.test>;tag='
-  - 'CSeq: \d+ ACK'
-  - 'Max-Forwards: 70'
+  - 'Call-Info: <sip:spce.test>;appearance-index=1'
+  - 'CSeq: 2 ACK'
+  - 'Contact: sip:testuser1002@127.126.0.1:\d+'
   - 'Content-Length:\s+0'
-  - 'Contact: <sip:127.0.0.1:5085;transport=udp>'
+  - 'P-NGCP-Src-Ip: 127.126.0.1'
+  - 'P-NGCP-Src-Port: \d+'
+  - 'P-NGCP-Src-Proto: udp'
+  - 'P-NGCP-Src-Af: 4'
+  - 'P-Sock-Info: udp:127.0.0.1:5060'
 sip_out:
   - [
-      '^ACK sip:127.0.0.1:5080;transport=udp SIP/2.0',
-      'From: <sip:4311002@spce.test>;tag=',
+      '^ACK sip:127.0.0.1:5085(;prxroute=1)? SIP/2.0',
+      'From: <sip:testuser1002@spce.test>;tag=',
       'To: <sip:1003@spce.test>;tag=',
-      'CSeq: \d+ ACK',
+      'Call-Info: <sip:spce.test>;appearance-index=1',
+      'CSeq: 2 ACK',
+      'Contact: sip:testuser1002@127.126.0.1:\d+',
       'Content-Length:\s+0',
-      'Contact: <sip:127.0.0.1:5085;transport=udp>'
     ]

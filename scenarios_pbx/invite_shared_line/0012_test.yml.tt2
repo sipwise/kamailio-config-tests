@@ -1,43 +1,58 @@
 flow:
-  - start|DEFAULT_ROUTE:
+  - start|DEFAULT_ONREPLY:
+  - start|REPLY_ROUTE_NAT:
   - start|ROUTE_ENTRY:
   - return|ROUTE_ENTRY:
-  - start|ROUTE_COLLECT_HDR:
-  - return|ROUTE_COLLECT_HDR:
-  - start|ROUTE_NET_INFO:
-  - return|ROUTE_NET_INFO:
-  - start|ROUTE_CHECK_TEL_URI:
-  - return|ROUTE_CHECK_TEL_URI:
-  - start|ROUTE_PRX_REQUEST:
-  - start|ROUTE_INITVARS:
-  - return|ROUTE_INITVARS:
-  - start|ROUTE_INVITE:
-  - start|ROUTE_LOAD_CALLEE_DOMAIN_PREF:
-  - start|ROUTE_CLEAR_CALLEE_DOMAIN_PREF:
-  - return|ROUTE_CLEAR_CALLEE_DOMAIN_PREF:
-  - return|ROUTE_LOAD_CALLEE_DOMAIN_PREF:
-  - start|ROUTE_FIND_CALLER:
-  - start|ROUTE_AUTH:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - start|REPLY_SCA_UPDATE:
+  - return|REPLY_SCA_UPDATE:
+  - start|ROUTE_PREPARE_UA:
+  - return|ROUTE_PREPARE_UA:
+  - start|REPLY_ROUTE_RTPENGINE:
+  - return|REPLY_ROUTE_RTPENGINE:
+  - start|REPLY_ROUTE_NAT_CONTINUE:
   - start|ROUTE_EXIT:
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:
-  - exit|ROUTE_EXIT:
+  - start|dialog:start:
+  - return|dialog:start:
+      $avp(lua_dlg_profile): [
+        "totalaccountout:[% customerpbx_test.id %]",
+        "totaluserout:[% spce_test.testuser1002.uuid %]",
+        "totalaccount:[% customerpbx_test.id %]",
+        "totaluser:[% spce_test.testuser1002.uuid %]",
+        "totalaccount:[% customerpbx_test.id %]",
+        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "total"
+      ]
+  - return|dialog:start:
 sip_in:
-  - '^INVITE sip:1003@spce.test SIP/2.0'
+  - '^SIP/2.0 200 OK'
   - 'From: <sip:testuser1002@spce.test>;tag='
-  - 'To: <sip:1003@spce.test>'
-  - 'Call-Info: <sip:spce.test>;appearance-index=1'
-  - 'CSeq: 1 INVITE'
-  - 'Contact: sip:testuser1002@127.126.0.1:\d+'
+  - 'To: <sip:1003@spce.test>;tag='
+  - 'CSeq: 2 INVITE'
+  - 'Contact: <sip:127.0.0.1:5085;transport=udp>'
   - 'Content-Type: application/sdp'
-  - 'Content-Length:\s+\d+'
 sip_out:
   - [
-      '^SIP/2.0 100 Trying',
+      '^NOTIFY sip:testuser1002@127.1.0.1:\d+ SIP/2.0',
+      'To: <sip:testuser1002@spce.test>;tag=',
       'From: <sip:testuser1002@spce.test>;tag=',
-      'To: <sip:1003@spce.test>',
-      'CSeq: 1 INVITE',
+      'CSeq: 5 NOTIFY',
+      'Contact: sip:127.0.0.1:5062',
+      'Call-Info: <sip:spce.test>;appearance-index=1;appearance-state=active;appearance-uri=\"<sip:testuser1003@spce.test>\",<sip:spce.test>;appearance-index=\*;appearance-state=idle',
+      'Event: call-info',
+      'Subscription-State: active;expires=\d+'
     ]
   - [
-      '^SIP/2.0 407 Proxy Authentication Required'
+      '^SIP/2.0 200 OK',
+      'From: <sip:testuser1002@spce.test>;tag=',
+      'To: <sip:1003@spce.test>;tag=',
+      'CSeq: 2 INVITE',
+      'Contact: <sip:127.0.0.1:5085;transport=udp>',
+      'Content-Type: application/sdp',
+      'P-COLP-Identity: \"1003\" <sip:1003@spce.test>',
+      'P-Asserted-Identity:  <sip:testuser1003@spce.test>',
+      'P-Out-Socket: udp:127.0.0.1:5060'
     ]
