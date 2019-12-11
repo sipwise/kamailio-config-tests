@@ -1,7 +1,9 @@
 flow:
-  - start|DEFAULT_ROUTE:
+  - start|DEFAULT_ONREPLY:
+  - start|REPLY_ROUTE_NAT:
   - start|ROUTE_ENTRY:
   - return|ROUTE_ENTRY:
+<<<<<<< HEAD
   - start|ROUTE_COLLECT_HDR:
   - return|ROUTE_COLLECT_HDR:
   - start|ROUTE_NET_INFO:
@@ -18,60 +20,27 @@ flow:
   - return|ROUTE_ADD_CALLINFO_REPLY:
   - return|ROUTE_AUTH:
   - start|ROUTE_IMP_PRESENCE:
+=======
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - start|ROUTE_PREPARE_UA:
+  - return|ROUTE_PREPARE_UA:
+  - start|REPLY_ROUTE_NAT_CONTINUE:
+>>>>>>> 987011d... TT#71821 Fix PBX scenarios
   - start|ROUTE_EXIT:
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^SUBSCRIBE sip:testuser1002@spce.test SIP/2.0'
-  - 'From: <sip:testuser1002@spce.test>;tag='
-  - 'To: <sip:testuser1002@spce.test>'
-  - 'CSeq: 31 SUBSCRIBE'
-  - 'Contact: <sip:testuser1002@127.1.0.2:\d+>'
-  - 'Max-Forwards: 69'
-  - 'Expires: 20'
-  - 'Event: line-seize'
+  - '^SIP/2.0 180 Ringing'
+  - 'Contact: <sip:127.0.0.1:5080;transport=udp>'
   - 'Content-Length:\s+0'
 sip_out:
   - [
-      '^SIP/2.0 100 Trying',
+      '^SIP/2.0 180 Ringing',
       'From: <sip:testuser1002@spce.test>;tag=',
-      'To: <sip:testuser1002@spce.test>',
-      'CSeq: 31 SUBSCRIBE',
-    ]
-  - [
-      '^SIP/2.0 200 OK',
-      'From: <sip:testuser1002@spce.test>;tag=',
-      'To: <sip:testuser1002@spce.test>;tag=',
-      'CSeq: 31 SUBSCRIBE',
-      'P-NGCP-Authorization: testuser1002@spce.test',
-      'P-NGCP-Authorized: 1',
-      'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
-      'Event: line-seize',
-      'Contact: sip:127.0.0.1:5062',
-      'Allow-Events: call-info, line-seize',
-      'Expires: \d+',
+      'To: <sip:1003@spce.test>;tag=',
+      'CSeq: \d+ INVITE',
+      'Contact: <sip:127.0.0.1:5080;transport=udp>',
       'Content-Length:\s+0'
-    ]
-  - [
-      '^NOTIFY sip:testuser1002@127.1.0.2:\d+ SIP/2.0',
-      'From: <sip:testuser1002@spce.test>;tag=',
-      'To: <sip:testuser1002@spce.test>;tag=',
-      'CSeq: 1 NOTIFY',
-      'Content-Length:\s+0',
-      'Contact: sip:127.0.0.1:5062',
-      'Call-Info: <sip:spce\.test>;appearance-index=1',
-      'Event: line-seize',
-      'Subscription-State: active'
-    ]
-  - [
-      '^NOTIFY sip:testuser1002@127.1.0.1:\d+ SIP/2.0',
-      'From: <sip:testuser1002@spce.test>;tag=',
-      'To: <sip:testuser1002@spce.test>;tag=',
-      'CSeq: 2 NOTIFY',
-      'Content-Length:\s+0',
-      'Contact: sip:127.0.0.1:5062',
-      'Call-Info: <sip:spce\.test>;appearance-index=1;appearance-state=seized,<sip:spce\.test>;appearance-index=\*;appearance-state=idle',
-      'Event: call-info',
-      'Subscription-State: active;expires=\d+'
     ]
