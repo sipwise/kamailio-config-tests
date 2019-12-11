@@ -6,36 +6,47 @@ flow:
   - return|ROUTE_NET_INFO:
   - start|ROUTE_CHECK_TEL_URI:
   - return|ROUTE_CHECK_TEL_URI:
-  - start|ROUTE_IMP_REQUEST:
-  - start|ROUTE_IMP_WITHINDLG:
-  - return|ROUTE_IMP_WITHINDLG:
+  - start|ROUTE_REG_REQUEST:
+  - start|ROUTE_REG_HANDLE:
   - start|ROUTE_AUTH:
   - start|ROUTE_EXIT:
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^SUBSCRIBE sip:testuser1002@spce.test SIP/2.0'
+  - '^REGISTER sip:testuser1002@spce.test SIP/2.0'
   - 'From: <sip:testuser1002@spce.test>;tag='
   - 'To: <sip:testuser1002@spce.test>'
-  - 'CSeq: 1 SUBSCRIBE'
-  - 'Contact: <sip:testuser1002@127.1.0.1:\d+>'
-  - 'Expires: 20'
-  - 'Event: call-info'
-  - 'Content-Length:\s+0'
-  - 'P-NGCP-Src-Ip: 127.1.0.1'
+  - 'CSeq: 1 REGISTER'
+  - 'Contact: sip:testuser1002@127.1.0.3:\d+;transport=UDP'
+  - 'Expires: 600'
+  - 'Max-Forwards: 69'
+  - 'Content-Length: 0'
+  - 'P-NGCP-Src-Ip: 127.1.0.3'
   - 'P-NGCP-Src-Port: \d+'
   - 'P-NGCP-Src-Proto: udp'
   - 'P-NGCP-Src-Af: 4'
   - 'P-Sock-Info: udp:127.0.0.1:5060'
+  - 'Path: <sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060>'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
-      'CSeq: 1 SUBSCRIBE'
+      'From: <sip:testuser1002@spce.test>;tag=',
+      'To: <sip:testuser1002@spce.test>',
+      'CSeq: 1 REGISTER',
+      'P-Out-Socket: udp:127.0.0.1:5060',
+      'P-NGCP-Auth-IP: 127.1.0.3',
+      'P-NGCP-Auth-UA: <null>',
+      'Content-Length: 0',
     ]
   - [
-      '^SIP/2.0 407 Proxy Authentication Required',
+      '^SIP/2.0 401 Unauthorized',
       'From: <sip:testuser1002@spce.test>;tag=',
       'To: <sip:testuser1002@spce.test>;tag=',
-      'CSeq: 1 SUBSCRIBE'
+      'CSeq: 1 REGISTER',
+      'P-Out-Socket: udp:127.0.0.1:5060',
+      'P-NGCP-Auth-IP: 127.1.0.3',
+      'P-NGCP-Auth-UA: <null>',
+      'WWW-Authenticate: Digest',
+      'Content-Length: 0',
     ]
