@@ -15,7 +15,7 @@ TMP_LOG_DIR="/tmp"
 KAM_DIR="/tmp/cfgtest"
 COREDUMP_DIR="/ngcp-data/coredumps"
 PROFILE="CE"
-OPTS=(-P -T)
+OPTS=(-P -T -M) #SKIP_PARSE=true, SKIP_TESTS=true, SKIP_MOVE_JSON_KAM=true
 DOMAIN="spce.test"
 TIMEOUT=${TIMEOUT:-300}
 SHOW_SCENARIOS=false

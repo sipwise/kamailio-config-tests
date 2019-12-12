@@ -30,6 +30,7 @@ FIX_RETRANS=false
 GRAPH=false
 GRAPH_FAIL=false
 JSON_KAM=true
+SKIP_MOVE_JSON_KAM=false
 CDR=false
 
 
@@ -653,17 +654,18 @@ usage() {
   echo -e "\t-g: creation of graphviz image only if test fails"
   echo -e "\t-r: fix retransmission issues"
   echo -e "\t-d: DOMAIN"
-  echo -e "\t-p CE|PRO default is CE"
-  echo -e "\t-J kamailio json output OFF"
-  echo -e "\t-K enable tcpdump capture"
-  echo -e "\t-s scenario group. Default: scenarios"
-  echo -e "\t-m enable memdbg csv"
-  echo -e "\t-c enable cdr validation"
+  echo -e "\t-p: CE|PRO default is CE"
+  echo -e "\t-J: kamailio json output OFF"
+  echo -e "\t-M: skip move of kamailio json output to log folder"
+  echo -e "\t-K: enable tcpdump capture"
+  echo -e "\t-s: scenario group. Default: scenarios"
+  echo -e "\t-m: enable memdbg csv"
+  echo -e "\t-c: enable cdr validation"
   echo "Arguments:"
   echo -e "\tcheck_name. Scenario name to check. This is the name of the directory on GROUP dir."
 }
 
-while getopts 'hCd:p:Rs:DTPGgrcJKm' opt; do
+while getopts 'hCd:p:Rs:DTPGgrcJKMm' opt; do
   case $opt in
     h) usage; exit 0;;
     C) SKIP=true;;
@@ -679,6 +681,7 @@ while getopts 'hCd:p:Rs:DTPGgrcJKm' opt; do
     g) GRAPH_FAIL=true;;
     r) FIX_RETRANS=true;;
     J) JSON_KAM=false;;
+    M) SKIP_MOVE_JSON_KAM=true;;
     m) MEMDBG=true;;
     c) CDR=true;;
   esac
@@ -776,22 +779,24 @@ if ! "$SKIP_RUNSIPP" ; then
   echo "$(date) - Done"
 
   if "${JSON_KAM}" ; then
-    echo "$(date) - Move kamailio json files"
-    if [ -d "${JSON_DIR}" ] ; then
-      for i in "${JSON_DIR}"/*.json ; do
-        json_size_before=$(stat -c%s "${i}")
-        moved_file="${LOG_DIR}/$(printf "%04d.json" "$(basename "${i}" .json)")"
-        expand -t1 "${i}" > "${moved_file}"
-        json_size_after=$(stat -c%s "${moved_file}")
-        echo "$(date) - Moved file ${i} with size before: ${json_size_before} and after: ${json_size_after}"
-        rm "${i}"
-      done
-      echo "$(date) - clean cfgt scenario ${test_uuid}"
-      ngcp-kamcmd proxy cfgt.clean "${test_uuid}"
-      echo "$(date) - Done"
-    else
-      echo "$(date) - No json files found"
+    if ! "${SKIP_MOVE_JSON_KAM}" ; then
+      echo "$(date) - Move kamailio json files"
+      if [ -d "${JSON_DIR}" ] ; then
+        for i in "${JSON_DIR}"/*.json ; do
+          json_size_before=$(stat -c%s "${i}")
+          moved_file="${LOG_DIR}/$(printf "%04d.json" "$(basename "${i}" .json)")"
+          expand -t1 "${i}" > "${moved_file}"
+          json_size_after=$(stat -c%s "${moved_file}")
+          echo "$(date) - Moved file ${i} with size before: ${json_size_before} and after: ${json_size_after}"
+          rm "${i}"
+        done
+      else
+        echo "$(date) - No json files found"
+      fi
     fi
+    echo "$(date) - clean cfgt scenario ${test_uuid}"
+    ngcp-kamcmd proxy cfgt.clean "${test_uuid}"
+    echo "$(date) - Done"
   fi
 
   if "${FIX_RETRANS}" ; then
