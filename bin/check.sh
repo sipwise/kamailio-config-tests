@@ -654,7 +654,7 @@ usage() {
   echo -e "\t-r: fix retransmission issues"
   echo -e "\t-d: DOMAIN"
   echo -e "\t-p CE|PRO default is CE"
-  echo -e "\t-J kamailio json output ON. PARSE skipped"
+  echo -e "\t-J kamailio json output OFF"
   echo -e "\t-K enable tcpdump capture"
   echo -e "\t-s scenario group. Default: scenarios"
   echo -e "\t-m enable memdbg csv"
@@ -678,7 +678,7 @@ while getopts 'hCd:p:Rs:DTPGgrcJKm' opt; do
     G) GRAPH=true;;
     g) GRAPH_FAIL=true;;
     r) FIX_RETRANS=true;;
-    J) JSON_KAM=true;;
+    J) JSON_KAM=false;;
     m) MEMDBG=true;;
     c) CDR=true;;
   esac
