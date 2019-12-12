@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5bea25f7_f648aaed",
+        "filename": "bin/check.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2019-12-12T08:41:30Z",
+      "side": 1,
+      "message": "but If JSON_KAM is false now... you will not clean the scenario here",
+      "revId": "d849697f33305a128cb65812f143d330b55d1f74",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20183a32_6224d4f1",
+        "filename": "bin/check.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2019-12-12T08:41:30Z",
+      "side": 1,
+      "message": "but If JSON_KAM is false now... you will not clean the scenario here",
+      "revId": "d849697f33305a128cb65812f143d330b55d1f74",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    }
+  ]
+}
