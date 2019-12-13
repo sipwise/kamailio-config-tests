@@ -793,10 +793,10 @@ if ! "$SKIP_RUNSIPP" ; then
       else
         echo "$(date) - No json files found"
       fi
+      echo "$(date) - clean cfgt scenario ${test_uuid}"
+      ngcp-kamcmd proxy cfgt.clean "${test_uuid}"
+      echo "$(date) - Done"
     fi
-    echo "$(date) - clean cfgt scenario ${test_uuid}"
-    ngcp-kamcmd proxy cfgt.clean "${test_uuid}"
-    echo "$(date) - Done"
   fi
 
   if "${FIX_RETRANS}" ; then
