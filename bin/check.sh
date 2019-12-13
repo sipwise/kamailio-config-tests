@@ -574,7 +574,7 @@ run_sipp() {
   fi
 
   if [[ ${status} -ne 0 ]]; then
-    error_helper "error in sipp" 2
+    echo "error in sipp!"
   fi
 }
 
