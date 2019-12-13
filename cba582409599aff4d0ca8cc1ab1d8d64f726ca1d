@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d040e128_8b91275e",
+        "filename": "bin/check.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2019-12-13T11:34:21Z",
+      "side": 1,
+      "message": "but If you do this... no error will be reported. Maybe setting a flag here and later exit with the error 2?",
+      "revId": "cba582409599aff4d0ca8cc1ab1d8d64f726ca1d",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    }
+  ]
+}
