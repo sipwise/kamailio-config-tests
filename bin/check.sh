@@ -31,6 +31,7 @@ GRAPH=false
 GRAPH_FAIL=false
 JSON_KAM=false
 CDR=false
+ERR_FLAG=0
 
 
 # sipwise password for mysql connections
@@ -601,7 +602,8 @@ run_sipp() {
   fi
 
   if [[ ${status} -ne 0 ]]; then
-    error_helper "error in sipp" 2
+    echo "error in sipp!"
+    ERR_FLAG=1;
   fi
 }
 
@@ -876,7 +878,6 @@ fi
 
 
 # let's check the results
-ERR_FLAG=0
 if ! "${SKIP_TESTS}" ; then
   echo "$(date) - ================================================================================="
   echo "$(date) - Check [${GROUP}/${PROFILE}]: ${NAME_CHECK}"
