@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a521421d_9c76f427",
+        "filename": "bench.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2019-12-16T16:26:54Z",
+      "side": 1,
+      "message": "I think it is better to check if the selected profile is correct, otherwise we have to wait the validation of the next executed script.\n\nif [ \"${PROFILE}\" !\u003d \"CE\" ] \u0026\u0026 [ \"${PROFILE}\" !\u003d \"PRO\" ]; then\n  echo \"PROFILE ${PROFILE} unknown\"\n  usage\n  exit 1\nfi",
+      "range": {
+        "startLine": 18,
+        "startChar": 4,
+        "endLine": 18,
+        "endChar": 26
+      },
+      "revId": "f343105956f159a5e8063aa655fe7f19423d53b0",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
