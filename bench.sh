@@ -1,16 +1,52 @@
 #!/bin/bash
+SKIP_CONFIG=false
+PROFILE=CE
+
+usage() {
+  echo "Usage: bench.sh [-p PROFILE] [-C] [num_runs]"
+  echo "Options:"
+  echo -e "\t-p CE|PRO default is CE"
+  echo -e "\t-C skips configuration of the environment"
+  echo -e "\t-h this help"
+  echo -e "num_runs default is 20"
+}
+
+while getopts 'hCp:' opt; do
+  case $opt in
+    h) usage; exit 0;;
+    C) SKIP_CONFIG=true;;
+    p) PROFILE=${OPTARG};;
+	*) echo "Unknown option $opt"; usage; exit 1;;
+  esac
+done
+shift $((OPTIND - 1))
+
 NUM=${1:-20}
+RUN_OPS=(-c -r -p"${PROFILE}")
+
 # clean previous
 rm -rf log_* result_*
+
+BASE_DIR=$(pwd)
+export BASE_DIR
+
+if ! "${SKIP_CONFIG}" ; then
+	export PERL5LIB="${BASE_DIR}/lib"
+	echo "add configuration for tests"
+	./bin/config_debug.pl on
+	ngcpcfg apply 'k-c-t on'
+	RUN_OPS+=(-C)
+fi
+
 echo "$(date) - Starting $NUM tests"
 for i in $(seq "$NUM"); do
-  BASE_DIR=$(pwd) ./run_tests.sh -c &> /tmp/run_tests.log
+  ./run_tests.sh "${RUN_OPS[@]}" | tee /tmp/run_tests.log
   status=$?
   if [[ $status -ne 0 ]]; then
   	echo "$(date) - ERROR[$status] run_tests $i"
   	break
   fi
-  BASE_DIR=$(pwd) ./get_results.sh &> /tmp/get_results.log
+  ./get_results.sh -r | tee /tmp/get_results.log
   status=$?
   if [[ $status -ne 0 ]]; then
   	echo "$(date) - ERROR[$status] get_results $i"
@@ -21,3 +57,9 @@ for i in $(seq "$NUM"); do
   mv log "log_$i"
   mv result "result_$i"
 done
+
+if ! "${SKIP_CONFIG}" ; then
+	echo "remove configuration for tests"
+	./bin/config_debug.pl off
+	ngcpcfg apply 'k-c-t off'
+fi
