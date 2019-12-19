@@ -5,7 +5,7 @@ Requiriments:
 -------------
  - A working NGCP
  - sip-tester. sipp with ssl enabled ( needed for auth ).
-   We provide a version backported to wheezy
+   We provide a version backported
  See debian/control for the actual list of dependences
 
 
@@ -51,14 +51,13 @@ Usage:
     #bash ./run_tests.sh [-p PROFILE ] [-K] [-c] [-r] -x scenarios_lnp
     #bash ./get_results.sh [-p PROFILE ] [-g] [-c] [-r] -x scenarios_lnp
 
-  If you want to run test manually just exec this onces:
-    #./bin/config_debug.pl on
-    #ngcpcfg apply 'cfgtest'
+  If you want to run test manually just exec this once:
+    #bash ./set_config.sh [-x GROUP]
   and run the check that you want:
-    #PERL5LIB="$$(pwd)/lib" ./bin/check.sh <checkname>
+    #bash PERL5LIB="$(pwd)/lib" ./bin/check.sh <checkname>
   this will run the test and the result taps
   or run all the tests as many times you want with:
-    #./bin/bench.sh $NUM
+    #bash ./bin/bench.sh $NUM
 
 If you want to test just a set of scenarios, set the SCENARIOS
 environment var.
