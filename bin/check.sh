@@ -586,6 +586,14 @@ test_filepath() {
   if ! "${JSON_KAM}" ; then
     msg_name=${1/_test.yml/.yml}
   else
+    if grep -q '^retrans: true' "${1}"; then
+      echo "$(date) - Detected a test for a retransmission"
+      msg_name=${1/_test.yml/.json_retransmission}
+      msg="${LOG_DIR}/$(basename "${msg_name}")"
+      if [ -f "${msg}" ]; then
+        return
+      fi
+    fi
     msg_name=${1/_test.yml/.json}
   fi
   msg="${LOG_DIR}/$(basename "${msg_name}")"
