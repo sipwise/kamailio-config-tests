@@ -148,6 +148,10 @@ The test file is divided in tree different parts:
 
  [0] https://docs.python.org/3/library/re.html#regular-expression-syntax
 
+ - retrans:
+  boolean value indicating if this test is meant for a retransmission.
+  It's optional, default is false
+
 
 Cdr test file syntax (cdr_test.yml.tt2):
 ----------------------------------------
