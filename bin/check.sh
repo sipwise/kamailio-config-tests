@@ -586,6 +586,14 @@ test_filepath() {
   if ! "${JSON_KAM}" ; then
     msg_name=${1/_test.yml/.yml}
   else
+    if grep -q '^retrans: true' "${1}"; then
+      echo "$(date) - Detected a test for a retransmission"
+      msg_name=${1/_test_retransmission.yml/.json_retransmission}
+      msg="${LOG_DIR}/$(basename "${msg_name}")"
+      if [ -f "${msg}" ]; then
+        return
+      fi
+    fi
     msg_name=${1/_test.yml/.json}
   fi
   msg="${LOG_DIR}/$(basename "${msg_name}")"
@@ -872,7 +880,7 @@ if ! "${SKIP_TESTS}" ; then
   "${BIN_DIR}/generate_tests.sh" -d \
     "${SCEN_CHECK_DIR}" "${LOG_DIR}/scenario_ids.yml" "${PROFILE}"
 
-  for t in ${SCEN_CHECK_DIR}/[0-9][0-9][0-9][0-9]_test.yml; do
+  for t in ${SCEN_CHECK_DIR}/[0-9][0-9][0-9][0-9]_test*.yml; do
     test_filepath "${t}"
     echo "$(date) - Check test ${t} on ${msg}"
     dest=${RESULT_DIR}/$(basename "${t}" .yml)
