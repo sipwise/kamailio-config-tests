@@ -26,3 +26,4 @@ sip_out:
       'From: <sip:testuser1002@',
       'To: <sip:004321001@',
     ]
+retrans: true
