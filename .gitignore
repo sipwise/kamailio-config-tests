@@ -2,6 +2,7 @@
 log
 result
 mem
+.ngcpcfg_perms
 *.pyc
 *_test.yml
 scenario_ids.yml
