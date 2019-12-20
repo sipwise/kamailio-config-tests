@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f6e4862_14688370",
+        "filename": "README",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2019-12-20T13:19:26Z",
+      "side": 1,
+      "message": "I think just one dollar sign is enough",
+      "range": {
+        "startLine": 57,
+        "startChar": 20,
+        "endLine": 57,
+        "endChar": 27
+      },
+      "revId": "022daa182e4e04d0325bed0236e59870a743dd50",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
