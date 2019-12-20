@@ -1,3 +1,10 @@
+kamailio-config-tests (8.1.1.2+0~mr8.1.1.2) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [c98021d] TT#71821 Fix PBX scenarios
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 20 Dec 2019 14:07:29 +0100
+
 kamailio-config-tests (8.1.1.1+0~mr8.1.1.1) unstable; urgency=medium
 
   [ Victor Seva ]
