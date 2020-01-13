@@ -1,3 +1,16 @@
+kamailio-config-tests (8.0.3.0+0~mr8.0.3.0) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [aa484b2] TT#71323 invite_hdr
+
+  [ Marco Capetta ]
+  * [2e0796b] TT#71323 Fix invite_hdr scenario when auto_collect is disabled
+  * [34dcee9] TT#72152 Check Diversion and HIH in invite_redirect scenario
+  * [b004b41] TT#73251 Remove pv_headers routes because of auto_collect active
+  * [7aa39db] TT#71821 Fix PBX scenarios
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 13 Jan 2020 15:17:38 +0100
+
 kamailio-config-tests (8.0.2.0+0~mr8.0.2.0) unstable; urgency=medium
 
   [ Marco Capetta ]
