@@ -45,6 +45,7 @@ if ! "${SKIP_CONFIG}" ; then
 fi
 
 echo "$(date) - Starting $NUM tests"
+set -o pipefail
 for i in $(seq "$NUM"); do
   ./run_tests.sh "${RUN_OPS[@]}" | tee /tmp/run_tests.log
   status=$?
@@ -63,6 +64,7 @@ for i in $(seq "$NUM"); do
   mv log "log_$i"
   mv result "result_$i"
 done
+set +o pipefail
 
 if ! "${SKIP_CONFIG}" ; then
 	echo "remove configuration for tests"
