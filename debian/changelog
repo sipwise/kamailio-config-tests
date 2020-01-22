@@ -1,3 +1,10 @@
+kamailio-config-tests (7.5.2.5+0~mr7.5.2.5) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [095b33f] TT#73652  Revert "TT#73251 Remove pv_headers routes because of auto_collect active"
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 22 Jan 2020 11:02:04 +0100
+
 kamailio-config-tests (7.5.2.4+0~mr7.5.2.4) unstable; urgency=medium
 
   [ Marco Capetta ]
