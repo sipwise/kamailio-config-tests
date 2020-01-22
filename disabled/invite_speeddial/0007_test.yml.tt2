@@ -95,8 +95,12 @@ flow:
   - return|ROUTE_SET_CALLEE:
   - start|ROUTE_ADD_CALLINFO:
   - return|ROUTE_ADD_CALLINFO:
+  - start|ROUTE_APPLY_HDR:
+  - return|ROUTE_APPLY_HDR:
   - return|BRANCH_ROUTE_SBC:
   # branch ??
+  - start|ROUTE_APPLY_HDR:
+  - return|ROUTE_APPLY_HDR:
   - return|BRANCH_ROUTE_SBC:
   - exit|ROUTE_OUTBOUND:
 sip_in:
