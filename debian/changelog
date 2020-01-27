@@ -1,3 +1,26 @@
+kamailio-config-tests (8.2.1.0+0~mr8.2.1.0) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [569cd96] TT#71323 invite_hdr
+  * [8618aa8] TT#71552 use new cfgt RPC command to clean scenario
+  * [2ccc9ca] TT#72700 update bench script
+  * [f75d155] TT#72700 add set_config.sh helper script
+  * [fea1a3c] TT#72700 bench.sh: fix fail detection of commands on pipe
+
+  [ Marco Capetta ]
+  * [f3e64b0] TT#71321 Fix invite_redirect scenario after kamailio config change
+  * [37a504b] TT#72152 Check Diversion and HIH in invite_redirect scenario
+  * [a81171a] TT#71552 Fix JSON_KAM enable/disable
+  * [efcc90d] TT#71552 Add -M option in bin/check.sh to skip moving of json files
+  * [9e08596] TT#71552 Clean scenario only if json files were moved
+  * [190ab27] TT#71552 Continue bin/check.sh execution in case of sipp errors
+  * [87c7638] TT#70329 Adapt invite_q_forking scenario to the new preference type
+  * [987011d] TT#71821 Fix PBX scenarios
+  * [9b06616] TT#73803 Add outbound_pai_display evaluation route
+  * [2b9e6a8] TT#74213 Load redirecting party prefs as new caller after 302
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 27 Jan 2020 12:20:54 +0100
+
 kamailio-config-tests (8.2.0.0+0~mr8.2.0.0) unstable; urgency=medium
 
   [ Alexander Lutay ]
