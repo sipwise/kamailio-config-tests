@@ -478,7 +478,7 @@ run_sipp() {
   local responder_pid=""
 
   # test LOG_DIR
-  # we dont want to remove "/*" don't we?
+  # we do not want to remove "/*" don't we?
   if [ -z "${LOG_DIR}" ]; then
     error_helper "LOG_DIR empty" 1
   fi
@@ -651,7 +651,7 @@ prev_test_filepath() {
 
   msg_name=$(basename "${msg_name}")
   old_json="${msg_name:0:4}"
-  new_json=$(((10#$old_json)-1))  #There should't be any problem since they start from 0001
+  new_json=$(((10#$old_json)-1))  # There should not be any problem since they start from 0001
   new_json=$(printf %04d ${new_json})
   msg_name="${new_json}${msg_name:4}"
 
