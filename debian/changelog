@@ -610,7 +610,7 @@ kamailio-config-tests (0.12.0.0+0~mr4.2.0.0) unstable; urgency=medium
   * [fe6ee4c] MT#14721 add new event_route dialog:start
   * [8e20d27] MT#14967 fix check.py TAP output
   * [c9d73ed] MT#12937 fix new order of preferences
-  * [cafe088] MT#7571 bin/check.sh: skip delete domain when skiping run tests
+  * [cafe088] MT#7571 bin/check.sh: skip delete domain when skipping run tests
   * [20bb49e] MT#7571 bin/check.sh: fix creation of KAM_DIR cfgtest dir
   * [c421e3f] MT#7571 bin/check.sh: fix cosmetic output removing domain
 
@@ -850,7 +850,7 @@ kamailio-config-tests (0.2) unstable; urgency=low
   * [3b7e2d4] bin/show_flow.pl: add missing option to help output
   * [3558279] MT#4675 refresh checks
   * [fcedee9] MT#4675 fix PRO tests
-  * [1e76a20] MT#4691 Update documentation for oficial releases
+  * [1e76a20] MT#4691 Update documentation for official releases
   * [b97e447] MT#4143 scenario to check unregister with 2 contacts as Bria does
   * [5f62e52] Add tests for sip_in and sip_out
   * [77e1e2f] MT#4817 Add not match rule.
