@@ -1,0 +1,36 @@
+flow:
+  - start|DEFAULT_ONREPLY:
+  - start|REPLY_ROUTE_NAT:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - start|ROUTE_PREPARE_UA:
+  - return|ROUTE_PREPARE_UA:
+  - start|REPLY_ROUTE_RTPENGINE:
+  - return|REPLY_ROUTE_RTPENGINE:
+  - start|REPLY_ROUTE_NAT_CONTINUE:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - start|dialog:start:
+  - return|dialog:start:
+  - return|dialog:start:
+sip_in:
+  - '^SIP/2.0 200 OK'
+  - 'CSeq: \d+ INVITE'
+sip_out:
+  - [
+      '^PUBLISH sip:testuser1004@',
+      'To: <sip:testuser1004@',
+      'From: <sip:testuser1004@',
+      'CSeq: \d+ PUBLISH',
+      'Event: dialog',
+      'Content-Type: application/dialog-info\+xml',
+    ]
+  - [
+      '^SIP/2.0 200 OK',
+      'CSeq: \d+ INVITE',
+      'From: <sip:4311002@',
+      'To: <sip:1010@'
+    ]
