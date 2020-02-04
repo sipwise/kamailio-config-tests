@@ -1,0 +1,43 @@
+flow:
+  - start|DEFAULT_ROUTE:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_NET_INFO:
+  - return|ROUTE_NET_INFO:
+  - start|ROUTE_CHECK_TEL_URI:
+  - return|ROUTE_CHECK_TEL_URI:
+  - start|ROUTE_PRX_REQUEST:
+  - start|ROUTE_INITVARS:
+  - return|ROUTE_INITVARS:
+  - start|ROUTE_LOCAL:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+sip_in:
+  - '^CANCEL sip:testuser1003'
+  - 'Contact: <sip:127.0.0.1:5085'
+  - 'CSeq: \d+ CANCEL'
+  - 'P-NGCP-Orig-User: 43110021010'
+  - 'P-NGCP-Orig-PBX-Ext: 1010'
+  - 'P-To-Group: 1'
+  - 'P-NGCP-Sems-Instance: pbx'
+sip_out:
+  - [
+      '^SIP/2.0 100 Trying',
+      'CSeq: \d+ CANCEL',
+      'From: <sip:4311002@',
+      'To: <sip:1010@'
+    ]
+  - [
+      '^CANCEL sip:testuser1003@',
+      'CSeq: \d+ CANCEL',
+      'From: <sip:4311002@',
+      'To: <sip:1010@'
+    ]
+  - [
+      '^SIP/2.0 200 canceling',
+      'CSeq: \d+ CANCEL',
+      'From: <sip:4311002@',
+      'To: <sip:1010@'
+    ]
