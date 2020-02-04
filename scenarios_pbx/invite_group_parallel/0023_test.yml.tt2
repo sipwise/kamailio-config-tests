@@ -1,0 +1,27 @@
+flow:
+  - start|DEFAULT_ONREPLY:
+  - start|REPLY_ROUTE_NAT:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - start|ROUTE_PREPARE_UA:
+  - return|ROUTE_PREPARE_UA:
+  - start|REPLY_ROUTE_NAT_CONTINUE:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+sip_in:
+  - '^SIP/2.0 487 Request terminated'
+  - 'CSeq: \d+ INVITE'
+  - 'Content-Length: 0'
+  - 'From: <sip:4311002@'
+  - 'To: <sip:1010@'
+sip_out:
+  - [
+      '^ACK sip:testuser1003@127.1.0.2:50603',
+      'CSeq: \d+ ACK',
+      'From: <sip:4311002@',
+      'To: <sip:1010@'
+    ]
