@@ -1,0 +1,7 @@
+{
+    "testuser1003@spce.test": {
+        "cloud_pbx_callqueue": true,
+        "max_queue_length": 2,
+        "queue_wrap_up_time": 1
+    }
+}
