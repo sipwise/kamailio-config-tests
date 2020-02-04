@@ -63,6 +63,8 @@ sub get_data {
     username => $val->{username},
     password => $val->{password},
     is_pbx_group => $val->{is_pbx_group},
+    pbx_hunt_policy => $val->{pbx_hunt_policy},
+    pbx_hunt_timeout => $val->{pbx_hunt_timeout},
     is_pbx_pilot => $val->{is_pbx_pilot},
     pbx_extension => $val->{pbx_extension},
     pbx_group_ids => $val->{pbx_group_ids},

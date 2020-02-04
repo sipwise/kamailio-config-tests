@@ -1,0 +1,69 @@
+test_uuid: invite_group_serial
+domains:
+  'spce.test':
+    reseller_id: 1
+customers:
+  'customerpbx.test':
+    contacts:
+      - email: "customerpbx.test@spce.test"
+        reseller_id: 1
+    details:
+      status: 'active'
+      type: 'pbxaccount'
+      billing_profile_id: 1
+      reseller_id: 1
+subscribers:
+  spce.test:
+    testgroup1010:
+      customer: 'customerpbx.test'
+      password: testgroup
+      cc: 43
+      ac: 1
+      sn: 1010
+      is_pbx_group: 1
+      pbx_hunt_policy: serial
+      pbx_hunt_timeout: 5
+      pbx_extension: 1010
+    testuser1002:
+      customer: 'customerpbx.test'
+      password: testuser
+      cc: 43
+      ac: 1
+      sn: 1002
+      is_pbx_pilot: 1
+      pbx_extension: 1002
+    testuser1003:
+      customer: 'customerpbx.test'
+      password: testuser
+      cc: 43
+      ac: 1
+      sn: 1003
+      is_pbx_pilot: 0
+      pbx_extension: 1003
+      pbx_groups: [testgroup1010]
+    testuser1004:
+      customer: 'customerpbx.test'
+      password: testuser
+      cc: 43
+      ac: 1
+      sn: 1004
+      is_pbx_pilot: 0
+      pbx_extension: 1004
+      pbx_groups: [testgroup1010]
+scenarios:
+  - ip: 127.126.0.1
+    username: testuser1002
+    domain: spce.test
+    responders:
+      - ip: 127.1.0.1
+        username: testgroup1010
+        domain: spce.test
+        register: no
+      - ip: 127.1.0.1
+        username: testuser1003
+        domain: spce.test
+        register: yes
+      - ip: 127.1.0.1
+        username: testuser1004
+        domain: spce.test
+        register: yes
