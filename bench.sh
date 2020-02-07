@@ -28,7 +28,7 @@ if [ "${PROFILE}" != "CE" ] && [ "${PROFILE}" != "PRO" ]; then
 fi
 
 NUM=${1:-20}
-RUN_OPS=(-c -r -p"${PROFILE}")
+RUN_OPS=(-C -c -r -p"${PROFILE}")
 
 # clean previous
 rm -rf log_* result_*
@@ -41,7 +41,6 @@ if ! "${SKIP_CONFIG}" ; then
 	echo "add configuration for tests"
 	./bin/config_debug.pl on
 	ngcpcfg apply 'k-c-t on'
-	RUN_OPS+=(-C)
 fi
 
 echo "$(date) - Starting $NUM tests"
