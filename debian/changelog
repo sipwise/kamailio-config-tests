@@ -1,3 +1,18 @@
+kamailio-config-tests (7.5.3.1+0~mr7.5.3.1) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [690e7ac] TT#71323 invite_hdr
+  * [3dc2a9d] TT#73652  Revert "TT#73251 Remove pv_headers routes because of auto_collect active"
+
+  [ Marco Capetta ]
+  * [9f0560a] TT#71323 Fix invite_hdr scenario when auto_collect is disabled
+  * [14e738a] TT#72152 Check Diversion and HIH in invite_redirect scenario
+  * [cf20109] TT#73251 Remove pv_headers routes because of auto_collect active
+  * [ed72b49] TT#71821 Fix PBX scenarios
+  * [b01fdff] TT#74213 Load redirecting party prefs as new caller after 302
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 10 Feb 2020 16:33:30 +0100
+
 kamailio-config-tests (7.5.3.0+0~mr7.5.3.0) unstable; urgency=medium
 
   * New release.
