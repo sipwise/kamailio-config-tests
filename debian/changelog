@@ -1,3 +1,10 @@
+kamailio-config-tests (8.2.1.1+0~mr8.2.1.1) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [af4e53d] TT#73652 Revert "TT#58628 Adapt test to auto collect/apply of pv_headers"
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 10 Feb 2020 08:45:36 +0100
+
 kamailio-config-tests (8.2.1.0+0~mr8.2.1.0) unstable; urgency=medium
 
   [ Victor Seva ]
