@@ -30,16 +30,18 @@ use Hash::Merge qw(merge);
 
 sub usage
 {
-  my $output = "usage: config_debug.pl [-h] MODE DOMAIN\n";
+  my $output = "usage: config_debug.pl [-hgc] MODE DOMAIN\n";
   $output .= "Options:\n";
   $output .= "\t-h: this help\n";
   $output .= "\t-g: scenarios group\n";
+  $output .= "\t-c: number of kamailio.proxy.children\n";
   $output .= "\tMODE: on|off\tdefault: off\n";
   $output .= "\tDOMAIN: default: spce.test\n";
   return $output
 }
 
 my $help = 0;
+my $children;
 my $profile = "CE";
 my $group;
 if (exists $ENV{'GROUP'})
@@ -50,7 +52,10 @@ else
 {
   $group = "scenarios";
 }
-GetOptions ("h|help" => \$help, "g|group=s" => \$group)
+GetOptions (
+  "h|help" => \$help,
+  "g|group=s" => \$group,
+  "c|children=i" => \$children)
   or die("Error in command line arguments\n".usage());
 
 if($#ARGV>1 || $help)
@@ -99,11 +104,14 @@ else
 {
   for my $file ($file_yaml, $file_net_yaml) {
     cp($file, $file.".orig") or die "Copy $file failed: $ERRNO" unless(-e $file.".orig");
-  }  
+  }
   $yaml = LoadFile($file_yaml);
   $yaml->{kamailio}{lb}{cfgt} = 'yes';
   $yaml->{kamailio}{lb}{dns}{use_dns_cache} = 'off';
-  $yaml->{kamailio}{proxy}{children} = 1;
+  if($children > 0)
+  {
+    $yaml->{kamailio}{proxy}{children} = $children;
+  }
   $yaml->{kamailio}{proxy}{cfgt} = 'yes';
   $yaml->{sems}{cfgt} = 'yes';
   $yaml->{sems}{debug} = 'yes';
