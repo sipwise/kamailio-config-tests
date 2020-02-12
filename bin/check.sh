@@ -247,6 +247,8 @@ delete_voip() {
   if [ -f "${SCEN_CHECK_DIR}/peer.yml" ]; then
     echo "$(date) - Deleting peers"
     "${BIN_DIR}/create_peers.pl" -delete "${SCEN_CHECK_DIR}/peer.yml"
+    # REMOVE ME!! fix for REST API
+    ngcp-kamcmd proxy lcr.reload
   fi
 
   if [ -f "${SCEN_CHECK_DIR}/trusted.yml" ]; then
