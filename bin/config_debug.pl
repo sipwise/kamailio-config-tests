@@ -41,7 +41,7 @@ sub usage
 }
 
 my $help = 0;
-my $children;
+my $children = 0;
 my $profile = "CE";
 my $group;
 if (exists $ENV{'GROUP'})
