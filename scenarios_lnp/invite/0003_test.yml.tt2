@@ -111,6 +111,8 @@ flow:
         "account:[% customer_test.id %]",
         "user:[% spce_test.testuser1001.uuid %]"
       ]
+  - start|ROUTE_CHECK_PEER_PROBE:
+  - return|ROUTE_CHECK_PEER_PROBE:
   - start|ROUTE_CLEAR_PEER_OUT_PREF:
   - return|ROUTE_CLEAR_PEER_OUT_PREF:
   - start|ROUTE_LOAD_PEER_OUT_PREF:
