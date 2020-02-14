@@ -1,0 +1,7 @@
+flow:
+  - start|DEFAULT_ONREPLY:
+  - return|DEFAULT_ONREPLY:
+sip_in:
+  - '^SIP/2.0 200 OK'
+  - 'CSeq: 2 CANCEL'
+sip_out: []

@@ -1,0 +1,45 @@
+flow:
+  - start|DEFAULT_ONREPLY:
+  - start|REPLY_ROUTE_NAT:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - start|ROUTE_PREPARE_UA:
+  - return|ROUTE_PREPARE_UA:
+  - start|REPLY_ROUTE_NAT_CONTINUE:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+  - exit|ROUTE_EXIT:
+sip_in:
+  - '^SIP/2.0 302 Moved Temporarily'
+  - 'From: <sip:4311002@'
+  - 'To: <sip:testuser1003@'
+  - 'CSeq: 2 INVITE'
+sip_out:
+  - [
+      '^ACK sip:testuser1003@',
+      'From: <sip:4311002@',
+      'To: <sip:testuser1003@',
+      'CSeq: 2 ACK',
+      'Max-Forwards: 68',
+      'Content-Length: 0'
+    ]
+  - [
+      '^CANCEL sip:testuser1003@',
+      'From: <sip:4311002@',
+      'To: <sip:testuser1003@',
+      'CSeq: 2 CANCEL',
+      'Max-Forwards: 68',
+      'Content-Length: 0'
+    ]
+  - [
+      '^CANCEL sip:testuser1003@',
+      'From: <sip:4311002@',
+      'To: <sip:testuser1003@',
+      'CSeq: 2 CANCEL',
+      'Max-Forwards: 68',
+      'Content-Length: 0'
+    ]
