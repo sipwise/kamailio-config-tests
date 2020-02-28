@@ -12,6 +12,7 @@ testuser1003@spce.test:
         destinationset: dest1003
         sourceset: null
         timeset: null
+        enabled: true
     cfb: []
     cfna: []
     cft: []
