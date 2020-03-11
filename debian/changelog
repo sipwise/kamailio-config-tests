@@ -1,3 +1,10 @@
+kamailio-config-tests (6.5.8.1+0~mr6.5.8.1) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [d591141] TT#76152 Adapt scenario after moving of ROUTE_CHECK_PEER_PROBE route
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 11 Mar 2020 09:13:28 +0100
+
 kamailio-config-tests (6.5.8.0+0~mr6.5.8.0) unstable; urgency=medium
 
   * New release.
