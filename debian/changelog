@@ -1,3 +1,17 @@
+kamailio-config-tests (8.3.1.0+0~mr8.3.1.0) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [5ec9fa1] TT#72700 bench.sh: fix skip config option
+  * [33f2faa] TT#75801 don't change kamailio.proxy.children value per default
+  * [02f0f84] TT#75801 add missing hack for missing REST API behaviour
+  * [9ae2008] TT#75801 config_debug.pl remove uninitialized value warning
+
+  [ Marco Capetta ]
+  * [101be4d] TT#76152 Adapt scenario after moving of ROUTE_CHECK_PEER_PROBE route
+  * [287c561] TT#75754 Add callforward enabled/disable paramenter
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 16 Mar 2020 11:13:18 +0100
+
 kamailio-config-tests (8.3.0.0+0~mr8.3.0.0) unstable; urgency=medium
 
   [ Victor Seva ]
