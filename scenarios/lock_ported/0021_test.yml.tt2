@@ -59,8 +59,12 @@ flow:
      $xavp(caller_real_prefs[0]=>lock[*]): [5]
   - start|ROUTE_ACC_FAILURE:
   - start|ROUTE_ACC_CALLER:
+  - start|ROUTE_SET_ACC_CALLER_CALL_COUNTERS:
+  - return|ROUTE_SET_ACC_CALLER_CALL_COUNTERS:
   - return|ROUTE_ACC_CALLER:
   - start|ROUTE_ACC_CALLEE:
+  - start|ROUTE_SET_ACC_CALLEE_CALL_COUNTERS:
+  - return|ROUTE_SET_ACC_CALLEE_CALL_COUNTERS:
   - return|ROUTE_ACC_CALLEE:
   - return|ROUTE_ACC_FAILURE:
   - start|ROUTE_EARLY_REJECT:

@@ -67,8 +67,12 @@ flow:
         "local"
       ]
   - start|ROUTE_ACC_CALLER:
+  - start|ROUTE_SET_ACC_CALLER_CALL_COUNTERS:
+  - return|ROUTE_SET_ACC_CALLER_CALL_COUNTERS:
   - return|ROUTE_ACC_CALLER:
   - start|ROUTE_ACC_CALLEE:
+  - start|ROUTE_SET_ACC_CALLEE_CALL_COUNTERS:
+  - return|ROUTE_SET_ACC_CALLEE_CALL_COUNTERS:
   - return|ROUTE_ACC_CALLEE:
   - start|BRANCH_ROUTE_NO_SBC:
   - start|ROUTE_BRANCH_ACC_RTP:
