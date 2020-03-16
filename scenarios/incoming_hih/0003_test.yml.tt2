@@ -92,8 +92,12 @@ flow:
   - return|ROUTE_CHECK_CF:
   - start|ROUTE_ACC_CF:
   - start|ROUTE_ACC_CALLER:
+  - start|ROUTE_SET_ACC_CALLER_CALL_COUNTERS:
+  - return|ROUTE_SET_ACC_CALLER_CALL_COUNTERS:
   - return|ROUTE_ACC_CALLER:
   - start|ROUTE_ACC_CALLEE:
+  - start|ROUTE_SET_ACC_CALLEE_CALL_COUNTERS:
+  - return|ROUTE_SET_ACC_CALLEE_CALL_COUNTERS:
   - return|ROUTE_ACC_CALLEE:
   - return|ROUTE_ACC_CF:
   - start|ROUTE_EXECUTE_CF_LOOP:
@@ -108,6 +112,10 @@ flow:
         "user:[% spce_test.testuser1003.uuid %]",
         "peer:[% peer_00_host0.id %]", "total"
       ]
+  - start|ROUTE_SET_ACC_CALLER_CALL_COUNTERS:
+  - return|ROUTE_SET_ACC_CALLER_CALL_COUNTERS:
+  - start|ROUTE_SET_ACC_CALLEE_CALL_COUNTERS:
+  - return|ROUTE_SET_ACC_CALLEE_CALL_COUNTERS:
   - start|ROUTE_ADD_AOC_HEADER:
   - return|ROUTE_ADD_AOC_HEADER:
   - start|BRANCH_ROUTE_FWD_LOOP:
