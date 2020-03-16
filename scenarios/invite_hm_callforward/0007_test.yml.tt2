@@ -119,8 +119,12 @@ flow:
         "user:[% spce_test.testuser1003.uuid %]"
       ]
   - start|ROUTE_ACC_CALLER:
+  - start|ROUTE_SET_ACC_CALLER_CALL_COUNTERS:
+  - return|ROUTE_SET_ACC_CALLER_CALL_COUNTERS:
   - return|ROUTE_ACC_CALLER:
   - start|ROUTE_ACC_CALLEE:
+  - start|ROUTE_SET_ACC_CALLEE_CALL_COUNTERS:
+  - return|ROUTE_SET_ACC_CALLEE_CALL_COUNTERS:
   - return|ROUTE_ACC_CALLEE:
   - start|BRANCH_ROUTE_SBC:
   - start|ROUTE_LOAD_CALLEE_CONTRACT_PREF:

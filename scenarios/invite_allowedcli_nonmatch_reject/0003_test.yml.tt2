@@ -61,9 +61,13 @@ flow:
       $xavp(caller_usr_prefs[0]=>allowed_clis_reject_policy[*]): ['reject']
   - start|ROUTE_ACC_FAILURE:
   - start|ROUTE_ACC_CALLER:
+  - start|ROUTE_SET_ACC_CALLER_CALL_COUNTERS:
+  - return|ROUTE_SET_ACC_CALLER_CALL_COUNTERS:
   - return|ROUTE_ACC_CALLER:
       $avp(caller_clir): ['']
   - start|ROUTE_ACC_CALLEE:
+  - start|ROUTE_SET_ACC_CALLEE_CALL_COUNTERS:
+  - return|ROUTE_SET_ACC_CALLEE_CALL_COUNTERS:
   - return|ROUTE_ACC_CALLEE:
       $avp(acc_callee_user): ['testuser1003']
       $avp(acc_callee_domain): ["spce.test"]
