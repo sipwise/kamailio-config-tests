@@ -134,6 +134,10 @@ flow:
         "account:[% customer_test.id %]",
         "user:[% spce_test.testuser1001.uuid %]"
       ]
+  - start|ROUTE_SET_ACC_CALLER_CALL_COUNTERS:
+  - return|ROUTE_SET_ACC_CALLER_CALL_COUNTERS:
+  - start|ROUTE_SET_ACC_CALLEE_CALL_COUNTERS:
+  - return|ROUTE_SET_ACC_CALLEE_CALL_COUNTERS:
   - start|ROUTE_ADD_AOC_HEADER:
   - return|ROUTE_ADD_AOC_HEADER:
   - start|BRANCH_ROUTE_FWD_LOOP:
