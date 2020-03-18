@@ -21,6 +21,13 @@ sip_in:
   - 'CSeq: \d+ INVITE'
 sip_out:
   - [
+      '^PUBLISH sip:testuser1003@spce.test SIP/2.0',
+      'From: <sip:testuser1003@spce.test>',
+      'To: <sip:testuser1003@spce.test>',
+      'Event: dialog',
+      'Content-Type: application/dialog-info\+xml',
+    ]
+  - [
       '^SIP/2.0 180 Ringing',
       'CSeq: \d+ INVITE',
     ]

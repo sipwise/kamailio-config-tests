@@ -175,6 +175,13 @@ sip_out:
       'P-NGCP-Caller-Info: <sip:testuser1002@'
     ]
   - [
+      '^PUBLISH sip:testuser1002@spce.test SIP/2.0',
+      'From: <sip:testuser1002@spce.test>',
+      'To: <sip:testuser1002@spce.test>',
+      'Event: dialog',
+      'Content-Type: application/dialog-info\+xml',
+    ]
+  - [
       '^INVITE sip:testuser1003@',
       'CSeq: 2 INVITE',
       'From: <sip:testuser1002@',

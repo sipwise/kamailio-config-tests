@@ -166,6 +166,13 @@ sip_out:
       'Content-Length: 0',
     ]
   - [
+      '^PUBLISH sip:testuser1003@spce.test SIP/2.0',
+      'From: <sip:testuser1003@spce.test>',
+      'To: <sip:testuser1003@spce.test>',
+      'Event: dialog',
+      'Content-Type: application/dialog-info\+xml',
+    ]
+  - [
       '^INVITE sip:testuser1002@spce.test SIP/2.0',
       'From: <sip:testuser1003@spce.test>;tag=',
       'To: <sip:1002@spce.test>',

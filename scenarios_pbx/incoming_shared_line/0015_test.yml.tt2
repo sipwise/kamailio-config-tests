@@ -5,33 +5,53 @@ flow:
   - return|ROUTE_ENTRY:
   - start|ROUTE_APPLY_HEADER_RULES:
   - return|ROUTE_APPLY_HEADER_RULES:
-  - start|REPLY_SCA_UPDATE:
-  - return|REPLY_SCA_UPDATE:
   - start|ROUTE_PREPARE_UA:
   - return|ROUTE_PREPARE_UA:
+  - start|REPLY_ROUTE_RTPENGINE:
+  - return|REPLY_ROUTE_RTPENGINE:
   - start|REPLY_ROUTE_NAT_CONTINUE:
   - start|ROUTE_EXIT:
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:
-  - exit|ROUTE_EXIT:
+  - start|dialog:start:
+  - return|dialog:start:
+  - return|dialog:start:
 sip_in:
-  - '^SIP/2.0 180 Ringing'
-  - 'From: <sip:testuser1003@spce.test>;tag='
+  - '^SIP/2.0 200 OK'
+  - 'From: <sip:43110021003@spce.test>;tag='
   - 'To: <sip:1002@spce.test>;tag='
-  - 'CSeq: 2 INVITE'
+  - 'CSeq: \d+ INVITE'
   - 'Allow: INVITE, PRACK, ACK, BYE, CANCEL, OPTIONS, NOTIFY, REGISTER, SUBSCRIBE, REFER, PUBLISH, UPDATE, MESSAGE'
   - 'Call-Info: <sip:spce\.test>;appearance-index=1'
-  - 'Contact: <sip:127.0.0.1:5085;transport=udp>'
-  - 'Content-Length: 0'
+  - 'Contact: <sip:127.0.0.1:5080;transport=udp>'
+  - 'Content-Type: application/sdp'
+  - 'Content-Length: \d+'
 sip_out:
   - [
-      '^SIP/2.0 180 Ringing',
+      '^PUBLISH sip:testuser1002@spce.test SIP/2.0',
+      'From: <sip:testuser1002@spce.test>',
+      'To: <sip:testuser1002@spce.test>',
+      'Event: dialog',
+      'Content-Type: application/dialog-info\+xml',
+    ]
+  - [
+      '^SIP/2.0 200 OK',
       'From: <sip:testuser1003@spce.test>;tag=',
       'To: <sip:1002@spce.test>;tag=',
-      'CSeq: 2 INVITE',
+      'CSeq: \d+ INVITE',
       'Allow: INVITE, PRACK, ACK, BYE, CANCEL, OPTIONS, NOTIFY, REGISTER, SUBSCRIBE, REFER, PUBLISH, UPDATE, MESSAGE',
-      'Contact: <sip:127.0.0.1:5085;transport=udp>',
+      'Call-Info: <sip:spce\.test>;appearance-index=1',
+      'Contact: <sip:127.0.0.1:5080;transport=udp>',
+      'Content-Type: application/sdp',
+      'Content-Length: \d+',
+    ]
+  - [
+      '^CANCEL sip:testuser1002@127.1.0.3:\d+ SIP/2.0',
+      'From: <sip:43110021003@spce.test>;tag=',
+      'To: <sip:1002@spce.test>',
+      'CSeq: \d+ CANCEL',
+      'Route: <sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060>',
+      'Max-Forwards: 69',
       'Content-Length: 0',
-      'P-COLP-Identity: \"1002\" <sip:1002@spce.test>',
-      'P-Out-Socket: udp:127.0.0.1:5060',
+      'Reason: SIP;cause=200;text=\"Call completed elsewhere\"',
     ]

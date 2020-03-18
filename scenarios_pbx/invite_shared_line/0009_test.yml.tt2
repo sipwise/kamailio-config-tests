@@ -18,6 +18,13 @@ sip_in:
   - 'Content-Length:\s+0'
 sip_out:
   - [
+      '^PUBLISH sip:testuser1003@spce.test SIP/2.0',
+      'From: <sip:testuser1003@spce.test>',
+      'To: <sip:testuser1003@spce.test>',
+      'Event: dialog',
+      'Content-Type: application/dialog-info\+xml',
+    ]
+  - [
       '^SIP/2.0 180 Ringing',
       'From: <sip:testuser1002@spce.test>;tag=',
       'To: <sip:1003@spce.test>;tag=',
