@@ -9,6 +9,8 @@ flow:
   - return|REPLY_SCA_UPDATE:
   - start|ROUTE_PREPARE_UA:
   - return|ROUTE_PREPARE_UA:
+  - start|ROUTE_FIX_PBX_STOP_RECORDS:
+  - return|ROUTE_FIX_PBX_STOP_RECORDS:
   - start|REPLY_ROUTE_RTPENGINE:
   - return|REPLY_ROUTE_RTPENGINE:
   - start|REPLY_ROUTE_NAT_CONTINUE:
@@ -28,6 +30,13 @@ sip_in:
   - 'Content-Type: application/sdp'
   - 'Content-Length: \d+'
 sip_out:
+  - [
+      '^PUBLISH sip:testuser1003@spce.test SIP/2.0',
+      'From: <sip:testuser1003@spce.test>',
+      'To: <sip:testuser1003@spce.test>',
+      'Event: dialog',
+      'Content-Type: application/dialog-info\+xml',
+    ]
   - [
       '^SIP/2.0 200 OK',
       'From: <sip:testuser1003@spce.test>;tag=',
