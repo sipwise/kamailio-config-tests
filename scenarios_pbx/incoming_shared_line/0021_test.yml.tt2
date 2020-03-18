@@ -12,6 +12,8 @@ flow:
   - start|dialog:end:
   - return|dialog:end:
   - return|dialog:end:
+  - start|ROUTE_FIX_PBX_STOP_RECORDS:
+  - return|ROUTE_FIX_PBX_STOP_RECORDS:
   - start|ROUTE_STOP_RTPPROXY:
   - start|ROUTE_RESTORE_CLUSTERSET:
   - return|ROUTE_RESTORE_CLUSTERSET:
@@ -52,6 +54,13 @@ sip_out:
       'P-NGCP-Auth-IP: 127.126.0.3',
       'P-NGCP-Auth-UA: <null>',
       'Content-Length: 0',
+    ]
+  - [
+      '^PUBLISH sip:testuser1003@spce.test SIP/2.0',
+      'From: <sip:testuser1003@spce.test>',
+      'To: <sip:testuser1003@spce.test>',
+      'Event: dialog',
+      'Content-Type: application/dialog-info\+xml',
     ]
   - [
       '^NOTIFY sip:testuser1002@127.1.0.2:\d+ SIP/2.0',
