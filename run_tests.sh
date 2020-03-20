@@ -384,6 +384,21 @@ done
 # Hack to allow tcpdump to capture all the packages and kamailio to write all the json files
 sleep 5
 
+# Check if there are still some rtp port open after tests execution
+rtpengine_ctl_ip=$(grep 'listen-cli' /etc/rtpengine/rtpengine.conf |awk '{print $3}')
+rtp_ports=$(rtpengine-ctl -ip "${rtpengine_ctl_ip}" list interfaces |grep "Ports used" | awk '{print $3}')
+if [ -n "${rtp_ports}" ]; then
+  while read -r i; do
+    if [ "${i}" -gt 0 ]; then
+      echo "$(date) - ================================================================================="
+      echo "$(date) - There are still some rtp ports open, please check the following output"
+      rtpengine-ctl -ip 127.0.0.1:2224 list interfaces
+      echo "$(date) - ================================================================================="
+      error_flag=1
+    fi
+  done <<<  "${rtp_ports}"
+fi
+
 if "${CAPTURE}" ; then
   stop_capture
 fi
