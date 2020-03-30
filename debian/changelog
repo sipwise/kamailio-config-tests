@@ -1,3 +1,10 @@
+kamailio-config-tests (8.3.1.1+0~mr8.3.1.1) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [5b79641] TT#77207 Fix scenarios after "lookup_peer_destination_domain_for_pbx" mode set to "yes"
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 30 Mar 2020 11:16:54 +0200
+
 kamailio-config-tests (8.3.1.0+0~mr8.3.1.0) unstable; urgency=medium
 
   [ Victor Seva ]
