@@ -188,7 +188,7 @@ flow:
       ]
 sip_in:
   - '^INVITE sip:4311005@'
-  - 'Contact: <sip:(testuser1003@)?127.0.0.1:5080(;transport=udp)?>'
+  - 'Contact: <sip:(testuser1003@)?127.0.0.1:5088(;transport=udp)?>'
   - 'CSeq: \d+ INVITE'
   - 'Content-Type: application/sdp'
 sip_out:

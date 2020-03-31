@@ -28,7 +28,7 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^BYE sip:127.0.0.1:5080(;prxroute=1)? SIP/2.0'
+  - '^BYE sip:127.0.0.1:5088(;prxroute=1)? SIP/2.0'
   - 'Contact: sip:testuser1002@'
   - 'CSeq: 2 BYE'
   - 'Max-Forwards: 69'
@@ -46,7 +46,7 @@ sip_out:
       '_:NOT:_P-Asserted-Identity: \w+'
     ]
   - [
-      '^BYE sip:127.0.0.1:5080(;prxroute=1)? SIP/2.0',
+      '^BYE sip:127.0.0.1:5088(;prxroute=1)? SIP/2.0',
       'Contact: sip:testuser1002@',
       'CSeq: 2 BYE',
       'Max-Forwards: 68',
