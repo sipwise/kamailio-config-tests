@@ -229,9 +229,9 @@ sip_out:
       'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
       'P-Callee-UUID: [% spce_test.testuser1003.uuid %]',
       'P-App-Name: sbc',
-      'P-App-Param: ;a_park_domain=\d+;b_park_domain=\d+',
+      'P-App-Param: ;profile=ngcp_pbx;a_park_domain=\d+;b_park_domain=\d+',
       'P-NGCP-Acc-Src-Leg: \w+',
       'P-NGCP-Acc-Dst-Leg: \w+',
       'P-NGCP-Caller-Info: <sip:testuser1002@spce.test>;ip=127.126.0.1;port=\d+;primary=4311002',
-      'P-NGCP-Callee-Info: <sip:43110021003@spce.test>;ip=127.0.0.1;port=5085;primary=43110021003',
+      'P-NGCP-Callee-Info: <sip:43110021003@spce.test>;ip=127.0.0.1;port=5088;primary=43110021003',
     ]

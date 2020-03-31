@@ -192,6 +192,6 @@ sip_out:
       'P-NGCP-Lookup-Type: ext',
       'P-NGCP-Orig-User: 43110021003',
       'P-NGCP-Orig-Dialed: 1003',
-      'P-App-Param: (;calltimer=21600)?;a_park_domain=\d+;b_park_domain=\d+',
+      'P-App-Param: (;calltimer=21600)?;profile=ngcp_pbx;a_park_domain=\d+;b_park_domain=\d+',
       'P-App-Name: sbc'
     ]
