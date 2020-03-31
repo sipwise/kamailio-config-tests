@@ -26,7 +26,7 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^ACK sip:127.0.0.1:5085(;prxroute=1)? SIP/2.0'
+  - '^ACK sip:127.0.0.1:508[5|8](;prxroute=1)? SIP/2.0'
   - 'From: <sip:testuser1002@spce.test>;tag='
   - 'To: <sip:1003@spce.test>;tag='
   - 'Call-Info: <sip:spce.test>;appearance-index=1'
@@ -40,7 +40,7 @@ sip_in:
   - 'P-Sock-Info: udp:127.0.0.1:5060'
 sip_out:
   - [
-      '^ACK sip:127.0.0.1:5085(;prxroute=1)? SIP/2.0',
+      '^ACK sip:127.0.0.1:508[5|8](;prxroute=1)? SIP/2.0',
       'From: <sip:testuser1002@spce.test>;tag=',
       'To: <sip:1003@spce.test>;tag=',
       'Call-Info: <sip:spce.test>;appearance-index=1',

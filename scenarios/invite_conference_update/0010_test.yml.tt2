@@ -20,7 +20,7 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^UPDATE sip:127.0.0.1:5080(;prxroute=1)?(;transport=udp)? SIP/2.0'
+  - '^UPDATE sip:127.0.0.1:508[0|8](;prxroute=1)?(;transport=udp)? SIP/2.0'
   - 'Contact: sip:testuser1002@'
   - 'CSeq: 3 UPDATE'
   - 'Max-Forwards: 69'
@@ -37,7 +37,7 @@ sip_out:
       'To: <sip:testuser1001@'
     ]
   - [
-      '^UPDATE sip:127.0.0.1:5080(;prxroute=1)?(;transport=udp)? SIP/2.0',
+      '^UPDATE sip:127.0.0.1:508[0|8](;prxroute=1)?(;transport=udp)? SIP/2.0',
       'Contact: sip:testuser1002@',
       'CSeq: 3 UPDATE',
       'Max-Forwards: 68',
