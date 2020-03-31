@@ -24,13 +24,13 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^ACK sip:(4318881003@)?127.0.0.1:5080(;transport=udp)? SIP/2.0'
+  - '^ACK sip:(4318881003@)?127.0.0.1:508[0|8](;transport=udp)? SIP/2.0'
   - 'CSeq: \d+ ACK'
   - 'From: <sip:004321001@'
   - 'To: <sip:4311001@'
 sip_out:
   - [
-      '^ACK sip:(4318881003@)?127.0.0.1:5080(;transport=udp)? SIP/2.0',
+      '^ACK sip:(4318881003@)?127.0.0.1:508[0|8](;transport=udp)? SIP/2.0',
       'CSeq: \d+ ACK',
       'From: <sip:004321001@',
       'To: <sip:4311001@'

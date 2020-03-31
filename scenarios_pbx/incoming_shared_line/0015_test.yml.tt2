@@ -23,7 +23,7 @@ sip_in:
   - 'CSeq: \d+ INVITE'
   - 'Allow: INVITE, PRACK, ACK, BYE, CANCEL, OPTIONS, NOTIFY, REGISTER, SUBSCRIBE, REFER, PUBLISH, UPDATE, MESSAGE'
   - 'Call-Info: <sip:spce\.test>;appearance-index=1'
-  - 'Contact: <sip:127.0.0.1:5080;transport=udp>'
+  - 'Contact: <sip:127.0.0.1:508[0|8];transport=udp>'
   - 'Content-Type: application/sdp'
   - 'Content-Length: \d+'
 sip_out:
@@ -41,7 +41,7 @@ sip_out:
       'CSeq: \d+ INVITE',
       'Allow: INVITE, PRACK, ACK, BYE, CANCEL, OPTIONS, NOTIFY, REGISTER, SUBSCRIBE, REFER, PUBLISH, UPDATE, MESSAGE',
       'Call-Info: <sip:spce\.test>;appearance-index=1',
-      'Contact: <sip:127.0.0.1:5080;transport=udp>',
+      'Contact: <sip:127.0.0.1:508[0|8];transport=udp>',
       'Content-Type: application/sdp',
       'Content-Length: \d+',
     ]

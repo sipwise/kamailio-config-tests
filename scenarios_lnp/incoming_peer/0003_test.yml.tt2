@@ -211,7 +211,7 @@ sip_out:
       '^INVITE sip:4318881003@',
       'CSeq: \d+ INVITE',
       'From: <sip:004321001@',
-      'Contact: <sip:127.0.0.1:5080(;transport=udp)?>',
+      'Contact: <sip:127.0.0.1:508[0|8](;transport=udp)?>',
       'To: <sip:4311001@',
       'Content-Type: application/sdp',
       'P-CF-Depth: 1',

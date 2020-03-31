@@ -26,13 +26,13 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^ACK sip:127.0.0.1:5085;prxroute=1 SIP/2.0'
+  - '^ACK sip:127.0.0.1:508[5|8];prxroute=1 SIP/2.0'
   - 'CSeq: 2 ACK'
   - 'From: <sip:testuser1002@'
   - 'To: <sip:1003@'
 sip_out:
   - [
-      '^ACK sip:127.0.0.1:5085;prxroute=1 SIP/2.0',
+      '^ACK sip:127.0.0.1:508[5|8];prxroute=1 SIP/2.0',
       'CSeq: 2 ACK',
       'From: <sip:testuser1002@',
       'To: <sip:1003@'
