@@ -30,7 +30,7 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^BYE sip:127.0.0.1:5080;transport=udp SIP/2.0'
+  - '^BYE sip:127.0.0.1:5088;transport=udp SIP/2.0'
   - 'CSeq: \d+ BYE'
   - 'Max-Forwards: 70'
   - 'Content-Length: 0'
@@ -53,7 +53,7 @@ sip_out:
       'Content-Type: application/dialog-info\+xml',
     ]
   - [
-      '^BYE sip:127.0.0.1:5080;transport=udp SIP/2.0',
+      '^BYE sip:127.0.0.1:5088;transport=udp SIP/2.0',
       'CSeq: \d+ BYE',
       'Max-Forwards: 69',
       'Content-Length: 0',

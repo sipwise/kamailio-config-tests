@@ -14,7 +14,7 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^UPDATE sip:127.0.0.1:5080;transport=udp SIP/2.0'
+  - '^UPDATE sip:127.0.0.1:5088;transport=udp SIP/2.0'
   - 'CSeq: \d+ UPDATE'
   - 'Content-Length: 0'
   - 'From: <sip:testuser1002@'
