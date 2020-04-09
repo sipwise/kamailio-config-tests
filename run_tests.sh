@@ -63,32 +63,32 @@ cfg_debug_off() {
 
 copy_logs_to_tmp() {
   # copy the kamailio log
-  cp "${KAM_LOG}" "${TMP_LOG_DIR}/tmp_kamailio.log"
+  cp -a "${KAM_LOG}" "${TMP_LOG_DIR}/tmp_kamailio.log"
   if [ -f "${SEMS_LOG}" ] ; then
     # copy the sems log
-    cp "${SEMS_LOG}" "${TMP_LOG_DIR}/tmp_sems.log"
+    cp -a "${SEMS_LOG}" "${TMP_LOG_DIR}/tmp_sems.log"
   fi
   if [ -f "${SEMS_PBX_LOG}" ] ; then
     # copy the sems-pbx log
-    cp "${SEMS_PBX_LOG}" "${TMP_LOG_DIR}/tmp_sems-pbx.log"
+    cp -a "${SEMS_PBX_LOG}" "${TMP_LOG_DIR}/tmp_sems-pbx.log"
   fi
   # copy the kamailio-lb log
-  cp "${KAMLB_LOG}" "${TMP_LOG_DIR}/tmp_kamailio-lb.log"
+  cp -a "${KAMLB_LOG}" "${TMP_LOG_DIR}/tmp_kamailio-lb.log"
 }
 
 copy_logs_from_tmp() {
   # copy the kamailio log
-  cp "${TMP_LOG_DIR}/tmp_kamailio.log" "${KAM_LOG}"
+  cp -a "${TMP_LOG_DIR}/tmp_kamailio.log" "${KAM_LOG}"
   if [ -f "${SEMS_LOG}" ] ; then
     # copy the sems log
-    cp "${TMP_LOG_DIR}/tmp_sems.log" "${SEMS_LOG}"
+    cp -a "${TMP_LOG_DIR}/tmp_sems.log" "${SEMS_LOG}"
   fi
   if [ -f "${TMP_LOG_DIR}/tmp_sems-pbx.log" ] ; then
     # copy the sems-pbx log
-    cp "${TMP_LOG_DIR}/tmp_sems-pbx.log" "${SEMS_PBX_LOG}"
+    cp -a "${TMP_LOG_DIR}/tmp_sems-pbx.log" "${SEMS_PBX_LOG}"
   fi
   # copy the kamailio-lb log
-  cp "${TMP_LOG_DIR}/tmp_kamailio-lb.log" "${KAMLB_LOG}"
+  cp -a "${TMP_LOG_DIR}/tmp_kamailio-lb.log" "${KAMLB_LOG}"
 }
 
 capture() {
