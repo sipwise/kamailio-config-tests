@@ -1,3 +1,14 @@
+kamailio-config-tests (8.2.2.1+0~mr8.2.2.1) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [9b2dc06] TT#75801 don't change kamailio.proxy.children value per default
+  * [7a890d0] TT#75801 config_debug.pl remove uninitialized value warning
+
+  [ Marco Capetta ]
+  * [d1f0609] TT#76152 Adapt scenario after moving of ROUTE_CHECK_PEER_PROBE route
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 27 Apr 2020 21:26:44 +0200
+
 kamailio-config-tests (8.2.2.0+0~mr8.2.2.0) unstable; urgency=medium
 
   [ Victor Seva ]
