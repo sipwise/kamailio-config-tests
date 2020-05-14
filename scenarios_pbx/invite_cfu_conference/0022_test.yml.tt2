@@ -1,0 +1,38 @@
+flow:
+  - start|DEFAULT_ONREPLY:
+  - start|REPLY_ROUTE_NAT:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - start|REPLY_SCA_UPDATE:
+  - return|REPLY_SCA_UPDATE:
+  - start|ROUTE_PREPARE_UA:
+  - return|ROUTE_PREPARE_UA:
+  - start|ROUTE_FIX_PBX_STOP_RECORDS:
+  - return|ROUTE_FIX_PBX_STOP_RECORDS:
+  - start|REPLY_ROUTE_RTPENGINE:
+  - return|REPLY_ROUTE_RTPENGINE:
+  - start|REPLY_ROUTE_NAT_CONTINUE:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+sip_in:
+  - 'SIP/2.0 200 OK'
+  - 'From: <sip:testuser1002@'
+  - 'To: <sip:4311001@'
+  - 'CSeq: \d+ INVITE'
+  - 'Contact: <sip:127.0.0.1:508[5|8];transport=udp>'
+  - 'Content-Type: application/sdp'
+sip_out:
+  - [
+      'SIP/2.0 200 OK',
+      'From: <sip:testuser1002@',
+      'To: <sip:4311001@',
+      'CSeq: \d+ INVITE',
+      'Contact: <sip:127.0.0.1:508[5|8];transport=udp>',
+      'Content-Type: application/sdp',
+      'P-COLP-Identity: "1001" <sip:1001@spce.test>',
+      'P-Out-Socket: udp:127.0.0.1:5060',
+    ]

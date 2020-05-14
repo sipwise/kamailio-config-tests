@@ -1,0 +1,34 @@
+flow:
+  - start|DEFAULT_ONREPLY:
+  - start|REPLY_ROUTE_CF_LOOP:
+      $avp(lua_dlg_profile): [
+        "total"
+      ]
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - start|ROUTE_PREPARE_UA:
+  - return|ROUTE_PREPARE_UA:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - start|dialog:start:
+  - return|dialog:start:
+  - return|dialog:start:
+sip_in:
+  - 'SIP/2.0 200 OK'
+  - 'From: <sip:testuser1002@'
+  - 'To: <sip:4311001@'
+  - 'CSeq: \d+ INVITE'
+  - 'Contact: <sip:127.0.0.1:5080;transport=udp>'
+  - 'Content-Type: application/sdp'
+sip_out:
+  - [
+      'SIP/2.0 200 OK',
+      'From: <sip:testuser1002@',
+      'To: <sip:4311001@',
+      'CSeq: \d+ INVITE',
+      'Contact: <sip:127.0.0.1:5080;transport=udp>',
+      'Content-Type: application/sdp',
+    ]
