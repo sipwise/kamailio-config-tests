@@ -1,0 +1,19 @@
+flow:
+  - start|DEFAULT_ONREPLY:
+  - return|DEFAULT_ONREPLY:
+sip_in:
+  - 'SIP/2.0 200 OK'
+  - 'From: <sip:testuser1002@'
+  - 'To: <sip:4311001@'
+  - 'CSeq: 2 INVITE'
+  - 'Contact: <sip:127.0.0.1:508[5|8];transport=udp>'
+  - 'Content-Type: application/sdp'
+sip_out:
+  - [
+      'SIP/2.0 200 OK',
+      'From: <sip:testuser1002@',
+      'To: <sip:4311001@',
+      'CSeq: 2 INVITE',
+      'Contact: <sip:127.0.0.1:508[5|8];transport=udp>',
+      'Content-Type: application/sdp',
+    ]

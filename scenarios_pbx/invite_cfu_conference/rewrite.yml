@@ -1,0 +1,13 @@
+rw_00:
+  - direction: in
+    field: callee
+    match_pattern: '^(00|\+)([1-9][0-9]+)$'
+    replace_pattern: '\2'
+    priority: 1
+    description: International to E.164
+  - direction: in
+    field: caller
+    match_pattern: '^(00|\+)([1-9][0-9]+)$'
+    replace_pattern: '\2'
+    priority: 1
+    description: International to E.164

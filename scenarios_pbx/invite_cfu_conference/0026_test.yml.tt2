@@ -1,0 +1,21 @@
+flow:
+  - start|DEFAULT_ONREPLY:
+  - return|DEFAULT_ONREPLY:
+sip_in:
+  - 'SIP/2.0 200 OK'
+  - 'From: <sip:43110011002@'
+  - 'To: <sip:4311001@'
+  - 'CSeq: \d+ INVITE'
+  - 'Server: Sipwise NGCP Application Server'
+  - 'Contact: <sip:127.0.0.1:5080;transport=udp>'
+  - 'Content-Type: application/sdp'
+sip_out:
+  - [
+      'SIP/2.0 200 OK',
+      'From: <sip:43110011002@',
+      'To: <sip:4311001@',
+      'CSeq: \d+ INVITE',
+      'Server: Sipwise NGCP Application Server',
+      'Contact: <sip:127.0.0.1:5080;transport=udp>',
+      'Content-Type: application/sdp',
+    ]
