@@ -1,0 +1,21 @@
+---
+testuser1001@spce.test:
+  destinations:
+    destinations:
+      - destination: conference
+        priority: 0
+        timeout: 5
+    name: dest1001
+  mappings:
+    cfu:
+      - bnumberset: null
+        destinationset: dest1001
+        sourceset: null
+        timeset: null
+        enabled: true
+    cfb: []
+    cfna: []
+    cft: []
+    cfs: []
+    cfr: []
+    cfo: []

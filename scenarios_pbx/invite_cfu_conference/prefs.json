@@ -1,0 +1,6 @@
+{
+        "@spce.test": {
+                "sound_set": "default_soundset",
+                "rewrite_rule_set": "rw_00"
+        }
+}

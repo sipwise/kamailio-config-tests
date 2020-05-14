@@ -1,0 +1,209 @@
+# INVITE_OFFLINE scenario
+flow:
+  - start|DEFAULT_ROUTE:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_NET_INFO:
+  - return|ROUTE_NET_INFO:
+  - start|ROUTE_CHECK_TEL_URI:
+  - return|ROUTE_CHECK_TEL_URI:
+  - start|ROUTE_PRX_REQUEST:
+  - start|ROUTE_INITVARS:
+  - return|ROUTE_INITVARS:
+  - start|ROUTE_INVITE:
+  - start|ROUTE_LOAD_CALLEE_DOMAIN_PREF:
+  - start|ROUTE_CLEAR_CALLEE_DOMAIN_PREF:
+  - return|ROUTE_CLEAR_CALLEE_DOMAIN_PREF:
+  - return|ROUTE_LOAD_CALLEE_DOMAIN_PREF:
+  - start|ROUTE_FIND_CALLER:
+  - start|ROUTE_AUTH:
+  - start|ROUTE_AUTH_HELPER:
+      $x_hdr(From): spce.test
+      $var(realm_user): testuser1002
+      $var(realm_domain): spce.test
+  - return|ROUTE_AUTH_HELPER:
+      $avp(orig_acc_caller_user): ['testuser1002']
+      $avp(orig_acc_caller_domain): ['spce.test']
+  - start|ROUTE_ADD_CALLINFO_REPLY:
+  - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_REPLY:
+  - return|ROUTE_AUTH:
+  - return|ROUTE_FIND_CALLER:
+  - start|ROUTE_LOAD_CALLER_PREF:
+  - start|ROUTE_CLEAR_CALLER_PREF:
+  - return|ROUTE_CLEAR_CALLER_PREF:
+  - start|ROUTE_CHECK_UA:
+  - return|ROUTE_CHECK_UA:
+  - start|ROUTE_LOAD_CALLER_CONTRACT_PREF:
+  - return|ROUTE_LOAD_CALLER_CONTRACT_PREF:
+  - start|ROUTE_DLG_MANAGE:
+  - return|ROUTE_DLG_MANAGE:
+  - return|ROUTE_LOAD_CALLER_PREF:
+  - start|ROUTE_DLG_MANAGE:
+  - return|ROUTE_DLG_MANAGE:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - start|ROUTE_GET_CALLER_CLI:
+  - return|ROUTE_GET_CALLER_CLI:
+  - start|ROUTE_GET_FORWARDER_CLI:
+  - return|ROUTE_GET_FORWARDER_CLI:
+  - start|ROUTE_APPLY_CALLER_RWR:
+  - start|ROUTE_APPLY_REWRITE_RULE:
+  - return|ROUTE_APPLY_REWRITE_RULE:
+  - return|ROUTE_APPLY_CALLER_RWR:
+  - start|ROUTE_CLIR:
+  - return|ROUTE_CLIR:
+  - start|ROUTE_CALLER_BLOCK_CLI:
+  - return|ROUTE_CALLER_BLOCK_CLI:
+  - start|ROUTE_CHECK_USERPROV_CLI:
+  - start|ROUTE_CHECK_CLI_ALLOWED:
+  - return|ROUTE_CHECK_CLI_ALLOWED:
+  - return|ROUTE_CHECK_USERPROV_CLI:
+  - start|ROUTE_FIND_CALLEE:
+  - start|ROUTE_APPLY_REWRITE_RULE:
+  - return|ROUTE_APPLY_REWRITE_RULE:
+  - start|ROUTE_CLEAR_CALLEE_PREF:
+  - return|ROUTE_CLEAR_CALLEE_PREF:
+  - start|ROUTE_LOAD_CALLEE_PREF:
+  - start|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
+  - return|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
+  - start|ROUTE_SET_CALLEE_DIALOG:
+  - start|ROUTE_CNT_DLG_CHECK:
+  - return|ROUTE_CNT_DLG_CHECK:
+  - return|ROUTE_SET_CALLEE_DIALOG:
+      $avp(lua_dlg_profile): [
+        "totalaccount:[% customerpbx_test.id %]",
+        "totaluser:[% spce_test.testuser1001.uuid %]",
+        "total",
+      ]
+  - start|ROUTE_BLOCK_IN:
+  - return|ROUTE_BLOCK_IN:
+  - start|ROUTE_ORDER_CF_MAP_ID:
+  - return|ROUTE_ORDER_CF_MAP_ID:
+  - return|ROUTE_LOAD_CALLEE_PREF:
+  - start|ROUTE_NCOS_CHECK:
+  - start|ROUTE_NCOS:
+  - return|ROUTE_NCOS:
+  - start|ROUTE_NCOS:
+  - return|ROUTE_NCOS:
+  - start|ROUTE_NCOS:
+  - return|ROUTE_NCOS:
+  - start|ROUTE_NCOS:
+  - return|ROUTE_NCOS:
+  - return|ROUTE_NCOS_CHECK:
+  - start|ROUTE_BLOCK_OUT:
+  - return|ROUTE_BLOCK_OUT:
+  - start|ROUTE_CHECK_PBX:
+  - start|ROUTE_APPEND_PBX_HDRS:
+  - start|ROUTE_ADD_EVENTMON_HEADERS:
+  - return|ROUTE_ADD_EVENTMON_HEADERS:
+  - return|ROUTE_APPEND_PBX_HDRS:
+  - start|ROUTE_OUTBOUND:
+  - start|ROUTE_SET_CALLER_DIALOG:
+  - start|ROUTE_CNT_DLG_CHECK:
+  - return|ROUTE_CNT_DLG_CHECK:
+  - return|ROUTE_SET_CALLER_DIALOG:
+      $avp(lua_dlg_profile): [
+        "totalaccountout:[% customerpbx_test.id %]",
+        "totaluserout:[% spce_test.testuser1002.uuid %]",
+        "totalaccount:[% customerpbx_test.id %]",
+        "totaluser:[% spce_test.testuser1002.uuid %]",
+        "totalaccount:[% customerpbx_test.id %]",
+        "totaluser:[% spce_test.testuser1001.uuid %]",
+        "total"
+      ]
+  - start|ROUTE_ACC_CALLER:
+  - start|ROUTE_SET_ACC_CALLER_CALL_COUNTERS:
+  - return|ROUTE_SET_ACC_CALLER_CALL_COUNTERS:
+  - start|ROUTE_APPLY_REWRITE_RULE:
+  - return|ROUTE_APPLY_REWRITE_RULE:
+  - return|ROUTE_ACC_CALLER:
+  - start|ROUTE_ACC_CALLEE:
+  - start|ROUTE_SET_ACC_CALLEE_CALL_COUNTERS:
+  - return|ROUTE_SET_ACC_CALLEE_CALL_COUNTERS:
+  - start|ROUTE_APPLY_REWRITE_RULE:
+  - return|ROUTE_APPLY_REWRITE_RULE:
+  - return|ROUTE_ACC_CALLEE:
+  - start|ROUTE_SCA_UPDATE:
+  - return|ROUTE_SCA_UPDATE:
+  - start|BRANCH_ROUTE_NO_SBC:
+  - start|ROUTE_BRANCH_ACC_RTP:
+  - return|ROUTE_BRANCH_ACC_RTP:
+  - start|ROUTE_SET_BRANCH_HDRS:
+  - start|ROUTE_PREPARE_UA:
+  - return|ROUTE_PREPARE_UA:
+  - return|ROUTE_SET_BRANCH_HDRS:
+  - start|ROUTE_FILTER_PRACK:
+  - return|ROUTE_FILTER_PRACK:
+  - start|ROUTE_PREPARE_MOH_PBX:
+  - return|ROUTE_PREPARE_MOH_PBX:
+  - start|ROUTE_LOAD_PBXSRV:
+  - return|ROUTE_LOAD_PBXSRV:
+  - start|ROUTE_ADD_CALLINFO:
+  - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
+  - start|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - return|BRANCH_ROUTE_NO_SBC:
+  - start|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+sip_in:
+  - '^INVITE'
+  - 'Contact: sip:testuser1002@'
+  - 'CSeq: 2 INVITE'
+  - 'Max-Forwards: 69'
+  - 'Content-Type: application/sdp'
+  - 'Proxy-Authorization: Digest username="testuser1002"'
+sip_out:
+  - [
+      '^SIP/2.0 100 Trying',
+      'CSeq: 2 INVITE',
+      'From: <sip:testuser1002@',
+      'To: <sip:4311001@'
+    ]
+  - [
+      '^SIP/2.0 101 Connecting',
+      'CSeq: 2 INVITE',
+      'From: <sip:testuser1002@',
+      'To: <sip:4311001@'
+    ]
+  - [
+      '^PUBLISH sip:testuser1002@spce.test SIP/2.0',
+      'From: <sip:testuser1002@spce.test>',
+      'To: <sip:testuser1002@spce.test>',
+      'Event: dialog',
+      'Content-Type: application/dialog-info\+xml',
+    ]
+  - [
+      '^INVITE sip:testuser1001@spce.test SIP/2.0',
+      'CSeq: 2 INVITE',
+      'From: <sip:testuser1002@',
+      'To: <sip:4311001@',
+      'Content-Type: application/sdp',
+      'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
+      'P-Callee-UUID: [% spce_test.testuser1001.uuid %]',
+      'P-NGCP-Alias-Base: 4311001',
+      'P-NGCP-Alias-DevId: 0',
+      'P-NGCP-Src-Nat: 0',
+      'P-Caller-CLIR: 0',
+      'P-NGCP-Orig-User: 4311001',
+      'P-NGCP-Orig-Domain: spce.test',
+      'P-NGCP-Orig-Dialed: 4311001',
+      'P-NGCP-Orig-PBX-Ext: 1001',
+      'P-First-Caller-Cloud-PBX: [% customerpbx_test.id %]',
+      'P-AA-Caller-CLIR: 0',
+      'P-NGCP-Lookup-Type: alias',
+      'P-App-Param: ;a_park_domain=[% customerpbx_test.id %];b_park_domain=[% customerpbx_test.id %]',
+      'P-App-Name: sbc',
+      'P-NGCP-Acc-Src-Leg: \w+',
+      'P-NGCP-Acc-Dst-Leg: \w+'
+    ]
