@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 #
-# Copyright: 2013 Sipwise Development Team <support@sipwise.com>
+# Copyright: 2020 Sipwise Development Team <support@sipwise.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,23 +23,23 @@ use strict;
 use warnings;
 use Cwd 'abs_path';
 use Data::Dumper;
+use YAML::XS qw(LoadFile);
 use Getopt::Long;
 use English;
+use utf8;
+use JSON;
 
 sub usage
 {
-  my $output = "usage: show_flow.pl [-h] file\n";
+  my $output = "usage: generate_test_tt2.pl [-h] file\n";
   $output .= "\tOptions:\n";
   $output .= "-h --help: this help\n";
-  $output .= "-y --yml: yaml output\n";
-  $output .= "-j --json: json input\n";
   return $output
 }
 
 my $yml = '';
 my $help = 0;
-my $json_in = 0;
-GetOptions ("y|yml" => \$yml, "h|help" => \$help, "j|json" => \$json_in)
+GetOptions ("h|help" => \$help)
   or die("Error in command line arguments\n".usage());
 
 if($#ARGV!=0 || $help)
@@ -47,30 +47,49 @@ if($#ARGV!=0 || $help)
   die(usage())
 }
 my $filename = abs_path($ARGV[0]);
-my $inlog;
-if($json_in) {
-  use utf8;
-  use JSON;
-  my $json;
-  {
-    local $INPUT_RECORD_SEPARATOR = undef; #Enable 'slurp' mode
-    open my $fh, "<", $filename;
-    $json = <$fh>;
-    close $fh;
-  }
-  $inlog = decode_json($json);
+my $json;
+{
+  local $INPUT_RECORD_SEPARATOR = undef; #Enable 'slurp' mode
+  open my $fh, "<", $filename;
+  $json = <$fh>;
+  close $fh;
 }
-else {
-  use YAML::XS;
-  $inlog = YAML::XS::LoadFile($filename);
-}
-
+my $inlog = decode_json($json);
+print "flow:\n";
 foreach my $i (@{$inlog->{'flow'}})
 {
   foreach my $key (keys %{$i})
   {
-    if($yml) { print "- ".$key.":\n"; }
-    else { print "$key\n"; }
+    print "  - ".$key.":\n";
   }
 }
-#EOF
+print "sip_in:\n";
+foreach my $i (@{$inlog->{'sip_in'}})
+{
+  my @line = split(/\r\n/, $i);
+  foreach my $l (@line)
+  {
+    if($l) {
+      print "  - '$l'\n";
+    } else {
+      # we don't care about SDP
+      last;
+    }
+  }
+}
+print "sip_out:\n";
+foreach my $i (@{$inlog->{'sip_out'}})
+{
+  my @line = split(/\r\n/, $i);
+  print "  - [\n";
+  foreach my $l (@line)
+  {
+    if($l) {
+      print "      '$l',\n";
+    } else {
+      # we don't care about SDP
+      last;
+    }
+  }
+  print "    ]\n";
+}
