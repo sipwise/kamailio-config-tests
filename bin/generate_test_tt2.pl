@@ -28,6 +28,7 @@ use Getopt::Long;
 use English;
 use utf8;
 use JSON;
+use Scalar::Util qw(reftype);
 
 sub usage
 {
@@ -35,13 +36,69 @@ sub usage
   $output .= "\tOptions:\n";
   $output .= "-h --help: this help\n";
   $output .= "-f --filter: remove this header ( can be used multiple times )\n";
+  $output .= "-i --ids: subst ids present in scenarios_ids.yml file\n";
   return $output
+}
+
+sub load_ids
+{
+  my $yml = LoadFile($_[0]);
+  my $res = {};
+  get_uuid($yml, "", $res);
+  return $res;
+}
+
+sub get_uuid
+{
+  my $data = shift;
+  my $str_key = shift;
+  my $res = shift;
+  foreach my $key (sort keys %{$data}) {
+    my $new_key = ${str_key} ? "${str_key}.${key}" : "${key}";
+    if($key eq 'uuid') {
+      $res->{$data->{$key}} = $new_key;
+    } else {
+      my $_type = defined(reftype($data->{$key})) ? reftype($data->{$key}) : "";
+      if( $_type eq 'HASH') {
+        get_uuid($data->{$key}, $new_key, $res);
+      }
+    }
+  }
+  return $res;
+}
+
+my $uuids;
+sub subst_uuids
+{
+  my $line = shift;
+
+  foreach my $uuid (sort keys %{$uuids}) {
+    if($line =~ s/\Q${uuid}\E/[% $uuids->{$uuid} %]/g) {
+      return $line;
+    }
+  }
+  return $line;
+}
+sub print_header
+{
+  my $_type = shift;
+  my $_l = shift;
+  my $line = $_l;
+
+  if($uuids) {
+    $line = subst_uuids($_l);
+  }
+  if($_type eq 'sip_in') {
+    print "  - '$line'\n";
+  } else {
+    print "      '$line',\n";
+  }
 }
 
 my @headers;
 sub filter_header
 {
-  my $line = $_[0];
+  my $line = shift;
   foreach my $header (@headers) {
     if ($line =~ /${header}:/i) {
       return 1;
@@ -50,9 +107,9 @@ sub filter_header
   return 0;
 }
 
-my $yml = '';
 my $help = 0;
-GetOptions ("h|help" => \$help, "f|filter=s" => \@headers)
+my $f_ids;
+GetOptions ("h|help" => \$help, "f|filter=s" => \@headers, "i|ids=s" => \$f_ids)
   or die("Error in command line arguments\n".usage());
 
 if($#ARGV!=0 || $help)
@@ -68,6 +125,11 @@ my $json;
   close $fh;
 }
 my $inlog = decode_json($json);
+
+if($f_ids) {
+  $uuids = load_ids(abs_path($f_ids));
+}
+
 print "flow:\n";
 foreach my $i (@{$inlog->{'flow'}})
 {
@@ -84,7 +146,7 @@ foreach my $i (@{$inlog->{'sip_in'}})
   {
     if($l) {
       if(!filter_header($l)) {
-        print "  - '$l'\n";
+        print_header('sip_in', $l);
       }
     } else {
       # we don't care about SDP
@@ -101,7 +163,7 @@ foreach my $i (@{$inlog->{'sip_out'}})
   {
     if($l) {
       if(!filter_header($l)) {
-        print "      '$l',\n";
+        print_header('sip_out', $l);
       }
     } else {
       # we don't care about SDP
