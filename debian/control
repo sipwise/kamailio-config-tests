@@ -10,6 +10,7 @@ Build-Depends:
  libjson-perl,
  libtemplate-perl,
  libtext-csv-perl,
+ libtext-diff-perl,
  libyaml-libyaml-perl,
  python,
 Recommends:
@@ -28,6 +29,7 @@ Depends:
  libjson-perl,
  libtemplate-perl,
  libtext-csv-perl,
+ libtext-diff-perl,
  libyaml-libyaml-perl,
  ngcp-provisioning-tools,
  parallel,
