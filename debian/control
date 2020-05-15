@@ -27,6 +27,7 @@ Depends:
  libio-compress-perl,
  libjson-perl,
  libtemplate-perl,
+ libtext-diff-perl,
  libtext-csv-perl,
  libyaml-libyaml-perl,
  ngcp-provisioning-tools,
