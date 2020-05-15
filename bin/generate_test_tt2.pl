@@ -31,15 +31,28 @@ use JSON;
 
 sub usage
 {
-  my $output = "usage: generate_test_tt2.pl [-h] file\n";
+  my $output = "usage: generate_test_tt2.pl [-h] [-f Header] file\n";
   $output .= "\tOptions:\n";
   $output .= "-h --help: this help\n";
+  $output .= "-f --filter: remove this header ( can be used multiple times )\n";
   return $output
+}
+
+my @headers;
+sub filter_header
+{
+  my $line = $_[0];
+  foreach my $header (@headers) {
+    if ($line =~ /${header}:/i) {
+      return 1;
+    }
+  }
+  return undef;
 }
 
 my $yml = '';
 my $help = 0;
-GetOptions ("h|help" => \$help)
+GetOptions ("h|help" => \$help, "f|filter=s" => \@headers)
   or die("Error in command line arguments\n".usage());
 
 if($#ARGV!=0 || $help)
@@ -70,7 +83,9 @@ foreach my $i (@{$inlog->{'sip_in'}})
   foreach my $l (@line)
   {
     if($l) {
-      print "  - '$l'\n";
+      if(!filter_header($l)) {
+        print "  - '$l'\n";
+      }
     } else {
       # we don't care about SDP
       last;
@@ -85,7 +100,9 @@ foreach my $i (@{$inlog->{'sip_out'}})
   foreach my $l (@line)
   {
     if($l) {
-      print "      '$l',\n";
+      if(!filter_header($l)) {
+        print "      '$l',\n";
+      }
     } else {
       # we don't care about SDP
       last;
