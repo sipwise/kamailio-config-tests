@@ -79,6 +79,24 @@ sub subst_uuids
   }
   return $line;
 }
+
+sub subst_common
+{
+  my $line = shift;
+  if(($line =~ /^From: /i) || ($line =~ /^To: /i)) {
+    $line =~ s/;tag=(.+)/;tag=[\\w-]+/;
+  } elsif($line =~ /^CSeq: /i) {
+    $line =~ s/:[ ]+\d+[ ]+/: \\d+ /;
+  } elsif($line =~ /^WWW-Authenticate: /i) {
+    $line =~ s/nonce=".+"/nonce=".+"/;
+  } elsif($line =~ /^Server: Sipwise/i) {
+    $line =~ s/^: Sipwise .+/: Sipwise NGCP Proxy/;
+  } elsif($line =~ /^Content-Length: [1-9]/i) {
+    $line =~ s/: \d+/: \\d+/;
+  }
+  return $line;
+}
+
 sub print_header
 {
   my $_type = shift;
@@ -88,6 +106,7 @@ sub print_header
   if($uuids) {
     $line = subst_uuids($_l);
   }
+  $line = subst_common($line);
   if($_type eq 'sip_in') {
     print "  - '$line'\n";
   } else {
