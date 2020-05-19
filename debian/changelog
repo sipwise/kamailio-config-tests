@@ -1,3 +1,29 @@
+kamailio-config-tests (8.4.1.0+0~mr8.4.1.0) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [ee7ec19] TT#76676 Adapt test to new routes to store call counters in CDRs
+  * [abd1fef] TT#76676 Adapt hm test to new routes to store call counters in CDRs
+  * [8aa4ded] TT#76405 Fix pbx scenarios after BLF moved to kamailio
+  * [36dc88e] TT#73567 Fix scenarios for ROUTE_APPLY_HEADER_RULES 'reply' for CFs
+  * [04d6ec7] TT#76664 Check if there are still rtp ports open after tests execution
+  * [5d438b9] TT#78303 Remove ROUTE_RESTORE_EVENTMON_HEADERS route from pbx scenarios
+  * [4880fed] TT#78301 Adapt tests to sems unification
+  * [8e27778] TT#78301 Fix typo in sems port evaluation introduced in commit 4880fed1
+
+  [ Sergii Kipot ]
+  * [d2f6237] TT#79205 Fix permissions and group for restored logs
+
+  [ Andrew Pogrebennyk ]
+  * [2dbe4d6] TT#79954 remove route to RTPENGINE from callforward scenarios before CF loop
+
+  [ Victor Seva ]
+  * [5124bf4] TT#81700 generate_test_tt2.pl and show_sip.pl tools
+  * [eeaec0f] TT#81700 generate_test_tt2.pl: add filter option
+  * [c2df9cf] TT#81700 generate_test_tt2.pl: add option to replace uuids from scenario_ids.yml file
+  * [ac41658] TT#81700 bin/show_flow_diff.pl
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 19 May 2020 11:08:00 +0200
+
 kamailio-config-tests (8.4.0.0+0~mr8.4.0.0) unstable; urgency=medium
 
   [ Victor Seva ]
