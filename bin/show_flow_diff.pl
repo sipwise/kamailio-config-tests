@@ -29,6 +29,7 @@ use YAML::XS;
 use utf8;
 use JSON;
 use Text::Diff;
+use Scalar::Util qw(reftype);
 
 sub usage
 {
@@ -59,21 +60,49 @@ my $log;
   $log = decode_json($json);
 }
 
+sub str_values
+{
+  my $data = shift;
+  my $res = shift;
+
+  foreach my $key (keys %{$data})
+  {
+    my $_type = defined(reftype($data->{$key})) ? reftype($data->{$key}) : "HASH";
+    if( $_type eq 'ARRAY') {
+      $res .= "      ".$key.": [\n";
+      foreach my $val (@{$data->{$key}}){
+        $res .= "        ".$val.",\n";
+      }
+      $res .= "      ]\n";
+    } elsif( $_type eq 'HASH') {
+      $res .= "      ".$key.": ".$data->{$key}."\n";
+    }
+  }
+  return $res;
+}
+
 my $text_yml = "";
 foreach my $i (@{$test->{'flow'}})
 {
   foreach my $key (keys %{$i})
   {
     $text_yml .= "  - ".$key.":\n";
+    if($i->{$key}) {
+      $text_yml = str_values($i->{$key}, $text_yml);
+    }
   }
 }
 
 my $text_json = "";
-foreach my $i (@{$log->{'flow'}})
+while (my ($index, $element) = each(@{$log->{'flow'}}))
 {
-  foreach my $key (keys %{$i})
+  my $element_yml = @{$test->{'flow'}}[$index];
+  foreach my $key (keys %{$element})
   {
     $text_json .= "  - ".$key.":\n";
+    if(defined($element_yml->{$key})) {
+      $text_json = str_values($element_yml->{$key}, $text_json);
+    }
   }
 }
 
