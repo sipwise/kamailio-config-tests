@@ -93,6 +93,8 @@ sub subst_common
     $line =~ s/^: Sipwise .+/: Sipwise NGCP Proxy/;
   } elsif($line =~ /^Content-Length: [1-9]/i) {
     $line =~ s/: \d+/: \\d+/;
+  } elsif($line =~ /^P-LB-Uptime: /i) {
+    $line =~ s/: \d+/: \\d+/;
   }
   return $line;
 }

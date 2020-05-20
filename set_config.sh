@@ -32,6 +32,7 @@ echo "$(date) - Removed apicert.pem"
 rm -f "${BASE_DIR}/apicert.pem"
 echo "$(date) - Setting config debug on"
 "${BIN_DIR}/config_debug.pl" -g "${GROUP}" on ${DOMAIN}
+cd /etc/ngcp-config || exit 3
 if ! ngcpcfg apply "config debug on via kamailio-config-tests" ; then
   echo "$(date) - ngcpcfg apply returned $?"
   error_flag=4
