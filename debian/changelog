@@ -1,3 +1,10 @@
+kamailio-config-tests (6.5.9.1+0~mr6.5.9.1) unstable; urgency=medium
+
+  [ Andrew Pogrebennyk ]
+  * [9c24ac1] TT#79954 remove route to RTPENGINE from callforward scenarios before CF loop
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 21 May 2020 16:11:05 +0200
+
 kamailio-config-tests (6.5.9.0+0~mr6.5.9.0) unstable; urgency=medium
 
   [ Marco Capetta ]
