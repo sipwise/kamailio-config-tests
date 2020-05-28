@@ -58,7 +58,7 @@ for i in $(seq "$NUM"); do
   	echo "$(date) - ERROR[$status] run_tests $i"
   	break
   fi
-  ./get_results.sh -r | tee /tmp/get_results.log
+  ./get_results.sh -r -x"${GROUP}" | tee /tmp/get_results.log
   status=$?
   if [[ $status -ne 0 ]]; then
   	echo "$(date) - ERROR[$status] get_results $i"
