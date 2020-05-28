@@ -112,6 +112,8 @@ flow:
   - start|ROUTE_ADD_AOC_HEADER:
   - return|ROUTE_ADD_AOC_HEADER:
   - start|BRANCH_ROUTE_FWD_LOOP:
+  - start|ROUTE_SET_HIH_CF:
+  - return|ROUTE_SET_HIH_CF:
   - start|ROUTE_APPEND_CF_HDRS:
   - start|ROUTE_ADD_EVENTMON_HEADERS:
   - return|ROUTE_ADD_EVENTMON_HEADERS:
