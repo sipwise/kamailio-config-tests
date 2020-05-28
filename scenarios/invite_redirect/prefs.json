@@ -1,4 +1,8 @@
 {
+    "testuser1003@spce.test": {
+        "outbound_diversion": "uprn",
+        "outbound_history_info": "uprn"
+    },
     "testuser1004@spce.test": {
         "outbound_diversion": "uprn",
         "outbound_history_info": "uprn"
