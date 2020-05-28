@@ -19,6 +19,8 @@ flow:
   - start|ROUTE_RESTORE_CLUSTERSET:
   - return|ROUTE_RESTORE_CLUSTERSET:
   - return|ROUTE_STOP_RTPPROXY_BRANCH:
+  - start|ROUTE_SET_HIH_CF:
+  - return|ROUTE_SET_HIH_CF:
   - start|ROUTE_LOAD_CALLER_PREF:
   - start|ROUTE_CLEAR_CALLER_PREF:
   - return|ROUTE_CLEAR_CALLER_PREF:
@@ -195,5 +197,6 @@ sip_out:
       'P-NGCP-Caller-Info: <sip:testuser1002@',
       'P-NGCP-Callee-Info: <sip:testuser1004@',
       'Diversion: <sip:testuser1003@',
-      'History-Info: <sip:testuser1003@.*;cause=302>;index=1'
+      'History-Info: <sip:testuser1003@.*;user=phone\?Reason=SIP%3bcause%3d302>;index=1',
+      'History-Info: <sip:testuser1004@.*;user=phone;cause=302>;index=1.1'
     ]
