@@ -17,6 +17,7 @@ flow:
   - start|ROUTE_FIND_CALLER:
   - start|ROUTE_AUTH:
   - start|ROUTE_AUTH_HELPER:
+  - start|ROUTE_AUTH_HELPER:
       $x_hdr(From): spce.test
       $var(realm_user): testuser1002
       $var(realm_domain): spce.test
@@ -66,15 +67,43 @@ flow:
   - return|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_LOAD_APPSRV:
   - start|ROUTE_OUTBOUND:
-  - start|BRANCH_ROUTE_NO_SBC:
-  - start|ROUTE_BRANCH_ACC_RTP:
-  - return|ROUTE_BRANCH_ACC_RTP:
+  - start|ROUTE_ADD_AOC_HEADER:
+  - return|ROUTE_ADD_AOC_HEADER:
+  - start|BRANCH_ROUTE_SBC:
+  - start|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
+  - return|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
+  - start|ROUTE_SET_CALLEE_DIALOG:
+  - start|ROUTE_CNT_DLG_CHECK:
+  - return|ROUTE_CNT_DLG_CHECK:
+  - return|ROUTE_SET_CALLEE_DIALOG:
   - start|ROUTE_SET_BRANCH_HDRS:
   - start|ROUTE_PREPARE_UA:
   - return|ROUTE_PREPARE_UA:
   - return|ROUTE_SET_BRANCH_HDRS:
+  - start|ROUTE_BRANCH_ACC_RTP:
+  - return|ROUTE_BRANCH_ACC_RTP:
   - start|ROUTE_FILTER_PRACK:
   - return|ROUTE_FILTER_PRACK:
+  - start|ROUTE_PREPARE_SST:
+  - return|ROUTE_PREPARE_SST:
+  - start|ROUTE_PREPARE_MOH:
+  - return|ROUTE_PREPARE_MOH:
+  - start|ROUTE_SET_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - return|ROUTE_PREPARE_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - return|ROUTE_PREPARE_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - return|ROUTE_PREPARE_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - return|ROUTE_PREPARE_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - return|ROUTE_PREPARE_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - return|ROUTE_PREPARE_CALLER_CLI:
+  - return|ROUTE_SET_CALLER_CLI:
+  - start|ROUTE_SET_CALLEE:
+  - return|ROUTE_SET_CALLEE:
   - start|ROUTE_ADD_CALLINFO:
   - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
   - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
@@ -83,7 +112,7 @@ flow:
   - return|ROUTE_ADD_CALLINFO:
   - start|ROUTE_APPLY_HEADER_RULES:
   - return|ROUTE_APPLY_HEADER_RULES:
-  - return|BRANCH_ROUTE_NO_SBC:
+  - return|BRANCH_ROUTE_SBC:
   - start|DEFAULT_SEND:
   - exit|DEFAULT_SEND:
   - exit|DEFAULT_SEND:
@@ -111,7 +140,7 @@ sip_out:
     ]
   - [
       '^INVITE sip:earlyannounce@app.local SIP/2.0',
-      'From: <sip:testuser1002@',
+      'From: <sip:testuser1002@', #'From: <sip:0@0>;tag=[\w-]+',
       'To: <sip:testuser1003@',
       'CSeq: 2 INVITE',
       'Contact: sip:testuser1002@127.126.0.1:\d+',
@@ -119,7 +148,7 @@ sip_out:
       'Content-Type: application/sdp',
       'Content-Length:   \d+',
       'P-App-Param: audio_id=\d+;play_looped=no;fr_code=403;fr_reason=Unauthorized IP detected',
-      'P-App-Name: early_dbprompt',
+      'P-App-Name: sbc',
       'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
       'P-Callee-UUID: [% spce_test.testuser1002.uuid %]',
       'P-NGCP-Caller-Info: <sip:testuser1002@spce.test>;ip=127.126.0.1;port=\d+;primary=4311002',

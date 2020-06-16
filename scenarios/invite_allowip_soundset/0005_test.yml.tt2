@@ -7,42 +7,26 @@ flow:
   - return|ROUTE_APPLY_HEADER_RULES:
   - start|ROUTE_PREPARE_UA:
   - return|ROUTE_PREPARE_UA:
+  - start|REPLY_ROUTE_RTPENGINE:
+  - return|REPLY_ROUTE_RTPENGINE:
   - start|REPLY_ROUTE_NAT_CONTINUE:
   - start|ROUTE_EXIT:
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
-  - start|FAILURE_ROUTE_EARLY_REJECT:
-  - start|ROUTE_STOP_RTPPROXY_BRANCH:
-  - start|ROUTE_RESTORE_CLUSTERSET:
-  - return|ROUTE_RESTORE_CLUSTERSET:
-  - return|ROUTE_STOP_RTPPROXY_BRANCH:
-  - start|FAILURE_ROUTE_EARLY_REJECT:
-  - start|ROUTE_RUNTIME:
-  - return|ROUTE_RUNTIME:
-  - exit|ROUTE_EXIT:
-  - start|dialog:failed:
-  - return|dialog:failed:
-      $avp(lua_dlg_profile): None
-  - return|dialog:failed:
 sip_in:
-  - '^SIP/2.0 403 Unauthorized IP detected'
-  - 'From: <sip:testuser1002@spce.test>;tag='
-  - 'To: <sip:testuser1003@spce.test>;tag='
+  - '^SIP/2.0 183 Progress'
+  - 'From: <sip:testuser1002@'
+  - 'To: <sip:testuser1003@'
   - 'CSeq: 2 INVITE'
-  - 'Content-Length: 0'
+  - 'Contact: <sip:127.0.0.1:508[0|8](;transport=udp)?>',
+  - 'Content-Type: application/sdp'
+  - 'Content-Length: \d+'
 sip_out:
   - [
-      '^ACK sip:earlyannounce@app.local SIP/2.0',
-      'From: <sip:testuser1002@spce.test>;tag=',
-      'To: <sip:testuser1003@spce.test>;tag=',
-      'CSeq: 2 ACK',
-      'Max-Forwards: 68',
-      'Content-Length: 0'
-    ]
-  - [
-      '^SIP/2.0 403 Unauthorized IP detected',
-      'CSeq: 2 INVITE',
-      'Content-Length: 0',
+      '^SIP/2.0 183 Progress',
+      'Contact: <sip:127.0.0.1:508[0|8](;transport=udp)?>',
+      'Content-Type: application/sdp',
+      'Content-Length: \d+',
       'P-Out-Socket: udp:127.0.0.1:5060'
     ]
