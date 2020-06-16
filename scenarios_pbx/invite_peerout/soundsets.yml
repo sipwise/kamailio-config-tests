@@ -1,0 +1,7 @@
+soundsets:
+  'default_soundset':
+      reseller_id: 1
+      sounds:
+        unauth_caller_ip:
+          filename: sounds/no_sh.wav
+          loopplay: 'false'

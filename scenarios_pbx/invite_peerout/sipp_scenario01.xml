@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<scenario name="Sipwise NGCP Benchmark UAC Caller">
+
+  <send>
+    <![CDATA[
+
+      OPTIONS sip:[field0 file="caller.csv" line=1]@[field2 file="caller.csv" line=1] SIP/2.0
+      Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
+      From: <sip:[field0 file="caller.csv" line=1]@[field2 file="caller.csv" line=1]>;tag=[pid]SIPpTag00[call_number]
+      To: <sip:[field0 file="caller.csv" line=1]@[field2 file="caller.csv" line=1]>
+      Call-ID: NGCP%[field4 file="callee.csv" line=1]_opt%///[call_id]
+      CSeq: 1 OPTIONS
+      Contact: <sip:[field0 file="caller.csv" line=1]@[local_ip]:[local_port]>
+      Content-Length: [len]
+
+    ]]>
+  </send>
+
+  <recv response="100" optional="true">
+  </recv>
+
+  <recv response="200">
+  </recv>
+
+</scenario>
+
