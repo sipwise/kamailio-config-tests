@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<scenario name="Sipwise NGCP Benchmark UAC Caller">
+
+  <pause milliseconds="1000"/>
+
+  <send>
+    <![CDATA[
+
+      SUBSCRIBE sip:[field0 file="caller.csv" line=1]@[field2 file="caller.csv" line=1] SIP/2.0
+      Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
+      From: <sip:[field0 file="caller.csv" line=1]@[field2 file="caller.csv" line=1]>;tag=[pid]SIPpTag00[call_number]
+      To: <sip:[field0 file="caller.csv" line=1]@[field2 file="caller.csv" line=1]>
+      Call-ID: NGCP%[field4 file="callee.csv" line=1]_sub%///[call_id]
+      CSeq: 30 SUBSCRIBE
+      Contact: <sip:[field0 file="caller.csv" line=1]@[local_ip]:[local_port]>
+      Allow: INVITE,ACK,CANCEL,BYE,PRACK,INFO,UPDATE,OPTIONS,MESSAGE,NOTIFY,REFER
+      Call-Info: <sip:[field2 file="caller.csv" line=1]>;appearance-index=1
+      Max-Forwards: 70
+      Expires: 20
+      Event: line-seize
+      Content-Length: [len]
+
+    ]]>
+  </send>
+
+  <recv response="100" optional="true">
+  </recv>
+
+  <recv response="407" auth="true"/>
+
+  <send>
+    <![CDATA[
+
+      ACK sip:[field0 file="caller.csv" line=1]@[field2 file="caller.csv" line=1] SIP/2.0
+      [last_Via:]
+      [last_From:]
+      [last_To:]
+      [last_Call-ID:]
+      [last_CSeq:]
+      Contact: <sip:[local_ip]:[local_port];transport=[transport]>
+      Content-Length: 0
+
+    ]]>
+  </send>
+
+  <send>
+    <![CDATA[
+
+      SUBSCRIBE sip:[field0 file="caller.csv" line=1]@[field2 file="caller.csv" line=1] SIP/2.0
+      Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
+      From: <sip:[field0 file="caller.csv" line=1]@[field2 file="caller.csv" line=1]>;tag=[pid]SIPpTag00[call_number]
+      To: <sip:[field0 file="caller.csv" line=1]@[field2 file="caller.csv" line=1]>
+      [field1 file="caller.csv" line=1]
+      Call-ID: NGCP%[field4 file="callee.csv" line=1]_sub%///[call_id]
+      CSeq: 31 SUBSCRIBE
+      Contact: <sip:[field0 file="caller.csv" line=1]@[local_ip]:[local_port]>
+      Allow: INVITE,ACK,CANCEL,BYE,PRACK,INFO,UPDATE,OPTIONS,MESSAGE,NOTIFY,REFER
+      Call-Info: <sip:[field2 file="caller.csv" line=1]>;appearance-index=1
+      Max-Forwards: 70
+      Expires: 20
+      Event: line-seize
+      Content-Length: [len]
+
+    ]]>
+  </send>
+
+  <recv response="100" optional="true">
+  </recv>
+
+  <recv response="200">
+  </recv>
+
+  <!--Begin NOTIFY loop-->
+  <label id="1" />
+  <recv request="NOTIFY">
+    <action>
+      <ereg regexp="terminated.*"
+        search_in="hdr"
+        header="Subscription-State: "
+        assign_to="8"/>
+    </action>
+  </recv>
+
+  <send>
+    <![CDATA[
+      SIP/2.0 200 OK
+      [last_Via:]
+      [last_From:]
+      [last_To:]
+      [last_Call-ID:]
+      [last_CSeq:]
+      Contact: <sip:[local_ip]:[local_port];transport=[transport]>
+      Content-Length: 0
+    ]]>
+  </send>
+
+  <!--Jump to the end if the subscription is terminated-->
+  <nop next="19" test="8" />
+
+  <nop next="1" />
+  <!--End NOTIFY loop-->
+
+  <!--End-->
+  <label id="19"/>
+
+</scenario>
+
