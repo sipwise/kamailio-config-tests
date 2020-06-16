@@ -7,26 +7,15 @@ flow:
   - return|ROUTE_APPLY_HEADER_RULES:
   - start|ROUTE_PREPARE_UA:
   - return|ROUTE_PREPARE_UA:
-  - start|REPLY_ROUTE_RTPENGINE:
-  - return|REPLY_ROUTE_RTPENGINE:
   - start|REPLY_ROUTE_NAT_CONTINUE:
   - start|ROUTE_EXIT:
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^SIP/2.0 183 Progress'
+  - '^SIP/2.0 100 Trying'
   - 'From: <sip:testuser1002@'
   - 'To: <sip:testuser1003@'
   - 'CSeq: 2 INVITE'
-  - 'Contact: <sip:(earlyannounce@)?127.0.0.1:508[0|8](;transport=udp)?>'
-  - 'Content-Type: application/sdp'
-  - 'Content-Length: \d+'
-sip_out:
-  - [
-      '^SIP/2.0 183 Progress',
-      'Contact: <sip:(earlyannounce@)?127.0.0.1:508[0|8](;transport=udp)?>',
-      'Content-Type: application/sdp',
-      'Content-Length: \d+',
-      'P-Out-Socket: udp:127.0.0.1:5060'
-    ]
+  - 'Content-Length: 0'
+sip_out: []
