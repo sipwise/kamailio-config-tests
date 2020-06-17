@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright: 2013-2016 Sipwise Development Team <support@sipwise.com>
+# Copyright: 2013-2020 Sipwise Development Team <support@sipwise.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -181,6 +181,12 @@ create_voip() {
     echo "$(date) - Cannot create domain subscribers"
     exit 1
   fi
+
+  if [ -f "${SCEN_CHECK_DIR}/registration.yml" ]; then
+    echo "$(date) - Creating permanent registrations"
+    "${BIN_DIR}/create_registrations.pl" \
+      "${SCEN_CHECK_DIR}/registration.yml"
+  fi
 }
 
 # $1 prefs yml file
@@ -289,6 +295,11 @@ delete_voip() {
   if [ -f "${SCEN_CHECK_DIR}/soundsets.yml" ]; then
     echo "$(date) - Deleting soundsets"
     "${BIN_DIR}/create_soundsets.pl" -delete "${SCEN_CHECK_DIR}/soundsets.yml"
+  fi
+
+  if [ -f "${SCEN_CHECK_DIR}/registration.yml" ]; then
+    echo "$(date) - Deleting registrations"
+    "${BIN_DIR}/create_registrations.pl" -delete "${SCEN_CHECK_DIR}/registration.yml"
   fi
 }
 
@@ -423,6 +434,8 @@ get_ip() {
   fi
   peer_host=$(grep "$1" "${SCEN_CHECK_DIR}/scenario.csv"|cut -d\; -f4| tr -d '\n')
   foreign_dom=$(grep "$1" "${SCEN_CHECK_DIR}/scenario.csv"|cut -d\; -f5| tr -d '\n')
+  registration=$(grep "$1" "${SCEN_CHECK_DIR}/scenario.csv"|cut -d\; -f6| tr -d '\n')
+  subscriber=$(grep "$1" "${SCEN_CHECK_DIR}/scenario.csv"|cut -d\; -f7| tr -d '\n')
 }
 
 copy_logs() {
@@ -509,6 +522,14 @@ run_sipp() {
     if [ "${foreign_dom}" == "yes" ]; then
       echo "$(date) - foreign domain detected... using 5060 port"
       PORT="5060"
+    fi
+    if [ "${registration}" == "permanent" ]; then
+      echo "$(date) - Update permanent reg:${subscriber} ${ip}:${PORT} info"
+      if ! "${BIN_DIR}/update_perm_reg.pl" --port="${PORT}" \
+          "${subscriber}" "${ip}";
+      then
+        error_helper "$(date) - error updating peer info" 15
+      fi
     fi
 
     if [ -f "${SCEN_CHECK_DIR}/${base}_reg.xml" ]; then
