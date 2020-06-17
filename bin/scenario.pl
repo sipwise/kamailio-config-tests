@@ -151,7 +151,7 @@ sub generate
             $auth   = "[authentication username=$_->{username} password=$_->{password}]";
             $csv_data = [$_->{username}, $_->{number}, $auth, $_->{domain}, $test_uuid, $_->{'pbx_extension'}];
             $csv->{callee}->print($io_callee, $csv_data);
-            $csv_data = ["sipp_scenario_responder".sprintf("%02i", $res_id).".xml", $_->{proto}, $_->{ip}, $_->{peer_host}, $_->{foreign}];
+            $csv_data = ["sipp_scenario_responder".sprintf("%02i", $res_id).".xml", $_->{proto}, $_->{ip}, $_->{peer_host}, $_->{foreign}, $_{register}, $_->{username}@$_->{domain}];
             $csv->{scenario}->print($io_scenario, $csv_data);
             if($_->{register} eq "yes" && $_->{active} eq "yes")
             {

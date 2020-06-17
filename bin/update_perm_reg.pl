@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #
-# Copyright: 2013-2016 Sipwise Development Team <support@sipwise.com>
+# Copyright: 2020 Sipwise Development Team <support@sipwise.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -40,19 +40,20 @@ $opts = $api->opts;
 
 sub usage {
     return "Usage:\n$PROGRAM_NAME [-h] [-i IP] [-p PORT]" .
-        " peer_host_name\n";
+        " subscriber IP\n";
 }
 
 my $help = 0;
 my $ip;
 my $port;
 GetOptions ("h|help" => \$help,
+            "d|debug" => \$opts->{verbose},
             "i|ip=s" => \$ip,
             "p|port=i" => \$port)
   or die("Error in command line arguments\n".usage());
 
 die(usage()) unless (!$help);
-die("Wrong number of arguments\n".usage()) unless ($#ARGV == 0);
+die("Wrong number of arguments\n".usage()) unless ($#ARGV == 1);
 
 my $data = {};
 $data->{ip} = $ip unless !defined($ip);
@@ -60,22 +61,25 @@ $data->{port} = $port unless !defined($port);
 if (!defined($data->{ip}) && !defined($data->{port})) {
     die("ip or port option has to be set\n".usage())
 }
+my ($subscriber, $domain) = split /@/, $ARGV[0];
+my $old_ip = $ARGV[1];
 
 sub do_update {
-    my $host_id = $api->check_peeringserver_exists({ name => $ARGV[0] });
-    if($host_id) {
-        my $peer_data = $api->get_peeringserver($host_id);
-        if($peer_data) {
-            $peer_data->{ip} = $data->{ip};
-            $peer_data->{port} = $data->{port};
-            $api->set_peeringserver($host_id, $peer_data) or
-                die("Can't update peer $_->{name}");
-            print "peer $ARGV[0] updated [$host_id]\n";
-        } else {
-            die("Can't get peer data");
+    my $subs_id = $api->check_subscriber_exists({
+                          domain => $domain,
+                          username => $subscriber});
+    if(!$subs_id) {
+        die("Error: No subscriber ${subscriber}\@${domain} found");
+    }
+    my $regs = $api->get_subscriber_registrations($subs_id);
+    foreach my $r (@{$regs}) {
+        print "registration[$r->{id}]: $r->{contact}\n";
+        if($r->{contact} =~ m/sip:$old_ip:/) {
+            $r->{contact} = "sip:". $data->{ip}. ":" . $data->{port};
+            $api->set_subscriber_registration($r->{id}, $r) or
+                die("Can't update permanent registration $r->{id}");
+            print "registration for $ARGV[0] updated [$r->{id}]\n";
         }
-    } else {
-        die("peer $ARGV[0] not found");
     }
     return;
 }
