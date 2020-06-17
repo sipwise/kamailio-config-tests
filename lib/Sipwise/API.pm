@@ -52,7 +52,7 @@ sub _get_id {
 	my ($baseurl, $location) = @_;
 	my $id;
 
-	($id) = ($location =~ m/\Q$baseurl\E(\d+)/);
+	($id) = ($location =~ m/\Q$baseurl\E(.+)/);
 	return $id;
 }
 
@@ -559,6 +559,71 @@ sub get_subscriber_trusted_sources {
 	my $collection_id = 'ngcp:trustedsources';
 
 	return $self->_get_content(undef, $urldata);
+}
+
+sub check_subscriber_registration_exists {
+	my ($self, $data) = @_;
+	my $urldata = '/api/subscriberregistrations/';
+	my $collection_id = 'ngcp:subscriberregistrations';
+
+	return $self->_exists($data, $urldata, $collection_id);
+}
+
+sub create_subscriber_registration {
+	my ($self, $data) = @_;
+	my $urldata = '/api/subscriberregistrations/';
+
+	return $self->_create($data, $urldata);
+}
+
+sub get_subscriber_registration {
+	my ($self, $id) = @_;
+	my $urldata = "/api/subscriberregistrations/${id}";
+	my $collection_id = 'ngcp:subscriberregistrations';
+
+	return $self->_get_content(undef, $urldata);
+}
+
+sub get_subscriber_registrations {
+	my ($self, $subs_id) = @_;
+	my $urldata = '/api/subscriberregistrations/';
+	my $collection_id = 'ngcp:subscriberregistrations';
+
+	my $collection = $self->_get_content({subscriber_id=>$subs_id}, $urldata);
+	my $res = [];
+	if (defined $collection && $collection->{total_count} > 0) {
+		return $collection->{_embedded}->{$collection_id};
+	}
+	return $res;
+}
+
+sub set_subscriber_registration {
+	my ($self, $id, $data) = @_;
+	my $urldata = "/api/subscriberregistrations/${id}";
+	my $collection_id = 'ngcp:subscriberregistrations';
+
+	return $self->_set_content($data, $urldata);
+}
+
+sub delete_subscriber_registration {
+	my ($self, $subs_id) = @_;
+	my $urldata = '/api/subscriberregistrations/';
+	my $collection_id = 'ngcp:subscriberregistrations';
+
+	my $collection = $self->_get_content(undef, $urldata);
+	my $count = 0;
+	if (defined $collection && $collection->{total_count} > 0) {
+		my $data = $collection->{_embedded}->{$collection_id};
+		foreach my $r (@{$data}) {
+			if ($r->{subscriber_id} eq $subs_id) {
+				if($self->_delete(${urldata}.$r->{id})) {
+					$count++;
+				}
+
+			}
+		}
+	}
+	return $count;
 }
 
 sub create_subscriber {
