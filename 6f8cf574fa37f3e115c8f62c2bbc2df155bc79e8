@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40c2df18_7f50b96a",
+        "filename": "bin/check.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2020-06-17T12:17:03Z",
+      "side": 1,
+      "message": "If everything works as expected this is not necessary because the registration should be removed when the domain/customer/subscriber is removed.... But we never know... :-D",
+      "range": {
+        "startLine": 300,
+        "startChar": 2,
+        "endLine": 303,
+        "endChar": 4
+      },
+      "revId": "6f8cf574fa37f3e115c8f62c2bbc2df155bc79e8",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
