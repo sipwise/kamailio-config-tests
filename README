@@ -84,6 +84,7 @@ And can optionally include:
  - speeddial.yml
  - peer.yml
  - trusted.yml
+ - registration.yml
 
 
 Test file syntax (XXXX_test.yml.tt2 files):
@@ -365,6 +366,25 @@ testuser1002@spce.test:
   from_pattern: 1002
   protocol: UDP
   src_ip: 127.126.0.1
+
+
+registration.yml file syntax:
+-----------------------------
+
+This is used for permanent registrations, lb has two extra sockets defined:
+  $yaml->{kamailio}{lb}{extra_sockets}->{test} = "udp:127.2.0.1:5064";
+  $yaml->{kamailio}{lb}{extra_sockets}->{other} = "udp:127.3.0.1:5074";
+
+socket has to be one of those two, and path has to have socket param with
+the same value
+
+testuser1003@spce.test:
+  - nat: false
+    contact: sip:127.3.0.5:8008
+    socket: sip:127.3.0.1:5074
+    path: <sip:lb@127.0.0.1:5060;lr;socket=sip:127.3.0.1:5074>
+    q: 0.5
+    expires: 1977-07-26 23:47:37
 
 
 prefs.json file syntax:
