@@ -238,6 +238,12 @@ create_voip_prefs() {
     echo "$(date) - Setting preferences"
     "${BIN_DIR}/set_preferences.pl" "${SCEN_CHECK_DIR}/prefs.json"
   fi
+
+  if [ -f "${SCEN_CHECK_DIR}/registration.yml" ]; then
+    echo "$(date) - Creating permanent registrations"
+    "${BIN_DIR}/create_registrations.pl" \
+      "${SCEN_CHECK_DIR}/registration.yml" "${SCEN_CHECK_DIR}/scenario_ids.yml"
+  fi
 }
 
 # $1 domain
@@ -289,6 +295,11 @@ delete_voip() {
   if [ -f "${SCEN_CHECK_DIR}/soundsets.yml" ]; then
     echo "$(date) - Deleting soundsets"
     "${BIN_DIR}/create_soundsets.pl" -delete "${SCEN_CHECK_DIR}/soundsets.yml"
+  fi
+
+  if [ -f "${SCEN_CHECK_DIR}/registration.yml" ]; then
+    echo "$(date) - Deleting registrations"
+    "${BIN_DIR}/create_registrations.pl" -delete "${SCEN_CHECK_DIR}/registration.yml"
   fi
 }
 
