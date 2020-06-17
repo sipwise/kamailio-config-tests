@@ -181,6 +181,12 @@ create_voip() {
     echo "$(date) - Cannot create domain subscribers"
     exit 1
   fi
+
+  if [ -f "${SCEN_CHECK_DIR}/registration.yml" ]; then
+    echo "$(date) - Creating permanent registrations"
+    "${BIN_DIR}/create_registrations.pl" \
+      "${SCEN_CHECK_DIR}/registration.yml"
+  fi
 }
 
 # $1 prefs yml file
@@ -289,6 +295,11 @@ delete_voip() {
   if [ -f "${SCEN_CHECK_DIR}/soundsets.yml" ]; then
     echo "$(date) - Deleting soundsets"
     "${BIN_DIR}/create_soundsets.pl" -delete "${SCEN_CHECK_DIR}/soundsets.yml"
+  fi
+
+  if [ -f "${SCEN_CHECK_DIR}/registration.yml" ]; then
+    echo "$(date) - Deleting registrations"
+    "${BIN_DIR}/create_registrations.pl" -delete "${SCEN_CHECK_DIR}/registration.yml"
   fi
 }
 
