@@ -1,0 +1,6 @@
+{
+    "peer_00_host0": {
+        "concurrent_max": 1,
+        "outbound_socket": "udp:127.0.0.1:5064"
+    }
+}

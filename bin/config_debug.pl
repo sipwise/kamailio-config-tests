@@ -108,10 +108,8 @@ else
   $yaml = LoadFile($file_yaml);
   $yaml->{kamailio}{lb}{cfgt} = 'yes';
   $yaml->{kamailio}{lb}{dns}{use_dns_cache} = 'off';
-  if($children > 0)
-  {
-    $yaml->{kamailio}{proxy}{children} = $children;
-  }
+  $yaml->{kamailio}{lb}{extra_sockets}->{test} = "udp:127.0.0.1:5064";
+  $yaml->{kamailio}{proxy}{children} = $children if($children > 0);
   $yaml->{kamailio}{proxy}{cfgt} = 'yes';
   $yaml->{sems}{cfgt} = 'yes';
   $yaml->{sems}{debug} = 'yes';
