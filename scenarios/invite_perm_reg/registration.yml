@@ -1,0 +1,7 @@
+---
+testuser1003@spce.test:
+  - nat: false
+    contact: sip:127.3.0.5:8008
+    path: <sip:127.3.0.1:5074;lr>
+    q: 0.5
+    expires: 2156-07-26 23:47:37
