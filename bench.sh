@@ -42,7 +42,7 @@ export BASE_DIR
 if ! "${SKIP_CONFIG}" ; then
 	export PERL5LIB="${BASE_DIR}/lib"
 	echo "add configuration for tests"
-	./bin/config_debug.pl -g"${GROUP}" on
+	./bin/config_debug.pl -g "${GROUP}" on
 	(
     cd /etc/ngcp-config || true
     ngcpcfg apply "k-c-t ${GROUP} on"
