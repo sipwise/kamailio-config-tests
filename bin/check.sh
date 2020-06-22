@@ -34,16 +34,6 @@ SKIP_MOVE_JSON_KAM=false
 CDR=false
 ERR_FLAG=0
 
-
-# sipwise password for mysql connections
-declare -r SIPWISE_EXTRA_CNF="/etc/mysql/sipwise_extra.cnf"
-
-if [ ! -f "${SIPWISE_EXTRA_CNF}" ]; then
-  echo "Error: missing DB credentials file '${SIPWISE_EXTRA_CNF}'." >&2
-  exit 1
-fi
-
-
 # $1 kamailio msg parsed to yml
 # $2 destination png filename
 graph() {
@@ -246,37 +236,6 @@ create_voip_prefs() {
   fi
 }
 
-delete_locations() {
-  local f
-  local sub
-
-  for f in ${SCEN_CHECK_DIR}/callee.csv ${SCEN_CHECK_DIR}/caller.csv; do
-    if ! [ -f "$f" ] ; then
-      continue
-    fi
-    for sub in $(uniq "${f}" | grep "${DOMAIN}" | cut -d\; -f1 | xargs); do
-      ngcp-kamctl proxy fifo ul.rm location "${sub}@${DOMAIN}" >/dev/null
-      # delete possible banned user
-      ngcp-kamcmd lb htable.delete auth "${sub}@${DOMAIN}::auth_count"
-    done
-  done
-
-  # check what's in the DDBB
-  f=$(mysql --defaults-extra-file="${SIPWISE_EXTRA_CNF}" \
-      kamailio -e 'select count(*) from location;' -s -r | head)
-  if [ "${f}" != "0" ]; then
-    echo "$(date) Cleaning location table"
-    sub=$(mysql --defaults-extra-file="${SIPWISE_EXTRA_CNF}" \
-      -e 'select concat(username, "@", domain) as user from kamailio.location;' \
-      -r -s | head| uniq|xargs)
-    for f in $sub; do
-      ngcp-kamctl proxy fifo ul.rm location "${f}" >/dev/null
-    done
-    mysql --defaults-extra-file="${SIPWISE_EXTRA_CNF}" \
-      -e 'delete from kamailio.location;' || true
-  fi
-}
-
 # $1 domain
 delete_voip() {
   /usr/bin/ngcp-delete-domain "$1" >/dev/null 2>&1
@@ -332,7 +291,6 @@ delete_voip() {
     echo "$(date) - Deleting registrations"
     "${BIN_DIR}/create_registrations.pl" -delete "${SCEN_CHECK_DIR}/registration.yml"
   fi
-  delete_locations
 }
 
 release_appearance() {
@@ -485,6 +443,8 @@ run_sipp() {
   echo "$(date) - create ${LOG_DIR}"
   mkdir -p "${LOG_DIR}"
 
+  echo "$(date) - Cleaning registrations"
+  "${BIN_DIR}/clean_registrations.pl" "${SCEN_CHECK_DIR}/scenario.yml"
   if [ "${PROFILE}" = "PRO" ] ; then
     release_appearance
   fi
@@ -595,7 +555,8 @@ run_sipp() {
     status=1
   fi
 
-  delete_locations
+  echo "$(date) - Cleaning registrations"
+  "${BIN_DIR}/clean_registrations.pl" "${SCEN_CHECK_DIR}/scenario.yml"
   if [ "${PROFILE}" = "PRO" ] ; then
     release_appearance
   fi
@@ -681,24 +642,24 @@ cdr_check() {
 usage() {
   echo "Usage: check.sh [-hCDRTGgJKm] [-d DOMAIN ] [-p PROFILE ] -s [GROUP] check_name"
   echo "Options:"
-  echo -e "\t-C: skip creation of domain and subscribers"
-  echo -e "\t-R: skip run sipp"
-  echo -e "\t-D: skip deletion of domain and subscribers as final step"
-  echo -e "\t-T: skip checks"
-  echo -e "\t-P: skip parse"
-  echo -e "\t-G: creation of graphviz image"
-  echo -e "\t-g: creation of graphviz image only if test fails"
-  echo -e "\t-r: fix retransmission issues"
-  echo -e "\t-d: DOMAIN"
-  echo -e "\t-p: CE|PRO default is CE"
-  echo -e "\t-J: kamailio json output OFF"
-  echo -e "\t-M: skip move of kamailio json output to log folder"
-  echo -e "\t-K: enable tcpdump capture"
-  echo -e "\t-s: scenario group. Default: scenarios"
-  echo -e "\t-m: enable memdbg csv"
-  echo -e "\t-c: enable cdr validation"
+  echo -e "\\t-C: skip creation of domain and subscribers"
+  echo -e "\\t-R: skip run sipp"
+  echo -e "\\t-D: skip deletion of domain and subscribers as final step"
+  echo -e "\\t-T: skip checks"
+  echo -e "\\t-P: skip parse"
+  echo -e "\\t-G: creation of graphviz image"
+  echo -e "\\t-g: creation of graphviz image only if test fails"
+  echo -e "\\t-r: fix retransmission issues"
+  echo -e "\\t-d: DOMAIN"
+  echo -e "\\t-p: CE|PRO default is CE"
+  echo -e "\\t-J: kamailio json output OFF"
+  echo -e "\\t-M: skip move of kamailio json output to log folder"
+  echo -e "\\t-K: enable tcpdump capture"
+  echo -e "\\t-s: scenario group. Default: scenarios"
+  echo -e "\\t-m: enable memdbg csv"
+  echo -e "\\t-c: enable cdr validation"
   echo "Arguments:"
-  echo -e "\tcheck_name. Scenario name to check. This is the name of the directory on GROUP dir."
+  echo -e "\\tcheck_name. Scenario name to check. This is the name of the directory on GROUP dir."
 }
 
 while getopts 'hCd:p:Rs:DTPGgrcJKMm' opt; do
@@ -720,6 +681,7 @@ while getopts 'hCd:p:Rs:DTPGgrcJKMm' opt; do
     M) SKIP_MOVE_JSON_KAM=true;;
     m) MEMDBG=true;;
     c) CDR=true;;
+    *) usage; exit 1;;
   esac
 done
 shift $((OPTIND - 1))
@@ -838,7 +800,7 @@ if ! "$SKIP_RUNSIPP" ; then
   if "${FIX_RETRANS}" ; then
     echo "$(date) - Checking retransmission issues"
     RETRANS_ISSUE=false
-    file_find=($(find "${LOG_DIR}" -maxdepth 1 -name '*.json' | sort))
+    mapfile -t file_find < <(find "${LOG_DIR}" -maxdepth 1 -name '*.json' | sort)
     for json_file in "${file_find[@]}" ; do
       file_find=("${file_find[@]:1}")
       if ! [ -a "${json_file}" ] ; then
@@ -858,12 +820,12 @@ if ! "$SKIP_RUNSIPP" ; then
 
     if "${RETRANS_ISSUE}" ; then
       echo "$(date) - Reordering kamailio json files"
-      file_find=($(find "${LOG_DIR}" -maxdepth 1 -name '*.json' | sort))
+      mapfile -t file_find < <(find "${LOG_DIR}" -maxdepth 1 -name '*.json' | sort)
       a=1
       for json_file in "${file_find[@]}" ; do
         new_name=$(printf "%04d.json" "${a}")
         mv -n "${json_file}" "${LOG_DIR}/${new_name}" &> /dev/null
-        let a=a+1
+        ((a=a+1))
       done
     fi
 
@@ -906,7 +868,7 @@ if ! "${SKIP_TESTS}" ; then
   "${BIN_DIR}/generate_tests.sh" -d \
     "${SCEN_CHECK_DIR}" "${LOG_DIR}/scenario_ids.yml" "${PROFILE}"
 
-  for t in ${SCEN_CHECK_DIR}/[0-9][0-9][0-9][0-9]_test*.yml; do
+  for t in "${SCEN_CHECK_DIR}"/[0-9][0-9][0-9][0-9]_test*.yml; do
     test_filepath "${t}"
     echo "$(date) - Check test ${t} on ${msg}"
     dest=${RESULT_DIR}/$(basename "${t}" .yml)
