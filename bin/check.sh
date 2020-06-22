@@ -251,6 +251,9 @@ delete_locations() {
   local sub
 
   for f in ${SCEN_CHECK_DIR}/callee.csv ${SCEN_CHECK_DIR}/caller.csv; do
+    if ! [ -f "$f" ] ; then
+      continue
+    fi
     for sub in $(uniq "${f}" | grep "${DOMAIN}" | cut -d\; -f1 | xargs); do
       ngcp-kamctl proxy fifo ul.rm location "${sub}@${DOMAIN}" >/dev/null
       # delete possible banned user
