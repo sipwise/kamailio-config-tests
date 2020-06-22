@@ -34,16 +34,6 @@ SKIP_MOVE_JSON_KAM=false
 CDR=false
 ERR_FLAG=0
 
-
-# sipwise password for mysql connections
-declare -r SIPWISE_EXTRA_CNF="/etc/mysql/sipwise_extra.cnf"
-
-if [ ! -f "${SIPWISE_EXTRA_CNF}" ]; then
-  echo "Error: missing DB credentials file '${SIPWISE_EXTRA_CNF}'." >&2
-  exit 1
-fi
-
-
 # $1 kamailio msg parsed to yml
 # $2 destination png filename
 graph() {
@@ -243,37 +233,6 @@ create_voip_prefs() {
   if [ -f "${SCEN_CHECK_DIR}/prefs.json" ]; then
     echo "$(date) - Setting preferences"
     "${BIN_DIR}/set_preferences.pl" "${SCEN_CHECK_DIR}/prefs.json"
-  fi
-}
-
-delete_locations() {
-  local f
-  local sub
-
-  for f in ${SCEN_CHECK_DIR}/callee.csv ${SCEN_CHECK_DIR}/caller.csv; do
-    if ! [ -f "$f" ] ; then
-      continue
-    fi
-    for sub in $(uniq "${f}" | grep "${DOMAIN}" | cut -d\; -f1 | xargs); do
-      ngcp-kamctl proxy fifo ul.rm location "${sub}@${DOMAIN}" >/dev/null
-      # delete possible banned user
-      ngcp-kamcmd lb htable.delete auth "${sub}@${DOMAIN}::auth_count"
-    done
-  done
-
-  # check what's in the DDBB
-  f=$(mysql --defaults-extra-file="${SIPWISE_EXTRA_CNF}" \
-      kamailio -e 'select count(*) from location;' -s -r | head)
-  if [ "${f}" != "0" ]; then
-    echo "$(date) Cleaning location table"
-    sub=$(mysql --defaults-extra-file="${SIPWISE_EXTRA_CNF}" \
-      -e 'select concat(username, "@", domain) as user from kamailio.location;' \
-      -r -s | head| uniq|xargs)
-    for f in $sub; do
-      ngcp-kamctl proxy fifo ul.rm location "${f}" >/dev/null
-    done
-    mysql --defaults-extra-file="${SIPWISE_EXTRA_CNF}" \
-      -e 'delete from kamailio.location;' || true
   fi
 }
 
