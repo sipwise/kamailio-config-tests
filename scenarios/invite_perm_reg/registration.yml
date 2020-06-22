@@ -1,0 +1,8 @@
+---
+testuser1003@spce.test:
+  - nat: false
+    contact: sip:127.3.0.5:8008
+    socket: sip:127.3.0.1:5074
+    path: <sip:lb@127.0.0.1:5060;lr;socket=sip:127.3.0.1:5074>
+    q: 0.5
+    expires: 1977-07-26 23:47:37
