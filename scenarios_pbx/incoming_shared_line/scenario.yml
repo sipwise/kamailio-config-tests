@@ -1,4 +1,9 @@
 test_uuid: incoming_shared_line
+kamailio:
+  proxy:
+    debugger:
+      - name: sca
+        level: 3
 domains:
   'spce.test':
     reseller_id: 1
