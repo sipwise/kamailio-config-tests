@@ -5,6 +5,7 @@ Maintainer: Sipwise Development Team <support@sipwise.com>
 Build-Depends:
  debhelper-compat (= 12),
  devscripts,
+ libcapture-tiny-perl,
  libconfig-tiny-perl,
  libhash-merge-perl,
  libjson-perl,
@@ -22,6 +23,7 @@ Package: kamailio-config-tests
 Architecture: all
 Depends:
  curl,
+ libcapture-tiny-perl,
  libconfig-tiny-perl,
  libfile-slurp-perl,
  libhash-merge-perl,

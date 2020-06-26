@@ -480,6 +480,9 @@ run_sipp() {
     capture
   fi
 
+  echo "$(date) - kamailio debugger level"
+  "${BIN_DIR}/kam_dbg.pl" "${SCEN_CHECK_DIR}/scenario.yml"
+
   if [ -e "${SCEN_CHECK_DIR}/presence.sh" ]; then
     echo "$(date) - Presence xcap"
     if ! "${SCEN_CHECK_DIR}/presence.sh" ; then
@@ -563,6 +566,10 @@ run_sipp() {
   if "${MEMDBG}" ; then
     memdbg
   fi
+
+  echo "$(date) - kamailio debugger level reset to 1"
+  "${BIN_DIR}/kam_dbg.pl" --clean "${SCEN_CHECK_DIR}/scenario.yml"
+
   copy_logs
   # if any scenario has a log... error
   if [ "$(find "${SCEN_CHECK_DIR}" -name 'sipp_scenario*errors.log' 2>/dev/null|wc -l)" -ne 0 ]; then

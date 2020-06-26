@@ -196,9 +196,20 @@ scenario.yml file syntax:
 
   If password_wrong: yes then the caller is going to use 'wrongpass' as password.
 
+  If defined, we can set kamailio's modules level debug as desired.
+
   Example:
 
   test_uuid: lock_ported
+  kamailio:
+    lb:
+      debugger:
+        - name: sl
+          level: 3
+    proxy:
+      debugger:
+        - name: dialog
+          level: 3
   domains:
     'spce.test':
       reseller_id: 1
