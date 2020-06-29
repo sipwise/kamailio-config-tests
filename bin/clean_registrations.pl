@@ -142,6 +142,20 @@ sub clean_kamailio
     return;
 }
 
+sub usrloc_in_redis
+{
+    my ($rc, $out, $err) = run_cmd("ngcpcfg get kamailio.proxy.redis.usrloc");
+    if ($err) {
+        $err = join(", ", split(/\r*\n/, $err));
+        print "Error getting kamailio.proxy.redis.usrloc config\n";
+        return 0;
+    }
+    if($out =~ "yes") {
+        return 1;
+    }
+    return 0;
+}
+
 sub clean_locations
 {
     my $local_host = $CONSTANTS->{database}{local}{dbhost};
@@ -173,4 +187,6 @@ SQL
 }
 
 clean_kamailio($cf);
-clean_locations();
+if(usrloc_in_redis() eq 0) {
+    clean_locations();
+}
