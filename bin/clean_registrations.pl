@@ -24,12 +24,24 @@ use warnings;
 use English;
 use Getopt::Long;
 use Cwd 'abs_path';
+use Config::Tiny;
 use Capture::Tiny qw(capture);
 use YAML::XS;
 use List::MoreUtils qw(uniq);
 use DBI qw(:sql_types);
+use Sipwise::API qw(all);
 
 my $CONSTANTS = YAML::XS::LoadFile('/etc/ngcp-config/constants.yml');
+my $config = Config::Tiny->read('/etc/default/ngcp-api');
+my $opts;
+if ($config) {
+    $opts = {};
+    $opts->{host} = $config->{_}->{NGCP_API_IP};
+    $opts->{port} = $config->{_}->{NGCP_API_PORT};
+    $opts->{sslverify} = $config->{_}->{NGCP_API_SSLVERIFY};
+}
+my $api = Sipwise::API->new($opts);
+$opts = $api->opts;
 
 sub usage
 {
@@ -40,9 +52,10 @@ sub usage
 }
 
 my $help = 0;
-my $del = 0;
-GetOptions ("h|help" => \$help)
-  or die("Error in command line arguments\n".usage());
+GetOptions (
+    "h|help" => \$help,
+    "d|debug" => \$opts->{verbose},
+) or die("Error in command line arguments\n".usage());
 
 die(usage()) unless (!$help);
 die("Wrong number of arguments\n".usage()) unless ($#ARGV == 0);
@@ -51,19 +64,8 @@ my $filename = abs_path($ARGV[0]);
 my $cf = YAML::XS::LoadFile($filename);
 my $MYSQL_CREDENTIALS = "/etc/mysql/sipwise_extra.cnf";
 
-if (! -e ${MYSQL_CREDENTIALS}) {
-  die("Error: missing DB credentials file '${MYSQL_CREDENTIALS}'.\n")
-}
-
 sub get_mysql_credentials {
   return $CONSTANTS->{credentials}->{mysql}->{system}->{u};
-}
-
-sub get_nodename {
-    my @lines = capturex( [ 0 ], "/usr/sbin/ngcp-nodename");
-    my $l = shift @lines;
-    chomp $l;
-    return $l;
 }
 
 sub connect_db {
@@ -138,6 +140,9 @@ sub clean_kamailio
     }
     foreach (uniq @values) {
         clean_kamailio_ul($_);
+        if($api->delete_banneduser($_)) {
+            print("$_ removed from banned\n");
+        }
     }
     return;
 }
@@ -188,5 +193,8 @@ SQL
 
 clean_kamailio($cf);
 if(usrloc_in_redis() eq 0) {
+    if (! -e ${MYSQL_CREDENTIALS}) {
+        die("Error: missing DB credentials file '${MYSQL_CREDENTIALS}'.\n")
+    }
     clean_locations();
 }
