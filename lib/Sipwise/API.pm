@@ -93,7 +93,9 @@ sub do_request {
 	my $res = $ua->request($req);
 	if(!$res->is_success) {
 		print "$url\n";
-		print Dumper $data unless $self->{opts}->{verbose};
+		if($data) {
+			print Dumper $data unless $self->{opts}->{verbose};
+		}
 	}
 	return $res;
 }
@@ -131,7 +133,9 @@ sub do_query {
 	my $res = $ua->request($req);
 	if(!$res->is_success) {
 		print "$url\n";
-		print Dumper $data unless $self->{opts}->{verbose};
+		if($data) {
+			print Dumper $data unless $self->{opts}->{verbose};
+		}
 	}
 	return $res;
 }
@@ -1010,6 +1014,13 @@ sub upload_soundfile {
 		die $res->as_string;
 	}
 	return;
+}
+
+sub delete_banneduser {
+	my ($self, $id) = @_;
+	my $urldata = "/api/bannedusers/${id}";
+
+	return $self->_delete($urldata);
 }
 
 1;
