@@ -1,3 +1,13 @@
+kamailio-config-tests (8.3.2.1+0~mr8.3.2.1) unstable; urgency=medium
+
+  [ Andrew Pogrebennyk ]
+  * [1a4489b] TT#79954 remove route to RTPENGINE from callforward scenarios before CF loop
+
+  [ Marco Capetta ]
+  * [4dc38eb] TT#78303 Remove ROUTE_RESTORE_EVENTMON_HEADERS route from pbx scenarios
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 30 Jun 2020 15:28:26 +0200
+
 kamailio-config-tests (8.3.2.0+0~mr8.3.2.0) unstable; urgency=medium
 
   [ Marco Capetta ]
