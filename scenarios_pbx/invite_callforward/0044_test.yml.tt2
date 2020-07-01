@@ -1,0 +1,220 @@
+flow:
+  - start|DEFAULT_ROUTE:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_NET_INFO:
+  - return|ROUTE_NET_INFO:
+  - start|ROUTE_CHECK_TEL_URI:
+  - return|ROUTE_CHECK_TEL_URI:
+  - start|ROUTE_PRX_REQUEST:
+  - start|ROUTE_INITVARS:
+  - return|ROUTE_INITVARS:
+  - start|ROUTE_INVITE:
+  - start|ROUTE_LOAD_CALLEE_DOMAIN_PREF:
+  - start|ROUTE_CLEAR_CALLEE_DOMAIN_PREF:
+  - return|ROUTE_CLEAR_CALLEE_DOMAIN_PREF:
+  - return|ROUTE_LOAD_CALLEE_DOMAIN_PREF:
+  - start|ROUTE_FIND_CALLER:
+  - start|ROUTE_CONSUME_CF_HDRS:
+  - start|ROUTE_RESTORE_EVENTMON_HEADERS:
+  - return|ROUTE_RESTORE_EVENTMON_HEADERS:
+  - return|ROUTE_CONSUME_CF_HDRS:
+  - return|ROUTE_FIND_CALLER:
+  - start|ROUTE_LOAD_CALLER_PREF:
+  - start|ROUTE_CLEAR_CALLER_PREF:
+  - return|ROUTE_CLEAR_CALLER_PREF:
+  - start|ROUTE_CHECK_UA:
+  - return|ROUTE_CHECK_UA:
+  - start|ROUTE_LOAD_CALLER_CONTRACT_PREF:
+  - return|ROUTE_LOAD_CALLER_CONTRACT_PREF:
+  - start|ROUTE_DLG_MANAGE:
+  - return|ROUTE_DLG_MANAGE:
+  - return|ROUTE_LOAD_CALLER_PREF:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - start|ROUTE_GET_FORWARDER_CLI:
+  - return|ROUTE_GET_FORWARDER_CLI:
+  - start|ROUTE_CLIR:
+  - return|ROUTE_CLIR:
+  - start|ROUTE_CALLER_BLOCK_CLI:
+  - return|ROUTE_CALLER_BLOCK_CLI:
+  - start|ROUTE_CHECK_USERPROV_CLI:
+  - start|ROUTE_CHECK_CLI_ALLOWED:
+  - return|ROUTE_CHECK_CLI_ALLOWED:
+  - return|ROUTE_CHECK_USERPROV_CLI:
+  - start|ROUTE_CHECK_USERPROV_CLI:
+  - start|ROUTE_CHECK_CLI_ALLOWED:
+  - return|ROUTE_CHECK_CLI_ALLOWED:
+  - return|ROUTE_CHECK_USERPROV_CLI:
+  - start|ROUTE_FIND_CALLEE:
+  - start|ROUTE_CLEAR_CALLEE_PREF:
+  - return|ROUTE_CLEAR_CALLEE_PREF:
+  - start|ROUTE_LOAD_CALLEE_PREF:
+  - start|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
+  - return|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
+  - start|ROUTE_SET_CALLEE_DIALOG:
+  - start|ROUTE_CNT_DLG_CHECK:
+  - return|ROUTE_CNT_DLG_CHECK:
+  - return|ROUTE_SET_CALLEE_DIALOG:
+  - start|ROUTE_BLOCK_IN:
+  - return|ROUTE_BLOCK_IN:
+  - start|ROUTE_ORDER_CF_MAP_ID:
+  - return|ROUTE_ORDER_CF_MAP_ID:
+  - return|ROUTE_LOAD_CALLEE_PREF:
+  - start|ROUTE_NCOS_CHECK:
+  - start|ROUTE_NCOS:
+  - return|ROUTE_NCOS:
+  - start|ROUTE_NCOS:
+  - return|ROUTE_NCOS:
+  - start|ROUTE_NCOS:
+  - return|ROUTE_NCOS:
+  - start|ROUTE_NCOS:
+  - return|ROUTE_NCOS:
+  - start|ROUTE_NCOS:
+  - return|ROUTE_NCOS:
+  - return|ROUTE_NCOS_CHECK:
+  - start|ROUTE_BLOCK_OUT:
+  - return|ROUTE_BLOCK_OUT:
+  - start|ROUTE_CHECK_PBX:
+  - return|ROUTE_CHECK_PBX:
+  - start|ROUTE_CALLEE_DISPATCH:
+  - start|ROUTE_INVITE_TO_INT:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - start|ROUTE_OUTBOUND:
+  - start|ROUTE_SET_CALLER_DIALOG:
+  - start|ROUTE_CNT_DLG_CHECK:
+  - return|ROUTE_CNT_DLG_CHECK:
+  - return|ROUTE_SET_CALLER_DIALOG:
+  - start|ROUTE_ACC_CALLER:
+  - start|ROUTE_SET_ACC_CALLER_CALL_COUNTERS:
+  - return|ROUTE_SET_ACC_CALLER_CALL_COUNTERS:
+  - return|ROUTE_ACC_CALLER:
+  - start|ROUTE_ACC_CALLEE:
+  - start|ROUTE_SET_ACC_CALLEE_CALL_COUNTERS:
+  - return|ROUTE_SET_ACC_CALLEE_CALL_COUNTERS:
+  - return|ROUTE_ACC_CALLEE:
+  - start|ROUTE_SCA_UPDATE:
+  - return|ROUTE_SCA_UPDATE:
+  - start|BRANCH_ROUTE_NO_SBC:
+  - start|ROUTE_BRANCH_ACC_RTP:
+  - return|ROUTE_BRANCH_ACC_RTP:
+  - start|ROUTE_SET_BRANCH_HDRS:
+  - start|ROUTE_PREPARE_UA:
+  - return|ROUTE_PREPARE_UA:
+  - return|ROUTE_SET_BRANCH_HDRS:
+  - start|ROUTE_FILTER_PRACK:
+  - return|ROUTE_FILTER_PRACK:
+  - start|ROUTE_APPEND_CF_HDRS:
+  - start|ROUTE_ADD_EVENTMON_HEADERS:
+  - return|ROUTE_ADD_EVENTMON_HEADERS:
+  - return|ROUTE_APPEND_CF_HDRS:
+  - start|ROUTE_PREPARE_MOH_PBX:
+  - return|ROUTE_PREPARE_MOH_PBX:
+  - start|ROUTE_LOAD_PBXSRV:
+  - return|ROUTE_LOAD_PBXSRV:
+  - start|ROUTE_ADD_CALLINFO:
+  - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
+  - start|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - return|BRANCH_ROUTE_NO_SBC:
+  - start|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+sip_in:
+  - 'INVITE sip:43110011005@spce.test SIP/2.0'
+  - 'From: <sip:testuser1002@spce.test>;tag=[\w-]+'
+  - 'To: <sip:testuser1004@spce.test>'
+  - 'CSeq: \d+ INVITE'
+  - 'P-First-Caller-Cloud-PBX: [% customerpbx_test.id %]'
+  - 'P-Caller-UUID: [% spce_test.testuser1004.uuid %]'
+  - 'P-NGCP-Caller-Info: <sip:testuser1002@spce.test>;ip=127.126.0.1;port=\d+;primary=43110011002'
+  - 'P-NGCP-Callee-Info: <sip:43110011005@spce.test>;ip=127.0.0.1;port=5080'
+  - 'P-HIH-Cause: 486'
+  - 'P-First-Caller-UPN: 43110011002'
+  - 'P-First-Caller-NPN: 43110011002'
+  - 'P-First-Caller-UPD: spce.test'
+  - 'P-First-Caller-NPD: spce.test'
+  - 'P-Acc-Caller-User: testuser1004'
+  - 'P-Acc-Caller-Domain: spce.test'
+  - 'P-Acc-State: cfb'
+  - 'P-From-Peer: 0'
+  - 'P-First-V46-RTP: auto'
+  - 'P-First-RTP: ice_strip_candidates'
+  - 'P-First-RTP-Transport: RTP/AVP'
+  - 'P-First-Caller-CLIR: 0'
+  - 'P-CF-Depth: 1'
+  - 'P-First-Caller-UA-Mode: strip'
+  - 'P-First-Caller-PBX-Ext: 1002'
+  - 'P-Callee-Account-ID: 0'
+  - 'P-Orig-Callee-Dialed: testuser1004'
+  - 'P-Prev-Caller-UUID: [% spce_test.testuser1002.uuid %]'
+  - 'P-First-Caller-RTP-Interface: ext'
+  - 'P-First-Caller-RTP-Interface-Source: default'
+  - 'P-NGCP-Forward-Info: <sip:testuser1004@spce.test>;ip=127.0.0.1;port=5080;primary=43110011004'
+  - 'Content-Type: application/sdp'
+  - 'Content-Length:\s+\d+'
+  - 'Contact: <sip:127.0.0.1:5080;transport=udp>'
+sip_out:
+  - [
+      'SIP/2.0 100 Trying',
+      'From: <sip:testuser1002@spce.test>;tag=[\w-]+',
+      'To: <sip:testuser1004@spce.test>',
+      'CSeq: \d+ INVITE',
+      'Server: Sipwise NGCP Proxy 8.X',
+      'Content-Length: 0',
+    ]
+  - [
+      'INVITE sip:testuser1005@spce.test SIP/2.0',
+      'From: <sip:testuser1002@spce.test>;tag=[\w-]+',
+      'To: <sip:testuser1004@spce.test>',
+      'CSeq: \d+ INVITE',
+      'P-First-Caller-Cloud-PBX: [% customerpbx_test.id %]',
+      'P-Caller-UUID: [% spce_test.testuser1004.uuid %]',
+      'P-NGCP-Caller-Info: <sip:testuser1004@spce.test>;ip=127.0.0.1;port=5080;primary=43110011004',
+      'P-NGCP-Callee-Info: <sip:43110011005@spce.test>;ip=127.0.0.1;port=508[58];primary=43110011005',
+      'P-First-Caller-UPN: 43110011002',
+      'P-First-Caller-NPN: 43110011002',
+      'P-First-Caller-UPD: spce.test',
+      'P-First-Caller-NPD: spce.test',
+      'P-Acc-Caller-User: testuser1004',
+      'P-Acc-Caller-Domain: spce.test',
+      'P-Acc-State: cfb',
+      'P-From-Peer: 0',
+      'P-First-V46-RTP: auto',
+      'P-First-RTP: ice_strip_candidates',
+      'P-First-RTP-Transport: transparent',
+      'P-First-Caller-CLIR: 0',
+      'P-CF-Depth: 1',
+      'P-First-Caller-UA-Mode: strip',
+      'P-First-Caller-PBX-Ext: 1002',
+      'P-Callee-Account-ID: [% customerpbx_test.id %]',
+      'P-Orig-Callee-Dialed: 43110011005',
+      'P-Prev-Caller-UUID: [% spce_test.testuser1004.uuid %]',
+      'P-First-Caller-RTP-Interface: ext',
+      'P-First-Caller-RTP-Interface-Source: default',
+      'P-NGCP-Forward-Info: <sip:testuser1004@spce.test>;ip=127.0.0.1;port=5080;primary=43110011004',
+      'Content-Type: application/sdp',
+      'Content-Length:\s+\d+',
+      'Contact: <sip:127.0.0.1:5080;transport=udp>',
+      'P-NGCP-Sems-Instance: pbx',
+      'P-Callee-Ext-Subs-ID: ',
+      'P-Callee-Ext-Contr-ID: ',
+      'P-NGCP-Orig-User: 43110011005',
+      'P-Callee-UUID: [% spce_test.testuser1005.uuid %]',
+      'P-NGCP-Alias-Base: 43110011005',
+      'P-NGCP-Alias-DevId: 0',
+      'P-App-Name: sbc',
+      'P-App-Param: ;profile=ngcp_pbx;a_park_domain=[% customerpbx_test.id %];b_park_domain=[% customerpbx_test.id %]',
+      'P-NGCP-Acc-Src-Leg: .+',
+      'P-NGCP-Acc-Dst-Leg: .+',
+      'P-Proxy-Uri: 127.0.0.1:5062',
+    ]

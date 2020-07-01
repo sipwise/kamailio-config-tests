@@ -1,0 +1,32 @@
+flow:
+  - start|DEFAULT_ONREPLY:
+  - start|REPLY_ROUTE_NAT:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|REPLY_SCA_UPDATE:
+  - return|REPLY_SCA_UPDATE:
+  - start|ROUTE_PREPARE_UA:
+  - return|ROUTE_PREPARE_UA:
+  - start|REPLY_ROUTE_NAT_CONTINUE:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+sip_in:
+  - 'SIP/2.0 180 Ringing'
+  - 'From: <sip:testuser1002@spce.test>;tag=[\w-]+'
+  - 'To: <sip:testuser1001@spce.test>;tag=[\w-]+'
+  - 'CSeq: \d+ INVITE'
+  - 'P-COLP-Identity: "1003" <sip:1003@spce.test>'
+  - 'Contact: <sip:127.0.0.1:508[58];transport=udp>'
+  - 'Content-Length: 0'
+sip_out:
+  - [
+      'SIP/2.0 180 Ringing',
+      'From: <sip:testuser1002@spce.test>;tag=[\w-]+',
+      'To: <sip:testuser1001@spce.test>;tag=[\w-]+',
+      'CSeq: \d+ INVITE',
+      'P-COLP-Identity: "1003" <sip:1003@spce.test>',
+      'Contact: <sip:127.0.0.1:508[58];transport=udp>',
+      'Content-Length: 0',
+    ]

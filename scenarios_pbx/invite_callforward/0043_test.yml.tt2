@@ -1,0 +1,121 @@
+flow:
+  - start|DEFAULT_ONREPLY:
+  - start|REPLY_ROUTE_NAT:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - start|ROUTE_PREPARE_UA:
+  - return|ROUTE_PREPARE_UA:
+  - start|REPLY_ROUTE_NAT_CONTINUE:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+  - start|FAILURE_ROUTE_LOCAL:
+  - start|ROUTE_INITVARS:
+  - return|ROUTE_INITVARS:
+  - start|ROUTE_STOP_RTPPROXY_BRANCH:
+  - start|ROUTE_RESTORE_CLUSTERSET:
+  - return|ROUTE_RESTORE_CLUSTERSET:
+  - return|ROUTE_STOP_RTPPROXY_BRANCH:
+  - start|ROUTE_CF_CFB:
+  - start|ROUTE_LOAD_CF_MAP:
+  - return|ROUTE_LOAD_CF_MAP:
+  - start|ROUTE_CHECK_CF:
+  - start|ROUTE_CHECK_CF_SOURCES:
+  - return|ROUTE_CHECK_CF_SOURCES:
+  - start|ROUTE_CHECK_CF_BNUMBERS:
+  - return|ROUTE_CHECK_CF_BNUMBERS:
+  - start|ROUTE_CHECK_CF_PERIOD:
+  - return|ROUTE_CHECK_CF_PERIOD:
+  - return|ROUTE_CHECK_CF:
+  - start|ROUTE_EXECUTE_CF_LOOP:
+  - start|ROUTE_ADD_AOC_HEADER:
+  - return|ROUTE_ADD_AOC_HEADER:
+  - start|BRANCH_ROUTE_FWD_LOOP:
+  - start|ROUTE_APPEND_CF_HDRS:
+  - start|ROUTE_ADD_EVENTMON_HEADERS:
+  - return|ROUTE_ADD_EVENTMON_HEADERS:
+  - return|ROUTE_APPEND_CF_HDRS:
+  - start|ROUTE_ADD_CALLINFO:
+  - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
+  - start|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - return|BRANCH_ROUTE_FWD_LOOP:
+  - start|ROUTE_DROP:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_DROP:
+  - start|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - start|ROUTE_EXECUTE_CF_LOOP:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+  - exit|ROUTE_EXIT:
+sip_in:
+  - 'SIP/2.0 486 Busy Here'
+  - 'From: <sip:43110011002@spce.test>;tag=[\w-]+'
+  - 'To: <sip:testuser1004@spce.test>;tag=[\w-]+'
+  - 'CSeq: \d+ INVITE'
+  - 'Content-Length: 0'
+sip_out:
+  - [
+      'ACK sip:testuser1004@127.1.0.4:\d+ SIP/2.0',
+      'From: <sip:43110011002@spce.test>;tag=[\w-]+',
+      'To: <sip:testuser1004@spce.test>;tag=[\w-]+',
+      'CSeq: \d+ ACK',
+      'Content-Length: 0',
+    ]
+  - [
+      'INVITE sip:43110011005@spce.test SIP/2.0',
+      'From: <sip:testuser1002@spce.test>;tag=[\w-]+',
+      'To: <sip:testuser1004@spce.test>',
+      'CSeq: \d+ INVITE',
+      'P-LB-Uptime: \d+',
+      'P-NGCP-Orig-PBX-Ext: 1004',
+      'P-First-Caller-Cloud-PBX: [% customerpbx_test.id %]',
+      'P-Caller-UUID: [% spce_test.testuser1004.uuid %]',
+      'P-Callee-UUID: [% spce_test.testuser1004.uuid %]',
+      'P-NGCP-Acc-Src-Leg: .+',
+      'P-NGCP-Acc-Dst-Leg: .+',
+      'P-NGCP-Sems-Instance: sbc',
+      'P-NGCP-Caller-Info: <sip:testuser1002@spce.test>;ip=127.126.0.1;port=\d+;primary=43110011002',
+      'P-NGCP-Callee-Info: <sip:43110011005@spce.test>;ip=127.0.0.1;port=5080',
+      'Content-Type: application/sdp',
+      'Content-Length:\s+\d+',
+      'Contact: <sip:127.0.0.1:508[58];transport=udp>',
+      'P-HIH-Cause: 486',
+      'P-App-Param: ;profile=ngcp_cf',
+      'P-App-Name: sbc',
+      'P-D-Uri: sip:127.0.0.1:5062',
+      'P-First-Caller-UPN: 43110011002',
+      'P-First-Caller-NPN: 43110011002',
+      'P-First-Caller-UPD: spce.test',
+      'P-First-Caller-NPD: spce.test',
+      'P-Acc-Caller-User: testuser1004',
+      'P-Acc-Caller-Domain: spce.test',
+      'P-Acc-State: cfb',
+      'P-From-Peer: 0',
+      'P-First-V46-RTP: auto',
+      'P-First-RTP: ice_strip_candidates',
+      'P-First-RTP-Transport: RTP/AVP',
+      'P-First-Caller-CLIR: 0',
+      'P-CF-Depth: 1',
+      'P-First-Caller-UA-Mode: strip',
+      'P-First-Caller-PBX-Ext: 1002',
+      'P-Callee-Ext-Subs-ID: ',
+      'P-Callee-Ext-Contr-ID: ',
+      'P-Callee-Account-ID: 0',
+      'P-Orig-Callee-Dialed: testuser1004',
+      'P-Prev-Caller-UUID: [% spce_test.testuser1002.uuid %]',
+      'P-First-Caller-RTP-Interface: ext',
+      'P-First-Caller-RTP-Interface-Source: default',
+      'P-NGCP-Forward-Info: <sip:testuser1004@spce.test>;ip=127.0.0.1;port=5080;primary=43110011004',
+    ]
