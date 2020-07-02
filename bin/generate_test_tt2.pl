@@ -41,6 +41,7 @@ sub usage
   $output .= "\t-F --filter-common: filter common headers:\n";
   $output .= "\t\t@common_hdrs\n";
   $output .= "\t-i --ids: subst ids present in scenarios_ids.yml file\n";
+  $output .= "\t-n --network: subst sipp ports using networks defined at scenarios.yml file\n";
   return $output
 }
 
@@ -50,6 +51,20 @@ sub load_ids
   my $res = {};
   get_uuid($yml, "", $res);
   return $res;
+}
+
+sub load_network
+{
+  my $yml = LoadFile($_[0]);
+  my @res = ();
+  foreach (@{$yml->{scenarios}}) {
+    push @res, $_->{ip};
+    foreach (@{$_->{responders}}) {
+      push @res, $_->{ip};
+    }
+  }
+  @res = uniq(@res);
+  return \@res;
 }
 
 sub get_uuid
@@ -91,14 +106,35 @@ sub subst_common
     $line =~ s/;tag=(.+)/;tag=[\\w-]+/;
   } elsif($line =~ /^CSeq: /i) {
     $line =~ s/:[ ]+\d+[ ]+/: \\d+ /;
-  } elsif($line =~ /^WWW-Authenticate: /i) {
-    $line =~ s/nonce=".+"/nonce=".+"/;
+  } elsif($line =~ /^(WWW|Proxy)-Authenticate: /i) {
+    $line =~ s/nonce="[^"]+"/nonce=".+"/;
+  } elsif($line =~ /^(WWW|Proxy)-Authorization: /i) {
+    $line =~ s/response="[^"]+"/response=".+"/;
+    $line =~ s/nonce="[^"]+"/nonce=".+"/;
   } elsif($line =~ /^Server: Sipwise/i) {
-    $line =~ s/^: Sipwise .+/: Sipwise NGCP Proxy/;
+    $line =~ s/: Sipwise .+/: Sipwise NGCP Proxy/;
   } elsif($line =~ /^Content-Length:[ ]+[1-9]/i) {
     $line =~ s/:[ ]+\d+/: \\d+/;
   } elsif($line =~ /^P-LB-Uptime: /i) {
     $line =~ s/: \d+/: \\d+/;
+  } elsif($line =~ /^P-NGCP-Src-Port: /i) {
+    $line =~ s/: \d+/: \\d+/;
+  }
+  return $line;
+}
+
+my $network;
+sub subst_network
+{
+  my $line = shift;
+  if ($line =~ /(?:[0-9]{1,3}\.){3}[0-9]{1,3}/) {
+    foreach my $ip (@{$network}) {
+      if($line =~ s/\Q${ip}\E:\d+/${ip}:\\d+/g) {
+        return $line;
+      } elsif($line =~ s/ip=\Q${ip}\E;port=\d+/ip=${ip};port=\\d+/g) {
+        return $line;
+      }
+    }
   }
   return $line;
 }
@@ -113,6 +149,9 @@ sub print_header
     $line = subst_uuids($_l);
   }
   $line = subst_common($line);
+  if($network) {
+    $line = subst_network($line);
+  }
   if($_type eq 'sip_in') {
     print "  - '$line'\n";
   } else {
@@ -135,11 +174,13 @@ sub filter_header
 my $help = 0;
 my $f_common = 0;
 my $f_ids;
+my $f_net;
 GetOptions (
   "h|help" => \$help,
   "f|filter=s" => \@headers,
   "F|filter-common" => \$f_common,
   "i|ids=s" => \$f_ids,
+  "n|network=s" => \$f_net,
 ) or die("Error in command line arguments\n".usage());
 
 if($#ARGV!=0 || $help)
@@ -163,6 +204,10 @@ my $inlog = decode_json($json);
 
 if($f_ids) {
   $uuids = load_ids(abs_path($f_ids));
+}
+
+if($f_net) {
+  $network = load_network(abs_path($f_net));
 }
 
 print "flow:\n";
