@@ -26,10 +26,9 @@ import json
 import logging
 
 from yaml import load
-from pprint import pprint
 try:
     from yaml import CLoader as Loader
-except:
+except ImportError:
     from yaml import Loader
 
 
@@ -38,10 +37,10 @@ class XAvp:
     """ Class to simulate the xavp """
 
     def __init__(self, name, data):
-        result = re.match('\$xavp\((\w+)\)', name)
+        result = re.match(r'\$xavp\((\w+)\)', name)
         try:
             self._name = result.group(1)
-        except:
+        except Exception:
             raise Exception('not a xavp')
         self._data = data
 
@@ -74,9 +73,9 @@ class XAvp:
 
     @classmethod
     def parse(cls, str):
-        pattern_nindx = '(\[(?P<%s>\d+)\])?' % 'nindx'
-        pattern_kindx = '(\[(?P<%s>\d+|\*+)\])?' % 'kindx'
-        pattern = '\$xavp\((?P<name>\w+)%s(=>(?P<key>\w+)%s)?\)' % (
+        pattern_nindx = r'(\[(?P<%s>\d+)\])?' % 'nindx'
+        pattern_kindx = r'(\[(?P<%s>\d+|\*+)\])?' % 'kindx'
+        pattern = r'\$xavp\((?P<name>\w+)%s(=>(?P<key>\w+)%s)?\)' % (
             pattern_nindx, pattern_kindx)
         result = re.match(pattern, str)
         if result is not None:
@@ -86,7 +85,7 @@ class XAvp:
                 nindx = 0
             try:
                 kindx = int(result.group('kindx'))
-            except:
+            except Exception:
                 if result.group('kindx') == '*':
                     kindx = '*'
                 else:
@@ -134,7 +133,7 @@ class Test:
         elif isinstance(val0, int):
             try:
                 result = (val0 == int(val1))
-            except:
+            except Exception:
                 result = False
         elif isinstance(val0, list) and isinstance(val1, list):
             size = len(val0)
@@ -230,7 +229,7 @@ def check_flow(scen, check, test):
         (sk, sv) = scen[i].popitem()
         try:
             (ck, cv) = check[i].popitem()
-        except:
+        except Exception:
             test.error('wrong flow. Expected: %s but is nothing there' % sk)
             continue
         if(sk != ck):
@@ -243,11 +242,11 @@ def check_flow(scen, check, test):
             test.ok('flow[%s]' % sk)
         check_flow_vars(sk, sv, cv, test)
     if(len(check) > len(scen)):
-        l = []
+        line = []
         for i in check:
             for k in i.keys():
-                l.append(k)
-        test.error('Expected to end but there are more flows %s' % l)
+                line.append(k)
+        test.error('Expected to end but there are more flows %s' % line)
 
 
 def check_sip(scen, msg, test):
@@ -346,7 +345,7 @@ def main():
 
     try:
         check = load_check(args[1])
-    except:
+    except Exception:
         check = {'flow': [], 'sip_in': '', 'sip_out': []}
         test.error("Error loading file:%s" % args[1])
 
@@ -359,6 +358,7 @@ def main():
     print(test)
     if test.isError():
         sys.exit(1)
+
 
 if __name__ == "__main__":
     main()
