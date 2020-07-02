@@ -14,7 +14,7 @@ SEMS_PBX_LOG=${SEMS_PBX_LOG:-"/var/log/ngcp/sems-pbx.log"}
 TMP_LOG_DIR="/tmp"
 KAM_DIR="/tmp/cfgtest"
 COREDUMP_DIR="/ngcp-data/coredumps"
-PROFILE="CE"
+PROFILE="${PROFILE:-CE}"
 OPTS=(-P -T -M) #SKIP_PARSE=true, SKIP_TESTS=true, SKIP_MOVE_JSON_KAM=true
 DOMAIN="spce.test"
 TIMEOUT=${TIMEOUT:-300}

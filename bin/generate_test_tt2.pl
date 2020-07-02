@@ -29,14 +29,18 @@ use English;
 use utf8;
 use JSON;
 use Scalar::Util qw(reftype);
+use List::MoreUtils qw(uniq);
 
+my @common_hdrs = qw(Via Route Call-ID Expires Max-Forwards);
 sub usage
 {
   my $output = "usage: generate_test_tt2.pl [-h] [-f Header] file\n";
-  $output .= "\tOptions:\n";
-  $output .= "-h --help: this help\n";
-  $output .= "-f --filter: remove this header ( can be used multiple times )\n";
-  $output .= "-i --ids: subst ids present in scenarios_ids.yml file\n";
+  $output .= "Options:\n";
+  $output .= "\t-h --help: this help\n";
+  $output .= "\t-f --filter: remove this header ( can be used multiple times )\n";
+  $output .= "\t-F --filter-common: filter common headers:\n";
+  $output .= "\t\t@common_hdrs\n";
+  $output .= "\t-i --ids: subst ids present in scenarios_ids.yml file\n";
   return $output
 }
 
@@ -91,8 +95,8 @@ sub subst_common
     $line =~ s/nonce=".+"/nonce=".+"/;
   } elsif($line =~ /^Server: Sipwise/i) {
     $line =~ s/^: Sipwise .+/: Sipwise NGCP Proxy/;
-  } elsif($line =~ /^Content-Length: [1-9]/i) {
-    $line =~ s/: \d+/: \\d+/;
+  } elsif($line =~ /^Content-Length:[ ]+[1-9]/i) {
+    $line =~ s/:[ ]+\d+/: \\d+/;
   } elsif($line =~ /^P-LB-Uptime: /i) {
     $line =~ s/: \d+/: \\d+/;
   }
@@ -129,14 +133,24 @@ sub filter_header
 }
 
 my $help = 0;
+my $f_common = 0;
 my $f_ids;
-GetOptions ("h|help" => \$help, "f|filter=s" => \@headers, "i|ids=s" => \$f_ids)
-  or die("Error in command line arguments\n".usage());
+GetOptions (
+  "h|help" => \$help,
+  "f|filter=s" => \@headers,
+  "F|filter-common" => \$f_common,
+  "i|ids=s" => \$f_ids,
+) or die("Error in command line arguments\n".usage());
 
 if($#ARGV!=0 || $help)
 {
   die(usage())
 }
+
+if($f_common) {
+  @headers =  uniq(@headers, @common_hdrs);
+}
+
 my $filename = abs_path($ARGV[0]);
 my $json;
 {
