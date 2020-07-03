@@ -492,7 +492,7 @@ run_sipp() {
     if [ "${registration}" == "permanent" ]; then
       echo "$(date) - Update permanent reg:${subscriber} ${ip}:${PORT} info"
       if ! "${BIN_DIR}/update_perm_reg.pl"  \
-          "${subscriber}" "${ip}" "${PORT}";
+          -t "${transport}" "${subscriber}" "${ip}" "${PORT}";
       then
         error_helper "$(date) - error updating peer info" 15
       fi
