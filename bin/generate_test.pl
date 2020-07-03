@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #
-# Copyright: 2016 Sipwise Development Team <support@sipwise.com>
+# Copyright: 2016-2020 Sipwise Development Team <support@sipwise.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -30,14 +30,19 @@ sub usage
   my $output = "usage: generate_test.pl [-h] test.tt2 scenario_ids.yml\n";
   $output .= "Options:\n";
   $output .= "\t-h: this help\n";
+  $output .= "\t-c: ngcp config yml file\n";
   $output .= "\t-p: PRO scenario\n";
   return $output
 }
 
 my $help = 0;
 my $PRO = 0;
-GetOptions ("h|help" => \$help, "p|pro" =>\$PRO)
-  or die("Error in command line arguments\n".usage());
+my $ngcp_cfg;
+GetOptions (
+	"h|help" => \$help,
+	"p|pro" =>\$PRO,
+	"c|config=s" =>\$ngcp_cfg,
+) or die("Error in command line arguments\n".usage());
 
 die(usage()) unless (!$help);
 die("Wrong number of arguments\n".usage()) unless ($#ARGV == 1);
@@ -48,6 +53,11 @@ if($PRO) {
 } else {
   $ids->{CE} = 1;
 }
+my $config = undef;
+if ($ngcp_cfg) {
+	$ids->{cfg} = LoadFile($ngcp_cfg);
+}
+
 my $template = Template->new({ABSOLUTE => 1});
 $template->process(abs_path($ARGV[0]), $ids)
   or die $template->error();

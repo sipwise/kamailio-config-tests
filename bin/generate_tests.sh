@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright: 2013-2016 Sipwise Development Team <support@sipwise.com>
+# Copyright: 2013-2020 Sipwise Development Team <support@sipwise.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@ BASE_DIR="${BASE_DIR:-/usr/share/kamailio-config-tests}"
 DIR="${BASE_DIR}/scenarios"
 BIN_DIR="${BASE_DIR}/bin"
 DEST_DIR="${DEST_DIR}"
+NGCP_CFG="${NGCP_CFG:-/etc/ngcp-config/config.yml}"
 
 error_flag=0
 
@@ -34,11 +35,11 @@ function usage
 {
   echo "Usage: generate_tests.sh [-h] [-c] [-d directory] scenario_ids.yml profile"
   echo "Options:"
-  echo -e "\tc: clean. Removes all generated test files"
-  echo -e "\td: directory"
-  echo -e "\th: this help"
+  echo -e "\\tc: clean. Removes all generated test files"
+  echo -e "\\td: directory"
+  echo -e "\\th: this help"
   echo "Args:"
-  echo -e "\tprofile: CE|PRO"
+  echo -e "\\tprofile: CE|PRO"
 }
 
 while getopts 'hcd:' opt; do
@@ -46,6 +47,7 @@ while getopts 'hcd:' opt; do
     h) usage; exit 0;;
     c) clean; exit 0;;
     d) DIR=${OPTARG};;
+    *) usage; exit 1;;
   esac
 done
 shift $((OPTIND - 1))
@@ -91,7 +93,7 @@ for t in $(find "${DIR}" -not -regex '.+customtt.tt2' -type f -name '*.tt2' | so
   fi
   echo "$(date) - - Generating: ${destdir}/${destfile}"
   # shellcheck disable=SC2086
-  if ! "${BIN_DIR}/generate_test.pl" ${ARGS} "${origdir}/${template}" ${IDS} > "${destdir}/${destfile}" ; then
+  if ! "${BIN_DIR}/generate_test.pl" -c ${NGCP_CFG} ${ARGS} "${origdir}/${template}" ${IDS} > "${destdir}/${destfile}" ; then
     error_flag=1
   fi
 done
