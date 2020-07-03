@@ -37,7 +37,7 @@ if ! ngcpcfg apply "config debug on via kamailio-config-tests" ; then
   echo "$(date) - ngcpcfg apply returned $?"
   error_flag=4
 fi
-echo "$(date) - Setting config debug on. Done[${error_flag}]"
+echo "$(date) - Setting config[${GROUP}] debug on. Done[${error_flag}]"
 
 exit ${error_flag}
 

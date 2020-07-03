@@ -1,6 +1,6 @@
 #!/bin/bash
 SKIP_CONFIG=false
-PROFILE=CE
+PROFILE="${PROFILE:-CE}"
 GROUP="${GROUP:-scenarios}"
 
 usage() {
