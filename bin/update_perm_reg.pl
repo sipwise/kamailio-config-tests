@@ -39,19 +39,21 @@ my $api = Sipwise::API->new($opts);
 $opts = $api->opts;
 
 sub usage {
-    return "Usage:\n$PROGRAM_NAME [-h]" .
+    return "Usage:\n$PROGRAM_NAME [-h] [-t transport]" .
         " subscriber IP PORT\n";
 }
 
 my $help = 0;
+my $trans = "udp";
 GetOptions ("h|help" => \$help,
-            "d|debug" => \$opts->{verbose})
-  or die("Error in command line arguments\n".usage());
+            "d|debug" => \$opts->{verbose},
+            "t|transport=s" => \$trans,
+) or die("Error in command line arguments\n".usage());
 
 die(usage()) unless (!$help);
 die("Wrong number of arguments\n".usage()) unless ($#ARGV == 2);
 
-my $data = {ip=> $ARGV[1], port=>$ARGV[2]};
+my $data = {ip=> $ARGV[1], port=>$ARGV[2], transport=>$trans};
 my ($subscriber, $domain) = split /@/, $ARGV[0];
 
 sub do_update {
@@ -66,6 +68,7 @@ sub do_update {
         print "registration[$r->{id}]: $r->{contact}\n";
         if($r->{contact} =~ m/sip:$data->{ip}:/) {
             $r->{contact} = "sip:". $data->{ip}. ":" . $data->{port};
+            $r->{contact} .= ";transport=". $data->{transport};
             $api->set_subscriber_registration($r->{id}, $r) or
                 die("Can't update permanent registration $r->{id}");
             print "registration for ${ARGV[0]}[$r->{id}] updated to $r->{contact}\n";

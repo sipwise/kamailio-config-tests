@@ -238,6 +238,11 @@ create_voip_prefs() {
 
 # $1 domain
 delete_voip() {
+  if [ -f "${SCEN_CHECK_DIR}/registration.yml" ]; then
+    echo "$(date) - Deleting registrations"
+    "${BIN_DIR}/create_registrations.pl" -delete "${SCEN_CHECK_DIR}/registration.yml"
+  fi
+
   /usr/bin/ngcp-delete-domain "$1" >/dev/null 2>&1
 
   if [ -f "${SCEN_CHECK_DIR}/peer.yml" ]; then
@@ -285,11 +290,6 @@ delete_voip() {
   if [ -f "${SCEN_CHECK_DIR}/soundsets.yml" ]; then
     echo "$(date) - Deleting soundsets"
     "${BIN_DIR}/create_soundsets.pl" -delete "${SCEN_CHECK_DIR}/soundsets.yml"
-  fi
-
-  if [ -f "${SCEN_CHECK_DIR}/registration.yml" ]; then
-    echo "$(date) - Deleting registrations"
-    "${BIN_DIR}/create_registrations.pl" -delete "${SCEN_CHECK_DIR}/registration.yml"
   fi
 }
 
@@ -492,7 +492,7 @@ run_sipp() {
     if [ "${registration}" == "permanent" ]; then
       echo "$(date) - Update permanent reg:${subscriber} ${ip}:${PORT} info"
       if ! "${BIN_DIR}/update_perm_reg.pl"  \
-          "${subscriber}" "${ip}" "${PORT}";
+          -t "${transport}" "${subscriber}" "${ip}" "${PORT}";
       then
         error_helper "$(date) - error updating peer info" 15
       fi

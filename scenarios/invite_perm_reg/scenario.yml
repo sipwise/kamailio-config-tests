@@ -39,3 +39,4 @@ scenarios:
         username: testuser1003
         domain: spce.test
         register: permanent
+        proto: tcp
