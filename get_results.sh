@@ -2,7 +2,7 @@
 RUN_DIR="$(dirname "$0")"
 export BASE_DIR=${BASE_DIR:-$RUN_DIR}
 BIN_DIR="${BASE_DIR}/bin"
-PROFILE="CE"
+PROFILE="${PROFILE:-CE}"
 DOMAIN="spce.test"
 GROUP="${GROUP:-scenarios}"
 RETRANS=""
@@ -54,6 +54,7 @@ while getopts 'hgGp:TPrcx:' opt; do
     c) CDR="-c";;
     p) PROFILE=${OPTARG};;
     x) GROUP=${OPTARG};;
+    *) usage; exit 1;;
   esac
 done
 shift $((OPTIND-1))
@@ -77,4 +78,3 @@ echo "${SCENARIOS}" |  tr ' ' '\n' \
 status=$?
 echo "$(date) - All done[${status}]"
 exit ${status}
-
