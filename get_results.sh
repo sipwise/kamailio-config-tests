@@ -65,6 +65,15 @@ if [[ $# -ne 0 ]]; then
   exit 1
 fi
 
+ngcp_type=$(command -v ngcp-type)
+if [ -n "${ngcp_type}" ]; then
+  case $(${ngcp_type}) in
+    sppro|carrier) PROFILE=PRO;;
+    ce) PROFILE=CE;;
+    *) ;;
+  esac
+  echo "ngcp-type: profile ${PROFILE}"
+fi
 if [ "${PROFILE}" != "CE" ] && [ "${PROFILE}" != "PRO" ]; then
   echo "PROFILE ${PROFILE} unknown"
   usage
