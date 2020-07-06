@@ -24,6 +24,15 @@ while getopts 'hCp:x:' opt; do
 done
 shift $((OPTIND - 1))
 
+ngcp_type=$(command -v ngcp-type)
+if [ -n "${ngcp_type}" ]; then
+  case $(${ngcp_type}) in
+    sppro|carrier) PROFILE=PRO;;
+    ce) PROFILE=CE;;
+    *) ;;
+  esac
+  echo "ngcp-type: profile ${PROFILE}"
+fi
 if [ "${PROFILE}" != "CE" ] && [ "${PROFILE}" != "PRO" ]; then
   echo "PROFILE ${PROFILE} unknown"
   usage

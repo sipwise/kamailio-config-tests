@@ -243,6 +243,7 @@ while getopts 'hlCcp:Kx:t:rm' opt; do
     r) FIX_RETRANS=true;;
     c) CDR=true;;
     m) MEMDBG=true;;
+    *) usage; exit 1;;
   esac
 done
 shift $((OPTIND - 1))
@@ -257,6 +258,16 @@ if "${SHOW_SCENARIOS}"  ; then
   get_scenarios
   echo "${SCENARIOS}"
   exit 0
+fi
+
+ngcp_type=$(command -v ngcp-type)
+if [ -n "${ngcp_type}" ]; then
+  case $(${ngcp_type}) in
+    sppro|carrier) PROFILE=PRO;;
+    ce) PROFILE=CE;;
+    *) ;;
+  esac
+  echo "ngcp-type: profile ${PROFILE}"
 fi
 
 if [ "${PROFILE}" != "CE" ] && [ "${PROFILE}" != "PRO" ]; then
