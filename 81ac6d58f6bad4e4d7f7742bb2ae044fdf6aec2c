@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e11a9760_1ed9492b",
+        "filename": "bench.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2020-07-07T07:29:20Z",
+      "side": 1,
+      "message": "I think that this section is not necessary anymore.\nUnless we give the possibility to skip the previous check (automatic profile detection) in case PROFILE was set using the dedicated \"p\" argument.",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 2
+      },
+      "revId": "81ac6d58f6bad4e4d7f7742bb2ae044fdf6aec2c",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
