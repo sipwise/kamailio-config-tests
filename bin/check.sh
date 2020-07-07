@@ -156,6 +156,14 @@ check_test() {
   fi
 
   ERR_FLAG=1
+  if [ -x "${BIN_DIR}/show_flow_diff.pl" ] ; then
+    echo "$(date) - Generating flow diff: ${dest}.diff"
+    "${BIN_DIR}/show_flow_diff.pl" "$1" "$2" > "${dest}.diff"
+  fi
+  if [ -x "${BIN_DIR}/show_sip.pl" ] ; then
+    echo "$(date) - Generating: ${dest}.sip"
+    "${BIN_DIR}/show_sip.pl" "$2" > "${dest}.sip"
+  fi
   if ( ! "${GRAPH}" ) && "${GRAPH_FAIL}" ; then
     echo "$(date) - Generating flow image: ${dest}.png"
     # In any failure case only the graph related to the original json file will be created
