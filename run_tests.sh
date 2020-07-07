@@ -26,24 +26,28 @@ MEMDBG=false
 CDR=false
 START_TIME=$(date +%s)
 error_flag=0
+SCEN=()
 
 get_scenarios() {
   local t
   local flag
-  flag=0
+  flag=false
+
   if [ -n "${SCENARIOS}" ]; then
     for t in ${SCENARIOS}; do
-      if [ ! -d "${BASE_DIR}/${GROUP}/${t}" ]; then
-        echo "$(date) - scenario: $t at ${GROUP} not found"
-        flag=1
+      if [ ! -f "${BASE_DIR}/${GROUP}/${t}/scenario.yml" ]; then
+        echo "$(date) - scenario: ${t}/scenario.yml at ${GROUP} not found"
+        flag=true
+      else
+        SCEN+=( "${t}" )
       fi
     done
-    if [ ${flag} != 0 ]; then
-      exit 1
-    fi
+    ${flag} && exit 1
   else
-    SCENARIOS=$(find "${BASE_DIR}/${GROUP}/" -depth -maxdepth 1 -mindepth 1 \
-      -type d -exec basename {} \; | grep -v templates | sort)
+    while read -r t; do
+      SCEN+=( "$(basename "${t}")" )
+    done < <(find "${BASE_DIR}/${GROUP}/" -name scenario.yml \
+      -type f -exec dirname {} \; | sort)
   fi
 }
 
@@ -126,7 +130,7 @@ stop_capture() {
 move_json_file() {
   echo "$(date) - ================================================================================="
   echo "$(date) - Move kamailio json files"
-  for t in ${SCENARIOS}; do
+  for t in "${SCEN[@]}"; do
     echo "$(date) - - Scenario: ${t}"
     json_dir="${KAM_DIR}/${t}"
     if [ -d "${json_dir}" ] ; then
@@ -155,7 +159,7 @@ fix_retransmissions() {
       continue
     fi
     RETRANS_ISSUE=false
-    file_find=($(find "${LOG_DIR}/${t}" -maxdepth 1 -name '*.json' | sort))
+    mapfile -t file_find < <(find "${LOG_DIR}/${t}" -maxdepth 1 -name '*.json' | sort)
     for json_file in "${file_find[@]}" ; do
       file_find=("${file_find[@]:1}")
       if ! [ -a "${json_file}" ] ; then
@@ -184,12 +188,12 @@ fix_retransmissions() {
 
     if "${RETRANS_ISSUE}" ; then
       echo "$(date) - - - Reordering kamailio json files"
-      file_find=($(find "${LOG_DIR}/${t}" -maxdepth 1 -name '*.json' | sort))
+      mapfile -t file_find < <(find "${LOG_DIR}/${t}" -maxdepth 1 -name '*.json' | sort)
       a=1
       for json_file in "${file_find[@]}" ; do
         new_name=$(printf "%04d.json" "${a}")
         mv -n "${json_file}" "${LOG_DIR}/${t}/${new_name}" &> /dev/null
-        let a=a+1
+        ((a++))
       done
     fi
   done
@@ -201,7 +205,7 @@ fix_retransmissions() {
 cdr_export() {
   echo "$(date) - ================================================================================="
   echo "$(date) - Extracting CDRs"
-  for t in ${SCENARIOS}; do
+  for t in "${SCEN[@]}"; do
     echo "$(date) - - Scenario: $t"
     if ! "${BIN_DIR}/cdr_extract.sh" -m -t "${START_TIME}" -s "${GROUP}" "${t}" ; then
       echo "ERROR: ${t}"
@@ -216,16 +220,16 @@ cdr_export() {
 usage() {
   echo "Usage: run_test.sh [-p PROFILE] [-C] [-t]"
   echo "Options:"
-  echo -e "\t-p CE|PRO default is CE"
-  echo -e "\t-l print available SCENARIOS in GROUP"
-  echo -e "\t-C skips configuration of the environment"
-  echo -e "\t-K capture messages with tcpdump"
-  echo -e "\t-x set GROUP scenario. Default: scenarios"
-  echo -e "\t-t set timeout in secs for pid_watcher.py [PRO]. Default: 300"
-  echo -e "\t-r fix retransmission issues"
-  echo -e "\t-c export CDRs at the end of the test"
-  echo -e "\t-m mem debug"
-  echo -e "\t-h this help"
+  echo -e "\\t-p CE|PRO default is CE"
+  echo -e "\\t-l print available SCENARIOS in GROUP"
+  echo -e "\\t-C skips configuration of the environment"
+  echo -e "\\t-K capture messages with tcpdump"
+  echo -e "\\t-x set GROUP scenario. Default: scenarios"
+  echo -e "\\t-t set timeout in secs for pid_watcher.py [PRO]. Default: 300"
+  echo -e "\\t-r fix retransmission issues"
+  echo -e "\\t-c export CDRs at the end of the test"
+  echo -e "\\t-m mem debug"
+  echo -e "\\t-h this help"
 
   echo "BASE_DIR:${BASE_DIR}"
   echo "BIN_DIR:${BIN_DIR}"
@@ -256,7 +260,7 @@ fi
 
 if "${SHOW_SCENARIOS}"  ; then
   get_scenarios
-  echo "${SCENARIOS}"
+  echo "${SCEN[@]}"
   exit 0
 fi
 
@@ -356,7 +360,7 @@ if "${CAPTURE}" ; then
   capture
 fi
 
-for t in ${SCENARIOS}; do
+for t in "${SCEN[@]}"; do
   echo "$(date) - ================================================================================="
   echo "$(date) - Run [${GROUP}/${PROFILE}]: ${t}"
 

@@ -840,7 +840,7 @@ if ! "$SKIP_RUNSIPP" ; then
       for json_file in "${file_find[@]}" ; do
         new_name=$(printf "%04d.json" "${a}")
         mv -n "${json_file}" "${LOG_DIR}/${new_name}" &> /dev/null
-        ((a=a+1))
+        ((a++))
       done
     fi
 
