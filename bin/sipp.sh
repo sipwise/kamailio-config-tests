@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright: 2013 Sipwise Development Team <support@sipwise.com>
+# Copyright: 2013-2020 Sipwise Development Team <support@sipwise.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,15 +21,15 @@
 usage() {
   echo "Usage: sipp.sh [-p PORT] [-m MPORT] [-t TIMEOUT] [-r] [-T TRANSPORT] scenario.xml"
   echo "Options:"
-  echo -e "\t-p: sip port. default 50602/50603(responder)"
-  echo -e "\t-m: media port"
-  echo -e "\t-t: timeout. default 10/25(responder)"
-  echo -e "\t-i: IP. default 127.0.0.1"
-  echo -e "\t-T: transport [UDP|TCP] default UDP"
-  echo -e "\t-r: responder"
-  echo -e "\t-b: run sipp in background (responder)"
+  echo -e "\\t-p: sip port. default 50602/50603(responder)"
+  echo -e "\\t-m: media port"
+  echo -e "\\t-t: timeout. default 10/25(responder)"
+  echo -e "\\t-i: IP. default 127.0.0.1"
+  echo -e "\\t-T: transport [UDP|TCP] default UDP"
+  echo -e "\\t-r: responder"
+  echo -e "\\t-b: run sipp in background (responder)"
   echo "Arguments:"
-  echo -e "\t sipp_scenario.xml file"
+  echo -e "\\t sipp_scenario.xml file"
 }
 
 while getopts 'hrp:m:t:i:T:b' opt; do
@@ -42,6 +42,7 @@ while getopts 'hrp:m:t:i:T:b' opt; do
     i) IP=$OPTARG;;
     T) TRANSPORT=${OPTARG,,};;
     b) BACK="-bg";;
+    *) usage; exit 0;;
   esac
 done
 shift $((OPTIND - 1))

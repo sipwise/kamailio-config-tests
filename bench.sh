@@ -6,10 +6,10 @@ GROUP="${GROUP:-scenarios}"
 usage() {
   echo "Usage: bench.sh [-p PROFILE] [-C] [num_runs]"
   echo "Options:"
-  echo -e "\t-p CE|PRO default is CE"
-  echo -e "\t-C skips configuration of the environment"
-  echo -e "\t-x set GROUP scenario. Default: scenarios"
-  echo -e "\t-h this help"
+  echo -e "\\t-p CE|PRO default is CE"
+  echo -e "\\t-C skips configuration of the environment"
+  echo -e "\\t-x set GROUP scenario. Default: scenarios"
+  echo -e "\\t-h this help"
   echo -e "num_runs default is 20"
 }
 

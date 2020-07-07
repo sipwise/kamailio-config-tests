@@ -10,15 +10,15 @@ CDR=""
 
 usage() {
   echo "Usage: get_results.sh [-p PROFILE] [-h] [-g]"
-  echo "-p CE|PRO default is CE"
-  echo "-g generate png flow graphs if test fails"
-  echo "-G generate png all flow graphs"
-  echo "-h this help"
-  echo "-P parse only will disable test"
-  echo "-T test only will disable parse"
-  echo "-r fix retransmission issues"
-  echo "-c enable cdr validation"
-  echo "-x set GROUP scenario. Default: scenarios"
+  echo -e "\\t-p CE|PRO default is CE"
+  echo -e "\\t-g generate png flow graphs if test fails"
+  echo -e "\\t-G generate png all flow graphs"
+  echo -e "\\t-h this help"
+  echo -e "\\t-P parse only will disable test"
+  echo -e "\\t-T test only will disable parse"
+  echo -e "\\t-r fix retransmission issues"
+  echo -e "\\t-c enable cdr validation"
+  echo -e "\\t-x set GROUP scenario. Default: scenarios"
   echo "BASE_DIR:${BASE_DIR}"
   echo "BIN_DIR:${BIN_DIR}"
 }
@@ -26,20 +26,23 @@ usage() {
 get_scenarios() {
   local t
   local flag
-  flag=0
+  flag=false
+
   if [ -n "${SCENARIOS}" ]; then
     for t in ${SCENARIOS}; do
-      if [ ! -d "${BASE_DIR}/${GROUP}/${t}" ]; then
-        echo "$(date) - scenario: $t not found"
-        flag=1
+      if [ ! -f "${BASE_DIR}/${GROUP}/${t}/scenario.yml" ]; then
+        echo "$(date) - scenario: ${t}/scenario.yml at ${GROUP} not found"
+        flag=true
+      else
+        SCEN+=( "${t}" )
       fi
     done
-    if [ $flag != 0 ]; then
-      exit 1
-    fi
+    ${flag} && exit 1
   else
-    SCENARIOS=$(find "${BASE_DIR}/${GROUP}/" -depth -maxdepth 1 -mindepth 1 \
-      -type d -exec basename {} \; | grep -v templates | sort)
+    while read -r t; do
+      SCEN+=( "$(basename "${t}")" )
+    done < <(find "${BASE_DIR}/${GROUP}/" -name scenario.yml \
+      -type f -exec dirname {} \; | sort)
   fi
 }
 
@@ -82,7 +85,7 @@ fi
 
 get_scenarios
 
-echo "${SCENARIOS}" |  tr ' ' '\n' \
+echo "${SCEN[@]}" |  tr ' ' '\n' \
  | parallel "${BIN_DIR}/check.sh ${GRAPH} -C -R ${OPTS} ${RETRANS} ${CDR} -d ${DOMAIN} -p ${PROFILE} -s ${GROUP}"
 status=$?
 echo "$(date) - All done[${status}]"

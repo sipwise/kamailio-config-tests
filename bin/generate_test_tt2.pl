@@ -133,7 +133,7 @@ sub subst_common
     $line =~ s/response="[^"]+"/response=".+"/;
     $line =~ s/nonce="[^"]+"/nonce=".+"/;
   } elsif($line =~ /^(Server|User-Agent): Sipwise/i) {
-    $line =~ s/: Sipwise NGCP (Proxy|PBX) Server.+/: Sipwise NGCP ${1} Server/;
+    $line =~ s/: Sipwise NGCP (Proxy|Application|PBX).+/: Sipwise NGCP ${1}/;
   } elsif($line =~ /^Content-Length:[ ]+[1-9]/i) {
     $line =~ s/:[ ]+\d+/:\\s+\\d+/;
   } elsif($line =~ /^P-LB-Uptime: /i) {
