@@ -143,51 +143,68 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - 'INVITE sip:testuser1003@'
-  - 'From: <sip:testuser1002@'
-  - 'To: <sip:1003@'
+  - 'INVITE sip:testuser1003@spce.test SIP/2.0'
+  - 'From: <sip:testuser1002@spce.test>;tag=[\w-]+'
+  - 'To: <sip:1003@spce.test>'
   - 'CSeq: \d+ INVITE'
-  - 'Max-Forwards: 70'
-  - 'P-NGCP-Lookup-Type: ext'
+  - 'P-NGCP-Src-Ip: 127.126.0.1'
+  - 'P-NGCP-Src-Port: \d+'
+  - 'P-NGCP-Src-Proto: udp'
+  - 'P-NGCP-Src-Af: 4'
+  - 'P-LB-Uptime: \d+'
+  - 'P-NGCP-Src-Nat: 0'
+  - 'P-Caller-CLIR: 0'
   - 'P-NGCP-Orig-User: 43110021003'
   - 'P-NGCP-Orig-Domain: spce.test'
   - 'P-NGCP-Orig-Dialed: 1003'
+  - 'P-NGCP-Orig-PBX-Ext: 1003'
+  - 'P-First-Caller-Cloud-PBX: [% customerpbx_test.id %]'
+  - 'P-AA-Caller-CLIR: 0'
+  - 'P-NGCP-Lookup-Type: ext'
   - 'P-NGCP-BlockOut-Override: 0'
   - 'P-NGCP-AdmBlockOut-Override: 0'
   - 'P-NGCP-ContBlockOut-Override: 0'
   - 'P-NGCP-ContAdmBlockOut-Override: 0'
-  - 'P-Caller-CLIR: 0'
   - 'P-Caller-UUID: [% spce_test.testuser1002.uuid %]'
   - 'P-Callee-UUID: [% spce_test.testuser1003.uuid %]'
-  - 'P-NGCP-Caller-Info: <sip:testuser1002@'
-  - 'P-NGCP-Callee-Info: <sip:43110021003@spce.test>;ip=127.0.0.1;port=508[5|8];'
+  - 'P-NGCP-Acc-Src-Leg: .+'
+  - 'P-NGCP-Acc-Dst-Leg: .+'
+  - 'P-NGCP-Sems-Instance: pbx'
+  - 'P-Proxy-Uri: 127.0.0.1:5062'
+  - 'P-NGCP-Caller-Info: <sip:testuser1002@spce.test>;ip=127.126.0.1;port=\d+;primary=4311002'
+  - 'P-NGCP-Callee-Info: <sip:43110021003@spce.test>;ip=127.0.0.1;port=508[58];primary=43110021003'
   - 'P-To-Device: 1'
   - 'Content-Type: application/sdp'
-  - 'Contact: <sip:127.0.0.1:508[5|8];transport=udp>'
+  - 'Content-Length:\s+\d+'
+  - 'Contact: <sip:127.0.0.1:508[58];transport=udp>'
 sip_out:
   - [
       'SIP/2.0 100 Trying',
-      'Via: SIP/2.0/UDP 127.0.0.1:508[5|8];branch=',
-      'From: <sip:testuser1002@',
-      'To: <sip:1003@',
+      'From: <sip:testuser1002@spce.test>;tag=[\w-]+',
+      'To: <sip:1003@spce.test>',
       'CSeq: \d+ INVITE',
-      'Content-Length: 0'
-   ]
+      'Server: Sipwise NGCP Proxy',
+      'Content-Length: 0',
+    ]
   - [
-       'INVITE sip:127.3.0.5:',
-       'From: <sip:4311002@',
-       'To: <sip:1003@',
-       'CSeq: \d+ INVITE',
-       'Max-Forwards: 69',
-       'Content-Type: application/sdp',
-       'Contact: <sip:127.0.0.1:508[5|8];transport=udp>',
-       'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
-       'P-Callee-UUID: [% spce_test.testuser1003.uuid %]',
-       'P-Asserted-Identity: <sip:4311002@',
-       'P-Called-Party-ID: <sip:1003@',
-       'P-App-Param: ;calltimer=21600;aleg_sst_enable=no;sst_enable=no;hold_alter_b2b_bleg=no;hold_alter_b2b_aleg=no;fast_ack=no',
-       'P-App-Name: sbc',
-       'P-NGCP-Caller-Info: <sip:testuser1002@.+;primary=4311002',
-       'P-NGCP-Callee-Info: <sip:43110021003@.+;primary=43110021003',
-       'P-D-Uri: sip:lb@127.0.0.1:5060;lr;socket=sip:127.3.0.1:5074'
+      'INVITE sip:127.3.0.5:\d+;transport=tcp SIP/2.0',
+      'From: <sip:4311002@spce.test>;tag=[\w-]+',
+      'To: <sip:1003@spce.test>',
+      'CSeq: \d+ INVITE',
+      'P-LB-Uptime: \d+',
+      'P-NGCP-Orig-PBX-Ext: 1003',
+      'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
+      'P-Callee-UUID: [% spce_test.testuser1003.uuid %]',
+      'P-NGCP-Acc-Src-Leg: .+',
+      'P-NGCP-Acc-Dst-Leg: .+',
+      'P-NGCP-Caller-Info: <sip:testuser1002@spce.test>;ip=127.126.0.1;port=\d+;primary=4311002',
+      'P-NGCP-Callee-Info: <sip:43110021003@spce.test>;ip=127.0.0.1;port=5060;primary=43110021003',
+      'Content-Type: application/sdp',
+      'Content-Length:\s+\d+',
+      'Contact: <sip:127.0.0.1:508[58];transport=udp>',
+      'P-Asserted-Identity: <sip:4311002@spce.test>',
+      'P-Called-Party-ID: <sip:1003@spce.test>',
+      'P-App-Param: ;calltimer=21600;aleg_sst_enable=no;sst_enable=no;hold_alter_b2b_bleg=no;hold_alter_b2b_aleg=no;fast_ack=no',
+      'P-App-Name: sbc',
+      'P-D-Uri: sip:lb@127.0.0.1:5060;lr;socket=tcp:127.3.0.1:5074',
     ]
