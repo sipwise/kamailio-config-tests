@@ -76,5 +76,10 @@ echo "${SCENARIOS}" |  tr ' ' '\n' \
  | parallel "${BIN_DIR}/check.sh ${GRAPH} -J -C -R ${OPTS} ${RETRANS} ${CDR} -d ${DOMAIN} -p ${PROFILE} -s ${GROUP}"
 status=$?
 echo "$(date) - All done[${status}]"
+tap_cmd=()
+for t in "${SCEN[@]}" ; do
+  tap_cmd+=( "result/${GROUP}/${t}/"*tap )
+done
+prove -f -Q "${tap_cmd[@]}"
 exit ${status}
 
