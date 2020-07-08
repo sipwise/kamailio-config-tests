@@ -144,6 +144,8 @@ sub subst_common
     $line =~ s/: .+/: .+/;
   } elsif($line =~ /^SIP-If-Match: /i) {
     $line =~ s/: .+/: .+/;
+  } elsif($line =~ /127\.0\.0\.1(:|;port=)508[08]/) {
+     $line =~ s/127\.0\.0\.1(:|;port=)\d+/127.0.0.1${1}508[08]/g;
   } elsif($line =~ /127\.0\.0\.1(:|;port=)508[58]/) {
      $line =~ s/127\.0\.0\.1(:|;port=)\d+/127.0.0.1${1}508[58]/g;
   } elsif($line =~ /^Content-Type: application\/dialog\-info\+xml/i) {
