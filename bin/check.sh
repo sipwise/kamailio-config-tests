@@ -144,12 +144,12 @@ check_test() {
   if ! [ -f "$1" ]; then
     generate_error_tap "$3" "$1"
     ERR_FLAG=1
-    return
+    return 1
   fi
   if ! [ -f "$2" ]; then
     generate_error_tap "$3" "$2"
     ERR_FLAG=1
-    return
+    return 1
   fi
 
   if "${JSON_KAM}" ; then
@@ -159,7 +159,7 @@ check_test() {
   echo -n "$(date) - Testing $(basename "$1") against $(basename "$2") -> $(basename "$3")"
   if "${BIN_DIR}/check.py" ${kam_type} "$1" "$2" > "$3" ; then
     echo " ok"
-    return
+    return 0
   fi
 
   echo " NOT ok"
@@ -167,16 +167,16 @@ check_test() {
   if "${FIX_RETRANS}" ; then
     if check_retrans_next "$1" ${kam_type} "$3" 1 ; then
       echo " ok"
-      return
+      return 0
     elif check_retrans_prev "$1" ${kam_type} "$3" 1 ; then
       echo " ok"
-      return
+      return 0
     elif check_retrans_next "$1" ${kam_type} "$3" 2 ; then
       echo " ok"
-      return
+      return 0
     elif check_retrans_prev "$1" ${kam_type} "$3" 2 ; then
       echo " ok"
-      return
+      return 0
     fi
   fi
 
@@ -195,6 +195,7 @@ check_test() {
     graph "$msg" "${dest}.png"
     echo "$(date) - Done"
   fi
+  return 1
 }
 
 # $1 domain
@@ -676,11 +677,13 @@ cdr_check() {
     echo -n "$(date) - Testing $(basename "$1") against $(basename "$2") -> $(basename "$3")"
     if "${BIN_DIR}/cdr_check.py" "--text" "$1" "$2" > "$3" ; then
       echo " ok"
-      return
+      return 0
     fi
     echo " NOT ok"
+    return 1
   else
     echo "$(date) - CDR test file $1 doesn't exist, skipping CDR test"
+    return 0
   fi
 }
 
@@ -917,8 +920,8 @@ if ! "${SKIP_TESTS}" ; then
     test_filepath "${t}"
     echo "$(date) - Check test ${t} on ${msg}"
     dest=${RESULT_DIR}/$(basename "${t}" .yml)
-    check_test "${t}" "${msg}" "${dest}.tap"
-    echo "$(date) - $(basename "${t}" .yml) - Done[${ERR_FLAG}]"
+    check_test "${t}" "${msg}" "${dest}.tap" && result=OK || result=KO
+    echo "$(date) - $(basename "${t}" .yml) - Done[${result}]"
     if "${GRAPH}" ; then
       echo "$(date) - Generating flow image: ${dest}.png"
       graph "${msg}" "${dest}.png"
@@ -932,8 +935,8 @@ if ! "${SKIP_TESTS}" ; then
     msg="${LOG_DIR}/cdr.txt"
     dest="${RESULT_DIR}/cdr_test.tap"
     echo "$(date) - Check test ${t_cdr} on ${msg}"
-    cdr_check "${t_cdr}" "${msg}" "${dest}"
-    echo "$(date) - Done"
+    cdr_check "${t_cdr}" "${msg}" "${dest}" && result=OK || result=KO
+    echo "$(date) - Done[${result}]"
   fi
   echo "$(date) - ================================================================================="
 fi
