@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1156c93c_deef7d1b",
+        "filename": "bin/generate_test_tt2.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2020-07-09T10:07:38Z",
+      "side": 1,
+      "message": "What these id means? are the IDs of the json files?\n\nThen probably better specify it in the help and also tell that they could be more than 2...",
+      "range": {
+        "startLine": 28,
+        "startChar": 62,
+        "endLine": 28,
+        "endChar": 73
+      },
+      "revId": "3f7ebb98029759cc672403d7d53dd656d54a5b2c",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
