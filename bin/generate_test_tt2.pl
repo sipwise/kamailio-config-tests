@@ -127,9 +127,9 @@ sub subst_common
     $line =~ s/;tag=(.+)/;tag=[\\w-]+/;
   } elsif($line =~ /^CSeq: /i) {
     $line =~ s/:[ ]+\d+[ ]+/: \\d+ /;
-  } elsif($line =~ /^(WWW|Proxy)-Authenticate: /i) {
+  } elsif($line =~ /^((WWW|Proxy)-)?Authenticate: /i) {
     $line =~ s/nonce="[^"]+"/nonce=".+"/;
-  } elsif($line =~ /^(WWW|Proxy)-Authorization: /i) {
+  } elsif($line =~ /^((WWW|Proxy)-)?Authorization: /i) {
     $line =~ s/response="[^"]+"/response=".+"/;
     $line =~ s/nonce="[^"]+"/nonce=".+"/;
   } elsif($line =~ /^(Server|User-Agent): Sipwise/i) {
@@ -150,6 +150,9 @@ sub subst_common
      $line =~ s/127\.0\.0\.1(:|;port=)\d+/127.0.0.1${1}508[58]/g;
   } elsif($line =~ /^Content-Type: application\/dialog\-info\+xml/i) {
     $line =~ s/: application\/dialog\-info\+xml/: application\/dialog\\-info\\+xml/;
+  } elsif($line =~ /^Call-Info: /i) {
+    $line =~ s/appearance-index=\*/appearance-index=\\*/g;
+    $line =~ s/appearance-uri=\"([^\"]+)\"/appearance-uri=\\"${1}\\"/g;
   }
   return $line;
 }
