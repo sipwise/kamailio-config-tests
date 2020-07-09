@@ -139,7 +139,9 @@ move_json_file() {
         moved_file="${LOG_DIR}/${t}/$(printf "%04d.json" "$(basename "$i" .json)")"
         expand -t1 "${i}" > "${moved_file}"
         json_size_after=$(stat -c%s "${moved_file}")
-        echo "$(date) - - - Moved file ${i} with size before: ${json_size_before} and after: ${json_size_after}"
+        if [ "${json_size_before}" -ne "${json_size_after}" ] ; then
+          echo "$(date) - - - Moved file ${i} with size before: ${json_size_before} and after: ${json_size_after}"
+        fi
         rm "${i}"
       done
       rm -rf "${json_dir}"
