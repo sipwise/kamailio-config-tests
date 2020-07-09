@@ -68,6 +68,78 @@ EOF
 echo "$(date) - $(basename "$2") NOT ok"
 }
 
+check_retrans_next() {
+  # testing next json file, if exist. Necessary in case of retransmissions or wrong timing/order.
+  local next_msg
+  local next_tap
+  local kam_type
+  local step
+
+  step=${4:-1}
+  next_test_filepath "$1"  "${step}"
+  kam_type=$2
+  next_tap=${3/_test.tap/_test_next.tap}
+  echo "$(date) - Fix retransmissions enabled: try to test the next[+${step}] json file"
+
+  if [ -a "${next_msg}" ] ; then
+    echo -n "$(date) - Testing $(basename "$1") against $(basename "${next_msg}") -> $(basename "${next_tap}")"
+    if "${BIN_DIR}/check.py" "${kam_type}" "$1" "${next_msg}" > "${next_tap}" ; then
+      # Test using the next json file was fine. That means that, with high probability, there was a retransmission.
+      # Next step is to backup the failed tap test and overwrite it with the working one
+      mv "$3" "${3}_retrans"
+      mv "${next_tap}" "$3"
+      return 0
+    fi
+
+    if [ -a "${next_tap}" ] ; then
+      # Test using the next json file was a failure.
+      # Next step is remove $next_tap file to don't create confusion during the additional checks
+      rm "${next_tap}"
+    fi
+  else
+    echo -n "$(date) - File $(basename "${next_msg}") doesn't exists. Result"
+  fi
+
+  echo " NOT ok"
+  return 1
+}
+
+check_retrans_prev() {
+  # testing previous json file, if exist. Necessary in case of wrong timing/order.
+  local prev_msg
+  local prev_tap
+  local kam_type
+  local step
+
+  step=${4:-1}
+  prev_test_filepath "$1" "${step}"
+  kam_type=$2
+  prev_tap=${3/_test.tap/_test_prev.tap}
+  echo "$(date) - Fix retransmissions enabled: try to test the previous[-${step}] json file"
+
+  if [ -a "${prev_msg}" ] ; then
+    echo -n "$(date) - Testing $(basename "$1") against $(basename "${prev_msg}") -> $(basename "${prev_tap}")"
+    if "${BIN_DIR}/check.py" "${kam_type}" "$1" "${prev_msg}" > "${prev_tap}" ; then
+      # Test using the previous json file was fine. That means that, with high probability, there was a wrong timing/order.
+      # Next step is to backup the failed tap test and overwrite it with the working one
+      mv "$3" "${3}_retrans"
+      mv "${prev_tap}" "$3"
+      return 0
+    fi
+
+    if [ -a "${prev_tap}" ] ; then
+      # Test using the previous json file was a failure.
+      # Next step is remove $prev_tap file to don't create confusion during the additional checks
+      rm "${prev_tap}"
+    fi
+  else
+    echo -n "$(date) - File $(basename "${prev_msg}") doesn't exists. Result"
+  fi
+
+  echo " NOT ok"
+  return 1
+}
+
 # $1 unit test yml
 # $2 kamailio msg parsed to yml
 # $3 destination tap filename
@@ -101,63 +173,19 @@ check_test() {
   echo " NOT ok"
 
   if "${FIX_RETRANS}" ; then
-    # testing next json file, if exist. Necessary in case of retransmissions or wrong timing/order.
-    echo "$(date) - Fix retransmissions enabled: try to test the next json file"
-    local next_msg
-    local next_tap
-    next_test_filepath "$1"
-    next_tap=${3/_test.tap/_test_next.tap}
-
-    if [ -a "${next_msg}" ] ; then
-      echo -n "$(date) - Testing $(basename "$1") against $(basename "${next_msg}") -> $(basename "${next_tap}")"
-      if "${BIN_DIR}/check.py" ${kam_type} "$1" "${next_msg}" > "${next_tap}" ; then
-        # Test using the next json file was fine. That means that, with high probability, there was a retransmission.
-        # Next step is to backup the failed tap test and overwrite it with the working one
-        mv "$3" "${3}_retrans"
-        mv "${next_tap}" "$3"
-        echo " ok"
-        return
-      fi
-
-      if [ -a "${next_tap}" ] ; then
-        # Test using the next json file was a failure.
-        # Next step is remove $next_tap file to don't create confusion during the additional checks
-        rm "${next_tap}"
-      fi
-    else
-      echo -n "$(date) - File $(basename "${next_msg}") doesn't exists. Result"
+    if check_retrans_next "$1" ${kam_type} "$3" 1 ; then
+      echo " ok"
+      return
+    elif check_retrans_prev "$1" ${kam_type} "$3" 1 ; then
+      echo " ok"
+      return
+    elif check_retrans_next "$1" ${kam_type} "$3" 2 ; then
+      echo " ok"
+      return
+    elif check_retrans_prev "$1" ${kam_type} "$3" 2 ; then
+      echo " ok"
+      return
     fi
-
-    echo " NOT ok"
-
-    # testing previous json file, if exist. Necessary in case of wrong timing/order.
-    echo "$(date) - Fix retransmissions enabled: try to test the previous json file"
-    local prev_msg
-    local prev_tap
-    prev_test_filepath "$1"
-    prev_tap=${3/_test.tap/_test_prev.tap}
-
-    if [ -a "${prev_msg}" ] ; then
-      echo -n "$(date) - Testing $(basename "$1") against $(basename "${prev_msg}") -> $(basename "${prev_tap}")"
-      if "${BIN_DIR}/check.py" ${kam_type} "$1" "${prev_msg}" > "${prev_tap}" ; then
-        # Test using the previous json file was fine. That means that, with high probability, there was a wrong timing/order.
-        # Next step is to backup the failed tap test and overwrite it with the working one
-        mv "$3" "${3}_retrans"
-        mv "${prev_tap}" "$3"
-        echo " ok"
-        return
-      fi
-
-      if [ -a "${prev_tap}" ] ; then
-        # Test using the previous json file was a failure.
-        # Next step is remove $prev_tap file to don't create confusion during the additional checks
-        rm "${prev_tap}"
-      fi
-    else
-      echo -n "$(date) - File $(basename "${prev_msg}") doesn't exists. Result"
-    fi
-
-    echo " NOT ok"
   fi
 
   ERR_FLAG=1
@@ -622,6 +650,7 @@ next_test_filepath() {
   local msg_name
   local old_json
   local new_json
+  local step=${2:-1}
 
   if ! "${JSON_KAM}" ; then
     msg_name=${1/_test.yml/.yml}
@@ -631,7 +660,7 @@ next_test_filepath() {
 
   msg_name=$(basename "${msg_name}")
   old_json="${msg_name:0:4}"
-  new_json=$(((10#$old_json)+1))
+  new_json=$(((10#$old_json)+step))
   new_json=$(printf %04d ${new_json})
   msg_name="${new_json}${msg_name:4}"
 
@@ -642,6 +671,7 @@ prev_test_filepath() {
   local msg_name
   local old_json
   local new_json
+  local step=${2:-1}
 
   if ! "${JSON_KAM}" ; then
     msg_name=${1/_test.yml/.yml}
@@ -651,7 +681,7 @@ prev_test_filepath() {
 
   msg_name=$(basename "${msg_name}")
   old_json="${msg_name:0:4}"
-  new_json=$(((10#$old_json)-1))  # There should not be any problem since they start from 0001
+  new_json=$(((10#$old_json)-step))  # There should not be any problem since they start from 0001
   new_json=$(printf %04d ${new_json})
   msg_name="${new_json}${msg_name:4}"
 
@@ -899,7 +929,7 @@ if ! "${SKIP_TESTS}" ; then
     echo "$(date) - Check test ${t} on ${msg}"
     dest=${RESULT_DIR}/$(basename "${t}" .yml)
     check_test "${t}" "${msg}" "${dest}.tap"
-    echo "$(date) - Done"
+    echo "$(date) - $(basename "${t}" .yml) - Done[${ERR_FLAG}]"
     if "${GRAPH}" ; then
       echo "$(date) - Generating flow image: ${dest}.png"
       graph "${msg}" "${dest}.png"
