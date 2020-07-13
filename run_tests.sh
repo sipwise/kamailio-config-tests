@@ -11,6 +11,7 @@ KAM_LOG=${KAM_LOG:-"/var/log/ngcp/kamailio-proxy.log"}
 KAMLB_LOG=${KAMLB_LOG:-"/var/log/ngcp/kamailio-lb.log"}
 SEMS_LOG=${SEMS_LOG:-"/var/log/ngcp/sems.log"}
 SEMS_PBX_LOG=${SEMS_PBX_LOG:-"/var/log/ngcp/sems-pbx.log"}
+RTP_LOG=${RTP_LOG:-"/var/log/ngcp/rtp.log"}
 TMP_LOG_DIR="/tmp"
 KAM_DIR="/tmp/cfgtest"
 COREDUMP_DIR="/ngcp-data/coredumps"
@@ -414,6 +415,8 @@ if [ -n "${rtp_ports}" ]; then
       echo "$(date) - There are still some rtp ports open, please check the following output"
       rtpengine-ctl -ip "${rtpengine_ctl_ip}" list interfaces
       rtpengine-ctl -ip "${rtpengine_ctl_ip}" list sessions all
+      echo "$(date) - copy rtpengine log to ${LOG_DIR}"
+      cp -a "${RTP_LOG}" "${LOG_DIR}"
       echo "$(date) - ================================================================================="
       error_flag=1
     fi

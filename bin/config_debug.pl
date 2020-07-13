@@ -118,6 +118,7 @@ else
   $yaml->{security}->{ngcp_panel}->{scripts}->{restapi}->{sslverify} = 'no';
   $yaml->{mediator}{interval} = '1';      # Necessary to speedup the creation of the CDRs
   $yaml->{rtpproxy}{delete_delay} = '5';  # Necessary to speedup the deletetion of the used ports in rtpengine
+  $yaml->{rtpproxy}{log_level} = '7';
 
   $net_yaml = LoadFile($file_net_yaml);
   $net_yaml->{hosts_common}->{etc_hosts_global_extra_entries} //= ();
