@@ -413,6 +413,7 @@ if [ -n "${rtp_ports}" ]; then
       echo "$(date) - ================================================================================="
       echo "$(date) - There are still some rtp ports open, please check the following output"
       rtpengine-ctl -ip "${rtpengine_ctl_ip}" list interfaces
+      rtpengine-ctl -ip "${rtpengine_ctl_ip}" list sessions all
       echo "$(date) - ================================================================================="
       error_flag=1
     fi
