@@ -23,6 +23,16 @@ usage() {
   echo "BIN_DIR:${BIN_DIR}"
 }
 
+filter_scenario() {
+  # filter out PRO only scenarios on CE
+  local scen=$1
+
+  if [ "${PROFILE}" == CE ] ; then
+    [ -f "${BASE_DIR}/${GROUP}/${scen}/pro.yml" ] && return 1
+  fi
+  return 0
+}
+
 get_scenarios() {
   local t
   local flag
@@ -34,13 +44,14 @@ get_scenarios() {
         echo "$(date) - scenario: ${t}/scenario.yml at ${GROUP} not found"
         flag=true
       else
-        SCEN+=( "${t}" )
+        filter_scenario "${t}" && SCEN+=( "${t}" )
       fi
     done
     ${flag} && exit 1
   else
     while read -r t; do
-      SCEN+=( "$(basename "${t}")" )
+      t=$(basename "${t}")
+      filter_scenario "${t}" && SCEN+=( "${t}" )
     done < <(find "${BASE_DIR}/${GROUP}/" -name scenario.yml \
       -type f -exec dirname {} \; | sort)
   fi
