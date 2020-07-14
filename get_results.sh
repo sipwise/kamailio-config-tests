@@ -2,7 +2,7 @@
 RUN_DIR="$(dirname "$0")"
 export BASE_DIR=${BASE_DIR:-$RUN_DIR}
 BIN_DIR="${BASE_DIR}/bin"
-PROFILE="CE"
+PROFILE="${PROFILE:-CE}"
 DOMAIN="spce.test"
 GROUP="${GROUP:-scenarios}"
 RETRANS=""
@@ -23,23 +23,37 @@ usage() {
   echo "BIN_DIR:${BIN_DIR}"
 }
 
+filter_scenario() {
+  # filter out PRO only scenarios on CE
+  local scen=$1
+
+  if [ "${PROFILE}" == CE ] ; then
+    [ -f "${BASE_DIR}/${GROUP}/${scen}/pro.yml" ] && return 1
+  fi
+  return 0
+}
+
 get_scenarios() {
   local t
   local flag
-  flag=0
+  flag=false
+
   if [ -n "${SCENARIOS}" ]; then
     for t in ${SCENARIOS}; do
-      if [ ! -d "${BASE_DIR}/${GROUP}/${t}" ]; then
-        echo "$(date) - scenario: $t not found"
-        flag=1
+      if [ ! -f "${BASE_DIR}/${GROUP}/${t}/scenario.yml" ]; then
+        echo "$(date) - scenario: ${t}/scenario.yml at ${GROUP} not found"
+        flag=true
+      else
+        filter_scenario "${t}" && SCEN+=( "${t}" )
       fi
     done
-    if [ $flag != 0 ]; then
-      exit 1
-    fi
+    ${flag} && exit 1
   else
-    SCENARIOS=$(find "${BASE_DIR}/${GROUP}/" -depth -maxdepth 1 -mindepth 1 \
-      -type d -exec basename {} \; | grep -v templates | sort)
+    while read -r t; do
+      t=$(basename "${t}")
+      filter_scenario "${t}" && SCEN+=( "${t}" )
+    done < <(find "${BASE_DIR}/${GROUP}/" -name scenario.yml \
+      -type f -exec dirname {} \; | sort)
   fi
 }
 
@@ -54,6 +68,7 @@ while getopts 'hgGp:TPrcx:' opt; do
     c) CDR="-c";;
     p) PROFILE=${OPTARG};;
     x) GROUP=${OPTARG};;
+    *) usage; exit 1;;
   esac
 done
 shift $((OPTIND-1))
@@ -72,9 +87,8 @@ fi
 
 get_scenarios
 
-echo "${SCENARIOS}" |  tr ' ' '\n' \
+echo "${SCEN[@]}" |  tr ' ' '\n' \
  | parallel "${BIN_DIR}/check.sh ${GRAPH} -J -C -R ${OPTS} ${RETRANS} ${CDR} -d ${DOMAIN} -p ${PROFILE} -s ${GROUP}"
 status=$?
 echo "$(date) - All done[${status}]"
 exit ${status}
-
