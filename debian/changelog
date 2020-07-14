@@ -1,3 +1,42 @@
+kamailio-config-tests (8.6.0.0+0~mr8.6.0.0) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [a60bd79] TT#81700 generate_test_tt2.pl: replace common headers
+  * [6f6e07e] TT#42858 add support for checking retransmissions
+  * [36349d4] TT#81700 generate_test_tt2.pl: add P-LB-Uptime to common subst headers
+  * [be14641] TT#81700 bench.sh: fix support selecting the GROUP scenario
+  * [b006dee] TT#68855 add support for permanent registrations
+  * [74a7433] TT#68855 check.sh: fix errors calling delete_location()
+  * [d71c223] TT#68855 clean_registrations.pl
+  * [3a3de63] TT#81700 support change kamailio module level of debug
+  * [83f869a] TT#68855 invite_perm_reg
+  * [12207c1] TT#68855 clean_registrations.pl, don't try to clean mysql if redis is on
+  * [d17f8e0] TT#68855 clean_registrations.pl: clean bannedusers too
+  * [b459ef3] TT#81700 generate_test_tt2.pl: add -F option
+  * [8e19a04] TT#84335 scenarios_pbx: add invite_callforward
+  * [5872e21] TT#68855 support different transport on perm registrations
+  * [2df340c] TT#81700 bin/get_results.sh: obey PROFILE environment var
+  * [8e912dd] TT#81700 generate_test_tt2.pl: add -n option
+  * [003a92e] TT#81700 autodetect environment
+  * [1aa65df] TT#81700 check.sh: produce flow.diff and scenario.sip files on error
+  * [740408f] TT#81700 fix discover of scenarios
+  * [7d7625d] TT#81700 generate_test_tt2.pl: add common subst port 5080 -> 508[08]
+  * [25f2e51] TT#81700 get_results.sh: add summary at the end of the report
+  * [76e4ef2] TT#84599 scenarios_pbx: add more test to avoid nightly errors
+  * [d3434ab] TT#81700 bin/check.sh: support checking up to two steps of messages
+  * [7b064d6] TT#81700 run_tests.sh: print moved file just if size are different
+  * [2f1f4df] TT#81700 bin/generate_test_tt2.pl: fix some common subst
+  * [5fe990c] TT#81700 generate_test_tt2.sh: helper
+  * [ca4ee69] TT#81700 bin/check.sh: use result of the check not ERR_FLAG
+  * [b902548] TT#81700 run_tests.sh: show rtp sessions if open ports
+  * [5091fc3] TT#81700 run_tests.sh: copy rtpengine log if check fails
+
+  [ Marco Capetta ]
+  * [3fe284a] TT#73250 Add queue and group_serial PBX scenarios to k-c-t
+  * [a2b08d2] TT#76782 Adaptation after changes to ROUTE_CODES_ANNOUNCEMENTS_MAPPING
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 14 Jul 2020 11:52:04 +0200
+
 kamailio-config-tests (8.5.0.0+0~mr8.5.0.0) unstable; urgency=medium
 
   [ Marco Capetta ]
