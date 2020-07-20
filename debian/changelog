@@ -1,3 +1,17 @@
+kamailio-config-tests (7.5.5.1+0~mr7.5.5.1) unstable; urgency=medium
+
+  [ Andrew Pogrebennyk ]
+  * [f558cd4] TT#79954 remove route to RTPENGINE from callforward scenarios before CF loop
+
+  [ Victor Seva ]
+  * [d67a967] TT#70351 change /etc/hosts via ngcpcfg
+  * [4c152ed] TT#72700 add set_config.sh helper script
+  * [336f571] TT#81700 bin/show_flow_diff.pl
+  * [d51a0e9] TT#81700 show_sip to see sip_in and sip_out as SIP trace
+  * [58e5f98] TT#81700 check.sh: produce flow.diff and scenario.sip files on error
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 20 Jul 2020 12:59:32 +0200
+
 kamailio-config-tests (7.5.5.0+0~mr7.5.5.0) unstable; urgency=medium
 
   [ Marco Capetta ]
