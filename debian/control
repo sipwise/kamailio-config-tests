@@ -17,6 +17,7 @@ Build-Depends:
  libtemplate-perl,
  libtext-csv-perl,
  libtext-diff-perl,
+ libtry-tiny-perl,
  libyaml-libyaml-perl,
  python3:any,
 Recommends:
@@ -40,6 +41,7 @@ Depends:
  libtemplate-perl,
  libtext-csv-perl,
  libtext-diff-perl,
+ libtry-tiny-perl,
  libyaml-libyaml-perl,
  ngcp-provisioning-tools,
  parallel,
