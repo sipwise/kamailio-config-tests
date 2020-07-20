@@ -2,7 +2,7 @@
 RUN_DIR="$(dirname "$0")"
 export BASE_DIR=${BASE_DIR:-$RUN_DIR}
 BIN_DIR="${BASE_DIR}/bin"
-PROFILE="${PROFILE:-CE}"
+PROFILE="${PROFILE:-}"
 DOMAIN="spce.test"
 GROUP="${GROUP:-scenarios}"
 RETRANS=""
@@ -10,7 +10,7 @@ CDR=""
 
 usage() {
   echo "Usage: get_results.sh [-p PROFILE] [-h] [-g]"
-  echo -e "\\t-p CE|PRO default is CE"
+  echo -e "\\t-p CE|PRO default is autodetect"
   echo -e "\\t-g generate png flow graphs if test fails"
   echo -e "\\t-G generate png all flow graphs"
   echo -e "\\t-h this help"
@@ -68,14 +68,16 @@ if [[ $# -ne 0 ]]; then
   exit 1
 fi
 
-ngcp_type=$(command -v ngcp-type)
-if [ -n "${ngcp_type}" ]; then
-  case $(${ngcp_type}) in
-    sppro|carrier) PROFILE=PRO;;
-    ce) PROFILE=CE;;
-    *) ;;
-  esac
-  echo "ngcp-type: profile ${PROFILE}"
+if [ -z "${PROFILE}" ] ; then
+  ngcp_type=$(command -v ngcp-type)
+  if [ -n "${ngcp_type}" ]; then
+    case $(${ngcp_type}) in
+      sppro|carrier) PROFILE=PRO;;
+      ce) PROFILE=CE;;
+      *) ;;
+    esac
+    echo "ngcp-type: profile ${PROFILE}"
+  fi
 fi
 if [ "${PROFILE}" != "CE" ] && [ "${PROFILE}" != "PRO" ]; then
   echo "PROFILE ${PROFILE} unknown"

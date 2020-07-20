@@ -14,7 +14,7 @@ SEMS_PBX_LOG=${SEMS_PBX_LOG:-"/var/log/ngcp/sems-pbx.log"}
 TMP_LOG_DIR="/tmp"
 KAM_DIR="/tmp/cfgtest"
 COREDUMP_DIR="/ngcp-data/coredumps"
-PROFILE="${PROFILE:-CE}"
+PROFILE="${PROFILE:-}"
 OPTS=(-P -T -M) #SKIP_PARSE=true, SKIP_TESTS=true, SKIP_MOVE_JSON_KAM=true
 DOMAIN="spce.test"
 TIMEOUT=${TIMEOUT:-300}
@@ -220,7 +220,7 @@ cdr_export() {
 usage() {
   echo "Usage: run_test.sh [-p PROFILE] [-C] [-t]"
   echo "Options:"
-  echo -e "\\t-p CE|PRO default is CE"
+  echo -e "\\t-p CE|PRO default is autodetect"
   echo -e "\\t-l print available SCENARIOS in GROUP"
   echo -e "\\t-C skips configuration of the environment"
   echo -e "\\t-K capture messages with tcpdump"
@@ -264,16 +264,17 @@ if "${SHOW_SCENARIOS}"  ; then
   exit 0
 fi
 
-ngcp_type=$(command -v ngcp-type)
-if [ -n "${ngcp_type}" ]; then
-  case $(${ngcp_type}) in
-    sppro|carrier) PROFILE=PRO;;
-    ce) PROFILE=CE;;
-    *) ;;
-  esac
-  echo "ngcp-type: profile ${PROFILE}"
+if [ -z "${PROFILE}" ]; then
+  ngcp_type=$(command -v ngcp-type)
+  if [ -n "${ngcp_type}" ]; then
+    case $(${ngcp_type}) in
+      sppro|carrier) PROFILE=PRO;;
+      ce) PROFILE=CE;;
+      *) ;;
+    esac
+    echo "ngcp-type: profile ${PROFILE}"
+  fi
 fi
-
 if [ "${PROFILE}" != "CE" ] && [ "${PROFILE}" != "PRO" ]; then
   echo "PROFILE ${PROFILE} unknown"
   usage
