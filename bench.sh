@@ -1,12 +1,12 @@
 #!/bin/bash
 SKIP_CONFIG=false
-PROFILE="${PROFILE:-CE}"
+PROFILE="${PROFILE:-}"
 GROUP="${GROUP:-scenarios}"
 
 usage() {
   echo "Usage: bench.sh [-p PROFILE] [-C] [num_runs]"
   echo "Options:"
-  echo -e "\\t-p CE|PRO default is CE"
+  echo -e "\\t-p CE|PRO default is autodetect"
   echo -e "\\t-C skips configuration of the environment"
   echo -e "\\t-x set GROUP scenario. Default: scenarios"
   echo -e "\\t-h this help"
@@ -24,14 +24,16 @@ while getopts 'hCp:x:' opt; do
 done
 shift $((OPTIND - 1))
 
-ngcp_type=$(command -v ngcp-type)
-if [ -n "${ngcp_type}" ]; then
-  case $(${ngcp_type}) in
-    sppro|carrier) PROFILE=PRO;;
-    ce) PROFILE=CE;;
-    *) ;;
-  esac
-  echo "ngcp-type: profile ${PROFILE}"
+if [ -z "${PROFILE}" ] ; then
+  ngcp_type=$(command -v ngcp-type)
+  if [ -n "${ngcp_type}" ]; then
+    case $(${ngcp_type}) in
+      sppro|carrier) PROFILE=PRO;;
+      ce) PROFILE=CE;;
+      *) ;;
+    esac
+    echo "ngcp-type: profile ${PROFILE}"
+  fi
 fi
 if [ "${PROFILE}" != "CE" ] && [ "${PROFILE}" != "PRO" ]; then
   echo "PROFILE ${PROFILE} unknown"
