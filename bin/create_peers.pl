@@ -21,6 +21,7 @@
 use strict;
 use warnings;
 
+use Try::Tiny;
 use English;
 use Getopt::Long;
 use Cwd 'abs_path';
@@ -120,12 +121,15 @@ sub manage_rules
 
   foreach my $rule (@{$data})
   {
-    $rule->{id} = $api->check_peeringrule_exists($rule);
-    if(defined $rule->{id}) {
-      print "rule: already there [$rule->{id}]\n";
-    } else {
+    try {
       $rule->{id} = $api->create_peeringrule($rule);
       print "rule: created [$rule->{id}]\n";
+    } catch {
+      if($opts->{verbose}) {
+        warn "rule: not able to create: $_";
+      } else {
+        warn "rule: not able to create";
+      }
     }
   }
   return;
@@ -137,12 +141,15 @@ sub manage_inbound_rules
 
   foreach my $rule (@{$data})
   {
-    $rule->{id} = $api->check_peeringinboundrule_exists($rule);
-    if(defined $rule->{id}) {
-      print "inboundrule: already there [$rule->{id}]\n";
-    } else {
+    try {
       $rule->{id} = $api->create_peeringinboundrule($rule);
       print "inboundrule: created [$rule->{id}]\n";
+    } else {
+      if($opts->{verbose}) {
+        warn "rule: not able to create: $_";
+      } else {
+        warn "rule: not able to create";
+      }
     }
   }
   return;
