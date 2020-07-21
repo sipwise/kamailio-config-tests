@@ -66,9 +66,10 @@ sub do_update {
     my $regs = $api->get_subscriber_registrations($subs_id);
     foreach my $r (@{$regs}) {
         print "registration[$r->{id}]: $r->{contact}\n";
-        if($r->{contact} =~ m/sip:$data->{ip}:/) {
-            $r->{contact} = "sip:". $data->{ip}. ":" . $data->{port};
+        if($r->{contact} =~ m/sip:(.*)$data->{ip}:\d+(;[^;]+)*/) {
+            $r->{contact} = "sip:${1}". $data->{ip}. ":" . $data->{port};
             $r->{contact} .= ";transport=". $data->{transport};
+            $r->{contact} .= "${2}";
             $api->set_subscriber_registration($r->{id}, $r) or
                 die("Can't update permanent registration $r->{id}");
             print "registration for ${ARGV[0]}[$r->{id}] updated to $r->{contact}\n";

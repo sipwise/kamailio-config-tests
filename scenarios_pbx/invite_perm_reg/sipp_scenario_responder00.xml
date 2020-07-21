@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-
+<!-- simulate TT#68855 B leg is a NGCP lb -->
 <scenario name="Sipwise NGCP Benchmark UAS Responder">
 
   <recv request="INVITE" crlf="true" rtd="true">
@@ -8,14 +8,46 @@
   <send>
     <![CDATA[
 
-      SIP/2.0 180 Ringing
+      SIP/2.0 100 Trying
+      [last_Via:]
+      [last_From:]
+      [last_To:]
+      [last_Call-ID:]
+      [last_CSeq:]
+      Server: Sipwise NGCP LB 6.X
+      Content-Length: 0
+
+    ]]>
+  </send>
+
+
+  <send>
+    <![CDATA[
+
+      SIP/2.0 183 Ringing
+      Record-Route: <sip:127.0.0.1:5062;lr=on;ftag=[pid]SIPpTag01[call_number];did=6f6.7e12;ice_caller=strip;ice_callee=strip;aset=50;rtpprx=yes;vsf=Rkwzb2hpbkhtYnQ1d1VGSXRYIVwQDD4iPWULcxgcEkFJIitWOS4->
+      Record-Route: <sip:127.0.0.1;r2=on;lr=on;ftag=[pid]SIPpTag01[call_number];ngcplb=yes;socket=tcp:192.168.242.52:5060>
+      Record-Route: <sip:[local_ip]:[local_port];transport=[transport];r2=on;lr=on;ftag=[pid]SIPpTag01[call_number];ngcplb=yes;socket=tcp:192.168.242.52:5060>
       [last_Via:]
       [last_From:]
       [last_To:];tag=[pid]SIPpTag01[call_number]
       [last_Call-ID:]
       [last_CSeq:]
-      Contact: <sip:[local_ip]:[local_port];transport=[transport]>
-      Content-Length: 0
+      Contact: <sip:ngcp-lb@[local_ip]:[local_port];transport=[transport];ngcpct=7369703a3132372e302e302e313a353038303b707278726f7574653d31>
+      Content-Length: [len]
+
+      o=user1 53655765 2353687637 IN IP[local_ip_type] [local_ip]
+      s=-
+      c=IN IP[media_ip_type] [media_ip]
+      t=0 0
+      m=audio [media_port] RTP/AVP 8 101
+      a=rtpmap:0 PCMU/8000/1
+      a=rtpmap:8 PCMA/8000/1
+      a=rtpmap:101 telephone-event/8000
+      a=fmtp:101 0-15
+      a=sendrecv
+      a=rtcp:33273
+      a=ptime:20
 
     ]]>
   </send>
@@ -26,6 +58,9 @@
     <![CDATA[
 
       SIP/2.0 200 OK
+      Record-Route: <sip:127.0.0.1:5062;lr=on;ftag=[pid]SIPpTag01[call_number];did=6f6.7e12;ice_caller=strip;ice_callee=strip;aset=50;rtpprx=yes;vsf=Rkwzb2hpbkhtYnQ1d1VGSXRYIVwQDD4iPWULcxgcEkFJIitWOS4->
+      Record-Route: <sip:127.0.0.1;r2=on;lr=on;ftag=[pid]SIPpTag01[call_number];ngcplb=yes;socket=tcp:192.168.242.52:5060>
+      Record-Route: <sip:[local_ip]:[local_port];transport=[transport];r2=on;lr=on;ftag=[pid]SIPpTag01[call_number];ngcplb=yes;socket=tcp:192.168.242.52:5060>
       [last_Via:]
       [last_From:]
       [last_To:];tag=[pid]SIPpTag01[call_number]
@@ -33,7 +68,7 @@
       [last_CSeq:]
       [last_Record-Route:]
       [last_Route:]
-      Contact: <sip:[local_ip]:[local_port];transport=[transport]>
+      Contact: <sip:ngcp-lb@[local_ip]:[local_port];transport=[transport];ngcpct=7369703a3132372e302e302e313a353038303b707278726f7574653d31>
       Content-Type: application/sdp
       Content-Length: [len]
 
@@ -60,6 +95,9 @@
     <![CDATA[
 
       SIP/2.0 200 OK
+      Record-Route: <sip:127.0.0.1:5062;lr=on;ftag=[pid]SIPpTag01[call_number];did=6f6.7e12;ice_caller=strip;ice_callee=strip;aset=50;rtpprx=yes;vsf=Rkwzb2hpbkhtYnQ1d1VGSXRYIVwQDD4iPWULcxgcEkFJIitWOS4->
+      Record-Route: <sip:127.0.0.1;r2=on;lr=on;ftag=[pid]SIPpTag01[call_number];ngcplb=yes;socket=tcp:192.168.242.52:5060>
+      Record-Route: <sip:[local_ip]:[local_port];transport=[transport];r2=on;lr=on;ftag=[pid]SIPpTag01[call_number];ngcplb=yes;socket=tcp:192.168.242.52:5060>
       [last_Via:]
       [last_From:]
       [last_To:]

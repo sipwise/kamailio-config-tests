@@ -1,7 +1,7 @@
 ---
 testuser1003@spce.test:
   - nat: false
-    contact: sip:127.3.0.5:8008
+    contact: sip:ngcp-lb@127.3.0.5:5060;ngcpct=7369703a3132372e302e302e313a353038303b707278726f7574653d31
     socket: tcp:127.3.0.1:5074
     path: <sip:lb@127.0.0.1:5060;lr;socket=tcp:127.3.0.1:5074>
     q: 0.5
