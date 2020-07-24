@@ -136,6 +136,8 @@ sub subst_common
     $line =~ s/: Sipwise NGCP (Proxy|Application|PBX).+/: Sipwise NGCP ${1}/;
   } elsif($line =~ /^Content-Length:[ ]+[1-9]/i) {
     $line =~ s/:[ ]+\d+/:\\s+\\d+/;
+  } elsif($line =~ /^Contact: /i) {
+    $line =~ s/;expires=\d+/;expires=\\d+/g;
   } elsif($line =~ /^P-LB-Uptime: /i) {
     $line =~ s/: \d+/: \\d+/;
   } elsif($line =~ /^P-NGCP-Src-Port: /i) {
@@ -144,15 +146,17 @@ sub subst_common
     $line =~ s/: .+/: .+/;
   } elsif($line =~ /^SIP-If-Match: /i) {
     $line =~ s/: .+/: .+/;
-  } elsif($line =~ /127\.0\.0\.1(:|;port=)508[08]/) {
-     $line =~ s/127\.0\.0\.1(:|;port=)\d+/127.0.0.1${1}508[08]/g;
-  } elsif($line =~ /127\.0\.0\.1(:|;port=)508[58]/) {
-     $line =~ s/127\.0\.0\.1(:|;port=)\d+/127.0.0.1${1}508[58]/g;
   } elsif($line =~ /^Content-Type: application\/dialog\-info\+xml/i) {
     $line =~ s/: application\/dialog\-info\+xml/: application\/dialog\\-info\\+xml/;
   } elsif($line =~ /^Call-Info: /i) {
     $line =~ s/appearance-index=\*/appearance-index=\\*/g;
     $line =~ s/appearance-uri=\"([^\"]+)\"/appearance-uri=\\"${1}\\"/g;
+  }
+
+  if($line =~ /127\.0\.0\.1(:|;port=)508[08]/) {
+     $line =~ s/127\.0\.0\.1(:|;port=)\d+/127.0.0.1${1}508[08]/g;
+  } elsif($line =~ /127\.0\.0\.1(:|;port=)508[58]/) {
+     $line =~ s/127\.0\.0\.1(:|;port=)\d+/127.0.0.1${1}508[58]/g;
   }
   return $line;
 }
@@ -163,11 +167,8 @@ sub subst_network
   my $line = shift;
   if ($line =~ /(?:[0-9]{1,3}\.){3}[0-9]{1,3}/) {
     foreach my $ip (@{$network}) {
-      if($line =~ s/\Q${ip}\E:\d+/${ip}:\\d+/g) {
-        return $line;
-      } elsif($line =~ s/ip=\Q${ip}\E;port=\d+/ip=${ip};port=\\d+/g) {
-        return $line;
-      }
+      $line =~ s/\Q${ip}\E:\d+/${ip}:\\d+/g;
+      $line =~ s/ip=\Q${ip}\E;port=\d+/ip=${ip};port=\\d+/g;
     }
   }
   return $line;
