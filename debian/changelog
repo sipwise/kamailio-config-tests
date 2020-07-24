@@ -1,3 +1,18 @@
+kamailio-config-tests (8.5.2.0+0~mr8.5.2.0) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [dac0cd0] TT#81700 get_results.sh: fix error on tap summary
+  * [b12dc55] TT#84335 scenarios_pbx: invite_callforward fix cdr check
+  * [2866f74] TT#81700 obey profile if selected via parameters
+  * [174e011] TT#84555 disable failing scenarios from scenarios_pbx
+  * [9e8a2dd] TT#81700 bin/generate_test_tt2.pl: fix some common subst
+
+  [ Marco Capetta ]
+  * [a76a4e2] TT#72451 Add new ROUTE_SET_HIH_CF route
+  * [7cb7a0c] TT#72451 Add missing ROUTE_SET_HIH_CF route
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 24 Jul 2020 13:48:29 +0200
+
 kamailio-config-tests (8.5.1.0+0~mr8.5.1.0) unstable; urgency=medium
 
   [ Victor Seva ]
