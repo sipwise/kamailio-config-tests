@@ -41,13 +41,13 @@ files we want to watch
 services = [
     'kamailio/kamailio.lb.pid',
     'kamailio/kamailio.proxy.pid',
-    'ngcp-sems/ngcp-sems.pid',
+    'sems-b2b/sems-b2b.pid',
     'ngcp-witnessd.pid'
 ]
 
 watched_dirs = [
     '/run/kamailio',
-    '/run/ngcp-sems',
+    '/run/sems-b2b',
     '/run'
 ]
 
@@ -110,11 +110,9 @@ args = parser.parse_args()
 
 if args.pbx:
     watched_dirs += [
-        '/run/sems-pbx',
         '/run/fastcgi',
     ]
     services += [
-        'sems-pbx/sems-pbx.pid',
         'fastcgi/ngcp-panel.pid',
     ]
 
