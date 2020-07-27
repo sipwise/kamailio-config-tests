@@ -2,21 +2,27 @@
 SKIP_CONFIG=false
 PROFILE="${PROFILE:-}"
 GROUP="${GROUP:-scenarios}"
+CAPTURE=false
+SINGLE_CAPTURE=false
 
 usage() {
   echo "Usage: bench.sh [-p PROFILE] [-C] [num_runs]"
   echo "Options:"
   echo -e "\\t-p CE|PRO default is autodetect"
   echo -e "\\t-C skips configuration of the environment"
+  echo -e "\\t-k capture messages with tcpdump, per scenario"
+  echo -e "\\t-K capture messages with tcpdump. One big file for all scenarios"
   echo -e "\\t-x set GROUP scenario. Default: scenarios"
   echo -e "\\t-h this help"
   echo -e "num_runs default is 20"
 }
 
-while getopts 'hCp:x:' opt; do
+while getopts 'hCkKp:x:' opt; do
   case $opt in
     h) usage; exit 0;;
     C) SKIP_CONFIG=true;;
+    k) SINGLE_CAPTURE=true;;
+    K) CAPTURE=true;;
     p) PROFILE=${OPTARG};;
     x) GROUP=${OPTARG};;
 	*) echo "Unknown option $opt"; usage; exit 1;;
@@ -43,6 +49,12 @@ fi
 
 NUM=${1:-20}
 RUN_OPS=(-C -c -r -p"${PROFILE}" -x"${GROUP}")
+
+if "${CAPTURE}" ; then
+  RUN_OPS+=(-K)
+elif "${SINGLE_CAPTURE}" ; then
+  RUN_OPS+=(-k)
+fi
 
 # clean previous
 rm -rf log_* result_*

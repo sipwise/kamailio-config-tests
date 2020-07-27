@@ -22,6 +22,7 @@ TIMEOUT=${TIMEOUT:-300}
 SHOW_SCENARIOS=false
 SKIP_CONFIG=false
 CAPTURE=false
+SINGLE_CAPTURE=false
 FIX_RETRANS=false
 MEMDBG=false
 CDR=false
@@ -226,7 +227,8 @@ usage() {
   echo -e "\\t-p CE|PRO default is autodetect"
   echo -e "\\t-l print available SCENARIOS in GROUP"
   echo -e "\\t-C skips configuration of the environment"
-  echo -e "\\t-K capture messages with tcpdump"
+  echo -e "\\t-k capture messages with tcpdump, per scenario"
+  echo -e "\\t-K capture messages with tcpdump. One big file for all scenarios"
   echo -e "\\t-x set GROUP scenario. Default: scenarios"
   echo -e "\\t-t set timeout in secs for pid_watcher.py [PRO]. Default: 300"
   echo -e "\\t-r fix retransmission issues"
@@ -238,12 +240,13 @@ usage() {
   echo "BIN_DIR:${BIN_DIR}"
 }
 
-while getopts 'hlCcp:Kx:t:rm' opt; do
+while getopts 'hlCcp:kKx:t:rm' opt; do
   case $opt in
     h) usage; exit 0;;
     l) SHOW_SCENARIOS=true;;
     C) SKIP_CONFIG=true;;
     p) PROFILE=${OPTARG};;
+    k) SINGLE_CAPTURE=true;;
     K) CAPTURE=true;;
     x) GROUP=${OPTARG};;
     t) TIMEOUT=${OPTARG};;
@@ -362,6 +365,8 @@ fi
 
 if "${CAPTURE}" ; then
   capture
+elif "${SINGLE_CAPTURE}" ; then
+  OPTS+=(-K)
 fi
 
 for t in "${SCEN[@]}"; do
