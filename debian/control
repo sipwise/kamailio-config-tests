@@ -43,6 +43,7 @@ Depends:
  libyaml-libyaml-perl,
  ngcp-provisioning-tools,
  parallel,
+ python3-scapy,
  python3-pyinotify,
  python3-yaml,
  python3:any,
