@@ -275,7 +275,7 @@ if [ -z "${PROFILE}" ]; then
   if [ -n "${ngcp_type}" ]; then
     case $(${ngcp_type}) in
       sppro|carrier) PROFILE=PRO;;
-      ce) PROFILE=CE;;
+      spce) PROFILE=CE;;
       *) ;;
     esac
     echo "ngcp-type: profile ${PROFILE}"
