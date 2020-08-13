@@ -141,7 +141,7 @@ sip_in:
   - 'P-First-Caller-Cloud-PBX: [% customerpbx_test.id %]'
   - 'P-Caller-UUID: [% spce_test.testuser1001.uuid %]'
   - 'P-NGCP-Caller-Info: <sip:testuser1001@spce.test>;ip=127.0.0.1;port=5080;primary=4311001'
-  - 'P-NGCP-Callee-Info: <sip:43110011003@spce.test>;ip=127.0.0.1;port=508[58];primary=43110011003'
+  - 'P-NGCP-Callee-Info: <sip:43110011003@spce.test>;ip=127.0.0.1;port=5080;primary=43110011003'
   - 'P-First-Caller-UPN: 43110011002'
   - 'P-First-Caller-NPN: 43110011002'
   - 'P-First-Caller-UPD: spce.test'
@@ -174,7 +174,7 @@ sip_in:
   - 'P-To-Device: 1'
   - 'Content-Type: application/sdp'
   - 'Content-Length:\s+\d+'
-  - 'Contact: <sip:127.0.0.1:508[58];transport=udp>'
+  - 'Contact: <sip:127.0.0.1:5080;transport=udp>'
 sip_out:
   - [
       'SIP/2.0 100 Trying',
@@ -190,7 +190,7 @@ sip_out:
       'To: <sip:testuser1001@spce.test>',
       'CSeq: \d+ INVITE',
       'P-Caller-UUID: [% spce_test.testuser1001.uuid %]',
-      'P-NGCP-Caller-Info: <sip:testuser1001@spce.test>;ip=127.0.0.1;port=508[58];primary=4311001',
+      'P-NGCP-Caller-Info: <sip:testuser1001@spce.test>;ip=127.0.0.1;port=5080;primary=4311001',
       'P-NGCP-Callee-Info: <sip:43110011003@spce.test>;ip=127.0.0.1;port=5060;primary=43110011003;alias=43110011003',
       'P-CF-Depth: 1',
       'P-NGCP-Forward-Info: <sip:testuser1001@spce.test>;ip=127.0.0.1;port=5080;primary=4311001',
@@ -199,7 +199,7 @@ sip_out:
       'P-NGCP-Acc-Dst-Leg: .+',
       'Content-Type: application/sdp',
       'Content-Length:\s+\d+',
-      'Contact: <sip:127.0.0.1:508[58];transport=udp>',
+      'Contact: <sip:127.0.0.1:5080;transport=udp>',
       'P-Asserted-Identity: <sip:43110011002@spce.test>',
       'P-Called-Party-ID: <sip:testuser1003@spce.test>',
       'P-App-Param: ;calltimer=21600;aleg_sst_enable=no;sst_enable=no;hold_alter_b2b_bleg=no;hold_alter_b2b_aleg=no;fast_ack=no',

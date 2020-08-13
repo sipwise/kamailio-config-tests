@@ -21,7 +21,7 @@ sip_in:
   - 'CSeq: 2 INVITE'
   - 'Allow: INVITE, PRACK, ACK, BYE, CANCEL, OPTIONS, NOTIFY, REGISTER, SUBSCRIBE, REFER, PUBLISH, UPDATE, MESSAGE'
   - 'Call-Info: <sip:spce\.test>;appearance-index=1'
-  - 'Contact: <sip:127.0.0.1:508[5|8];transport=udp>'
+  - 'Contact: <sip:127.0.0.1:5080;transport=udp>'
   - 'Content-Length: 0'
 sip_out:
   - [
@@ -37,7 +37,7 @@ sip_out:
       'To: <sip:1002@spce.test>;tag=',
       'CSeq: 2 INVITE',
       'Allow: INVITE, PRACK, ACK, BYE, CANCEL, OPTIONS, NOTIFY, REGISTER, SUBSCRIBE, REFER, PUBLISH, UPDATE, MESSAGE',
-      'Contact: <sip:127.0.0.1:508[5|8];transport=udp>',
+      'Contact: <sip:127.0.0.1:5080;transport=udp>',
       'Content-Length: 0',
       'P-COLP-Identity: \"1002\" <sip:1002@spce.test>',
       'P-Out-Socket: udp:127.0.0.1:5060',

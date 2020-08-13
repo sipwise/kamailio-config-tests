@@ -160,14 +160,14 @@ sip_in:
   - 'P-Caller-UUID: [% spce_test.testuser1002.uuid %]'
   - 'P-Callee-UUID: [% spce_test.testuser1003.uuid %]'
   - 'P-NGCP-Caller-Info: <sip:testuser1002@'
-  - 'P-NGCP-Callee-Info: <sip:43110021003@spce.test>;ip=127.0.0.1;port=508[5|8];'
+  - 'P-NGCP-Callee-Info: <sip:43110021003@spce.test>;ip=127.0.0.1;port=5080;'
   - 'P-To-Device: 1'
   - 'Content-Type: application/sdp'
-  - 'Contact: <sip:127.0.0.1:508[5|8];transport=udp>'
+  - 'Contact: <sip:127.0.0.1:5080;transport=udp>'
 sip_out:
   - [
       'SIP/2.0 100 Trying',
-      'Via: SIP/2.0/UDP 127.0.0.1:508[5|8];branch=',
+      'Via: SIP/2.0/UDP 127.0.0.1:5080;branch=',
       'From: <sip:testuser1002@',
       'To: <sip:1003@',
       'CSeq: \d+ INVITE',
@@ -180,7 +180,7 @@ sip_out:
        'CSeq: \d+ INVITE',
        'Max-Forwards: 69',
        'Content-Type: application/sdp',
-       'Contact: <sip:127.0.0.1:508[5|8];transport=udp>',
+       'Contact: <sip:127.0.0.1:5080;transport=udp>',
        'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
        'P-Callee-UUID: [% spce_test.testuser1003.uuid %]',
        'P-Asserted-Identity: <sip:4311002@',

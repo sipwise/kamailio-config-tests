@@ -26,7 +26,7 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - 'ACK sip:127.0.0.1:508[58];prxroute=1 SIP/2.0'
+  - 'ACK sip:127.0.0.1:5080;prxroute=1 SIP/2.0'
   - 'From: <sip:testuser1002@spce.test>;tag=[\w-]+'
   - 'To: <sip:testuser1004@spce.test>;tag=[\w-]+'
   - 'CSeq: \d+ ACK'
@@ -40,7 +40,7 @@ sip_in:
   - 'P-LB-Uptime: \d+'
 sip_out:
   - [
-      'ACK sip:127.0.0.1:508[58];prxroute=1 SIP/2.0',
+      'ACK sip:127.0.0.1:5080;prxroute=1 SIP/2.0',
       'From: <sip:testuser1002@spce.test>;tag=[\w-]+',
       'To: <sip:testuser1004@spce.test>;tag=[\w-]+',
       'CSeq: \d+ ACK',

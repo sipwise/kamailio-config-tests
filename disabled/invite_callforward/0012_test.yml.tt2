@@ -180,7 +180,7 @@ sip_out:
       'P-First-Caller-Cloud-PBX: [% customerpbx_test.id %]',
       'P-Caller-UUID: [% spce_test.testuser1001.uuid %]',
       'P-NGCP-Caller-Info: <sip:testuser1001@spce.test>;ip=127.0.0.1;port=5080;primary=4311001',
-      'P-NGCP-Callee-Info: <sip:43110011003@spce.test>;ip=127.0.0.1;port=508[58];primary=43110011003',
+      'P-NGCP-Callee-Info: <sip:43110011003@spce.test>;ip=127.0.0.1;port=5080;primary=43110011003',
       'P-First-Caller-UPN: 43110011002',
       'P-First-Caller-NPN: 43110011002',
       'P-First-Caller-UPD: spce.test',

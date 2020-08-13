@@ -20,7 +20,7 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^ACK sip:127.0.0.1:508[0|8](;prxroute=1)? SIP/2.0'
+  - '^ACK sip:127.0.0.1:5080(;prxroute=1)? SIP/2.0'
   - 'Contact: sip:004321001@'
   - 'CSeq: 1 ACK'
   - 'Max-Forwards: 69'
@@ -30,7 +30,7 @@ sip_in:
 
 sip_out:
   - [
-      '^ACK sip:127.0.0.1:508[0|8](;prxroute=1)? SIP/2.0',
+      '^ACK sip:127.0.0.1:5080(;prxroute=1)? SIP/2.0',
       'Contact: sip:004321001@',
       'CSeq: 1 ACK',
       'Max-Forwards: 68',

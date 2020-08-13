@@ -31,7 +31,7 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^BYE sip:127.0.0.1:508[5|8];prxroute=1 SIP/2.0'
+  - '^BYE sip:127.0.0.1:5080;prxroute=1 SIP/2.0'
   - 'From: <sip:testuser1003@spce.test>;tag='
   - 'To: <sip:1002@spce.test>;tag='
   - 'Call-Info: <sip:spce\.test>;appearance-index=1'
@@ -87,7 +87,7 @@ sip_out:
       'Subscription-State: active;expires=\d+',
     ]
   - [
-      '^BYE sip:127.0.0.1:508[5|8];prxroute=1 SIP/2.0',
+      '^BYE sip:127.0.0.1:5080;prxroute=1 SIP/2.0',
       'From: <sip:testuser1003@spce.test>;tag=',
       'To: <sip:1002@spce.test>;tag=',
       'CSeq: 3 BYE',

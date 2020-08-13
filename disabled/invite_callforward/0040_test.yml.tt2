@@ -161,11 +161,11 @@ sip_in:
   - 'P-NGCP-Sems-Instance: pbx'
   - 'P-Proxy-Uri: 127.0.0.1:5062'
   - 'P-NGCP-Caller-Info: <sip:testuser1002@spce.test>;ip=127.126.0.1;port=\d+;primary=43110011002'
-  - 'P-NGCP-Callee-Info: <sip:testuser1004@spce.test>;ip=127.0.0.1;port=508[58];primary=43110011004'
+  - 'P-NGCP-Callee-Info: <sip:testuser1004@spce.test>;ip=127.0.0.1;port=5080;primary=43110011004'
   - 'P-To-Device: 1'
   - 'Content-Type: application/sdp'
   - 'Content-Length:\s+\d+'
-  - 'Contact: <sip:127.0.0.1:508[58];transport=udp>'
+  - 'Contact: <sip:127.0.0.1:5080;transport=udp>'
 sip_out:
   - [
       'SIP/2.0 100 Trying',
@@ -190,7 +190,7 @@ sip_out:
       'P-NGCP-Callee-Info: <sip:testuser1004@spce.test>;ip=127.0.0.1;port=5060;primary=43110011004',
       'Content-Type: application/sdp',
       'Content-Length:\s+\d+',
-      'Contact: <sip:127.0.0.1:508[58];transport=udp>',
+      'Contact: <sip:127.0.0.1:5080;transport=udp>',
       'P-Asserted-Identity: <sip:43110011002@spce.test>',
       'P-Called-Party-ID: <sip:testuser1004@spce.test>',
       'P-App-Param: ;calltimer=21600;aleg_sst_enable=no;sst_enable=no;hold_alter_b2b_bleg=no;hold_alter_b2b_aleg=no;fast_ack=no',

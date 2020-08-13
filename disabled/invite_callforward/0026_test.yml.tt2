@@ -25,7 +25,7 @@ sip_in:
   - 'To: <sip:testuser1001@spce.test>;tag=[\w-]+'
   - 'CSeq: \d+ ACK'
   - 'Content-Length: 0'
-  - 'Contact: <sip:127.0.0.1:508[58];transport=udp>'
+  - 'Contact: <sip:127.0.0.1:5080;transport=udp>'
 sip_out:
   - [
       'ACK sip:127.0.0.1:5080;transport=udp SIP/2.0',
@@ -33,5 +33,5 @@ sip_out:
       'To: <sip:testuser1001@spce.test>;tag=[\w-]+',
       'CSeq: \d+ ACK',
       'Content-Length: 0',
-      'Contact: <sip:127.0.0.1:508[58];transport=udp>',
+      'Contact: <sip:127.0.0.1:5080;transport=udp>',
     ]

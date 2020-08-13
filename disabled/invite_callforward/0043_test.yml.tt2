@@ -92,7 +92,7 @@ sip_out:
       'P-NGCP-Callee-Info: <sip:43110011005@spce.test>;ip=127.0.0.1;port=5080',
       'Content-Type: application/sdp',
       'Content-Length:\s+\d+',
-      'Contact: <sip:127.0.0.1:508[58];transport=udp>',
+      'Contact: <sip:127.0.0.1:5080;transport=udp>',
       'P-HIH-Cause: 486',
       'P-App-Param: ;profile=ngcp_cf',
       'P-App-Name: sbc',

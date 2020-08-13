@@ -123,5 +123,5 @@ sip_out:
       'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
       'P-Callee-UUID: [% spce_test.testuser1002.uuid %]',
       'P-NGCP-Caller-Info: <sip:testuser1002@spce.test>;ip=127.126.0.1;port=\d+;primary=4311002',
-      'P-NGCP-Callee-Info: <sip:testuser1003@spce.test>;ip=127.0.0.1;port=508[0|8];primary=4311002',
+      'P-NGCP-Callee-Info: <sip:testuser1003@spce.test>;ip=127.0.0.1;port=5080;primary=4311002',
     ]

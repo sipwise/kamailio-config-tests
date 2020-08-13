@@ -213,5 +213,5 @@ sip_out:
       'P-NGCP-Sems-Instance: pbx',
       'P-Proxy-Uri: 127.0.0.1:5062',
       'P-NGCP-Caller-Info: <sip:testuser1002@spce.test>;ip=127.126.0.1;port=\d+;primary=43110011002',
-      'P-NGCP-Callee-Info: <sip:testuser1004@spce.test>;ip=127.0.0.1;port=508[58];primary=43110011004',
+      'P-NGCP-Callee-Info: <sip:testuser1004@spce.test>;ip=127.0.0.1;port=5080;primary=43110011004',
     ]

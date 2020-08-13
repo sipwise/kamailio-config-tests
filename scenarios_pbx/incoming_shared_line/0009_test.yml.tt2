@@ -205,11 +205,11 @@ sip_in:
   - 'P-NGCP-Acc-Src-Leg: \w+'
   - 'P-NGCP-Acc-Dst-Leg: \w+'
   - 'P-NGCP-Caller-Info: <sip:testuser1003@spce.test>;ip=127.126.0.3;port=\d+;primary=43110021003'
-  - 'P-NGCP-Callee-Info: <sip:4311002@spce.test>;ip=127.0.0.1;port=508[5|8];primary=4311002'
+  - 'P-NGCP-Callee-Info: <sip:4311002@spce.test>;ip=127.0.0.1;port=5080;primary=4311002'
   - 'P-To-Device: 1'
   - 'Content-Type: application/sdp'
   - 'Content-Length: \d+'
-  - 'Contact: <sip:127.0.0.1:508[5|8];transport=udp>'
+  - 'Contact: <sip:127.0.0.1:5080;transport=udp>'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
@@ -230,7 +230,7 @@ sip_out:
       'P-NGCP-Acc-Dst-Leg: \w+',
       'Content-Type: application/sdp',
       'Content-Length: \d+',
-      'Contact: <sip:127.0.0.1:508[5|8];transport=udp>',
+      'Contact: <sip:127.0.0.1:5080;transport=udp>',
       'P-Caller-UUID: [% spce_test.testuser1003.uuid %]',
       'P-Callee-UUID: [% spce_test.testuser1002.uuid %]',
       'P-Asserted-Identity: <sip:43110021003@spce.test>',
@@ -253,7 +253,7 @@ sip_out:
       'P-NGCP-Acc-Dst-Leg: \w+',
       'Content-Type: application/sdp',
       'Content-Length: \d+',
-      'Contact: <sip:127.0.0.1:508[5|8];transport=udp>',
+      'Contact: <sip:127.0.0.1:5080;transport=udp>',
       'P-Caller-UUID: [% spce_test.testuser1003.uuid %]',
       'P-Callee-UUID: [% spce_test.testuser1002.uuid %]',
       'P-Asserted-Identity: <sip:43110021003@spce.test>',

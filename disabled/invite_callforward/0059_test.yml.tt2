@@ -26,7 +26,7 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - 'ACK sip:127.0.0.1:508[58];transport=udp SIP/2.0'
+  - 'ACK sip:127.0.0.1:5080;transport=udp SIP/2.0'
   - 'From: <sip:testuser1002@spce.test>;tag=[\w-]+'
   - 'To: <sip:testuser1004@spce.test>;tag=[\w-]+'
   - 'CSeq: \d+ ACK'
@@ -34,7 +34,7 @@ sip_in:
   - 'Contact: <sip:127.0.0.1:5080;transport=udp>'
 sip_out:
   - [
-      'ACK sip:127.0.0.1:508[58];transport=udp SIP/2.0',
+      'ACK sip:127.0.0.1:5080;transport=udp SIP/2.0',
       'From: <sip:testuser1002@spce.test>;tag=[\w-]+',
       'To: <sip:testuser1004@spce.test>;tag=[\w-]+',
       'CSeq: \d+ ACK',

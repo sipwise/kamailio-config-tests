@@ -26,7 +26,7 @@ sip_in:
   - 'To: <sip:testuser1001@spce.test>;tag=[\w-]+'
   - 'CSeq: \d+ INVITE'
   - 'P-COLP-Identity: "1003" <sip:1003@spce.test>'
-  - 'Contact: <sip:127.0.0.1:508[58];transport=udp>'
+  - 'Contact: <sip:127.0.0.1:5080;transport=udp>'
   - 'Content-Type: application/sdp'
   - 'Content-Length:\s+\d+'
 sip_out:
@@ -47,7 +47,7 @@ sip_out:
       'To: <sip:testuser1001@spce.test>;tag=[\w-]+',
       'CSeq: \d+ INVITE',
       'P-COLP-Identity: "1003" <sip:1003@spce.test>',
-      'Contact: <sip:127.0.0.1:508[58];transport=udp>',
+      'Contact: <sip:127.0.0.1:5080;transport=udp>',
       'Content-Type: application/sdp',
       'Content-Length:\s+\d+',
       'P-Out-Socket: udp:127.0.0.1:5060',

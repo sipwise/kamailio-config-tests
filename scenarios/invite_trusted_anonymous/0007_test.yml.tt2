@@ -24,14 +24,14 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^ACK sip:127.0.0.1:508[0|8];prxroute=1 SIP/2.0'
+  - '^ACK sip:127.0.0.1:5080;prxroute=1 SIP/2.0'
   - 'CSeq: 1 ACK'
   - 'From: "Anonymous" <sip:anonymous@anonymous.invalid>'
   - 'To: <sip:testuser1003@'
   - '_:NOT:_P-Asserted-Identity: \w+'
 sip_out:
   - [
-      '^ACK sip:127.0.0.1:508[0|8];prxroute=1 SIP/2.0',
+      '^ACK sip:127.0.0.1:5080;prxroute=1 SIP/2.0',
       'CSeq: 1 ACK',
       'From: "Anonymous" <sip:anonymous@anonymous.invalid>',
       'To: <sip:testuser1003@',

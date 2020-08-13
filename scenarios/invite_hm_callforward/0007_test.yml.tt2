@@ -197,7 +197,7 @@ flow:
       ]
 sip_in:
   - '^INVITE sip:4311003@'
-  - 'Contact: <sip:127.0.0.1:508[0|8]'
+  - 'Contact: <sip:127.0.0.1:5080'
   - 'CSeq: \d+ INVITE'
   - 'Content-Type: application/sdp'
   - 'P-Caller-UUID: [% spce_test.testuser1001.uuid %]'
@@ -218,7 +218,7 @@ sip_out:
       '^INVITE sip:testuser1003@',
       'CSeq: \d+ INVITE',
       'From: <sip:4311002@',
-      'Contact: <sip:127.0.0.1:508[0|8](;transport=udp)?>',
+      'Contact: <sip:127.0.0.1:5080(;transport=udp)?>',
       'To: <sip:testuser1001@',
       'Content-Type: application/sdp',
       'P-Callee-UUID: [% spce_test.testuser1003.uuid %]',

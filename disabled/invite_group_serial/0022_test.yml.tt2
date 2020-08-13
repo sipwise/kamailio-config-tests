@@ -17,7 +17,7 @@ sip_in:
   - 'From: <sip:4311002@spce.test>;tag=[\w-]+'
   - 'To: <sip:1010@spce.test>;tag=[\w-]+'
   - 'CSeq: \d+ INVITE'
-  - 'Contact: <sip:127.0.0.1:508[08];transport=udp>'
+  - 'Contact: <sip:127.0.0.1:5080;transport=udp>'
   - 'Content-Length: 0'
 sip_out:
   - [
@@ -35,6 +35,6 @@ sip_out:
       'From: <sip:4311002@spce.test>;tag=[\w-]+',
       'To: <sip:1010@spce.test>;tag=[\w-]+',
       'CSeq: \d+ INVITE',
-      'Contact: <sip:127.0.0.1:508[08];transport=udp>',
+      'Contact: <sip:127.0.0.1:5080;transport=udp>',
       'Content-Length: 0',
     ]
