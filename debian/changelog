@@ -1,3 +1,28 @@
+kamailio-config-tests (8.4.3.0+0~mr8.4.3.0) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [9362279] TT#81700 generate_test_tt2.pl: replace common headers
+  * [9786523] TT#42858 add support for checking retransmissions
+  * [64cd8cb] TT#81700 generate_test_tt2.pl: add P-LB-Uptime to common subst headers
+  * [05458ae] TT#81700 bench.sh: fix support selecting the GROUP scenario
+  * [cc6d6f7] TT#68855 add support for permanent registrations
+  * [6850e85] TT#68855 check.sh: fix errors calling delete_location()
+  * [3857742] TT#68855 clean_registrations.pl
+  * [21cad1e] TT#81700 support change kamailio module level of debug
+  * [8f2980d] TT#68855 clean_registrations.pl, don't try to clean mysql if redis is on
+  * [6c9910a] TT#68855 clean_registrations.pl: clean bannedusers too
+  * [61036ae] TT#81700 generate_test_tt2.pl: add -F option
+  * [2e8e969] TT#68855 support different transport on perm registrations
+  * [91a7e19] TT#81700 bin/get_results.sh: obey PROFILE environment var
+  * [5f9b25b] TT#81700 generate_test_tt2.pl: add -n option
+  * [0b34a2d] TT#81700 autodetect environment
+  * [e62326f] TT#81700 check.sh: produce flow.diff and scenario.sip files on error
+  * [1414d4a] TT#81700 fix discover of scenarios
+  * [65e4c4d] TT#81700 obey profile if selected via parameters
+  * [bbe2d63] TT#81700 fix detection of profile on CE
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 25 Aug 2020 16:48:50 +0200
+
 kamailio-config-tests (8.4.2.0+0~mr8.4.2.0) unstable; urgency=medium
 
   * New release.
