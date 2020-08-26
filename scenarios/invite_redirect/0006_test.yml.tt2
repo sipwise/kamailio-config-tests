@@ -1,0 +1,9 @@
+flow:
+  - start|sl:filtered-ack:
+sip_in:
+  - 'ACK sip:testuser1003@spce.test SIP/2.0'
+  - 'From: <sip:testuser1002@spce.test>;tag=[\w-]+'
+  - 'To: <sip:testuser1003@spce.test>;tag=[\w-]+'
+  - 'CSeq: \d+ ACK'
+  - 'Content-Length: 0'
+sip_out: []

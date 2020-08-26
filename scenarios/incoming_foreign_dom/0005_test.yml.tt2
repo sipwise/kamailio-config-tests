@@ -1,38 +1,50 @@
 flow:
-  - start|DEFAULT_ONREPLY:
-  - start|REPLY_ROUTE_NAT:
+  - start|DEFAULT_ROUTE:
   - start|ROUTE_ENTRY:
   - return|ROUTE_ENTRY:
-  - start|ROUTE_APPLY_HEADER_RULES:
-  - return|ROUTE_APPLY_HEADER_RULES:
-      $avp(lua_dlg_profile): [
-        "accountout:0",
-        "userout:0",
-        "account:0",
-        "user:0",
-        "totalaccountout:0",
-        "totaluserout:0",
-        "totalaccount:0",
-        "totaluser:0",
-        "local",
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1003.uuid %]",
-        "total",
-        "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1003.uuid %]"
-      ]
-  - start|ROUTE_PREPARE_UA:
-  - return|ROUTE_PREPARE_UA:
-  - start|REPLY_ROUTE_NAT_CONTINUE:
+  - start|ROUTE_LEG_B:
+  - start|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
   - start|ROUTE_EXIT:
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^SIP/2.0 180 Ringing'
-  - 'CSeq: 1 INVITE'
+  - 'INVITE sip:testuser1003@127.1.0.1:\d+ SIP/2.0'
+  - 'From: <sip:external@external.test>;tag=[\w-]+'
+  - 'To: <sip:testuser1003@spce.test>'
+  - 'CSeq: \d+ INVITE'
+  - 'P-LB-Uptime: \d+'
+  - 'P-Asserted-Identity: <sip:external@external.test>'
+  - 'P-Caller-UUID: 0'
+  - 'P-NGCP-Caller-Info: <sip:external@external.test>;ip=127.0.2.1;port=\d+'
+  - 'P-NGCP-Callee-Info: <sip:4311003@spce.test>;ip=127.0.0.1;port=5060;primary=4311003'
+  - 'P-D-Uri: sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060'
+  - 'Content-Type: application/sdp'
+  - 'Contact: <sip:127.0.0.1:508[08];transport=udp>'
+  - 'Content-Length:\s+\d+'
 sip_out:
   - [
-      '^SIP/2.0 180 Ringing',
-      'CSeq: 1 INVITE',
+      'SIP/2.0 100 Trying',
+      'From: <sip:external@external.test>;tag=[\w-]+',
+      'To: <sip:testuser1003@spce.test>',
+      'CSeq: \d+ INVITE',
+      'Server: Sipwise NGCP Proxy',
+      'Content-Length: 0',
+    ]
+  - [
+      'INVITE sip:testuser1003@127.1.0.1:\d+ SIP/2.0',
+      'From: <sip:external@external.test>;tag=[\w-]+',
+      'To: <sip:testuser1003@spce.test>',
+      'CSeq: \d+ INVITE',
+      'P-LB-Uptime: \d+',
+      'P-Asserted-Identity: <sip:external@external.test>',
+      'P-Caller-UUID: 0',
+      'P-NGCP-Caller-Info: <sip:external@external.test>;ip=127.0.2.1;port=\d+',
+      'P-NGCP-Callee-Info: <sip:4311003@spce.test>;ip=127.0.0.1;port=5060;primary=4311003',
+      'P-D-Uri: sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060',
+      'Content-Type: application/sdp',
+      'Contact: <sip:127.0.0.1:508[08];transport=udp>',
+      'Content-Length:\s+\d+',
     ]

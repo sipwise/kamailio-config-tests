@@ -1,22 +1,52 @@
 flow:
-  - start|DEFAULT_ONREPLY:
-  - start|REPLY_ROUTE_NAT:
+  - start|DEFAULT_ROUTE:
   - start|ROUTE_ENTRY:
   - return|ROUTE_ENTRY:
-  - start|ROUTE_APPLY_HEADER_RULES:
-  - return|ROUTE_APPLY_HEADER_RULES:
-  - start|ROUTE_PREPARE_UA:
-  - return|ROUTE_PREPARE_UA:
-  - start|REPLY_ROUTE_NAT_CONTINUE:
+  - start|ROUTE_LEG_B:
+  - start|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
   - start|ROUTE_EXIT:
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^SIP/2.0 180 Ringing'
-  - 'CSeq: 2 INVITE'
+  - 'INVITE sip:testuser1003@127.1.0.1:\d+ SIP/2.0'
+  - 'From: <sip:4311002@spce.test>;tag=[\w-]+'
+  - 'To: <sip:testuser1003@spce.test>'
+  - 'CSeq: \d+ INVITE'
+  - 'Allow: INVITE, OPTIONS, BYE, CANCEL, ACK, PRACK, COMET, SUBSCRIBE, NOTIFY, UPDATE, REGISTER'
+  - 'P-LB-Uptime: \d+'
+  - 'P-Asserted-Identity: <sip:4311002@spce.test>'
+  - 'P-Caller-UUID: [% spce_test.testuser1002.uuid %]'
+  - 'P-NGCP-Caller-Info: <sip:testuser1002@spce.test>;ip=127.126.0.1;port=\d+;primary=4311002'
+  - 'P-NGCP-Callee-Info: <sip:testuser1003@spce.test>;ip=127.0.0.1;port=5060;primary=4311003'
+  - 'P-D-Uri: sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060'
+  - 'Content-Type: application/sdp'
+  - 'Contact: <sip:127.0.0.1:508[08];transport=udp>'
+  - 'Content-Length:\s+\d+'
 sip_out:
   - [
-      '^SIP/2.0 180 Ringing',
-      'CSeq: 2 INVITE',
+      'SIP/2.0 100 Trying',
+      'From: <sip:4311002@spce.test>;tag=[\w-]+',
+      'To: <sip:testuser1003@spce.test>',
+      'CSeq: \d+ INVITE',
+      'Server: Sipwise NGCP Proxy',
+      'Content-Length: 0',
+    ]
+  - [
+      'INVITE sip:testuser1003@127.1.0.1:\d+ SIP/2.0',
+      'From: <sip:4311002@spce.test>;tag=[\w-]+',
+      'To: <sip:testuser1003@spce.test>',
+      'CSeq: \d+ INVITE',
+      'Allow: INVITE, OPTIONS, BYE, CANCEL, ACK, PRACK, COMET, SUBSCRIBE, NOTIFY, UPDATE, REGISTER',
+      'P-LB-Uptime: \d+',
+      'P-Asserted-Identity: <sip:4311002@spce.test>',
+      'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
+      'P-NGCP-Caller-Info: <sip:testuser1002@spce.test>;ip=127.126.0.1;port=\d+;primary=4311002',
+      'P-NGCP-Callee-Info: <sip:testuser1003@spce.test>;ip=127.0.0.1;port=5060;primary=4311003',
+      'P-D-Uri: sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060',
+      'Content-Type: application/sdp',
+      'Contact: <sip:127.0.0.1:508[08];transport=udp>',
+      'Content-Length:\s+\d+',
     ]

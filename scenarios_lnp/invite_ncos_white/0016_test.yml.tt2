@@ -1,44 +1,28 @@
 flow:
-  - start|DEFAULT_ROUTE:
+  - start|DEFAULT_ONREPLY:
+  - start|REPLY_ROUTE_NAT:
   - start|ROUTE_ENTRY:
   - return|ROUTE_ENTRY:
-  - start|ROUTE_NET_INFO:
-  - return|ROUTE_NET_INFO:
-  - start|ROUTE_CHECK_TEL_URI:
-  - return|ROUTE_CHECK_TEL_URI:
-  - start|ROUTE_PRX_REQUEST:
-  - start|ROUTE_INITVARS:
-  - return|ROUTE_INITVARS:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
   - start|ROUTE_PREPARE_UA:
   - return|ROUTE_PREPARE_UA:
-  - start|ROUTE_RESTORE_CLUSTERSET:
-  - return|ROUTE_RESTORE_CLUSTERSET:
-  - start|ROUTE_WITHINDLG_RTPENGINE:
-  - return|ROUTE_WITHINDLG_RTPENGINE:
-  - start|ROUTE_OUTBOUND:
-  - start|DEFAULT_SEND:
-  - exit|DEFAULT_SEND:
-  - exit|DEFAULT_SEND:
+  - start|REPLY_ROUTE_NAT_CONTINUE:
   - start|ROUTE_EXIT:
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^ACK sip:127.0.0.1:5080(;prxroute=1)? SIP/2.0'
-  - 'Contact: sip:testuser1002@'
-  - 'CSeq: 2 ACK'
-  - 'Max-Forwards: 69'
+  - '^SIP/2.0 200 OK'
+  - 'CSeq: 3 BYE'
   - 'Content-Length: 0'
-  - 'From: <sip:testuser1002@'
-  - 'To: <sip:43999200@'
-
+  - 'From: <sip:4311002@'
+  - 'To: <sip:43999100@'
 sip_out:
   - [
-      '^ACK sip:127.0.0.1:5080(;prxroute=1)? SIP/2.0',
-      'Contact: sip:testuser1002@',
-      'CSeq: 2 ACK',
-      'Max-Forwards: 68',
+      '^SIP/2.0 200 OK',
+      'CSeq: 3 BYE',
       'Content-Length: 0',
-      'From: <sip:4311002@',
-      'To: <sip:43999200@'
+      'From: <sip:testuser1002@',
+      'To: <sip:43999100@'
     ]

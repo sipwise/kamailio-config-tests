@@ -1,202 +1,50 @@
 flow:
-  - start|DEFAULT_ONREPLY:
-  - start|REPLY_ROUTE_NAT:
+  - start|DEFAULT_ROUTE:
   - start|ROUTE_ENTRY:
   - return|ROUTE_ENTRY:
-  - start|ROUTE_APPLY_HEADER_RULES:
-  - return|ROUTE_APPLY_HEADER_RULES:
-  - start|ROUTE_PREPARE_UA:
-  - return|ROUTE_PREPARE_UA:
-  - start|REPLY_ROUTE_NAT_CONTINUE:
-  - start|ROUTE_EXIT:
-  - start|ROUTE_RUNTIME:
-  - return|ROUTE_RUNTIME:
-  - exit|ROUTE_EXIT:
-  - start|FAILURE_ROUTE_LOCAL:
-  - start|ROUTE_INITVARS:
-  - return|ROUTE_INITVARS:
-  - start|ROUTE_STOP_RTPPROXY_BRANCH:
-  - start|ROUTE_RESTORE_CLUSTERSET:
-  - return|ROUTE_RESTORE_CLUSTERSET:
-  - return|ROUTE_STOP_RTPPROXY_BRANCH:
-  - start|ROUTE_SET_HIH_CF:
-  - return|ROUTE_SET_HIH_CF:
-  - start|ROUTE_LOAD_CALLER_PREF:
-  - start|ROUTE_CLEAR_CALLER_PREF:
-  - return|ROUTE_CLEAR_CALLER_PREF:
-  - start|ROUTE_CHECK_UA:
-  - return|ROUTE_CHECK_UA:
-  - start|ROUTE_LOAD_CALLER_CONTRACT_PREF:
-  - return|ROUTE_LOAD_CALLER_CONTRACT_PREF:
-  - return|ROUTE_LOAD_CALLER_PREF:
-  - start|ROUTE_FIND_CALLEE:
-  - start|ROUTE_CLEAR_CALLEE_PREF:
-  - return|ROUTE_CLEAR_CALLEE_PREF:
-  - start|ROUTE_LOAD_CALLEE_PREF:
-  - start|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
-  - return|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
-  - start|ROUTE_SET_CALLEE_DIALOG:
-  - start|ROUTE_CNT_DLG_CHECK:
-  - return|ROUTE_CNT_DLG_CHECK:
-  - return|ROUTE_SET_CALLEE_DIALOG:
-      $avp(lua_dlg_profile): [
-          "accountout:[% customer_test.id %]",
-          "userout:[% spce_test.testuser1002.uuid %]",
-          "account:[% customer_test.id %]",
-          "user:[% spce_test.testuser1002.uuid %]",
-          "totalaccountout:[% customer_test.id %]",
-          "totaluserout:[% spce_test.testuser1002.uuid %]",
-          "totalaccount:[% customer_test.id %]",
-          "totaluser:[% spce_test.testuser1002.uuid %]",
-          "local",
-          "totalaccount:[% customer_test.id %]",
-          "totaluser:[% spce_test.testuser1003.uuid %]",
-          "total",
-          "account:[% customer_test.id %]",
-          "user:[% spce_test.testuser1003.uuid %]"
-        ]
-  - start|ROUTE_BLOCK_IN:
-  - return|ROUTE_BLOCK_IN:
-  - start|ROUTE_ORDER_CF_MAP_ID:
-  - return|ROUTE_ORDER_CF_MAP_ID:
-  - return|ROUTE_LOAD_CALLEE_PREF:
-  - start|ROUTE_NCOS_CHECK:
-  - start|ROUTE_NCOS:
-  - return|ROUTE_NCOS:
-  - start|ROUTE_NCOS:
-  - return|ROUTE_NCOS:
-  - start|ROUTE_NCOS:
-  - return|ROUTE_NCOS:
-  - start|ROUTE_NCOS:
-  - return|ROUTE_NCOS:
-  - return|ROUTE_NCOS_CHECK:
-  - start|ROUTE_BLOCK_OUT:
-  - return|ROUTE_BLOCK_OUT:
-  - start|ROUTE_CHECK_PBX:
-  - return|ROUTE_CHECK_PBX:
-  - start|ROUTE_CALLEE_DISPATCH:
-  - start|ROUTE_INVITE_TO_INT:
-  - start|ROUTE_APPLY_HEADER_RULES:
-  - return|ROUTE_APPLY_HEADER_RULES:
-  - start|ROUTE_CF_CFU:
-  - return|ROUTE_CF_CFU:
-  - start|ROUTE_CNT_DLG_CHECK:
-  - return|ROUTE_CNT_DLG_CHECK:
-  - start|ROUTE_OUTBOUND:
-  - start|ROUTE_ACC_CALLER:
-  - start|ROUTE_SET_ACC_CALLER_CALL_COUNTERS:
-  - return|ROUTE_SET_ACC_CALLER_CALL_COUNTERS:
-  - return|ROUTE_ACC_CALLER:
-  - start|ROUTE_ACC_CALLEE:
-  - start|ROUTE_SET_ACC_CALLEE_CALL_COUNTERS:
-  - return|ROUTE_SET_ACC_CALLEE_CALL_COUNTERS:
-  - return|ROUTE_ACC_CALLEE:
-  - start|ROUTE_ADD_AOC_HEADER:
-  - return|ROUTE_ADD_AOC_HEADER:
-  - start|BRANCH_ROUTE_SBC:
-  - start|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
-  - return|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
-  - start|ROUTE_SET_CALLEE_DIALOG:
-  - start|ROUTE_CNT_DLG_CHECK:
-  - return|ROUTE_CNT_DLG_CHECK:
-  - return|ROUTE_SET_CALLEE_DIALOG:
-  - start|ROUTE_SET_BRANCH_HDRS:
-  - start|ROUTE_PREPARE_UA:
-  - return|ROUTE_PREPARE_UA:
-  - return|ROUTE_SET_BRANCH_HDRS:
-  - start|ROUTE_SET_RUSER:
-  - return|ROUTE_SET_RUSER:
-  - start|ROUTE_BRANCH_ACC_RTP:
-  - return|ROUTE_BRANCH_ACC_RTP:
-  - start|ROUTE_FILTER_PRACK:
-  - return|ROUTE_FILTER_PRACK:
-  - start|ROUTE_PREPARE_SST:
-  - return|ROUTE_PREPARE_SST:
-  - start|ROUTE_PREPARE_MOH:
-  - return|ROUTE_PREPARE_MOH:
-  - start|ROUTE_SET_CALLER_CLI:
-  - start|ROUTE_PREPARE_CALLER_CLI:
-  - return|ROUTE_PREPARE_CALLER_CLI:
-  - start|ROUTE_PREPARE_CALLER_CLI:
-  - return|ROUTE_PREPARE_CALLER_CLI:
-  - start|ROUTE_PREPARE_CALLER_CLI:
-  - return|ROUTE_PREPARE_CALLER_CLI:
-  - start|ROUTE_PREPARE_CALLER_CLI:
-  - return|ROUTE_PREPARE_CALLER_CLI:
-  - start|ROUTE_PREPARE_CALLER_CLI:
-  - return|ROUTE_PREPARE_CALLER_CLI:
-  - start|ROUTE_PREPARE_CALLER_CLI:
-  - return|ROUTE_PREPARE_CALLER_CLI:
-  - return|ROUTE_SET_CALLER_CLI:
-  - start|ROUTE_SET_CALLEE:
-  - return|ROUTE_SET_CALLEE:
-  - start|ROUTE_ADD_CALLINFO:
-  - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
-  - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
-  - start|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
-  - return|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
-  - return|ROUTE_ADD_CALLINFO:
-  - start|ROUTE_APPLY_HEADER_RULES:
-  - return|ROUTE_APPLY_HEADER_RULES:
-  - return|BRANCH_ROUTE_SBC:
-  - start|ROUTE_DROP:
-  - start|ROUTE_RUNTIME:
-  - return|ROUTE_RUNTIME:
-  - exit|ROUTE_DROP:
+  - start|ROUTE_LEG_B:
   - start|DEFAULT_SEND:
   - exit|DEFAULT_SEND:
-  - start|ROUTE_OUTBOUND:
+  - exit|DEFAULT_SEND:
   - start|ROUTE_EXIT:
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
-      $avp(lua_dlg_profile): [
-        "accountout:[% customer_test.id %]",
-        "userout:[% spce_test.testuser1002.uuid %]",
-        "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1002.uuid %]",
-        "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% spce_test.testuser1002.uuid %]",
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1002.uuid %]",
-        "local",
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1003.uuid %]",
-        "total",
-        "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1003.uuid %]"
-      ]
-  - exit|ROUTE_EXIT:
 sip_in:
-  - '^SIP/2.0 302 Moved Temporarily'
-  - 'From: <sip:4311002@'
-  - 'To: <sip:testuser1003@'
-  - 'CSeq: 2 INVITE'
+  - 'INVITE sip:testuser1003@127.1.0.1:\d+ SIP/2.0'
+  - 'From: <sip:4311002@spce.test>;tag=[\w-]+'
+  - 'To: <sip:testuser1003@spce.test>'
+  - 'CSeq: \d+ INVITE'
+  - 'P-LB-Uptime: \d+'
+  - 'P-Asserted-Identity: <sip:4311002@spce.test>'
+  - 'P-Caller-UUID: [% spce_test.testuser1002.uuid %]'
+  - 'P-NGCP-Caller-Info: <sip:testuser1002@spce.test>;ip=127.126.0.1;port=\d+;primary=4311002'
+  - 'P-NGCP-Callee-Info: <sip:testuser1003@spce.test>;ip=127.0.0.1;port=5060;primary=4311003'
+  - 'P-D-Uri: sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060'
+  - 'Content-Type: application/sdp'
+  - 'Contact: <sip:127.0.0.1:508[08];transport=udp>'
+  - 'Content-Length:\s+\d+'
 sip_out:
   - [
-      '^ACK sip:testuser1003@',
-      'From: <sip:4311002@',
-      'To: <sip:testuser1003@',
-      'CSeq: 2 ACK',
-      'Max-Forwards: 68',
-      'Content-Length: 0'
+      'SIP/2.0 100 Trying',
+      'From: <sip:4311002@spce.test>;tag=[\w-]+',
+      'To: <sip:testuser1003@spce.test>',
+      'CSeq: \d+ INVITE',
+      'Server: Sipwise NGCP Proxy',
+      'Content-Length: 0',
     ]
   - [
-      '^INVITE sip:testuser1004@',
-      'From: <sip:4311002@',
-      'To: <sip:testuser1003@',
-      'CSeq: 2 INVITE',
-      'Contact: sip:testuser1002@',
-      'Max-Forwards: 68',
+      'INVITE sip:testuser1003@127.1.0.1:\d+ SIP/2.0',
+      'From: <sip:4311002@spce.test>;tag=[\w-]+',
+      'To: <sip:testuser1003@spce.test>',
+      'CSeq: \d+ INVITE',
+      'P-LB-Uptime: \d+',
+      'P-Asserted-Identity: <sip:4311002@spce.test>',
+      'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
+      'P-NGCP-Caller-Info: <sip:testuser1002@spce.test>;ip=127.126.0.1;port=\d+;primary=4311002',
+      'P-NGCP-Callee-Info: <sip:testuser1003@spce.test>;ip=127.0.0.1;port=5060;primary=4311003',
+      'P-D-Uri: sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060',
       'Content-Type: application/sdp',
-      'P-Caller-UUID: [% spce_test.testuser1003.uuid %]',
-      'P-Callee-UUID: [% spce_test.testuser1004.uuid %]',
-      'P-Asserted-Identity: <sip:4311002@',
-      'P-Called-Party-ID: <sip:testuser1004@',
-      'P-App-Name: sbc',
-      'P-NGCP-Caller-Info: <sip:testuser1002@',
-      'P-NGCP-Callee-Info: <sip:testuser1004@',
-      'Diversion: <sip:testuser1003@',
-      'History-Info: <sip:testuser1003@.*;user=phone\?Reason=SIP%3bcause%3d302>;index=1',
-      'History-Info: <sip:testuser1004@.*;user=phone;cause=302>;index=1.1'
+      'Contact: <sip:127.0.0.1:508[08];transport=udp>',
+      'Content-Length:\s+\d+',
     ]

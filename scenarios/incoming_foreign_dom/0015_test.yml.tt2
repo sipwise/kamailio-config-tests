@@ -1,0 +1,38 @@
+flow:
+  - start|DEFAULT_ONREPLY:
+  - start|REPLY_ROUTE_NAT:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - start|ROUTE_PREPARE_UA:
+  - return|ROUTE_PREPARE_UA:
+  - start|REPLY_ROUTE_NAT_CONTINUE:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+sip_in:
+  - 'SIP/2.0 200 OK'
+  - 'From: <sip:external@external.test>;tag=[\w-]+'
+  - 'To: <sip:testuser1003@spce.test>;tag=[\w-]+'
+  - 'CSeq: \d+ BYE'
+  - 'Contact: <sip:127.1.0.1:\d+;transport=UDP>'
+  - 'Content-Length:     0'
+  - 'P-NGCP-Src-Ip: 127.1.0.1'
+  - 'P-NGCP-Src-Port: \d+'
+  - 'P-NGCP-Src-Proto: udp'
+  - 'P-NGCP-Src-Af: 4'
+sip_out:
+  - [
+      'SIP/2.0 200 OK',
+      'From: <sip:external@external.test>;tag=[\w-]+',
+      'To: <sip:testuser1003@spce.test>;tag=[\w-]+',
+      'CSeq: \d+ BYE',
+      'Contact: <sip:127.1.0.1:\d+;transport=UDP>',
+      'Content-Length:     0',
+      'P-NGCP-Src-Ip: 127.1.0.1',
+      'P-NGCP-Src-Port: \d+',
+      'P-NGCP-Src-Proto: udp',
+      'P-NGCP-Src-Af: 4',
+    ]

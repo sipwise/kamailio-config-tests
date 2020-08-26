@@ -2,24 +2,7 @@ flow:
   - start|DEFAULT_ROUTE:
   - start|ROUTE_ENTRY:
   - return|ROUTE_ENTRY:
-  - start|ROUTE_NET_INFO:
-  - return|ROUTE_NET_INFO:
-  - start|ROUTE_CHECK_TEL_URI:
-  - return|ROUTE_CHECK_TEL_URI:
-  - start|ROUTE_PRX_REQUEST:
-  - start|ROUTE_INITVARS:
-  - return|ROUTE_INITVARS:
-  - start|dialog:end:
-  - return|dialog:end:
-      $avp(lua_dlg_profile): None
-  - return|dialog:end:
-  - start|ROUTE_STOP_RTPPROXY:
-  - start|ROUTE_RESTORE_CLUSTERSET:
-  - return|ROUTE_RESTORE_CLUSTERSET:
-  - return|ROUTE_STOP_RTPPROXY:
-  - start|ROUTE_PREPARE_UA:
-  - return|ROUTE_PREPARE_UA:
-  - start|ROUTE_OUTBOUND:
+  - start|ROUTE_LEG_B:
   - start|DEFAULT_SEND:
   - exit|DEFAULT_SEND:
   - exit|DEFAULT_SEND:
@@ -28,28 +11,48 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^BYE sip:127.0.0.1:5080(;prxroute=1)? SIP/2.0'
-  - 'Contact: sip:testuser1002@'
-  - 'CSeq: 3 BYE'
-  - 'Max-Forwards: 69'
-  - 'Content-Length: 0'
-  - 'From: <sip:testuser1002@'
-  - 'To: <sip:testuser1003@'
-
+  - 'INVITE sip:testuser1004@127.1.0.2:\d+;cause=302 SIP/2.0'
+  - 'From: <sip:4311002@spce.test>;tag=[\w-]+'
+  - 'To: <sip:testuser1004@spce.test>'
+  - 'CSeq: \d+ INVITE'
+  - 'P-LB-Uptime: \d+'
+  - 'P-Asserted-Identity: <sip:4311002@spce.test>'
+  - 'History-Info: <sip:testuser1003@spce\.test:5060;user=phone\?Reason=SIP%3bcause%3d302>;index=1'
+  - 'P-Caller-UUID: [% spce_test.testuser1003.uuid %]'
+  - 'Diversion: <sip:testuser1003@spce.test>;privacy=off;counter=1'
+  - 'History-Info: <sip:testuser1004@spce\.test:5060;user=phone;cause=302>;index=1\.1'
+  - 'P-NGCP-Caller-Info: <sip:testuser1002@spce.test>;ip=127.126.0.1;port=\d+;primary=4311003'
+  - 'P-NGCP-Forward-Info: <sip:testuser1004@spce.test>;ip=127.0.0.1;port=5060;primary=4311004'
+  - 'P-NGCP-Callee-Info: <sip:testuser1004@127.1.0.2>;ip=127.0.0.1;port=5060'
+  - 'P-D-Uri: sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060'
+  - 'Content-Type: application/sdp'
+  - 'Contact: <sip:127.0.0.1:508[08];transport=udp>'
+  - 'Content-Length:\s+\d+'
 sip_out:
   - [
-      '^SIP/2.0 100 Trying',
-      'CSeq: 3 BYE',
+      'SIP/2.0 100 Trying',
+      'From: <sip:4311002@spce.test>;tag=[\w-]+',
+      'To: <sip:testuser1004@spce.test>',
+      'CSeq: \d+ INVITE',
+      'Server: Sipwise NGCP Proxy',
       'Content-Length: 0',
-      'From: <sip:testuser1002@',
-      'To: <sip:testuser1003@'
     ]
   - [
-      '^BYE sip:127.0.0.1:5080(;prxroute=1)? SIP/2.0',
-      'Contact: sip:testuser1002@',
-      'CSeq: 3 BYE',
-      'Max-Forwards: 68',
-      'Content-Length: 0',
-      'From: <sip:4311002@',
-      'To: <sip:testuser1003@'
+      'INVITE sip:testuser1004@127.1.0.2:\d+;cause=302 SIP/2.0',
+      'From: <sip:4311002@spce.test>;tag=[\w-]+',
+      'To: <sip:testuser1004@spce.test>',
+      'CSeq: \d+ INVITE',
+      'P-LB-Uptime: \d+',
+      'P-Asserted-Identity: <sip:4311002@spce.test>',
+      'P-Caller-UUID: [% spce_test.testuser1003.uuid %]',
+      'Diversion: <sip:testuser1003@spce.test>;privacy=off;counter=1',
+      'History-Info: <sip:testuser1003@spce\.test:5060;user=phone\?Reason=SIP%3bcause%3d302>;index=1',
+      'History-Info: <sip:testuser1004@spce\.test:5060;user=phone;cause=302>;index=1\.1',
+      'P-NGCP-Caller-Info: <sip:testuser1002@spce.test>;ip=127.126.0.1;port=\d+;primary=4311003',
+      'P-NGCP-Forward-Info: <sip:testuser1004@spce.test>;ip=127.0.0.1;port=5060;primary=4311004',
+      'P-NGCP-Callee-Info: <sip:testuser1004@127.1.0.2>;ip=127.0.0.1;port=5060',
+      'P-D-Uri: sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060',
+      'Content-Type: application/sdp',
+      'Contact: <sip:127.0.0.1:508[08];transport=udp>',
+      'Content-Length:\s+\d+',
     ]

@@ -1,46 +1,45 @@
 flow:
-  - start|DEFAULT_ROUTE:
+  - start|DEFAULT_ONREPLY:
+  - start|REPLY_ROUTE_NAT:
   - start|ROUTE_ENTRY:
   - return|ROUTE_ENTRY:
-  - start|ROUTE_NET_INFO:
-  - return|ROUTE_NET_INFO:
-  - start|ROUTE_CHECK_TEL_URI:
-  - return|ROUTE_CHECK_TEL_URI:
-  - start|ROUTE_PRX_REQUEST:
-  - start|ROUTE_INITVARS:
-  - return|ROUTE_INITVARS:
-  - start|ROUTE_INVITE:
-  - start|ROUTE_LOAD_CALLEE_DOMAIN_PREF:
-  - start|ROUTE_CLEAR_CALLEE_DOMAIN_PREF:
-  - return|ROUTE_CLEAR_CALLEE_DOMAIN_PREF:
-  - return|ROUTE_LOAD_CALLEE_DOMAIN_PREF:
-  - start|ROUTE_FIND_CALLER:
-  - start|ROUTE_AUTH:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - start|ROUTE_PREPARE_UA:
+  - return|ROUTE_PREPARE_UA:
+  - start|REPLY_ROUTE_RTPENGINE:
+  - return|REPLY_ROUTE_RTPENGINE:
+  - start|REPLY_ROUTE_NAT_CONTINUE:
   - start|ROUTE_EXIT:
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:
-  - exit|ROUTE_EXIT:
+  - start|dialog:start:
+  - return|dialog:start:
+      $avp(lua_dlg_profile): [
+        "accountout:[% customer_test.id %]",
+        "userout:[% spce_test.testuser1002.uuid %]",
+        "account:[% customer_test.id %]",
+        "user:[% spce_test.testuser1002.uuid %]",
+        "totalaccountout:[% customer_test.id %]",
+        "totaluserout:[% spce_test.testuser1002.uuid %]",
+        "totalaccount:[% customer_test.id %]",
+        "totaluser:[% spce_test.testuser1002.uuid %]",
+        "total",
+        "relay",
+        "peerout:[% peer_00_host0.id %]",
+        "peer:[% peer_00_host0.id %]",
+        "outgoing"
+      ]
+  - return|dialog:start:
 sip_in:
-  - '^INVITE sip:43999200@'
-  - 'From: <sip:testuser1002'
-  - 'To: <sip:43999200@'
-  - 'Max-Forwards: 69'
-  - 'Content-Type: application/sdp'
-  - 'P-NGCP-Src-Ip: 127.126.0.2'
-  - 'P-NGCP-Src-Port: \d+'
-  - 'P-NGCP-Src-Proto: udp'
-  - 'P-NGCP-Src-Af: 4'
-  - 'P-Sock-Info: udp:127.0.0.1:5060'
+  - '^SIP/2.0 200 OK'
+  - 'CSeq: 2 INVITE'
+  - 'From: <sip:4311002@'
+  - 'To: <sip:43999100@'
 sip_out:
   - [
-      '^SIP/2.0 100 Trying',
-      'CSeq: 1 INVITE',
-      'P-Out-Socket: udp:127.0.0.1:5060',
-      'P-NGCP-Auth-IP: 127.126.0.2',
-      'Content-Length: 0'
-    ]
-  - [
-      '^SIP/2.0 407 Proxy Authentication Required',
-      'CSeq: 1 INVITE',
-      'Content-Length: 0'
+      '^SIP/2.0 200 OK',
+      'CSeq: 2 INVITE',
+      'From: <sip:testuser1002@',
+      'To: <sip:43999100@',
     ]

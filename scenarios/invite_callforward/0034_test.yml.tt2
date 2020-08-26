@@ -1,50 +1,50 @@
 flow:
-  - start|DEFAULT_ONREPLY:
-  - start|REPLY_ROUTE_NAT:
+  - start|DEFAULT_ROUTE:
   - start|ROUTE_ENTRY:
   - return|ROUTE_ENTRY:
-  - start|ROUTE_APPLY_HEADER_RULES:
-  - return|ROUTE_APPLY_HEADER_RULES:
-  - start|ROUTE_PREPARE_UA:
-  - return|ROUTE_PREPARE_UA:
-  - start|REPLY_ROUTE_RTPENGINE:
-  - return|REPLY_ROUTE_RTPENGINE:
-  - start|REPLY_ROUTE_NAT_CONTINUE:
+  - start|ROUTE_LEG_B:
+  - start|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
   - start|ROUTE_EXIT:
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:
-  - start|dialog:start:
-  - return|dialog:start:
-      $avp(lua_dlg_profile): [
-        "accountout:[% customer_test.id %]",
-        "userout:[% spce_test.testuser1002.uuid %]",
-        "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1002.uuid %]",
-        "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% spce_test.testuser1002.uuid %]",
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1002.uuid %]",
-        "local",
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1004.uuid %]",
-        "total",
-        "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1004.uuid %]"
-      ]
-  - return|dialog:start:
+  - exit|ROUTE_EXIT:
 sip_in:
-  - '^SIP/2.0 200 OK'
-  - 'CSeq: 2 INVITE'
-  - 'Content-Length: \d+'
+  - 'INVITE sip:testuser1004@127.1.0.4:\d+ SIP/2.0'
+  - 'From: <sip:4311002@spce.test>;tag=[\w-]+'
+  - 'To: <sip:testuser1004@spce.test>'
+  - 'CSeq: \d+ INVITE'
+  - 'P-LB-Uptime: \d+'
+  - 'P-Asserted-Identity: <sip:4311002@spce.test>'
+  - 'P-Caller-UUID: [% spce_test.testuser1002.uuid %]'
+  - 'P-NGCP-Caller-Info: <sip:testuser1002@spce.test>;ip=127.126.0.1;port=\d+;primary=4311002'
+  - 'P-NGCP-Callee-Info: <sip:testuser1004@spce.test>;ip=127.0.0.1;port=5060;primary=4311004'
+  - 'P-D-Uri: sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060'
   - 'Content-Type: application/sdp'
-  - 'From: <sip:testuser1002@'
-  - 'To: <sip:testuser1004@'
+  - 'Content-Length:\s+\d+'
+  - 'Contact: <sip:127.0.0.1:508[08];transport=udp>'
 sip_out:
   - [
-      '^SIP/2.0 200 OK',
-      'CSeq: 2 INVITE',
-      'Content-Length: \d+',
+      'SIP/2.0 100 Trying',
+      'From: <sip:4311002@spce.test>;tag=[\w-]+',
+      'To: <sip:testuser1004@spce.test>',
+      'CSeq: \d+ INVITE',
+      'Server: Sipwise NGCP Proxy',
+      'Content-Length: 0',
+    ]
+  - [
+      'INVITE sip:testuser1004@127.1.0.4:\d+ SIP/2.0',
+      'From: <sip:4311002@spce.test>;tag=[\w-]+',
+      'To: <sip:testuser1004@spce.test>',
+      'CSeq: \d+ INVITE',
+      'P-LB-Uptime: \d+',
+      'P-Asserted-Identity: <sip:4311002@spce.test>',
+      'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
+      'P-NGCP-Caller-Info: <sip:testuser1002@spce.test>;ip=127.126.0.1;port=\d+;primary=4311002',
+      'P-NGCP-Callee-Info: <sip:testuser1004@spce.test>;ip=127.0.0.1;port=5060;primary=4311004',
+      'P-D-Uri: sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060',
       'Content-Type: application/sdp',
-      'From: <sip:testuser1002@',
-      'To: <sip:testuser1004@'
+      'Content-Length:\s+\d+',
+      'Contact: <sip:127.0.0.1:508[08];transport=udp>',
     ]

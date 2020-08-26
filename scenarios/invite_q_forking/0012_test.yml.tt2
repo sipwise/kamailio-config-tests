@@ -12,22 +12,11 @@ flow:
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
-  - exit|ROUTE_EXIT:
 sip_in:
-  - '^SIP/2.0 486 Busy Here'
+  - '^SIP/2.0 180 Ringing'
   - 'CSeq: 2 INVITE'
-  - 'From: <sip:4311002@'
-  - 'To: <sip:testuser1003@'
 sip_out:
   - [
-      '^ACK sip:testuser1003@127.1.0.2',
-      'CSeq: 2 ACK',
-      'From: <sip:4311002@',
-      'To: <sip:testuser1003@'
-    ]
-  - [
-      '^CANCEL sip:testuser1003@127.1.0.1',
-      'CSeq: 2 CANCEL',
-      'From: <sip:4311002@',
-      'To: <sip:testuser1003@'
+      '^SIP/2.0 180 Ringing',
+      'CSeq: 2 INVITE',
     ]

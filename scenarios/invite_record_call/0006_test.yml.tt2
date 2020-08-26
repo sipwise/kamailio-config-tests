@@ -15,10 +15,21 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^SIP/2.0 183 Progress'
-  - 'CSeq: 2 INVITE'
+  - 'SIP/2.0 183 Progress'
+  - 'From: <sip:4311002@spce.test>;tag=[\w-]+'
+  - 'To: <sip:testuser1003@spce.test>;tag=[\w-]+'
+  - 'CSeq: \d+ INVITE'
+  - 'Contact: <sip:127.0.0.1:508[08];transport=udp>'
+  - 'Content-Type: application/sdp'
+  - 'Content-Length:\s+\d+'
 sip_out:
   - [
-      '^SIP/2.0 183 Progress',
-      'CSeq: 2 INVITE',
+      'SIP/2.0 183 Progress',
+      'From: <sip:testuser1002@spce.test>;tag=[\w-]+',
+      'To: <sip:testuser1003@spce.test>;tag=[\w-]+',
+      'CSeq: \d+ INVITE',
+      'Contact: <sip:127.0.0.1:508[08];transport=udp>',
+      'Content-Type: application/sdp',
+      'Content-Length:\s+\d+',
+      'P-Out-Socket: udp:127.0.0.1:5060',
     ]

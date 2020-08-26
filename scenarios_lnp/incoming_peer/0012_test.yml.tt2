@@ -1,0 +1,35 @@
+flow:
+  - start|DEFAULT_ONREPLY:
+  - start|REPLY_ROUTE_CF_LOOP:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - start|ROUTE_PREPARE_UA:
+  - return|ROUTE_PREPARE_UA:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - start|dialog:start:
+  - return|dialog:start:
+      $avp(lua_dlg_profile): [
+        "totalaccount:[% customer_test.id %]",
+        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "account:[% customer_test.id %]",
+        "user:[% spce_test.testuser1003.uuid %]",
+        "peer:[% peer_00_host0.id %]",
+        "total"
+      ]
+  - return|dialog:start:
+sip_in:
+  - '^SIP/2.0 200 OK'
+  - 'CSeq: 1 INVITE'
+  - 'From: <sip:004321001@'
+  - 'To: <sip:4311001@'
+sip_out:
+  - [
+      '^SIP/2.0 200 OK',
+      'CSeq: 1 INVITE',
+      'From: <sip:004321001@',
+      'To: <sip:4311001@',
+    ]

@@ -1,0 +1,50 @@
+flow:
+  - start|DEFAULT_ROUTE:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_LEG_B:
+  - start|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+sip_in:
+  - 'INVITE sip:testuser1003@127.1.0.3:\d+ SIP/2.0'
+  - 'From: <sip:4311002@spce.test>;tag=[\w-]+'
+  - 'To: <sip:testuser1003@spce.test>'
+  - 'CSeq: \d+ INVITE'
+  - 'P-Caller-UUID: [% spce_test.testuser1001.uuid %]'
+  - 'P-NGCP-Caller-Info: <sip:testuser1001@spce.test>;ip=127.0.0.1;port=508[08];primary=4311001'
+  - 'P-NGCP-Forward-Info: <sip:testuser1001@spce.test>;ip=127.0.0.1;port=508[08];primary=4311001'
+  - 'P-NGCP-Callee-Info: <sip:4311003@spce.test>;ip=127.0.0.1;port=5060;primary=4311003'
+  - 'P-Asserted-Identity: <sip:4311002@spce.test>'
+  - 'P-D-Uri: sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060'
+  - 'Content-Type: application/sdp'
+  - 'Contact: <sip:127.0.0.1:508[08];transport=udp>'
+  - 'Content-Length:\s+\d+'
+sip_out:
+  - [
+      'SIP/2.0 100 Trying',
+      'From: <sip:4311002@spce.test>;tag=[\w-]+',
+      'To: <sip:testuser1003@spce.test>',
+      'CSeq: \d+ INVITE',
+      'Server: Sipwise NGCP Proxy',
+      'Content-Length: 0',
+    ]
+  - [
+      'INVITE sip:testuser1003@127.1.0.3:\d+ SIP/2.0',
+      'From: <sip:4311002@spce.test>;tag=[\w-]+',
+      'To: <sip:testuser1003@spce.test>',
+      'CSeq: \d+ INVITE',
+      'P-Caller-UUID: [% spce_test.testuser1001.uuid %]',
+      'P-NGCP-Caller-Info: <sip:testuser1001@spce.test>;ip=127.0.0.1;port=508[08];primary=4311001',
+      'P-NGCP-Forward-Info: <sip:testuser1001@spce.test>;ip=127.0.0.1;port=508[08];primary=4311001',
+      'P-NGCP-Callee-Info: <sip:4311003@spce.test>;ip=127.0.0.1;port=5060;primary=4311003',
+      'P-Asserted-Identity: <sip:4311002@spce.test>',
+      'P-D-Uri: sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060',
+      'Content-Type: application/sdp',
+      'Contact: <sip:127.0.0.1:508[08];transport=udp>',
+      'Content-Length:\s+\d+',
+    ]
