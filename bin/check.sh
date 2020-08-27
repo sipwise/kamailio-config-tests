@@ -32,6 +32,7 @@ GRAPH_FAIL=false
 JSON_KAM=false
 CDR=false
 ERR_FLAG=0
+RETRANS_SIZE=2
 
 
 # sipwise password for mysql connections
@@ -143,6 +144,23 @@ check_retrans_prev() {
 # $1 unit test yml
 # $2 kamailio msg parsed to yml
 # $3 destination tap filename
+# $4 number of messages to check before and after
+check_retrans_block() {
+  for i in $(seq "${4:-2}") ; do
+    if check_retrans_next "$1" "$2" "$3" "$i" ; then
+      echo " ok"
+      return 0
+    elif check_retrans_prev "$1" "$2" "$3" "$i" ; then
+      echo " ok"
+      return 0
+    fi
+  done
+  return 1
+}
+
+# $1 unit test yml
+# $2 kamailio msg parsed to yml
+# $3 destination tap filename
 check_test() {
   local dest
   local kam_type="--yaml"
@@ -173,19 +191,7 @@ check_test() {
   echo " NOT ok"
 
   if "${FIX_RETRANS}" ; then
-    if check_retrans_next "$1" ${kam_type} "$3" 1 ; then
-      echo " ok"
-      return 0
-    elif check_retrans_prev "$1" ${kam_type} "$3" 1 ; then
-      echo " ok"
-      return 0
-    elif check_retrans_next "$1" ${kam_type} "$3" 2 ; then
-      echo " ok"
-      return 0
-    elif check_retrans_prev "$1" ${kam_type} "$3" 2 ; then
-      echo " ok"
-      return 0
-    fi
+    check_retrans_block "$1" "${kam_type}" "$3" "${RETRANS_SIZE}" && return 0
   fi
 
   ERR_FLAG=1
@@ -726,7 +732,7 @@ usage() {
   echo -e "\tcheck_name. Scenario name to check. This is the name of the directory on GROUP dir."
 }
 
-while getopts 'hCd:p:Rs:DTPGgrcJKm' opt; do
+while getopts 'hCd:p:Rs:DTPGgrcJKmw:' opt; do
   case $opt in
     h) usage; exit 0;;
     C) SKIP=true;;
@@ -744,6 +750,8 @@ while getopts 'hCd:p:Rs:DTPGgrcJKm' opt; do
     J) JSON_KAM=true;;
     m) MEMDBG=true;;
     c) CDR=true;;
+    w) RETRANS_SIZE=${OPTARG};;
+    *) usage; exit 1;;
   esac
 done
 shift $((OPTIND - 1))

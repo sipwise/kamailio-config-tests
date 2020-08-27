@@ -17,6 +17,7 @@ usage() {
   echo "-P parse only will disable test"
   echo "-T test only will disable parse"
   echo "-r fix retransmission issues"
+  echo "-R choose how many messages before and after to check"
   echo "-c enable cdr validation"
   echo "-x set GROUP scenario. Default: scenarios"
   echo "BASE_DIR:${BASE_DIR}"
@@ -57,7 +58,7 @@ get_scenarios() {
   fi
 }
 
-while getopts 'hgGp:TPrcx:' opt; do
+while getopts 'hgGp:TPrR:cx:' opt; do
   case $opt in
     h) usage; exit 0;;
     G) GRAPH="-G";;
@@ -65,6 +66,7 @@ while getopts 'hgGp:TPrcx:' opt; do
     P) OPTS="-T";;
     T) OPTS="-P";;
     r) RETRANS="-r";;
+    R) RETRANS="-r -w ${OPTARG}";;
     c) CDR="-c";;
     p) PROFILE=${OPTARG};;
     x) GROUP=${OPTARG};;
