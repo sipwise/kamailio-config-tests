@@ -1,3 +1,25 @@
+kamailio-config-tests (9.1.0.0+0~mr9.1.0.0) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [0b8d118] TT#81700 bin/generate_test_tt2.pl: fix some common subst
+  * [a5b78d4] TT#84555 disable failing scenarios from scenarios_pbx
+  * [7af0ea1] TT#81700 run_tests.sh: -k option to capture pcap per scenario
+  * [e123b0b] Revert "TT#84599 scenarios_pbx: add more test to avoid nightly errors"
+  * [4c3826e] Revert "TT#87502 Update pid_watcher to check sems-b2b instead of ngcp-sems and sems-pbx"
+  * [9cfffe6] TT#85300 create_peers.pl: use try/catch when creating rules
+  * [c57dca2] TT#81700 fix detection of profile on CE
+  * [c5362fa] TT#81700 bin/check.sh: add option to control RETRANS_SIZE
+  * [0f62d06] TT#81700 bin/reorder_tests_tt2.sh
+  * [a6fd138] TT#71804 Route B-leg of the call through kamailio proxy
+
+  [ Marco Capetta ]
+  * [2cfbd49] TT#87502 Update pid_watcher to check sems-b2b instead of ngcp-sems and sems-pbx
+  * [a0c19c4] TT#87502 Sems-b2b enabled by default and moved under sip port 5060
+  * [0ac84aa] Revert "Revert "TT#87502 Update pid_watcher to check sems-b2b instead of ngcp-sems and sems-pbx""
+  * [5872ecb] TT#71804 Increase kamailio proxy children to 5 during tests execution
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 31 Aug 2020 21:53:42 +0200
+
 kamailio-config-tests (9.0.0.0+0~mr9.0.0.0) unstable; urgency=medium
 
   [ Victor Seva ]
