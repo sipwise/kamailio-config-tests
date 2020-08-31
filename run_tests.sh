@@ -312,7 +312,7 @@ mkdir -p "${MLOG_DIR}" "${LOG_DIR}"
 
 if ! "${SKIP_CONFIG}" ; then
   echo "$(date) - Setting config debug on"
-  "${BIN_DIR}/config_debug.pl" -g "${GROUP}" on ${DOMAIN}
+  "${BIN_DIR}/config_debug.pl" -c 5 -g "${GROUP}" on ${DOMAIN}
   if [ "${PROFILE}" == "PRO" ]; then
     echo "$(date) - Exec pid_watcher with timeout[${TIMEOUT}]"
     ( timeout "${TIMEOUT}" "${BIN_DIR}/pid_watcher.py" ${PIDWATCH_OPTS} )&
