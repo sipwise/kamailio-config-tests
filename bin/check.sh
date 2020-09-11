@@ -61,12 +61,24 @@ EOF
 echo "$(date) - $(basename "$2") NOT ok"
 }
 
+function str_check_error() {
+  local err_type=()
+
+  [[ $(($1 & 2)) -eq 0 ]] && err_type+=("FLOW")
+  [[ $(($1 & 4)) -eq 0 ]] && err_type+=("FLOW_VARS")
+  [[ $(($1 & 8)) -eq 0 ]] && err_type+=("SIP_IN")
+  [[ $(($1 & 16)) -eq 0 ]] && err_type+=("SIP_OUT")
+
+  echo "${err_type[*]}"
+}
+
 check_retrans_next() {
   # testing next json file, if exist. Necessary in case of retransmissions or wrong timing/order.
   local next_msg
   local next_tap
   local kam_type
   local step
+  local err_type
 
   step=${4:-1}
   next_test_filepath "$1"  "${step}"
@@ -82,6 +94,8 @@ check_retrans_next() {
       mv "$3" "${3}_retrans"
       mv "${next_tap}" "$3"
       return 0
+    else
+      err_type=$(str_check_error $?)
     fi
 
     if [ -a "${next_tap}" ] ; then
@@ -93,7 +107,7 @@ check_retrans_next() {
     echo -n "$(date) - File $(basename "${next_msg}") doesn't exists. Result"
   fi
 
-  echo " NOT ok"
+  echo " NOT ok[${err_type}]"
   return 1
 }
 
@@ -103,6 +117,7 @@ check_retrans_prev() {
   local prev_tap
   local kam_type
   local step
+  local err_type
 
   step=${4:-1}
   prev_test_filepath "$1" "${step}"
@@ -118,6 +133,8 @@ check_retrans_prev() {
       mv "$3" "${3}_retrans"
       mv "${prev_tap}" "$3"
       return 0
+    else
+      err_type=$(str_check_error $?)
     fi
 
     if [ -a "${prev_tap}" ] ; then
@@ -129,7 +146,7 @@ check_retrans_prev() {
     echo -n "$(date) - File $(basename "${prev_msg}") doesn't exists. Result"
   fi
 
-  echo " NOT ok"
+  echo " NOT ok[${err_type}]"
   return 1
 }
 
@@ -156,6 +173,7 @@ check_retrans_block() {
 check_test() {
   local dest
   local kam_type="--yaml"
+  local err_type
 
   dest=${RESULT_DIR}/$(basename "$3" .tap)
 
@@ -178,9 +196,11 @@ check_test() {
   if "${BIN_DIR}/check.py" ${kam_type} "$1" "$2" > "$3" ; then
     echo " ok"
     return 0
+  else
+    err_type=$(str_check_error $?)
   fi
 
-  echo " NOT ok"
+  echo " NOT ok[${err_type}]"
 
   if "${FIX_RETRANS}" ; then
     check_retrans_block "$1" "${kam_type}" "$3" "${RETRANS_SIZE}" && return 0

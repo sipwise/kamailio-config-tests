@@ -24,8 +24,10 @@ import re
 import argparse
 import json
 import logging
+from enum import IntFlag
 
 from yaml import load
+
 try:
     from yaml import CLoader as Loader
 except ImportError:
@@ -37,66 +39,75 @@ class XAvp:
     """ Class to simulate the xavp """
 
     def __init__(self, name, data):
-        result = re.match(r'\$xavp\((\w+)\)', name)
+        result = re.match(r"\$xavp\((\w+)\)", name)
         try:
             self._name = result.group(1)
         except Exception:
-            raise Exception('not a xavp')
+            raise Exception("not a xavp")
         self._data = data
 
     def get(self, str):
         info = XAvp.parse(str)
 
-        if self._name != info['name']:
-            raise KeyError(
-                'diferent name. name:%s != %s' % (self._name, info['name'])
-            )
+        if self._name != info["name"]:
+            msg = "diferent name. name:{} != {}"
+            raise KeyError(msg.format(self._name, info["name"]))
 
         nsize = len(self._data)
-        if nsize <= info['nindx']:
-            raise IndexError('%s has %d elements' % (self._name, nsize))
+        if nsize <= info["nindx"]:
+            raise IndexError("%s has %d elements" % (self._name, nsize))
 
-        if info['key'] in self._data[info['nindx']]:
-            values = self._data[info['nindx']][info['key']]
+        if info["key"] in self._data[info["nindx"]]:
+            values = self._data[info["nindx"]][info["key"]]
         else:
-            raise KeyError('no %s key found' % info['key'])
+            raise KeyError("no %s key found" % info["key"])
 
-        if info['kindx'] == '*':
+        if info["kindx"] == "*":
             return values
 
         ksize = len(values)
-        if ksize <= info['kindx']:
-            raise IndexError('%s has %d elements not %s' %
-                             (info['key'], ksize, info['kindx']))
+        if ksize <= info["kindx"]:
+            msg = "{} has {} elements not {}"
+            raise IndexError(msg.format(info["key"], ksize, info["kindx"]))
 
-        return values[info['kindx']]
+        return values[info["kindx"]]
 
     @classmethod
     def parse(cls, str):
-        pattern_nindx = r'(\[(?P<%s>\d+)\])?' % 'nindx'
-        pattern_kindx = r'(\[(?P<%s>\d+|\*+)\])?' % 'kindx'
-        pattern = r'\$xavp\((?P<name>\w+)%s(=>(?P<key>\w+)%s)?\)' % (
-            pattern_nindx, pattern_kindx)
+        pattern_nindx = r"(\[(?P<%s>\d+)\])?" % "nindx"
+        pattern_kindx = r"(\[(?P<%s>\d+|\*+)\])?" % "kindx"
+        pattern = r"\$xavp\((?P<name>\w+)%s(=>(?P<key>\w+)%s)?\)" % (
+            pattern_nindx,
+            pattern_kindx,
+        )
         result = re.match(pattern, str)
         if result is not None:
             try:
-                nindx = int(result.group('nindx'))
-            except:
+                nindx = int(result.group("nindx"))
+            except Exception:
                 nindx = 0
             try:
-                kindx = int(result.group('kindx'))
+                kindx = int(result.group("kindx"))
             except Exception:
-                if result.group('kindx') == '*':
-                    kindx = '*'
+                if result.group("kindx") == "*":
+                    kindx = "*"
                 else:
                     kindx = 0
             return {
-                'name': result.group('name'),
-                'nindx': nindx,
-                'key': result.group('key'),
-                'kindx': kindx}
+                "name": result.group("name"),
+                "nindx": nindx,
+                "key": result.group("key"),
+                "kindx": kindx,
+            }
         else:
-            raise Exception('no xavp')
+            raise Exception("no xavp")
+
+
+class Section(IntFlag):
+    FLOW = 2
+    FLOW_VARS = 4
+    SIP_IN = 8
+    SIP_OUT = 16
 
 
 class Test:
@@ -105,26 +116,27 @@ class Test:
 
     def __init__(self):
         self._step = []
-        self._errflag = False
+        self._errflag = 0
 
     def comment(self, msg):
         """ Add a comment """
-        self._step.append({'result': None, 'msg_ok': msg})
+        self._step.append({"result": None, "msg_ok": msg})
 
     def ok(self, msg=None):
         """ Add a ok result """
-        self._step.append({'result': True, 'msg_ok': msg})
+        self._step.append({"result": True, "msg_ok": msg})
 
-    def error(self, msg_err):
+    def error(self, section, msg_err):
         """ Add an error result"""
-        self._step.append({'result': False, 'msg_err': msg_err})
-        self._errflag = True
+        self._step.append({"result": False, "msg_err": msg_err})
+        self._errflag += section
 
     @classmethod
     def compare(cls, val0, val1):
-        logging.debug("val0:[%s]:'%s' val1:[%s]:'%s'" %
-                      (type(val0), str(val0), type(val1),
-                       str(val1)))
+        logging.debug(
+            "val0:[%s]:'%s' val1:[%s]:'%s'"
+            % (type(val0), str(val0), type(val1), str(val1))
+        )
         if isinstance(val0, str):
             if re.search(val0, str(val1)) is not None:
                 return True
@@ -132,7 +144,7 @@ class Test:
                 return False
         elif isinstance(val0, int):
             try:
-                result = (val0 == int(val1))
+                result = val0 == int(val1)
             except Exception:
                 result = False
         elif isinstance(val0, list) and isinstance(val1, list):
@@ -147,25 +159,25 @@ class Test:
                     logging.debug(e)
                     return False
         else:
-            result = (val0 == val1)
+            result = val0 == val1
         return result
 
-    def test(self, value_expected, value, msg_err, msg_ok=None):
+    def test(self, section, value_expected, value, msg_err, msg_ok=None):
         """ Test two values and add the result"""
         result = Test.compare(value_expected, value)
-        self._step.append(
-            {'result': result, 'msg_err': msg_err, 'msg_ok': msg_ok})
+        val = {"result": result, "msg_err": msg_err, "msg_ok": msg_ok}
+        self._step.append(val)
         if not result:
-            self._errflag = True
+            self._errflag += section
 
     def isError(self):
-        return self._errflag
+        return self._errflag != 0
 
     def _num_tests(self):
         """get the num of tests"""
         test = 0
         for s in self._step:
-            if (s['result'] is not None):
+            if s["result"] is not None:
                 test = test + 1
         return test
 
@@ -174,123 +186,136 @@ class Test:
         output = "1..%s\n" % self._num_tests()
         test = 1
         for s in self._step:
-            if (s['result'] is None):
-                output += '# %s\n' % s['msg_ok']
+            if s["result"] is None:
+                output += "# %s\n" % s["msg_ok"]
                 continue
-            elif (s['result']):
-                if (s['msg_ok'] is not None):
-                    output += "ok %d - %s\n" % (test, s['msg_ok'])
+            elif s["result"]:
+                if s["msg_ok"] is not None:
+                    output += "ok %d - %s\n" % (test, s["msg_ok"])
                 else:
                     output += "ok %d\n" % test
             else:
-                output += "not ok %d - ERROR: %s\n" % (test, s['msg_err'])
+                output += "not ok %d - ERROR: %s\n" % (test, s["msg_err"])
             test = test + 1
         return output
 
 
 def check_flow_vars(sk, sv, cv, test):
     """ check the vars on a flow level"""
+    sec = Section.FLOW_VARS
     for k in sv.keys():
         logging.debug("check k:'%s'" % k)
-        if(k not in cv):
+        if k not in cv:
             try:
                 info = XAvp.parse(k)
-                search_key = '$xavp(%s)' % info['name']
-                if(search_key not in cv):
-                    raise Exception("search_key: %s info:%s" %
-                                    (search_key, info))
+                search_key = "$xavp(%s)" % info["name"]
+                if search_key not in cv:
+                    msg = "search_key: {} info:{}"
+                    raise Exception(msg.format(search_key, info))
                 xavp = XAvp(search_key, cv[search_key])
                 val = xavp.get(k)
                 logging.debug("testing %s == %s" % (sv[k], val))
-                test.test(sv[k], val,
-                          'flow[%s] expected %s == %s but is %s' %
-                          (sk, k, sv[k], val),
-                          'flow[%s] %s' % (sk, k))
+                msg_err = "flow[{}] expected {} == {} but is {}"
+                test.test(
+                    sec,
+                    sv[k],
+                    val,
+                    msg_err.format(sk, k, sv[k], val),
+                    "flow[{}] {}".format(sk, k),
+                )
             except LookupError as err:
-                if(sv[k] == 'None'):
-                    test.ok('flow[%s] %s is not there' % (sk, k))
+                if sv[k] == "None":
+                    test.ok("flow[%s] %s is not there" % (sk, k))
                 else:
-                    test.error('LookupError with %s. Error:%s' % (k, err))
+                    test.error(sec, "LookupError with %s. Error:%s" % (k, err))
             except Exception as err:
-                if(sv[k] == 'None'):
-                    test.ok('flow[%s] %s is not there' % (sk, k))
+                if sv[k] == "None":
+                    test.ok("flow[%s] %s is not there" % (sk, k))
                 else:
-                    test.error(
-                        'Expected var %s on flow[%s]. %s' % (k, sk, err))
+                    msg = "Expected var {} on flow[{}]. {}"
+                    test.error(sec, msg.format(k, sk, err))
         else:
             logging.debug("sv[k]:'%s' cv[k]:'%s'" % (sv[k], cv[k]))
-            test.test(sv[k], cv[k], 'flow[%s] expected %s == %s but is %s' % (
-                sk, k, sv[k], cv[k]), 'flow[%s] %s' % (sk, k))
+            msg_err = "flow[{}] expected {} == {} but is {}"
+            test.test(
+                sec,
+                sv[k],
+                cv[k],
+                msg_err.format(sk, k, sv[k], cv[k]),
+                "flow[%s] %s" % (sk, k),
+            )
 
 
 def check_flow(scen, check, test):
     """ checks the flow and the vars inside"""
+    sec = Section.FLOW
     for i in range(len(scen)):
         (sk, sv) = scen[i].popitem()
         try:
             (ck, cv) = check[i].popitem()
         except Exception:
-            test.error('wrong flow. Expected: %s but is nothing there' % sk)
+            msg = "wrong flow. Expected: {} but is nothing there"
+            test.error(sec, msg.format(sk))
             continue
-        if(sk != ck):
-            test.error('wrong flow. Expected: %s but is %s' % (sk, ck))
+        if sk != ck:
+            test.error(sec, "wrong flow. Expected: %s but is %s" % (sk, ck))
             continue
         if sv is None:
-            test.ok('flow[%s] no var to check' % sk)
+            test.ok("flow[%s] no var to check" % sk)
             continue
         else:
-            test.ok('flow[%s]' % sk)
+            test.ok("flow[%s]" % sk)
         check_flow_vars(sk, sv, cv, test)
-    if(len(check) > len(scen)):
+    if len(check) > len(scen):
         line = []
         for i in check:
             for k in i.keys():
                 line.append(k)
-        test.error('Expected to end but there are more flows %s' % line)
+        test.error(sec, "Expected to end but there are more flows %s" % line)
 
 
-def check_sip(scen, msg, test):
+def check_sip(sec, scen, msg, test):
     if isinstance(msg, list):
         if len(msg) != 1:
-            test.error('sip_in len != 1')
+            test.error(sec, "sip_in len != 1")
             return
         else:
             msg = msg[0]
     for rule in scen:
-        if rule.startswith('_:NOT:_'):
+        if rule.startswith("_:NOT:_"):
             flag = False
             rule = rule[7:]
-            msg_ok = '%s not match'
-            msg_ko = '%s match'
+            msg_ok = "%s not match"
+            msg_ko = "%s match"
         else:
             flag = True
-            msg_ok = '%s match'
-            msg_ko = '%s not match'
+            msg_ok = "%s match"
+            msg_ko = "%s not match"
         result = re.search(rule, msg)
         if (result is not None) == flag:
             test.ok(msg_ok % rule)
             continue
-        test.comment('result:%s' % result)
-        test.error(msg_ko % rule)
+        test.comment("result:%s" % result)
+        test.error(sec, msg_ko % rule)
 
 
-def check_sip_out(scen, msgs, test):
+def check_sip_out(sec, scen, msgs, test):
     num_msgs = len(msgs)
     num_scen = len(scen)
-    for i in (range(num_scen)):
+    for i in range(num_scen):
         test.comment("sip_out %d" % i)
-        if(i < num_msgs):
-            check_sip(scen[i], msgs[i], test)
+        if i < num_msgs:
+            check_sip(sec, scen[i], msgs[i], test)
         else:
-            test.error("sip_out[%d] does not exist" % i)
-    if (num_scen != num_msgs):
-        test.error("we expected %d out messages but we have %d" %
-                   (num_scen, num_msgs))
+            test.error(sec, "sip_out[%d] does not exist" % i)
+    if num_scen != num_msgs:
+        msg = "we expected {} out messages but we have {}"
+        test.error(sec, msg.format(num_scen, num_msgs))
 
 
 def load_yaml(filepath):
     output = None
-    with io.open(filepath, 'r') as file:
+    with io.open(filepath, "r") as file:
         output = load(file, Loader=Loader)
     file.close()
     return output
@@ -298,7 +323,7 @@ def load_yaml(filepath):
 
 def load_json(filepath):
     output = None
-    with io.open(filepath, 'r') as file:
+    with io.open(filepath, "r") as file:
         output = json.load(file)
     file.close()
     return output
@@ -322,18 +347,18 @@ def main(args):
     try:
         check = load_check(args.kam_file)
     except Exception:
-        check = {'flow': [], 'sip_in': '', 'sip_out': []}
+        check = {"flow": [], "sip_in": "", "sip_out": []}
         test.error("Error loading file:%s" % args[1])
 
-    test.comment('check flow')
-    check_flow(scen['flow'], check['flow'], test)
-    test.comment('check sip_in')
-    check_sip(scen['sip_in'], check['sip_in'], test)
-    test.comment('check sip_out')
-    check_sip_out(scen['sip_out'], check['sip_out'], test)
+    test.comment("check flow")
+    check_flow(scen["flow"], check["flow"], test)
+    test.comment("check sip_in")
+    check_sip(Section.SIP_IN, scen["sip_in"], check["sip_in"], test)
+    test.comment("check sip_out")
+    check_sip_out(Section.SIP_OUT, scen["sip_out"], check["sip_out"], test)
     print(test)
     if test.isError():
-        sys.exit(1)
+        sys.exit(test._errflag)
 
 
 if __name__ == "__main__":
