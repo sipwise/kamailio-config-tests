@@ -21,7 +21,7 @@
 import io
 import sys
 import re
-import getopt
+import argparse
 import json
 import logging
 
@@ -288,12 +288,6 @@ def check_sip_out(scen, msgs, test):
                    (num_scen, num_msgs))
 
 
-def usage():
-    print('Usage: check.py [-h] [-d] [-j] [-y] scenario_file test.yml')
-    print('-h: this help')
-    print('-d: debug')
-
-
 def load_yaml(filepath):
     output = None
     with io.open(filepath, 'r') as file:
@@ -310,41 +304,23 @@ def load_json(filepath):
     return output
 
 
-def main():
+def main(args):
     # default -y
     load_check = load_yaml
 
-    try:
-        opts, args = getopt.getopt(
-            sys.argv[1:], "hyjd", ["help", "yaml", "json", "debug"])
-    except getopt.GetoptError as err:
-        # print help information and exit:
-        print(str(err))  # will print something like "option -a not recognized"
-        usage()
-        sys.exit(2)
-    for o, a in opts:
-        if o in ("-h", "--help"):
-            usage()
-            sys.exit()
-        elif o in ("-y", "--yaml"):
-            load_check = load_yaml
-        elif o in ("-j", "--json"):
-            load_check = load_json
-        elif o in ("-d", "--debug"):
-            logging.basicConfig(level=logging.DEBUG)
-        else:
-            assert False, "unhandled option"
+    if args.yaml:
+        load_check = load_yaml
+    if args.json:
+        load_check = load_json
+    if args.debug:
+        logging.basicConfig(level=logging.DEBUG)
 
-    if(len(args) != 2):
-        usage()
-        sys.exit(1)
-
-    scen = load_yaml(args[0])
+    scen = load_yaml(args.test_yaml_file)
 
     test = Test()
 
     try:
-        check = load_check(args[1])
+        check = load_check(args.kam_file)
     except Exception:
         check = {'flow': [], 'sip_in': '', 'sip_out': []}
         test.error("Error loading file:%s" % args[1])
@@ -361,4 +337,12 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description='generate TAP result')
+    grp = parser.add_mutually_exclusive_group()
+    grp.add_argument('-y', '--yaml', action='store_true', help='YAML kam_file')
+    grp.add_argument('-j', '--json', action='store_true', help='JSON kam_file')
+    parser.add_argument('test_yaml_file', help='YAML file with checks')
+    parser.add_argument('kam_file', help='kamailio file')
+    parser.add_argument('-d', '--debug', action='store_true')
+    args = parser.parse_args()
+    main(args)
