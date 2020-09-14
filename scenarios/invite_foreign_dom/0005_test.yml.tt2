@@ -16,7 +16,7 @@ sip_in:
   - 'To: <sip:004321001@external.test>'
   - 'CSeq: \d+ INVITE'
   - 'P-LB-Uptime: \d+'
-  - 'P-Asserted-Identity: <sip:4311002@spce.test>'
+  - '_:NOT:_P-Asserted-Identity:'
   - 'P-Caller-UUID: [% spce_test.testuser1002.uuid %]'
   - 'P-NGCP-Caller-Info: <sip:testuser1002@spce.test>;ip=127.126.0.1;port=\d+;primary=4311002'
   - 'P-NGCP-Callee-Info: <sip:004321001@external.test>;ip=127.0.0.1;port=5060'
@@ -39,7 +39,7 @@ sip_out:
       'To: <sip:004321001@external.test>',
       'CSeq: \d+ INVITE',
       'P-LB-Uptime: \d+',
-      'P-Asserted-Identity: <sip:4311002@spce.test>',
+      '_:NOT:_P-Asserted-Identity:',
       'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
       'P-NGCP-Caller-Info: <sip:testuser1002@spce.test>;ip=127.126.0.1;port=\d+;primary=4311002',
       'P-NGCP-Callee-Info: <sip:004321001@external.test>;ip=127.0.0.1;port=5060',
