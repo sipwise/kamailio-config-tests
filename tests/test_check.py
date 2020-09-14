@@ -34,6 +34,23 @@ from check import load_json, load_yaml  # noqa
 not_ok = re.compile("^not ok.*", re.MULTILINE)
 
 
+class TestSection(unittest.TestCase):
+
+    def setUp(self):
+        self.sec = Section(0)
+
+    def test_add(self):
+        self.assertFalse(self.sec & Section.FLOW)
+        self.assertFalse(self.sec & Section.SIP_OUT)
+        self.assertFalse(self.sec & Section.SIP_IN)
+        self.sec |= Section.FLOW
+        self.assertTrue(self.sec & Section.FLOW)
+        self.sec |= Section.SIP_OUT
+        self.assertTrue(self.sec & Section.FLOW)
+        self.assertTrue(self.sec & Section.SIP_OUT)
+        self.assertFalse(self.sec & Section.SIP_IN)
+
+
 class TestXAvp(unittest.TestCase):
     def setUp(self):
         self.name = "test"
@@ -197,6 +214,7 @@ if __name__ == "__main__":
 
     suite = unittest.TestSuite()
     load = unittest.defaultTestLoader.loadTestsFromTestCase
+    suite.addTest(load(TestSection))
     suite.addTest(load(TestXAvp))
     suite.addTest(load(TestCheckFlowVars))
     suite.addTest(load(TestCheckSipIn))

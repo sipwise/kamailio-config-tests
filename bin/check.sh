@@ -64,10 +64,10 @@ echo "$(date) - $(basename "$2") NOT ok"
 function str_check_error() {
   local err_type=()
 
-  [[ $(($1 & 2)) -eq 0 ]] && err_type+=("FLOW")
-  [[ $(($1 & 4)) -eq 0 ]] && err_type+=("FLOW_VARS")
-  [[ $(($1 & 8)) -eq 0 ]] && err_type+=("SIP_IN")
-  [[ $(($1 & 16)) -eq 0 ]] && err_type+=("SIP_OUT")
+  [[ $(($1 & 2)) -eq 2 ]] && err_type+=("FLOW")
+  [[ $(($1 & 4)) -eq 4 ]] && err_type+=("FLOW_VARS")
+  [[ $(($1 & 8)) -eq 8 ]] && err_type+=("SIP_IN")
+  [[ $(($1 & 16)) -eq 16 ]] && err_type+=("SIP_OUT")
 
   echo "${err_type[*]}"
 }
