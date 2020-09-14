@@ -81,14 +81,20 @@ check_retrans_next() {
   kam_type=$2
   next_tap=${3/_test.tap/_test_next.tap}
   echo "$(date) - Fix retransmissions enabled: try to test the next[+${step}] json file"
+  kam_msg=$(basename "${next_msg}")
 
   if [ -a "${next_msg}" ] ; then
-    echo -n "$(date) - Testing $(basename "$1") against $(basename "${next_msg}") -> $(basename "${next_tap}")"
+    if [[ "${test_ok[*]}" =~ ${kam_msg} ]] ; then
+      echo "$(date) - ** skip ${kam_msg} already processed"
+      return 1
+    fi
+    echo -n "$(date) - Testing $(basename "$1") against ${kam_msg} -> $(basename "${next_tap}")"
     if "${BIN_DIR}/check.py" "${kam_type}" "$1" "${next_msg}" > "${next_tap}" ; then
       # Test using the next json file was fine. That means that, with high probability, there was a retransmission.
       # Next step is to backup the failed tap test and overwrite it with the working one
       mv "$3" "${3}_retrans"
       mv "${next_tap}" "$3"
+      test_ok+=("${kam_msg}")
       return 0
     fi
 
@@ -111,20 +117,27 @@ check_retrans_prev() {
   local prev_tap
   local kam_type
   local step
+  local kam_msg
 
   step=${4:-1}
   prev_test_filepath "$1" "${step}"
   kam_type=$2
   prev_tap=${3/_test.tap/_test_prev.tap}
   echo "$(date) - Fix retransmissions enabled: try to test the previous[-${step}] json file"
+  kam_msg=$(basename "${prev_msg}")
 
   if [ -a "${prev_msg}" ] ; then
-    echo -n "$(date) - Testing $(basename "$1") against $(basename "${prev_msg}") -> $(basename "${prev_tap}")"
+    if [[ "${test_ok[*]}" =~ ${kam_msg} ]] ; then
+      echo "$(date) - ** skip ${kam_msg} already processed"
+      return 1
+    fi
+    echo -n "$(date) - Testing $(basename "$1") against ${kam_msg} -> $(basename "${prev_tap}")"
     if "${BIN_DIR}/check.py" "${kam_type}" "$1" "${prev_msg}" > "${prev_tap}" ; then
       # Test using the previous json file was fine. That means that, with high probability, there was a wrong timing/order.
       # Next step is to backup the failed tap test and overwrite it with the working one
       mv "$3" "${3}_retrans"
       mv "${prev_tap}" "$3"
+      test_ok+=("${kam_msg}")
       return 0
     fi
 
@@ -164,6 +177,7 @@ check_retrans_block() {
 check_test() {
   local dest
   local kam_type="--yaml"
+  local kam_msg
 
   dest=${RESULT_DIR}/$(basename "$3" .tap)
 
@@ -182,9 +196,11 @@ check_test() {
     kam_type="--json"
   fi
 
-  echo -n "$(date) - Testing $(basename "$1") against $(basename "$2") -> $(basename "$3")"
+  kam_msg=$(basename "$2")
+  echo -n "$(date) - Testing $(basename "$1") against ${kam_msg} -> $(basename "$3")"
   if "${BIN_DIR}/check.py" ${kam_type} "$1" "$2" > "$3" ; then
     echo " ok"
+    test_ok+=("${kam_msg}")
     return 0
   fi
 
@@ -935,7 +951,9 @@ if ! "${SKIP_TESTS}" ; then
   "${BIN_DIR}/generate_tests.sh" -d \
     "${SCEN_CHECK_DIR}" "${LOG_DIR}/scenario_ids.yml" "${PROFILE}"
 
-  for t in ${SCEN_CHECK_DIR}/[0-9][0-9][0-9][0-9]_test.yml; do
+  test_ok=()
+
+  for t in "${SCEN_CHECK_DIR}"/[0-9][0-9][0-9][0-9]_test.yml; do
     test_filepath "${t}"
     echo "$(date) - Check test ${t} on ${msg}"
     dest=${RESULT_DIR}/$(basename "${t}" .yml)
