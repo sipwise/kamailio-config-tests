@@ -24,7 +24,7 @@ import re
 import argparse
 import json
 import logging
-from enum import IntFlag
+from enum import Flag
 
 from yaml import load
 
@@ -103,7 +103,7 @@ class XAvp:
             raise Exception("no xavp")
 
 
-class Section(IntFlag):
+class Section(Flag):
     FLOW = 2
     FLOW_VARS = 4
     SIP_IN = 8
@@ -116,7 +116,7 @@ class Test:
 
     def __init__(self):
         self._step = []
-        self._errflag = 0
+        self._errflag = Section(0)
 
     def comment(self, msg):
         """ Add a comment """
@@ -129,7 +129,7 @@ class Test:
     def error(self, section, msg_err):
         """ Add an error result"""
         self._step.append({"result": False, "msg_err": msg_err})
-        self._errflag += section
+        self._errflag |= section
 
     @classmethod
     def compare(cls, val0, val1):
@@ -168,10 +168,10 @@ class Test:
         val = {"result": result, "msg_err": msg_err, "msg_ok": msg_ok}
         self._step.append(val)
         if not result:
-            self._errflag += section
+            self._errflag |= section
 
     def isError(self):
-        return self._errflag != 0
+        return self._errflag.value != 0
 
     def _num_tests(self):
         """get the num of tests"""
@@ -356,9 +356,10 @@ def main(args):
     check_sip(Section.SIP_IN, scen["sip_in"], check["sip_in"], test)
     test.comment("check sip_out")
     check_sip_out(Section.SIP_OUT, scen["sip_out"], check["sip_out"], test)
+    test.comment(test._errflag)
     print(test)
     if test.isError():
-        sys.exit(test._errflag)
+        sys.exit(test._errflag.value)
 
 
 if __name__ == "__main__":
