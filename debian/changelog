@@ -1,3 +1,13 @@
+kamailio-config-tests (9.0.1.2+0~mr9.0.1.2) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [7d72a32] TT#81700 bin/check.sh: add info of what sections failed, take two
+  * [654e752] TT#81700 bin/check.sh: skip kam_msg that was already processed
+  * [35d1ada] TT#92600 fix checks of PAI after fixing PAI default 'none' on templates
+  * [6686edc] TT#71804 fix incoming_shared_line after b_leg changes
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 16 Sep 2020 12:16:14 +0200
+
 kamailio-config-tests (9.0.1.1+0~mr9.0.1.1) unstable; urgency=medium
 
   [ Victor Seva ]
