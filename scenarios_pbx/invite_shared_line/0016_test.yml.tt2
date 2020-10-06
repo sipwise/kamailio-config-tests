@@ -62,6 +62,6 @@ sip_out:
       'Contact: <sip:127.0.0.1:5080;transport=udp>',
       'Content-Type: application/sdp',
       'P-COLP-Identity: \"1003\" <sip:1003@spce.test>',
-      'P-Asserted-Identity:  <sip:testuser1003@spce.test>',
+      '_:NOT:_P-Asserted-Identity:',
       'P-Out-Socket: udp:127.0.0.1:5060'
     ]
