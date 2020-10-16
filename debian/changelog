@@ -1,3 +1,10 @@
+kamailio-config-tests (7.5.7.0+0~mr7.5.7.0) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [a25eb9f] TT#81700 support change kamailio module level of debug
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 16 Oct 2020 16:17:24 +0200
+
 kamailio-config-tests (7.5.6.0+0~mr7.5.6.0) unstable; urgency=medium
 
   [ Andrew Pogrebennyk ]
