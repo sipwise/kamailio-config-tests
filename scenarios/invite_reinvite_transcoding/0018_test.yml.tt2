@@ -1,0 +1,49 @@
+flow:
+  - start|DEFAULT_ONREPLY:
+  - start|REPLY_ROUTE_NAT:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - start|ROUTE_PREPARE_UA:
+  - return|ROUTE_PREPARE_UA:
+  - start|REPLY_ROUTE_RTPENGINE:
+  - return|REPLY_ROUTE_RTPENGINE:
+  - start|REPLY_ROUTE_NAT_CONTINUE:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+sip_in:
+  - 'SIP/2.0 200 OK'
+  - 'From: <sip:testuser1001@spce.test>;tag=[\w-]+'
+  - 'To: <sip:004321001@127.0.2.1>;tag=[\w-]+'
+  - 'CSeq: \d+ INVITE'
+  - 'Contact: <sip:127.0.0.1:508[08];transport=udp>'
+  - 'Content-Type: application/sdp'
+  - 'Content-Length:\s+\d+'
+  - 'P-NGCP-Src-Ip: 127.0.0.1'
+  - 'P-NGCP-Src-Port: \d+'
+  - 'P-NGCP-Src-Proto: udp'
+  - 'P-NGCP-Src-Af: 4'
+  - 'a=rtpmap:18 G729/8000'
+  - '_:NOT:_a=rtpmap:8 PCMA/8000'
+  - '_:NOT:_a=rtpmap:0 PCMU/8000'
+sip_out:
+  - [
+      'SIP/2.0 200 OK',
+      'From: <sip:testuser1001@spce.test>;tag=[\w-]+',
+      'To: <sip:004321001@127.0.2.1>;tag=[\w-]+',
+      'CSeq: \d+ INVITE',
+      'Contact: <sip:127.0.0.1:508[08];transport=udp>',
+      'Content-Type: application/sdp',
+      'Content-Length:\s+\d+',
+      'P-NGCP-Src-Ip: 127.0.0.1',
+      'P-NGCP-Src-Port: \d+',
+      'P-NGCP-Src-Proto: udp',
+      'P-NGCP-Src-Af: 4',
+      'P-Out-Socket: udp:127.0.0.1:5060',
+      'a=rtpmap:18 G729/8000',
+      '_:NOT:_a=rtpmap:8 PCMA/8000',
+      '_:NOT:_a=rtpmap:0 PCMU/8000',
+    ]

@@ -1,0 +1,35 @@
+flow:
+  - start|DEFAULT_ONREPLY:
+  - start|dialog:start:
+  - return|dialog:start:
+  - return|dialog:start:
+sip_in:
+  - 'SIP/2.0 200 OK'
+  - 'From: <sip:4311002@spce.test>;tag=[\w-]+'
+  - 'To: <sip:004321001@127.0.2.1>;tag=[\w-]+'
+  - 'CSeq: \d+ INVITE'
+  - 'Contact: <sip:127.0.2.1:\d+;transport=UDP>'
+  - 'Content-Type: application/sdp'
+  - 'Content-Length:\s+\d+'
+  - 'P-NGCP-Src-Ip: 127.0.2.1'
+  - 'P-NGCP-Src-Port: \d+'
+  - 'P-NGCP-Src-Proto: udp'
+  - 'P-NGCP-Src-Af: 4'
+  - 'a=rtpmap:8 PCMA/8000'
+  - '_:NOT:_a=rtpmap:\d+ G729/8000'
+sip_out:
+  - [
+      'SIP/2.0 200 OK',
+      'From: <sip:4311002@spce.test>;tag=[\w-]+',
+      'To: <sip:004321001@127.0.2.1>;tag=[\w-]+',
+      'CSeq: \d+ INVITE',
+      'Contact: <sip:127.0.2.1:\d+;transport=UDP>',
+      'Content-Type: application/sdp',
+      'Content-Length:\s+\d+',
+      'P-NGCP-Src-Ip: 127.0.2.1',
+      'P-NGCP-Src-Port: \d+',
+      'P-NGCP-Src-Proto: udp',
+      'P-NGCP-Src-Af: 4',
+      'a=rtpmap:8 PCMA/8000',
+      '_:NOT:_a=rtpmap:\d+ G729/8000',
+    ]
