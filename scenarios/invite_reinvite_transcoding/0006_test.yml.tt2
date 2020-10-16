@@ -1,0 +1,11 @@
+flow:
+  - start|DEFAULT_ONREPLY:
+  - return|DEFAULT_ONREPLY:
+sip_in:
+  - 'SIP/2.0 100 Trying'
+  - 'From: <sip:004321001@spce.test>;tag=[\w-]+'
+  - 'To: <sip:testuser1001@spce.test>'
+  - 'CSeq: \d+ INVITE'
+  - 'Server: Sipwise NGCP LB 9.X'
+  - 'Content-Length: 0'
+sip_out: []

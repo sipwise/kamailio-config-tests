@@ -1,0 +1,27 @@
+flow:
+  - start|DEFAULT_ONREPLY:
+  - return|DEFAULT_ONREPLY:
+sip_in:
+  - 'SIP/2.0 180 Ringing'
+  - 'From: <sip:4311002@spce.test>;tag=[\w-]+'
+  - 'To: <sip:004321001@127.0.2.1>;tag=[\w-]+'
+  - 'CSeq: \d+ INVITE'
+  - 'Contact: <sip:127.0.2.1:\d+;transport=UDP>'
+  - 'Content-Length: 0'
+  - 'P-NGCP-Src-Ip: 127.0.2.1'
+  - 'P-NGCP-Src-Port: \d+'
+  - 'P-NGCP-Src-Proto: udp'
+  - 'P-NGCP-Src-Af: 4'
+sip_out:
+  - [
+      'SIP/2.0 180 Ringing',
+      'From: <sip:4311002@spce.test>;tag=[\w-]+',
+      'To: <sip:004321001@127.0.2.1>;tag=[\w-]+',
+      'CSeq: \d+ INVITE',
+      'Contact: <sip:127.0.2.1:\d+;transport=UDP>',
+      'Content-Length: 0',
+      'P-NGCP-Src-Ip: 127.0.2.1',
+      'P-NGCP-Src-Port: \d+',
+      'P-NGCP-Src-Proto: udp',
+      'P-NGCP-Src-Af: 4',
+    ]
