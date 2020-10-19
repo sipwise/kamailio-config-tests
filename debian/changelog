@@ -1,3 +1,18 @@
+kamailio-config-tests (8.5.3.0+0~mr8.5.3.0) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [30dcc6d] TT#81700 run_tests.sh: -k option to capture pcap per scenario
+  * [ae4ab9c] TT#81700 fix detection of profile on CE
+  * [57885cc] TT#92600 scenarios/invite_pai_no
+  * [6b409cd] TT#81700 bin/check.sh: add option to control RETRANS_SIZE
+  * [ee1ffd6] TT#81700 bin/check.py: use argparse instead of old getopts
+  * [bfe1df5] TT#81700 bin/check.sh: add info of what sections failed
+  * [5e70a38] TT#81700 bin/check.sh: skip kam_msg that was already processed
+  * [69d2fbf] TT#81700 bin/check.sh: add info of what sections failed, take two
+  * [b5f9e8a] TT#92600 scenarios/invite_pai_no flow for mr8.5
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 19 Oct 2020 14:27:54 +0200
+
 kamailio-config-tests (8.5.2.0+0~mr8.5.2.0) unstable; urgency=medium
 
   [ Victor Seva ]
