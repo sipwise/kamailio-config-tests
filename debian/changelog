@@ -1,3 +1,10 @@
+kamailio-config-tests (9.0.1.3+0~mr9.0.1.3) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [8d252dc] TT#96305 Fix invire_redirect scenario
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 20 Oct 2020 09:14:59 +0200
+
 kamailio-config-tests (9.0.1.2+0~mr9.0.1.2) unstable; urgency=medium
 
   [ Victor Seva ]
