@@ -73,6 +73,18 @@ sub new_csv
     return $r;
 }
 
+sub check_devid
+{
+    my ($data_sub, $devid) = @_;
+    foreach (@{$data_sub->{alias_numbers}}) {
+        if ($devid eq $_->{cc}.$_->{ac}.$_->{sn}) {
+            die("devid:$devid not defined as is_devid") unless $_->{is_devid};
+            return 1;
+        }
+    }
+    die("devid:$devid is not an alias_number");
+}
+
 sub get_subs_info
 {
     my ($data_sub, $data, $presence) = @_;
@@ -84,7 +96,15 @@ sub get_subs_info
             my $username = $data->{username};
             my $subs = $data_sub->{$domain}->{$username};
             $data->{password} = $subs->{password};
-            eval { $data->{number} = $subs->{cc}.$subs->{ac}.$subs->{sn}; } unless defined($presence);
+            if(defined($data->{devid})) {
+                $_->{auth_username} = $data->{devid};
+                $_->{number} = $data->{devid};
+                check_devid($subs, $data->{devid});
+            } else {
+                $data->{devid} = $data->{username};
+                $data->{auth_username} = $data->{username};
+                eval { $data->{number} = $subs->{cc}.$subs->{ac}.$subs->{sn}; } unless defined($presence);
+            }
             $data->{'pbx_extension'} = $subs->{'pbx_extension'};
         }
         else
@@ -128,8 +148,8 @@ sub generate
         {
             $_->{password} = "wrongpass";
         }
-        my $auth   = "[authentication username=$_->{username} password=$_->{password}]";
-        my $csv_data = [$_->{username}, $auth, $_->{domain}, $test_uuid, $_->{'pbx_extension'}];
+        my $auth   = "[authentication username=$_->{auth_username} password=$_->{password}]";
+        my $csv_data = [$_->{devid}, $auth, $_->{domain}, $test_uuid, $_->{'pbx_extension'}];
         $csv->{caller}->print($io_caller, $csv_data);
         $csv_data = ["sipp_scenario".sprintf("%02i", $id).".xml", $_->{proto}, $_->{ip}];
         $csv->{scenario}->print($io_scenario, $csv_data);
@@ -148,8 +168,8 @@ sub generate
             $_->{peer_host} = "" unless defined($_->{peer_host});
             # by default proto is udp
             $_->{proto} = "udp" unless defined($_->{proto});
-            $auth   = "[authentication username=$_->{username} password=$_->{password}]";
-            $csv_data = [$_->{username}, $_->{number}, $auth, $_->{domain}, $test_uuid, $_->{'pbx_extension'}];
+            $auth   = "[authentication username=$_->{auth_username} password=$_->{password}]";
+            $csv_data = [$_->{devid}, $_->{number}, $auth, $_->{domain}, $test_uuid, $_->{'pbx_extension'}];
             $csv->{callee}->print($io_callee, $csv_data);
             $csv_data = ["sipp_scenario_responder".sprintf("%02i", $res_id).".xml", $_->{proto}, $_->{ip}, $_->{peer_host}, $_->{foreign}, $_->{register}, $_->{username}."@".$_->{domain}];
             $csv->{scenario}->print($io_scenario, $csv_data);

@@ -79,7 +79,9 @@ sub get_data {
     my $alias = {
       cc => $_->{cc},
       ac => $_->{ac},
-      sn => $_->{sn}
+      sn => $_->{sn},
+      is_devid => $_->{is_devid},
+      devid_alias => $_->{devid_alias}
     };
     push(@aliases, $alias);
   }

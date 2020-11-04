@@ -201,6 +201,9 @@ scenario.yml file syntax:
 
   If password_wrong: yes then the caller is going to use 'wrongpass' as password.
 
+  If devid: 1 (it must be an alias_number of the subscriber) then that value will be
+  used as username part of SIP and for auth
+
   If defined, we can set kamailio's modules level debug as desired.
 
   Example:
@@ -242,6 +245,12 @@ scenario.yml file syntax:
         cc: 43
         ac: 1
         sn: 1002
+        alias_numbers:
+          - cc: 34
+            ac: 96
+            sn: 5712045
+            is_devid: 1
+            devid_alias: 899898989898
       testuser1001:
         customer: 'customer.test'
         password: testuser
@@ -276,7 +285,13 @@ scenario.yml file syntax:
           domain: spce.test
           register: yes
           proto: tcp
-        - ip: 127.0.2.1                  --> sipp_scenario_responder02.xml
+        - ip: 127.126.0.2                --> sipp_scenario_responder02.xml
+          devid: 34965712045
+          username: testuser1002
+          domain: spce.test
+          register: yes
+          proto: tcp
+        - ip: 127.0.2.1                  --> sipp_scenario_responder03.xml
           number: 004321001
           username: 004321001
           domain: spce.test
