@@ -1,0 +1,37 @@
+flow:
+  - start|DEFAULT_ROUTE:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_NET_INFO:
+  - return|ROUTE_NET_INFO:
+  - start|ROUTE_CHECK_TEL_URI:
+  - return|ROUTE_CHECK_TEL_URI:
+  - start|ROUTE_PRX_REQUEST:
+  - start|ROUTE_INITVARS:
+  - return|ROUTE_INITVARS:
+  - start|ROUTE_PREPARE_UA:
+  - return|ROUTE_PREPARE_UA:
+  - start|ROUTE_OUTBOUND:
+  - start|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+sip_in:
+  - 'ACK sip:127.2.0.1:\d+;transport=UDP SIP/2.0'
+  - 'From: <sip:4311002@spce.test>;tag=[\w-]+'
+  - 'To: <sip:testuser1003@spce.test>;tag=[\w-]+'
+  - 'CSeq: \d+ ACK'
+  - 'Content-Length: 0'
+  - 'Contact: <sip:127.0.0.1:508[08];transport=udp>'
+sip_out:
+  - [
+      'ACK sip:127.2.0.1:\d+;transport=UDP SIP/2.0',
+      'From: <sip:4311002@spce.test>;tag=[\w-]+',
+      'To: <sip:testuser1003@spce.test>;tag=[\w-]+',
+      'CSeq: \d+ ACK',
+      'Content-Length: 0',
+      'Contact: <sip:127.0.0.1:508[08];transport=udp>',
+    ]
