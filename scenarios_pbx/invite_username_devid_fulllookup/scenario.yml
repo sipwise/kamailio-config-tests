@@ -1,0 +1,69 @@
+test_uuid: invite_username_devid_fulllookup
+domains:
+  'spce.test':
+    reseller_id: 1
+customers:
+  'customerpbx.test':
+    contacts:
+      - email: "customerpbx.test@spce.test"
+        reseller_id: 1
+    details:
+      status: 'active'
+      type: 'pbxaccount'
+      billing_profile_id: 1
+      reseller_id: 1
+subscribers:
+  spce.test:
+    testuser1002:
+      customer: 'customerpbx.test'
+      password: testuser
+      cc: 43
+      ac: 1
+      sn: 1002
+      is_pbx_pilot: 1
+      pbx_extension: 1002
+      alias_numbers:
+        - cc: 43
+          ac: 9
+          sn: 222111
+    testuser1003:
+      customer: 'customerpbx.test'
+      password: testuser
+      cc: 43
+      ac: 1
+      sn: 1003
+      is_pbx_pilot: 0
+      pbx_extension: 1003
+      alias_numbers:
+        - cc: 43
+          ac: 9
+          sn: 333111
+          is_devid: 1
+        - cc: 43
+          ac: 9
+          sn: 333222
+          is_devid: 1
+        - cc: 43
+          ac: 9
+          sn: 333333
+          is_devid: 1
+scenarios:
+  - ip: 127.126.0.1
+    domain: spce.test
+    username: testuser1002
+    responders:
+      - ip: 127.2.0.1
+        devid: 439333111
+        username: testuser1003
+        domain: spce.test
+        register: yes
+      - ip: 127.2.0.2
+        devid: 439333333
+        username: testuser1003
+        domain: spce.test
+        register: yes
+      - ip: 127.2.0.3
+        username: testuser1003
+        domain: spce.test
+        register: yes
+

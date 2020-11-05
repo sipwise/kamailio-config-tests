@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE scenario SYSTEM "sipp.dtd">
+
+<scenario name="Sipwise NGCP Benchmark UAS Registration">
+  <send>
+    <![CDATA[
+
+      REGISTER sip:[field0 file="callee.csv" line=1]@[field3 file="callee.csv" line=1] SIP/2.0
+      Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
+      From: <sip:[field0 file="callee.csv" line=1]@[field3 file="callee.csv" line=1]>;tag=[pid]SIPpTag00[call_number]
+      To: "TestBria" <sip:[field0 file="callee.csv" line=1]@[field3 file="callee.csv" line=1]>
+      Call-ID: NGCP%[field4 file="callee.csv" line=1]%///[call_id]
+      CSeq: 1 REGISTER
+      Contact: "TestBria" <sip:[field0 file="callee.csv" line=1]@[local_ip]:6666;ob>;reg-id=1;+sip.instance="<urn:uuid:C3DD6013-20E8-40E3-8EA2-5849B02ED0C4>"
+      Expires: 600
+      Max-Forwards: 70
+      Content-Length: 0
+
+    ]]>
+  </send>
+
+  <recv response="100"
+        optional="true">
+  </recv>
+
+  <recv response="401" auth="true"/>
+
+  <send>
+    <![CDATA[
+
+      REGISTER sip:[field0 file="callee.csv" line=1]@[field3 file="callee.csv" line=1] SIP/2.0
+      Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
+      From: <sip:[field0 file="callee.csv" line=1]@[field3 file="callee.csv" line=1]>;tag=[pid]SIPpTag00[call_number]
+      To: "TestBria" <sip:[field0 file="callee.csv" line=1]@[field3 file="callee.csv" line=1]>
+      Call-ID: NGCP%[field4 file="callee.csv" line=1]%///[call_id]
+      CSeq: 2 REGISTER
+      [field2 file="callee.csv" line=1]
+      Contact: "TestBria" <sip:[field0 file="callee.csv" line=1]@[local_ip]:6666;ob>;reg-id=1;+sip.instance="<urn:uuid:C3DD6013-20E8-40E3-8EA2-5849B02ED0C4>"
+      Expires: 600
+      Max-Forwards: 70
+      Content-Length: 0
+
+    ]]>
+  </send>
+
+  <recv response="100" optional="true">
+  </recv>
+
+  <recv response="200">
+  </recv>
+
+  <ResponseTimeRepartition value="10, 20, 30, 40, 50, 100, 150, 200"/>
+
+</scenario>
+
