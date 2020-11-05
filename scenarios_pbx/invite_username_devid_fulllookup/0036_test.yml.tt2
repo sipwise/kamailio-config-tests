@@ -1,0 +1,11 @@
+flow:
+  - start|DEFAULT_ONREPLY:
+  - return|DEFAULT_ONREPLY:
+sip_in:
+  - 'SIP/2.0 200 canceling'
+  - 'From: <sip:4311002@spce.test>;tag=[\w-]+'
+  - 'To: <sip:439333111@spce.test>;tag=[\w-]+'
+  - 'CSeq: \d+ CANCEL'
+  - 'Server: Sipwise NGCP LB'
+  - 'Content-Length: 0'
+sip_out: []

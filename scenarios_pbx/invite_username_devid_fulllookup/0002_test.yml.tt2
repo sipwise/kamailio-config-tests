@@ -1,0 +1,66 @@
+flow:
+  - start|DEFAULT_ROUTE:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_NET_INFO:
+  - return|ROUTE_NET_INFO:
+  - start|ROUTE_CHECK_TEL_URI:
+  - return|ROUTE_CHECK_TEL_URI:
+  - start|ROUTE_REG_REQUEST:
+  - start|ROUTE_REG_HANDLE:
+  - start|ROUTE_AUTH:
+  - start|ROUTE_AUTH_HELPER:
+  - return|ROUTE_AUTH_HELPER:
+  - start|ROUTE_ADD_CALLINFO_REPLY:
+  - return|ROUTE_ADD_CALLINFO_REPLY:
+  - return|ROUTE_AUTH:
+  - start|ROUTE_PREFERENCES:
+  - start|ROUTE_CHECK_UA:
+  - return|ROUTE_CHECK_UA:
+  - return|ROUTE_PREFERENCES:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+sip_in:
+  - 'REGISTER sip:439333111@spce.test SIP/2.0'
+  - 'From: <sip:439333111@spce.test>;tag=[\w-]+'
+  - 'To: <sip:439333111@spce.test>'
+  - 'CSeq: \d+ REGISTER'
+  - 'Authorization: Digest username="439333111",realm="spce.test",uri="sip:127.0.0.1:5060",nonce=".+",response=".+",algorithm=MD5'
+  - 'Contact: sip:439333111@127.2.0.1:\d+;transport=UDP'
+  - 'Content-Length: 0'
+  - 'P-NGCP-Src-Ip: 127.2.0.1'
+  - 'P-NGCP-Src-Port: \d+'
+  - 'P-NGCP-Src-Proto: udp'
+  - 'P-NGCP-Src-Af: 4'
+  - 'P-Sock-Info: udp:127.0.0.1:5060'
+  - 'P-LB-Uptime: \d+'
+  - 'Path: <sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060>'
+sip_out:
+  - [
+      'SIP/2.0 100 Trying',
+      'From: <sip:439333111@spce.test>;tag=[\w-]+',
+      'To: <sip:439333111@spce.test>',
+      'CSeq: \d+ REGISTER',
+      'P-Out-Socket: udp:127.0.0.1:5060',
+      'P-NGCP-Auth-IP: 127.2.0.1',
+      'P-NGCP-Auth-UA: <null>',
+      'Server: Sipwise NGCP Proxy',
+      'Content-Length: 0',
+    ]
+  - [
+      'SIP/2.0 200 OK',
+      'From: <sip:439333111@spce.test>;tag=[\w-]+',
+      'To: <sip:439333111@spce.test>;tag=[\w-]+',
+      'CSeq: \d+ REGISTER',
+      'P-Out-Socket: udp:127.0.0.1:5060',
+      'P-NGCP-Auth-IP: 127.2.0.1',
+      'P-NGCP-Auth-UA: <null>',
+      'P-NGCP-Authorization: 439333111@spce.test',
+      'P-NGCP-Authorized: 1',
+      'P-Caller-UUID: [% spce_test.testuser1003.uuid %]',
+      'Contact: <sip:439333111@127.2.0.1:\d+>;expires=\d+',
+      'Server: Sipwise NGCP Proxy',
+      'Content-Length: 0',
+    ]
