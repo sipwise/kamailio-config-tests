@@ -29,6 +29,7 @@ use IO::File;
 use YAML::XS;
 use Text::CSV;
 use Template;
+use Try::Tiny;
 use Data::Dumper;
 
 sub usage
@@ -97,12 +98,12 @@ sub get_subs_info
             my $subs = $data_sub->{$domain}->{$username};
             $data->{password} = $subs->{password};
             if(defined($data->{devid})) {
-                $_->{auth_username} = $data->{devid};
-                $_->{number} = $data->{devid};
+                $data->{auth_username} = $data->{devid};
+                $data->{number} = $data->{devid};
                 check_devid($subs, $data->{devid});
             } else {
-                $data->{devid} = $data->{username};
-                $data->{auth_username} = $data->{username};
+                $data->{devid} = $username;
+                $data->{auth_username} = $username;
                 eval { $data->{number} = $subs->{cc}.$subs->{ac}.$subs->{sn}; } unless defined($presence);
             }
             $data->{'pbx_extension'} = $subs->{'pbx_extension'};
@@ -137,49 +138,58 @@ sub generate
     $csv->{caller}->print($io_caller, $seq);
     $csv->{callee}->print($io_callee, $seq);
 
-    foreach (@{$data->{scenarios}})
+    foreach my $scen (@{$data->{scenarios}})
     {
-        eval { get_subs_info($data->{subscribers}, $_); };
-        $_->{password} = "" unless defined($_->{password});
-        # by default proto is udp
-        $_->{proto} = "udp" unless defined($_->{proto});
-        $_->{password_wrong} = "no" unless defined($_->{password_wrong});
-        if($_->{password_wrong} eq "yes")
+        try
         {
-            $_->{password} = "wrongpass";
+            get_subs_info($data->{subscribers}, $scen);
+        } catch {
+            $scen->{devid} = $scen->{username};
+            $scen->{auth_username} = $scen->{username};
+        };
+        $scen->{password} = "" unless defined($scen->{password});
+        # by default proto is udp
+        $scen->{proto} = "udp" unless defined($scen->{proto});
+        $scen->{password_wrong} = "no" unless defined($scen->{password_wrong});
+        if($scen->{password_wrong} eq "yes")
+        {
+            $scen->{password} = "wrongpass";
         }
-        my $auth   = "[authentication username=$_->{auth_username} password=$_->{password}]";
-        my $csv_data = [$_->{devid}, $auth, $_->{domain}, $test_uuid, $_->{'pbx_extension'}];
+        my $auth   = "[authentication username=$scen->{auth_username} password=$scen->{password}]";
+        my $csv_data = [$scen->{devid}, $auth, $scen->{domain}, $test_uuid, $scen->{'pbx_extension'}];
         $csv->{caller}->print($io_caller, $csv_data);
-        $csv_data = ["sipp_scenario".sprintf("%02i", $id).".xml", $_->{proto}, $_->{ip}];
+        $csv_data = ["sipp_scenario".sprintf("%02i", $id).".xml", $scen->{proto}, $scen->{ip}];
         $csv->{scenario}->print($io_scenario, $csv_data);
-        foreach (@{$_->{responders}})
+        foreach my $resp (@{$scen->{responders}})
         {
             # by default foreign is no
-            $_->{foreign} = "no" unless defined($_->{foreign});
-            if(not defined($_->{peer_host}) and $_->{foreign} ne "yes")
+            $resp->{foreign} = "no" unless defined($resp->{foreign});
+            if(not defined($resp->{peer_host}) and $resp->{foreign} ne "yes")
             {
-                get_subs_info($data->{subscribers}, $_);
+                get_subs_info($data->{subscribers}, $resp);
+            } else {
+                $resp->{devid} = $resp->{username};
+                $resp->{auth_username} = $resp->{username};
             }
-            $_->{password} = "" unless defined($_->{password});
+            $resp->{password} = "" unless defined($resp->{password});
             # by default responder is active
-            $_->{active} = "yes" unless defined($_->{active});
+            $resp->{active} = "yes" unless defined($resp->{active});
             # by default peer_host is empty
-            $_->{peer_host} = "" unless defined($_->{peer_host});
+            $resp->{peer_host} = "" unless defined($resp->{peer_host});
             # by default proto is udp
-            $_->{proto} = "udp" unless defined($_->{proto});
-            $auth   = "[authentication username=$_->{auth_username} password=$_->{password}]";
-            $csv_data = [$_->{devid}, $_->{number}, $auth, $_->{domain}, $test_uuid, $_->{'pbx_extension'}];
+            $resp->{proto} = "udp" unless defined($resp->{proto});
+            $auth   = "[authentication username=$resp->{auth_username} password=$resp->{password}]";
+            $csv_data = [$resp->{devid}, $resp->{number}, $auth, $resp->{domain}, $test_uuid, $resp->{'pbx_extension'}];
             $csv->{callee}->print($io_callee, $csv_data);
-            $csv_data = ["sipp_scenario_responder".sprintf("%02i", $res_id).".xml", $_->{proto}, $_->{ip}, $_->{peer_host}, $_->{foreign}, $_->{register}, $_->{username}."@".$_->{domain}];
+            $csv_data = ["sipp_scenario_responder".sprintf("%02i", $res_id).".xml", $resp->{proto}, $resp->{ip}, $resp->{peer_host}, $resp->{foreign}, $resp->{register}, $resp->{username}."@".$resp->{domain}];
             $csv->{scenario}->print($io_scenario, $csv_data);
-            if($_->{register} eq "yes" && $_->{active} eq "yes")
+            if($resp->{register} eq "yes" && $resp->{active} eq "yes")
             {
-                generate_reg($res_id, $test_uuid, $_->{q});
+                generate_reg($res_id, $test_uuid, $resp->{q});
             }
-            if($_->{foreign} eq "yes")
+            if($resp->{foreign} eq "yes")
             {
-                generate_foreign_dom($_->{domain}, $_->{ip});
+                generate_foreign_dom($resp->{domain}, $resp->{ip});
             }
             $res_id++;
         }
@@ -201,15 +211,19 @@ sub generate_presence
 {
     my @rules;
     my ($data) = @_;
-    foreach (@{$data->{presence}})
+    foreach my $pres (@{$data->{presence}})
     {
-        eval { get_subs_info($data->{subscribers}, $_); };
-        $_->{password} = "" unless defined($_->{password});
-        my $vars = { users => @{$_->{allow}} };
-        my $fn = File::Spec->catfile($base_check_dir, "presence_".$_->{username}."_".$_->{domain}.".xml");
+        try {
+            get_subs_info($data->{subscribers}, $pres);
+        } catch {
+            $pres->{auth_username} = $pres->{username};
+        };
+        $pres->{password} = "" unless defined($pres->{password});
+        my $vars = { users => @{$pres->{allow}} };
+        my $fn = File::Spec->catfile($base_check_dir, "presence_".$pres->{auth_username}."_".$pres->{domain}.".xml");
         $tt->process($template_presence, $vars, $fn) or die($tt->error(), "\n");
         undef $fn;
-        my $digest = $_->{username}."@".$_->{domain}.":".$_->{password};
+        my $digest = $pres->{auth_username}."@".$pres->{domain}.":".$pres->{password};
         push @rules, "$bin_dir/presence.sh $digest $template_dir/$template_presence"
     }
     if(scalar(@rules)>0)
