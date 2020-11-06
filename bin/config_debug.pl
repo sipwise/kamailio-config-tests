@@ -111,6 +111,7 @@ else
   $yaml->{kamailio}{lb}{extra_sockets}->{test} = "udp:127.2.0.1:5064";
   $yaml->{kamailio}{lb}{extra_sockets}->{other} = "tcp:127.3.0.1:5074";
   $yaml->{kamailio}{proxy}{children} = $children if($children > 0);
+  $yaml->{kamailio}{proxy}{permissions_reload_delta} = 0;
   $yaml->{kamailio}{proxy}{cfgt} = 'yes';
   $yaml->{sems}{cfgt} = 'yes';
   $yaml->{sems}{debug} = 'yes';
