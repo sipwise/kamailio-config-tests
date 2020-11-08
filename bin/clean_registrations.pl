@@ -126,22 +126,33 @@ sub clean_kamailio
 {
     my $data = shift;
     my @values = ();
-    foreach (@{$data->{scenarios}})
+    my $auth_username;
+    foreach my $scen (@{$data->{scenarios}})
     {
-        push @values, $_->{username}."@".$_->{domain};
-        foreach (@{$_->{responders}})
+        if(defined $scen->{devid}) {
+            $auth_username = $scen->{devid};
+        } else {
+            $auth_username = $scen->{username};
+        }
+        push @values, $auth_username."@".$scen->{domain};
+        foreach my $resp (@{$scen->{responders}})
         {
-            $_->{active} = "yes" unless defined($_->{active});
-            if($_->{register} eq "yes" && $_->{active} eq "yes")
+            $resp->{active} = "yes" unless defined($resp->{active});
+            if($resp->{register} eq "yes" && $resp->{active} eq "yes")
             {
-                push @values, $_->{username}."@".$_->{domain};
+                if(defined $resp->{devid}) {
+                    $auth_username = $resp->{devid};
+                } else {
+                    $auth_username = $resp->{username};
+                }
+                push @values, $auth_username."@".$resp->{domain};
             }
         }
     }
-    foreach (uniq @values) {
-        clean_kamailio_ul($_);
-        if($api->delete_banneduser($_)) {
-            print("$_ removed from banned\n");
+    foreach my $sub (uniq @values) {
+        clean_kamailio_ul($sub);
+        if($api->delete_banneduser($sub)) {
+            print("$sub removed from banned\n");
         }
     }
     return;
