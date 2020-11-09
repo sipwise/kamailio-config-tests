@@ -1,3 +1,31 @@
+kamailio-config-tests (9.2.0.0+0~mr9.2.0.0) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [99858e1] TT#71804 Fix incoming_foreign_dom scenario after proxy on leg_b addition
+  * [403e43c] TT#96305 Fix invire_redirect scenario
+  * [2100090] TT#97750 Fix scenarios after rework of 'EVENTMON_HEADERS' routes
+
+  [ Kirill Solomko ]
+  * [36752a6] Revert "TT#71804 Fix incoming_foreign_dom scenario after proxy on leg_b addition"
+
+  [ Victor Seva ]
+  * [977813a] TT#92600 scenarios/invite_pai_no
+  * [4099f1a] TT#81700 bin/check.py: use argparse instead of old getopts
+  * [4c6d227] TT#81700 bin/check.sh: add info of what sections failed
+  * [49c3f4c] TT#81700 bin/check.sh: add info of what sections failed, take two
+  * [3656b8a] TT#81700 bin/check.sh: skip kam_msg that was already processed
+  * [8c78ded] TT#92600 fix checks of PAI after fixing PAI default 'none' on templates
+  * [173a45d] TT#71804 fix incoming_shared_line after b_leg changes
+  * [f5ce3e9] TT#71906 scenarios_pbx: remove PAI inserted previously by sca
+  * [78eab46] TT#95650 invite_reinvite_*transcoding
+  * [32d0e51] TT#81700 bin/apply_flow_diff.sh
+  * [bcfb522] TT#95650 fix invite_reinvite_*transcoding
+  * [f1c1379] TT#97750 support devid in scenario.yml
+  * [2b4793a] TT#97750 fix support devid in scenario.yml
+  * [b5ea646] TT#99150 set permissions_reload_delta value
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 09 Nov 2020 16:24:15 +0100
+
 kamailio-config-tests (9.1.0.0+0~mr9.1.0.0) unstable; urgency=medium
 
   [ Victor Seva ]
