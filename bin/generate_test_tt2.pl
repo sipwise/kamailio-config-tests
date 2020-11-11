@@ -138,6 +138,7 @@ sub subst_common
     $line =~ s/:[ ]+\d+/:\\s+\\d+/;
   } elsif($line =~ /^Contact: /i) {
     $line =~ s/;expires=\d+/;expires=\\d+/g;
+    $line =~ s/;\+sip\.instance=/;\\+sip.instance=/g;
   } elsif($line =~ /^P-LB-Uptime: /i) {
     $line =~ s/: \d+/: \\d+/;
   } elsif($line =~ /^P-NGCP-Src-Port: /i) {
