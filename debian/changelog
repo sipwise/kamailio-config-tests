@@ -1,3 +1,11 @@
+kamailio-config-tests (9.1.1.1+0~mr9.1.1.1) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [6f586f0] TT#81700 generate_test_tt2.pl: fix contact param sip.instance
+  * [a705286] TT#97750 clean_registrations: add devid support
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 23 Nov 2020 12:19:40 +0100
+
 kamailio-config-tests (9.1.1.0+0~mr9.1.1.0) unstable; urgency=medium
 
   [ Marco Capetta ]
