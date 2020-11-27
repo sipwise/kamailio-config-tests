@@ -133,7 +133,7 @@ sub subst_common
     $line =~ s/response="[^"]+"/response=".+"/;
     $line =~ s/nonce="[^"]+"/nonce=".+"/;
   } elsif($line =~ /^(Server|User-Agent): Sipwise/i) {
-    $line =~ s/: Sipwise NGCP (Proxy|Application|PBX).+/: Sipwise NGCP ${1}/;
+    $line =~ s/: Sipwise NGCP (Proxy|Application|PBX|LB).+/: Sipwise NGCP ${1}/;
   } elsif($line =~ /^Content-Length:[ ]+[1-9]/i) {
     $line =~ s/:[ ]+\d+/:\\s+\\d+/;
   } elsif($line =~ /^Contact: /i) {
@@ -152,6 +152,8 @@ sub subst_common
   } elsif($line =~ /^Call-Info: /i) {
     $line =~ s/appearance-index=\*/appearance-index=\\*/g;
     $line =~ s/appearance-uri=\"([^\"]+)\"/appearance-uri=\\"${1}\\"/g;
+  } elsif($line =~ /^Subscription-State: /i) {
+    $line =~ s/expires=\d+/expires=\\d+/;
   }
 
   if($line =~ /127\.0\.0\.1(:|;port=)508[08]/) {
