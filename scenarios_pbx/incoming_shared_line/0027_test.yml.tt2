@@ -6,6 +6,6 @@ sip_in:
   - 'From: <sip:43110021003@spce.test>;tag=[\w-]+'
   - 'To: <sip:testuser1002@spce.test>;tag=[\w-]+'
   - 'CSeq: \d+ CANCEL'
-  - 'Server: Sipwise NGCP LB 9.X'
+  - 'Server: Sipwise NGCP LB'
   - 'Content-Length: 0'
 sip_out: []

@@ -6,6 +6,6 @@ sip_in:
   - 'From: "Anonymous" <sip:anonymous@anonymous.invalid>;tag=[\w-]+'
   - 'To: <sip:testuser1003@spce.test>'
   - 'CSeq: \d+ INVITE'
-  - 'Server: Sipwise NGCP LB 9.X'
+  - 'Server: Sipwise NGCP LB'
   - 'Content-Length: 0'
 sip_out: []
