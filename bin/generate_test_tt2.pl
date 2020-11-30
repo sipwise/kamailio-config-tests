@@ -119,7 +119,7 @@ sub subst_ids
     }
   }
   foreach my $id (sort keys %{$ids}) {
-    if($line =~ s/(=|: )\Q${id}\E([^\d]?)/${1}[% $ids->{$id} %]${2}/g) {
+    if($line =~ s/(=|: )\Q${id}\E([^\d]+?)/${1}[% $ids->{$id} %]${2}/g) {
       return $line;
     }
   }
