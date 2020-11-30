@@ -112,6 +112,12 @@ sub subst_uuids
 sub subst_ids
 {
   my $line = shift;
+  my @skip_headers = qw(Content-Length CSeq);
+  foreach my $header (@{skip_headers}) {
+    if ($line =~ /^\Q${header}\E: /i) {
+      return $line;
+    }
+  }
   foreach my $id (sort keys %{$ids}) {
     if($line =~ s/(=|: )\Q${id}\E([^\d]?)/${1}[% $ids->{$id} %]${2}/g) {
       return $line;
@@ -136,6 +142,8 @@ sub subst_common
     $line =~ s/: Sipwise NGCP (Proxy|Application|PBX|LB).+/: Sipwise NGCP ${1}/;
   } elsif($line =~ /^Content-Length:[ ]+[1-9]/i) {
     $line =~ s/:[ ]+\d+/:\\s+\\d+/;
+  } elsif($line =~ /^Content-Length: [ ]+0/i) {
+    $line =~ s/: [ ]+\d+/: \\s+0/;
   } elsif($line =~ /^Contact: /i) {
     $line =~ s/;expires=\d+/;expires=\\d+/g;
     $line =~ s/;\+sip\.instance=/;\\+sip.instance=/g;
@@ -154,6 +162,8 @@ sub subst_common
     $line =~ s/appearance-uri=\"([^\"]+)\"/appearance-uri=\\"${1}\\"/g;
   } elsif($line =~ /^Subscription-State: /i) {
     $line =~ s/expires=\d+/expires=\\d+/;
+  } elsif($line =~ /sip:pre_announce\@app\.local:\d+/ ) {
+    $line =~ s/app\.local:\d+/app.local:\\d+/;
   }
 
   if($line =~ /127\.0\.0\.1(:|;port=)508[08]/) {

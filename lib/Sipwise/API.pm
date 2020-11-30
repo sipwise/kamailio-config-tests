@@ -1013,7 +1013,7 @@ sub upload_soundfile {
 	if(! $res->is_success) {
 		die $res->as_string;
 	}
-	return;
+	return _get_id("/api/soundfiles/", $res->header('Location'));
 }
 
 sub delete_banneduser {
