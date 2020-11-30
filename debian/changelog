@@ -1,3 +1,10 @@
+kamailio-config-tests (9.1.1.2+0~mr9.1.1.2) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [4573bb4] TT#97750 Add new pbx scenarios for calls with alias dev_id
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 30 Nov 2020 09:22:09 +0100
+
 kamailio-config-tests (9.1.1.1+0~mr9.1.1.1) unstable; urgency=medium
 
   [ Victor Seva ]
