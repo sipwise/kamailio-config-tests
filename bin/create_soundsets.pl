@@ -65,7 +65,7 @@ if(!$del) {
 
 sub manage_soundfiles
 {
-  my ($data, $id) = @_;
+  my ($data, $st) = @_;
 
   foreach my $sf (sort keys %{$data->{sounds}})
   {
@@ -76,8 +76,8 @@ sub manage_soundfiles
     $sf_data->{handle} = $sf;
     $sf_data->{filename} = basename($filename, '.wav');
     if(-f $filepath) {
-      $api->upload_soundfile($sf_data, $filepath);
-      print "$filename at [$filepath] uploaded\n";
+      $ids->{soundsets}->{$st}->{$sf}->{id} = $api->upload_soundfile($sf_data, $filepath);
+      print "$filename at [$filepath] uploaded[$sf]\n";
     } else {
       die("$filename at [$filepath] not found");
     }
@@ -100,7 +100,7 @@ sub do_create
     } else {
       $data->{soundsets}->{$st}->{id} = $api->create_soundset($st_data);
       print "soundset [$st]: created [$data->{soundsets}->{$st}->{id}]\n";
-      manage_soundfiles($data->{soundsets}->{$st});
+      manage_soundfiles($data->{soundsets}->{$st}, $st);
     }
     $ids->{soundsets}->{$st}->{id} = $data->{soundsets}->{$st}->{id};
   }
