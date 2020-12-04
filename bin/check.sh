@@ -37,6 +37,10 @@ CDR=false
 . /etc/mysql/sipwise.cnf
 
 
+rtpengine_ctl_ip=$(grep 'listen-cli' /etc/rtpengine/rtpengine.conf|\
+  awk '{print $3}')
+RTPENGINE_CTL="rtpengine-ctl -ip ${rtpengine_ctl_ip}"
+
 # $1 kamailio msg parsed to yml
 # $2 destination png filename
 graph() {
@@ -374,6 +378,20 @@ stop_capture() {
       fi
     done
   fi
+}
+
+check_rtp() {
+  local uuid
+
+  uuid=$(awk '/^test_uuid:/ { print $2 }' "${SCEN_CHECK_DIR}/scenario.yml")
+  mapfile -t callids < <(${RTPENGINE_CTL} list sessions all|awk '{print $2}')
+  for callid in "${callids[@]}" ; do
+    if [[ "${callid}" =~ NGCP%${uuid}%/// ]]; then
+      echo "$(date) - Terminate RTP sessions for ${callid}"
+      ${RTPENGINE_CTL} terminate "${callid}"
+      ERR_FLAG=1
+    fi
+  done
 }
 
 # $1 port to check
@@ -832,10 +850,12 @@ if ! "$SKIP_RUNSIPP" ; then
         let a=a+1
       done
     fi
-
     echo "$(date) - Done"
   fi
 
+  echo "$(date) - check RTP sessions, wait 5 secs first"
+  sleep 5
+  check_rtp
 fi
 
 
