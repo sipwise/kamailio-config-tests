@@ -1,3 +1,10 @@
+kamailio-config-tests (9.1.1.3+0~mr9.1.1.3) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [27613e5] TT#97750 disable invite_username_devid_fulllookup
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 17 Dec 2020 09:48:49 +0100
+
 kamailio-config-tests (9.1.1.2+0~mr9.1.1.2) unstable; urgency=medium
 
   [ Marco Capetta ]
