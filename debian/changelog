@@ -1,3 +1,22 @@
+kamailio-config-tests (9.2.1.0+0~mr9.2.1.0) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [6320e9f] TT#81700 generate_test_tt2.pl: fix contact param sip.instance
+  * [1cc3361] TT#97750 clean_registrations: add devid support
+  * [c1a56fe] TT#81700 generate_test_tt2.pl: add LB for Server|User-Agent
+  * [4750bc8] TT#81700 remove server version from checks
+  * [e0662e6] TT#81700 helpers to show/diff content of vars in a route
+  * [4f6e639] TT#81700 generate_test_tt2.pl: fixes
+  * [183e841] TT#81700 generate_test_tt2.pl: fix subst_ids()
+  * [66ec763] TT#81700 bin/pcap_diff.py tool
+  * [c93bacb] TT#81700 check: add check for rtpengine session per test
+  * [674989c] TT#97750 disable invite_username_devid_fulllookup
+
+  [ Marco Capetta ]
+  * [35e7d6f] TT#97750 Add new pbx scenarios for calls with alias dev_id
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 05 Jan 2021 15:31:00 +0100
+
 kamailio-config-tests (9.2.0.0+0~mr9.2.0.0) unstable; urgency=medium
 
   [ Marco Capetta ]
