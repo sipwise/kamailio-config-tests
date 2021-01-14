@@ -4,7 +4,7 @@
 
   <recv request="INVITE" crlf="true" rtd="true">
     <action>
-      <ereg regexp="<(.*)>" search_in="hdr" header="Contact:" check_it="true" assign_to="1,2" />
+      <ereg regexp="&lt;(.*)&gt;" search_in="hdr" header="Contact:" check_it="true" assign_to="1,2" />
       <ereg regexp="tag=(.*)" search_in="hdr" header="From:" check_it="true" assign_to="1,3" />
     </action>
   </recv>

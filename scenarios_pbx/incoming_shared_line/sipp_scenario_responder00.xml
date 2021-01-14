@@ -87,7 +87,7 @@
   <label id="1" />
   <recv request="NOTIFY">
     <action>
-      <ereg regexp=" <sip:spce\.test>;appearance-index=\*;appearance-state=idle$"
+      <ereg regexp=" &lt;sip:spce\.test&gt;;appearance-index=\*;appearance-state=idle$"
         search_in="hdr"
         header="Call-Info:"
         assign_to="9"/>
