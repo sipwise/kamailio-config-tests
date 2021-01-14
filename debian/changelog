@@ -1,3 +1,20 @@
+kamailio-config-tests (8.5.3.1+0~mr8.5.3.1) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [866b79c] TT#96305 Fix invire_redirect scenario
+
+  [ Victor Seva ]
+  * [4ca56fe] TT#95650 invite_reinvite_*transcoding
+  * [f020ce7] TT#95650 fix invite_reinvite_*transcoding
+  * [a6226b0] TT#95650 fix invite_reinvite_*transcoding, take two
+  * [28deff4] TT#81700 generate_test_tt2.pl: fix contact param sip.instance
+  * [e125b93] TT#81700 generate_test_tt2.pl: add LB for Server|User-Agent
+  * [f400652] TT#81700 generate_test_tt2.pl: fixes
+  * [ab0eb9a] TT#81700 generate_test_tt2.pl: fix subst_ids()
+  * [68be054] TT#81700 check: add check for rtpengine session per test
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 14 Jan 2021 16:47:48 +0100
+
 kamailio-config-tests (8.5.3.0+0~mr8.5.3.0) unstable; urgency=medium
 
   [ Victor Seva ]
