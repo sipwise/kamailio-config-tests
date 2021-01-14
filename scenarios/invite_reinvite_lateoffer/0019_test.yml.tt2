@@ -1,0 +1,53 @@
+flow:
+  - start|DEFAULT_ROUTE:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_NET_INFO:
+  - return|ROUTE_NET_INFO:
+  - start|ROUTE_CHECK_TEL_URI:
+  - return|ROUTE_CHECK_TEL_URI:
+  - start|ROUTE_PRX_REQUEST:
+  - start|ROUTE_INITVARS:
+  - return|ROUTE_INITVARS:
+  - start|ROUTE_PREPARE_UA:
+  - return|ROUTE_PREPARE_UA:
+  - start|ROUTE_OUTBOUND:
+  - start|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+sip_in:
+  - 'ACK sip:127.0.0.1:508[08] SIP/2.0'
+  - 'From: <sip:004321001@spce.test>;tag=[\w-]+'
+  - 'To: <sip:testuser1001@spce.test>;tag=[\w-]+'
+  - 'CSeq: \d+ ACK'
+  - 'Contact: <sip:testuser1001@127.0.2.1:\d+;transport=UDP>'
+  - 'Content-Type: application/sdp'
+  - 'Content-Length:\s+\d+'
+  - 'P-NGCP-Src-Ip: 127.0.2.1'
+  - 'P-NGCP-Src-Port: \d+'
+  - 'P-NGCP-Src-Proto: udp'
+  - 'P-NGCP-Src-Af: 4'
+  - 'P-Sock-Info: udp:\d+.\d+.\d+.\d+:5060'
+  - 'P-LB-Uptime: \d+'
+  - 'o=OXE \d+ \d+ IN IP4 127.0.2.1'
+sip_out:
+  - [
+      'ACK sip:127.0.0.1:508[08] SIP/2.0',
+      'From: <sip:004321001@spce.test>;tag=[\w-]+',
+      'To: <sip:testuser1001@spce.test>;tag=[\w-]+',
+      'CSeq: \d+ ACK',
+      'Contact: <sip:testuser1001@127.0.2.1:\d+;transport=UDP>',
+      'Content-Type: application/sdp',
+      'Content-Length:\s+\d+',
+      'P-NGCP-Src-Ip: 127.0.2.1',
+      'P-NGCP-Src-Port: \d+',
+      'P-NGCP-Src-Proto: udp',
+      'P-NGCP-Src-Af: 4',
+      'P-Sock-Info: udp:\d+.\d+.\d+.\d+:5060',
+      'P-LB-Uptime: \d+',
+      'o=OXE \d+ \d+ IN IP4 127.0.2.1',
+    ]

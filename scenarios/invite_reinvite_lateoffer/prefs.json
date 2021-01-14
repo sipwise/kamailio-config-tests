@@ -1,0 +1,6 @@
+{
+    "peer_00_host0": {
+        "rtp_interface": "tag",
+        "concurrent_max": 1
+    }
+}

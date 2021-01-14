@@ -1,0 +1,50 @@
+flow:
+  - start|DEFAULT_ROUTE:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_LEG_B:
+  - start|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+sip_in:
+  - 'INVITE sip:004321001@127.0.2.1:\d+;transport=udp SIP/2.0'
+  - 'From: <sip:4311001@spce.test>;tag=[\w-]+'
+  - 'To: <sip:004321001@127.0.2.1>'
+  - 'CSeq: \d+ INVITE'
+  - 'P-LB-Uptime: \d+'
+  - 'P-Asserted-Identity: <sip:4311001@spce.test>'
+  - 'P-Caller-UUID: [% spce_test.testuser1001.uuid %]'
+  - 'P-NGCP-Caller-Info: <sip:testuser1001@spce.test>;ip=127.126.0.1;port=\d+;primary=4311001'
+  - 'P-NGCP-Callee-Info: <sip:004321001@spce.test>;ip=127.0.2.1;port=\d+'
+  - 'P-D-Uri: sip:127.0.0.1:5060;received=sip:127.0.2.1:\d+%3blr%3btransport%3dudp'
+  - 'Content-Type: application/sdp'
+  - 'Contact: <sip:127.0.0.1:508[08];transport=udp>'
+  - 'Content-Length:\s+\d+'
+sip_out:
+  - [
+      'SIP/2.0 100 Trying',
+      'From: <sip:4311001@spce.test>;tag=[\w-]+',
+      'To: <sip:004321001@127.0.2.1>',
+      'CSeq: \d+ INVITE',
+      'Server: Sipwise NGCP Proxy',
+      'Content-Length: 0',
+    ]
+  - [
+      'INVITE sip:004321001@127.0.2.1:\d+;transport=udp SIP/2.0',
+      'From: <sip:4311001@spce.test>;tag=[\w-]+',
+      'To: <sip:004321001@127.0.2.1>',
+      'CSeq: \d+ INVITE',
+      'P-LB-Uptime: \d+',
+      'P-Asserted-Identity: <sip:4311001@spce.test>',
+      'P-Caller-UUID: [% spce_test.testuser1001.uuid %]',
+      'P-NGCP-Caller-Info: <sip:testuser1001@spce.test>;ip=127.126.0.1;port=\d+;primary=4311001',
+      'P-NGCP-Callee-Info: <sip:004321001@spce.test>;ip=127.0.2.1;port=\d+',
+      'P-D-Uri: sip:127.0.0.1:5060;received=sip:127.0.2.1:\d+%3blr%3btransport%3dudp',
+      'Content-Type: application/sdp',
+      'Contact: <sip:127.0.0.1:508[08];transport=udp>',
+      'Content-Length:\s+\d+',
+    ]
