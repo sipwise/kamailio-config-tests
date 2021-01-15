@@ -400,7 +400,7 @@ error_helper() {
     echo "$(date) - Deleting domain:${DOMAIN}"
     delete_voip "${DOMAIN}"
   fi
-  find "${SCEN_CHECK_DIR}/" -type f -name 'sipp_scenario*errors.log' \
+  find "${BASE_DIR}/" -maxdepth 1 -type f -name 'sipp_scenario*errors.log' \
     -exec mv {} "${LOG_DIR}" \;
   stop_capture
   check_rtp
@@ -655,8 +655,8 @@ run_sipp() {
 
   copy_logs
   # if any scenario has a log... error
-  if [ "$(find "${SCEN_CHECK_DIR}" -name 'sipp_scenario*errors.log' 2>/dev/null|wc -l)" -ne 0 ]; then
-    find "${SCEN_CHECK_DIR}/" -type f -name 'sipp_scenario*errors.log' -exec mv {} "${LOG_DIR}" \;
+  if [ "$(find "${BASE_DIR}" -maxdepth 1 -name 'sipp_scenario*errors.log' 2>/dev/null|wc -l)" -ne 0 ]; then
+    find "${BASE_DIR}/" -maxdepth 1 -type f -name 'sipp_scenario*errors.log' -exec mv {} "${LOG_DIR}" \;
     status=1
   fi
 
