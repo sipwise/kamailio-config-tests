@@ -38,6 +38,7 @@ RETRANS_SIZE=2
 rtpengine_ctl_ip=$(grep 'listen-cli' /etc/rtpengine/rtpengine.conf|\
   awk '{print $3}')
 RTPENGINE_CTL="rtpengine-ctl -ip ${rtpengine_ctl_ip}"
+SIPP_VERSION=$(sipp -v | awk -F- '/SIPp/ { print $1 }' | awk '{print $2}')
 
 # $1 kamailio msg parsed to yml
 # $2 destination png filename
@@ -63,6 +64,38 @@ generate_error_tap() {
 not ok 1 - ERROR: File $2 does not exists
 EOF
 echo "$(date) - $(basename "$2") NOT ok"
+}
+
+detect_sipp_error_files() {
+  local find_cmd
+  case ${SIPP_VERSION} in
+    v3\.[0-5]\.*)
+      find_cmd=$(find "${SCEN_CHECK_DIR}/" -type f -name 'sipp_scenario*errors.log' 2>/dev/null|wc -l)
+      ;;
+    *)
+      find_cmd=$(find "${BASE_DIR}/" -maxdepth 1 -type f -name 'sipp_scenario*errors.log' 2>/dev/null|wc -l)
+      ;;
+  esac
+  if [ "${find_cmd}" -ne 0 ]; then
+    echo "$(date) - Detected sipp error files"
+    return 0
+  else
+    echo "$(date) - No sipp error files detected"
+    return 1
+  fi
+}
+
+move_sipp_error_files() {
+  case ${SIPP_VERSION} in
+    v3\.[0-5]\.*)
+      find "${SCEN_CHECK_DIR}/" -type f -name 'sipp_scenario*errors.log' \
+        -exec mv {} "${LOG_DIR}" \;
+      ;;
+    *)
+      find "${BASE_DIR}/" -maxdepth 1 -type f -name 'sipp_scenario*errors.log' \
+        -exec mv {} "${LOG_DIR}" \;
+      ;;
+  esac
 }
 
 function str_check_error() {
@@ -400,8 +433,7 @@ error_helper() {
     echo "$(date) - Deleting domain:${DOMAIN}"
     delete_voip "${DOMAIN}"
   fi
-  find "${BASE_DIR}/" -maxdepth 1 -type f -name 'sipp_scenario*errors.log' \
-    -exec mv {} "${LOG_DIR}" \;
+  move_sipp_error_files
   stop_capture
   check_rtp
   exit "$2"
@@ -655,8 +687,8 @@ run_sipp() {
 
   copy_logs
   # if any scenario has a log... error
-  if [ "$(find "${BASE_DIR}" -maxdepth 1 -name 'sipp_scenario*errors.log' 2>/dev/null|wc -l)" -ne 0 ]; then
-    find "${BASE_DIR}/" -maxdepth 1 -type f -name 'sipp_scenario*errors.log' -exec mv {} "${LOG_DIR}" \;
+  if detect_sipp_error_files; then
+    move_sipp_error_files
     status=1
   fi
 
