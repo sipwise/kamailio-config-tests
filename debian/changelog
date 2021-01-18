@@ -1,3 +1,14 @@
+kamailio-config-tests (7.5.7.1+0~mr7.5.7.1) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [d9dbd1e] TT#81700 get_results.sh: add summary at the end of the report
+  * [2fe950a] TT#81700 get_results.sh: fix error on tap summary
+  * [56c29a0] TT#95650 invite_reinvite_*transcoding
+  * [c6da82a] TT#95650 fix invite_reinvite_*transcoding, take two
+  * [c32a099] TT#81700 check: add check for rtpengine session per test
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 18 Jan 2021 15:00:28 +0100
+
 kamailio-config-tests (7.5.7.0+0~mr7.5.7.0) unstable; urgency=medium
 
   [ Victor Seva ]
