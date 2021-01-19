@@ -20,7 +20,7 @@
 #
 #ngcp-kamcmd proxy dbg.reset_msgid
 LOGS="/var/log/ngcp/kamailio-proxy.log /var/log/ngcp/sems.log \
- /var/log/ngcp/sems-pbx.log /var/log/ngcp/kamailio-lb.log"
+ /var/log/ngcp/sems-pbx.log /var/log/ngcp/kamailio-lb.log /var/log/ngcp/rtp.log"
 # shellcheck disable=SC2086
 rm -rf $LOGS
 service rsyslog restart

@@ -543,6 +543,8 @@ copy_logs() {
   fi
   # copy the kamailio-lb log
   cp "${KAMLB_LOG}" "${LOG_DIR}/kamailio-lb.log"
+  # copy the rtpengine log
+  cp "${RTP_LOG}" "${LOG_DIR}/rtp.log"
 }
 
 memdbg() {
@@ -846,6 +848,7 @@ KAM_LOG=${KAM_LOG:-"/var/log/ngcp/kamailio-proxy.log"}
 KAMLB_LOG=${KAMLB_LOG:-"/var/log/ngcp/kamailio-lb.log"}
 SEMS_LOG=${SEMS_LOG:-"/var/log/ngcp/sems.log"}
 SEMS_PBX_LOG=${SEMS_PBX_LOG:-"/var/log/ngcp/sems-pbx.log"}
+RTP_LOG=${RTP_LOG:-"/var/log/ngcp/rtp.log"}
 SCEN_DIR="${BASE_DIR}/${GROUP}"
 SCEN_CHECK_DIR="${SCEN_DIR}/${NAME_CHECK}"
 DOMAIN=${DOMAIN:-"spce.test"}
