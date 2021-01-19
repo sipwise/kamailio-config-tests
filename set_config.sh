@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 RUN_DIR="$(dirname "$0")"
 export BASE_DIR=${BASE_DIR:-$RUN_DIR}
 # Set up the environment, to use local perl modules
@@ -37,7 +38,10 @@ if ! ngcpcfg apply "config debug on via kamailio-config-tests" ; then
   echo "$(date) - ngcpcfg apply returned $?"
   error_flag=4
 fi
-echo "$(date) - Setting config[${GROUP}] debug on. Done[${error_flag}]"
 
+echo "$(date) - start dummy0 interface"
+ifup dummy0
+
+echo "$(date) - Setting config[${GROUP}] debug on. Done[${error_flag}]"
 exit ${error_flag}
 

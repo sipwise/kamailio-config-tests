@@ -44,6 +44,7 @@ my $help = 0;
 my $children = 0;
 my $profile = "CE";
 my $group;
+
 if (exists $ENV{'GROUP'})
 {
   $group = $ENV{'GROUP'};
@@ -120,8 +121,19 @@ else
   $yaml->{mediator}{interval} = '1';      # Necessary to speedup the creation of the CDRs
   $yaml->{rtpproxy}{delete_delay} = '2';  # Necessary to speedup the deletetion of the used ports in rtpengine
   $yaml->{rtpproxy}{log_level} = '7';
+  $yaml->{modules}[0]->{enable} = 'yes'; # dummy module should be the first one
 
   $net_yaml = LoadFile($file_net_yaml);
+
+  for my $host (keys %{$net_yaml->{hosts}}) {
+    $net_yaml->{hosts}->{$host}->{dummy0} = {
+      ip => '172.30.1.2',
+      netmask => '255.255.255.0',
+      type => ['rtp_tag']
+    };
+    push @{$net_yaml->{hosts}->{$host}->{interfaces}}, 'dummy0';
+  }
+
   $net_yaml->{hosts_common}->{etc_hosts_global_extra_entries} //= ();
   my $entries = $net_yaml->{hosts_common}->{etc_hosts_global_extra_entries};
   push @{$entries}, "127.0.0.1 $domain";
