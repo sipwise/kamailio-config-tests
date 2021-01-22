@@ -1,0 +1,12 @@
+---
+cdr:
+  - source_user: 'testuser1002'
+    source_domain: 'spce.test'
+    source_cli: '4311002'
+    destination_user: 'emergency_112'
+    destination_domain: '127.0.2.1'
+    destination_user_dialed: '112'
+    destination_user_out: 'E1112'
+    call_type: 'call'
+    call_status: 'ok'
+    call_code: '200'
