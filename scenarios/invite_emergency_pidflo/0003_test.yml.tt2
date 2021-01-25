@@ -59,7 +59,7 @@ flow:
   - start|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_CNT_DLG_CHECK:
   - start|ROUTE_EMERGENCY_OBJ:
-      $xavp(caller_real_prefs=>emergency_location_format): cirpack
+      $xavp(caller_real_prefs=>emergency_location_format): PIDF-LO
   - return|ROUTE_EMERGENCY_OBJ:
   - start|ROUTE_CHECK_PBX:
   - return|ROUTE_CHECK_PBX:
@@ -213,6 +213,7 @@ sip_out:
       'Content-Type: application/sdp',
       'Content-Length:\s+\d+',
       'P-LB-Uptime: \d+',
+      'Geolocation: <cid:\d+@spce.test>',
       'P-Asserted-Identity: <sip:4311002@spce.test>',
       'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
       'P-Callee-UUID: 0',
