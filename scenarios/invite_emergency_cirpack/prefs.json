@@ -1,10 +1,14 @@
 {
     "@spce.test": {
-    	"emergency_prefix": "E",
+        "emergency_prefix": "E",
         "rewrite_rule_set": "rw_00"
     },
     "testuser1002@spce.test": {
-    	"emergency_location_object": "7e Od 04 55 75 69 20 4d 61 6b 65 43 61 6c 6c"
+        "emergency_location_format": "cirpack",
+        "emergency_location_object": {
+            "content_type": "application/vnd.cirpack.isdn-ext",
+            "data": "N2UgT2QgMDQgNTUgNzUgNjkgMjAgNGQgNjEgNmIgNjUgNDMgNjEgNmMgNmM="
+        }
     },
     "peer_00_host0": {
         "rewrite_rule_set": "rw_01",

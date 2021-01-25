@@ -1,0 +1,15 @@
+---
+rw_00:
+  - direction: in
+    field: callee
+    match_pattern: '^(911|112)$'
+    replace_pattern: 'emergency_\1'
+    priority: 1
+    description: Tag Emergency Numbers
+rw_01:
+  - direction: out
+    field: callee
+    match_pattern: '^emergency_(.+)$'
+    replace_pattern: '${caller_emergency_prefix}${caller_ac}\1'
+    priority: 1
+    description: Normalize Emergency Numbers
