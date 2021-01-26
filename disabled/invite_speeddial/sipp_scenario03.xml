@@ -27,9 +27,7 @@
     ]]>
   </send>
 
-  <recv response="100" rtd="1" optional="true">
-  </recv>
-
+  <recv response="100" rtd="1" optional="true"/>
   <recv response="407" rtd="2" auth="true"/>
 
   <send>
@@ -77,11 +75,8 @@
     ]]>
   </send>
 
-  <recv response="100" optional="true">
-  </recv>
-
-  <recv response="484" rrs="true" rtd="3">
-  </recv>
+  <recv response="100" optional="true"/>
+  <recv response="484" rtd="3"/>
 
 <send>
     <![CDATA[
