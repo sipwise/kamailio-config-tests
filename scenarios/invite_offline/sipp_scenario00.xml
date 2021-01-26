@@ -26,9 +26,7 @@
     ]]>
   </send>
 
-  <recv response="100" rtd="1" optional="true">
-  </recv>
-
+  <recv response="100" rtd="1" optional="true"/>
   <recv response="407" rtd="2" auth="true"/>
 
   <send>
@@ -75,17 +73,10 @@
     ]]>
   </send>
 
-  <recv response="100" optional="true">
-  </recv>
-
-  <recv response="180" optional="true">
-  </recv>
-
-  <recv response="183" optional="true">
-  </recv>
-
-  <recv response="480" rrs="true" rtd="3">
-  </recv>
+  <recv response="100" optional="true"/>
+  <recv response="180" optional="true"/>
+  <recv response="183" optional="true"/>
+  <recv response="480" rtd="3"/>
 
   <send>
     <![CDATA[
@@ -131,17 +122,10 @@
     ]]>
   </send>
 
-  <recv response="100" optional="true">
-  </recv>
-
-  <recv response="180" optional="true">
-  </recv>
-
-  <recv response="183" optional="true">
-  </recv>
-
-  <recv response="480" rrs="true" rtd="3">
-  </recv>
+  <recv response="100" optional="true"/>
+  <recv response="180" optional="true"/>
+  <recv response="183" optional="true"/>
+  <recv response="480" rtd="3"/>
 
   <send>
     <![CDATA[
