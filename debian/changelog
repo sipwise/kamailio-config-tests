@@ -1,3 +1,10 @@
+kamailio-config-tests (9.2.1.2+0~mr9.2.1.2) unstable; urgency=medium
+
+  [ Alessio Garzi ]
+  * [8a1a9e1] TT#107650 New scenario invite_callee_bye
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 26 Jan 2021 10:30:40 +0100
+
 kamailio-config-tests (9.2.1.1+0~mr9.2.1.1) unstable; urgency=medium
 
   * New release.
