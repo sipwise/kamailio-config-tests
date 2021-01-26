@@ -80,11 +80,8 @@
     ]]>
   </send>
 
-  <recv response="100" optional="true">
-  </recv>
-
-  <recv response="486" rrs="true" rtd="3">
-  </recv>
+  <recv response="100" optional="true"/>
+  <recv response="486" rtd="3"/>
 
   <send>
     <![CDATA[
@@ -94,7 +91,6 @@
       From: <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>;tag=[pid]SIPpTag00[call_number]
       To: <sip:[field0 file="callee.csv" line=1]@[field3 file="callee.csv" line=1]>
       Call-ID: NGCP%[field4 file="callee.csv" line=0]%///[call_id]
-      [routes]
       CSeq: 2 ACK
       Contact: sip:[field0 file="caller.csv"]@[local_ip]:[local_port]
       Max-Forwards: 70
