@@ -13,10 +13,9 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - 'SIP/2.0 100 Connecting'
+  - 'SIP/2.0 100'
   - 'From: <sip:4311002@spce.test>;tag=[\w-]+'
   - 'To: <sip:testuser1003@spce.test>'
   - 'CSeq: \d+ INVITE'
-  - 'Server: Sipwise NGCP Application'
   - 'Content-Length: 0'
 sip_out: []
