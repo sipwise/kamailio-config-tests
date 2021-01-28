@@ -164,6 +164,8 @@ sub subst_common
     $line =~ s/expires=\d+/expires=\\d+/;
   } elsif($line =~ /sip:pre_announce\@app\.local:\d+/ ) {
     $line =~ s/app\.local:\d+/app.local:\\d+/;
+  } elsif($line =~ /^Accept: [^+]*\+.*/i ) {
+    $line =~ s/^Accept: ([^+]*)\+(.*)/Accept: ${1}\\\+${2}/;
   }
 
   if($line =~ /127\.0\.0\.1(:|;port=)508[08]/) {
