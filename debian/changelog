@@ -1,3 +1,10 @@
+kamailio-config-tests (8.5.3.3+0~mr8.5.3.3) unstable; urgency=medium
+
+  [ Víctor Seva ]
+  * [72f59bd] Revert "TT#107650 New scenario invite_callee_bye"
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 29 Jan 2021 11:50:09 +0100
+
 kamailio-config-tests (8.5.3.2+0~mr8.5.3.2) unstable; urgency=medium
 
   [ Alessio Garzi ]
