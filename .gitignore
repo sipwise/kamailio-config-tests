@@ -1,4 +1,5 @@
 *~
+.swp
 log
 result
 mem
@@ -6,6 +7,7 @@ mem
 *_test.yml
 scenario_ids.yml
 sipp_scenario_responder*_reg.xml
+*errors.log
 *.csv
 presence_*xml
 presence.sh

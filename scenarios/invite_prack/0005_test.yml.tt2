@@ -1,0 +1,33 @@
+flow:
+  - start|DEFAULT_ROUTE:
+  - start|ROUTE_ENTRY:
+      $x_hdr(Supported): 100rel
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_LEG_B:
+  - start|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+sip_in:
+  - 'INVITE sip:004321001@127.0.2.1:\d+;transport=udp SIP/2.0'
+  - 'From: <sip:4311012@spce.test>;tag=[\w-]+'
+  - 'To: <sip:004321001@127.0.2.1>'
+  - 'CSeq: \d+ INVITE'
+  - 'Supported: 100rel'
+sip_out:
+  - [
+      'SIP/2.0 100 Trying',
+      'From: <sip:4311012@spce.test>;tag=[\w-]+',
+      'To: <sip:004321001@127.0.2.1>',
+      'CSeq: \d+ INVITE',
+    ]
+  - [
+      'INVITE sip:004321001@127.0.2.1:\d+;transport=udp SIP/2.0',
+      'From: <sip:4311012@spce.test>;tag=[\w-]+',
+      'To: <sip:004321001@127.0.2.1>',
+      'CSeq: \d+ INVITE',
+      'Supported: 100rel',
+    ]

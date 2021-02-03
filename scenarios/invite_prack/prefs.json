@@ -1,0 +1,8 @@
+{
+	"@spce.test": {
+		"disable_prack_method": false
+	},
+"peer_00_host0": {
+        "concurrent_max": 1
+    }
+}
