@@ -413,6 +413,23 @@ testuser1003@spce.test:
     expires: 1977-07-26 23:47:37
 
 
+locmap.yml file syntax:
+-----------------------------
+
+Kamailio proxy uses location mappings to act as a forking proxy
+when a subscriber gets a call.
+Kamailio proxy will cause Sems to generate new calls for each
+registration related to the "location" endpoint.
+SubscriberLocationMapping API will be consumed.
+
+testuser1003@spce.test:
+  - caller_pattern: .+
+    callee_pattern: .+
+    enabled: 1
+    location: sip:testuser1004@spce.test
+    mode: add
+
+
 prefs.json file syntax:
 ----------------------
 
