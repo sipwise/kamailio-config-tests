@@ -1,0 +1,7 @@
+{
+    "testuser1003@spce.test": {
+        "extended_dialing_mode": "extended_send_dialed",
+        "no_404_fallback":1,
+        "e164_to_ruri":1
+    }
+}

@@ -1,0 +1,37 @@
+flow:
+  - start|DEFAULT_ONREPLY:
+  - return|DEFAULT_ONREPLY:
+  - start|dialog:failed:
+  - return|dialog:failed:
+  - return|dialog:failed:
+sip_in:
+  - 'SIP/2.0 404 Not Found'
+  - 'From: <sip:4311002@spce.test>;tag=[\w-]+'
+  - 'To: <sip:testuser1003@spce.test>;tag=[\w-]+'
+  - 'CSeq: \d+ INVITE'
+  - 'Contact: <sip:127.1.0.1:\d+;transport=UDP>'
+  - 'Content-Length: 0'
+  - 'P-NGCP-Src-Ip: 127.1.0.1'
+  - 'P-NGCP-Src-Port: \d+'
+  - 'P-NGCP-Src-Proto: udp'
+  - 'P-NGCP-Src-Af: 4'
+sip_out:
+  - [
+      'ACK sip:testuser1003@127.1.0.1:\d+ SIP/2.0',
+      'From: <sip:4311002@spce.test>;tag=[\w-]+',
+      'To: <sip:testuser1003@spce.test>;tag=[\w-]+',
+      'CSeq: \d+ ACK',
+      'Content-Length: 0',
+    ]
+  - [
+      'SIP/2.0 404 Not Found',
+      'From: <sip:4311002@spce.test>;tag=[\w-]+',
+      'To: <sip:testuser1003@spce.test>;tag=[\w-]+',
+      'CSeq: \d+ INVITE',
+      'Contact: <sip:127.1.0.1:\d+;transport=UDP>',
+      'Content-Length: 0',
+      'P-NGCP-Src-Ip: 127.1.0.1',
+      'P-NGCP-Src-Port: \d+',
+      'P-NGCP-Src-Proto: udp',
+      'P-NGCP-Src-Af: 4',
+    ]
