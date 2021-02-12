@@ -17,6 +17,5 @@ sip_in:
   - 'From: <sip:testuser1001@spce.test>;tag=[\w-]+'
   - 'To: <sip:004321001@127.0.2.1>;tag=[\w-]+'
   - 'CSeq: \d+ INVITE'
-  - 'Server: Sipwise NGCP LB'
   - 'Content-Length: 0'
 sip_out: []
