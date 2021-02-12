@@ -22,10 +22,6 @@ sip_in:
   - 'Contact: <sip:127.0.0.1:508[08];transport=udp>'
   - 'Content-Type: application/sdp'
   - 'Content-Length:\s+\d+'
-  - 'P-NGCP-Src-Ip: 127.0.0.1'
-  - 'P-NGCP-Src-Port: \d+'
-  - 'P-NGCP-Src-Proto: udp'
-  - 'P-NGCP-Src-Af: 4'
   - 'a=rtpmap:18 G729/8000'
   - '_:NOT:_a=rtpmap:8 PCMA/8000'
   - '_:NOT:_a=rtpmap:0 PCMU/8000'
@@ -38,10 +34,6 @@ sip_out:
       'Contact: <sip:127.0.0.1:508[08];transport=udp>',
       'Content-Type: application/sdp',
       'Content-Length:\s+\d+',
-      'P-NGCP-Src-Ip: 127.0.0.1',
-      'P-NGCP-Src-Port: \d+',
-      'P-NGCP-Src-Proto: udp',
-      'P-NGCP-Src-Af: 4',
       'P-Out-Socket: udp:127.0.0.1:5060',
       'a=rtpmap:18 G729/8000',
       '_:NOT:_a=rtpmap:8 PCMA/8000',
