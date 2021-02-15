@@ -1,3 +1,32 @@
+kamailio-config-tests (9.4.0.0+0~mr9.4.0.0) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [3c25d44] TT#104401 scenario changes for sip-tester 3.6.0
+  * [e9190e9] TT#104401 check.sh: changes for sip-tester 3.6.0
+  * [7dab6c9] TT#104401 check.sh: support sipp 3.6 and 3.5 series
+  * [40d27f4] TT#104401 add rtp.log to scenario logs
+  * [567a6c8] TT#104401 config: add dummy interface rtp_tag
+  * [46dca93] TT#108065 emergency scenarios
+  * [8326475] TT#104401 invite_reinvite_lateoffer
+  * [ac48c91] TT#104401 scenarios: fixes detected with sip-tester v3.5.3
+  * [d7386d5] TT#107650 fix invite_callee_bye for PRO
+  * [488e2f1] TT#107650 fix invite_callee_bye
+  * [87d7ec0] TT#109304 update flow with new route
+
+  [ Alessio Garzi ]
+  * [1802892] TT#107650 New scenario invite_callee_bye
+  * [fd584db] TT#81700 generate_test_tt2.pl should escape `+' in Accept: header
+  * [0a2e17d] TT#109304 Added locmap.yml to README
+  * [e2472f7] TT#109304 fixed invite reinvite transcoding scenario
+
+  [ Michael Prokop ]
+  * [3fd03b4] Revert "TT#104401 invite_reinvite_lateoffer"
+
+  [ mohammed ghettas ]
+  * [9605e9f] TT#108958 add invite_prack scenario..
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 15 Feb 2021 17:52:12 +0100
+
 kamailio-config-tests (9.3.0.0+0~mr9.3.0.0) unstable; urgency=medium
 
   [ Victor Seva ]
