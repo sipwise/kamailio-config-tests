@@ -1,3 +1,10 @@
+kamailio-config-tests (9.1.1.4+0~mr9.1.1.4) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [421a14b] TT#109304 update flow with new route
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 16 Feb 2021 14:32:33 +0100
+
 kamailio-config-tests (9.1.1.3+0~mr9.1.1.3) unstable; urgency=medium
 
   [ Victor Seva ]
