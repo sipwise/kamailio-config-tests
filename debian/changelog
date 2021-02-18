@@ -1,3 +1,10 @@
+kamailio-config-tests (9.1.1.5+0~mr9.1.1.5) unstable; urgency=medium
+
+  [ Alessio Garzi ]
+  * [ff5d342] TT#109304 fixed invite reinvite transcoding scenario
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 18 Feb 2021 14:52:18 +0100
+
 kamailio-config-tests (9.1.1.4+0~mr9.1.1.4) unstable; urgency=medium
 
   [ Victor Seva ]
