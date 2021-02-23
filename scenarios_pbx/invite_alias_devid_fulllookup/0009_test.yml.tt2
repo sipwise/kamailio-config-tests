@@ -106,8 +106,6 @@ flow:
   - return|ROUTE_SET_BRANCH_HDRS:
   - start|ROUTE_FILTER_PRACK:
   - return|ROUTE_FILTER_PRACK:
-  - start|ROUTE_PREPARE_MOH_PBX:
-  - return|ROUTE_PREPARE_MOH_PBX:
   - start|ROUTE_LOAD_PBXSRV:
   - return|ROUTE_LOAD_PBXSRV:
   - start|ROUTE_ADD_CALLINFO:

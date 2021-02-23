@@ -1,6 +1,12 @@
 flow:
   - start|DEFAULT_ONREPLY:
-  - return|DEFAULT_ONREPLY:
+  - start|REPLY_ROUTE_LEG_B:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
 sip_in:
   - 'SIP/2.0 100 Trying'
   - 'From: <sip:4311002@spce.test>;tag=[\w-]+'
