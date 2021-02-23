@@ -1,4 +1,10 @@
+---
 test_uuid: invite_peerout_rewrite_pv_regex
+kamailio:
+  proxy:
+    debugger:
+      - name: dialplan
+        level: 3
 domains:
   'spce.test':
     reseller_id: 1
@@ -30,4 +36,4 @@ scenarios:
         username: 004321001
         domain: spce.test
         peer_host: peer_00_host0
-        register: no
+        register: 'no'
