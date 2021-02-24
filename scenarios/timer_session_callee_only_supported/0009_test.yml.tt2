@@ -1,0 +1,41 @@
+flow:
+  - start|DEFAULT_ONREPLY:
+  - start|REPLY_ROUTE_LEG_B:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - start|dialog:start:
+  - return|dialog:start:
+  - return|dialog:start:
+sip_in:
+  - 'SIP/2.0 200 OK'
+  - 'Require: timer'
+  - 'Supported: timer'
+  - 'From: <sip:004321001@spce.test>;tag=[\w-]+'
+  - 'To: <sip:testuser1001@spce.test>;tag=[\w-]+'
+  - 'CSeq: \d+ INVITE'
+  - 'Contact: <sip:127.1.0.1:\d+;transport=UDP>'
+  - 'Content-Type: application/sdp'
+  - 'Content-Length: 0'
+  - 'P-NGCP-Src-Ip: 127.1.0.1'
+  - 'P-NGCP-Src-Port: \d+'
+  - 'P-NGCP-Src-Proto: udp'
+  - 'P-NGCP-Src-Af: 4'
+sip_out:
+  - [
+      'SIP/2.0 200 OK',
+      'Require: timer',
+      'Supported: timer',
+      'From: <sip:004321001@spce.test>;tag=[\w-]+',
+      'To: <sip:testuser1001@spce.test>;tag=[\w-]+',
+      'CSeq: \d+ INVITE',
+      'Contact: <sip:127.1.0.1:\d+;transport=UDP>',
+      'Content-Type: application/sdp',
+      'Content-Length: 0',
+      'P-NGCP-Src-Ip: 127.1.0.1',
+      'P-NGCP-Src-Port: \d+',
+      'P-NGCP-Src-Proto: udp',
+      'P-NGCP-Src-Af: 4',
+    ]

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<scenario name="Sipwise NGCP Benchmark UAC Caller">
+  <send start_rtd="1">
+    <![CDATA[
+
+      INVITE sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0] SIP/2.0
+      Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
+      Supported: timer
+      From: <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>;tag=[pid]SIPpTag00[call_number]
+      To: <sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]>
+      Call-ID: NGCP%[field4 file="callee.csv" line=0]%///[call_id]
+      CSeq: [cseq] INVITE
+      Contact: <sip:[field0 file="caller.csv"]@[local_ip]:[local_port];transport=[transport]>
+      Max-Forwards: 70
+      Session-Expires: 20;refresher=uac
+      Min-SE: 2
+      Content-Type: application/sdp
+      Content-Length: 0
+    ]]>
+  </send>
+
+  <recv response="100" optional="true"/>
+  <recv response="180" optional="true"/>
+  <recv response="183" optional="true"/>
+  <recv response="200" rrs="true" rtd="1"/>
+
+  <send >
+    <![CDATA[
+
+      ACK [next_url] SIP/2.0
+      Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
+      From: <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>;tag=[pid]SIPpTag00[call_number]
+      To: <sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]>[peer_tag_param]
+      Call-ID: NGCP%[field4 file="callee.csv" line=0]%///[call_id]
+      [routes]
+      CSeq: [cseq] ACK
+      Contact: <sip:[field0 file="caller.csv"]@[local_ip]:[local_port];transport=[transport]>
+      Max-Forwards: 70
+      Content-Length: 0
+
+    ]]>
+  </send>
+
+  <pause milliseconds="500"/>
+
+  <send start_rtd="1">
+    <![CDATA[
+
+      BYE [next_url] SIP/2.0
+      Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
+      From: <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>;tag=[pid]SIPpTag00[call_number]
+      To: <sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]>[peer_tag_param]
+      Call-ID: NGCP%[field4 file="callee.csv" line=0]%///[call_id]
+      CSeq: [cseq] BYE
+      Contact: <sip:[field0 file="caller.csv"]@[local_ip]:[local_port];transport=[transport]>
+      [routes]
+      Max-Forwards: 70
+      Content-Length: 0
+
+    ]]>
+  </send>
+
+  <recv response="100" optional="true"/>
+  <recv response="200" rtd="1" rrs="true"/>
+
+  <ResponseTimeRepartition value="10, 20, 30, 40, 50, 100, 150, 200, 500, 1000"/>
+
+<!-- <CallLengthRepartition value="10, 50, 100, 500, 1000, 5000, 10000"/> -->
+
+</scenario>
+
