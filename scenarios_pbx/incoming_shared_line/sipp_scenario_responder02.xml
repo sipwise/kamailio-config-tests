@@ -2,8 +2,13 @@
 
 <scenario name="Sipwise NGCP Benchmark UAS Responder">
 
-  <recv request="INVITE" crlf="true" rtd="true">
+  <recv request="INVITE" crlf="true" rrs="true">
+    <action>
+      <ereg regexp=".*" search_in="hdr" header="CSeq:"
+        check_it="true" assign_to="1" />
+    </action>
   </recv>
+
 
   <pause milliseconds="300"/>
 
@@ -25,6 +30,13 @@
     ]]>
   </send>
 
+  <nop>
+    <action>
+      <assignstr assign_to="2" value="[last_Via:]"/>
+      <assignstr assign_to="3" value="[last_Record-Route:]"/>
+    </action>
+  </nop>
+
   <pause milliseconds="500"/>
 
   <recv request="CANCEL">
@@ -44,6 +56,25 @@
 
     ]]>
   </send>
+
+  <send>
+    <![CDATA[
+
+      SIP/2.0 487 Request terminated
+      [$2]
+      [last_From:]
+      [last_To:]
+      [last_Call-ID:]
+      [$3]
+      CSeq:[$1]
+      Contact: <sip:[local_ip]:[local_port];transport=[transport]>
+      Content-Length: [len]
+
+    ]]>
+  </send>
+
+  <recv request="ACK">
+  </recv>
 
 </scenario>
 
