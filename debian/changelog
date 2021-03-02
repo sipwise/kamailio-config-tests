@@ -1,3 +1,14 @@
+kamailio-config-tests (9.3.2.0+0~mr9.3.2.0) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [ca75351] TT#108065 invite_emergency_pidflo
+
+  [ Marco Capetta ]
+  * [02c7916] TT#89560 Adapt scenarios to changes to LEG_B route
+  * [bf07775] TT#89560 Fix missing 487 message in incoming_shared_line pbx scenario
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 02 Mar 2021 12:06:48 +0100
+
 kamailio-config-tests (9.3.1.0+0~mr9.3.1.0) unstable; urgency=medium
 
   [ Victor Seva ]
