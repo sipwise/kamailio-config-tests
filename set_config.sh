@@ -39,8 +39,11 @@ if ! ngcpcfg apply "config debug on via kamailio-config-tests" ; then
   error_flag=4
 fi
 
-echo "$(date) - start dummy0 interface"
-ifup dummy0
+dummy_ip=$(ip addr show dummy0 | grep inet | awk '{print $2}' | head -1)
+if [ -z "${dummy_ip}" ]; then
+  echo "$(date) - start dummy0 interface"
+  ifup dummy0
+fi
 
 echo "$(date) - Setting config[${GROUP}] debug on. Done[${error_flag}]"
 exit ${error_flag}
