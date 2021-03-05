@@ -29,11 +29,12 @@ usage() {
   echo -e "\\t-r: responder"
   echo -e "\\t-b: run sipp in background (responder)"
   echo -e "\\t-l: log_message_file"
+  echo -e "\\t-e: err_file"
   echo "Arguments:"
   echo -e "\\t sipp_scenario.xml file"
 }
 
-while getopts 'hrp:m:t:i:T:bl:' opt; do
+while getopts 'hrp:m:t:i:T:bl:e:' opt; do
   case $opt in
     h) usage; exit 0;;
     r) RESP=1;;
@@ -44,6 +45,7 @@ while getopts 'hrp:m:t:i:T:bl:' opt; do
     T) TRANSPORT=${OPTARG,,};;
     b) BACK="-bg";;
     l) LOG_FILE=${OPTARG};;
+    e) ERR_FILE=${OPTARG};;
     *) usage; exit 0;;
   esac
 done
@@ -68,6 +70,12 @@ if [ -n "${LOG_FILE}" ]; then
   MSG_LOG="-trace_msg -message_file ${LOG_FILE}"
 fi
 
+if [ -n "${ERR_FILE}" ]; then
+  ERR_LOG="-trace_err -error_file ${ERR_FILE}"
+else
+  ERR_LOG="-trace_err"
+fi
+
 if [ "${TRANSPORT}" == "tcp" ]; then
     TRANSPORT_ARG="-t t1"
 else
@@ -82,11 +90,11 @@ if [ -z "${RESP}" ]; then
   PORT=${PORT:-"50602"}
   TIMEOUT=${TIMEOUT:-"15"}
 
-  sipp -max_socket $MAX ${TRANSPORT_ARG} ${MSG_LOG} \
+  sipp -max_socket $MAX ${TRANSPORT_ARG} ${MSG_LOG} ${ERR_LOG} \
     -inf "${BASE_DIR}/callee.csv" -inf "${BASE_DIR}/caller.csv" \
     -sf "$1" -i "$IP" -p "$PORT" \
     -nr -nd -m 1 ${MPORT_ARG} \
-    -timeout "${TIMEOUT}" -timeout_error -trace_err \
+    -timeout "${TIMEOUT}" -timeout_error \
     "$IP_SERVER" &> /dev/null
   status=$?
 else
@@ -97,19 +105,19 @@ else
   TIMEOUT=${TIMEOUT:-"25"}
 
   if [ -z "${BACK}" ]; then
-    sipp -max_socket $MAX ${TRANSPORT_ARG} ${MSG_LOG} \
+    sipp -max_socket $MAX ${TRANSPORT_ARG} ${MSG_LOG} ${ERR_LOG} \
       -inf "${BASE_DIR}/callee.csv" -inf "${BASE_DIR}/caller.csv" \
       -sf "$1" -i "$IP" -p "$PORT" \
       -nr -nd -m 1 ${MPORT_ARG} \
-      -timeout "${TIMEOUT}" -timeout_error -trace_err \
+      -timeout "${TIMEOUT}" -timeout_error \
       "$IP_SERVER" &> /dev/null
     status=$?
   else
-    tmp=$(sipp $BACK -max_socket $MAX ${TRANSPORT_ARG} ${MSG_LOG} \
+    tmp=$(sipp $BACK -max_socket $MAX ${TRANSPORT_ARG} ${MSG_LOG} ${ERR_LOG} \
       -inf "${BASE_DIR}/callee.csv" -inf "${BASE_DIR}/caller.csv" \
       -sf "$1" -i "$IP" -p "$PORT" \
       -nr -nd -m 1 ${MPORT_ARG} \
-      -timeout "${TIMEOUT}" -timeout_error -trace_err \
+      -timeout "${TIMEOUT}" -timeout_error \
       "$IP_SERVER")
     # shellcheck disable=SC2046
     echo "$tmp" | cut -d= -f2 | sed -e 's_\[__' -e 's_\]__'

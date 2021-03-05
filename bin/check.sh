@@ -66,16 +66,26 @@ EOF
 echo "$(date) - $(basename "$2") NOT ok"
 }
 
+
+# since 3.6.0 there's a warning
+# showing up and generates the error file
+# See https://github.com/SIPp/sipp/issues/497
+clean_sipp_error() {
+  while read -r sipp_error ; do
+    sed -i '/The following events occurred:/d' "${sipp_error}"
+    sed -i '/Failed to delete FD from epoll/d' "${sipp_error}"
+    [ -s "${sipp_error}" ] || rm -v "${sipp_error}"
+  done < <(find "${LOG_DIR}/" -type f -name '*errors.log')
+}
+
 detect_sipp_error_files() {
   local find_cmd
+
   case ${SIPP_VERSION} in
-    v3\.[0-5]\.*)
-      find_cmd=$(find "${SCEN_CHECK_DIR}/" -type f -name 'sipp_scenario*errors.log' 2>/dev/null|wc -l)
-      ;;
-    *)
-      find_cmd=$(find "${BASE_DIR}/" -maxdepth 1 -type f -name 'sipp_scenario*errors.log' 2>/dev/null|wc -l)
-      ;;
+    v3\.[0-5]\.*) ;;
+    *) clean_sipp_error;;
   esac
+  find_cmd=$(find "${LOG_DIR}/" -type f -name '*errors.log' 2>/dev/null|wc -l)
   if [ "${find_cmd}" -ne 0 ]; then
     echo "$(date) - Detected sipp error files"
     return 0
@@ -83,19 +93,6 @@ detect_sipp_error_files() {
     echo "$(date) - No sipp error files detected"
     return 1
   fi
-}
-
-move_sipp_error_files() {
-  case ${SIPP_VERSION} in
-    v3\.[0-5]\.*)
-      find "${SCEN_CHECK_DIR}/" -type f -name 'sipp_scenario*errors.log' \
-        -exec mv {} "${LOG_DIR}" \;
-      ;;
-    *)
-      find "${BASE_DIR}/" -maxdepth 1 -type f -name 'sipp_scenario*errors.log' \
-        -exec mv {} "${LOG_DIR}" \;
-      ;;
-  esac
 }
 
 function str_check_error() {
@@ -433,7 +430,6 @@ error_helper() {
     echo "$(date) - Deleting domain:${DOMAIN}"
     delete_voip "${DOMAIN}"
   fi
-  move_sipp_error_files
   stop_capture
   check_rtp
   exit "$2"
@@ -633,10 +629,12 @@ run_sipp() {
     if [ -f "${SCEN_CHECK_DIR}/${base}_reg.xml" ]; then
       echo "$(date) - Register ${base} ${ip}:${PORT}-${MPORT}"
       "${BIN_DIR}/sipp.sh" -T "$transport" -i "${ip}" -p "${PORT}" \
+        -e "${LOG_DIR}/${base}_reg_errors.log" \
         -r "${SCEN_CHECK_DIR}/${base}_reg.xml"
     fi
     pid=$("${BIN_DIR}/sipp.sh" -b -T "$transport" -i "${ip}" -p "${PORT}" \
       -l "${LOG_DIR}/${base}.msg" \
+      -e "${LOG_DIR}/${base}_errors.log" \
       -m "${MPORT}" -r "${SCEN_CHECK_DIR}/${base}.xml")
     echo "$(date) - Running ${base}[${pid}] ${ip}:${PORT}-${MPORT}"
     responder_pid="${responder_pid} ${base}:${pid}"
@@ -659,7 +657,7 @@ run_sipp() {
     PORT=$(check_port )
     MPORT=$(check_mport )
     echo "$(date) - Running ${base} $ip:51602-45003"
-    if ! "${BIN_DIR}/sipp.sh" -l "${LOG_DIR}/${base}.msg" -T "${transport}" -i "${ip}" -p 51602 -m 45003 "${send}" ; then
+    if ! "${BIN_DIR}/sipp.sh" -e "${LOG_DIR}/${base}_errors.log" -l "${LOG_DIR}/${base}.msg" -T "${transport}" -i "${ip}" -p 51602 -m 45003 "${send}" ; then
       echo "$(date) - ${base} error"
       status=1
     fi
@@ -691,7 +689,6 @@ run_sipp() {
   copy_logs
   # if any scenario has a log... error
   if detect_sipp_error_files; then
-    move_sipp_error_files
     status=1
   fi
 
