@@ -8,6 +8,7 @@ mem
 scenario_ids.yml
 sipp_scenario_responder*_reg.xml
 *errors.log
+*.msg
 *.csv
 presence_*xml
 presence.sh

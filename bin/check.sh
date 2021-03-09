@@ -636,6 +636,7 @@ run_sipp() {
         -r "${SCEN_CHECK_DIR}/${base}_reg.xml"
     fi
     pid=$("${BIN_DIR}/sipp.sh" -b -T "$transport" -i "${ip}" -p "${PORT}" \
+      -l "${LOG_DIR}/${base}.msg" \
       -m "${MPORT}" -r "${SCEN_CHECK_DIR}/${base}.xml")
     echo "$(date) - Running ${base}[${pid}] ${ip}:${PORT}-${MPORT}"
     responder_pid="${responder_pid} ${base}:${pid}"
@@ -658,7 +659,7 @@ run_sipp() {
     PORT=$(check_port )
     MPORT=$(check_mport )
     echo "$(date) - Running ${base} $ip:51602-45003"
-    if ! "${BIN_DIR}/sipp.sh" -T "${transport}" -i "${ip}" -p 51602 -m 45003 "${send}" ; then
+    if ! "${BIN_DIR}/sipp.sh" -l "${LOG_DIR}/${base}.msg" -T "${transport}" -i "${ip}" -p 51602 -m 45003 "${send}" ; then
       echo "$(date) - ${base} error"
       status=1
     fi

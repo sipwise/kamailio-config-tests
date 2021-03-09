@@ -28,11 +28,12 @@ usage() {
   echo -e "\\t-T: transport [UDP|TCP] default UDP"
   echo -e "\\t-r: responder"
   echo -e "\\t-b: run sipp in background (responder)"
+  echo -e "\\t-l: log_message_file"
   echo "Arguments:"
   echo -e "\\t sipp_scenario.xml file"
 }
 
-while getopts 'hrp:m:t:i:T:b' opt; do
+while getopts 'hrp:m:t:i:T:bl:' opt; do
   case $opt in
     h) usage; exit 0;;
     r) RESP=1;;
@@ -42,6 +43,7 @@ while getopts 'hrp:m:t:i:T:b' opt; do
     i) IP=$OPTARG;;
     T) TRANSPORT=${OPTARG,,};;
     b) BACK="-bg";;
+    l) LOG_FILE=${OPTARG};;
     *) usage; exit 0;;
   esac
 done
@@ -62,6 +64,10 @@ IP=${IP:-"127.0.0.1"}
 IP_SERVER=${IP_SERVER:-"127.0.0.1"}
 MAX="5000"
 
+if [ -n "${LOG_FILE}" ]; then
+  MSG_LOG="-trace_msg -message_file ${LOG_FILE}"
+fi
+
 if [ "${TRANSPORT}" == "tcp" ]; then
     TRANSPORT_ARG="-t t1"
 else
@@ -76,7 +82,7 @@ if [ -z "${RESP}" ]; then
   PORT=${PORT:-"50602"}
   TIMEOUT=${TIMEOUT:-"15"}
 
-  sipp -max_socket $MAX ${TRANSPORT_ARG}\
+  sipp -max_socket $MAX ${TRANSPORT_ARG} ${MSG_LOG} \
     -inf "${BASE_DIR}/callee.csv" -inf "${BASE_DIR}/caller.csv" \
     -sf "$1" -i "$IP" -p "$PORT" \
     -nr -nd -m 1 ${MPORT_ARG} \
@@ -91,7 +97,7 @@ else
   TIMEOUT=${TIMEOUT:-"25"}
 
   if [ -z "${BACK}" ]; then
-    sipp -max_socket $MAX ${TRANSPORT_ARG}\
+    sipp -max_socket $MAX ${TRANSPORT_ARG} ${MSG_LOG} \
       -inf "${BASE_DIR}/callee.csv" -inf "${BASE_DIR}/caller.csv" \
       -sf "$1" -i "$IP" -p "$PORT" \
       -nr -nd -m 1 ${MPORT_ARG} \
@@ -99,7 +105,7 @@ else
       "$IP_SERVER" &> /dev/null
     status=$?
   else
-    tmp=$(sipp $BACK -max_socket $MAX ${TRANSPORT_ARG}\
+    tmp=$(sipp $BACK -max_socket $MAX ${TRANSPORT_ARG} ${MSG_LOG} \
       -inf "${BASE_DIR}/callee.csv" -inf "${BASE_DIR}/caller.csv" \
       -sf "$1" -i "$IP" -p "$PORT" \
       -nr -nd -m 1 ${MPORT_ARG} \
