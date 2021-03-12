@@ -1,0 +1,5 @@
+{
+    "testuser1002@spce.test": {
+        "force_outbound_calls_to_peer":"force"
+    }
+}
