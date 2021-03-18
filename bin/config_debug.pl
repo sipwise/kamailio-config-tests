@@ -23,7 +23,6 @@ use File::Copy qw(cp move);
 use File::Spec;
 use Getopt::Long;
 use strict;
-use Tie::File;
 use warnings;
 use YAML::XS qw(LoadFile DumpFile);
 use Hash::Merge qw(merge);
@@ -42,7 +41,6 @@ sub usage
 
 my $help = 0;
 my $children = 0;
-my $profile = "CE";
 my $group;
 
 if (exists $ENV{'GROUP'})
@@ -65,12 +63,13 @@ if($#ARGV>1 || $help)
 }
 
 my $base_dir;
-my $yaml;
-my $net_yaml;
 my $file_yaml = '/etc/ngcp-config/config.yml';
 my $file_net_yaml = '/etc/ngcp-config/network.yml';
-my @array;
-my $path;
+my ($action, $domain) = @ARGV;
+
+$action = 'off' unless defined($action);
+$domain = 'spce.test' unless defined($domain);
+
 if (exists $ENV{'BASE_DIR'})
 {
   $base_dir = $ENV{'BASE_DIR'};
@@ -80,33 +79,29 @@ else
   $base_dir = '/usr/share/kamailio-config-tests';
 }
 
-my ($action, $domain) = @ARGV;
-
-$action = 'off' unless defined($action);
-$domain = 'spce.test' unless defined($domain);
-
-if (lc($action) eq "off")
+sub change_network
 {
-  for my $file ($file_yaml, $file_net_yaml) {
-    move("$file.orig", $file) or die "Can't restore the orig config $file";
+  my $net_yaml = LoadFile($file_net_yaml);
+
+  for my $host (keys %{$net_yaml->{hosts}}) {
+    $net_yaml->{hosts}->{$host}->{dummy0} = {
+      ip => '172.30.1.2',
+      netmask => '255.255.255.0',
+      type => ['rtp_tag']
+    };
+    push @{$net_yaml->{hosts}->{$host}->{interfaces}}, 'dummy0';
   }
-  for my $i ('caller.csv', 'callee.csv')
-  {
-    $path = File::Spec->catfile( $base_dir, 'scenarios', $i);
-    tie @array, 'Tie::File', $path or die ("Can set test domain on $path");
-    for (@array)
-    {
-      s/\Q$domain\E/DOMAIN/;
-    }
-    untie @array;
-  }
+
+  $net_yaml->{hosts_common}->{etc_hosts_global_extra_entries} //= ();
+  my $entries = $net_yaml->{hosts_common}->{etc_hosts_global_extra_entries};
+  push @{$entries}, "127.0.0.1 $domain";
+  $net_yaml->{hosts_common}->{etc_hosts_global_extra_entries} = $entries;
+  DumpFile($file_net_yaml, $net_yaml);
 }
-else
+
+sub change_config
 {
-  for my $file ($file_yaml, $file_net_yaml) {
-    cp($file, $file.".orig") or die "Copy $file failed: $ERRNO" unless(-e $file.".orig");
-  }
-  $yaml = LoadFile($file_yaml);
+  my $yaml = LoadFile($file_yaml);
   $yaml->{kamailio}{lb}{cfgt} = 'yes';
   $yaml->{kamailio}{lb}{dns}{use_dns_cache} = 'off';
   $yaml->{kamailio}{lb}{extra_sockets}->{test} = "udp:127.2.0.1:5064";
@@ -123,48 +118,33 @@ else
   $yaml->{rtpproxy}{log_level} = '7';
   $yaml->{modules}[0]->{enable} = 'yes'; # dummy module should be the first one
 
-  $net_yaml = LoadFile($file_net_yaml);
-
-  for my $host (keys %{$net_yaml->{hosts}}) {
-    $net_yaml->{hosts}->{$host}->{dummy0} = {
-      ip => '172.30.1.2',
-      netmask => '255.255.255.0',
-      type => ['rtp_tag']
-    };
-    push @{$net_yaml->{hosts}->{$host}->{interfaces}}, 'dummy0';
-  }
-
-  $net_yaml->{hosts_common}->{etc_hosts_global_extra_entries} //= ();
-  my $entries = $net_yaml->{hosts_common}->{etc_hosts_global_extra_entries};
-  push @{$entries}, "127.0.0.1 $domain";
-  $net_yaml->{hosts_common}->{etc_hosts_global_extra_entries} = $entries;
-  DumpFile($file_net_yaml, $net_yaml);
-
   my $group_yml_file = $base_dir."/".$group."/config.yml";
   if ( -e  $group_yml_file )
   {
     print "load $group_yml_file config file\n";
     my $group_yml = LoadFile($group_yml_file);
     my $hm = Hash::Merge->new('RIGHT_PRECEDENT');
-    my $config = {};
-    $config = $hm->merge( $config, $yaml);
+    my $config = $hm->merge( {}, $yaml);
     $yaml = $hm->merge( $config, $group_yml);
   } else {
     print "$group_yml_file not found\n";
   }
-
-  untie @array;
-  for my $i ('caller.csv', 'callee.csv')
-  {
-    $path = File::Spec->catfile( $base_dir, 'scenarios', $i);
-    tie @array, 'Tie::File', $path or die ("Can set test domain on $path");
-    for (@array)
-    {
-      s/DOMAIN/$domain/;
-    }
-    untie @array;
-  }
   DumpFile($file_yaml, $yaml);
+}
+
+if (lc($action) eq "off")
+{
+  for my $file ($file_yaml, $file_net_yaml) {
+    move("$file.orig", $file) or die "Can't restore the orig config $file";
+  }
+}
+else
+{
+  for my $file ($file_yaml, $file_net_yaml) {
+    cp($file, $file.".orig") or die "Copy $file failed: $ERRNO" unless(-e $file.".orig");
+  }
+  change_config();
+  change_network();
 }
 
 #EOF
