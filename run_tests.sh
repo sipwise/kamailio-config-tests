@@ -58,7 +58,9 @@ cfg_debug_off() {
     echo "$(date) - Removed apicert.pem"
     rm -f "${BASE_DIR}/apicert.pem"
     echo "$(date) - Setting config debug off"
-    "${BIN_DIR}/config_debug.pl" -g "${GROUP}" off ${DOMAIN}
+    "${BIN_DIR}/config_debug.pl" -g "${GROUP}" off
+    echo "$(date) - Setting network config off"
+    "${BIN_DIR}/network_config.pl" -g "${GROUP}" off
     if ! ngcpcfg apply "config debug off via kamailio-config-tests" ; then
       echo "$(date) - ngcpcfg apply returned $?"
       error_flag=4
@@ -312,7 +314,9 @@ mkdir -p "${MLOG_DIR}" "${LOG_DIR}"
 
 if ! "${SKIP_CONFIG}" ; then
   echo "$(date) - Setting config debug on"
-  "${BIN_DIR}/config_debug.pl" -c 5 -g "${GROUP}" on ${DOMAIN}
+  "${BIN_DIR}/config_debug.pl" -c 5 -g "${GROUP}" on
+  echo "$(date) - Setting network config"
+  "${BIN_DIR}/network_config.pl" -g "${GROUP}" on
   if [ "${PROFILE}" == "PRO" ]; then
     echo "$(date) - Exec pid_watcher with timeout[${TIMEOUT}]"
     ( timeout "${TIMEOUT}" "${BIN_DIR}/pid_watcher.py" ${PIDWATCH_OPTS} )&

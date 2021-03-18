@@ -6,7 +6,6 @@ export BASE_DIR=${BASE_DIR:-$RUN_DIR}
 export PERL5LIB="${BASE_DIR}/lib"
 BIN_DIR="${BASE_DIR}/bin"
 GROUP="${GROUP:-scenarios}"
-DOMAIN="spce.test"
 
 usage() {
   echo "Usage: set_config.sh [-h] [-x GROUP]"
@@ -32,7 +31,9 @@ error_flag=0
 echo "$(date) - Removed apicert.pem"
 rm -f "${BASE_DIR}/apicert.pem"
 echo "$(date) - Setting config debug on"
-"${BIN_DIR}/config_debug.pl" -g "${GROUP}" on ${DOMAIN}
+"${BIN_DIR}/config_debug.pl" -c 5 -g "${GROUP}" on
+echo "$(date) - Setting network config"
+"${BIN_DIR}/network_config.pl" -g "${GROUP}" on
 cd /etc/ngcp-config || exit 3
 if ! ngcpcfg apply "config debug on via kamailio-config-tests" ; then
   echo "$(date) - ngcpcfg apply returned $?"

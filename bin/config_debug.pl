@@ -29,13 +29,12 @@ use Hash::Merge qw(merge);
 
 sub usage
 {
-  my $output = "usage: config_debug.pl [-hgc] MODE DOMAIN\n";
+  my $output = "usage: config_debug.pl [-hgc] MODE\n";
   $output .= "Options:\n";
   $output .= "\t-h: this help\n";
   $output .= "\t-g: scenarios group\n";
   $output .= "\t-c: number of kamailio.proxy.children\n";
   $output .= "\tMODE: on|off\tdefault: off\n";
-  $output .= "\tDOMAIN: default: spce.test\n";
   return $output
 }
 
@@ -62,41 +61,15 @@ if($#ARGV>1 || $help)
   die("Wrong number of arguments\n".usage())
 }
 
-my $base_dir;
+my $base_dir = '/usr/share/kamailio-config-tests';
 my $file_yaml = '/etc/ngcp-config/config.yml';
-my $file_net_yaml = '/etc/ngcp-config/network.yml';
-my ($action, $domain) = @ARGV;
+my ($action) = @ARGV;
 
 $action = 'off' unless defined($action);
-$domain = 'spce.test' unless defined($domain);
 
 if (exists $ENV{'BASE_DIR'})
 {
   $base_dir = $ENV{'BASE_DIR'};
-}
-else
-{
-  $base_dir = '/usr/share/kamailio-config-tests';
-}
-
-sub change_network
-{
-  my $net_yaml = LoadFile($file_net_yaml);
-
-  for my $host (keys %{$net_yaml->{hosts}}) {
-    $net_yaml->{hosts}->{$host}->{dummy0} = {
-      ip => '172.30.1.2',
-      netmask => '255.255.255.0',
-      type => ['rtp_tag']
-    };
-    push @{$net_yaml->{hosts}->{$host}->{interfaces}}, 'dummy0';
-  }
-
-  $net_yaml->{hosts_common}->{etc_hosts_global_extra_entries} //= ();
-  my $entries = $net_yaml->{hosts_common}->{etc_hosts_global_extra_entries};
-  push @{$entries}, "127.0.0.1 $domain";
-  $net_yaml->{hosts_common}->{etc_hosts_global_extra_entries} = $entries;
-  DumpFile($file_net_yaml, $net_yaml);
 }
 
 sub change_config
@@ -134,17 +107,12 @@ sub change_config
 
 if (lc($action) eq "off")
 {
-  for my $file ($file_yaml, $file_net_yaml) {
-    move("$file.orig", $file) or die "Can't restore the orig config $file";
-  }
+  move("${file_yaml}.orig", $file_yaml) or die "Can't restore the orig config ${file_yaml}";
 }
 else
 {
-  for my $file ($file_yaml, $file_net_yaml) {
-    cp($file, $file.".orig") or die "Copy $file failed: $ERRNO" unless(-e $file.".orig");
-  }
+  cp($file_yaml, "${file_yaml}.orig") or die "Copy $file_yaml failed: $ERRNO" unless(-e "${file_yaml}.orig");
   change_config();
-  change_network();
 }
 
 #EOF
