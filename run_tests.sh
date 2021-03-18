@@ -31,25 +31,12 @@ error_flag=0
 SCEN=()
 
 get_scenarios() {
-  local t
-  local flag
-  flag=false
-
-  if [ -n "${SCENARIOS}" ]; then
-    for t in ${SCENARIOS}; do
-      if [ ! -f "${BASE_DIR}/${GROUP}/${t}/scenario.yml" ]; then
-        echo "$(date) - scenario: ${t}/scenario.yml at ${GROUP} not found"
-        flag=true
-      else
-        SCEN+=( "${t}" )
-      fi
-    done
-    ${flag} && exit 1
-  else
-    while read -r t; do
-      SCEN+=( "$(basename "${t}")" )
-    done < <(find "${BASE_DIR}/${GROUP}/" -name scenario.yml \
-      -type f -exec dirname {} \; | sort)
+  while read -r t; do
+    SCEN+=( "${t}" )
+  done < <("${BIN_DIR}/get_scenarios.sh" -p "${PROFILE}" -x "${GROUP}")
+  if [[ ${#SCEN[@]} == 0 ]]; then
+    echo "$(date) no scenarios found"
+    exit 1
   fi
 }
 
@@ -159,7 +146,7 @@ move_json_file() {
 fix_retransmissions() {
   echo "$(date) - ================================================================================="
   echo "$(date) - Checking retransmission issues"
-  for t in ${SCENARIOS}; do
+  for t in "${SCEN[@]}"; do
     echo "$(date) - - Scenario: ${t}"
     if [ "${t}" == "invite_retrans" ] ; then
       continue

@@ -24,37 +24,13 @@ usage() {
   echo "BIN_DIR:${BIN_DIR}"
 }
 
-filter_scenario() {
-  # filter out PRO only scenarios on CE
-  local scen=$1
-
-  if [ "${PROFILE}" == CE ] ; then
-    [ -f "${BASE_DIR}/${GROUP}/${scen}/pro.yml" ] && return 1
-  fi
-  return 0
-}
-
 get_scenarios() {
-  local t
-  local flag
-  flag=false
-
-  if [ -n "${SCENARIOS}" ]; then
-    for t in ${SCENARIOS}; do
-      if [ ! -f "${BASE_DIR}/${GROUP}/${t}/scenario.yml" ]; then
-        echo "$(date) - scenario: ${t}/scenario.yml at ${GROUP} not found"
-        flag=true
-      else
-        filter_scenario "${t}" && SCEN+=( "${t}" )
-      fi
-    done
-    ${flag} && exit 1
-  else
-    while read -r t; do
-      t=$(basename "${t}")
-      filter_scenario "${t}" && SCEN+=( "${t}" )
-    done < <(find "${BASE_DIR}/${GROUP}/" -name scenario.yml \
-      -type f -exec dirname {} \; | sort)
+  while read -r t; do
+    SCEN+=( "${t}" )
+  done < <("${BIN_DIR}/get_scenarios.sh" -p "${PROFILE}" -x "${GROUP}")
+  if [[ ${#SCEN[@]} == 0 ]]; then
+    echo "$(date) no scenarios found"
+    exit 1
   fi
 }
 
