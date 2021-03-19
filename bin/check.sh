@@ -274,138 +274,6 @@ check_test() {
   return 1
 }
 
-# $1 domain
-create_voip() {
-  if ! "${BIN_DIR}/create_subscribers.pl" \
-    "${SCEN_CHECK_DIR}/scenario.yml" "${SCEN_CHECK_DIR}/scenario_ids.yml"
-  then
-    echo "$(date) - Deleting domain:${DOMAIN}"
-    delete_voip "$1"
-    echo "$(date) - Cannot create domain subscribers"
-    exit 1
-  fi
-
-  if [ -f "${SCEN_CHECK_DIR}/registration.yml" ]; then
-    echo "$(date) - Creating permanent registrations"
-    "${BIN_DIR}/create_registrations.pl" \
-      "${SCEN_CHECK_DIR}/registration.yml"
-  fi
-}
-
-# $1 prefs yml file
-create_voip_prefs() {
-  if [ -f "${SCEN_CHECK_DIR}/rewrite.yml" ]; then
-    echo "$(date) - Creating rewrite rules"
-    "${BIN_DIR}/create_rewrite_rules.pl" "${SCEN_CHECK_DIR}/rewrite.yml"
-  fi
-
-  if [ -f "${SCEN_CHECK_DIR}/callforward.yml" ]; then
-   echo "$(date) - Setting callforward config"
-   "${BIN_DIR}/set_subscribers_callforward_advanced.pl" "${SCEN_CHECK_DIR}/callforward.yml"
-  fi
-
-  if [ -f "${SCEN_CHECK_DIR}/trusted.yml" ]; then
-   echo "$(date) - Setting trusted sources"
-   "${BIN_DIR}/set_subscribers_trusted_sources.pl" "${SCEN_CHECK_DIR}/trusted.yml"
-  fi
-
-  if [ -f "${SCEN_CHECK_DIR}/speeddial.yml" ]; then
-   echo "$(date) - Setting speeddial config"
-   "${BIN_DIR}/set_subscribers_speeddial.pl" "${SCEN_CHECK_DIR}/speeddial.yml"
-  fi
-
-  if [ -f "${SCEN_CHECK_DIR}/ncos.yml" ]; then
-    echo "$(date) - Creating ncos levels"
-    "${BIN_DIR}/create_ncos.pl" "${SCEN_CHECK_DIR}/ncos.yml"
-  fi
-
-  if [ -f "${SCEN_CHECK_DIR}/soundsets.yml" ]; then
-    echo "$(date) - Creating soundsets"
-    "${BIN_DIR}/create_soundsets.pl" \
-      "${SCEN_CHECK_DIR}/soundsets.yml" "${SCEN_CHECK_DIR}/scenario_ids.yml"
-  fi
-
-  if [ -f "${SCEN_CHECK_DIR}/peer.yml" ]; then
-    echo "$(date) - Creating peers"
-    "${BIN_DIR}/create_peers.pl" \
-      "${SCEN_CHECK_DIR}/peer.yml" "${SCEN_CHECK_DIR}/scenario_ids.yml"
-    # REMOVE ME!! fix for REST API
-    ngcp-kamcmd proxy lcr.reload
-  fi
-
-  if [ -f "${SCEN_CHECK_DIR}/lnp.yml" ]; then
-    echo "$(date) - Creating lnp carrier/number"
-    "${BIN_DIR}/create_lnp.pl" "${SCEN_CHECK_DIR}/lnp.yml"
-  fi
-
-  if [ -f "${SCEN_CHECK_DIR}/header.yml" ]; then
-    echo "$(date) - Creating header manipulations"
-    "${BIN_DIR}/create_header_manipulation.pl" "${SCEN_CHECK_DIR}/header.yml"
-  fi
-
-  if [ -f "${SCEN_CHECK_DIR}/prefs.json" ]; then
-    echo "$(date) - Setting preferences"
-    "${BIN_DIR}/set_preferences.pl" "${SCEN_CHECK_DIR}/prefs.json"
-  fi
-}
-
-# $1 domain
-delete_voip() {
-  if [ -f "${SCEN_CHECK_DIR}/registration.yml" ]; then
-    echo "$(date) - Deleting registrations"
-    "${BIN_DIR}/create_registrations.pl" -delete "${SCEN_CHECK_DIR}/registration.yml"
-  fi
-
-  /usr/bin/ngcp-delete-domain "$1" >/dev/null 2>&1
-
-  if [ -f "${SCEN_CHECK_DIR}/peer.yml" ]; then
-    echo "$(date) - Deleting peers"
-    "${BIN_DIR}/create_peers.pl" -delete "${SCEN_CHECK_DIR}/peer.yml"
-    # REMOVE ME!! fix for REST API
-    ngcp-kamcmd proxy lcr.reload
-  fi
-
-  if [ -f "${SCEN_CHECK_DIR}/trusted.yml" ]; then
-   echo "$(date) - Deleting trusted sources"
-   # Trusted sources are not deleted from kamailio cache when the domain is removed
-   # therefore better reload them from the database
-   ngcp-kamcmd proxy permissions.trustedReload
-  fi
-
-  if [ -f "${SCEN_CHECK_DIR}/header.yml" ]; then
-    echo "$(date) - Deleting header manipulations"
-    "${BIN_DIR}/create_header_manipulation.pl" -delete "${SCEN_CHECK_DIR}/header.yml"
-  fi
-
-  if [ -f "${SCEN_CHECK_DIR}/lnp.yml" ]; then
-    echo "$(date) - Deleting lnp carrier/number"
-    "${BIN_DIR}/create_lnp.pl" -delete "${SCEN_CHECK_DIR}/lnp.yml"
-    # REMOVE ME!! fix for REST API
-    ngcp-kamcmd proxy lcr.reload
-  fi
-
-  if [ -f "${SCEN_CHECK_DIR}/ncos.yml" ]; then
-    echo "$(date) - Deleting ncos levels"
-    "${BIN_DIR}/create_ncos.pl" -delete "${SCEN_CHECK_DIR}/ncos.yml"
-  fi
-
-  if [ -f "${SCEN_CHECK_DIR}/rewrite.yml" ]; then
-    echo "$(date) - Deleting rewrite rules"
-    "${BIN_DIR}/create_rewrite_rules.pl" -delete "${SCEN_CHECK_DIR}/rewrite.yml"
-  fi
-
-  if [ -f "${SCEN_CHECK_DIR}/hosts" ]; then
-    echo "$(date) - Deleting foreign domains"
-    sed -e "s:$(cat "${SCEN_CHECK_DIR}/hosts")::" -i /etc/hosts
-    rm "${SCEN_CHECK_DIR}/hosts"
-  fi
-
-  if [ -f "${SCEN_CHECK_DIR}/soundsets.yml" ]; then
-    echo "$(date) - Deleting soundsets"
-    "${BIN_DIR}/create_soundsets.pl" -delete "${SCEN_CHECK_DIR}/soundsets.yml"
-  fi
-}
-
 release_appearance() {
   local values
   values=$(mktemp)
@@ -427,8 +295,7 @@ release_appearance() {
 error_helper() {
   echo "$1"
   if ! "${SKIP_DELDOMAIN}" ; then
-    echo "$(date) - Deleting domain:${DOMAIN}"
-    delete_voip "${DOMAIN}"
+    "${BIN_DIR}/provide_scenario.sh" "${SCEN_CHECK_DIR}" delete
   fi
   stop_capture
   check_rtp
@@ -781,7 +648,7 @@ cdr_check() {
 }
 
 usage() {
-  echo "Usage: check.sh [-hCDRTGgJKm] [-d DOMAIN ] [-p PROFILE ] -s [GROUP] check_name"
+  echo "Usage: check.sh [-hCDRTGgJKm] [-p PROFILE ] -s [GROUP] check_name"
   echo "Options:"
   echo -e "\\t-C: skip creation of domain and subscribers"
   echo -e "\\t-R: skip run sipp"
@@ -791,7 +658,6 @@ usage() {
   echo -e "\\t-G: creation of graphviz image"
   echo -e "\\t-g: creation of graphviz image only if test fails"
   echo -e "\\t-r: fix retransmission issues"
-  echo -e "\\t-d: DOMAIN"
   echo -e "\\t-p: CE|PRO default is CE"
   echo -e "\\t-J: kamailio json output OFF"
   echo -e "\\t-M: skip move of kamailio json output to log folder"
@@ -803,11 +669,10 @@ usage() {
   echo -e "\\tcheck_name. Scenario name to check. This is the name of the directory on GROUP dir."
 }
 
-while getopts 'hCd:p:Rs:DTPGgrcJKMmw:' opt; do
+while getopts 'hCp:Rs:DTPGgrcJKMmw:' opt; do
   case $opt in
     h) usage; exit 0;;
     C) SKIP=true;;
-    d) DOMAIN=${OPTARG};;
     p) PROFILE=${OPTARG};;
     R) SKIP_RUNSIPP=true; SKIP_DELDOMAIN=true;;
     s) GROUP=${OPTARG};;
@@ -849,7 +714,6 @@ SEMS_PBX_LOG=${SEMS_PBX_LOG:-"/var/log/ngcp/sems-pbx.log"}
 RTP_LOG=${RTP_LOG:-"/var/log/ngcp/rtp.log"}
 SCEN_DIR="${BASE_DIR}/${GROUP}"
 SCEN_CHECK_DIR="${SCEN_DIR}/${NAME_CHECK}"
-DOMAIN=${DOMAIN:-"spce.test"}
 PROFILE="${PROFILE:-CE}"
 MLOG_DIR="${BASE_DIR}/mem"
 test_uuid=$(grep test_uuid "${SCEN_CHECK_DIR}/scenario.yml" | awk '{print $2}')
@@ -878,12 +742,7 @@ if [ -f "${SCEN_CHECK_DIR}/pro.yml" ] && [ "${PROFILE}" == "CE" ]; then
 fi
 
 if ! "$SKIP" ; then
-  echo "$(date) - Deleting all info for ${DOMAIN} domain"
-  delete_voip "${DOMAIN}" # just to be sure nothing is there
-  echo "$(date) - Creating ${DOMAIN}"
-  create_voip "${DOMAIN}"
-  echo "$(date) - Adding prefs"
-  create_voip_prefs
+  "${BIN_DIR}/provide_scenario.sh" "${SCEN_CHECK_DIR}" create
 fi
 
 if ! "$SKIP_RUNSIPP" ; then
@@ -981,9 +840,7 @@ fi
 
 
 if ! "${SKIP_DELDOMAIN}" ; then
-  echo "$(date) - Deleting domain:${DOMAIN}"
-  delete_voip "${DOMAIN}"
-  echo "$(date) - Done"
+  "${BIN_DIR}/provide_scenario.sh" "${SCEN_CHECK_DIR}" delete
 fi
 
 

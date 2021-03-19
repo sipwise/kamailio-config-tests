@@ -17,7 +17,7 @@ KAM_DIR="/tmp/cfgtest"
 COREDUMP_DIR="/ngcp-data/coredumps"
 PROFILE="${PROFILE:-}"
 OPTS=(-P -T -M) #SKIP_PARSE=true, SKIP_TESTS=true, SKIP_MOVE_JSON_KAM=true
-DOMAIN="spce.test"
+
 TIMEOUT=${TIMEOUT:-300}
 SHOW_SCENARIOS=false
 SKIP_CONFIG=false
@@ -376,7 +376,7 @@ for t in "${SCEN[@]}"; do
     rm -rf "${json_temp}"
   fi
 
-  if ! "${BIN_DIR}/check.sh" "${OPTS[@]}" -d "${DOMAIN}" -p "${PROFILE}" -s "${GROUP}" "${t}" ; then
+  if ! "${BIN_DIR}/check.sh" "${OPTS[@]}" -p "${PROFILE}" -s "${GROUP}" "${t}" ; then
     echo "ERROR: ${t}"
     error_flag=1
   fi

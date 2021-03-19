@@ -3,7 +3,6 @@ RUN_DIR="$(dirname "$0")"
 export BASE_DIR=${BASE_DIR:-$RUN_DIR}
 BIN_DIR="${BASE_DIR}/bin"
 PROFILE="${PROFILE:-}"
-DOMAIN="spce.test"
 GROUP="${GROUP:-scenarios}"
 RETRANS=""
 CDR=""
@@ -77,7 +76,7 @@ fi
 get_scenarios
 
 echo "${SCEN[@]}" |  tr ' ' '\n' \
- | parallel "${BIN_DIR}/check.sh ${GRAPH} -C -R ${OPTS} ${RETRANS} ${CDR} -d ${DOMAIN} -p ${PROFILE} -s ${GROUP}"
+ | parallel "${BIN_DIR}/check.sh ${GRAPH} -C -R ${OPTS} ${RETRANS} ${CDR} -p ${PROFILE} -s ${GROUP}"
 status=$?
 echo "$(date) - All done[${status}]"
 tap_cmd=()
