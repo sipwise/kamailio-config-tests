@@ -24,6 +24,7 @@ use File::Spec;
 use Getopt::Long;
 use strict;
 use warnings;
+use List::MoreUtils qw(uniq);
 use YAML::XS qw(LoadFile DumpFile);
 use Hash::Merge qw(merge);
 
@@ -71,8 +72,21 @@ if (exists $ENV{'BASE_DIR'})
 
 sub get_domains
 {
+  my $ip = "127.0.0.1";
   my $entries = shift;
-  push @{$entries}, "127.0.0.1 spce.test";
+  my @scenarios = qx{${base_dir}/bin/get_scenarios.sh -x ${group}};
+  my @domains = ();
+  for my $scenario (@scenarios) {
+    chomp $scenario;
+    my $info = LoadFile("${base_dir}/${group}/${scenario}/scenario.yml");
+    foreach (keys %{$info->{domains}}) {
+      push @domains, $_;
+    }
+  }
+  foreach (uniq(@domains)) {
+    print "define $_ as $ip\n";
+    push @{$entries}, "$ip $_";
+  }
   return $entries;
 }
 
