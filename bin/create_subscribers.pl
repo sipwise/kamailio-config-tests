@@ -193,6 +193,7 @@ sub create_subscriber
   my $tmp = $api->get_subscriber($s->{id});
   my $key = $username =~ tr/\./_/r;
   my $key_dom = $domain =~ tr/\./_/r;
+  $key_dom = $key_dom =~ tr/\-/_/r;
   $ids->{$key_dom}->{$key}->{uuid} = $tmp->{uuid};
   return;
 }
