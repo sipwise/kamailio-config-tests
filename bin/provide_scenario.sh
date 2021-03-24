@@ -175,6 +175,23 @@ delete_voip() {
   fi
 }
 
+scenario_csv() {
+  local DOMAIN=$1
+  echo "$(date) - Cleaning csv/reg.xml files"
+  find "${SCEN_CHECK_DIR}" -name 'sipp_scenario_responder*_reg.xml' -exec rm {} \;
+  find "${SCEN_CHECK_DIR}" -name '*.csv' -exec rm {} \;
+  echo "$(date) - Generating csv/reg.xml files"
+  if ! "${BIN_DIR}/scenario.pl" "${SCEN_CHECK_DIR}/scenario.yml" ; then
+    echo "Error creating csv files"
+    exit 2
+  fi
+
+  if [ -f "${SCEN_CHECK_DIR}/hosts" ]; then
+    echo "$(date) - Setting foreign domains"
+    cat "${SCEN_CHECK_DIR}/hosts" >> /etc/hosts
+  fi
+}
+
 create() {
   local DOMAIN=$1
   delete "${DOMAIN}" # just to be sure nothing is there
@@ -182,6 +199,7 @@ create() {
   create_voip "${DOMAIN}"
   echo "$(date) - Adding prefs"
   create_voip_prefs
+  scenario_csv "${DOMAIN}"
 }
 
 usage() {

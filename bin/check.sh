@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright: 2013-2020 Sipwise Development Team <support@sipwise.com>
+# Copyright: 2013-2021 Sipwise Development Team <support@sipwise.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -756,18 +756,6 @@ if ! "$SKIP_RUNSIPP" ; then
       echo "$(date) - clean cfgt scenario ${test_uuid}"
       ngcp-kamcmd proxy cfgt.clean "${test_uuid}"
     fi
-  fi
-  echo "$(date) - Cleaning csv/reg.xml files"
-  find "${SCEN_CHECK_DIR}" -name 'sipp_scenario_responder*_reg.xml' -exec rm {} \;
-  find "${SCEN_CHECK_DIR}" -name '*.csv' -exec rm {} \;
-  echo "$(date) - Generating csv/reg.xml files"
-  if ! "${BIN_DIR}/scenario.pl" "${SCEN_CHECK_DIR}/scenario.yml" ; then
-    error_helper "Error creating csv files" 4
-  fi
-
-  if [ -f "${SCEN_CHECK_DIR}/hosts" ]; then
-    echo "$(date) - Setting foreign domains"
-    cat "${SCEN_CHECK_DIR}/hosts" >> /etc/hosts
   fi
 
   echo "$(date) - Running sipp scenarios"
