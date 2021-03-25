@@ -78,7 +78,9 @@ sub get_domains
   my @domains = ();
   for my $scenario (@scenarios) {
     chomp $scenario;
-    my $info = LoadFile("${base_dir}/${group}/${scenario}/scenario.yml");
+    my $scen_file = "${base_dir}/${group}/${scenario}/scenario.yml";
+    print "loading ${scen_file}\n";
+    my $info = LoadFile($scen_file);
     foreach (keys %{$info->{domains}}) {
       push @domains, $_;
     }
