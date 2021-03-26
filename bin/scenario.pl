@@ -120,6 +120,22 @@ sub get_subs_info
     return;
 }
 
+sub network_data
+{
+    my $scen = shift;
+    my $idx_port = 50603;
+    my $idx_mport = 46003;
+
+    $scen->{port} = 51602;
+    $scen->{mport} = 45003;
+    foreach my $resp (@{$scen->{responders}})
+    {
+        $resp->{port} = $idx_port++;
+        $resp->{mport} = $idx_mport;
+        $idx_mport = $idx_mport + 3;
+    }
+}
+
 sub generate
 {
     my $id = 0;
@@ -158,7 +174,8 @@ sub generate
         my $auth   = "[authentication username=$scen->{auth_username} password=$scen->{password}]";
         my $csv_data = [$scen->{devid}, $auth, $scen->{domain}, $test_uuid, $scen->{'pbx_extension'}];
         $csv->{caller}->print($io_caller, $csv_data);
-        $csv_data = ["sipp_scenario".sprintf("%02i", $id).".xml", $scen->{proto}, $scen->{ip}];
+        network_data($scen);
+        $csv_data = ["sipp_scenario".sprintf("%02i", $id).".xml", $scen->{proto}, $scen->{ip}, $scen->{port}, $scen->{mport}];
         $csv->{scenario}->print($io_scenario, $csv_data);
         foreach my $resp (@{$scen->{responders}})
         {
@@ -181,7 +198,17 @@ sub generate
             $auth   = "[authentication username=$resp->{auth_username} password=$resp->{password}]";
             $csv_data = [$resp->{devid}, $resp->{number}, $auth, $resp->{domain}, $test_uuid, $resp->{'pbx_extension'}];
             $csv->{callee}->print($io_callee, $csv_data);
-            $csv_data = ["sipp_scenario_responder".sprintf("%02i", $res_id).".xml", $resp->{proto}, $resp->{ip}, $resp->{peer_host}, $resp->{foreign}, $resp->{register}, $resp->{username}."@".$resp->{domain}];
+            $csv_data = [
+                "sipp_scenario_responder".sprintf("%02i", $res_id).".xml",
+                $resp->{proto},
+                $resp->{ip},
+                $resp->{port},
+                $resp->{mport},
+                $resp->{peer_host},
+                $resp->{foreign},
+                $resp->{register},
+                $resp->{username}."@".$resp->{domain}
+            ];
             $csv->{scenario}->print($io_scenario, $csv_data);
             if($resp->{register} eq "yes" && $resp->{active} eq "yes")
             {
