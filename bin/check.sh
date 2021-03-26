@@ -343,54 +343,18 @@ check_rtp() {
   done
 }
 
-# $1 port to check
-check_port() {
-  local status=0
-  local port=$1
-  local step=${2:-1}
-
-  until [ ${status} -eq 1 ]; do
-    if netstat -an | grep -q ":${port} " ; then
-      port=$((port + step))
-    else
-      status=1
-    fi
-  done
-  echo ${port}
-}
-
-# $1 media port to check
-# sipp uses media_port and media_port+2
-check_mport() {
-  local status=0
-  local mport=$1
-  local step=${2:-3}
-  local mport2
-  until [ ${status} -eq 1 ]; do
-    if ! (netstat -aun | grep -q ":${mport} ") ; then
-      mport2=$((mport + 2))
-      if ! (netstat -aun | grep -q ":${mport2} "); then
-        status=1
-      fi
-    fi
-    if [ $status -eq 0 ] ; then
-      mport=$((mport + step))
-    fi
-  done
-  echo ${mport}
-}
-
 #$1 is filename
 get_ip() {
-  transport=$(grep "$1" "${SCEN_CHECK_DIR}/scenario.csv"|cut -d\; -f2| tr -d '\n')
-  ip=$(grep "$1" "${SCEN_CHECK_DIR}/scenario.csv"|cut -d\; -f3| tr -d '\n')
-  if [[ $? -ne 0 ]]; then
-    error_helper "cannot find $1 ip on ${SCEN_CHECK_DIR}/scenario.csv" 10
-  fi
-  peer_host=$(grep "$1" "${SCEN_CHECK_DIR}/scenario.csv"|cut -d\; -f4| tr -d '\n')
-  foreign_dom=$(grep "$1" "${SCEN_CHECK_DIR}/scenario.csv"|cut -d\; -f5| tr -d '\n')
-  registration=$(grep "$1" "${SCEN_CHECK_DIR}/scenario.csv"|cut -d\; -f6| tr -d '\n')
-  subscriber=$(grep "$1" "${SCEN_CHECK_DIR}/scenario.csv"|cut -d\; -f7| tr -d '\n')
+  local scen=()
+  while IFS=";" read -r -a scen; do
+    transport=${scen[1]}
+    ip=${scen[2]}
+    port=${scen[3]}
+    mport=${scen[4]}
+    foreign_dom=${scen[6]}
+    registration=${scen[7]}
+    subscriber=${scen[8]}
+  done< <(grep "$1" "${SCEN_CHECK_DIR}/scenario.csv")
 }
 
 copy_logs() {
@@ -420,11 +384,6 @@ memdbg() {
 
 # $1 sipp xml scenario file
 run_sipp() {
-  local PORT
-  local MPORT
-  PORT=$(check_port 50603)
-  MPORT=$(check_mport 46003)
-
   local base=""
   local pid=""
   local responder_pid=""
@@ -469,47 +428,32 @@ run_sipp() {
       continue
     fi
     get_ip "$(basename "${res}")"
-    if [ "${peer_host}" != "" ]; then
-      echo "$(date) - Update peer_host:${peer_host} ${ip}:${PORT} info"
-      if ! "${BIN_DIR}/update_peer_host.pl" --ip="${ip}" --port="${PORT}" \
-          "${peer_host}" ;
-      then
-        error_helper "$(date) - error updating peer info" 15
-      else
-        # REMOVE ME!! fix for REST API
-          ngcp-kamcmd proxy lcr.reload
-      fi
-    fi
+
     if [ "${foreign_dom}" == "yes" ]; then
       echo "$(date) - foreign domain detected... using 5060 port"
-      PORT="5060"
+      port="5060"
     fi
     if [ "${registration}" == "permanent" ]; then
-      echo "$(date) - Update permanent reg:${subscriber} ${ip}:${PORT} info"
+      echo "$(date) - Update permanent reg:${subscriber} ${ip}:${port} info"
       if ! "${BIN_DIR}/update_perm_reg.pl"  \
-          -t "${transport}" "${subscriber}" "${ip}" "${PORT}";
+          -t "${transport}" "${subscriber}" "${ip}" "${port}";
       then
         error_helper "$(date) - error updating peer info" 15
       fi
     fi
 
     if [ -f "${SCEN_CHECK_DIR}/${base}_reg.xml" ]; then
-      echo "$(date) - Register ${base} ${ip}:${PORT}-${MPORT}"
-      "${BIN_DIR}/sipp.sh" -T "$transport" -i "${ip}" -p "${PORT}" \
+      echo "$(date) - Register ${base} ${ip}:${port}-${mport}"
+      "${BIN_DIR}/sipp.sh" -T "$transport" -i "${ip}" -p "${port}" \
         -e "${LOG_DIR}/${base}_reg_errors.log" \
         -r "${SCEN_CHECK_DIR}/${base}_reg.xml"
     fi
-    pid=$("${BIN_DIR}/sipp.sh" -b -T "$transport" -i "${ip}" -p "${PORT}" \
+    pid=$("${BIN_DIR}/sipp.sh" -b -T "$transport" -i "${ip}" -p "${port}" \
       -l "${LOG_DIR}/${base}.msg" \
       -e "${LOG_DIR}/${base}_errors.log" \
-      -m "${MPORT}" -r "${SCEN_CHECK_DIR}/${base}.xml")
-    echo "$(date) - Running ${base}[${pid}] ${ip}:${PORT}-${MPORT}"
+      -m "${mport}" -r "${SCEN_CHECK_DIR}/${base}.xml")
+    echo "$(date) - Running ${base}[${pid}] ${ip}:${port}-${mport}"
     responder_pid="${responder_pid} ${base}:${pid}"
-
-    if [ "${foreign_dom}" == "no" ]; then
-      PORT=$(check_port "$((PORT+1))")
-    fi
-    MPORT=$(check_mport "$((MPORT+2))")
   done
 
   local status=0
@@ -521,10 +465,10 @@ run_sipp() {
       continue
     fi
     get_ip "$(basename "${send}")"
-    PORT=$(check_port )
-    MPORT=$(check_mport )
-    echo "$(date) - Running ${base} $ip:51602-45003"
-    if ! "${BIN_DIR}/sipp.sh" -e "${LOG_DIR}/${base}_errors.log" -l "${LOG_DIR}/${base}.msg" -T "${transport}" -i "${ip}" -p 51602 -m 45003 "${send}" ; then
+    echo "$(date) - Running ${base} ${ip}:${port}-${mport}"
+    if ! "${BIN_DIR}/sipp.sh" -e "${LOG_DIR}/${base}_errors.log" -l "${LOG_DIR}/${base}.msg" \
+        -T "${transport}" -i "${ip}" -p "${port}" -m "${mport}" "${send}"
+    then
       echo "$(date) - ${base} error"
       status=1
     fi
