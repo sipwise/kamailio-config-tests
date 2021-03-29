@@ -98,8 +98,6 @@ create_voip_prefs() {
     echo "$(date) - Creating peers"
     "${BIN_DIR}/create_peers.pl" \
       "${SCEN_CHECK_DIR}/peer.yml" "${SCEN_CHECK_DIR}/scenario_ids.yml"
-    # REMOVE ME!! fix for REST API
-    ngcp-kamcmd proxy lcr.reload
   fi
 
   if [ -f "${SCEN_CHECK_DIR}/lnp.yml" ]; then
@@ -181,7 +179,13 @@ scenario_csv() {
   find "${SCEN_CHECK_DIR}" -name 'sipp_scenario_responder*_reg.xml' -exec rm {} \;
   find "${SCEN_CHECK_DIR}" -name '*.csv' -exec rm {} \;
   echo "$(date) - Generating csv/reg.xml files"
-  if ! "${BIN_DIR}/scenario.pl" "${SCEN_CHECK_DIR}/scenario.yml" ; then
+  echo "IP=${IP} PORT=${PORT} MPORT=${MPORT}"
+  echo "PEER_IP=${PEER_IP} PEER_PORT=${PEER_PORT} PEER_MPORT=${PEER_MPORT}"
+  if ! "${BIN_DIR}/scenario.pl" \
+    --ip="${IP}" --port="${PORT}" --mport="${MPORT}" \
+    --peer-ip="${PEER_IP}" --peer-port="${PEER_PORT}" --peer-mport="${PEER_MPORT}" \
+    "${SCEN_CHECK_DIR}/scenario.yml" "${SCEN_CHECK_DIR}/scenario_ids.yml"
+  then
     echo "Error creating csv files"
     exit 2
   fi
@@ -195,27 +199,45 @@ scenario_csv() {
 create() {
   local DOMAIN=$1
   delete "${DOMAIN}" # just to be sure nothing is there
+  scenario_csv "${DOMAIN}"
   echo "$(date) - Creating ${DOMAIN}"
   create_voip "${DOMAIN}"
   echo "$(date) - Adding prefs"
   create_voip_prefs
-  scenario_csv "${DOMAIN}"
 }
 
 usage() {
   cat <<EOF
-Usage: ${ME} [-h] scenario_dir action
+Usage: ${ME} [options] scenario_dir action
 
 Options:
   -h: this help
+  -i: IP
+  -p: sipp port base
+  -m: sipp multimedia port base
+  -I: peer IP
+  -P: sipp peer port base
+  -M: sipp peer multimedia port base
 Arguments:
   scenario_dir
   action. 'create' or 'delete'
 EOF
 }
 
-while getopts 'hp:s:' opt; do
+IP="127.126.0.1"
+PORT=51602
+MPORT=45003
+PEER_IP="127.0.2.1"
+PEER_PORT=51602
+PEER_MPORT=45003
+while getopts 'hi:p:m:I:P:M:' opt; do
   case $opt in
+    i) IP=${OPTARG};;
+    p) PORT=${OPTARG};;
+    m) MPORT=${OPTARG};;
+    I) PEER_IP=${OPTARG};;
+    P) PEER_PORT=${OPTARG};;
+    M) PEER_MPORT=${OPTARG};;
     h) usage; exit 0;;
     *) usage; exit 1;;
   esac

@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #
-# Copyright: 2013-2015 Sipwise Development Team <support@sipwise.com>
+# Copyright: 2013-2021 Sipwise Development Team <support@sipwise.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,7 +26,8 @@ use Cwd 'abs_path';
 use File::Basename;
 use File::Spec;
 use IO::File;
-use YAML::XS;
+use YAML::XS qw(DumpFile LoadFile);
+use Hash::Merge qw(merge);
 use Text::CSV;
 use Template;
 use Try::Tiny;
@@ -34,23 +35,48 @@ use Data::Dumper;
 
 sub usage
 {
-  my $output = "usage: scenario.pl [-h] scenario.yml\n";
+  my $output = "usage: scenario.pl [options] scenario.yml scenario_ids.yml\n";
   $output .= "Options:\n";
   $output .= "\t-h: this help\n";
+  $output .= "\t--ip: IP\n";
+  $output .= "\t--port: base sipp port\n";
+  $output .= "\t--mport: base sipp media port\n";
+  $output .= "\t--peer-ip: peer IP\n";
+  $output .= "\t--peer-port: peer base sipp port\n";
+  $output .= "\t--peer-mport: peer base sipp media port\n";
   return $output
 }
 
+my $ids = {};
 my $help = 0;
-my $del = 0;
-GetOptions ("h|help" => \$help)
-  or die("Error in command line arguments\n".usage());
+my $net_data = {
+    scen => {
+        ip => "127.126.0.1",
+        port => 51602,
+        mport => 45003,
+    },
+    peer => {
+        ip => "127.0.2.1",
+        port => 51602,
+        mport => 45003,
+    },
+};
+GetOptions (
+    "h|help" => \$help,
+    "ip=s" => \$net_data->{scen}->{ip},
+    "port=i" => \$net_data->{scen}->{port},
+    "mport=i" => \$net_data->{scen}->{mport},
+    "peer-ip=s" => \$net_data->{peer}->{ip},
+    "peer-port=i" => \$net_data->{peer}->{port},
+    "peer-mport=i" => \$net_data->{peer}->{mport},
+) or die("Error in command line arguments\n".usage());
 
 die(usage()) unless (!$help);
-die("Wrong number of arguments\n".usage()) unless ($#ARGV == 0);
+die("Wrong number of arguments[$#ARGV]\n".usage()) unless ($#ARGV == 1);
 
 my $filename = abs_path($ARGV[0]);
 our $base_check_dir = dirname($filename);
-my $cf = YAML::XS::LoadFile($filename);
+my $cf = LoadFile($filename);
 
 our $bin_dir = '/usr/share/kamailio-config-tests/bin';
 our $template_dir = '/usr/share/kamailio-config-tests/scenarios/templates';
@@ -120,20 +146,62 @@ sub get_subs_info
     return;
 }
 
+sub generate_net_values
+{
+    my $net = shift;
+    my $res = {
+        ip => $net->{ip},
+        port => $net->{port},
+        mport => $net->{mport},
+    };
+    $net->{port} += 1;
+    $net->{mport} += 3;
+    return $res;
+}
+
+sub peer_data
+{
+    my $peer_host = shift;
+    if(not defined($ids->{$peer_host})) {
+        $ids->{$peer_host} = generate_net_values($net_data->{peer});
+    }
+    return $ids->{$peer_host};
+}
+
 sub network_data
 {
     my $scen = shift;
-    my $idx_port = 50603;
-    my $idx_mport = 46003;
+    my $hm = Hash::Merge->new('RIGHT_PRECEDENT');
+    my $data = {};
 
-    $scen->{port} = 51602;
-    $scen->{mport} = 45003;
+    if(defined($scen->{peer_host})) {
+        $data->{peer} = $scen->{peer_host};
+        $data = $hm->merge($data, peer_data($scen->{peer_host}));
+    } else {
+        $data = generate_net_values($net_data->{scen});
+    }
+    $data->{username} = $scen->{username};
+    $scen->{ip} = $data->{ip};
+    $scen->{port} = $data->{port};
+    $scen->{mport} = $data->{mport};
+    if(defined($scen->{domain})) { $data->{domain} = $scen->{domain}; }
     foreach my $resp (@{$scen->{responders}})
     {
-        $resp->{port} = $idx_port++;
-        $resp->{mport} = $idx_mport;
-        $idx_mport = $idx_mport + 3;
+        my $rdata = {};
+        if(defined($resp->{peer_host})) {
+            $rdata->{peer} = $resp->{peer_host};
+            $rdata = $hm->merge($rdata, peer_data($resp->{peer_host}));
+        } else {
+            $rdata = generate_net_values($net_data->{scen});
+        }
+        $rdata->{username} = $resp->{username};
+        $resp->{ip} = $rdata->{ip};
+        $resp->{port} = $rdata->{port};
+        $resp->{mport} = $rdata->{mport};
+        if(defined($resp->{domain})) { $rdata->{domain} = $resp->{domain}; }
+        push @{$data->{responders}}, $rdata;
     }
+    push @{$ids->{scenarios}}, $data;
 }
 
 sub generate
@@ -280,3 +348,4 @@ sub generate_foreign_dom
 
 generate($cf);
 generate_presence($cf);
+DumpFile(abs_path($ARGV[1]), $ids);

@@ -261,5 +261,8 @@ sub main
     return;
 }
 
+my $ids_path = abs_path($ARGV[1]);
+print "load $ids_path\n";
+$ids = LoadFile($ids_path);
 main(LoadFile(abs_path($ARGV[0])));
-DumpFile(abs_path($ARGV[1]), $ids);
+DumpFile($ids_path, $ids);
