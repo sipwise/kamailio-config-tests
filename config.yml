@@ -1,0 +1,13 @@
+---
+sip:
+  ip: 127.126.0.1
+  port: 51602
+  mport: 45003
+peer:
+  ip: 127.0.2.1
+  port: 51602
+  mport: 45003
+phone:
+  cc: 43
+  ac: 1
+  sn: 1000

@@ -41,6 +41,7 @@ sub usage
   $output .= "\t--ip: IP\n";
   $output .= "\t--port: base sipp port\n";
   $output .= "\t--mport: base sipp media port\n";
+  $output .= "\t--phone: base phone number\n";
   $output .= "\t--peer-ip: peer IP\n";
   $output .= "\t--peer-port: peer base sipp port\n";
   $output .= "\t--peer-mport: peer base sipp media port\n";
@@ -61,11 +62,13 @@ my $net_data = {
         mport => 45003,
     },
 };
+my $phone = "43:1:1000";
 GetOptions (
     "h|help" => \$help,
     "ip=s" => \$net_data->{scen}->{ip},
     "port=i" => \$net_data->{scen}->{port},
     "mport=i" => \$net_data->{scen}->{mport},
+    "phone=s" => \$phone,
     "peer-ip=s" => \$net_data->{peer}->{ip},
     "peer-port=i" => \$net_data->{peer}->{port},
     "peer-mport=i" => \$net_data->{peer}->{mport},
@@ -92,6 +95,48 @@ our $tt = Template->new({
     INCLUDE_PATH => $template_dir,
     INTERPOLATE  => 1,
 }) || die "$Template::ERROR\n";
+our ($phone_cc, $phone_ac, $phone_sn) = split(/:/, $phone);
+$phone_sn = int($phone_sn);
+
+sub key_domain
+{
+    my $domain = shift;
+
+    my $key_dom = $domain =~ tr/\./_/r;
+    return $key_dom =~ tr/\-/_/r;
+}
+
+sub manage_phones
+{
+    my ($data) = @_;
+
+    foreach my $domain (sort keys %{$data->{subscribers}}) {
+        my $key_dom = key_domain($domain);
+        push(@{$ids->{domains}}, $key_dom);
+        foreach my $subs (sort keys %{$data->{subscribers}->{$domain}}) {
+            my $subs_data = $data->{subscribers}->{$domain}->{$subs};
+            $ids->{$key_dom}->{$subs}->{cc} = $subs_data->{cc} = $phone_cc;
+            $ids->{$key_dom}->{$subs}->{ac} = $subs_data->{ac} = $phone_ac;
+            $ids->{$key_dom}->{$subs}->{sn} = $subs_data->{sn} = $phone_sn++;
+            $ids->{$key_dom}->{$subs}->{phone_number} = $subs_data->{cc} . $subs_data->{ac} . $subs_data->{sn};
+        }
+        foreach my $subs (sort keys %{$data->{subscribers}->{$domain}}) {
+            my $subs_data = $data->{subscribers}->{$domain}->{$subs};
+            foreach (@{$subs_data->{alias_numbers}}) {
+                my $alias_data = {
+                    cc => $phone_cc,
+                    ac => $phone_ac,
+                    sn => $phone_sn++,
+                };
+                $alias_data->{phone_number} = $alias_data->{cc} . $alias_data->{ac} . $alias_data->{sn};
+                push(@{$ids->{$key_dom}->{$subs}->{alias_numbers}}, $alias_data);
+            }
+            if(defined($ids->{$key_dom}->{$subs}->{alias_numbers})) {
+                $subs_data->{alias_numbers} = $ids->{$key_dom}->{$subs}->{alias_numbers};
+            }
+        }
+    }
+}
 
 sub new_csv
 {
@@ -118,6 +163,7 @@ sub get_subs_info
     if (defined($data_sub->{$data->{domain}}))
     {
         my $domain = $data->{domain};
+        my $key_dom = key_domain($domain);
         if (defined($data_sub->{$domain}->{$data->{username}}))
         {
             my $username = $data->{username};
@@ -346,6 +392,7 @@ sub generate_foreign_dom
     return;
 }
 
+manage_phones($cf);
 generate($cf);
 generate_presence($cf);
 DumpFile(abs_path($ARGV[1]), $ids);

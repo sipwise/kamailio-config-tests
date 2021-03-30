@@ -30,22 +30,24 @@ fi
 
 usage() {
   cat <<EOF
-Usage: ${ME} [-h] [-i IP] [-p port] [-m mport] [-x GROUP] action
+Usage: ${ME} [-h] [-f config.yml] [-x GROUP] action
 
 Options:
   -h: this help
-  -i: IP. Default: 127.126.0.1
-  -p: sipp port base. Default: 51602
-  -m: sipp multimedia port base. Default: 45003
+  -f: config.yml path. Default: ${BASE_DIR}/config.yml
   -x: set GROUP scenario. Default: scenarios
 Arguments:
   action. 'create' or 'delete'
 EOF
 }
 
+CONFIG=${BASE_DIR}/config.yml
 IP="127.126.0.1"
 PORT=51602
 MPORT=45003
+PHONE_CC=43
+PHONE_AC=1
+PHONE_SN=1000
 PEER_IP="127.0.2.1"
 PEER_PORT=51602
 PEER_MPORT=45003
@@ -63,16 +65,10 @@ get_scenarios() {
   fi
 }
 
-while getopts 'hi:p:m:I:P:M:x:t:' opt; do
+while getopts 'hf:x:' opt; do
   case $opt in
-    i) IP=${OPTARG};;
-    p) PORT=${OPTARG};;
-    m) MPORT=${OPTARG};;
-    I) PEER_IP=${OPTARG};;
-    P) PEER_PORT=${OPTARG};;
-    M) PEER_MPORT=${OPTARG};;
+    f) CONFIG=${OPTARG};;
     x) GROUP=${OPTARG};;
-    t) PROFILE=${OPTARG};;
     h) usage; exit 0;;
     *) usage; exit 1;;
   esac
@@ -86,24 +82,26 @@ if [[ $# != 1 ]]; then
 fi
 ACTION="$1"
 
-if [ -z "${PROFILE}" ]; then
-  ngcp_type=$(command -v ngcp-type)
-  if [ -n "${ngcp_type}" ]; then
-    case $(${ngcp_type}) in
-      sppro|carrier) PROFILE=PRO;;
-      spce) PROFILE=CE;;
-      *) ;;
-    esac
-    echo "ngcp-type: profile ${PROFILE}"
+get_config() {
+  local data=()
+  if [ ! -f "${CONFIG}" ]; then
+    echo "can't read ${CONFIG} file" >&2
+    exit 4
   fi
-fi
-if [ "${PROFILE}" != "CE" ] && [ "${PROFILE}" != "PRO" ]; then
-  echo "PROFILE ${PROFILE} unknown" >&2
-  usage
-  exit 2
-fi
+  mapfile -t data < <("${BIN_DIR}/get_config.pl" "${CONFIG}")
+  IP=${data[0]}
+  PORT=${data[1]}
+  MPORT=${data[2]}
+  PEER_IP=${data[3]}
+  PEER_PORT=${data[4]}
+  PEER_MPORT=${data[5]}
+  PHONE_CC=${data[6]}
+  PHONE_AC=${data[7]}
+  PHONE_SN=${data[8]}
+}
 
 update_network() {
+  local data=()
   local scen=$1
   local ids=${scen}/scenario_ids.yml
 
@@ -121,6 +119,9 @@ update_network() {
   if [[ ${data[1]} -ne 2 ]]; then
     PEER_MPORT=${data[1]}
   fi
+
+  mapfile -d: -t data < <("${BIN_DIR}/provide_next_phone.pl" "${ids}")
+  PHONE_SN=${data[2]}
 }
 
 create() {
@@ -128,6 +129,7 @@ create() {
   echo "*** $1 IP:${IP} PORT:${PORT} MPORT:${MPORT} ***"
   "${BIN_DIR}/provide_scenario.sh" \
     -i "${IP}" -p "${PORT}" -m "${MPORT}" \
+    -n "${PHONE_CC}:${PHONE_AC}:${PHONE_SN}" \
     -I "${PEER_IP}" -P "${PEER_PORT}" -M "${PEER_MPORT}" \
     "${scen}" "${ACTION}"
   echo "*** done ***"
@@ -139,6 +141,7 @@ delete() {
   "${BIN_DIR}/provide_scenario.sh" "${scen}" "${ACTION}"
 }
 
+get_config
 get_scenarios
 
 case ${ACTION} in

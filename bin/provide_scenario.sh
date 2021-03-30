@@ -182,7 +182,7 @@ scenario_csv() {
   echo "IP=${IP} PORT=${PORT} MPORT=${MPORT}"
   echo "PEER_IP=${PEER_IP} PEER_PORT=${PEER_PORT} PEER_MPORT=${PEER_MPORT}"
   if ! "${BIN_DIR}/scenario.pl" \
-    --ip="${IP}" --port="${PORT}" --mport="${MPORT}" \
+    --ip="${IP}" --port="${PORT}" --mport="${MPORT}" --phone="${PHONE}" \
     --peer-ip="${PEER_IP}" --peer-port="${PEER_PORT}" --peer-mport="${PEER_MPORT}" \
     "${SCEN_CHECK_DIR}/scenario.yml" "${SCEN_CHECK_DIR}/scenario_ids.yml"
   then
@@ -218,6 +218,7 @@ Options:
   -I: peer IP
   -P: sipp peer port base
   -M: sipp peer multimedia port base
+  -n: phone base number(cc:ac:sn). Default: 43:1:1000
 Arguments:
   scenario_dir
   action. 'create' or 'delete'
@@ -227,10 +228,11 @@ EOF
 IP="127.126.0.1"
 PORT=51602
 MPORT=45003
+PHONE=43:1:1000
 PEER_IP="127.0.2.1"
 PEER_PORT=51602
 PEER_MPORT=45003
-while getopts 'hi:p:m:I:P:M:' opt; do
+while getopts 'hi:p:m:I:P:M:n:' opt; do
   case $opt in
     i) IP=${OPTARG};;
     p) PORT=${OPTARG};;
@@ -238,6 +240,7 @@ while getopts 'hi:p:m:I:P:M:' opt; do
     I) PEER_IP=${OPTARG};;
     P) PEER_PORT=${OPTARG};;
     M) PEER_MPORT=${OPTARG};;
+    n) PHONE=${OPTARG};;
     h) usage; exit 0;;
     *) usage; exit 1;;
   esac
