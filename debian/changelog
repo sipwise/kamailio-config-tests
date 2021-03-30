@@ -1,3 +1,18 @@
+kamailio-config-tests (6.5.12.1+0~mr6.5.12.1) unstable; urgency=medium
+
+  [ Alessio Garzi ]
+  * [6b1ec2f] TT#107650 New scenario invite_callee_bye
+
+  [ Víctor Seva ]
+  * [6882b97] Revert "TT#107650 New scenario invite_callee_bye"
+
+  [ Victor Seva ]
+  * [a9d71ac] TT#81700 get_results.sh: fix error on tap summary
+  * [5e2a7c3] TT#81700 get_results.sh: add summary at the end of the report
+  * [5997afa] TT#81700 backport set_config.sh
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 30 Mar 2021 19:21:32 +0200
+
 kamailio-config-tests (6.5.12.0+0~mr6.5.12.0) unstable; urgency=medium
 
   * New release.
