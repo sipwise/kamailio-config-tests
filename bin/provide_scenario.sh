@@ -57,6 +57,7 @@ create_voip() {
   if [ -f "${SCEN_CHECK_DIR}/registration.yml" ]; then
     echo "$(date) - Creating permanent registrations"
     "${BIN_DIR}/create_registrations.pl" \
+      -ids "${SCEN_CHECK_DIR}/scenario_ids.yml" \
       "${SCEN_CHECK_DIR}/registration.yml"
   fi
 }

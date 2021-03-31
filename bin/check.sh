@@ -352,8 +352,6 @@ get_ip() {
     port=${scen[3]}
     mport=${scen[4]}
     foreign_dom=${scen[6]}
-    registration=${scen[7]}
-    subscriber=${scen[8]}
   done< <(grep "$1" "${SCEN_CHECK_DIR}/scenario.csv")
 }
 
@@ -432,14 +430,6 @@ run_sipp() {
     if [ "${foreign_dom}" == "yes" ]; then
       echo "$(date) - foreign domain detected... using 5060 port"
       port="5060"
-    fi
-    if [ "${registration}" == "permanent" ]; then
-      echo "$(date) - Update permanent reg:${subscriber} ${ip}:${port} info"
-      if ! "${BIN_DIR}/update_perm_reg.pl"  \
-          -t "${transport}" "${subscriber}" "${ip}" "${port}";
-      then
-        error_helper "$(date) - error updating peer info" 15
-      fi
     fi
 
     if [ -f "${SCEN_CHECK_DIR}/${base}_reg.xml" ]; then

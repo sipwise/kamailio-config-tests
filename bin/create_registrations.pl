@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #
-# Copyright: 2013-2016 Sipwise Development Team <support@sipwise.com>
+# Copyright: 2013-2021 Sipwise Development Team <support@sipwise.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -39,22 +39,34 @@ if ($config) {
 my $api = Sipwise::API->new($opts);
 $opts = $api->opts;
 my $del = 0;
+my $ids = {};
 
 sub usage {
   return "Usage:\n$PROGRAM_NAME registrations.yml\n".
         "Options:\n".
+        "  -ids scenario_ids.yml file\n".
         "  -delete\n".
         "  -d debug\n".
         "  -h this help\n";
 }
 my $help = 0;
+my $ids_path;
 GetOptions ("h|help" => \$help,
+    "ids=s" => \$ids_path,
     "d|debug" => \$opts->{verbose},
     "delete" => \$del)
     or die("Error in command line arguments\n".usage());
 
 die(usage()) unless (!$help);
 die("Error: wrong number of arguments\n".usage()) unless ($#ARGV == 0);
+
+sub key_domain
+{
+    my $domain = shift;
+
+    my $key_dom = $domain =~ tr/\./_/r;
+    return $key_dom =~ tr/\-/_/r;
+}
 
 sub delete_regs
 {
@@ -71,6 +83,25 @@ sub delete_regs
   return;
 }
 
+sub contact
+{
+  my $subscriber = shift;
+  my $domain = shift;
+  my $key_dom = key_domain($domain);
+
+  foreach my $scen (@{$ids->{scenarios}})
+  {
+    foreach my $resp (@{$scen->{responders}})
+    {
+      if( $resp->{username} eq $subscriber && $resp->{domain} eq $domain)
+      {
+        return "sip:$resp->{ip}:$resp->{port}";
+      }
+    }
+  }
+  die("can't find ${subscriber}\@${domain} on scenarios\n");
+}
+
 sub create_regs
 {
   my $subscriber = shift;
@@ -83,8 +114,9 @@ sub create_regs
     foreach my $r (@{$data})
     {
       $r->{subscriber_id} = $subs_id;
+      $r->{contact} = contact($subscriber, $domain);
       my $id = $api->create_subscriber_registration($r);
-      print "registration: ${subscriber}[${subs_id}] created [${id}]\n";
+      print "registration: ${subscriber}[${subs_id}] created as $r->{contact} [${id}]\n";
     }
   }
   else {
@@ -126,6 +158,9 @@ sub main {
         print "delete registrations\n" unless $opts->{debug};
         return do_delete($r);
     } else {
+        die("scenario_ids.yml needed, use -ids option\n") unless defined($ids_path);
+        print "load ${ids_path}\n" unless $opts->{debug};
+        $ids = LoadFile($ids_path);
         print "create registrations\n" unless $opts->{debug};
         return do_create($r);
     }
