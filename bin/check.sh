@@ -351,7 +351,6 @@ get_ip() {
     ip=${scen[2]}
     port=${scen[3]}
     mport=${scen[4]}
-    foreign_dom=${scen[6]}
   done< <(grep "$1" "${SCEN_CHECK_DIR}/scenario.csv")
 }
 
@@ -426,11 +425,6 @@ run_sipp() {
       continue
     fi
     get_ip "$(basename "${res}")"
-
-    if [ "${foreign_dom}" == "yes" ]; then
-      echo "$(date) - foreign domain detected... using 5060 port"
-      port="5060"
-    fi
 
     if [ -f "${SCEN_CHECK_DIR}/${base}_reg.xml" ]; then
       echo "$(date) - Register ${base} ${ip}:${port}-${mport}"

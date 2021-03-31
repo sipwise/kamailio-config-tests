@@ -241,6 +241,9 @@ sub network_data
             $rdata = generate_net_values($net_data->{scen});
         }
         $rdata->{username} = $resp->{username};
+        if (defined($resp->{foreign}) && $resp->{foreign} eq "yes") {
+            $rdata->{port} = 5060;
+        }
         $resp->{ip} = $rdata->{ip};
         $resp->{port} = $rdata->{port};
         $resp->{mport} = $rdata->{mport};
