@@ -69,7 +69,7 @@ if ! "${SKIP_CONFIG}" ; then
   ./bin/network_config.pl -g "${GROUP}" on
 	(
     cd /etc/ngcp-config || true
-    ngcpcfg apply "k-c-t ${GROUP} on"
+    ngcpcfg --summary-only apply "k-c-t ${GROUP} on"
   )
 fi
 
@@ -101,6 +101,6 @@ if ! "${SKIP_CONFIG}" ; then
   ./bin/network_config.pl -g"${GROUP}" off
 	(
     cd /etc/ngcp-config || true
-    ngcpcfg apply "k-c-t ${GROUP} off"
+    ngcpcfg --summary-only apply "k-c-t ${GROUP} off"
   )
 fi
