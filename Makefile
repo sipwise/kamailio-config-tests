@@ -11,6 +11,14 @@ RESULTS ?= reports
 all:
 	$(MAKE) syntaxcheck
 
+.ONESHELL:
+clean:
+	@echo "Clean files"
+	for SCENARIO in $(SCENARIOS); do
+		find "$${SCENARIO}" -name '*_test.yml' -exec rm {} \;
+		find "$${SCENARIO}" -name '*.csv' -exec rm {} \;
+	done
+
 syntaxcheck: bashismcheck perlcheck pythoncheck shellcheck
 
 bashismcheck:
