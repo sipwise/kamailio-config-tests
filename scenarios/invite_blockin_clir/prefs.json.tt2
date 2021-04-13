@@ -1,0 +1,11 @@
+{
+    "testuser1002@invite-blockin-clir.scenarios.test": {
+        "clir": true
+    },
+    "testuser1003@invite-blockin-clir.scenarios.test": {
+        "block_in_list": [
+            "[% invite_blockin_clir_scenarios_test.testuser1001.phone_number %]"
+        ],
+        "block_in_clir": true
+    }
+}
