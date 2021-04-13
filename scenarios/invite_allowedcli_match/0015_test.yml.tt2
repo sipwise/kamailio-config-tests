@@ -33,7 +33,7 @@ sip_in:
   - 'CSeq: 3 BYE'
   - 'Max-Forwards: 69'
   - 'Content-Length: 0'
-  - 'From: "431100299" <sip:testuser1002@'
+  - 'From: "[% invite_allowedcli_match_scenarios_test.testuser1002.phone_number %]99" <sip:testuser1002@'
   - 'To: <sip:testuser1003@'
 
 sip_out:
@@ -41,7 +41,7 @@ sip_out:
       '^SIP/2.0 100 Trying',
       'CSeq: 3 BYE',
       'Content-Length: 0',
-      'From: "431100299" <sip:testuser1002@',
+      'From: "[% invite_allowedcli_match_scenarios_test.testuser1002.phone_number %]99" <sip:testuser1002@',
       'To: <sip:testuser1003@'
     ]
   - [
@@ -50,6 +50,6 @@ sip_out:
       'CSeq: 3 BYE',
       'Max-Forwards: 68',
       'Content-Length: 0',
-      'From: "431100299" <sip:431100299@',
+      'From: "[% invite_allowedcli_match_scenarios_test.testuser1002.phone_number %]99" <sip:[% invite_allowedcli_match_scenarios_test.testuser1002.phone_number %]99@',
       'To: <sip:testuser1003@'
     ]

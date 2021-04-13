@@ -15,12 +15,12 @@ flow:
 sip_in:
   - '^SIP/2.0 180 Ringing'
   - 'CSeq: 2 INVITE'
-  - 'From: <sip:431100299@'
+  - 'From: <sip:[% invite_allowedcli_match_scenarios_test.testuser1002.phone_number %]99@'
   - 'To: <sip:testuser1003@'
 sip_out:
   - [
       '^SIP/2.0 180 Ringing',
       'CSeq: 2 INVITE',
-      'From: "431100299" <sip:testuser1002@',
+      'From: "[% invite_allowedcli_match_scenarios_test.testuser1002.phone_number %]99" <sip:testuser1002@',
       'To: <sip:testuser1003@'
     ]
