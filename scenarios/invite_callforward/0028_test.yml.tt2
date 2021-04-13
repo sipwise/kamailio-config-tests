@@ -16,7 +16,7 @@ sip_in:
   - '^SIP/2.0 200 OK'
   - 'CSeq: \d+ BYE'
   - 'Content-Length: 0'
-  - 'From: <sip:4311002@'
+  - 'From: <sip:[% invite_callforward_scenarios_test.testuser1002.phone_number %]@'
   - 'To: <sip:testuser1001@'
 sip_out:
   - [

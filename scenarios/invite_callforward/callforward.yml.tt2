@@ -1,11 +1,11 @@
 ---
-testuser1001@spce.test:
+testuser1001@invite-callforward.scenarios.test:
   destinations:
     destinations:
-      - destination: sip:4311003@spce.test
+      - destination: sip:[% invite_callforward_scenarios_test.testuser1003.phone_number %]@invite-callforward.scenarios.test
         priority: 0
         timeout: 5
-      - destination: sip:testuser1003@spce.test
+      - destination: sip:testuser1003@invite-callforward.scenarios.test
         priority: 1
         timeout: 5
     name: dest1001
@@ -22,13 +22,13 @@ testuser1001@spce.test:
     cfs: []
     cfr: []
     cfo: []
-testuser1004@spce.test:
+testuser1004@invite-callforward.scenarios.test:
   destinations:
     destinations:
-      - destination: sip:4311005@spce.test
+      - destination: sip:[% invite_callforward_scenarios_test.testuser1005.phone_number %]@invite-callforward.scenarios.test
         priority: 0
         timeout: 5
-      - destination: sip:testuser1005@spce.test
+      - destination: sip:testuser1005@invite-callforward.scenarios.test
         priority: 1
         timeout: 5
     name: dest1004

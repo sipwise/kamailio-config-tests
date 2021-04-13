@@ -1,6 +1,7 @@
+---
 test_uuid: invite_callforward
 domains:
-  'spce.test':
+  invite-callforward.scenarios.test:
     reseller_id: 1
 customers:
   'customer.test':
@@ -13,7 +14,7 @@ customers:
       billing_profile_id: 1
       reseller_id: 1
 subscribers:
-  spce.test:
+  invite-callforward.scenarios.test:
     testuser1003:
       customer: 'customer.test'
       password: testuser
@@ -47,26 +48,26 @@ subscribers:
 scenarios:
   - ip: 127.126.0.1
     username: testuser1002
-    domain: spce.test
+    domain: invite-callforward.scenarios.test
     responders:
       - ip: 127.1.0.1
         username: testuser1001
-        domain: spce.test
-        register: no
-        active: no
+        domain: invite-callforward.scenarios.test
+        register: 'no'
+        active: 'no'
       - ip: 127.1.0.3
         username: testuser1003
-        domain: spce.test
-        register: yes
+        domain: invite-callforward.scenarios.test
+        register: 'yes'
   - ip: 127.126.0.1
     username: testuser1002
-    domain: spce.test
+    domain: invite-callforward.scenarios.test
     responders:
       - ip: 127.1.0.4
         username: testuser1004
-        domain: spce.test
-        register: yes
+        domain: invite-callforward.scenarios.test
+        register: 'yes'
       - ip: 127.1.0.5
         username: testuser1005
-        domain: spce.test
-        register: yes
+        domain: invite-callforward.scenarios.test
+        register: 'yes'
