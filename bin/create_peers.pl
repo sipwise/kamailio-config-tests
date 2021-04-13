@@ -155,6 +155,35 @@ sub manage_inbound_rules
   return;
 }
 
+sub update_network
+{
+  my $host = shift;
+
+  foreach my $scen (@{$ids->{scenarios}})
+  {
+    if(defined($scen->{peer})) {
+      if($scen->{peer} eq $host->{name}) {
+        $host->{ip} = $scen->{ip};
+        $host->{port} = $scen->{port};
+        print "peer: $host->{name} [$host->{ip}:$host->{port}]\n";
+        return;
+      }
+    }
+    foreach my $resp (@{$scen->{responders}})
+    {
+      if(defined($resp->{peer})) {
+        if($resp->{peer} eq $host->{name}) {
+          $host->{ip} = $resp->{ip};
+          $host->{port} = $resp->{port};
+          print "peer: $host->{name} [$host->{ip}:$host->{port}]\n";
+          return;
+        }
+      }
+    }
+  }
+  return;
+}
+
 sub manage_hosts
 {
   my $data = shift;
@@ -166,6 +195,7 @@ sub manage_hosts
     if(defined $host->{id}) {
       print "peer: $host->{name} already there [$host->{id}]\n";
     } else {
+      update_network($host);
       $host->{id} = $api->create_peeringserver($host);
       print "peer: $host->{name} created [$host->{id}]\n";
     }
