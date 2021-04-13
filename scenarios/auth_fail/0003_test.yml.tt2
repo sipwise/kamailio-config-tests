@@ -10,12 +10,12 @@ flow:
   - start|ROUTE_REG_HANDLE:
   - start|ROUTE_AUTH:
   - start|ROUTE_AUTH_HELPER:
-      $x_hdr(From): spce.test
+      $x_hdr(From): auth-fail.scenarios.test
       $var(realm_user): testuser1003
-      $var(realm_domain): spce.test
+      $var(realm_domain): auth-fail.scenarios.test
   - return|ROUTE_AUTH_HELPER:
       $avp(orig_acc_caller_user): ['testuser1003']
-      $avp(orig_acc_caller_domain): ['spce.test']
+      $avp(orig_acc_caller_domain): ['auth-fail.scenarios.test']
   - start|ROUTE_ADD_CALLINFO_REPLY:
   - return|ROUTE_ADD_CALLINFO_REPLY:
   - start|ROUTE_EXIT:

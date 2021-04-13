@@ -1,6 +1,7 @@
+---
 test_uuid: auth_fail
 domains:
-  'spce.test':
+  auth-fail.scenarios.test:
     reseller_id: 1
 customers:
   'customer.test':
@@ -13,7 +14,7 @@ customers:
       billing_profile_id: 1
       reseller_id: 1
 subscribers:
-  spce.test:
+  auth-fail.scenarios.test:
     testuser1003:
       customer: 'customer.test'
       password: testuser
@@ -22,12 +23,12 @@ subscribers:
       sn: 1003
 scenarios:
   - ip: 127.126.254.1
-    domain: spce.test
+    domain: auth-fail.scenarios.test
     username: testuser1003
-    password_wrong: yes
+    password_wrong: 'yes'
     responders:
       - ip: 127.1.0.1
-        domain: spce.test
-        register: no
+        domain: auth-fail.scenarios.test
+        register: 'no'
         username: testuser1003
-        active: no
+        active: 'no'
