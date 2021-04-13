@@ -83,8 +83,8 @@ flow:
   - start|ROUTE_OUTBOUND:
       $avp(lua_dlg_profile): [
         "relay",
-        "peerout:[% peer_00_host0.id %]",
-        "peer:[% peer_00_host0.id %]",
+        "peerout:[% peer_00_invite_concurrent_max_out_host0.id %]",
+        "peer:[% peer_00_invite_concurrent_max_out_host0.id %]",
         "outgoing"
       ]
   - start|ROUTE_SET_CALLER_DIALOG:
@@ -93,17 +93,17 @@ flow:
   - start|ROUTE_CNT_CALLER_REJECT:
       $avp(lua_dlg_profile): [
         "accountout:[% customer_test.id %]",
-        "userout:[% spce_test.testuser1002.uuid %]",
+        "userout:[% invite_concurrent_max_out_scenarios_test.testuser1002.uuid %]",
         "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1002.uuid %]",
+        "user:[% invite_concurrent_max_out_scenarios_test.testuser1002.uuid %]",
         "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% spce_test.testuser1002.uuid %]",
+        "totaluserout:[% invite_concurrent_max_out_scenarios_test.testuser1002.uuid %]",
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1002.uuid %]",
+        "totaluser:[% invite_concurrent_max_out_scenarios_test.testuser1002.uuid %]",
         "total",
         "relay",
-        "peerout:[% peer_00_host0.id %]",
-        "peer:[% peer_00_host0.id %]",
+        "peerout:[% peer_00_invite_concurrent_max_out_host0.id %]",
+        "peer:[% peer_00_invite_concurrent_max_out_host0.id %]",
         "outgoing"
       ]
   - return|ROUTE_CNT_CALLER_REJECT:
@@ -137,33 +137,33 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^INVITE sip:004421003@'
-  - 'Contact: sip:testuser1002@'
-  - 'From: <sip:testuser1002@'
-  - 'To: <sip:004421003@'
+  - '^INVITE sip:[% scenarios.0.responders.1.username %]@'
+  - 'Contact: sip:[% scenarios.0.username %]@'
+  - 'From: <sip:[% scenarios.0.username %]@'
+  - 'To: <sip:[% scenarios.0.responders.1.username %]@'
   - 'CSeq: 2 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
-  - 'Proxy-Authorization: Digest username="testuser1002"'
+  - 'Proxy-Authorization: Digest username="[% scenarios.0.username %]"'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: 2 INVITE',
-      'From: <sip:testuser1002@',
-      'To: <sip:004421003@'
+      'From: <sip:[% scenarios.0.username %]@',
+      'To: <sip:[% scenarios.0.responders.1.username %]@'
     ]
   - [
       '^SIP/2.0 101 Connecting',
-      '<sip:testuser1002@',
-      'To: <sip:004421003@',
+      '<sip:[% scenarios.0.username %]@',
+      'To: <sip:[% scenarios.0.responders.1.username %]@',
       'CSeq: 2 INVITE',
-      'P-NGCP-Authorization: testuser1002@',
+      'P-NGCP-Authorization: [% scenarios.0.username %]@',
     ]
   - [
       '^SIP/2.0 403 Maximum parallel calls exceeded',
-      'From: <sip:testuser1002@',
-      'To: <sip:004421003@',
+      'From: <sip:[% scenarios.0.username %]@',
+      'To: <sip:[% scenarios.0.responders.1.username %]@',
       'CSeq: 2 INVITE',
-      'P-NGCP-Authorization: testuser1002@',
+      'P-NGCP-Authorization: [% scenarios.0.username %]@',
       'P-NGCP-Authorized: 1'
     ]

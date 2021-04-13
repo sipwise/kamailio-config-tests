@@ -25,26 +25,26 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - '^INVITE'
-  - 'Contact: sip:testuser1002@'
+  - 'Contact: sip:[% scenarios.0.username %]@'
   - 'CSeq: 3 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
-  - 'Proxy-Authorization: Digest username="testuser1002"'
+  - 'Proxy-Authorization: Digest username="[% scenarios.0.username %]"'
   - 'a=sendonly'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: 3 INVITE',
-      'From: <sip:testuser1002@',
-      'To: <sip:004321001@'
+      'From: <sip:[% scenarios.0.username %]@',
+      'To: <sip:[% scenarios.0.responders.0.username %]@'
     ]
   - [
       '^INVITE',
       'CSeq: 3 INVITE',
-      'From: <sip:4311002@',
-      'To: <sip:004321001@',
+      'From: <sip:[% invite_concurrent_max_out_scenarios_test.testuser1002.phone_number %]@',
+      'To: <sip:[% scenarios.0.responders.0.username %]@',
       'Content-Type: application/sdp',
-      'Proxy-Authorization: Digest username="testuser1002"',
+      'Proxy-Authorization: Digest username="[% scenarios.0.username %]"',
       'Max-Forwards: 68',
       'Content-Type: application/sdp',
       'a=sendonly'

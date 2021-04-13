@@ -29,9 +29,9 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - '^BYE'
-  - 'Contact: sip:testuser1002@'
-  - 'From: <sip:testuser1002@'
-  - 'To: <sip:004321001@'
+  - 'Contact: sip:[% scenarios.0.username %]@'
+  - 'From: <sip:[% scenarios.0.username %]@'
+  - 'To: <sip:[% scenarios.0.responders.0.username %]@'
   - 'CSeq: 6 BYE'
   - 'Max-Forwards: 69'
   - 'Content-Length: 0'
@@ -39,14 +39,14 @@ sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: 6 BYE',
-      'From: <sip:testuser1002@',
-      'To: <sip:004321001@',
+      'From: <sip:[% scenarios.0.username %]@',
+      'To: <sip:[% scenarios.0.responders.0.username %]@',
       'Content-Length: 0'
     ]
   - [
       '^BYE',
-      'From: <sip:4311002@',
-      'To: <sip:004321001@',
+      'From: <sip:[% invite_concurrent_max_out_scenarios_test.testuser1002.phone_number %]@',
+      'To: <sip:[% scenarios.0.responders.0.username %]@',
       'CSeq: 6 BYE',
       'Content-Length: 0'
     ]

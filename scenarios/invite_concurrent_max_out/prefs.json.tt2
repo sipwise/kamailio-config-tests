@@ -1,0 +1,12 @@
+{
+    "testuser1002@invite-concurrent-max-out.scenarios.test": {
+        "concurrent_max": 2,
+        "concurrent_max_out": 1
+    },
+    "peer_00_invite_concurrent_max_out_host0": {
+        "concurrent_max": 10
+    },
+    "peer_01_invite_concurrent_max_out_host0": {
+        "concurrent_max": 10
+    }
+}

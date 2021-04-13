@@ -21,9 +21,9 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^INVITE sip:004421003@'
-  - 'Contact: sip:testuser1002@'
-  - 'To: <sip:004421003@'
+  - '^INVITE sip:[% scenarios.0.responders.1.username %]@'
+  - 'Contact: sip:[% scenarios.0.username %]@'
+  - 'To: <sip:[% scenarios.0.responders.1.username %]@'
   - 'CSeq: 1 INVITE'
   - 'Max-Forwards: 69'
   - 'Call-ID: NGCP%invite_concurrent_max_out%NEW///'
@@ -32,12 +32,12 @@ sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: 1 INVITE',
-      'From: <sip:testuser1002@',
-      'To: <sip:004421003@'
+      'From: <sip:[% scenarios.0.username %]@',
+      'To: <sip:[% scenarios.0.responders.1.username %]@'
     ]
   - [
       '^SIP/2.0 407 Proxy Authentication Required',
       'CSeq: 1 INVITE',
-      'From: <sip:testuser1002@',
-      'To: <sip:004421003@'
+      'From: <sip:[% scenarios.0.username %]@',
+      'To: <sip:[% scenarios.0.responders.1.username %]@'
     ]
