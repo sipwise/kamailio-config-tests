@@ -17,12 +17,12 @@ flow:
   - start|ROUTE_FIND_CALLER:
   - start|ROUTE_AUTH:
   - start|ROUTE_AUTH_HELPER:
-      $x_hdr(From): spce.test
+      $x_hdr(From): invite-blockout-blst.scenarios.test
       $var(realm_user): testuser1002
-      $var(realm_domain): spce.test
+      $var(realm_domain): invite-blockout-blst.scenarios.test
   - return|ROUTE_AUTH_HELPER:
       $avp(orig_acc_caller_user): ['testuser1002']
-      $avp(orig_acc_caller_domain): ['spce.test']
+      $avp(orig_acc_caller_domain): ['invite-blockout-blst.scenarios.test']
   - start|ROUTE_ADD_CALLINFO_REPLY:
   - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
   - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
@@ -77,8 +77,8 @@ flow:
   - return|ROUTE_NCOS:
   - return|ROUTE_NCOS_CHECK:
   - start|ROUTE_BLOCK_OUT:
-      $xavp(caller_usr_prefs[0]=>block_out_list[*]): ['4311003', '4311001']
-      $xavp(caller_real_prefs[0]=>block_out_list[*]): ['4311003', '4311001']
+      $xavp(caller_usr_prefs[0]=>block_out_list[*]): ['[% invite_blockout_blst_scenarios_test.testuser1003.phone_number %]', '[% invite_blockout_blst_scenarios_test.testuser1001.phone_number %]']
+      $xavp(caller_real_prefs[0]=>block_out_list[*]): ['[% invite_blockout_blst_scenarios_test.testuser1003.phone_number %]', '[% invite_blockout_blst_scenarios_test.testuser1001.phone_number %]']
   - start|ROUTE_ACC_FAILURE:
   - start|ROUTE_ACC_CALLER:
   - start|ROUTE_SET_ACC_CALLER_CALL_COUNTERS:

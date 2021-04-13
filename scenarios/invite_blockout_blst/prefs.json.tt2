@@ -1,0 +1,8 @@
+{
+    "testuser1002@invite-blockout-blst.scenarios.test": {
+        "block_out_list": [
+            "[% invite_blockout_blst_scenarios_test.testuser1003.phone_number %]",
+            "[% invite_blockout_blst_scenarios_test.testuser1001.phone_number %]"
+        ]
+    }
+}
