@@ -1,0 +1,9 @@
+{
+    "testuser1002@invite-blockout-wlst.scenarios.test": {
+        "block_out_list": [
+            "[% invite_blockout_wlst_scenarios_test.testuser1001.phone_number %]",
+            "[% invite_blockout_wlst_scenarios_test.testuser1002.phone_number %]"
+        ],
+        "block_out_mode": true
+    }
+}
