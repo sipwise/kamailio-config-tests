@@ -36,13 +36,13 @@ sip_out:
       '^SIP/2.0 100 Trying',
       'CSeq: 3 INVITE',
       'From: <sip:testuser1002@',
-      'To: <sip:004321001@'
+      'To: <sip:[% scenarios.0.responders.0.username %]@'
     ]
   - [
       '^INVITE',
       'CSeq: 3 INVITE',
-      'From: <sip:4311002@',
-      'To: <sip:004321001@',
+      'From: <sip:[% invite_concurrent_max_out_per_account_scenarios_test.testuser1002.phone_number %]@',
+      'To: <sip:[% scenarios.0.responders.0.username %]@',
       'Content-Type: application/sdp',
       'Proxy-Authorization: Digest username="testuser1002"',
       'Max-Forwards: 68',

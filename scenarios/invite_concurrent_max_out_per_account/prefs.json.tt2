@@ -1,0 +1,11 @@
+{
+    "testuser1002@invite-concurrent-max-out-per-account.scenarios.test": {
+        "concurrent_max_out_per_account": 1
+    },
+    "peer_00_invite_concurrent_max_out_per_account_host0": {
+        "concurrent_max": 10
+    },
+    "peer_01_invite_concurrent_max_out_per_account_host1": {
+        "concurrent_max": 10
+    }
+}
