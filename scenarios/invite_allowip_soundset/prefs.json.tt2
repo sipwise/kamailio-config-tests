@@ -1,0 +1,11 @@
+{
+	"@invite-allowip-soundset.scenarios.test": {
+		"sound_set": "default_soundset"
+	},
+    "testuser1002@invite-allowip-soundset.scenarios.test": {
+        "allowed_ips": [
+            "1.2.3.4"
+        ],
+        "cli": [% invite_allowip_soundset_scenarios_test.testuser1002.phone_number %]
+    }
+}

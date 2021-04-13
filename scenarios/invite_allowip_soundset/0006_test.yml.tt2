@@ -12,9 +12,9 @@ flow:
   - start|ROUTE_LOCAL:
   - return|ROUTE_LOCAL:
 sip_in:
-  - '^ACK sip:testuser1003@spce.test'
-  - 'From: <sip:testuser1002@spce.test>;tag='
-  - 'To: <sip:testuser1003@spce.test>;tag='
+  - '^ACK sip:testuser1003@invite-allowip-soundset.scenarios.test'
+  - 'From: <sip:testuser1002@invite-allowip-soundset.scenarios.test>;tag='
+  - 'To: <sip:testuser1003@invite-allowip-soundset.scenarios.test>;tag='
   - 'CSeq: 2 ACK'
   - 'Max-Forwards: 69'
   - 'Content-Length: 0'

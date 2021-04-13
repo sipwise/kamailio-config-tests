@@ -17,12 +17,12 @@ flow:
   - start|ROUTE_FIND_CALLER:
   - start|ROUTE_AUTH:
   - start|ROUTE_AUTH_HELPER:
-      $x_hdr(From): spce.test
+      $x_hdr(From): invite-allowip-soundset.scenarios.test
       $var(realm_user): testuser1002
-      $var(realm_domain): spce.test
+      $var(realm_domain): invite-allowip-soundset.scenarios.test
   - return|ROUTE_AUTH_HELPER:
       $avp(orig_acc_caller_user): ['testuser1002']
-      $avp(orig_acc_caller_domain): ['spce.test']
+      $avp(orig_acc_caller_domain): ['invite-allowip-soundset.scenarios.test']
   - start|ROUTE_ADD_CALLINFO_REPLY:
   - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
   - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
@@ -114,14 +114,14 @@ sip_out:
       'From: <sip:testuser1002@',
       'To: <sip:testuser1003@',
       'CSeq: 2 INVITE',
-      'Contact: sip:testuser1002@127.126.0.1:\d+',
+      'Contact: sip:testuser1002@[% scenarios.0.ip %]:[% scenarios.0.port %]',
       'Max-Forwards: 68',
       'Content-Type: application/sdp',
       'Content-Length:   \d+',
       'P-App-Param: audio_id=\d+;play_looped=no;fr_code=403;fr_reason=Unauthorized IP detected',
       'P-App-Name: early_dbprompt',
-      'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
-      'P-Callee-UUID: [% spce_test.testuser1002.uuid %]',
-      'P-NGCP-Caller-Info: <sip:testuser1002@spce.test>;ip=127.126.0.1;port=\d+;primary=4311002',
-      'P-NGCP-Callee-Info: <sip:testuser1003@spce.test>;ip=127.0.0.1;port=5080;primary=4311002',
+      'P-Caller-UUID: [% invite_allowip_soundset_scenarios_test.testuser1002.uuid %]',
+      'P-Callee-UUID: [% invite_allowip_soundset_scenarios_test.testuser1002.uuid %]',
+      'P-NGCP-Caller-Info: <sip:testuser1002@invite-allowip-soundset.scenarios.test>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %];primary=[% invite_allowip_soundset_scenarios_test.testuser1002.phone_number %]',
+      'P-NGCP-Callee-Info: <sip:testuser1003@invite-allowip-soundset.scenarios.test>;ip=127.0.0.1;port=5080;primary=[% invite_allowip_soundset_scenarios_test.testuser1002.phone_number %]',
     ]
