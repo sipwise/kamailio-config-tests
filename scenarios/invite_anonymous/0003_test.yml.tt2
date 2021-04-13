@@ -23,10 +23,10 @@ flow:
       $x_hdr(From): sip:anonymous@
       $x_hdr(From): anonymous.invalid
       $var(realm_user): testuser1002
-      $var(realm_domain): spce.test
+      $var(realm_domain): invite-anonymous.scenarios.test
 sip_in:
   - '^INVITE'
-  - 'P-Asserted-Identity: "long name here" <sip:testuser1002@spce.test>'
+  - 'P-Asserted-Identity: "long name here" <sip:testuser1002@invite-anonymous.scenarios.test>'
   - 'From: "Anonymous" <sip:anonymous@anonymous.invalid>;tag='
   - 'Contact: sip:testuser1002@'
   - 'To: <sip:testuser1003@'
