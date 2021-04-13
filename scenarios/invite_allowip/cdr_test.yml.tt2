@@ -1,9 +1,9 @@
 cdr:
   - source_user: 'testuser1002'
-    source_domain: 'spce.test'
+    source_domain: 'invite-allowip.scenarios.test'
     source_cli: '0'
     destination_user: 'testuser1003'
-    destination_domain: 'spce.test'
+    destination_domain: 'invite-allowip.scenarios.test'
     destination_user_dialed: 'testuser1003'
     call_type: 'call'
     call_status: 'other'
