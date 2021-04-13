@@ -17,12 +17,12 @@ flow:
   - start|ROUTE_FIND_CALLER:
   - start|ROUTE_AUTH:
   - start|ROUTE_AUTH_HELPER:
-      $x_hdr(From): spce.test
+      $x_hdr(From): invite-concurrent-max.scenarios.test
       $var(realm_user): testuser1004
-      $var(realm_domain): spce.test
+      $var(realm_domain): invite-concurrent-max.scenarios.test
   - return|ROUTE_AUTH_HELPER:
       $avp(orig_acc_caller_user): ['testuser1004']
-      $avp(orig_acc_caller_domain): ['spce.test']
+      $avp(orig_acc_caller_domain): ['invite-concurrent-max.scenarios.test']
   - start|ROUTE_ADD_CALLINFO_REPLY:
   - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
   - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
@@ -65,10 +65,10 @@ flow:
   - start|ROUTE_CNT_CALLEE_REJECT:
       $avp(lua_dlg_profile): [
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "totaluser:[% invite_concurrent_max_scenarios_test.testuser1003.uuid %]",
         "total",
         "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1003.uuid %]"
+        "user:[% invite_concurrent_max_scenarios_test.testuser1003.uuid %]"
       ]
   - start|ROUTE_ACC_FAILURE:
       $xavp(callee_real_prefs[0]=>concurrent_max[*]): [1]
