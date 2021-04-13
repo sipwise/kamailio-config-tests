@@ -1,8 +1,0 @@
-{
-    "testuser1002@spce.test": {
-        "outbound_history_info": "uprn" 
-    },
-    "testuser1003@spce.test": {
-        "clir": true 
-    }
-}

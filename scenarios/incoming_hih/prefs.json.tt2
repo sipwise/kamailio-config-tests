@@ -1,0 +1,8 @@
+{
+    "testuser1002@incoming-hih.scenarios.test": {
+        "outbound_history_info": "uprn"
+    },
+    "testuser1003@incoming-hih.scenarios.test": {
+        "clir": true
+    }
+}

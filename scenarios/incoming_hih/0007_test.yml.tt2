@@ -13,18 +13,18 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - 'INVITE sip:testuser1002@127.1.0.2:\d+;cause=302 SIP/2.0'
-  - 'From: <sip:004321001@spce.test>;tag=[\w-]+'
-  - 'To: <sip:testuser1002@spce.test>'
+  - 'INVITE sip:testuser1002@[% scenarios.0.responders.1.ip %]:[% scenarios.0.responders.1.port %];cause=302 SIP/2.0'
+  - 'From: <sip:004321001@incoming-hih.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:testuser1002@incoming-hih.scenarios.test>'
   - 'CSeq: \d+ INVITE'
-  - 'History-Info: <sip:\+4313012026@spce.test;user=phone\?privacy=history>;index=1'
-  - 'History-Info: <sip:\+4311003@spce.test;user=phone;cause=302\?privacy=id>;index=1.1'
-  - 'History-Info: <sip:\+4311002@spce.test:5060;user=phone;cause=302>;index=1.1.1'
-  - 'P-Caller-UUID: [% spce_test.testuser1003.uuid %]'
-  - 'P-NGCP-Caller-Info: <sip:testuser1003@spce.test>;ip=127.0.0.1;port=508[08];primary=4311003'
-  - 'P-NGCP-Forward-Info: <sip:4311003@spce.test>;ip=127.0.0.1;port=508[08];primary=4311003'
-  - 'P-NGCP-Callee-Info: <sip:4311002@spce.test>;ip=127.0.0.1;port=5060;primary=4311002'
-  - 'P-Asserted-Identity: <sip:004321001@spce.test>'
+  - 'History-Info: <sip:\+4313012026@incoming-hih.scenarios.test;user=phone\?privacy=history>;index=1'
+  - 'History-Info: <sip:\+[% incoming_hih_scenarios_test.testuser1003.phone_number %]@incoming-hih.scenarios.test;user=phone;cause=302\?privacy=id>;index=1.1'
+  - 'History-Info: <sip:\+[% incoming_hih_scenarios_test.testuser1002.phone_number %]@incoming-hih.scenarios.test:5060;user=phone;cause=302>;index=1.1.1'
+  - 'P-Caller-UUID: [% incoming_hih_scenarios_test.testuser1003.uuid %]'
+  - 'P-NGCP-Caller-Info: <sip:testuser1003@incoming-hih.scenarios.test>;ip=127.0.0.1;port=508[08];primary=[% incoming_hih_scenarios_test.testuser1003.phone_number %]'
+  - 'P-NGCP-Forward-Info: <sip:[% incoming_hih_scenarios_test.testuser1003.phone_number %]@incoming-hih.scenarios.test>;ip=127.0.0.1;port=508[08];primary=[% incoming_hih_scenarios_test.testuser1003.phone_number %]'
+  - 'P-NGCP-Callee-Info: <sip:[% incoming_hih_scenarios_test.testuser1002.phone_number %]@incoming-hih.scenarios.test>;ip=127.0.0.1;port=5060;primary=[% incoming_hih_scenarios_test.testuser1002.phone_number %]'
+  - 'P-Asserted-Identity: <sip:004321001@incoming-hih.scenarios.test>'
   - 'P-D-Uri: sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060'
   - 'Content-Type: application/sdp'
   - 'Contact: <sip:127.0.0.1:508[08];transport=udp>'
@@ -32,25 +32,25 @@ sip_in:
 sip_out:
   - [
       'SIP/2.0 100 Trying',
-      'From: <sip:004321001@spce.test>;tag=[\w-]+',
-      'To: <sip:testuser1002@spce.test>',
+      'From: <sip:004321001@incoming-hih.scenarios.test>;tag=[\w-]+',
+      'To: <sip:testuser1002@incoming-hih.scenarios.test>',
       'CSeq: \d+ INVITE',
       'Server: Sipwise NGCP Proxy',
       'Content-Length: 0',
     ]
   - [
-      'INVITE sip:testuser1002@127.1.0.2:\d+;cause=302 SIP/2.0',
-      'From: <sip:004321001@spce.test>;tag=[\w-]+',
-      'To: <sip:testuser1002@spce.test>',
+      'INVITE sip:testuser1002@[% scenarios.0.responders.1.ip %]:[% scenarios.0.responders.1.port %];cause=302 SIP/2.0',
+      'From: <sip:004321001@incoming-hih.scenarios.test>;tag=[\w-]+',
+      'To: <sip:testuser1002@incoming-hih.scenarios.test>',
       'CSeq: \d+ INVITE',
-      'History-Info: <sip:\+4313012026@spce.test;user=phone\?privacy=history>;index=1',
-      'History-Info: <sip:\+4311003@spce.test;user=phone;cause=302\?privacy=id>;index=1.1',
-      'History-Info: <sip:\+4311002@spce.test:5060;user=phone;cause=302>;index=1.1.1',
-      'P-Caller-UUID: [% spce_test.testuser1003.uuid %]',
-      'P-NGCP-Caller-Info: <sip:testuser1003@spce.test>;ip=127.0.0.1;port=508[08];primary=4311003',
-      'P-NGCP-Forward-Info: <sip:4311003@spce.test>;ip=127.0.0.1;port=508[08];primary=4311003',
-      'P-NGCP-Callee-Info: <sip:4311002@spce.test>;ip=127.0.0.1;port=5060;primary=4311002',
-      'P-Asserted-Identity: <sip:004321001@spce.test>',
+      'History-Info: <sip:\+4313012026@incoming-hih.scenarios.test;user=phone\?privacy=history>;index=1',
+      'History-Info: <sip:\+[% incoming_hih_scenarios_test.testuser1003.phone_number %]@incoming-hih.scenarios.test;user=phone;cause=302\?privacy=id>;index=1.1',
+      'History-Info: <sip:\+[% incoming_hih_scenarios_test.testuser1002.phone_number %]@incoming-hih.scenarios.test:5060;user=phone;cause=302>;index=1.1.1',
+      'P-Caller-UUID: [% incoming_hih_scenarios_test.testuser1003.uuid %]',
+      'P-NGCP-Caller-Info: <sip:testuser1003@incoming-hih.scenarios.test>;ip=127.0.0.1;port=508[08];primary=[% incoming_hih_scenarios_test.testuser1003.phone_number %]',
+      'P-NGCP-Forward-Info: <sip:[% incoming_hih_scenarios_test.testuser1003.phone_number %]@incoming-hih.scenarios.test>;ip=127.0.0.1;port=508[08];primary=[% incoming_hih_scenarios_test.testuser1003.phone_number %]',
+      'P-NGCP-Callee-Info: <sip:[% incoming_hih_scenarios_test.testuser1002.phone_number %]@incoming-hih.scenarios.test>;ip=127.0.0.1;port=5060;primary=[% incoming_hih_scenarios_test.testuser1002.phone_number %]',
+      'P-Asserted-Identity: <sip:004321001@incoming-hih.scenarios.test>',
       'P-D-Uri: sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060',
       'Content-Type: application/sdp',
       'Contact: <sip:127.0.0.1:508[08];transport=udp>',

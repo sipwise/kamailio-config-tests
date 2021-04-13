@@ -1,25 +1,25 @@
 ---
-peer_00:
+peer_incoming_hih:
   contact:
-    company: peer_00
-    email: peer_00@host0.not
+    company: peer_incoming_hih
+    email: peer_incoming_hih@host0.not
   contract:
     billing_profile_id: 1
     status: active
     type: sippeering
   groups:
-    - name: peer_00_group
+    - name: peer_incoming_hih_group
       priority: 1
       description:
   inboundrules:
-    - group_id: peer_00_group
+    - group_id: peer_incoming_hih_group
       field: "ruri_uri"
-      pattern: '.*'
+      pattern: '.*@incoming-hih.scenarios.test'
       priority: 50
       enabled: 1
   hosts:
-    - group_id: peer_00_group
-      name: peer_00_host0
+    - group_id: peer_incoming_hih_group
+      name: peer_incoming_hih_host0
       ip: 127.0.2.1
       port: 51602
       host:

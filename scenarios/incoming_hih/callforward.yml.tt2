@@ -1,8 +1,8 @@
 ---
-testuser1003@spce.test:
+testuser1003@incoming-hih.scenarios.test:
   destinations:
     destinations:
-      - destination: sip:4311002@spce.test
+      - destination: sip:[% incoming_hih_scenarios_test.testuser1002.phone_number %]@incoming-hih.scenarios.test
         priority: 0
         timeout: 25
     name: dest1003

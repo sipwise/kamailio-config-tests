@@ -11,8 +11,8 @@
       Call-ID: NGCP%[field4 file="callee.csv" line=0]%///[call_id]
       CSeq: 1 INVITE
       Contact: sip:[field0 file="caller.csv" line=0]@[local_ip]:[local_port]
-      History-Info: <sip:+4313012026@spce.test;user=phone?privacy=history>;index=1
-      History-Info: <sip:+4311003@spce.test;user=phone;cause=302>;index=1.1
+      History-Info: <sip:+4313012026@incoming-hih.scenarios.test;user=phone?privacy=history>;index=1
+      History-Info: <sip:+[field1 file="callee.csv" line=0]@incoming-hih.scenarios.test;user=phone;cause=302>;index=1.1
       Max-Forwards: 70
       Content-Type: application/sdp
       Content-Length: [len]

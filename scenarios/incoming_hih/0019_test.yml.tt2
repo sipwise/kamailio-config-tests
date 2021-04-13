@@ -31,21 +31,21 @@ sip_in:
   - '^BYE sip:(testuser1002@)?127.0.0.1:5080(;transport=udp)? SIP/2.0'
   - 'CSeq: \d+ BYE'
   - 'Content-Length: 0'
-  - 'From: <sip:004321001@'
-  - 'To: <sip:4311003@'
+  - 'From: <sip:[% scenarios.0.username %]@'
+  - 'To: <sip:[% incoming_hih_scenarios_test.testuser1003.phone_number %]@'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: \d+ BYE',
       'Content-Length: 0',
-      'From: <sip:004321001@',
-      'To: <sip:4311003@'
+      'From: <sip:[% scenarios.0.username %]@',
+      'To: <sip:[% incoming_hih_scenarios_test.testuser1003.phone_number %]@'
     ]
   - [
       '^BYE sip:(testuser1002@)?127.0.0.1:5080(;transport=udp)? SIP/2.0',
       'CSeq: \d+ BYE',
       'Max-Forwards: 69',
       'Content-Length: 0',
-      'From: <sip:004321001@',
-      'To: <sip:4311003@'
+      'From: <sip:[% scenarios.0.username %]@',
+      'To: <sip:[% incoming_hih_scenarios_test.testuser1003.phone_number %]@'
     ]
