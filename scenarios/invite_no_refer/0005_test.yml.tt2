@@ -18,10 +18,10 @@ flow:
   - start|ROUTE_AUTH:
   - start|ROUTE_AUTH_HELPER:
       $x_hdr(From): spce.test
-      $var(realm_user): testuser1002
+      $var(realm_user): [% scenarios.0.username %]
       $var(realm_domain): spce.test
   - return|ROUTE_AUTH_HELPER:
-      $avp(orig_acc_caller_user): ['testuser1002']
+      $avp(orig_acc_caller_user): ['[% scenarios.0.username %]']
       $avp(orig_acc_caller_domain): ['spce.test']
   - start|ROUTE_ADD_CALLINFO_REPLY:
   - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
@@ -208,35 +208,35 @@ flow:
       ]
 sip_in:
   - '^INVITE'
-  - 'Contact: sip:testuser1002@'
+  - 'Contact: sip:[% scenarios.0.username %]@'
   - 'CSeq: 2 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
-  - 'Proxy-Authorization: Digest username="testuser1002"'
+  - 'Proxy-Authorization: Digest username="[% scenarios.0.username %]"'
   - '_:NOT:_Allow: .*REFER.*'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: 2 INVITE',
-      'From: <sip:testuser1002@',
-      'To: <sip:testuser1003@'
+      'From: <sip:[% scenarios.0.username %]@',
+      'To: <sip:[% scenarios.0.responders.0.username %]@'
     ]
   - [
       '^SIP/2.0 101 Connecting',
       'CSeq: 2 INVITE',
-      'From: <sip:testuser1002@',
-      'To: <sip:testuser1003@'
+      'From: <sip:[% scenarios.0.username %]@',
+      'To: <sip:[% scenarios.0.responders.0.username %]@'
     ]
   - [
-      '^INVITE sip:testuser1003@',
+      '^INVITE sip:[% scenarios.0.responders.0.username %]@',
       'CSeq: 2 INVITE',
       'From: <sip:4311002@',
-      'To: <sip:testuser1003@',
+      'To: <sip:[% scenarios.0.responders.0.username %]@',
       'Content-Type: application/sdp',
       'P-Caller-UUID: \w+',
       'P-Callee-UUID: \w+',
       'P-Asserted-Identity: <sip:4311002@',
-      'P-Called-Party-ID: <sip:testuser1003@',
+      'P-Called-Party-ID: <sip:[% scenarios.0.responders.0.username %]@',
       'P-App-Param: ;calltimer=21600;aleg_sst_enable=no;sst_enable=no',
       'P-App-Name: sbc',
       '_:NOT:_Allow: .*REFER.*'

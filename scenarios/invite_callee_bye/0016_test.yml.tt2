@@ -27,24 +27,24 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - 'BYE sip:testuser1002@127.126.0.1:\d+ SIP/2.0'
-  - 'From: <sip:testuser1003@spce.test>;tag=[\w-]+'
-  - 'To: <sip:4311002@spce.test>;tag=[\w-]+'
+  - 'BYE sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %] SIP/2.0'
+  - 'From: <sip:[% scenarios.0.responders.0.username %]@invite-callee-bye.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:[% invite_callee_bye_scenarios_test.testuser1002.phone_number %]@invite-callee-bye.scenarios.test>;tag=[\w-]+'
   - 'CSeq: \d+ BYE'
   - 'Content-Length: 0'
 sip_out:
   - [
       'SIP/2.0 100 Trying',
-      'From: <sip:testuser1003@spce.test>;tag=[\w-]+',
-      'To: <sip:4311002@spce.test>;tag=[\w-]+',
+      'From: <sip:[% scenarios.0.responders.0.username %]@invite-callee-bye.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% invite_callee_bye_scenarios_test.testuser1002.phone_number %]@invite-callee-bye.scenarios.test>;tag=[\w-]+',
       'CSeq: \d+ BYE',
       'Server: Sipwise NGCP Proxy',
       'Content-Length: 0',
     ]
   - [
-      'BYE sip:testuser1002@127.126.0.1:\d+ SIP/2.0',
-      'From: <sip:testuser1003@spce.test>;tag=[\w-]+',
-      'To: <sip:testuser1002@spce.test>;tag=[\w-]+',
+      'BYE sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %] SIP/2.0',
+      'From: <sip:[% scenarios.0.responders.0.username %]@invite-callee-bye.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.username %]@invite-callee-bye.scenarios.test>;tag=[\w-]+',
       'CSeq: \d+ BYE',
       'Content-Length: 0',
     ]

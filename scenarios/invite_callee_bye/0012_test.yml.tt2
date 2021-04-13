@@ -18,8 +18,8 @@ flow:
   - return|dialog:start:
 sip_in:
   - 'SIP/2.0 200 OK'
-  - 'From: <sip:4311002@spce.test>;tag=[\w-]+'
-  - 'To: <sip:testuser1003@spce.test>;tag=[\w-]+'
+  - 'From: <sip:[% invite_callee_bye_scenarios_test.testuser1002.phone_number %]@invite-callee-bye.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:[% scenarios.0.responders.0.username %]@invite-callee-bye.scenarios.test>;tag=[\w-]+'
   - 'CSeq: \d+ INVITE'
   - 'Contact: <sip:127.0.0.1:508[08];transport=udp>'
   - 'Content-Type: application/sdp'
@@ -27,8 +27,8 @@ sip_in:
 sip_out:
   - [
       'SIP/2.0 200 OK',
-      'From: <sip:testuser1002@spce.test>;tag=[\w-]+',
-      'To: <sip:testuser1003@spce.test>;tag=[\w-]+',
+      'From: <sip:[% scenarios.0.username %]@invite-callee-bye.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.0.username %]@invite-callee-bye.scenarios.test>;tag=[\w-]+',
       'CSeq: \d+ INVITE',
       'Contact: <sip:127.0.0.1:508[08];transport=udp>',
       'Content-Type: application/sdp',

@@ -14,14 +14,14 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - 'REGISTER sip:testuser1003@spce.test SIP/2.0'
-  - 'From: <sip:testuser1003@spce.test>;tag=[\w-]+'
-  - 'To: <sip:testuser1003@spce.test>'
+  - 'REGISTER sip:[% scenarios.0.responders.0.username %]@invite-callee-bye.scenarios.test SIP/2.0'
+  - 'From: <sip:[% scenarios.0.responders.0.username %]@invite-callee-bye.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:[% scenarios.0.responders.0.username %]@invite-callee-bye.scenarios.test>'
   - 'CSeq: \d+ REGISTER'
-  - 'Contact: sip:testuser1003@127.1.0.1:\d+;transport=UDP'
+  - 'Contact: sip:[% scenarios.0.responders.0.username %]@[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];transport=UDP'
   - 'Content-Length: 0'
-  - 'P-NGCP-Src-Ip: 127.1.0.1'
-  - 'P-NGCP-Src-Port: \d+'
+  - 'P-NGCP-Src-Ip: [% scenarios.0.responders.0.ip %]'
+  - 'P-NGCP-Src-Port: [% scenarios.0.responders.0.port %]'
   - 'P-NGCP-Src-Proto: udp'
   - 'P-NGCP-Src-Af: 4'
   - 'P-Sock-Info: udp:127.0.0.1:5060'
@@ -30,24 +30,24 @@ sip_in:
 sip_out:
   - [
       'SIP/2.0 100 Trying',
-      'From: <sip:testuser1003@spce.test>;tag=[\w-]+',
-      'To: <sip:testuser1003@spce.test>',
+      'From: <sip:[% scenarios.0.responders.0.username %]@invite-callee-bye.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.0.username %]@invite-callee-bye.scenarios.test>',
       'CSeq: \d+ REGISTER',
       'P-Out-Socket: udp:127.0.0.1:5060',
-      'P-NGCP-Auth-IP: 127.1.0.1',
+      'P-NGCP-Auth-IP: [% scenarios.0.responders.0.ip %]',
       'P-NGCP-Auth-UA: <null>',
       'Server: Sipwise NGCP Proxy',
       'Content-Length: 0',
     ]
   - [
       'SIP/2.0 401 Unauthorized',
-      'From: <sip:testuser1003@spce.test>;tag=[\w-]+',
-      'To: <sip:testuser1003@spce.test>;tag=[\w-]+',
+      'From: <sip:[% scenarios.0.responders.0.username %]@invite-callee-bye.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.0.username %]@invite-callee-bye.scenarios.test>;tag=[\w-]+',
       'CSeq: \d+ REGISTER',
       'P-Out-Socket: udp:127.0.0.1:5060',
-      'P-NGCP-Auth-IP: 127.1.0.1',
+      'P-NGCP-Auth-IP: [% scenarios.0.responders.0.ip %]',
       'P-NGCP-Auth-UA: <null>',
-      'WWW-Authenticate: Digest realm="spce.test", nonce=".+"',
+      'WWW-Authenticate: Digest realm="invite-callee-bye.scenarios.test", nonce=".+"',
       'Server: Sipwise NGCP Proxy',
       'Content-Length: 0',
     ]

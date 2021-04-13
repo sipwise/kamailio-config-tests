@@ -1,12 +1,17 @@
-test_uuid: invite_callee_bye 
+---
+test_uuid: invite_callee_bye
 description: |
-  In this scenario testuser1002 calls testuser1003, the call succeeds and testuser1003 (callee) hangs up.
-  Hang up is performed by testuser1003 by initiating a new transaction: a BYE Sip request is sent back to lb and proxy.
-  The request URI takes advantage of a feature described in RFC 4904: a trpg parameter is appended in the user part.
-  As a result the user part will be "ngcp-lb;tgrp=SIP_TripleC01", Kamailio proxy must understand this and foward the message correctly to Sems.
+  In this scenario testuser1002 calls testuser1003, the call succeeds and
+  testuser1003 (callee) hangs up.
+  Hang up is performed by testuser1003 by initiating a new transaction: a BYE
+  Sip request is sent back to lb and proxy.
+  The request URI takes advantage of a feature described in RFC 4904: a trpg
+  parameter is appended in the user part.
+  As a result the user part will be "ngcp-lb;tgrp=SIP_TripleC01", Kamailio proxy
+  must understand this and foward the message correctly to Sems.
   This test is part of the fix to TT#107650.
 domains:
-  'spce.test':
+  invite-callee-bye.scenarios.test:
     reseller_id: 1
 customers:
   'customer.test':
@@ -19,7 +24,7 @@ customers:
       billing_profile_id: 1
       reseller_id: 1
 subscribers:
-  spce.test:
+  invite-callee-bye.scenarios.test:
     testuser1003:
       customer: 'customer.test'
       password: testuser
@@ -39,9 +44,9 @@ subscribers:
 scenarios:
   - ip: 127.126.0.1
     username: testuser1002
-    domain: spce.test
+    domain: invite-callee-bye.scenarios.test
     responders:
       - ip: 127.1.0.1
         username: testuser1003
-        domain: spce.test
-        register: yes
+        domain: invite-callee-bye.scenarios.test
+        register: 'yes'
