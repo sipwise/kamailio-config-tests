@@ -13,15 +13,15 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - 'INVITE sip:testuser1003@127.1.0.1:\d+ SIP/2.0'
-  - 'From: <sip:004321001@spce.test>;tag=[\w-]+'
-  - 'To: <sip:testuser1003@spce.test>'
+  - 'INVITE sip:testuser1003@[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %] SIP/2.0'
+  - 'From: <sip:[% scenarios.0.username %]@incoming-peer.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:testuser1003@incoming-peer.scenarios.test>'
   - 'CSeq: \d+ INVITE'
   - 'P-LB-Uptime: \d+'
-  - 'P-Asserted-Identity: <sip:004321001@spce.test>'
+  - 'P-Asserted-Identity: <sip:[% scenarios.0.username %]@incoming-peer.scenarios.test>'
   - 'P-Caller-UUID: 0'
-  - 'P-NGCP-Caller-Info: <sip:004321001@127.0.2.1>;ip=127.0.2.1;port=\d+'
-  - 'P-NGCP-Callee-Info: <sip:4311003@spce.test>;ip=127.0.0.1;port=5060;primary=4311003'
+  - 'P-NGCP-Caller-Info: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %]'
+  - 'P-NGCP-Callee-Info: <sip:[% incoming_peer_scenarios_test.testuser1003.phone_number %]@incoming-peer.scenarios.test>;ip=127.0.0.1;port=5060;primary=[% incoming_peer_scenarios_test.testuser1003.phone_number %]'
   - 'P-D-Uri: sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060'
   - 'Content-Type: application/sdp'
   - 'Contact: <sip:127.0.0.1:508[08];transport=udp>'
@@ -29,22 +29,22 @@ sip_in:
 sip_out:
   - [
       'SIP/2.0 100 Trying',
-      'From: <sip:004321001@spce.test>;tag=[\w-]+',
-      'To: <sip:testuser1003@spce.test>',
+      'From: <sip:[% scenarios.0.username %]@incoming-peer.scenarios.test>;tag=[\w-]+',
+      'To: <sip:testuser1003@incoming-peer.scenarios.test>',
       'CSeq: \d+ INVITE',
       'Server: Sipwise NGCP Proxy',
       'Content-Length: 0',
     ]
   - [
-      'INVITE sip:testuser1003@127.1.0.1:\d+ SIP/2.0',
-      'From: <sip:004321001@spce.test>;tag=[\w-]+',
-      'To: <sip:testuser1003@spce.test>',
+      'INVITE sip:testuser1003@[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %] SIP/2.0',
+      'From: <sip:[% scenarios.0.username %]@incoming-peer.scenarios.test>;tag=[\w-]+',
+      'To: <sip:testuser1003@incoming-peer.scenarios.test>',
       'CSeq: \d+ INVITE',
       'P-LB-Uptime: \d+',
-      'P-Asserted-Identity: <sip:004321001@spce.test>',
+      'P-Asserted-Identity: <sip:[% scenarios.0.username %]@incoming-peer.scenarios.test>',
       'P-Caller-UUID: 0',
-      'P-NGCP-Caller-Info: <sip:004321001@127.0.2.1>;ip=127.0.2.1;port=\d+',
-      'P-NGCP-Callee-Info: <sip:4311003@spce.test>;ip=127.0.0.1;port=5060;primary=4311003',
+      'P-NGCP-Caller-Info: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %]',
+      'P-NGCP-Callee-Info: <sip:[% incoming_peer_scenarios_test.testuser1003.phone_number %]@incoming-peer.scenarios.test>;ip=127.0.0.1;port=5060;primary=[% incoming_peer_scenarios_test.testuser1003.phone_number %]',
       'P-D-Uri: sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060',
       'Content-Type: application/sdp',
       'Contact: <sip:127.0.0.1:508[08];transport=udp>',

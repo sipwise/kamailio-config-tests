@@ -18,9 +18,9 @@ flow:
       $avp(lua_dlg_profile): [
         "incoming",
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "totaluser:[% incoming_peer.scenarios.test.testuser1003.uuid %]",
         "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1003.uuid %]",
+        "user:[% incoming_peer.scenarios.test.testuser1003.uuid %]",
         "peer:[% peer_00_host0.id %]",
         "total"
       ]
@@ -28,12 +28,12 @@ flow:
 sip_in:
   - '^SIP/2.0 200 OK'
   - 'CSeq: 1 INVITE'
-  - 'From: <sip:004321001@'
-  - 'To: <sip:4311003@'
+  - 'From: <sip:[% scenarios.0.username %]@'
+  - 'To: <sip:[% incoming_peer_scenarios_test.testuser1003.phone_number %]@'
 sip_out:
   - [
       '^SIP/2.0 200 OK',
       'CSeq: 1 INVITE',
-      'From: <sip:004321001@',
-      'To: <sip:4311003@',
+      'From: <sip:[% scenarios.0.username %]@',
+      'To: <sip:[% incoming_peer_scenarios_test.testuser1003.phone_number %]@',
     ]

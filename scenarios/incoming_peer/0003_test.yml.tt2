@@ -49,9 +49,9 @@ flow:
   - return|ROUTE_SET_CALLEE_DIALOG:
      $avp(lua_dlg_profile): [
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "totaluser:[% incoming_peer.scenarios.test.testuser1003.uuid %]",
         "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1003.uuid %]",
+        "user:[% incoming_peer.scenarios.test.testuser1003.uuid %]",
         "peer:[% peer_00_host0.id %]",
         "total"
       ]
@@ -88,9 +88,9 @@ flow:
       $avp(lua_dlg_profile): [
         "incoming",
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "totaluser:[% incoming_peer.scenarios.test.testuser1003.uuid %]",
         "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1003.uuid %]",
+        "user:[% incoming_peer.scenarios.test.testuser1003.uuid %]",
         "peer:[% peer_00_host0.id %]",
         "total"
       ]
@@ -164,15 +164,15 @@ flow:
       $avp(lua_dlg_profile): [
         "incoming",
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "totaluser:[% incoming_peer.scenarios.test.testuser1003.uuid %]",
         "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1003.uuid %]",
+        "user:[% incoming_peer.scenarios.test.testuser1003.uuid %]",
         "peer:[% peer_00_host0.id %]",
         "total"
       ]
 sip_in:
-  - '^INVITE sip:4311003@'
-  - 'Contact: sip:004321001@'
+  - '^INVITE sip:[% incoming_peer_scenarios_test.testuser1003.phone_number %]@'
+  - 'Contact: sip:[% scenarios.0.username %]@'
   - 'CSeq: 1 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
@@ -180,19 +180,19 @@ sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: 1 INVITE',
-      'From: <sip:004321001@',
-      'To: <sip:4311003@'
+      'From: <sip:[% scenarios.0.username %]@',
+      'To: <sip:[% incoming_peer_scenarios_test.testuser1003.phone_number %]@'
     ]
   - [
       '^INVITE sip:testuser1003@',
       'CSeq: 1 INVITE',
-      'From: <sip:004321001@',
-      'To: <sip:4311003@',
-      'Contact: sip:004321001@',
+      'From: <sip:[% scenarios.0.username %]@',
+      'To: <sip:[% incoming_peer_scenarios_test.testuser1003.phone_number %]@',
+      'Contact: sip:[% scenarios.0.username %]@',
       'Content-Type: application/sdp',
       'P-Caller-UUID: 0',
-      'P-Callee-UUID: \w+',
-      'P-Asserted-Identity: <sip:004321001@',
+      'P-Callee-UUID: [% incoming_peer_scenarios_test.testuser1003.uui %]',
+      'P-Asserted-Identity: <sip:[% scenarios.0.username %]@',
       'P-Called-Party-ID: <sip:testuser1003@',
       'P-App-Param: ;calltimer=21600;aleg_sst_enable=no;sst_enable=no',
       'P-App-Name: sbc'

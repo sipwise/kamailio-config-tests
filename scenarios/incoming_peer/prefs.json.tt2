@@ -1,5 +1,5 @@
 {
-    "peer_00_host0": {
+    "peer_incoming_peer_host0": {
         "concurrent_max": 1
     }
 }

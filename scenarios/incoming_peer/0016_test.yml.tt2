@@ -16,13 +16,13 @@ sip_in:
   - '^SIP/2.0 200 OK'
   - 'CSeq: 2 BYE'
   - 'Content-Length: 0'
-  - 'From: <sip:004321001@'
-  - 'To: <sip:4311003@'
+  - 'From: <sip:[% scenarios.0.username %]@'
+  - 'To: <sip:[% incoming_peer_scenarios_test.testuser1003.phone_number %]@'
 sip_out:
   - [
       '^SIP/2.0 200 OK',
       'CSeq: 2 BYE',
       'Content-Length: 0',
-      'From: <sip:004321001@',
-      'To: <sip:4311003@'
+      'From: <sip:[% scenarios.0.username %]@',
+      'To: <sip:[% incoming_peer_scenarios_test.testuser1003.phone_number %]@'
     ]

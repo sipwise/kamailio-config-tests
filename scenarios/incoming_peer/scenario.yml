@@ -1,6 +1,7 @@
+---
 test_uuid: incoming_peer
 domains:
-  'spce.test':
+  incoming-peer.scenarios.test:
     reseller_id: 1
 customers:
   'customer.test':
@@ -13,7 +14,7 @@ customers:
       billing_profile_id: 1
       reseller_id: 1
 subscribers:
-  spce.test:
+  incoming-peer.scenarios.test:
     testuser1003:
       customer: 'customer.test'
       password: testuser
@@ -23,9 +24,10 @@ subscribers:
 scenarios:
   - ip: 127.0.2.1
     username: 004321001
-    domain: 127.0.2.1
+    domain: incoming-peer.host0.peer.scenarios.test
+    peer_host: peer_incoming_peer_host0
     responders:
       - ip: 127.1.0.1
         username: testuser1003
-        domain: spce.test
-        register: yes
+        domain: incoming-peer.scenarios.test
+        register: 'yes'
