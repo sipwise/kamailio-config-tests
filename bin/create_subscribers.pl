@@ -175,6 +175,9 @@ sub create_subscriber
 {
   my ($username, $domain , $data , $s) = @_;
   my $pbx_groups = $data->{pbx_groups};
+  my $key = $username =~ tr/\./_/r;
+  my $key_dom = $domain =~ tr/\./_/r;
+  $key_dom = $key_dom =~ tr/\-/_/r;
 
   $s->{pbx_group_ids} = [];
   $s->{username} = $username;
@@ -189,11 +192,12 @@ sub create_subscriber
     }
   }
   delete $s->{pbx_groups};
+  $s->{cc} = $ids->{$key_dom}->{$key}->{cc};
+  $s->{ac} = $ids->{$key_dom}->{$key}->{ac};
+  $s->{sn} = $ids->{$key_dom}->{$key}->{sn};
+  $s->{alias_numbers} = $ids->{$key_dom}->{$key}->{alias_numbers};
   $s->{id} = $api->create_subscriber(get_data($s));
   my $tmp = $api->get_subscriber($s->{id});
-  my $key = $username =~ tr/\./_/r;
-  my $key_dom = $domain =~ tr/\./_/r;
-  $key_dom = $key_dom =~ tr/\-/_/r;
   $ids->{$key_dom}->{$key}->{uuid} = $tmp->{uuid};
   return;
 }
