@@ -1,9 +1,9 @@
 cdr:
   - source_user: 'testuser1002'
-    source_domain: 'spce.test'
+    source_domain: 'invite-blockin-wlst.scenarios.test'
     source_cli: '4311002'
     destination_user: 'testuser1003'
-    destination_domain: 'spce.test'
+    destination_domain: 'invite-blockin-wlst.scenarios.test'
     destination_user_dialed: '4311003'
     call_type: 'call'
     call_status: 'other'

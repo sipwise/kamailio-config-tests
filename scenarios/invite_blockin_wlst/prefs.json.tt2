@@ -1,0 +1,8 @@
+{
+    "testuser1003@invite-blockin-wlst.scenarios.test": {
+        "block_in_list": [
+            "[% invite_blockin_wlst_scenarios_test.testuser1001.phone_number %]"
+        ],
+        "block_in_mode": true
+    }
+}
