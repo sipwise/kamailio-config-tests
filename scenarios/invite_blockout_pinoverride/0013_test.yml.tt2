@@ -27,11 +27,11 @@ sip_in:
   - '^ACK sip:127.0.0.1:5080;prxroute=1 SIP/2.0'
   - 'CSeq: 2 ACK'
   - 'From: <sip:testuser1002@'
-  - 'To: <sip:\*80\*4444311003@'
+  - 'To: <sip:\*80\*444[% invite_blockout_pinoverride_scenarios_test.testuser1003.phone_number %]@'
 sip_out:
   - [
       '^ACK sip:127.0.0.1:5080;prxroute=1 SIP/2.0',
       'CSeq: 2 ACK',
-      'From: <sip:4311002@',
-      'To: <sip:\*80\*4444311003@'
+      'From: <sip:[% invite_blockout_pinoverride_scenarios_test.testuser1002.phone_number %]@',
+      'To: <sip:\*80\*444[% invite_blockout_pinoverride_scenarios_test.testuser1003.phone_number %]@'
     ]

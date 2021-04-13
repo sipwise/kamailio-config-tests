@@ -34,7 +34,7 @@ sip_in:
   - 'Max-Forwards: 69'
   - 'Content-Length: 0'
   - 'From: <sip:testuser1002@'
-  - 'To: <sip:\*80\*4444311003@'
+  - 'To: <sip:\*80\*444[% invite_blockout_pinoverride_scenarios_test.testuser1003.phone_number %]@'
 
 sip_out:
   - [
@@ -42,7 +42,7 @@ sip_out:
       'CSeq: 3 BYE',
       'Content-Length: 0',
       'From: <sip:testuser1002@',
-      'To: <sip:\*80\*4444311003@'
+      'To: <sip:\*80\*444[% invite_blockout_pinoverride_scenarios_test.testuser1003.phone_number %]@'
     ]
   - [
       '^BYE sip:127.0.0.1:5080(;prxroute=1)? SIP/2.0',
@@ -50,6 +50,6 @@ sip_out:
       'CSeq: 3 BYE',
       'Max-Forwards: 68',
       'Content-Length: 0',
-      'From: <sip:4311002@',
-      'To: <sip:\*80\*4444311003@'
+      'From: <sip:[% invite_blockout_pinoverride_scenarios_test.testuser1002.phone_number %]@',
+      'To: <sip:\*80\*444[% invite_blockout_pinoverride_scenarios_test.testuser1003.phone_number %]@'
     ]

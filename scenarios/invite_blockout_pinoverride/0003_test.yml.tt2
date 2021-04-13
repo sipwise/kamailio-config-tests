@@ -23,7 +23,7 @@ flow:
 sip_in:
   - '^INVITE'
   - 'Contact: sip:testuser1002@'
-  - 'To: <sip:\*80\*4444311003@'
+  - 'To: <sip:\*80\*444[% invite_blockout_pinoverride_scenarios_test.testuser1003.phone_number %]@'
   - 'CSeq: 1 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
@@ -32,11 +32,11 @@ sip_out:
       '^SIP/2.0 100 Trying',
       'CSeq: 1 INVITE',
       'From: <sip:testuser1002@',
-      'To: <sip:\*80\*4444311003@'
+      'To: <sip:\*80\*444[% invite_blockout_pinoverride_scenarios_test.testuser1003.phone_number %]@'
     ]
   - [
       '^SIP/2.0 407 Proxy Authentication Required',
       'CSeq: 1 INVITE',
       'From: <sip:testuser1002@',
-      'To: <sip:\*80\*4444311003@'
+      'To: <sip:\*80\*444[% invite_blockout_pinoverride_scenarios_test.testuser1003.phone_number %]@'
     ]
