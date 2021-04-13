@@ -1,6 +1,7 @@
+---
 test_uuid: invite_allowedcli_nonmatch
 domains:
-  'spce.test':
+  invite-allowedcli-nonmatch.scenarios.test:
     reseller_id: 1
 customers:
   'customer.test':
@@ -13,7 +14,7 @@ customers:
       billing_profile_id: 1
       reseller_id: 1
 subscribers:
-  spce.test:
+  invite-allowedcli-nonmatch.scenarios.test:
     testuser1003:
       customer: 'customer.test'
       password: testuser
@@ -29,9 +30,14 @@ subscribers:
 scenarios:
   - ip: 127.126.0.1
     username: testuser1002
-    domain: spce.test
+    domain: invite-allowedcli-nonmatch.scenarios.test
     responders:
       - ip: 127.1.0.1
         username: testuser1003
-        domain: spce.test
-        register: yes
+        domain: invite-allowedcli-nonmatch.scenarios.test
+        register: 'yes'
+      - ip: 127.1.0.2
+        username: testuser1002
+        domain: invite-allowedcli-nonmatch.scenarios.test
+        register: 'no'
+        active: 'no'

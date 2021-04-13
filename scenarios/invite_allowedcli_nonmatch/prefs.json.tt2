@@ -1,0 +1,11 @@
+{
+    "testuser1002@invite-allowedcli-nonmatch.scenarios.test": {
+        "allowed_clis": [
+            "[% invite_allowedcli_nonmatch_scenarios_test.testuser1002.phone_number %]9*",
+            "[% invite_allowedcli_nonmatch_scenarios_test.testuser1002.phone_number %]1*"
+        ],
+        "cli": [% invite_allowedcli_nonmatch_scenarios_test.testuser1002.phone_number %],
+        "user_cli": 43122122,
+        "inbound_upn": "from_display"
+    }
+}

@@ -13,15 +13,15 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - 'INVITE sip:testuser1003@127.1.0.1:\d+ SIP/2.0'
-  - 'From: <sip:43122122@spce.test>;tag=[\w-]+'
-  - 'To: <sip:testuser1003@spce.test>'
+  - 'INVITE sip:testuser1003@[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %] SIP/2.0'
+  - 'From: <sip:43122122@invite-allowedcli-nonmatch.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:testuser1003@invite-allowedcli-nonmatch.scenarios.test>'
   - 'CSeq: \d+ INVITE'
   - 'P-LB-Uptime: \d+'
-  - 'P-Asserted-Identity: <sip:4311002@spce.test>'
-  - 'P-Caller-UUID: [% spce_test.testuser1002.uuid %]'
-  - 'P-NGCP-Caller-Info: <sip:testuser1002@spce.test>;ip=127.126.0.1;port=\d+;primary=4311002'
-  - 'P-NGCP-Callee-Info: <sip:testuser1003@spce.test>;ip=127.0.0.1;port=5060;primary=4311003'
+  - 'P-Asserted-Identity: <sip:[% invite_allowedcli_nonmatch_scenarios_test.testuser1002.phone_number %]@invite-allowedcli-nonmatch.scenarios.test>'
+  - 'P-Caller-UUID: [% invite_allowedcli_nonmatch_scenarios_test.testuser1002.uuid %]'
+  - 'P-NGCP-Caller-Info: <sip:testuser1002@invite-allowedcli-nonmatch.scenarios.test>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %];primary=[% invite_allowedcli_nonmatch_scenarios_test.testuser1002.phone_number %]'
+  - 'P-NGCP-Callee-Info: <sip:testuser1003@invite-allowedcli-nonmatch.scenarios.test>;ip=127.0.0.1;port=5060;primary=[% invite_allowedcli_nonmatch_scenarios_test.testuser1003.phone_number %]'
   - 'P-D-Uri: sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060'
   - 'Content-Type: application/sdp'
   - 'Contact: <sip:127.0.0.1:508[08];transport=udp>'
@@ -29,22 +29,22 @@ sip_in:
 sip_out:
   - [
       'SIP/2.0 100 Trying',
-      'From: <sip:43122122@spce.test>;tag=[\w-]+',
-      'To: <sip:testuser1003@spce.test>',
+      'From: <sip:43122122@invite-allowedcli-nonmatch.scenarios.test>;tag=[\w-]+',
+      'To: <sip:testuser1003@invite-allowedcli-nonmatch.scenarios.test>',
       'CSeq: \d+ INVITE',
       'Server: Sipwise NGCP Proxy',
       'Content-Length: 0',
     ]
   - [
-      'INVITE sip:testuser1003@127.1.0.1:\d+ SIP/2.0',
-      'From: <sip:43122122@spce.test>;tag=[\w-]+',
-      'To: <sip:testuser1003@spce.test>',
+      'INVITE sip:testuser1003@[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %] SIP/2.0',
+      'From: <sip:43122122@invite-allowedcli-nonmatch.scenarios.test>;tag=[\w-]+',
+      'To: <sip:testuser1003@invite-allowedcli-nonmatch.scenarios.test>',
       'CSeq: \d+ INVITE',
       'P-LB-Uptime: \d+',
-      'P-Asserted-Identity: <sip:4311002@spce.test>',
-      'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
-      'P-NGCP-Caller-Info: <sip:testuser1002@spce.test>;ip=127.126.0.1;port=\d+;primary=4311002',
-      'P-NGCP-Callee-Info: <sip:testuser1003@spce.test>;ip=127.0.0.1;port=5060;primary=4311003',
+      'P-Asserted-Identity: <sip:[% invite_allowedcli_nonmatch_scenarios_test.testuser1002.phone_number %]@invite-allowedcli-nonmatch.scenarios.test>',
+      'P-Caller-UUID: [% invite_allowedcli_nonmatch_scenarios_test.testuser1002.uuid %]',
+      'P-NGCP-Caller-Info: <sip:testuser1002@invite-allowedcli-nonmatch.scenarios.test>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %];primary=[% invite_allowedcli_nonmatch_scenarios_test.testuser1002.phone_number %]',
+      'P-NGCP-Callee-Info: <sip:testuser1003@invite-allowedcli-nonmatch.scenarios.test>;ip=127.0.0.1;port=5060;primary=[% invite_allowedcli_nonmatch_scenarios_test.testuser1003.phone_number %]',
       'P-D-Uri: sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060',
       'Content-Type: application/sdp',
       'Contact: <sip:127.0.0.1:508[08];transport=udp>',

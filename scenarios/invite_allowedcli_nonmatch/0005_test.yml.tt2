@@ -18,12 +18,12 @@ flow:
   - start|ROUTE_FIND_CALLER:
   - start|ROUTE_AUTH:
   - start|ROUTE_AUTH_HELPER:
-      $x_hdr(From): spce.test
+      $x_hdr(From): invite-allowedcli-nonmatch.scenarios.test
       $var(realm_user): testuser1002
-      $var(realm_domain): spce.test
+      $var(realm_domain): invite-allowedcli-nonmatch.scenarios.test
   - return|ROUTE_AUTH_HELPER:
       $avp(orig_acc_caller_user): ['testuser1002']
-      $avp(orig_acc_caller_domain): ['spce.test']
+      $avp(orig_acc_caller_domain): ['invite-allowedcli-nonmatch.scenarios.test']
   - start|ROUTE_ADD_CALLINFO_REPLY:
   - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
   - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
@@ -38,8 +38,8 @@ flow:
   - start|ROUTE_LOAD_CALLER_CONTRACT_PREF:
   - return|ROUTE_LOAD_CALLER_CONTRACT_PREF:
   - return|ROUTE_LOAD_CALLER_PREF:
-      $xavp(caller_usr_prefs[0]=>allowed_clis[*]): ['43110021*', '43110029*']
-      $xavp(caller_real_prefs[0]=>allowed_clis[*]): ['43110021*', '43110029*']
+      $xavp(caller_usr_prefs[0]=>allowed_clis[*]): ['[% invite_allowedcli_nonmatch_scenarios_test.testuser1002.phone_number %]1*', '[% invite_allowedcli_nonmatch_scenarios_test.testuser1002.phone_number %]9*']
+      $xavp(caller_real_prefs[0]=>allowed_clis[*]): ['[% invite_allowedcli_nonmatch_scenarios_test.testuser1002.phone_number %]1*', '[% invite_allowedcli_nonmatch_scenarios_test.testuser1002.phone_number %]9*']
       $xavp(caller_usr_prefs[0]=>user_cli[*]): ['43122122']
       $xavp(caller_real_prefs[0]=>user_cli[*]): ['43122122']
       $xavp(caller_usr_prefs[0]=>inbound_upn[*]): ['from_display']
@@ -55,7 +55,7 @@ flow:
   - start|ROUTE_CLIR:
   - return|ROUTE_CLIR:
   - start|ROUTE_CALLER_BLOCK_CLI:
-      $xavp(caller_real_prefs[0]=>allowed_clis[*]): ['43110021*', '43110029*']
+      $xavp(caller_real_prefs[0]=>allowed_clis[*]): ['[% invite_allowedcli_nonmatch_scenarios_test.testuser1002.phone_number %]1*', '[% invite_allowedcli_nonmatch_scenarios_test.testuser1002.phone_number %]9*']
   - return|ROUTE_CALLER_BLOCK_CLI:
   - start|ROUTE_CHECK_USERPROV_CLI:
   - start|ROUTE_CHECK_CLI_ALLOWED:
@@ -73,10 +73,10 @@ flow:
   - return|ROUTE_SET_CALLEE_DIALOG:
       $avp(lua_dlg_profile) : [
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "totaluser:[% invite_allowedcli_nonmatch_scenarios_test.testuser1003.uuid %]",
         "total",
         "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1003.uuid %]"
+        "user:[% invite_allowedcli_nonmatch_scenarios_test.testuser1003.uuid %]"
       ]
   - start|ROUTE_BLOCK_IN:
   - return|ROUTE_BLOCK_IN:
@@ -110,29 +110,29 @@ flow:
      $avp(lua_dlg_profile) : [
         "local",
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "totaluser:[% invite_allowedcli_nonmatch_scenarios_test.testuser1003.uuid %]",
         "total",
         "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1003.uuid %]"
+        "user:[% invite_allowedcli_nonmatch_scenarios_test.testuser1003.uuid %]"
       ]
   - start|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_SET_CALLER_DIALOG:
       $avp(lua_dlg_profile) : [
         'accountout:[% customer_test.id %]',
-        'userout:[% spce_test.testuser1002.uuid %]',
+        'userout:[% invite_allowedcli_nonmatch_scenarios_test.testuser1002.uuid %]',
         'account:[% customer_test.id %]',
-        'user:[% spce_test.testuser1002.uuid %]',
+        'user:[% invite_allowedcli_nonmatch_scenarios_test.testuser1002.uuid %]',
         'totalaccountout:[% customer_test.id %]',
-        'totaluserout:[% spce_test.testuser1002.uuid %]',
+        'totaluserout:[% invite_allowedcli_nonmatch_scenarios_test.testuser1002.uuid %]',
         'totalaccount:[% customer_test.id %]',
-        'totaluser:[% spce_test.testuser1002.uuid %]',
+        'totaluser:[% invite_allowedcli_nonmatch_scenarios_test.testuser1002.uuid %]',
         "local",
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "totaluser:[% invite_allowedcli_nonmatch_scenarios_test.testuser1003.uuid %]",
         "total",
         "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1003.uuid %]"
+        "user:[% invite_allowedcli_nonmatch_scenarios_test.testuser1003.uuid %]"
       ]
   - start|ROUTE_ACC_CALLER:
   - start|ROUTE_SET_ACC_CALLER_CALL_COUNTERS:
@@ -199,19 +199,19 @@ flow:
   - exit|ROUTE_EXIT:
       $avp(lua_dlg_profile) : [
         'accountout:[% customer_test.id %]',
-        'userout:[% spce_test.testuser1002.uuid %]',
+        'userout:[% invite_allowedcli_nonmatch_scenarios_test.testuser1002.uuid %]',
         'account:[% customer_test.id %]',
-        'user:[% spce_test.testuser1002.uuid %]',
+        'user:[% invite_allowedcli_nonmatch_scenarios_test.testuser1002.uuid %]',
         'totalaccountout:[% customer_test.id %]',
-        'totaluserout:[% spce_test.testuser1002.uuid %]',
+        'totaluserout:[% invite_allowedcli_nonmatch_scenarios_test.testuser1002.uuid %]',
         'totalaccount:[% customer_test.id %]',
-        'totaluser:[% spce_test.testuser1002.uuid %]',
+        'totaluser:[% invite_allowedcli_nonmatch_scenarios_test.testuser1002.uuid %]',
         "local",
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "totaluser:[% invite_allowedcli_nonmatch_scenarios_test.testuser1003.uuid %]",
         "total",
         "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1003.uuid %]"
+        "user:[% invite_allowedcli_nonmatch_scenarios_test.testuser1003.uuid %]"
       ]
 sip_in:
   - '^INVITE'
@@ -224,13 +224,13 @@ sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: 2 INVITE',
-      'From: "431100222" <sip:testuser1002@',
+      'From: "[% invite_allowedcli_nonmatch_scenarios_test.testuser1002.phone_number %]22" <sip:testuser1002@',
       'To: <sip:testuser1003@'
     ]
   - [
       '^SIP/2.0 101 Connecting',
       'CSeq: 2 INVITE',
-      'From: "431100222" <sip:testuser1002@',
+      'From: "[% invite_allowedcli_nonmatch_scenarios_test.testuser1002.phone_number %]22" <sip:testuser1002@',
       'To: <sip:testuser1003@'
     ]
   - [
@@ -239,9 +239,9 @@ sip_out:
       'From: <sip:43122122@',
       'To: <sip:testuser1003@',
       'Content-Type: application/sdp',
-      'P-Caller-UUID: \w+',
-      'P-Callee-UUID: \w+',
-      'P-Asserted-Identity: <sip:4311002@',
+      'P-Caller-UUID: [% invite_allowedcli_match_alias_scenarios_test.testuser1002.uuid %]',
+      'P-Callee-UUID: [% invite_allowedcli_match_alias_scenarios_test.testuser1003.uuid %]',
+      'P-Asserted-Identity: <sip:[% invite_allowedcli_nonmatch_scenarios_test.testuser1002.phone_number %]@',
       'P-Called-Party-ID: <sip:testuser1003@',
       'P-App-Param: ;calltimer=21600;aleg_sst_enable=no;sst_enable=no',
       'P-App-Name: sbc'
