@@ -13,8 +13,8 @@ flow:
   - return|ROUTE_LOCAL:
 sip_in:
   - 'ACK sip:testuser1003@'
-  - 'From: \"431100222\" <sip:testuser1002@spce.test>;tag='
-  - 'To: <sip:testuser1003@spce.test>;tag='
+  - 'From: \"[% invite_allowedcli_nonmatch_reject_scenarios_test.testuser1002.phone_number %]22\" <sip:testuser1002@invite-allowedcli-nonmatch-reject.scenarios.test>;tag='
+  - 'To: <sip:testuser1003@invite-allowedcli-nonmatch-reject.scenarios.test>;tag='
   - 'Max-Forwards: 69'
   - 'Content-Length: 0'
 sip_out: []

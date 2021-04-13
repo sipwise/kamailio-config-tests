@@ -17,12 +17,12 @@ flow:
   - start|ROUTE_FIND_CALLER:
   - start|ROUTE_AUTH:
   - start|ROUTE_AUTH_HELPER:
-      $x_hdr(From): spce.test
+      $x_hdr(From): invite-allowedcli-nonmatch-reject.scenarios.test
       $var(realm_user): testuser1002
-      $var(realm_domain): spce.test
+      $var(realm_domain): invite-allowedcli-nonmatch-reject.scenarios.test
   - return|ROUTE_AUTH_HELPER:
       $avp(orig_acc_caller_user): ['testuser1002']
-      $avp(orig_acc_caller_domain): ['spce.test']
+      $avp(orig_acc_caller_domain): ['invite-allowedcli-nonmatch-reject.scenarios.test']
   - start|ROUTE_ADD_CALLINFO_REPLY:
   - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
   - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
@@ -37,8 +37,8 @@ flow:
   - start|ROUTE_LOAD_CALLER_CONTRACT_PREF:
   - return|ROUTE_LOAD_CALLER_CONTRACT_PREF:
   - return|ROUTE_LOAD_CALLER_PREF:
-      $xavp(caller_usr_prefs[0]=>allowed_clis[*]): ['43110021*', '43110029*']
-      $xavp(caller_real_prefs[0]=>allowed_clis[*]): ['43110021*', '43110029*']
+      $xavp(caller_usr_prefs[0]=>allowed_clis[*]): ['[% invite_allowedcli_nonmatch_reject_scenarios_test.testuser1002.phone_number %]1*', '[% invite_allowedcli_nonmatch_reject_scenarios_test.testuser1002.phone_number %]9*']
+      $xavp(caller_real_prefs[0]=>allowed_clis[*]): ['[% invite_allowedcli_nonmatch_reject_scenarios_test.testuser1002.phone_number %]1*', '[% invite_allowedcli_nonmatch_reject_scenarios_test.testuser1002.phone_number %]9*']
       $xavp(caller_usr_prefs[0]=>user_cli[*]): ['43122122']
       $xavp(caller_real_prefs[0]=>user_cli[*]): ['43122122']
       $xavp(caller_usr_prefs[0]=>inbound_upn[*]): ['from_display']
@@ -57,7 +57,7 @@ flow:
   - return|ROUTE_CALLER_BLOCK_CLI:
   - start|ROUTE_CHECK_USERPROV_CLI:
   - start|ROUTE_CHECK_CLI_ALLOWED:
-      $xavp(caller_real_prefs[0]=>allowed_clis[*]): ['43110021*', '43110029*']
+      $xavp(caller_real_prefs[0]=>allowed_clis[*]): ['[% invite_allowedcli_nonmatch_reject_scenarios_test.testuser1002.phone_number %]1*', '[% invite_allowedcli_nonmatch_reject_scenarios_test.testuser1002.phone_number %]9*']
       $xavp(caller_usr_prefs[0]=>allowed_clis_reject_policy[*]): ['reject']
   - start|ROUTE_ACC_FAILURE:
   - start|ROUTE_ACC_CALLER:
@@ -70,7 +70,7 @@ flow:
   - return|ROUTE_SET_ACC_CALLEE_CALL_COUNTERS:
   - return|ROUTE_ACC_CALLEE:
       $avp(acc_callee_user): ['testuser1003']
-      $avp(acc_callee_domain): ["spce.test"]
+      $avp(acc_callee_domain): ["invite-allowedcli-nonmatch-reject.scenarios.test"]
       $avp(acc_callee_user_in): ['']
       $avp(acc_callee_domain_in): ['']
   - return|ROUTE_ACC_FAILURE:
@@ -103,18 +103,18 @@ sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: 2 INVITE',
-      'From: "431100222" <sip:testuser1002@',
+      'From: "[% invite_allowedcli_nonmatch_reject_scenarios_test.testuser1002.phone_number %]22" <sip:testuser1002@',
       'To: <sip:testuser1003@'
     ]
   - [
       '^SIP/2.0 101 Connecting',
       'CSeq: 2 INVITE',
-      'From: "431100222" <sip:testuser1002@',
+      'From: "[% invite_allowedcli_nonmatch_reject_scenarios_test.testuser1002.phone_number %]22" <sip:testuser1002@',
       'To: <sip:testuser1003@'
     ]
   - [
       '^SIP/2.0 403 Forbidden',
       'CSeq: 2 INVITE',
-      'From: "431100222" <sip:testuser1002@',
+      'From: "[% invite_allowedcli_nonmatch_reject_scenarios_test.testuser1002.phone_number %]22" <sip:testuser1002@',
       'To: <sip:testuser1003@',
     ]

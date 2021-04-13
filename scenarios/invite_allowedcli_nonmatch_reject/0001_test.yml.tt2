@@ -31,12 +31,12 @@ sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: 1 INVITE',
-      'From: "431100222" <sip:testuser1002@',
+      'From: "[% invite_allowedcli_nonmatch_reject_scenarios_test.testuser1002.phone_number %]22" <sip:testuser1002@',
       'To: <sip:testuser1003@'
     ]
   - [
       '^SIP/2.0 407 Proxy Authentication Required',
       'CSeq: 1 INVITE',
-      'From: "431100222" <sip:testuser1002@',
+      'From: "[% invite_allowedcli_nonmatch_reject_scenarios_test.testuser1002.phone_number %]22" <sip:testuser1002@',
       'To: <sip:testuser1003@'
     ]
