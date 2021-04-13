@@ -1,0 +1,11 @@
+{
+    "testuser1002@invite-allowedcli-match-alias.scenarios.test": {
+        "allowed_clis": [
+            "[% invite_allowedcli_match_alias_scenarios_test.testuser1002.phone_number %]9*",
+            "[% invite_allowedcli_match_alias_scenarios_test.testuser1002.phone_number %]1*"
+        ],
+        "user_cli": [% extra_info.phone_numbers.0 %],
+        "inbound_upn": "from_display",
+        "extension_in_npn": true
+    }
+}

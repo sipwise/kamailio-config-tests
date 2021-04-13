@@ -23,8 +23,8 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - '^INVITE'
-  - 'Contact: sip:testuser1002@'
-  - 'To: <sip:testuser1003@'
+  - 'Contact: sip:[% scenarios.0.username %]@'
+  - 'To: <sip:[% scenarios.0.responders.0.username %]@'
   - 'CSeq: 1 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
@@ -32,12 +32,12 @@ sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: 1 INVITE',
-      'From: "4311009" <sip:testuser1002@',
-      'To: <sip:testuser1003@'
+      'From: "[% invite_allowedcli_match_alias_scenarios_test.testuser1002.alias_numbers.0.phone_number %]" <sip:[% scenarios.0.username %]@',
+      'To: <sip:[% scenarios.0.responders.0.username %]@'
     ]
   - [
       '^SIP/2.0 407 Proxy Authentication Required',
       'CSeq: 1 INVITE',
-      'From: "4311009" <sip:testuser1002@',
-      'To: <sip:testuser1003@'
+      'From: "[% invite_allowedcli_match_alias_scenarios_test.testuser1002.alias_numbers.0.phone_number %]" <sip:[% scenarios.0.username %]@',
+      'To: <sip:[% scenarios.0.responders.0.username %]@'
     ]
