@@ -73,7 +73,7 @@ if [ ! -x "${BIN_DIR}/generate_test.pl" ]; then
   exit 3
 fi
 
-for t in $(find "${DIR}" -not -regex '.+customtt.tt2' -type f -name '*.tt2' | sort); do
+for t in $(find "${DIR}" -not -regex '.+customtt.tt2' -type f -name '*_test.yml.tt2' | sort); do
   origdir="$(dirname "${t}")"
   template="$(basename "${t}")"
   if [ -n "${DEST_DIR}" ] ; then

@@ -174,6 +174,29 @@ delete_voip() {
   fi
 }
 
+generate_template() {
+  local base=$1
+  if [ -f "${SCEN_CHECK_DIR}/${base}.tt2" ]; then
+    if ! "${BIN_DIR}/generate_test.pl" \
+      "${SCEN_CHECK_DIR}/${base}.tt2" \
+      "${SCEN_CHECK_DIR}/scenario_ids.yml" > "${SCEN_CHECK_DIR}/${base}"
+    then
+      echo "Error generating ${base} from template" >&2
+      exit 1
+    fi
+    echo "* ${base} generated"
+  fi
+}
+
+generate_templates() {
+  local prefs=( "prefs.json" )
+  prefs+=( "callforward.yml" )
+
+  for t in "${prefs[@]}"; do
+    generate_template "${t}"
+  done
+}
+
 scenario_csv() {
   local DOMAIN=$1
   echo "$(date) - Cleaning csv/reg.xml files"
@@ -190,6 +213,8 @@ scenario_csv() {
     echo "Error creating csv files"
     exit 2
   fi
+
+  generate_templates
 
   if [ -f "${SCEN_CHECK_DIR}/hosts" ]; then
     echo "$(date) - Setting foreign domains"
