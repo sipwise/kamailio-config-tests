@@ -15,7 +15,7 @@ flow:
 sip_in:
   - '^SIP/2.0 200 OK'
   - 'CSeq: \d+ BYE'
-  - 'From: <sip:4311002@'
+  - 'From: <sip:[% invite_conference_update_scenarios_test.testuser1002.phone_number %]@'
   - 'Content-Length: 0'
   - 'To: <sip:testuser1001@'
 sip_out:

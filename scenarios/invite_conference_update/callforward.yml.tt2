@@ -1,5 +1,5 @@
 ---
-testuser1001@spce.test:
+testuser1001@invite-conference-update.scenarios.test:
   destinations:
     destinations:
       - destination: conference

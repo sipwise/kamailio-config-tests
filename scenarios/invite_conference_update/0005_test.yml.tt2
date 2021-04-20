@@ -62,9 +62,9 @@ flow:
   - return|ROUTE_SET_CALLER_DIALOG:
       $avp(lua_dlg_profile): [
         "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% spce_test.testuser1001.uuid %]",
+        "totaluserout:[% invite_conference_update_scenarios_test.testuser1001.uuid %]",
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1001.uuid %]",
+        "totaluser:[% invite_conference_update_scenarios_test.testuser1001.uuid %]",
         "peer:appsrv",
         "local"
       ]
@@ -119,20 +119,20 @@ flow:
   - exit|ROUTE_EXIT:
       $avp(lua_dlg_profile): [
         "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% spce_test.testuser1001.uuid %]",
+        "totaluserout:[% invite_conference_update_scenarios_test.testuser1001.uuid %]",
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1001.uuid %]",
+        "totaluser:[% invite_conference_update_scenarios_test.testuser1001.uuid %]",
         "peer:appsrv",
         "local"
       ]
 sip_in:
-  - '^INVITE sip:conf=4311001@conference.local SIP/2.0'
+  - '^INVITE sip:conf=[% invite_conference_update_scenarios_test.testuser1001.phone_number %]@conference.local SIP/2.0'
   - 'Contact: <sip:127.0.0.1:5080(;transport=udp)?>'
   - 'CSeq: \d+ INVITE'
   - 'Content-Type: application/sdp'
-  - 'P-Caller-UUID: [% spce_test.testuser1001.uuid %]'
-  - 'P-First-Caller-UPN: 4311002'
-  - 'P-First-Caller-NPN: 4311002'
+  - 'P-Caller-UUID: [% invite_conference_update_scenarios_test.testuser1001.uuid %]'
+  - 'P-First-Caller-UPN: [% invite_conference_update_scenarios_test.testuser1002.phone_number %]'
+  - 'P-First-Caller-NPN: [% invite_conference_update_scenarios_test.testuser1002.phone_number %]'
   - 'P-Acc-Caller-User: testuser1001'
   - 'P-Acc-State: cfu'
 sip_out:
@@ -143,9 +143,9 @@ sip_out:
       'To: <sip:testuser1001@'
     ]
   - [
-      '^INVITE sip:conf=4311001@conference.local SIP/2.0',
+      '^INVITE sip:conf=[% invite_conference_update_scenarios_test.testuser1001.phone_number %]@conference.local SIP/2.0',
       'CSeq: \d+ INVITE',
-      'From: <sip:4311002@',
+      'From: <sip:[% invite_conference_update_scenarios_test.testuser1002.phone_number %]@',
       'To: <sip:testuser1001@',
       'Contact: <sip:127.0.0.1:5080(;transport=udp)?>',
       'Content-Type: application/sdp'

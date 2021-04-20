@@ -1,6 +1,7 @@
+---
 test_uuid: invite_conference_update
 domains:
-  'spce.test':
+  invite-conference-update.scenarios.test:
     reseller_id: 1
 customers:
   'customer.test':
@@ -13,7 +14,7 @@ customers:
       billing_profile_id: 1
       reseller_id: 1
 subscribers:
-  spce.test:
+  invite-conference-update.scenarios.test:
     testuser1001:
       customer: 'customer.test'
       password: testuser
@@ -29,10 +30,10 @@ subscribers:
 scenarios:
   - ip: 127.126.0.1
     username: testuser1002
-    domain: spce.test
+    domain: invite-conference-update.scenarios.test
     responders:
       - ip: 127.1.0.1
         username: testuser1001
-        domain: spce.test
-        register: no
-        active: no
+        domain: invite-conference-update.scenarios.test
+        register: 'no'
+        active: 'no'

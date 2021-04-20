@@ -1,22 +1,23 @@
+---
 soundsets:
   'default_soundset':
-      reseller_id: 1
-      sounds:
-        conference_first:
-          filename: sounds/conference_first.wav
-          loopplay: 'false'
-        conference_greeting:
-          filename: sounds/conference_greeting.wav
-          loopplay: 'false'
-        conference_join:
-          filename: sounds/conference_join.wav
-          loopplay: 'false'
-        conference_joined:
-          filename: sounds/conference_joined.wav
-          loopplay: 'false'
-        conference_leave:
-          filename: sounds/conference_leave.wav
-          loopplay: 'false'
-        conference_waiting_music:
-          filename: sounds/conference_waiting_music.wav
-          loopplay: 'false'
+    reseller_id: 1
+    sounds:
+      conference_first:
+        filename: sounds/conference_first.wav
+        loopplay: 'false'
+      conference_greeting:
+        filename: sounds/conference_greeting.wav
+        loopplay: 'false'
+      conference_join:
+        filename: sounds/conference_join.wav
+        loopplay: 'false'
+      conference_joined:
+        filename: sounds/conference_joined.wav
+        loopplay: 'false'
+      conference_leave:
+        filename: sounds/conference_leave.wav
+        loopplay: 'false'
+      conference_waiting_music:
+        filename: sounds/conference_waiting_music.wav
+        loopplay: 'false'

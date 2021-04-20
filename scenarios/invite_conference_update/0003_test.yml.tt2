@@ -18,12 +18,12 @@ flow:
   - start|ROUTE_FIND_CALLER:
   - start|ROUTE_AUTH:
   - start|ROUTE_AUTH_HELPER:
-      $x_hdr(From): spce.test
+      $x_hdr(From): invite-conference-update.scenarios.test
       $var(realm_user): testuser1002
-      $var(realm_domain): spce.test
+      $var(realm_domain): invite-conference-update.scenarios.test
   - return|ROUTE_AUTH_HELPER:
       $avp(orig_acc_caller_user): ['testuser1002']
-      $avp(orig_acc_caller_domain): ['spce.test']
+      $avp(orig_acc_caller_domain): ['invite-conference-update.scenarios.test']
   - start|ROUTE_ADD_CALLINFO_REPLY:
   - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
   - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
@@ -66,10 +66,10 @@ flow:
   - return|ROUTE_SET_CALLEE_DIALOG:
       $avp(lua_dlg_profile): [
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1001.uuid %]",
+        "totaluser:[% invite_conference_update_scenarios_test.testuser1001.uuid %]",
         "total",
         "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1001.uuid %]"
+        "user:[% invite_conference_update_scenarios_test.testuser1001.uuid %]"
       ]
   - start|ROUTE_BLOCK_IN:
   - return|ROUTE_BLOCK_IN:
@@ -114,18 +114,18 @@ flow:
   - return|ROUTE_SET_CALLER_DIALOG:
       $avp(lua_dlg_profile): [
         "accountout:[% customer_test.id %]",
-        "userout:[% spce_test.testuser1002.uuid %]",
+        "userout:[% invite_conference_update_scenarios_test.testuser1002.uuid %]",
         "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1002.uuid %]",
+        "user:[% invite_conference_update_scenarios_test.testuser1002.uuid %]",
         "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% spce_test.testuser1002.uuid %]",
+        "totaluserout:[% invite_conference_update_scenarios_test.testuser1002.uuid %]",
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1002.uuid %]",
+        "totaluser:[% invite_conference_update_scenarios_test.testuser1002.uuid %]",
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1001.uuid %]",
+        "totaluser:[% invite_conference_update_scenarios_test.testuser1001.uuid %]",
         "total",
         "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1001.uuid %]"
+        "user:[% invite_conference_update_scenarios_test.testuser1001.uuid %]"
       ]
   - start|ROUTE_SET_ACC_CALLER_CALL_COUNTERS:
   - return|ROUTE_SET_ACC_CALLER_CALL_COUNTERS:
@@ -178,14 +178,14 @@ sip_out:
       'To: <sip:testuser1001@'
     ]
   - [
-      '^INVITE sip:conf=4311001@conference.local SIP/2.0',
+      '^INVITE sip:conf=[% invite_conference_update_scenarios_test.testuser1001.phone_number %]@conference.local SIP/2.0',
       'CSeq: 2 INVITE',
       'From: <sip:testuser1002@',
       'To: <sip:testuser1001@',
       'Content-Type: application/sdp',
       'P-Caller-UUID: \w+',
-      'P-First-Caller-UPN: 4311002',
-      'P-First-Caller-NPN: 4311002',
+      'P-First-Caller-UPN: [% invite_conference_update_scenarios_test.testuser1002.phone_number %]',
+      'P-First-Caller-NPN: [% invite_conference_update_scenarios_test.testuser1002.phone_number %]',
       'P-Acc-Caller-User: testuser1001',
       'P-Acc-State: cfu',
       'P-App-Param: ;profile=ngcp_cf',
