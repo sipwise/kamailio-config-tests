@@ -1,0 +1,5 @@
+{
+    "testuser1002@invite-force-outbound-calls-to-peer.scenarios.test": {
+        "force_outbound_calls_to_peer":"force"
+    }
+}

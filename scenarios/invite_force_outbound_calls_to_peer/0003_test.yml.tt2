@@ -155,16 +155,16 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - 'INVITE sip:testuser1003@spce.test SIP/2.0'
-  - 'From: <sip:testuser1002@spce.test>;tag=[\w-]+'
-  - 'To: <sip:testuser1003@spce.test>'
+  - 'INVITE sip:testuser1003@invite-force-outbound-calls-to-peer.scenarios.test SIP/2.0'
+  - 'From: <sip:testuser1002@invite-force-outbound-calls-to-peer.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:testuser1003@invite-force-outbound-calls-to-peer.scenarios.test>'
   - 'CSeq: \d+ INVITE'
-  - 'Contact: sip:testuser1002@127.126.0.1:\d+'
-  - 'Proxy-Authorization: Digest username="testuser1002",realm="spce.test",uri="sip:127.0.0.1:5060",nonce=".+",response=".+",algorithm=MD5'
+  - 'Contact: sip:testuser1002@[% scenarios.0.ip %]:[% scenarios.0.port %]'
+  - 'Proxy-Authorization: Digest username="testuser1002",realm="invite-force-outbound-calls-to-peer.scenarios.test",uri="sip:127.0.0.1:5060",nonce=".+",response=".+",algorithm=MD5'
   - 'Content-Type: application/sdp'
   - 'Content-Length:\s+\d+'
-  - 'P-NGCP-Src-Ip: 127.126.0.1'
-  - 'P-NGCP-Src-Port: \d+'
+  - 'P-NGCP-Src-Ip: [% scenarios.0.ip %]'
+  - 'P-NGCP-Src-Port: [% scenarios.0.port %]'
   - 'P-NGCP-Src-Proto: udp'
   - 'P-NGCP-Src-Af: 4'
   - 'P-Sock-Info: udp:127.0.0.1:5060'
@@ -172,47 +172,47 @@ sip_in:
 sip_out:
   - [
       'SIP/2.0 100 Trying',
-      'From: <sip:testuser1002@spce.test>;tag=[\w-]+',
-      'To: <sip:testuser1003@spce.test>',
+      'From: <sip:testuser1002@invite-force-outbound-calls-to-peer.scenarios.test>;tag=[\w-]+',
+      'To: <sip:testuser1003@invite-force-outbound-calls-to-peer.scenarios.test>',
       'CSeq: \d+ INVITE',
       'P-Out-Socket: udp:127.0.0.1:5060',
-      'P-NGCP-Auth-IP: 127.126.0.1',
+      'P-NGCP-Auth-IP: [% scenarios.0.ip %]',
       'P-NGCP-Auth-UA: <null>',
       'Server: Sipwise NGCP Proxy',
       'Content-Length: 0',
     ]
   - [
       'SIP/2.0 101 Connecting',
-      'From: <sip:testuser1002@spce.test>;tag=[\w-]+',
-      'To: <sip:testuser1003@spce.test>',
+      'From: <sip:testuser1002@invite-force-outbound-calls-to-peer.scenarios.test>;tag=[\w-]+',
+      'To: <sip:testuser1003@invite-force-outbound-calls-to-peer.scenarios.test>',
       'CSeq: \d+ INVITE',
       'P-Out-Socket: udp:127.0.0.1:5060',
-      'P-NGCP-Auth-IP: 127.126.0.1',
+      'P-NGCP-Auth-IP: [% scenarios.0.ip %]',
       'P-NGCP-Auth-UA: <null>',
-      'P-NGCP-Authorization: testuser1002@spce.test',
+      'P-NGCP-Authorization: testuser1002@invite-force-outbound-calls-to-peer.scenarios.test',
       'P-NGCP-Authorized: 1',
-      'P-NGCP-Caller-Info: <sip:testuser1002@spce.test>;ip=127.126.0.1;port=\d+;primary=4311002',
-      'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
+      'P-NGCP-Caller-Info: <sip:testuser1002@invite-force-outbound-calls-to-peer.scenarios.test>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %];primary=[% invite_force_outbound_calls_to_peer_scenarios_test.testuser1002.phone_number %]',
+      'P-Caller-UUID: [% invite_force_outbound_calls_to_peer_scenarios_test.testuser1002.uuid %]',
       'Server: Sipwise NGCP Proxy',
       'Content-Length: 0',
     ]
   - [
-      'INVITE sip:testuser1003@127.0.2.1:\d+;transport=udp SIP/2.0',
-      'From: <sip:4311002@spce.test>;tag=[\w-]+',
-      'To: <sip:testuser1003@spce.test>',
+      'INVITE sip:testuser1003@[% scenarios.0.responders.1.ip %]:[% scenarios.0.responders.1.port %];transport=udp SIP/2.0',
+      'From: <sip:[% invite_force_outbound_calls_to_peer_scenarios_test.testuser1002.phone_number %]@invite-force-outbound-calls-to-peer.scenarios.test>;tag=[\w-]+',
+      'To: <sip:testuser1003@invite-force-outbound-calls-to-peer.scenarios.test>',
       'CSeq: \d+ INVITE',
-      'Contact: sip:testuser1002@127.126.0.1:\d+',
+      'Contact: sip:testuser1002@[% scenarios.0.ip %]:[% scenarios.0.port %]',
       'Content-Type: application/sdp',
       'Content-Length:\s+\d+',
       'P-LB-Uptime: \d+',
-      'P-Asserted-Identity: <sip:4311002@spce.test>',
-      'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
-      'P-Callee-UUID: [% spce_test.testuser1003.uuid %]',
-      'P-Called-Party-ID: <sip:testuser1003@127.0.2.1>',
+      'P-Asserted-Identity: <sip:[% invite_force_outbound_calls_to_peer_scenarios_test.testuser1002.phone_number %]@invite-force-outbound-calls-to-peer.scenarios.test>',
+      'P-Caller-UUID: [% invite_force_outbound_calls_to_peer_scenarios_test.testuser1002.uuid %]',
+      'P-Callee-UUID: [% invite_force_outbound_calls_to_peer_scenarios_test.testuser1003.uuid %]',
+      'P-Called-Party-ID: <sip:testuser1003@[% scenarios.0.responders.1.ip %]>',
       'P-App-Param: ;calltimer=21600;aleg_sst_enable=no;sst_enable=no;hold_alter_b2b_bleg=no;hold_alter_b2b_aleg=no;(fast_ack=no;)?a_park_domain=[% customer_test.id %];b_park_domain=[% customer_test.id %]',
       'P-App-Name: sbc',
-      'P-NGCP-Caller-Info: <sip:testuser1002@spce.test>;ip=127.126.0.1;port=\d+;primary=4311002',
-      'P-NGCP-Callee-Info: <sip:testuser1003@spce.test>;ip=127.0.2.1;port=\d+;primary=4311003',
-      'P-D-Uri: sip:127.0.0.1:5060;received=sip:127.0.2.1:\d+%3blr%3btransport%3dudp',
+      'P-NGCP-Caller-Info: <sip:testuser1002@invite-force-outbound-calls-to-peer.scenarios.test>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %];primary=[% invite_force_outbound_calls_to_peer_scenarios_test.testuser1002.phone_number %]',
+      'P-NGCP-Callee-Info: <sip:testuser1003@invite-force-outbound-calls-to-peer.scenarios.test>;ip=[% scenarios.0.responders.1.ip %];port=[% scenarios.0.responders.1.port %];primary=[% invite_force_outbound_calls_to_peer_scenarios_test.testuser1003.phone_number %]',
+      'P-D-Uri: sip:127.0.0.1:5060;received=sip:[% scenarios.0.responders.1.ip %]:[% scenarios.0.responders.1.port %]%3blr%3btransport%3dudp',
       'P-Proxy-Uri: sip:127.0.0.1:5062',
     ]
