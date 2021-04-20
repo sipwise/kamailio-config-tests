@@ -48,7 +48,16 @@ cfg_debug_off() {
     "${BIN_DIR}/config_debug.pl" -g "${GROUP}" off
     echo "$(date) - Setting network config off"
     "${BIN_DIR}/network_config.pl" -g "${GROUP}" off
-    if ! ngcpcfg apply "config debug off via kamailio-config-tests" ; then
+    dummy_ip=$(ip addr show dummy0 | grep inet | awk '{print $2}' | head -1)
+    if [ -n "${dummy_ip}" ]; then
+      echo "$(date) - start dummy0 interface"
+      ifdown dummy0
+    fi
+    if lsmod | grep -q dummy ; then
+      echo "$(date) - remove dummy module"
+      rmmod dummy
+    fi
+    if ! ngcpcfg --summary-only apply "config debug off via kamailio-config-tests" ; then
       echo "$(date) - ngcpcfg apply returned $?"
       error_flag=4
     fi
@@ -308,7 +317,7 @@ if ! "${SKIP_CONFIG}" ; then
     echo "$(date) - Exec pid_watcher with timeout[${TIMEOUT}]"
     ( timeout "${TIMEOUT}" "${BIN_DIR}/pid_watcher.py" ${PIDWATCH_OPTS} )&
   fi
-  if ! ngcpcfg apply "config debug on via kamailio-config-tests" ; then
+  if ! ngcpcfg --summary-only apply "config debug on via kamailio-config-tests" ; then
     echo "$(date) - ngcp apply returned $?"
     echo "$(date) - Done[3]"
     cfg_debug_off
