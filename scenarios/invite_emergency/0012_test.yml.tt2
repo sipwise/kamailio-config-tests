@@ -20,17 +20,17 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - 'ACK sip:127.0.2.1:\d+;transport=UDP SIP/2.0'
-  - 'From: <sip:4311002@spce.test>;tag=[\w-]+'
-  - 'To: <sip:E1112@127.0.2.1>;tag=[\w-]+'
+  - 'ACK sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];transport=UDP SIP/2.0'
+  - 'From: <sip:[% invite_emergency_scenarios_test.testuser1002.phone_number %]@invite-emergency.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:E1112@[% scenarios.0.responders.0.ip %]>;tag=[\w-]+'
   - 'CSeq: \d+ ACK'
   - 'Content-Length: 0'
   - 'Contact: <sip:127.0.0.1:508[08];transport=udp>'
 sip_out:
   - [
-      'ACK sip:127.0.2.1:\d+;transport=UDP SIP/2.0',
-      'From: <sip:4311002@spce.test>;tag=[\w-]+',
-      'To: <sip:E1112@127.0.2.1>;tag=[\w-]+',
+      'ACK sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];transport=UDP SIP/2.0',
+      'From: <sip:[% invite_emergency_scenarios_test.testuser1002.phone_number %]@invite-emergency.scenarios.test>;tag=[\w-]+',
+      'To: <sip:E1112@[% scenarios.0.responders.0.ip %]>;tag=[\w-]+',
       'CSeq: \d+ ACK',
       'Content-Length: 0',
       'Contact: <sip:127.0.0.1:508[08];transport=udp>',

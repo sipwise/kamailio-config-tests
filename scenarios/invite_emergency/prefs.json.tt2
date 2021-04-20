@@ -1,0 +1,10 @@
+{
+    "@invite-emergency.scenarios.test": {
+       "emergency_prefix": "E",
+        "rewrite_rule_set": "rw_invite_emergency_00"
+    },
+    "peer_invite_emergency_host0": {
+        "rewrite_rule_set": "rw_invite_emergency_01",
+        "concurrent_max": 0
+    }
+}
