@@ -1,8 +1,0 @@
-{
-    "testuser1003@spce.test": {
-        "concurrent_max_per_account": 2
-    },
-    "testuser1004@spce.test": {
-        "concurrent_max_per_account": 2
-    }
-}

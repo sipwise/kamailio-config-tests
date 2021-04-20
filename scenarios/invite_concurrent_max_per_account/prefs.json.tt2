@@ -1,0 +1,8 @@
+{
+    "testuser1003@invite-concurrent-max-per-account.scenarios.test": {
+        "concurrent_max_per_account": 2
+    },
+    "testuser1004@invite-concurrent-max-per-account.scenarios.test": {
+        "concurrent_max_per_account": 2
+    }
+}
