@@ -1,3 +1,38 @@
+kamailio-config-tests (9.4.1.0+0~mr9.4.1.0) unstable; urgency=medium
+
+  [ Alessio Garzi ]
+  * [f2af4c0] TT#62051 new scenario invite_no_404_fallback
+
+  [ Victor Seva ]
+  * [f6f0655] TT#108065 invite_emergency_pidflo
+  * [29612f1] TT#81700 add debug level for dialplan on relevant scenarios
+  * [bcced8e] TT#81700 store sipp message log per execution
+  * [675b838] TT#104401 check.sh: clean known errors on sipp 3.6
+  * [1ca6bf1] TT#104401 config: don't try to start an already configured dummy0
+  * [3c3715a] TT#114302 : fix force_[in|out]bound checks
+  * [935bf89] TT#116100 bin/config_debug.pl: remove obsolete code
+  * [2be72bb] TT#116100 bin/config_debug.pl: split logic
+  * [f63d15e] TT#116100 bin/get_scenarios.sh
+  * [0cc5b14] TT#116100 bin/network_config.pl: generate DNS aliases from scenarios
+  * [74fbf96] TT#116100 bin/check.sh: split logic of provisioning
+  * [03afbb1] TT#116100 support '-' on domains
+  * [4450e32] TT#116100 network_config.pl: log what scenario.yml is going to be loaded
+  * [8443c39] TT#81700 Makefile: add clean rule
+  * [24196f8] TT#81700 be less verbose on ngcpcfg apply
+
+  [ Marco Capetta ]
+  * [64d95bf] TT#89560 Adapt scenarios to changes to LEG_B route
+  * [bfc3922] TT#89560 Fix missing 487 message in incoming_shared_line pbx scenario
+
+  [ mohammed ghettas ]
+  * [2e1ac48] TT#111500 : scenarios for session timer
+
+  [ Mohammed Ghettas ]
+  * [c347842] TT#114302 : k-c-t scenarios for force_outbound_calls_to_peer and force_inbound_calls_to_peer
+  * [6ee7758] TT#114302 : fix force_[in|out]bound checks
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 20 Apr 2021 11:57:04 +0200
+
 kamailio-config-tests (9.4.0.0+0~mr9.4.0.0) unstable; urgency=medium
 
   [ Victor Seva ]
