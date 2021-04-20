@@ -25,13 +25,13 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - 'ACK sip:127.0.0.1:508[08];prxroute=1 SIP/2.0'
-  - 'From: <sip:testuser1002@spce.test>;tag=[\w-]+'
-  - 'To: <sip:112@spce.test>;tag=[\w-]+'
+  - 'From: <sip:testuser1002@invite-emergency-pidflo.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:112@invite-emergency-pidflo.scenarios.test>;tag=[\w-]+'
   - 'CSeq: \d+ ACK'
-  - 'Contact: sip:testuser1002@127.126.0.1:\d+'
+  - 'Contact: sip:testuser1002@[% scenarios.0.ip %]:[% scenarios.0.port %]'
   - 'Content-Length: 0'
-  - 'P-NGCP-Src-Ip: 127.126.0.1'
-  - 'P-NGCP-Src-Port: \d+'
+  - 'P-NGCP-Src-Ip: [% scenarios.0.ip %]'
+  - 'P-NGCP-Src-Port: [% scenarios.0.port %]'
   - 'P-NGCP-Src-Proto: udp'
   - 'P-NGCP-Src-Af: 4'
   - 'P-Sock-Info: udp:127.0.0.1:5060'
@@ -39,13 +39,13 @@ sip_in:
 sip_out:
   - [
       'ACK sip:127.0.0.1:508[08];prxroute=1 SIP/2.0',
-      'From: <sip:4311002@spce.test>;tag=[\w-]+',
-      'To: <sip:112@spce.test>;tag=[\w-]+',
+      'From: <sip:[% invite_emergency_pidflo_scenarios_test.testuser1002.phone_number %]@invite-emergency-pidflo.scenarios.test>;tag=[\w-]+',
+      'To: <sip:112@invite-emergency-pidflo.scenarios.test>;tag=[\w-]+',
       'CSeq: \d+ ACK',
-      'Contact: sip:testuser1002@127.126.0.1:\d+',
+      'Contact: sip:testuser1002@[% scenarios.0.ip %]:[% scenarios.0.port %]',
       'Content-Length: 0',
-      'P-NGCP-Src-Ip: 127.126.0.1',
-      'P-NGCP-Src-Port: \d+',
+      'P-NGCP-Src-Ip: [% scenarios.0.ip %]',
+      'P-NGCP-Src-Port: [% scenarios.0.port %]',
       'P-NGCP-Src-Proto: udp',
       'P-NGCP-Src-Af: 4',
       'P-Sock-Info: udp:127.0.0.1:5060',

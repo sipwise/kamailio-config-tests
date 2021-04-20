@@ -11,27 +11,27 @@ flow:
   - return|dialog:start:
 sip_in:
   - 'SIP/2.0 200 OK'
-  - 'From: <sip:4311002@spce.test>;tag=[\w-]+'
-  - 'To: <sip:E1112@127.0.2.1>;tag=[\w-]+'
+  - 'From: <sip:[% invite_emergency_pidflo_scenarios_test.testuser1002.phone_number %]@invite-emergency-pidflo.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:E1112@[% scenarios.0.responders.0.ip %]>;tag=[\w-]+'
   - 'CSeq: \d+ INVITE'
-  - 'Contact: <sip:127.0.2.1:\d+;transport=UDP>'
+  - 'Contact: <sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];transport=UDP>'
   - 'Content-Type: application/sdp'
   - 'Content-Length:\s+\d+'
-  - 'P-NGCP-Src-Ip: 127.0.2.1'
-  - 'P-NGCP-Src-Port: \d+'
+  - 'P-NGCP-Src-Ip: [% scenarios.0.responders.0.ip %]'
+  - 'P-NGCP-Src-Port: [% scenarios.0.responders.0.port %]'
   - 'P-NGCP-Src-Proto: udp'
   - 'P-NGCP-Src-Af: 4'
 sip_out:
   - [
       'SIP/2.0 200 OK',
-      'From: <sip:4311002@spce.test>;tag=[\w-]+',
-      'To: <sip:E1112@127.0.2.1>;tag=[\w-]+',
+      'From: <sip:[% invite_emergency_pidflo_scenarios_test.testuser1002.phone_number %]@invite-emergency-pidflo.scenarios.test>;tag=[\w-]+',
+      'To: <sip:E1112@[% scenarios.0.responders.0.ip %]>;tag=[\w-]+',
       'CSeq: \d+ INVITE',
-      'Contact: <sip:127.0.2.1:\d+;transport=UDP>',
+      'Contact: <sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];transport=UDP>',
       'Content-Type: application/sdp',
       'Content-Length:\s+\d+',
-      'P-NGCP-Src-Ip: 127.0.2.1',
-      'P-NGCP-Src-Port: \d+',
+      'P-NGCP-Src-Ip: [% scenarios.0.responders.0.ip %]',
+      'P-NGCP-Src-Port: [% scenarios.0.responders.0.port %]',
       'P-NGCP-Src-Proto: udp',
       'P-NGCP-Src-Af: 4',
     ]

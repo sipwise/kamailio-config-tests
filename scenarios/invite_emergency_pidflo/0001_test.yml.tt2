@@ -21,15 +21,15 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - 'INVITE sip:112@spce.test SIP/2.0'
-  - 'From: <sip:testuser1002@spce.test>;tag=[\w-]+'
-  - 'To: <sip:112@spce.test>'
+  - 'INVITE sip:112@invite-emergency-pidflo.scenarios.test SIP/2.0'
+  - 'From: <sip:testuser1002@invite-emergency-pidflo.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:112@invite-emergency-pidflo.scenarios.test>'
   - 'CSeq: \d+ INVITE'
-  - 'Contact: sip:testuser1002@127.126.0.1:\d+'
+  - 'Contact: sip:testuser1002@[% scenarios.0.ip %]:[% scenarios.0.port %]'
   - 'Content-Type: application/sdp'
   - 'Content-Length:\s+\d+'
-  - 'P-NGCP-Src-Ip: 127.126.0.1'
-  - 'P-NGCP-Src-Port: \d+'
+  - 'P-NGCP-Src-Ip: [% scenarios.0.ip %]'
+  - 'P-NGCP-Src-Port: [% scenarios.0.port %]'
   - 'P-NGCP-Src-Proto: udp'
   - 'P-NGCP-Src-Af: 4'
   - 'P-Sock-Info: udp:127.0.0.1:5060'
@@ -37,24 +37,24 @@ sip_in:
 sip_out:
   - [
       'SIP/2.0 100 Trying',
-      'From: <sip:testuser1002@spce.test>;tag=[\w-]+',
-      'To: <sip:112@spce.test>',
+      'From: <sip:testuser1002@invite-emergency-pidflo.scenarios.test>;tag=[\w-]+',
+      'To: <sip:112@invite-emergency-pidflo.scenarios.test>',
       'CSeq: \d+ INVITE',
       'P-Out-Socket: udp:127.0.0.1:5060',
-      'P-NGCP-Auth-IP: 127.126.0.1',
+      'P-NGCP-Auth-IP: [% scenarios.0.ip %]',
       'P-NGCP-Auth-UA: <null>',
       'Server: Sipwise NGCP Proxy',
       'Content-Length: 0',
     ]
   - [
       'SIP/2.0 407 Proxy Authentication Required',
-      'From: <sip:testuser1002@spce.test>;tag=[\w-]+',
-      'To: <sip:112@spce.test>;tag=[\w-]+',
+      'From: <sip:testuser1002@invite-emergency-pidflo.scenarios.test>;tag=[\w-]+',
+      'To: <sip:112@invite-emergency-pidflo.scenarios.test>;tag=[\w-]+',
       'CSeq: \d+ INVITE',
       'P-Out-Socket: udp:127.0.0.1:5060',
-      'P-NGCP-Auth-IP: 127.126.0.1',
+      'P-NGCP-Auth-IP: [% scenarios.0.ip %]',
       'P-NGCP-Auth-UA: <null>',
-      'Proxy-Authenticate: Digest realm="spce.test", nonce=".+"',
+      'Proxy-Authenticate: Digest realm="invite-emergency-pidflo.scenarios.test", nonce=".+"',
       'Server: Sipwise NGCP Proxy',
       'Content-Length: 0',
     ]

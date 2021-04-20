@@ -1,25 +1,25 @@
 ---
-peer_00:
+peer_invite_emergency_pidflo:
   contact:
-    company: peer_00
-    email: peer_00@host0.not
+    company: peer_invite_emergency_pidflo
+    email: peer_invite_emergency_pidflo@host0.not
   contract:
     billing_profile_id: 1
     status: active
     type: sippeering
   groups:
-    - name: peer_00_group
+    - name: peer_invite_emergency_pidflo_group
       priority: 1
       description:
   rules:
-    - group_id: peer_00_group
+    - group_id: peer_invite_emergency_pidflo_group
       callee_prefix: ""
       callee_pattern: ''
-      caller_pattern: '^sip:.+@spce.test'
+      caller_pattern: '^sip:.+@invite-emergency-pidflo.scenarios.test'
       description: ""
   hosts:
-    - group_id: peer_00_group
-      name: peer_00_host0
+    - group_id: peer_invite_emergency_pidflo_group
+      name: peer_invite_emergency_pidflo_host0
       ip: 127.0.2.1
       port: 51602
       host:
