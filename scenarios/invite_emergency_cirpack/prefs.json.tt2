@@ -1,17 +1,17 @@
 {
-    "@spce.test": {
+    "@invite-emergency-cirpack.scenarios.test": {
         "emergency_prefix": "E",
-        "rewrite_rule_set": "rw_00"
+        "rewrite_rule_set": "rw_00_invite_emergency_cirpack"
     },
-    "testuser1002@spce.test": {
+    "[% scenarios.0.username %]@invite-emergency-cirpack.scenarios.test": {
         "emergency_location_format": "cirpack",
         "emergency_location_object": {
             "content_type": "application/vnd.cirpack.isdn-ext",
             "data": "N2UgT2QgMDQgNTUgNzUgNjkgMjAgNGQgNjEgNmIgNjUgNDMgNjEgNmMgNmM="
         }
     },
-    "peer_00_host0": {
-        "rewrite_rule_set": "rw_01",
+    "peer_invite_emergency_cirpack_host0": {
+        "rewrite_rule_set": "rw_01_invite_emergency_cirpack",
         "concurrent_max": 0
     }
 }

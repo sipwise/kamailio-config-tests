@@ -1,10 +1,10 @@
 ---
 cdr:
-  - source_user: 'testuser1002'
-    source_domain: 'spce.test'
-    source_cli: '4311002'
+  - source_user: '[% scenarios.0.username %]'
+    source_domain: 'invite-emergency-cirpack.scenarios.test'
+    source_cli: '[% invite_emergency_cirpack_scenarios_test.testuser1002.phone_number %]'
     destination_user: 'emergency_112'
-    destination_domain: '127.0.2.1'
+    destination_domain: '[% scenarios.0.responders.0.ip %]'
     destination_user_dialed: '112'
     destination_user_out: 'E1112'
     call_type: 'call'

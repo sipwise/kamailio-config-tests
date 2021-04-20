@@ -83,8 +83,8 @@ flow:
   - start|ROUTE_OUTBOUND:
       $avp(lua_dlg_profile): [
         "relay",
-        "peerout:[% peer_00_host0.id %]",
-        "peer:[% peer_00_host0.id %]",
+        "peerout:[% peer_invite_emergency_cirpack.id %]",
+        "peer:[% peer_invite_emergency_cirpack.id %]",
         "outgoing",
         "emergency"
       ]
@@ -157,22 +157,22 @@ flow:
   - exit|ROUTE_EXIT:
       $avp(lua_dlg_profile): [
         "relay",
-        "peerout:[% peer_00_host0.id %]",
-        "peer:[% peer_00_host0.id %]",
+        "peerout:[% peer_invite_emergency_cirpack.id %]",
+        "peer:[% peer_invite_emergency_cirpack.id %]",
         "outgoing",
         "emergency"
       ]
 sip_in:
-  - 'INVITE sip:112@spce.test SIP/2.0'
-  - 'From: <sip:testuser1002@spce.test>;tag=[\w-]+'
-  - 'To: <sip:112@spce.test>'
+  - 'INVITE sip:112@invite-emergency-cirpack.scenarios.test SIP/2.0'
+  - 'From: <sip:[% scenarios.0.username %]@invite-emergency-cirpack.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:112@invite-emergency-cirpack.scenarios.test>'
   - 'CSeq: \d+ INVITE'
-  - 'Contact: sip:testuser1002@127.126.0.1:\d+'
-  - 'Proxy-Authorization: Digest username="testuser1002",realm="spce.test",uri="sip:127.0.0.1:5060",nonce=".+",response=".+",algorithm=MD5'
+  - 'Contact: sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %]'
+  - 'Proxy-Authorization: Digest username="[% scenarios.0.username %]",realm="invite-emergency-cirpack.scenarios.test",uri="sip:127.0.0.1:5060",nonce=".+",response=".+",algorithm=MD5'
   - 'Content-Type: application/sdp'
   - 'Content-Length:\s+\d+'
-  - 'P-NGCP-Src-Ip: 127.126.0.1'
-  - 'P-NGCP-Src-Port: \d+'
+  - 'P-NGCP-Src-Ip: [% scenarios.0.ip %]'
+  - 'P-NGCP-Src-Port: [% scenarios.0.port %]'
   - 'P-NGCP-Src-Proto: udp'
   - 'P-NGCP-Src-Af: 4'
   - 'P-Sock-Info: udp:127.0.0.1:5060'
@@ -180,47 +180,47 @@ sip_in:
 sip_out:
   - [
       'SIP/2.0 100 Trying',
-      'From: <sip:testuser1002@spce.test>;tag=[\w-]+',
-      'To: <sip:112@spce.test>',
+      'From: <sip:[% scenarios.0.username %]@invite-emergency-cirpack.scenarios.test>;tag=[\w-]+',
+      'To: <sip:112@invite-emergency-cirpack.scenarios.test>',
       'CSeq: \d+ INVITE',
       'P-Out-Socket: udp:127.0.0.1:5060',
-      'P-NGCP-Auth-IP: 127.126.0.1',
+      'P-NGCP-Auth-IP: [% scenarios.0.ip %]',
       'P-NGCP-Auth-UA: <null>',
       'Server: Sipwise NGCP Proxy',
       'Content-Length: 0',
     ]
   - [
       'SIP/2.0 101 Connecting',
-      'From: <sip:testuser1002@spce.test>;tag=[\w-]+',
-      'To: <sip:112@spce.test>',
+      'From: <sip:[% scenarios.0.username %]@invite-emergency-cirpack.scenarios.test>;tag=[\w-]+',
+      'To: <sip:112@invite-emergency-cirpack.scenarios.test>',
       'CSeq: \d+ INVITE',
       'P-Out-Socket: udp:127.0.0.1:5060',
-      'P-NGCP-Auth-IP: 127.126.0.1',
+      'P-NGCP-Auth-IP: [% scenarios.0.ip %]',
       'P-NGCP-Auth-UA: <null>',
-      'P-NGCP-Authorization: testuser1002@spce.test',
+      'P-NGCP-Authorization: [% scenarios.0.username %]@invite-emergency-cirpack.scenarios.test',
       'P-NGCP-Authorized: 1',
-      'P-NGCP-Caller-Info: <sip:testuser1002@spce.test>;ip=127.126.0.1;port=\d+;primary=4311002',
-      'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
+      'P-NGCP-Caller-Info: <sip:[% scenarios.0.username %]@invite-emergency-cirpack.scenarios.test>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %];primary=[% invite_emergency_cirpack_scenarios_test.testuser1002.phone_number %]',
+      'P-Caller-UUID: [% invite_emergency_cirpack_scenarios_test.testuser1002.uuid %]',
       'Server: Sipwise NGCP Proxy',
       'Content-Length: 0',
     ]
   - [
-      'INVITE sip:E1112@127.0.2.1:\d+;transport=udp SIP/2.0',
-      'From: <sip:4311002@spce.test>;tag=[\w-]+',
-      'To: <sip:112@spce.test>',
+      'INVITE sip:E1112@[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];transport=udp SIP/2.0',
+      'From: <sip:[% invite_emergency_cirpack_scenarios_test.testuser1002.phone_number %]@invite-emergency-cirpack.scenarios.test>;tag=[\w-]+',
+      'To: <sip:112@invite-emergency-cirpack.scenarios.test>',
       'CSeq: \d+ INVITE',
-      'Contact: sip:testuser1002@127.126.0.1:\d+',
+      'Contact: sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %]',
       'Content-Type: application/sdp',
       'Content-Length:\s+\d+',
       'P-LB-Uptime: \d+',
-      'P-Asserted-Identity: <sip:4311002@spce.test>',
-      'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
+      'P-Asserted-Identity: <sip:[% invite_emergency_cirpack_scenarios_test.testuser1002.phone_number %]@invite-emergency-cirpack.scenarios.test>',
+      'P-Caller-UUID: [% invite_emergency_cirpack_scenarios_test.testuser1002.uuid %]',
       'P-Callee-UUID: 0',
-      'P-Called-Party-ID: <sip:E1112@127.0.2.1>',
+      'P-Called-Party-ID: <sip:E1112@[% scenarios.0.responders.0.ip %]>',
       'P-App-Param: ;calltimer=21600;aleg_sst_enable=no;sst_enable=no;hold_alter_b2b_bleg=no;hold_alter_b2b_aleg=no',
       'P-App-Name: sbc',
-      'P-NGCP-Caller-Info: <sip:testuser1002@spce.test>;ip=127.126.0.1;port=\d+;primary=4311002',
-      'P-NGCP-Callee-Info: <sip:emergency_112@spce.test>;ip=127.0.2.1;port=\d+',
-      'P-D-Uri: sip:127.0.0.1:5060;received=sip:127.0.2.1:\d+%3blr%3btransport%3dudp',
+      'P-NGCP-Caller-Info: <sip:[% scenarios.0.username %]@invite-emergency-cirpack.scenarios.test>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %];primary=[% invite_emergency_cirpack_scenarios_test.testuser1002.phone_number %]',
+      'P-NGCP-Callee-Info: <sip:emergency_112@invite-emergency-cirpack.scenarios.test>;ip=[% scenarios.0.responders.0.ip %];port=[% scenarios.0.responders.0.port %]',
+      'P-D-Uri: sip:127.0.0.1:5060;received=sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %]%3blr%3btransport%3dudp',
       'P-Proxy-Uri: sip:127.0.0.1:5062',
     ]
