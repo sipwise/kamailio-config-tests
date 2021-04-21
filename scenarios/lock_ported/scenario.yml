@@ -1,6 +1,7 @@
+---
 test_uuid: lock_ported
 domains:
-  'spce.test':
+  lock-ported.scenarios.test:
     reseller_id: 1
 customers:
   'customer.test':
@@ -13,7 +14,7 @@ customers:
       billing_profile_id: 1
       reseller_id: 1
 subscribers:
-  spce.test:
+  lock-ported.scenarios.test:
     testuser1003:
       customer: 'customer.test'
       password: testuser
@@ -41,34 +42,34 @@ subscribers:
 scenarios:
   - ip: 127.126.0.1
     username: testuser1002
-    domain: spce.test
+    domain: lock-ported.scenarios.test
     responders:
       - ip: 127.1.0.1
         username: testuser1001
-        domain: spce.test
-        register: no
-        active: no
+        domain: lock-ported.scenarios.test
+        register: 'no'
+        active: 'no'
       - ip: 127.1.0.3
         username: testuser1003
-        domain: spce.test
-        register: yes
+        domain: lock-ported.scenarios.test
+        register: 'yes'
   - ip: 127.126.0.1
     username: testuser1001
-    domain: spce.test
+    domain: lock-ported.scenarios.test
     responders:
       - ip: 127.1.0.4
         username: testuser1004
-        domain: spce.test
-        register: no
-        active: no
+        domain: lock-ported.scenarios.test
+        register: 'no'
+        active: 'no'
   - ip: 127.126.0.4
     username: testuser1004
-    domain: spce.test
+    domain: lock-ported.scenarios.test
     responders:
       - ip: 127.0.2.1
         number: 004321003
         username: 004321003
-        domain: spce.test
-        peer_host: peer_00_host0
-        register: no
-        active: no
+        domain: lock-ported.scenarios.test
+        peer_host: peerlock_ported_host0
+        register: 'no'
+        active: 'no'

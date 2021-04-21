@@ -1,0 +1,27 @@
+---
+peerlock_ported:
+  contact:
+    company: peerlock_ported
+    email: peerlock_ported@host0.not
+  contract:
+    billing_profile_id: 1
+    status: active
+    type: sippeering
+  groups:
+    - name: peerlock_ported_group
+      priority: 1
+      description:
+  rules:
+    - group_id: peerlock_ported_group
+      callee_prefix: ""
+      callee_pattern: ''
+      caller_pattern: '^sip:.+@lock-ported.scenarios.test'
+      description: ""
+  hosts:
+    - group_id: peerlock_ported_group
+      name: peerlock_ported_host0
+      ip: 127.0.2.1
+      port: 51602
+      host:
+      transport: 1
+      weight: 1

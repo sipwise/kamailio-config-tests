@@ -1,11 +1,11 @@
 ---
-testuser1001@spce.test:
+[% scenarios.0.responders.0.username %]@lock-ported.scenarios.test:
   destinations:
     destinations:
-      - destination: sip:4311003@spce.test
+      - destination: sip:[% lock_ported_scenarios_test.testuser1003.phone_number %]@lock-ported.scenarios.test
         priority: 0
         timeout: 5
-      - destination: sip:testuser1003@spce.test
+      - destination: sip:[% scenarios.0.responders.1.username %]@lock-ported.scenarios.test
         priority: 1
         timeout: 5
     name: dest1001

@@ -61,9 +61,9 @@ flow:
   - return|ROUTE_SET_CALLEE_DIALOG:
       $avp(lua_dlg_profile): [
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "totaluser:[% lock_ported_scenarios_test.testuser1003.uuid %]",
         "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1003.uuid %]"
+        "user:[% lock_ported_scenarios_test.testuser1003.uuid %]"
       ]
   - start|ROUTE_BLOCK_IN:
   - return|ROUTE_BLOCK_IN:
@@ -99,27 +99,27 @@ flow:
       $avp(lua_dlg_profile): [
         "local",
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "totaluser:[% lock_ported_scenarios_test.testuser1003.uuid %]",
         "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1003.uuid %]"
+        "user:[% lock_ported_scenarios_test.testuser1003.uuid %]"
       ]
   - start|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_SET_CALLER_DIALOG:
       $avp(lua_dlg_profile): [
         "accountout:[% customer_test.id %]",
-        "userout:[% spce_test.testuser1001.uuid %]",
+        "userout:[% lock_ported_scenarios_test.testuser1001.uuid %]",
         "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1001.uuid %]",
+        "user:[% lock_ported_scenarios_test.testuser1001.uuid %]",
         "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% spce_test.testuser1001.uuid %]",
+        "totaluserout:[% lock_ported_scenarios_test.testuser1001.uuid %]",
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1001.uuid %]",
+        "totaluser:[% lock_ported_scenarios_test.testuser1001.uuid %]",
         "local",
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "totaluser:[% lock_ported_scenarios_test.testuser1003.uuid %]",
         "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1003.uuid %]"
+        "user:[% lock_ported_scenarios_test.testuser1003.uuid %]"
       ]
   - start|ROUTE_ACC_CALLER:
   - start|ROUTE_SET_ACC_CALLER_CALL_COUNTERS:
@@ -184,28 +184,28 @@ flow:
   - exit|ROUTE_EXIT:
       $avp(lua_dlg_profile): [
         "accountout:[% customer_test.id %]",
-        "userout:[% spce_test.testuser1001.uuid %]",
+        "userout:[% lock_ported_scenarios_test.testuser1001.uuid %]",
         "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1001.uuid %]",
+        "user:[% lock_ported_scenarios_test.testuser1001.uuid %]",
         "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% spce_test.testuser1001.uuid %]",
+        "totaluserout:[% lock_ported_scenarios_test.testuser1001.uuid %]",
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1001.uuid %]",
+        "totaluser:[% lock_ported_scenarios_test.testuser1001.uuid %]",
         "local",
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "totaluser:[% lock_ported_scenarios_test.testuser1003.uuid %]",
         "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1003.uuid %]"
+        "user:[% lock_ported_scenarios_test.testuser1003.uuid %]"
       ]
 sip_in:
-  - '^INVITE sip:4311003@'
+  - '^INVITE sip:[% lock_ported_scenarios_test.testuser1003.phone_number %]@'
   - 'Contact: <sip:127.0.0.1:5080'
   - 'CSeq: \d+ INVITE'
   - 'Content-Type: application/sdp'
-  - 'P-Caller-UUID: [% spce_test.testuser1001.uuid %]'
-  - 'P-First-Caller-UPN: 4311002'
-  - 'P-First-Caller-NPN: 4311002'
-  - 'P-Acc-Caller-User: testuser1001'
+  - 'P-Caller-UUID: [% lock_ported_scenarios_test.testuser1001.uuid %]'
+  - 'P-First-Caller-UPN: [% lock_ported_scenarios_test.testuser1002.phone_number %]'
+  - 'P-First-Caller-NPN: [% lock_ported_scenarios_test.testuser1002.phone_number %]'
+  - 'P-Acc-Caller-User: [% scenarios.0.responders.0.username %]'
   - 'P-Acc-State: cfu'
   - 'P-From-Peer: 0'
   - 'P-CF-Depth: 1'
@@ -213,20 +213,20 @@ sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: \d+ INVITE',
-      'From: <sip:testuser1002@',
-      'To: <sip:testuser1001@'
+      'From: <sip:[% scenarios.0.username %]@',
+      'To: <sip:[% scenarios.0.responders.0.username %]@'
     ]
   - [
-      '^INVITE sip:testuser1003@',
+      '^INVITE sip:[% scenarios.0.responders.1.username %]@',
       'CSeq: \d+ INVITE',
-      'From: <sip:4311002@',
+      'From: <sip:[% lock_ported_scenarios_test.testuser1002.phone_number %]@',
       'Contact: <sip:127.0.0.1:5080(;transport=udp)?>',
-      'To: <sip:testuser1001@',
+      'To: <sip:[% scenarios.0.responders.0.username %]@',
       'Content-Type: application/sdp',
-      'P-Callee-UUID: [% spce_test.testuser1003.uuid %]',
-      'P-Asserted-Identity: <sip:4311002@',
-      'P-Called-Party-ID: <sip:testuser1003@',
+      'P-Callee-UUID: [% lock_ported_scenarios_test.testuser1003.uuid %]',
+      'P-Asserted-Identity: <sip:[% lock_ported_scenarios_test.testuser1002.phone_number %]@',
+      'P-Called-Party-ID: <sip:[% scenarios.0.responders.1.username %]@',
       'P-App-Name: sbc',
-      'P-NGCP-Caller-Info: <sip:testuser1001@',
-      'P-NGCP-Callee-Info: <sip:4311003@'
+      'P-NGCP-Caller-Info: <sip:[% scenarios.0.responders.0.username %]@',
+      'P-NGCP-Callee-Info: <sip:[% lock_ported_scenarios_test.testuser1003.phone_number %]@'
     ]
