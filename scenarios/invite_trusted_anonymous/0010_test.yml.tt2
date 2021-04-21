@@ -17,19 +17,19 @@ flow:
   - return|dialog:start:
       $avp(lua_dlg_profile): [
         "accountout:[% customer_test.id %]",
-        "userout:[% spce_test.testuser1002.uuid %]",
+        "userout:[% invite_trusted_anonymous_scenarios_test.testuser1002.uuid %]",
         "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1002.uuid %]",
+        "user:[% invite_trusted_anonymous_scenarios_test.testuser1002.uuid %]",
         "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% spce_test.testuser1002.uuid %]",
+        "totaluserout:[% invite_trusted_anonymous_scenarios_test.testuser1002.uuid %]",
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1002.uuid %]",
+        "totaluser:[% invite_trusted_anonymous_scenarios_test.testuser1002.uuid %]",
         "local",
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "totaluser:[% invite_trusted_anonymous_scenarios_test.testuser1003.uuid %]",
         "total",
         "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1003.uuid %]"
+        "user:[% invite_trusted_anonymous_scenarios_test.testuser1003.uuid %]"
       ]
   - return|dialog:start:
 sip_in:
@@ -40,6 +40,6 @@ sip_out:
       '^SIP/2.0 200 OK',
       'CSeq: 1 INVITE',
       'From: "Anonymous" <sip:anonymous@anonymous.invalid>',
-      'To: <sip:testuser1003@',
+      'To: <sip:[% scenarios.0.responders.0.username %]@',
       '_:NOT:_P-Asserted-Identity: \w+'
     ]

@@ -10,7 +10,7 @@ flow:
 sip_in:
   - 'SIP/2.0 100 Trying'
   - 'From: "Anonymous" <sip:anonymous@anonymous.invalid>;tag=[\w-]+'
-  - 'To: <sip:testuser1003@spce.test>'
+  - 'To: <sip:[% scenarios.0.responders.0.username %]@invite-trusted-anonymous.scenarios.test>'
   - 'CSeq: \d+ INVITE'
   - 'Server: Sipwise NGCP LB'
   - 'Content-Length: 0'

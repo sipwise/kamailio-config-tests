@@ -1,6 +1,0 @@
----
-testuser1002@spce.test:
-  from_pattern: 1002
-  protocol: UDP
-  src_ip: 127.126.0.1
-

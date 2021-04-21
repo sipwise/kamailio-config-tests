@@ -34,7 +34,7 @@ sip_in:
   - 'Max-Forwards: 69'
   - 'Content-Length: 0'
   - 'From: "Anonymous" <sip:anonymous@anonymous.invalid>'
-  - 'To: <sip:testuser1003@'
+  - 'To: <sip:[% scenarios.0.responders.0.username %]@'
 
 sip_out:
   - [
@@ -42,7 +42,7 @@ sip_out:
       'CSeq: 2 BYE',
       'Content-Length: 0',
       'From: "Anonymous" <sip:anonymous@anonymous.invalid>',
-      'To: <sip:testuser1003@',
+      'To: <sip:[% scenarios.0.responders.0.username %]@',
       '_:NOT:_P-Asserted-Identity: \w+'
     ]
   - [
@@ -52,6 +52,6 @@ sip_out:
       'Max-Forwards: 68',
       'Content-Length: 0',
       'From: "Anonymous" <sip:anonymous@anonymous.invalid>',
-      'To: <sip:testuser1003@',
+      'To: <sip:[% scenarios.0.responders.0.username %]@',
       '_:NOT:_P-Asserted-Identity: \w+'
     ]
