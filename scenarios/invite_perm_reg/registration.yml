@@ -1,5 +1,5 @@
 ---
-testuser1003@spce.test:
+testuser1003@invite-perm-reg.scenarios.test:
   - nat: false
     contact: sip:127.3.0.5:8008
     socket: tcp:127.3.0.1:5074
