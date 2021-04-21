@@ -45,19 +45,19 @@ sip_in:
   - '^SIP/2.0 487 Request terminated'
   - 'CSeq: 2 INVITE'
   - 'Content-Length: 0'
-  - 'From: <sip:4311002@'
-  - 'To: <sip:testuser1003@'
+  - 'From: <sip:[% invite_q_forking_scenarios_test.testuser1002.phone_number %]@'
+  - 'To: <sip:[% scenarios.0.responders.0.username %]@'
 sip_out:
   - [
-      '^ACK sip:testuser1003@127.1.0.1',
+      '^ACK sip:[% scenarios.0.responders.0.username %]@[% scenarios.0.responders.0.ip %]',
       'CSeq: 2 ACK',
-      'From: <sip:4311002@',
-      'To: <sip:testuser1003@'
+      'From: <sip:[% invite_q_forking_scenarios_test.testuser1002.phone_number %]@',
+      'To: <sip:[% scenarios.0.responders.0.username %]@'
     ]
   - [
       '^SIP/2.0 486 Busy Here',
       'CSeq: 2 INVITE',
       'Content-Length: 0',
-      'From: <sip:testuser1002@',
-      'To: <sip:testuser1003@'
+      'From: <sip:[% scenarios.0.username %]@',
+      'To: <sip:[% scenarios.0.responders.0.username %]@'
     ]

@@ -1,5 +1,5 @@
 {
-    "testuser1003@spce.test": {
+    "[% scenarios.0.responders.0.username %]@invite-q-forking.scenarios.test": {
         "serial_forking_by_q_value": "standard",
         "stop_forking_code_lists": [
             "486"
