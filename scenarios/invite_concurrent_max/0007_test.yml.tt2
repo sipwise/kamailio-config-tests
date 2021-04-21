@@ -74,8 +74,6 @@ flow:
       ]
   - start|ROUTE_BLOCK_IN:
   - return|ROUTE_BLOCK_IN:
-  - start|ROUTE_ORDER_CF_MAP_ID:
-  - return|ROUTE_ORDER_CF_MAP_ID:
   - return|ROUTE_LOAD_CALLEE_PREF:
       $xavp(callee_real_prefs[0]=>concurrent_max[*]): [1]
       $xavp(callee_real_prefs[0]=>concurrent_max_out[*]): None

@@ -65,8 +65,6 @@ flow:
   - return|ROUTE_SET_CALLEE_DIALOG:
   - start|ROUTE_BLOCK_IN:
   - return|ROUTE_BLOCK_IN:
-  - start|ROUTE_ORDER_CF_MAP_ID:
-  - return|ROUTE_ORDER_CF_MAP_ID:
   - return|ROUTE_LOAD_CALLEE_PREF:
   - start|ROUTE_NCOS_CHECK:
   - start|ROUTE_NCOS:

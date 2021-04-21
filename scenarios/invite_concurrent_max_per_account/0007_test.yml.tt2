@@ -1,4 +1,3 @@
-# INVITE_OFFLINE scenario
 flow:
   - start|DEFAULT_ROUTE:
   - start|ROUTE_ENTRY:
@@ -75,8 +74,6 @@ flow:
   - return|ROUTE_SET_CALLEE_DIALOG:
   - start|ROUTE_BLOCK_IN:
   - return|ROUTE_BLOCK_IN:
-  - start|ROUTE_ORDER_CF_MAP_ID:
-  - return|ROUTE_ORDER_CF_MAP_ID:
   - return|ROUTE_LOAD_CALLEE_PREF:
       $xavp(callee_real_prefs[0]=>concurrent_max[*]): None
       $xavp(callee_real_prefs[0]=>concurrent_max_out[*]): None

@@ -73,8 +73,6 @@ flow:
       ]
   - start|ROUTE_BLOCK_IN:
   - return|ROUTE_BLOCK_IN:
-  - start|ROUTE_ORDER_CF_MAP_ID:
-  - return|ROUTE_ORDER_CF_MAP_ID:
   - return|ROUTE_LOAD_CALLEE_PREF:
   - start|ROUTE_NCOS_CHECK:
   - start|ROUTE_NCOS:
@@ -98,12 +96,6 @@ flow:
   - start|ROUTE_LOAD_CF_MAP:
   - return|ROUTE_LOAD_CF_MAP:
   - start|ROUTE_CHECK_CF:
-  - start|ROUTE_CHECK_CF_SOURCES:
-  - return|ROUTE_CHECK_CF_SOURCES:
-  - start|ROUTE_CHECK_CF_BNUMBERS:
-  - return|ROUTE_CHECK_CF_BNUMBERS:
-  - start|ROUTE_CHECK_CF_PERIOD:
-  - return|ROUTE_CHECK_CF_PERIOD:
   - return|ROUTE_CHECK_CF:
   - start|ROUTE_ACC_CF:
   - start|ROUTE_ACC_CALLER:

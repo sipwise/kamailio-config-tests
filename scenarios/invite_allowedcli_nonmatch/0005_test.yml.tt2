@@ -55,10 +55,10 @@ flow:
   - start|ROUTE_CLIR:
   - return|ROUTE_CLIR:
   - start|ROUTE_CALLER_BLOCK_CLI:
+      $xavp(caller_real_prefs[0]=>allowed_clis[*]): ['43110021*', '43110029*']
   - return|ROUTE_CALLER_BLOCK_CLI:
   - start|ROUTE_CHECK_USERPROV_CLI:
   - start|ROUTE_CHECK_CLI_ALLOWED:
-      $xavp(caller_real_prefs[0]=>allowed_clis[*]): ['43110021*', '43110029*']
   - return|ROUTE_CHECK_CLI_ALLOWED:
   - return|ROUTE_CHECK_USERPROV_CLI:
   - start|ROUTE_FIND_CALLEE:
@@ -80,8 +80,6 @@ flow:
       ]
   - start|ROUTE_BLOCK_IN:
   - return|ROUTE_BLOCK_IN:
-  - start|ROUTE_ORDER_CF_MAP_ID:
-  - return|ROUTE_ORDER_CF_MAP_ID:
   - return|ROUTE_LOAD_CALLEE_PREF:
   - start|ROUTE_NCOS_CHECK:
   - start|ROUTE_NCOS:
@@ -109,7 +107,7 @@ flow:
   - return|ROUTE_LOOKUP_SUBSCRIBER_LOCATIONS:
   - start|ROUTE_OUTBOUND:
   - start|ROUTE_SET_CALLER_DIALOG:
-      $avp(lua_dlg_profile) : [
+     $avp(lua_dlg_profile) : [
         "local",
         "totalaccount:[% customer_test.id %]",
         "totaluser:[% spce_test.testuser1003.uuid %]",
