@@ -14,29 +14,29 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^REGISTER sip:testuser1003@spce.test SIP/2.0'
-  - 'From: <sip:testuser1003@spce.test>;tag='
-  - 'To: <sip:testuser1003@spce.test>'
+  - '^REGISTER sip:[% scenarios.0.responders.0.username %]@invite-wrong-reg.scenarios.test SIP/2.0'
+  - 'From: <sip:[% scenarios.0.responders.0.username %]@invite-wrong-reg.scenarios.test>;tag='
+  - 'To: <sip:[% scenarios.0.responders.0.username %]@invite-wrong-reg.scenarios.test>'
   - 'CSeq: 1 REGISTER'
-  - 'Contact: sip:testuser1003@@127.1.0.1:\d+'
+  - 'Contact: sip:[% scenarios.0.responders.0.username %]@@[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %]'
   - 'Expires: 600'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
-      'From: <sip:testuser1003@spce.test>;tag=',
-      'To: <sip:testuser1003@spce.test>',
+      'From: <sip:[% scenarios.0.responders.0.username %]@invite-wrong-reg.scenarios.test>;tag=',
+      'To: <sip:[% scenarios.0.responders.0.username %]@invite-wrong-reg.scenarios.test>',
       'CSeq: 1 REGISTER',
       'P-Out-Socket: udp:127.0.0.1:5060',
-      'P-NGCP-Auth-IP: 127.1.0.1',
+      'P-NGCP-Auth-IP: [% scenarios.0.responders.0.ip %]',
       'Content-Length: 0'
     ]
   - [
       '^SIP/2.0 401 Unauthorized',
-      'From: <sip:testuser1003@spce.test>;tag=',
-      'To: <sip:testuser1003@spce.test>;tag=',
+      'From: <sip:[% scenarios.0.responders.0.username %]@invite-wrong-reg.scenarios.test>;tag=',
+      'To: <sip:[% scenarios.0.responders.0.username %]@invite-wrong-reg.scenarios.test>;tag=',
       'CSeq: 1 REGISTER',
       'P-Out-Socket: udp:127.0.0.1:5060',
-      'P-NGCP-Auth-IP: 127.1.0.1',
+      'P-NGCP-Auth-IP: [% scenarios.0.responders.0.ip %]',
       'WWW-Authenticate: Digest',
       'Content-Length: 0'
     ]
