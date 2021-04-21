@@ -45,8 +45,8 @@ flow:
   - return|ROUTE_CHECK_CLI_ALLOWED:
   - return|ROUTE_CHECK_USERPROV_CLI:
   - start|ROUTE_FIND_CALLEE:
-      $var(cf_loop): 1
-      $var(forward): 0
+     $var(cf_loop): 1
+     $var(forward): 0
   - start|ROUTE_CLEAR_CALLEE_PREF:
   - return|ROUTE_CLEAR_CALLEE_PREF:
   - start|ROUTE_LOAD_CALLEE_PREF:
@@ -66,8 +66,6 @@ flow:
       ]
   - start|ROUTE_BLOCK_IN:
   - return|ROUTE_BLOCK_IN:
-  - start|ROUTE_ORDER_CF_MAP_ID:
-  - return|ROUTE_ORDER_CF_MAP_ID:
   - return|ROUTE_LOAD_CALLEE_PREF:
   - start|ROUTE_NCOS_CHECK:
   - start|ROUTE_NCOS:

@@ -47,7 +47,7 @@ flow:
   - start|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_SET_CALLEE_DIALOG:
-      $avp(lua_dlg_profile): [
+     $avp(lua_dlg_profile): [
         "totalaccount:[% customer_test.id %]",
         "totaluser:[% spce_test.testuser1003.uuid %]",
         "account:[% customer_test.id %]",
@@ -57,8 +57,6 @@ flow:
       ]
   - start|ROUTE_BLOCK_IN:
   - return|ROUTE_BLOCK_IN:
-  - start|ROUTE_ORDER_CF_MAP_ID:
-  - return|ROUTE_ORDER_CF_MAP_ID:
   - return|ROUTE_LOAD_CALLEE_PREF:
       $xavp(caller_peer_prefs[0]=>concurrent_max[*]): [1]
   - start|ROUTE_NCOS_CHECK:

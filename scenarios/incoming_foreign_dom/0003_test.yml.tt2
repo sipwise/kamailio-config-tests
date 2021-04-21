@@ -66,8 +66,6 @@ flow:
       ]
   - start|ROUTE_BLOCK_IN:
   - return|ROUTE_BLOCK_IN:
-  - start|ROUTE_ORDER_CF_MAP_ID:
-  - return|ROUTE_ORDER_CF_MAP_ID:
   - return|ROUTE_LOAD_CALLEE_PREF:
   - start|ROUTE_NCOS_CHECK:
   - start|ROUTE_NCOS:
@@ -98,7 +96,7 @@ flow:
   - start|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_SET_CALLER_DIALOG:
-      $avp(lua_dlg_profile): [
+     $avp(lua_dlg_profile): [
         "accountout:0",
         "userout:0",
         "account:0",
@@ -177,7 +175,7 @@ flow:
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
-      $avp(lua_dlg_profile): [
+     $avp(lua_dlg_profile): [
         "accountout:0",
         "userout:0",
         "account:0",
