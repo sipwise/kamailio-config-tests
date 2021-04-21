@@ -1,0 +1,5 @@
+{
+    "[% scenarios.0.responders.0.username %]@invite-redirect-blocked.scenarios.test": {
+        "call_deflection": "disabled"
+     }
+}

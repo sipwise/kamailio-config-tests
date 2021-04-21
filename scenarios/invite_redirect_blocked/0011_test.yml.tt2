@@ -44,21 +44,23 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - '^SIP/2.0 302 Moved Temporarily'
-  - 'From: <sip:4311002@'
-  - 'To: <sip:testuser1003@'
+  - 'From: <sip:[% invite_redirect_blocked_scenarios_test.testuser1002.phone_number %]@'
+  - 'To: <sip:[% scenarios.0.responders.0.username %]@'
+  - 'Contact: <sip:[% scenarios.0.responders.1.username %]@'
   - 'CSeq: 2 INVITE'
 sip_out:
   - [
-      '^ACK sip:testuser1003@',
-      'From: <sip:4311002@',
-      'To: <sip:testuser1003@',
+      '^ACK sip:[% scenarios.0.responders.0.username %]@',
+      'From: <sip:[% invite_redirect_blocked_scenarios_test.testuser1002.phone_number %]@',
+      'To: <sip:[% scenarios.0.responders.0.username %]@',
       'CSeq: 2 ACK',
       'Max-Forwards: 68',
       'Content-Length: 0'
     ]
   - [
       '^SIP/2.0 302 Moved Temporarily',
-      'From: <sip:testuser1002@',
-      'To: <sip:testuser1003@',
+      'From: <sip:[% scenarios.0.username %]@',
+      'To: <sip:[% scenarios.0.responders.0.username %]@',
+      'Contact: <sip:[% scenarios.0.responders.0.username %]@[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %]>',
       'CSeq: 2 INVITE'
     ]

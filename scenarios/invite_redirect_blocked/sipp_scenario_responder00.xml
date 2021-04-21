@@ -14,7 +14,7 @@
       [last_To:];tag=[pid]SIPpTag01[call_number]
       [last_Call-ID:]
       [last_CSeq:]
-      Contact: <sip:testuser1004@spce.test;transport=[transport]>
+      Contact: <sip:[field0 file="callee.csv" line=1]@[field3 file="callee.csv" line=0];transport=[transport]>
       Content-Length: 0
 
     ]]>

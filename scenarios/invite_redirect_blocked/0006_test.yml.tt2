@@ -14,8 +14,8 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - 'SIP/2.0 100'
-  - 'From: <sip:4311002@spce.test>;tag=[\w-]+'
-  - 'To: <sip:testuser1003@spce.test>'
+  - 'From: <sip:[% invite_redirect_blocked_scenarios_test.testuser1002.phone_number %]@invite-redirect-blocked.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:[% scenarios.0.responders.0.username %]@invite-redirect-blocked.scenarios.test>'
   - 'CSeq: \d+ INVITE'
   - 'Content-Length: 0'
 sip_out: []

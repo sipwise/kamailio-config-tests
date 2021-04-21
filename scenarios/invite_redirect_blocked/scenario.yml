@@ -1,6 +1,7 @@
+---
 test_uuid: invite_redirect_blocked
 domains:
-  'spce.test':
+  invite-redirect-blocked.scenarios.test:
     reseller_id: 1
 customers:
   'customer.test':
@@ -13,7 +14,13 @@ customers:
       billing_profile_id: 1
       reseller_id: 1
 subscribers:
-  spce.test:
+  invite-redirect-blocked.scenarios.test:
+    testuser1004:
+      customer: 'customer.test'
+      password: testuser
+      cc: 43
+      ac: 1
+      sn: 1004
     testuser1003:
       customer: 'customer.test'
       password: testuser
@@ -29,9 +36,14 @@ subscribers:
 scenarios:
   - ip: 127.126.0.1
     username: testuser1002
-    domain: spce.test
+    domain: invite-redirect-blocked.scenarios.test
     responders:
       - ip: 127.1.0.1
         username: testuser1003
-        domain: spce.test
-        register: yes
+        domain: invite-redirect-blocked.scenarios.test
+        register: 'yes'
+      - ip: 127.1.0.2
+        username: testuser1004
+        domain: invite-redirect-blocked.scenarios.test
+        active: 'no'
+        register: 'no'
