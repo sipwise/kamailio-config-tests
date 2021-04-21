@@ -3,7 +3,7 @@ flow:
   - start|ROUTE_ENTRY:
   - return|ROUTE_ENTRY:
   - start|ROUTE_NET_INFO:
-      $x_hdr(From): sip:testuser1003@
+      $x_hdr(From): sip:[% scenarios.0.username %]@
   - return|ROUTE_NET_INFO:
   - start|ROUTE_CHECK_TEL_URI:
   - return|ROUTE_CHECK_TEL_URI:
@@ -17,7 +17,7 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - '^REGISTER'
-  - 'Contact: sip:testuser1003@'
+  - 'Contact: sip:[% scenarios.0.username %]@'
   - 'Content-Length: 0'
   - 'Expires: 600'
 sip_out:

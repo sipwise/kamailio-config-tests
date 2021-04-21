@@ -3,7 +3,7 @@ flow:
   - start|ROUTE_ENTRY:
   - return|ROUTE_ENTRY:
   - start|ROUTE_NET_INFO:
-      $x_hdr(From): sip:testuser1003@
+      $x_hdr(From): sip:[% scenarios.0.username %]@
   - return|ROUTE_NET_INFO:
   - start|ROUTE_CHECK_TEL_URI:
   - return|ROUTE_CHECK_TEL_URI:
@@ -12,12 +12,12 @@ flow:
   - start|ROUTE_REG_HANDLE:
   - start|ROUTE_AUTH:
   - start|ROUTE_AUTH_HELPER:
-      $x_hdr(From): spce.test
-      $var(realm_user): testuser1003
-      $var(realm_domain): spce.test
+      $x_hdr(From): register-tcp.scenarios.test
+      $var(realm_user): [% scenarios.0.username %]
+      $var(realm_domain): register-tcp.scenarios.test
   - return|ROUTE_AUTH_HELPER:
-      $avp(orig_acc_caller_user): ['testuser1003']
-      $avp(orig_acc_caller_domain): ['spce.test']
+      $avp(orig_acc_caller_user): ['[% scenarios.0.username %]']
+      $avp(orig_acc_caller_domain): ['register-tcp.scenarios.test']
   - start|ROUTE_ADD_CALLINFO_REPLY:
   - return|ROUTE_ADD_CALLINFO_REPLY:
   - return|ROUTE_AUTH:
@@ -30,23 +30,23 @@ flow:
       $xavp(caller_dom_prefs[0]=>cc[*]): None
       $xavp(caller_dom_prefs[0]=>cli[*]): None
       $xavp(caller_real_prefs[0]=>dummy[*]): ['caller']
-      $xavp(caller_real_prefs[0]=>ac[*]): [1]
-      $xavp(caller_real_prefs[0]=>cc[*]): [43]
-      $xavp(caller_real_prefs[0]=>cli[*]): [4311003]
+      $xavp(caller_real_prefs[0]=>ac[*]): [[% register_tcp_scenarios_test.testuser1003.ac %]]
+      $xavp(caller_real_prefs[0]=>cc[*]): [[% register_tcp_scenarios_test.testuser1003.cc %]]
+      $xavp(caller_real_prefs[0]=>cli[*]): [[% register_tcp_scenarios_test.testuser1003.phone_number %]]
       $xavp(caller_usr_prefs[0]=>dummy[*]): ['caller']
-      $xavp(caller_usr_prefs[0]=>ac[*]): [1]
-      $xavp(caller_usr_prefs[0]=>cc[*]): [43]
-      $xavp(caller_usr_prefs[0]=>cli[*]): [4311003]
+      $xavp(caller_usr_prefs[0]=>ac[*]): [[% register_tcp_scenarios_test.testuser1003.ac %]]
+      $xavp(caller_usr_prefs[0]=>cc[*]): [[% register_tcp_scenarios_test.testuser1003.cc %]]
+      $xavp(caller_usr_prefs[0]=>cli[*]): [[% register_tcp_scenarios_test.testuser1003.phone_number %]]
   - start|ROUTE_EXIT:
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
   - '^REGISTER'
-  - 'Contact: sip:testuser1003@'
+  - 'Contact: sip:[% scenarios.0.username %]@'
   - 'Content-Length: 0'
   - 'Expires: 600'
-  - 'Authorization: Digest username="testuser1003"'
+  - 'Authorization: Digest username="[% scenarios.0.username %]"'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
@@ -55,6 +55,6 @@ sip_out:
   - [
       '^SIP/2.0 200 OK',
       'Content-Length: 0',
-      'P-NGCP-Authorization: testuser1003@',
+      'P-NGCP-Authorization: [% scenarios.0.username %]@',
       'P-NGCP-Authorized: 1'
     ]
