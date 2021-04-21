@@ -1,6 +1,7 @@
+---
 test_uuid: timer_session_caller_only_supported
 domains:
-  'spce.test':
+  timer-session-caller-only-supported.scenarios.test:
     reseller_id: 1
 customers:
   'customer.test':
@@ -13,7 +14,7 @@ customers:
       billing_profile_id: 1
       reseller_id: 1
 subscribers:
-  spce.test:
+  timer-session-caller-only-supported.scenarios.test:
     testuser1001:
       customer: 'customer.test'
       password: testuser
@@ -23,9 +24,10 @@ subscribers:
 scenarios:
   - ip: 127.0.2.1
     username: 004321001
-    domain: 127.0.2.1
+    domain: timer-session-caller-only-supported.host0.scenarios.test
+    peer_host: peer_timer_session_caller_only_supported
     responders:
       - ip: 127.1.0.1
         username: testuser1001
-        domain: spce.test
-        register: yes
+        domain: timer-session-caller-only-supported.scenarios.test
+        register: 'yes'
