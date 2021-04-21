@@ -1,0 +1,5 @@
+{
+    "@invite-reinvite-transcoding.scenarios.test": {
+        "transcode_PCMA": true
+    }
+}

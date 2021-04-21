@@ -1,11 +1,12 @@
+---
 test_uuid: invite_reinvite_transcoding
 domains:
-  'spce.test':
+  invite-reinvite-transcoding.scenarios.test:
     reseller_id: 1
 customers:
   'customer.test':
     contacts:
-      - email: "customer.test@spce.test"
+      - email: "customer.test@invite-reinvite-transcoding.scenarios.test"
         reseller_id: 1
     details:
       status: 'active'
@@ -13,7 +14,7 @@ customers:
       billing_profile_id: 1
       reseller_id: 1
 subscribers:
-  spce.test:
+  invite-reinvite-transcoding.scenarios.test:
     testuser1001:
       customer: 'customer.test'
       password: testuser
@@ -23,9 +24,10 @@ subscribers:
 scenarios:
   - ip: 127.0.2.1
     username: 004321001
-    domain: 127.0.2.1
+    domain: invite-reinvite-transcoding.host0.scenarios.test
+    peer_host: peer_invite_reinvite_transcoding_host0
     responders:
       - ip: 127.1.0.1
         username: testuser1001
-        domain: spce.test
-        register: yes
+        domain: invite-reinvite-transcoding.scenarios.test
+        register: 'yes'

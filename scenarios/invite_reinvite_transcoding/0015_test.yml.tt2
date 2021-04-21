@@ -26,9 +26,9 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - 'INVITE sip:004321001@127.0.2.1:\d+;transport=UDP SIP/2.0'
-  - 'From: <sip:testuser1001@spce.test>;tag=[\w-]+'
-  - 'To: <sip:004321001@spce.test>;tag=[\w-]+'
+  - 'INVITE sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %];transport=UDP SIP/2.0'
+  - 'From: <sip:[% scenarios.0.responders.0.username %]@invite-reinvite-transcoding.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:[% scenarios.0.username %]@invite-reinvite-transcoding.scenarios.test>;tag=[\w-]+'
   - 'CSeq: \d+ INVITE'
   - 'Content-Type: application/sdp'
   - 'Contact: <sip:127.0.0.1:508[08];transport=udp>'
@@ -38,16 +38,16 @@ sip_in:
 sip_out:
   - [
       'SIP/2.0 100 Trying',
-      'From: <sip:testuser1001@spce.test>;tag=[\w-]+',
-      'To: <sip:004321001@spce.test>;tag=[\w-]+',
+      'From: <sip:[% scenarios.0.responders.0.username %]@invite-reinvite-transcoding.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.username %]@invite-reinvite-transcoding.scenarios.test>;tag=[\w-]+',
       'CSeq: \d+ INVITE',
       'Server: Sipwise NGCP Proxy',
       'Content-Length: 0',
     ]
   - [
-      'INVITE sip:004321001@127.0.2.1:\d+;transport=UDP SIP/2.0',
-      'From: <sip:testuser1001@spce.test>;tag=[\w-]+',
-      'To: <sip:004321001@127.0.2.1>;tag=[\w-]+',
+      'INVITE sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %];transport=UDP SIP/2.0',
+      'From: <sip:[% scenarios.0.responders.0.username %]@invite-reinvite-transcoding.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.username %]@[% scenarios.0.domain %]>;tag=[\w-]+',
       'CSeq: \d+ INVITE',
       'Content-Type: application/sdp',
       'Contact: <sip:127.0.0.1:508[08];transport=udp>',

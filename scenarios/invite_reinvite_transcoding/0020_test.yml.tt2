@@ -24,17 +24,17 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - 'ACK sip:127.0.2.1:\d+;transport=UDP SIP/2.0'
-  - 'From: <sip:testuser1001@spce.test>;tag=[\w-]+'
-  - 'To: <sip:004321001@spce.test>;tag=[\w-]+'
+  - 'ACK sip:[% scenarios.0.ip %]:[% scenarios.0.port %];transport=UDP SIP/2.0'
+  - 'From: <sip:[% scenarios.0.responders.0.username %]@invite-reinvite-transcoding.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:[% scenarios.0.username %]@invite-reinvite-transcoding.scenarios.test>;tag=[\w-]+'
   - 'CSeq: \d+ ACK'
   - 'Contact: <sip:127.0.0.1:508[08];transport=udp>'
   - 'Content-Length: 0'
 sip_out:
   - [
-      'ACK sip:127.0.2.1:\d+;transport=UDP SIP/2.0',
-      'From: <sip:testuser1001@spce.test>;tag=[\w-]+',
-      'To: <sip:004321001@127.0.2.1>;tag=[\w-]+',
+      'ACK sip:[% scenarios.0.ip %]:[% scenarios.0.port %];transport=UDP SIP/2.0',
+      'From: <sip:[% scenarios.0.responders.0.username %]@invite-reinvite-transcoding.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.username %]@[% scenarios.0.domain %]>;tag=[\w-]+',
       'CSeq: \d+ ACK',
       'Contact: <sip:127.0.0.1:508[08];transport=udp>',
       'Content-Length: 0',
