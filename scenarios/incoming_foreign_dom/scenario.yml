@@ -1,6 +1,7 @@
+---
 test_uuid: incoming_foreign_dom
 domains:
-  'spce.test':
+  incoming-foreign-dom.scenarios.test:
     reseller_id: 1
 customers:
   'customer.test':
@@ -13,7 +14,7 @@ customers:
       billing_profile_id: 1
       reseller_id: 1
 subscribers:
-  spce.test:
+  incoming-foreign-dom.scenarios.test:
     testuser1003:
       customer: 'customer.test'
       password: testuser
@@ -23,9 +24,9 @@ subscribers:
 scenarios:
   - ip: 127.0.2.1
     username: external
-    domain: external.test
+    domain: incoming-foreign-dom.external.test
     responders:
       - ip: 127.1.0.1
         username: testuser1003
-        domain: spce.test
-        register: yes
+        domain: incoming-foreign-dom.scenarios.test
+        register: 'yes'

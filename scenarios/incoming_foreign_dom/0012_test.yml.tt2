@@ -20,17 +20,17 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - 'ACK sip:127.1.0.1:\d+;transport=UDP SIP/2.0'
-  - 'From: <sip:external@external.test>;tag=[\w-]+'
-  - 'To: <sip:testuser1003@spce.test>;tag=[\w-]+'
+  - 'ACK sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];transport=UDP SIP/2.0'
+  - 'From: <sip:external@incoming-foreign-dom.external.test>;tag=[\w-]+'
+  - 'To: <sip:testuser1003@incoming-foreign-dom.scenarios.test>;tag=[\w-]+'
   - 'CSeq: \d+ ACK'
   - 'Contact: <sip:127.0.0.1:508[08];transport=udp>'
   - 'Content-Length: 0'
 sip_out:
   - [
-      'ACK sip:127.1.0.1:\d+;transport=UDP SIP/2.0',
-      'From: <sip:external@external.test>;tag=[\w-]+',
-      'To: <sip:testuser1003@spce.test>;tag=[\w-]+',
+      'ACK sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];transport=UDP SIP/2.0',
+      'From: <sip:external@incoming-foreign-dom.external.test>;tag=[\w-]+',
+      'To: <sip:testuser1003@incoming-foreign-dom.scenarios.test>;tag=[\w-]+',
       'CSeq: \d+ ACK',
       'Contact: <sip:127.0.0.1:508[08];transport=udp>',
       'Content-Length: 0',

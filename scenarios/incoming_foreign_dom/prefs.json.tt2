@@ -1,0 +1,5 @@
+{
+  "@incoming-foreign-dom.scenarios.test": {
+    "unauth_inbound_calls": true
+  }
+}

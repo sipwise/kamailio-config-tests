@@ -17,12 +17,12 @@ sip_in:
   - 'CSeq: 2 BYE'
   - 'Content-Length: 0'
   - 'From: <sip:external@'
-  - 'To: <sip:4311003@'
+  - 'To: <sip:[% incoming_foreign_dom_scenarios_test.testuser1003.phone_number %]@'
 sip_out:
   - [
       '^SIP/2.0 200 OK',
       'CSeq: 2 BYE',
       'Content-Length: 0',
       'From: <sip:external@',
-      'To: <sip:4311003@'
+      'To: <sip:[% incoming_foreign_dom_scenarios_test.testuser1003.phone_number %]@'
     ]
