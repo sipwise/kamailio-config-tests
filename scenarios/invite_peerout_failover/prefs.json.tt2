@@ -1,0 +1,8 @@
+{
+    "peer_00_invite_peerout_failover_host0": {
+        "concurrent_max": 1
+    },
+    "peer_01_invite_peerout_failover_host0": {
+        "concurrent_max_out": -1
+    }
+}

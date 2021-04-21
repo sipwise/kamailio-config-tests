@@ -7,17 +7,17 @@ flow:
   - return|ROUTE_APPLY_HEADER_RULES:
       $avp(lua_dlg_profile): [
         "accountout:[% customer_test.id %]",
-        "userout:[% spce_test.testuser1002.uuid %]",
+        "userout:[% invite_peerout_failover_scenarios_test.testuser1002.uuid %]",
         "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1002.uuid %]",
+        "user:[% invite_peerout_failover_scenarios_test.testuser1002.uuid %]",
         "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% spce_test.testuser1002.uuid %]",
+        "totaluserout:[% invite_peerout_failover_scenarios_test.testuser1002.uuid %]",
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1002.uuid %]",
+        "totaluser:[% invite_peerout_failover_scenarios_test.testuser1002.uuid %]",
         "total",
         "relay",
-        "peerout:[% peer_02_host0.id %]",
-        "peer:[% peer_02_host0.id %]",
+        "peerout:[% peer_02_invite_peerout_failover_host0.id %]",
+        "peer:[% peer_02_invite_peerout_failover_host0.id %]",
         "outgoing"
       ]
   - start|ROUTE_PREPARE_UA:
@@ -42,13 +42,13 @@ flow:
   - return|ROUTE_PSTN_SELECT_PEER_FAILURE:
       $avp(lua_dlg_profile): [
         "accountout:[% customer_test.id %]",
-        "userout:[% spce_test.testuser1002.uuid %]",
+        "userout:[% invite_peerout_failover_scenarios_test.testuser1002.uuid %]",
         "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1002.uuid %]",
+        "user:[% invite_peerout_failover_scenarios_test.testuser1002.uuid %]",
         "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% spce_test.testuser1002.uuid %]",
+        "totaluserout:[% invite_peerout_failover_scenarios_test.testuser1002.uuid %]",
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1002.uuid %]",
+        "totaluser:[% invite_peerout_failover_scenarios_test.testuser1002.uuid %]",
         "total",
         "outgoing"
       ]
@@ -62,29 +62,29 @@ flow:
   - return|ROUTE_PSTN_SELECT_PEER_FAILURE:
       $avp(lua_dlg_profile): [
         "accountout:[% customer_test.id %]",
-        "userout:[% spce_test.testuser1002.uuid %]",
+        "userout:[% invite_peerout_failover_scenarios_test.testuser1002.uuid %]",
         "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1002.uuid %]",
+        "user:[% invite_peerout_failover_scenarios_test.testuser1002.uuid %]",
         "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% spce_test.testuser1002.uuid %]",
+        "totaluserout:[% invite_peerout_failover_scenarios_test.testuser1002.uuid %]",
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1002.uuid %]",
+        "totaluser:[% invite_peerout_failover_scenarios_test.testuser1002.uuid %]",
         "total",
         "outgoing"
       ]
   - start|ROUTE_OUTBOUND:
       $avp(lua_dlg_profile): [
         "relay",
-        "peerout:[% peer_00_host0.id %]",
-        "peer:[% peer_00_host0.id %]",
+        "peerout:[% peer_00_invite_peerout_failover_host0.id %]",
+        "peer:[% peer_00_invite_peerout_failover_host0.id %]",
         "accountout:[% customer_test.id %]",
-        "userout:[% spce_test.testuser1002.uuid %]",
+        "userout:[% invite_peerout_failover_scenarios_test.testuser1002.uuid %]",
         "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1002.uuid %]",
+        "user:[% invite_peerout_failover_scenarios_test.testuser1002.uuid %]",
         "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% spce_test.testuser1002.uuid %]",
+        "totaluserout:[% invite_peerout_failover_scenarios_test.testuser1002.uuid %]",
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1002.uuid %]",
+        "totaluser:[% invite_peerout_failover_scenarios_test.testuser1002.uuid %]",
         "total",
         "outgoing"
       ]
@@ -143,16 +143,16 @@ flow:
   - exit|ROUTE_EXIT:
       $avp(lua_dlg_profile): [
         "relay",
-        "peerout:[% peer_00_host0.id %]",
-        "peer:[% peer_00_host0.id %]",
+        "peerout:[% peer_00_invite_peerout_failover_host0.id %]",
+        "peer:[% peer_00_invite_peerout_failover_host0.id %]",
         "accountout:[% customer_test.id %]",
-        "userout:[% spce_test.testuser1002.uuid %]",
+        "userout:[% invite_peerout_failover_scenarios_test.testuser1002.uuid %]",
         "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1002.uuid %]",
+        "user:[% invite_peerout_failover_scenarios_test.testuser1002.uuid %]",
         "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% spce_test.testuser1002.uuid %]",
+        "totaluserout:[% invite_peerout_failover_scenarios_test.testuser1002.uuid %]",
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1002.uuid %]",
+        "totaluser:[% invite_peerout_failover_scenarios_test.testuser1002.uuid %]",
         "total",
         "outgoing"
       ]
@@ -161,26 +161,26 @@ flow:
   - '^SIP/2.0 408 Timeout'
 "sip_out":
   - [
-      '^ACK sip:004321001@127.0.4.1:\d+;transport=udp SIP/2.0',
-      'From: <sip:4311002@spce.test>;tag=',
-      'To: <sip:004321001@spce.test>;tag=',
+      '^ACK sip:004321001@[% scenarios.0.responders.0.ip %]:\d+;transport=udp SIP/2.0',
+      'From: <sip:[% invite_peerout_failover_scenarios_test.testuser1002.phone_number %]@invite-peerout-failover.scenarios.test>;tag=',
+      'To: <sip:004321001@invite-peerout-failover.scenarios.test>;tag=',
       'CSeq: 2 ACK',
       'Content-Length: 0'
     ]
   - [
-      '^INVITE sip:004321001@127.0.2.1:\d+;transport=udp SIP/2.0',
-      'From: <sip:4311002@spce.test>;tag=',
-      'To: <sip:004321001@spce.test>',
+      '^INVITE sip:004321001@[% scenarios.0.responders.0.ip %]:\d+;transport=udp SIP/2.0',
+      'From: <sip:[% invite_peerout_failover_scenarios_test.testuser1002.phone_number %]@invite-peerout-failover.scenarios.test>;tag=',
+      'To: <sip:004321001@invite-peerout-failover.scenarios.test>',
       'CSeq: 2 INVITE',
-      'Contact: sip:testuser1002@',
+      'Contact: sip:[% scenarios.0.username %]@',
       'Content-Type: application/sdp',
-      'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
-      'P-Callee-UUID: [% spce_test.testuser1001.uuid %]',
-      'P-Asserted-Identity: <sip:4311002@spce.test>',
-      'P-Called-Party-ID: <sip:004321001@127.0.2.1>',
+      'P-Caller-UUID: [% invite_peerout_failover_scenarios_test.testuser1002.uuid %]',
+      'P-Callee-UUID: [% invite_peerout_failover_scenarios_test.testuser1001.uuid %]',
+      'P-Asserted-Identity: <sip:[% invite_peerout_failover_scenarios_test.testuser1002.phone_number %]@invite-peerout-failover.scenarios.test>',
+      'P-Called-Party-ID: <sip:004321001@[% scenarios.0.responders.0.ip %]>',
       'P-App-Param: ;calltimer=21600;aleg_sst_enable=no;sst_enable=no',
       'P-App-Name: sbc',
-      'P-NGCP-Caller-Info: <sip:testuser1002@spce.test>;ip=127.126.0.1;port=\d+;primary=4311002',
-      'P-NGCP-Callee-Info: <sip:004321001@spce.test>;ip=127.0.2.1;port=\d+',
+      'P-NGCP-Caller-Info: <sip:[% scenarios.0.username %]@invite-peerout-failover.scenarios.test>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %];primary=[% invite_peerout_failover_scenarios_test.testuser1002.phone_number %]',
+      'P-NGCP-Callee-Info: <sip:004321001@invite-peerout-failover.scenarios.test>;ip=[% scenarios.0.responders.0.ip %];port=\d+',
       'P-D-Uri: sip:127.0.0.1:5060;received=',
     ]

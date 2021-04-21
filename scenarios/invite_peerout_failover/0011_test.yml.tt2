@@ -13,39 +13,39 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - 'INVITE sip:004321001@127.0.2.1:\d+;transport=udp SIP/2.0'
-  - 'From: <sip:4311002@spce.test>;tag=[\w-]+'
-  - 'To: <sip:004321001@127.0.2.1>'
+  - 'INVITE sip:[% scenarios.0.responders.0.username %]@[% scenarios.0.responders.0.ip %]:\d+;transport=udp SIP/2.0'
+  - 'From: <sip:[% invite_peerout_failover_scenarios_test.testuser1002.phone_number %]@invite-peerout-failover.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:[% scenarios.0.responders.0.username %]@[% scenarios.0.responders.0.ip %]>'
   - 'CSeq: \d+ INVITE'
   - 'P-LB-Uptime: \d+'
-  - 'P-Asserted-Identity: <sip:4311002@spce.test>'
-  - 'P-Caller-UUID: [% spce_test.testuser1002.uuid %]'
-  - 'P-NGCP-Caller-Info: <sip:testuser1002@spce.test>;ip=127.126.0.1;port=\d+;primary=4311002'
-  - 'P-NGCP-Callee-Info: <sip:004321001@spce.test>;ip=127.0.2.1;port=\d+'
-  - 'P-D-Uri: sip:127.0.0.1:5060;received=sip:127.0.2.1:\d+%3blr%3btransport%3dudp'
+  - 'P-Asserted-Identity: <sip:[% invite_peerout_failover_scenarios_test.testuser1002.phone_number %]@invite-peerout-failover.scenarios.test>'
+  - 'P-Caller-UUID: [% invite_peerout_failover_scenarios_test.testuser1002.uuid %]'
+  - 'P-NGCP-Caller-Info: <sip:[% scenarios.0.username %]@invite-peerout-failover.scenarios.test>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %];primary=[% invite_peerout_failover_scenarios_test.testuser1002.phone_number %]'
+  - 'P-NGCP-Callee-Info: <sip:[% scenarios.0.responders.0.username %]@invite-peerout-failover.scenarios.test>;ip=[% scenarios.0.responders.0.ip %];port=\d+'
+  - 'P-D-Uri: sip:127.0.0.1:5060;received=sip:[% scenarios.0.responders.0.ip %]:\d+%3blr%3btransport%3dudp'
   - 'Content-Type: application/sdp'
   - 'Contact: <sip:127.0.0.1:508[08];transport=udp>'
   - 'Content-Length:\s+\d+'
 sip_out:
   - [
       'SIP/2.0 100 Trying',
-      'From: <sip:4311002@spce.test>;tag=[\w-]+',
-      'To: <sip:004321001@127.0.2.1>',
+      'From: <sip:[% invite_peerout_failover_scenarios_test.testuser1002.phone_number %]@invite-peerout-failover.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.0.username %]@[% scenarios.0.responders.0.ip %]>',
       'CSeq: \d+ INVITE',
       'Server: Sipwise NGCP Proxy',
       'Content-Length: 0',
     ]
   - [
-      'INVITE sip:004321001@127.0.2.1:\d+;transport=udp SIP/2.0',
-      'From: <sip:4311002@spce.test>;tag=[\w-]+',
-      'To: <sip:004321001@127.0.2.1>',
+      'INVITE sip:[% scenarios.0.responders.0.username %]@[% scenarios.0.responders.0.ip %]:\d+;transport=udp SIP/2.0',
+      'From: <sip:[% invite_peerout_failover_scenarios_test.testuser1002.phone_number %]@invite-peerout-failover.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.0.username %]@[% scenarios.0.responders.0.ip %]>',
       'CSeq: \d+ INVITE',
       'P-LB-Uptime: \d+',
-      'P-Asserted-Identity: <sip:4311002@spce.test>',
-      'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
-      'P-NGCP-Caller-Info: <sip:testuser1002@spce.test>;ip=127.126.0.1;port=\d+;primary=4311002',
-      'P-NGCP-Callee-Info: <sip:004321001@spce.test>;ip=127.0.2.1;port=\d+',
-      'P-D-Uri: sip:127.0.0.1:5060;received=sip:127.0.2.1:\d+%3blr%3btransport%3dudp',
+      'P-Asserted-Identity: <sip:[% invite_peerout_failover_scenarios_test.testuser1002.phone_number %]@invite-peerout-failover.scenarios.test>',
+      'P-Caller-UUID: [% invite_peerout_failover_scenarios_test.testuser1002.uuid %]',
+      'P-NGCP-Caller-Info: <sip:[% scenarios.0.username %]@invite-peerout-failover.scenarios.test>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %];primary=[% invite_peerout_failover_scenarios_test.testuser1002.phone_number %]',
+      'P-NGCP-Callee-Info: <sip:[% scenarios.0.responders.0.username %]@invite-peerout-failover.scenarios.test>;ip=[% scenarios.0.responders.0.ip %];port=\d+',
+      'P-D-Uri: sip:127.0.0.1:5060;received=sip:[% scenarios.0.responders.0.ip %]:\d+%3blr%3btransport%3dudp',
       'Content-Type: application/sdp',
       'Contact: <sip:127.0.0.1:508[08];transport=udp>',
       'Content-Length:\s+\d+',
