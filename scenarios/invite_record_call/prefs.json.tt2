@@ -1,8 +1,8 @@
 {
-    "@spce.test": {
+    "@invite-record-call.scenarios.test": {
         "sound_set": "default_soundset"
     },
-    "testuser1003@spce.test": {
+    "[% scenarios.0.responders.0.username %]@invite-record-call.scenarios.test": {
         "play_announce_before_recording": true,
         "record_call": true
     }
