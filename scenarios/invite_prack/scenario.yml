@@ -1,6 +1,7 @@
+---
 test_uuid: invite_prack
 domains:
-  'spce.test':
+  invite-prack.scenarios.test:
     reseller_id: 1
 customers:
   'customer.test':
@@ -13,7 +14,7 @@ customers:
       billing_profile_id: 1
       reseller_id: 1
 subscribers:
-  spce.test:
+  invite-prack.scenarios.test:
     testuser1012:
       customer: 'customer.test'
       password: testuser
@@ -23,11 +24,11 @@ subscribers:
 scenarios:
   - ip: 127.126.0.1
     username: testuser1012
-    domain: spce.test
+    domain: invite-prack.scenarios.test
     responders:
       - ip: 127.0.2.1
         number: 004321001
         username: 004321001
-        domain: spce.test
-        peer_host: peer_00_host0
+        domain: invite-prack.scenarios.test
+        peer_host: peer_invite_prack_host0
         register: 'no'

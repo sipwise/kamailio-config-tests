@@ -22,21 +22,21 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - 'INVITE sip:004321001@spce.test SIP/2.0'
-  - 'From: <sip:testuser1012@spce.test>;tag=[\w-]+'
+  - 'INVITE sip:[% scenarios.0.responders.0.username %]@invite-prack.scenarios.test SIP/2.0'
+  - 'From: <sip:[% scenarios.0.username %]@invite-prack.scenarios.test>;tag=[\w-]+'
   - 'Supported: 100rel'
-  - 'To: <sip:004321001@spce.test>'
+  - 'To: <sip:[% scenarios.0.responders.0.username %]@invite-prack.scenarios.test>'
   - 'CSeq: \d+ INVITE'
 sip_out:
   - [
       'SIP/2.0 100 Trying',
-      'From: <sip:testuser1012@spce.test>;tag=[\w-]+',
-      'To: <sip:004321001@spce.test>',
+      'From: <sip:[% scenarios.0.username %]@invite-prack.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.0.username %]@invite-prack.scenarios.test>',
       'CSeq: \d+ INVITE',
     ]
   - [
       'SIP/2.0 407 Proxy Authentication Required',
-      'From: <sip:testuser1012@spce.test>;tag=[\w-]+',
-      'To: <sip:004321001@spce.test>;tag=[\w-]+',
+      'From: <sip:[% scenarios.0.username %]@invite-prack.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.0.username %]@invite-prack.scenarios.test>;tag=[\w-]+',
       'CSeq: \d+ INVITE',
     ]

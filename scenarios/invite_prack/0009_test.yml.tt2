@@ -25,21 +25,21 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - 'PRACK sip:127.0.0.1:508[08];prxroute=1 SIP/2.0'
-  - 'From: <sip:testuser1012@spce.test>;tag=[\w-]+'
-  - 'To: <sip:004321001@spce.test>;tag=[\w-]+'
+  - 'From: <sip:[% scenarios.0.username %]@invite-prack.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:[% scenarios.0.responders.0.username %]@invite-prack.scenarios.test>;tag=[\w-]+'
   - 'CSeq: \d+ PRACK'
   - 'RAck:\s+\d+ 2 INVITE'
 sip_out:
   - [
       'SIP/2.0 100 Trying',
-      'From: <sip:testuser1012@spce.test>;tag=[\w-]+',
-      'To: <sip:004321001@spce.test>;tag=[\w-]+',
+      'From: <sip:[% scenarios.0.username %]@invite-prack.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.0.username %]@invite-prack.scenarios.test>;tag=[\w-]+',
       'CSeq: \d+ PRACK',
     ]
   - [
       'PRACK sip:127.0.0.1:508[08];prxroute=1 SIP/2.0',
-      'From: <sip:4311012@spce.test>;tag=[\w-]+',
-      'To: <sip:004321001@spce.test>;tag=[\w-]+',
+      'From: <sip:[% invite_prack_scenarios_test.testuser1012.phone_number %]@invite-prack.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.0.username %]@invite-prack.scenarios.test>;tag=[\w-]+',
       'CSeq: \d+ PRACK',
       'RAck:\s+\d+ 2 INVITE',
     ]

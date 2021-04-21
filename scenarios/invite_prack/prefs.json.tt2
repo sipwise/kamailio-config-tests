@@ -1,0 +1,8 @@
+{
+	"@invite-prack.scenarios.test": {
+		"disable_prack_method": false
+	},
+	"peer_invite_prack_host0": {
+		"concurrent_max": 1
+	}
+}

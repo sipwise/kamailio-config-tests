@@ -143,28 +143,28 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - 'INVITE sip:004321001@spce.test:5060 SIP/2.0'
-  - 'From: <sip:testuser1012@spce.test>;tag=[\w-]+'
-  - 'To: <sip:004321001@spce.test>'
+  - 'INVITE sip:[% scenarios.0.responders.0.username %]@invite-prack.scenarios.test:5060 SIP/2.0'
+  - 'From: <sip:[% scenarios.0.username %]@invite-prack.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:[% scenarios.0.responders.0.username %]@invite-prack.scenarios.test>'
   - 'Supported: 100rel'
   - 'CSeq: \d+ INVITE'
 sip_out:
   - [
       'SIP/2.0 100 Trying',
-      'From: <sip:testuser1012@spce.test>;tag=[\w-]+',
-      'To: <sip:004321001@spce.test>',
+      'From: <sip:[% scenarios.0.username %]@invite-prack.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.0.username %]@invite-prack.scenarios.test>',
       'CSeq: \d+ INVITE',
     ]
   - [
       'SIP/2.0 101 Connecting',
-      'From: <sip:testuser1012@spce.test>;tag=[\w-]+',
-      'To: <sip:004321001@spce.test>',
+      'From: <sip:[% scenarios.0.username %]@invite-prack.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.0.username %]@invite-prack.scenarios.test>',
       'CSeq: \d+ INVITE',
     ]
   - [
-      'INVITE sip:004321001@127.0.2.1:\d+;transport=udp SIP/2.0',
-      'From: <sip:4311012@spce.test>;tag=[\w-]+',
-      'To: <sip:004321001@spce.test>',
+      'INVITE sip:[% scenarios.0.responders.0.username %]@127.0.2.1:\d+;transport=udp SIP/2.0',
+      'From: <sip:[% invite_prack_scenarios_test.testuser1012.phone_number %]@invite-prack.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.0.username %]@invite-prack.scenarios.test>',
       'Supported: 100rel',
       'CSeq: \d+ INVITE',
     ]

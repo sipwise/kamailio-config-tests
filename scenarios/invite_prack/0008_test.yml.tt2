@@ -14,16 +14,16 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - 'SIP/2.0 180 Ringing'
-  - 'From: <sip:4311012@spce.test>;tag=[\w-]+'
-  - 'To: <sip:004321001@spce.test>;tag=[\w-]+'
+  - 'From: <sip:[% invite_prack_scenarios_test.testuser1012.phone_number %]@invite-prack.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:[% scenarios.0.responders.0.username %]@invite-prack.scenarios.test>;tag=[\w-]+'
   - 'CSeq: \d+ INVITE'
   - 'Require: 100rel'
   - 'RSeq: \d+'
 sip_out:
   - [
       'SIP/2.0 180 Ringing',
-      'From: <sip:testuser1012@spce.test>;tag=[\w-]+',
-      'To: <sip:004321001@spce.test>;tag=[\w-]+',
+      'From: <sip:testuser1012@invite-prack.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.0.username %]@invite-prack.scenarios.test>;tag=[\w-]+',
       'CSeq: \d+ INVITE',
       'Require: 100rel',
       'RSeq: \d+',

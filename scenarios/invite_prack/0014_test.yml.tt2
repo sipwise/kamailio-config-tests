@@ -16,15 +16,15 @@ flow:
   - return|dialog:start:
 sip_in:
   - 'SIP/2.0 200 OK'
-  - 'From: <sip:4311012@spce.test>;tag=[\w-]+'
-  - 'To: <sip:004321001@spce.test>;tag=[\w-]+'
+  - 'From: <sip:[% invite_prack_scenarios_test.testuser1012.phone_number %]@invite-prack.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:[% scenarios.0.responders.0.username %]@invite-prack.scenarios.test>;tag=[\w-]+'
   - 'CSeq: \d+ INVITE'
   - 'Contact: <sip:127.0.0.1:508[08];transport=udp>'
 sip_out:
   - [
       'SIP/2.0 200 OK',
-      'From: <sip:testuser1012@spce.test>;tag=[\w-]+',
-      'To: <sip:004321001@spce.test>;tag=[\w-]+',
+      'From: <sip:[% scenarios.0.username %]@invite-prack.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.0.username %]@invite-prack.scenarios.test>;tag=[\w-]+',
       'CSeq: \d+ INVITE',
       'Contact: <sip:127.0.0.1:508[08];transport=udp>',
     ]
