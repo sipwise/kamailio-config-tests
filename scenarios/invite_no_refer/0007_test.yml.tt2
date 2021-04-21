@@ -13,16 +13,16 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - 'INVITE sip:testuser1003@127.1.0.1:\d+ SIP/2.0'
-  - 'From: <sip:4311002@spce.test>;tag=[\w-]+'
-  - 'To: <sip:testuser1003@spce.test>'
+  - 'INVITE sip:[% scenarios.0.responders.0.username %]@[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %] SIP/2.0'
+  - 'From: <sip:[% invite_no_refer_scenarios_test.testuser1002.phone_number %]@invite-no-refer.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:[% scenarios.0.responders.0.username %]@invite-no-refer.scenarios.test>'
   - 'CSeq: \d+ INVITE'
   - 'Allow: INVITE, OPTIONS, BYE, CANCEL, ACK, PRACK, COMET, SUBSCRIBE, NOTIFY, UPDATE, REGISTER'
   - 'P-LB-Uptime: \d+'
-  - 'P-Asserted-Identity: <sip:4311002@spce.test>'
-  - 'P-Caller-UUID: [% spce_test.testuser1002.uuid %]'
-  - 'P-NGCP-Caller-Info: <sip:testuser1002@spce.test>;ip=127.126.0.1;port=\d+;primary=4311002'
-  - 'P-NGCP-Callee-Info: <sip:testuser1003@spce.test>;ip=127.0.0.1;port=5060;primary=4311003'
+  - 'P-Asserted-Identity: <sip:[% invite_no_refer_scenarios_test.testuser1002.phone_number %]@invite-no-refer.scenarios.test>'
+  - 'P-Caller-UUID: [% invite_no_refer_scenarios_test.testuser1002.uuid %]'
+  - 'P-NGCP-Caller-Info: <sip:[% scenarios.0.username %]@invite-no-refer.scenarios.test>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %];primary=[% invite_no_refer_scenarios_test.testuser1002.phone_number %]'
+  - 'P-NGCP-Callee-Info: <sip:[% scenarios.0.responders.0.username %]@invite-no-refer.scenarios.test>;ip=127.0.0.1;port=5060;primary=[% invite_no_refer_scenarios_test.testuser1003.phone_number %]'
   - 'P-D-Uri: sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060'
   - 'Content-Type: application/sdp'
   - 'Contact: <sip:127.0.0.1:508[08];transport=udp>'
@@ -30,23 +30,23 @@ sip_in:
 sip_out:
   - [
       'SIP/2.0 100 Trying',
-      'From: <sip:4311002@spce.test>;tag=[\w-]+',
-      'To: <sip:testuser1003@spce.test>',
+      'From: <sip:[% invite_no_refer_scenarios_test.testuser1002.phone_number %]@invite-no-refer.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.0.username %]@invite-no-refer.scenarios.test>',
       'CSeq: \d+ INVITE',
       'Server: Sipwise NGCP Proxy',
       'Content-Length: 0',
     ]
   - [
-      'INVITE sip:testuser1003@127.1.0.1:\d+ SIP/2.0',
-      'From: <sip:4311002@spce.test>;tag=[\w-]+',
-      'To: <sip:testuser1003@spce.test>',
+      'INVITE sip:[% scenarios.0.responders.0.username %]@[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %] SIP/2.0',
+      'From: <sip:[% invite_no_refer_scenarios_test.testuser1002.phone_number %]@invite-no-refer.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.0.username %]@invite-no-refer.scenarios.test>',
       'CSeq: \d+ INVITE',
       'Allow: INVITE, OPTIONS, BYE, CANCEL, ACK, PRACK, COMET, SUBSCRIBE, NOTIFY, UPDATE, REGISTER',
       'P-LB-Uptime: \d+',
-      'P-Asserted-Identity: <sip:4311002@spce.test>',
-      'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
-      'P-NGCP-Caller-Info: <sip:testuser1002@spce.test>;ip=127.126.0.1;port=\d+;primary=4311002',
-      'P-NGCP-Callee-Info: <sip:testuser1003@spce.test>;ip=127.0.0.1;port=5060;primary=4311003',
+      'P-Asserted-Identity: <sip:[% invite_no_refer_scenarios_test.testuser1002.phone_number %]@invite-no-refer.scenarios.test>',
+      'P-Caller-UUID: [% invite_no_refer_scenarios_test.testuser1002.uuid %]',
+      'P-NGCP-Caller-Info: <sip:[% scenarios.0.username %]@invite-no-refer.scenarios.test>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %];primary=[% invite_no_refer_scenarios_test.testuser1002.phone_number %]',
+      'P-NGCP-Callee-Info: <sip:[% scenarios.0.responders.0.username %]@invite-no-refer.scenarios.test>;ip=127.0.0.1;port=5060;primary=[% invite_no_refer_scenarios_test.testuser1003.phone_number %]',
       'P-D-Uri: sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060',
       'Content-Type: application/sdp',
       'Contact: <sip:127.0.0.1:508[08];transport=udp>',

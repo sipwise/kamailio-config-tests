@@ -17,12 +17,12 @@ flow:
   - start|ROUTE_FIND_CALLER:
   - start|ROUTE_AUTH:
   - start|ROUTE_AUTH_HELPER:
-      $x_hdr(From): spce.test
+      $x_hdr(From): invite-no-refer.scenarios.test
       $var(realm_user): [% scenarios.0.username %]
-      $var(realm_domain): spce.test
+      $var(realm_domain): invite-no-refer.scenarios.test
   - return|ROUTE_AUTH_HELPER:
       $avp(orig_acc_caller_user): ['[% scenarios.0.username %]']
-      $avp(orig_acc_caller_domain): ['spce.test']
+      $avp(orig_acc_caller_domain): ['invite-no-refer.scenarios.test']
   - start|ROUTE_ADD_CALLINFO_REPLY:
   - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
   - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
@@ -65,10 +65,10 @@ flow:
   - return|ROUTE_SET_CALLEE_DIALOG:
       $avp(lua_dlg_profile): [
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "totaluser:[% invite_no_refer_scenarios_test.testuser1003.uuid %]",
         "total",
         "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1003.uuid %]"
+        "user:[% invite_no_refer_scenarios_test.testuser1003.uuid %]"
       ]
   - start|ROUTE_BLOCK_IN:
   - return|ROUTE_BLOCK_IN:
@@ -101,10 +101,10 @@ flow:
       $avp(lua_dlg_profile): [
         "local",
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "totaluser:[% invite_no_refer_scenarios_test.testuser1003.uuid %]",
         "total",
         "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1003.uuid %]"
+        "user:[% invite_no_refer_scenarios_test.testuser1003.uuid %]"
       ]
   - start|ROUTE_SET_CALLER_DIALOG:
   - start|ROUTE_CNT_DLG_CHECK:
@@ -112,19 +112,19 @@ flow:
   - return|ROUTE_SET_CALLER_DIALOG:
       $avp(lua_dlg_profile): [
         "accountout:[% customer_test.id %]",
-        "userout:[% spce_test.testuser1002.uuid %]",
+        "userout:[% invite_no_refer_scenarios_test.testuser1002.uuid %]",
         "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1002.uuid %]",
+        "user:[% invite_no_refer_scenarios_test.testuser1002.uuid %]",
         "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% spce_test.testuser1002.uuid %]",
+        "totaluserout:[% invite_no_refer_scenarios_test.testuser1002.uuid %]",
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1002.uuid %]",
+        "totaluser:[% invite_no_refer_scenarios_test.testuser1002.uuid %]",
         "local",
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "totaluser:[% invite_no_refer_scenarios_test.testuser1003.uuid %]",
         "total",
         "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1003.uuid %]"
+        "user:[% invite_no_refer_scenarios_test.testuser1003.uuid %]"
       ]
   - start|ROUTE_ACC_CALLER:
   - start|ROUTE_SET_ACC_CALLER_CALL_COUNTERS:
@@ -192,19 +192,19 @@ flow:
   - exit|ROUTE_EXIT:
       $avp(lua_dlg_profile): [
         "accountout:[% customer_test.id %]",
-        "userout:[% spce_test.testuser1002.uuid %]",
+        "userout:[% invite_no_refer_scenarios_test.testuser1002.uuid %]",
         "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1002.uuid %]",
+        "user:[% invite_no_refer_scenarios_test.testuser1002.uuid %]",
         "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% spce_test.testuser1002.uuid %]",
+        "totaluserout:[% invite_no_refer_scenarios_test.testuser1002.uuid %]",
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1002.uuid %]",
+        "totaluser:[% invite_no_refer_scenarios_test.testuser1002.uuid %]",
         "local",
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "totaluser:[% invite_no_refer_scenarios_test.testuser1003.uuid %]",
         "total",
         "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1003.uuid %]"
+        "user:[% invite_no_refer_scenarios_test.testuser1003.uuid %]"
       ]
 sip_in:
   - '^INVITE'
@@ -230,12 +230,12 @@ sip_out:
   - [
       '^INVITE sip:[% scenarios.0.responders.0.username %]@',
       'CSeq: 2 INVITE',
-      'From: <sip:4311002@',
+      'From: <sip:[% invite_no_refer_scenarios_test.testuser1002.phone_number %]@',
       'To: <sip:[% scenarios.0.responders.0.username %]@',
       'Content-Type: application/sdp',
       'P-Caller-UUID: \w+',
       'P-Callee-UUID: \w+',
-      'P-Asserted-Identity: <sip:4311002@',
+      'P-Asserted-Identity: <sip:[% invite_no_refer_scenarios_test.testuser1002.phone_number %]@',
       'P-Called-Party-ID: <sip:[% scenarios.0.responders.0.username %]@',
       'P-App-Param: ;calltimer=21600;aleg_sst_enable=no;sst_enable=no',
       'P-App-Name: sbc',
