@@ -1,0 +1,8 @@
+{
+    "testuser1002@invite-hm.scenarios.test": {
+        "header_rule_set": "hm_invite_hm_00"
+    },
+    "testuser1003@invite-hm.scenarios.test": {
+        "header_rule_set": "hm_invite_hm_01"
+    }
+}
