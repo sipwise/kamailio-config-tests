@@ -17,12 +17,12 @@ flow:
   - start|ROUTE_FIND_CALLER:
   - start|ROUTE_AUTH:
   - start|ROUTE_AUTH_HELPER:
-      $x_hdr(From): spce.test
-      $var(realm_user): testuser1002
-      $var(realm_domain): spce.test
+      $x_hdr(From): invite-offline.scenarios.test
+      $var(realm_user): [% scenarios.0.username %]
+      $var(realm_domain): invite-offline.scenarios.test
   - return|ROUTE_AUTH_HELPER:
-      $avp(orig_acc_caller_user): ['testuser1002']
-      $avp(orig_acc_caller_domain): ['spce.test']
+      $avp(orig_acc_caller_user): ['[% scenarios.0.username %]']
+      $avp(orig_acc_caller_domain): ['invite-offline.scenarios.test']
   - start|ROUTE_ADD_CALLINFO_REPLY:
   - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
   - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
@@ -65,10 +65,10 @@ flow:
   - return|ROUTE_SET_CALLEE_DIALOG:
       $avp(lua_dlg_profile): [
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "totaluser:[% invite_offline_scenarios_test.testuser1003.uuid %]",
         "total",
         "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1003.uuid %]"
+        "user:[% invite_offline_scenarios_test.testuser1003.uuid %]"
       ]
   - start|ROUTE_BLOCK_IN:
   - return|ROUTE_BLOCK_IN:
@@ -128,25 +128,25 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^INVITE sip:4311003@'
-  - 'Contact: sip:testuser1002@'
+  - '^INVITE sip:[% invite_offline_scenarios_test.testuser1003.phone_number %]@'
+  - 'Contact: sip:[% scenarios.0.username %]@'
   - 'CSeq: 3 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
-  - 'Proxy-Authorization: Digest username="testuser1002"'
+  - 'Proxy-Authorization: Digest username="[% scenarios.0.username %]"'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: 3 INVITE',
-      'From: <sip:testuser1002@'
+      'From: <sip:[% scenarios.0.username %]@'
     ]
   - [
       '^SIP/2.0 101 Connecting',
       'CSeq: 3 INVITE',
-      'From: <sip:testuser1002@'
+      'From: <sip:[% scenarios.0.username %]@'
     ]
   - [
       '^SIP/2.0 480 Offline',
       'CSeq: 3 INVITE',
-      'From: <sip:testuser1002@'
+      'From: <sip:[% scenarios.0.username %]@'
     ]
