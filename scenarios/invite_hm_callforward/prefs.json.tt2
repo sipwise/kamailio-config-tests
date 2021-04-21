@@ -1,0 +1,11 @@
+{
+    "testuser1002@invite-hm-callforward.scenarios.test": {
+        "header_rule_set": "hm_invite_hm_cf_00"
+    },
+    "testuser1003@invite-hm-callforward.scenarios.test": {
+        "header_rule_set": "hm_invite_hm_cf_01"
+    },
+    "testuser1001@invite-hm-callforward.scenarios.test": {
+        "header_rule_set": "hm_invite_hm_cf_02"
+    }
+}

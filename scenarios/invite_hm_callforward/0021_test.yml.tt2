@@ -46,6 +46,6 @@ sip_out:
       'CSeq: \d+ BYE',
       'Max-Forwards: 69',
       'Content-Length: 0',
-      'From: <sip:4311002@',
+      'From: <sip:[% invite_hm_callforward_scenarios_test.testuser1002.phone_number %]@',
       'To: <sip:testuser1001@'
     ]

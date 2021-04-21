@@ -1,8 +1,8 @@
 ---
-testuser1001@spce.test:
+testuser1001@invite-hm-callforward.scenarios.test:
   destinations:
     destinations:
-      - destination: sip:4311003@spce.test
+      - destination: sip:[% invite_hm_callforward_scenarios_test.testuser1003.phone_number %]@invite-hm-callforward.scenarios.test
         priority: 0
         timeout: 10
     name: dest1001
