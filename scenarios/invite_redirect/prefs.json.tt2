@@ -1,9 +1,9 @@
 {
-    "testuser1003@spce.test": {
+    "[% scenarios.0.responders.0.username %]@invite-redirect.scenarios.test": {
         "outbound_diversion": "uprn",
         "outbound_history_info": "uprn"
     },
-    "testuser1004@spce.test": {
+    "[% scenarios.0.responders.1.username %]@invite-redirect.scenarios.test": {
         "outbound_diversion": "uprn",
         "outbound_history_info": "uprn"
     }
