@@ -1,6 +1,7 @@
+---
 test_uuid: reminder
 domains:
-  'spce.test':
+  reminder.scenarios.test:
     reseller_id: 1
 customers:
   'customer.test':
@@ -13,7 +14,7 @@ customers:
       billing_profile_id: 1
       reseller_id: 1
 subscribers:
-  spce.test:
+  reminder.scenarios.test:
     testuser1003:
       customer: 'customer.test'
       password: testuser
@@ -28,11 +29,11 @@ subscribers:
       sn: 1001
 scenarios:
   - ip: 127.126.0.1
-    domain: spce.test
+    domain: reminder.scenarios.test
     username: testuser1001
     responders:
       - ip: 127.1.0.1
-        domain: spce.test
-        register: no
+        domain: reminder.scenarios.test
+        register: 'no'
         username: testuser1003
-        active: no
+        active: 'no'

@@ -17,12 +17,12 @@ flow:
   - start|ROUTE_FIND_CALLER:
   - start|ROUTE_AUTH:
   - start|ROUTE_AUTH_HELPER:
-      $x_hdr(From): spce.test
-      $var(realm_user): testuser1001
-      $var(realm_domain): spce.test
+      $x_hdr(From): reminder.scenarios.test
+      $var(realm_user): [% scenarios.0.username %]
+      $var(realm_domain): reminder.scenarios.test
   - return|ROUTE_AUTH_HELPER:
-      $avp(orig_acc_caller_user): ['testuser1001']
-      $avp(orig_acc_caller_domain): ['spce.test']
+      $avp(orig_acc_caller_user): ['[% scenarios.0.username %]']
+      $avp(orig_acc_caller_domain): ['reminder.scenarios.test']
   - start|ROUTE_ADD_CALLINFO_REPLY:
   - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
   - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
@@ -67,9 +67,9 @@ flow:
   - return|ROUTE_SET_CALLER_DIALOG:
       $avp(lua_dlg_profile): [
         "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% spce_test.testuser1001.uuid %]",
+        "totaluserout:[% reminder_scenarios_test.testuser1001.uuid %]",
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1001.uuid %]",
+        "totaluser:[% reminder_scenarios_test.testuser1001.uuid %]",
         "total",
         "peer:appsrv",
         "local"
@@ -126,25 +126,25 @@ flow:
   - exit|ROUTE_EXIT:
       $avp(lua_dlg_profile): [
         "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% spce_test.testuser1001.uuid %]",
+        "totaluserout:[% reminder_scenarios_test.testuser1001.uuid %]",
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1001.uuid %]",
+        "totaluser:[% reminder_scenarios_test.testuser1001.uuid %]",
         "total",
         "peer:appsrv",
         "local"
       ]
 sip_in:
   - '^INVITE'
-  - 'Contact: sip:testuser1001@'
+  - 'Contact: sip:[% scenarios.0.username %]@'
   - 'CSeq: 2 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
-  - 'Proxy-Authorization: Digest username="testuser1001"'
+  - 'Proxy-Authorization: Digest username="[% scenarios.0.username %]"'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: 2 INVITE',
-      'From: <sip:testuser1001@',
+      'From: <sip:[% scenarios.0.username %]@',
       'To: <sip:\*55\*\d{4}@'
     ]
   - [
@@ -156,10 +156,10 @@ sip_out:
   - [
       '^INVITE sip:\*55\*\d{4}@',
       'CSeq: 2 INVITE',
-      'From: <sip:4311001@',
+      'From: <sip:[% reminder_scenarios_test.testuser1001.phone_number %]@',
       'To: <sip:\*55\*\d{4}@',
       'Content-Type: application/sdp',
-      'P-Caller-UUID: [% spce_test.testuser1001.uuid %]',
-      'P-Callee-UUID: [% spce_test.testuser1001.uuid %]',
+      'P-Caller-UUID: [% reminder_scenarios_test.testuser1001.uuid %]',
+      'P-Callee-UUID: [% reminder_scenarios_test.testuser1001.uuid %]',
       'P-App-Name: sw_vsc'
     ]

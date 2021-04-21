@@ -26,12 +26,12 @@ flow:
 sip_in:
   - '^ACK sip:127.0.0.1:5080;prxroute=1 SIP/2.0'
   - 'CSeq: 2 ACK'
-  - 'From: <sip:testuser1001@'
+  - 'From: <sip:[% scenarios.0.username %]@'
   - 'To: <sip:\*55\*\d{4}@'
 sip_out:
   - [
       '^ACK sip:127.0.0.1:5080;prxroute=1 SIP/2.0',
       'CSeq: 2 ACK',
-      'From: <sip:4311001@',
+      'From: <sip:[% reminder_scenarios_test.testuser1001.phone_number %]@',
       'To: <sip:\*55\*\d{4}@'
     ]

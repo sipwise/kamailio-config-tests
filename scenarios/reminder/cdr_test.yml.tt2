@@ -1,7 +1,7 @@
 cdr:
-  - source_user: 'testuser1001'
-    source_domain: 'spce.test'
-    source_cli: '4311001'
+  - source_user: '[% scenarios.0.username %]'
+    source_domain: 'reminder.scenarios.test'
+    source_cli: '[% reminder_scenarios_test.testuser1001.phone_number %]'
     destination_user: '\*55\*1420'
     destination_domain: 'vsc.local'
     destination_user_dialed: '\*55\*1420'

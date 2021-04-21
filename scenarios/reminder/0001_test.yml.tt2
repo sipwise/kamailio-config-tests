@@ -22,7 +22,7 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - '^INVITE'
-  - 'Contact: sip:testuser1001@'
+  - 'Contact: sip:[% scenarios.0.username %]@'
   - 'To: <sip:\*55\*\d{4}@'
   - 'CSeq: 1 INVITE'
   - 'Max-Forwards: 69'
@@ -31,12 +31,12 @@ sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: 1 INVITE',
-      'From: <sip:testuser1001@',
+      'From: <sip:[% scenarios.0.username %]@',
       'To: <sip:\*55\*\d{4}@'
     ]
   - [
       '^SIP/2.0 407 Proxy Authentication Required',
       'CSeq: 1 INVITE',
-      'From: <sip:testuser1001@',
+      'From: <sip:[% scenarios.0.username %]@',
       'To: <sip:\*55\*\d{4}@'
     ]
