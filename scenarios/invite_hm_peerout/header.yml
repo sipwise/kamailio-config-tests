@@ -1,9 +1,10 @@
-hm_00:
+---
+hm_invite_hm_peerout_00:
   header_rules:
   - data:
       direction: inbound
       description: Empty Manipulation
-      name: hm_00_00
+      name: hm_invite_hm_peerout_00_00
       stopper: 0
       enabled: 0
       priority: 48
@@ -12,7 +13,7 @@ hm_00:
   - data:
       direction: inbound
       description: Add TestTest Header
-      name: hm_00_01
+      name: hm_invite_hm_peerout_00_01
       stopper: 0
       enabled: 1
       priority: 50
@@ -26,7 +27,7 @@ hm_00:
       value_type: input
       values:
       - value: testuser1002
-      rwr_set_id: 
+      rwr_set_id:
     actions:
     - enabled: 1
       action_type: add
@@ -34,11 +35,11 @@ hm_00:
       header_part: full
       value: new_internal_header
       value_part: full
-      rwr_set_id: 
+      rwr_set_id:
   - data:
       direction: local
       description: Edit TestTest Local Header
-      name: hm_00_02
+      name: hm_invite_hm_peerout_00_02
       stopper: 0
       enabled: 1
       priority: 51
@@ -52,7 +53,7 @@ hm_00:
       value_type: input
       values:
       - value: new_internal_header
-      rwr_set_id: 
+      rwr_set_id:
     actions:
     - enabled: 1
       action_type: set
@@ -60,11 +61,11 @@ hm_00:
       header_part: full
       value: updated_local_header
       value_part: full
-      rwr_set_id: 
+      rwr_set_id:
   - data:
       direction: peer
       description: Edit TestTest Peer Header
-      name: hm_00_03
+      name: hm_invite_hm_peerout_00_03
       stopper: 0
       enabled: 1
       priority: 52
@@ -78,21 +79,21 @@ hm_00:
       value_type: input
       values:
       - value: '^new[\w]+$'
-      rwr_set_id: 
+      rwr_set_id:
     actions:
     - enabled: 1
       action_type: remove
       header: TestTest
       header_part: full
-      value: 
+      value:
       value_part: full
-      rwr_set_id: 
-hm_01:
+      rwr_set_id:
+hm_invite_hm_peerout_01:
   header_rules:
   - data:
       direction: outbound
       description: Add OutboundHeader as AVP
-      name: hm_01_00
+      name: hm_invite_hm_peerout_01_00
       stopper: 1
       enabled: 1
       priority: 60
@@ -105,8 +106,8 @@ hm_01:
       expression_negation: 0
       value_type: input
       values:
-      - value: '<sip:004321001@spce.test>'
-      rwr_set_id: 
+      - value: '<sip:004321001@invite-hm-peerout.scenarios.test>'
+      rwr_set_id:
     actions:
     - enabled: 1
       action_type: add
@@ -114,11 +115,11 @@ hm_01:
       header_part: full
       value: '$avp(s:caller_cli_userprov)'
       value_part: full
-      rwr_set_id: 
+      rwr_set_id:
   - data:
       direction: outbound
       description: Should not be executed
-      name: hm_01_01
+      name: hm_invite_hm_peerout_01_01
       stopper: 0
       enabled: 1
       priority: 61
@@ -132,19 +133,19 @@ hm_01:
       value_type: input
       values:
       - value: '.*'
-      rwr_set_id: 
+      rwr_set_id:
     actions:
     - enabled: 1
       action_type: remove
       header: From
       header_part: full
-      value: 
+      value:
       value_part: full
-      rwr_set_id: 
+      rwr_set_id:
     - enabled: 1
       action_type: remove
       header: To
       header_part: full
-      value: 
+      value:
       value_part: full
-      rwr_set_id: 
+      rwr_set_id:

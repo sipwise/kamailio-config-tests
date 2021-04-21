@@ -1,0 +1,9 @@
+{
+    "[% scenarios.0.username %]@invite-hm-peerout.scenarios.test": {
+        "header_rule_set": "hm_invite_hm_peerout_00"
+    },
+    "peer_invite_hm_peerout_host0": {
+        "concurrent_max": 1,
+        "header_rule_set": "hm_invite_hm_peerout_01"
+    }
+}

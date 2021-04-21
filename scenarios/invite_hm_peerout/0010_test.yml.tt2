@@ -17,29 +17,29 @@ flow:
   - return|dialog:start:
       $avp(lua_dlg_profile): [
         "accountout:[% customer_test.id %]",
-        "userout:[% spce_test.testuser1002.uuid %]",
+        "userout:[% invite_hm_peerout_scenarios_test.testuser1002.uuid %]",
         "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1002.uuid %]",
+        "user:[% invite_hm_peerout_scenarios_test.testuser1002.uuid %]",
         "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% spce_test.testuser1002.uuid %]",
+        "totaluserout:[% invite_hm_peerout_scenarios_test.testuser1002.uuid %]",
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1002.uuid %]",
+        "totaluser:[% invite_hm_peerout_scenarios_test.testuser1002.uuid %]",
         "total",
         "relay",
-        "peerout:[% peer_00_host0.id %]",
-        "peer:[% peer_00_host0.id %]",
+        "peerout:[% peer_invite_hm_peerout_host0.id %]",
+        "peer:[% peer_invite_hm_peerout_host0.id %]",
         "outgoing"
       ]
   - return|dialog:start:
 sip_in:
   - '^SIP/2.0 200 OK'
   - 'CSeq: 2 INVITE'
-  - 'From: <sip:4311002@'
-  - 'To: <sip:004321001@'
+  - 'From: <sip:[% invite_hm_peerout_scenarios_test.testuser1002.phone_number %]@'
+  - 'To: <sip:[% scenarios.0.responders.0.username %]@'
 sip_out:
   - [
       '^SIP/2.0 200 OK',
       'CSeq: 2 INVITE',
-      'From: <sip:testuser1002@',
-      'To: <sip:004321001@',
+      'From: <sip:[% scenarios.0.username %]@',
+      'To: <sip:[% scenarios.0.responders.0.username %]@',
     ]
