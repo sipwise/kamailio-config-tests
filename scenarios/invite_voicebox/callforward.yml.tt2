@@ -1,5 +1,5 @@
 ---
-testuser1001@spce.test:
+[% scenarios.0.responders.0.username %]@invite-voicebox.scenarios.test:
   destinations:
     destinations:
       - destination: voicebox
@@ -21,6 +21,6 @@ testuser1001@spce.test:
     cfo: []
   voicebox:
     pin: 0000
-    email: root@spce.test
+    email: root@invite-voicebox.scenarios.test
     attach: 1
     delete: 1

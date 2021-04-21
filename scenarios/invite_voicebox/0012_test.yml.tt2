@@ -28,24 +28,24 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^BYE sip:vmu4311001@127.0.0.1:5070 SIP/2.0'
+  - '^BYE sip:vmu[% invite_voicebox_scenarios_test.testuser1001.phone_number %]@127.0.0.1:5070 SIP/2.0'
   - 'CSeq: \d+ BYE'
   - 'Content-Length: 0'
-  - 'From: <sip:testuser1002@'
-  - 'To: <sip:testuser1001@'
+  - 'From: <sip:[% scenarios.0.username %]@'
+  - 'To: <sip:[% scenarios.0.responders.0.username %]@'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: \d+ BYE',
       'Content-Length: 0',
-      'From: <sip:testuser1002@',
-      'To: <sip:testuser1001@'
+      'From: <sip:[% scenarios.0.username %]@',
+      'To: <sip:[% scenarios.0.responders.0.username %]@'
     ]
   - [
-      '^BYE sip:vmu4311001@127.0.0.1:5070 SIP/2.0',
+      '^BYE sip:vmu[% invite_voicebox_scenarios_test.testuser1001.phone_number %]@127.0.0.1:5070 SIP/2.0',
       'CSeq: \d+ BYE',
       'Max-Forwards: 69',
       'Content-Length: 0',
-      'From: <sip:4311002@',
-      'To: <sip:testuser1001@'
+      'From: <sip:[% invite_voicebox_scenarios_test.testuser1002.phone_number %]@',
+      'To: <sip:[% scenarios.0.responders.0.username %]@'
     ]

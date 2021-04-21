@@ -1,4 +1,3 @@
-# INVITE_OFFLINE scenario
 flow:
   - start|DEFAULT_ROUTE:
   - start|ROUTE_ENTRY:
@@ -18,12 +17,12 @@ flow:
   - start|ROUTE_FIND_CALLER:
   - start|ROUTE_AUTH:
   - start|ROUTE_AUTH_HELPER:
-      $x_hdr(From): spce.test
-      $var(realm_user): testuser1002
-      $var(realm_domain): spce.test
+      $x_hdr(From): invite-voicebox.scenarios.test
+      $var(realm_user): [% scenarios.0.username %]
+      $var(realm_domain): invite-voicebox.scenarios.test
   - return|ROUTE_AUTH_HELPER:
-      $avp(orig_acc_caller_user): ['testuser1002']
-      $avp(orig_acc_caller_domain): ['spce.test']
+      $avp(orig_acc_caller_user): ['[% scenarios.0.username %]']
+      $avp(orig_acc_caller_domain): ['invite-voicebox.scenarios.test']
   - start|ROUTE_ADD_CALLINFO_REPLY:
   - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
   - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
@@ -66,10 +65,10 @@ flow:
   - return|ROUTE_SET_CALLEE_DIALOG:
       $avp(lua_dlg_profile): [
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1001.uuid %]",
+        "totaluser:[% invite_voicebox_scenarios_test.testuser1001.uuid %]",
         "total",
         "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1001.uuid %]"
+        "user:[% invite_voicebox_scenarios_test.testuser1001.uuid %]"
       ]
   - start|ROUTE_BLOCK_IN:
   - return|ROUTE_BLOCK_IN:
@@ -114,18 +113,18 @@ flow:
   - return|ROUTE_SET_CALLER_DIALOG:
       $avp(lua_dlg_profile): [
         "accountout:[% customer_test.id %]",
-        "userout:[% spce_test.testuser1002.uuid %]",
+        "userout:[% invite_voicebox_scenarios_test.testuser1002.uuid %]",
         "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1002.uuid %]",
+        "user:[% invite_voicebox_scenarios_test.testuser1002.uuid %]",
         "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% spce_test.testuser1002.uuid %]",
+        "totaluserout:[% invite_voicebox_scenarios_test.testuser1002.uuid %]",
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1002.uuid %]",
+        "totaluser:[% invite_voicebox_scenarios_test.testuser1002.uuid %]",
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1001.uuid %]",
+        "totaluser:[% invite_voicebox_scenarios_test.testuser1001.uuid %]",
         "total",
         "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1001.uuid %]"
+        "user:[% invite_voicebox_scenarios_test.testuser1001.uuid %]"
       ]
   - start|ROUTE_SET_ACC_CALLER_CALL_COUNTERS:
   - return|ROUTE_SET_ACC_CALLER_CALL_COUNTERS:
@@ -159,34 +158,34 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - '^INVITE'
-  - 'Contact: sip:testuser1002@'
+  - 'Contact: sip:[% scenarios.0.username %]@'
   - 'CSeq: 2 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
-  - 'Proxy-Authorization: Digest username="testuser1002"'
+  - 'Proxy-Authorization: Digest username="[% scenarios.0.username %]"'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: 2 INVITE',
-      'From: <sip:testuser1002@',
-      'To: <sip:testuser1001@'
+      'From: <sip:[% scenarios.0.username %]@',
+      'To: <sip:[% scenarios.0.responders.0.username %]@'
     ]
   - [
       '^SIP/2.0 101 Connecting',
       'CSeq: 2 INVITE',
-      'From: <sip:testuser1002@',
-      'To: <sip:testuser1001@'
+      'From: <sip:[% scenarios.0.username %]@',
+      'To: <sip:[% scenarios.0.responders.0.username %]@'
     ]
   - [
-      '^INVITE sip:vmu4311001@voicebox.local SIP/2.0',
+      '^INVITE sip:vmu[% invite_voicebox_scenarios_test.testuser1001.phone_number %]@voicebox.local SIP/2.0',
       'CSeq: 2 INVITE',
-      'From: <sip:testuser1002@',
-      'To: <sip:testuser1001@',
+      'From: <sip:[% scenarios.0.username %]@',
+      'To: <sip:[% scenarios.0.responders.0.username %]@',
       'Content-Type: application/sdp',
-      'P-Caller-UUID: \w+',
-      'P-First-Caller-UPN: 4311002',
-      'P-First-Caller-NPN: 4311002',
-      'P-Acc-Caller-User: testuser1001',
+      'P-Caller-UUID: [% invite_voicebox_scenarios_test.testuser1001.uuid %]',
+      'P-First-Caller-UPN: [% invite_voicebox_scenarios_test.testuser1002.phone_number %]',
+      'P-First-Caller-NPN: [% invite_voicebox_scenarios_test.testuser1002.phone_number %]',
+      'P-Acc-Caller-User: [% scenarios.0.responders.0.username %]',
       'P-Acc-State: cfu',
       'P-App-Param: ;profile=ngcp_cf',
       'P-App-Name: sbc'
