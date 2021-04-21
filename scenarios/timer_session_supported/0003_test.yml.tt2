@@ -143,16 +143,16 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - 'INVITE sip:testuser1001@spce.test SIP/2.0'
+  - 'INVITE sip:[% scenarios.0.responders.0.username %]@timer-session-supported.scenarios.test SIP/2.0'
   - 'Supported: timer'
-  - 'From: <sip:004321001@127.0.2.1>;tag=[\w-]+'
-  - 'To: <sip:testuser1001@spce.test>'
+  - 'From: <sip:[% scenarios.0.username %]@[% scenarios.0.domain %]>;tag=[\w-]+'
+  - 'To: <sip:[% scenarios.0.responders.0.username %]@timer-session-supported.scenarios.test>'
   - 'CSeq: \d+ INVITE'
-  - 'Contact: <sip:004321001@127.0.2.1:\d+;transport=UDP>'
+  - 'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %];transport=UDP>'
   - 'Min-SE: 2'
   - 'Content-Type: application/sdp'
   - 'Content-Length: 0'
-  - 'P-NGCP-Src-Ip: 127.0.2.1'
+  - 'P-NGCP-Src-Ip: [% scenarios.0.ip %]'
   - 'P-NGCP-Src-Port: \d+'
   - 'P-NGCP-Src-Proto: udp'
   - 'P-NGCP-Src-Af: 4'
@@ -161,34 +161,34 @@ sip_in:
 sip_out:
   - [
       'SIP/2.0 100 Trying',
-      'From: <sip:004321001@127.0.2.1>;tag=[\w-]+',
-      'To: <sip:testuser1001@spce.test>',
+      'From: <sip:[% scenarios.0.username %]@[% scenarios.0.domain %]>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.0.username %]@timer-session-supported.scenarios.test>',
       'CSeq: \d+ INVITE',
       'P-Out-Socket: udp:127.0.0.1:5060',
-      'P-NGCP-Auth-IP: 127.0.2.1',
+      'P-NGCP-Auth-IP: [% scenarios.0.ip %]',
       'P-NGCP-Auth-UA: <null>',
       'Server: Sipwise NGCP Proxy',
       'Content-Length: 0',
     ]
   - [
-      'INVITE sip:testuser1001@127.1.0.1:\d+ SIP/2.0',
+      'INVITE sip:[% scenarios.0.responders.0.username %]@[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %] SIP/2.0',
       'Supported: timer',
-      'From: <sip:004321001@spce.test>;tag=[\w-]+',
-      'To: <sip:testuser1001@spce.test>',
+      'From: <sip:[% scenarios.0.username %]@timer-session-supported.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.0.username %]@timer-session-supported.scenarios.test>',
       'CSeq: \d+ INVITE',
-      'Contact: <sip:004321001@127.0.2.1:\d+;transport=UDP>',
+      'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %];transport=UDP>',
       'Min-SE: 2',
       'Content-Type: application/sdp',
       'Content-Length: 0',
       'P-LB-Uptime: \d+',
-      'P-Asserted-Identity: <sip:004321001@spce.test>',
+      'P-Asserted-Identity: <sip:[% scenarios.0.username %]@timer-session-supported.scenarios.test>',
       'P-Caller-UUID: 0',
-      'P-Callee-UUID: [% spce_test.testuser1001.uuid %]',
-      'P-Called-Party-ID: <sip:testuser1001@spce.test>',
+      'P-Callee-UUID: [% timer_session_supported_scenarios_test.testuser1001.uuid %]',
+      'P-Called-Party-ID: <sip:[% scenarios.0.responders.0.username %]@timer-session-supported.scenarios.test>',
       'P-App-Param: ;calltimer=21600;aleg_sst_enable=yes;aleg_sst_expires=10;aleg_sst_min_timer=2;aleg_sst_max_timer=20;aleg_sst_refresh_method=INVITE;sst_enable=yes;sst_expires=8;sst_min_timer=2;sst_max_timer=20;sst_refresh_method=INVITE;hold_alter_b2b_bleg=no;hold_alter_b2b_aleg=no;(fast_ack=no;)?b_park_domain=[% customer_test.id %]',
       'P-App-Name: sbc',
-      'P-NGCP-Caller-Info: <sip:004321001@127.0.2.1>;ip=127.0.2.1;port=\d+',
-      'P-NGCP-Callee-Info: <sip:testuser1001@spce.test>;ip=127.0.0.1;port=5060;primary=4311001',
+      'P-NGCP-Caller-Info: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %]',
+      'P-NGCP-Callee-Info: <sip:[% scenarios.0.responders.0.username %]@timer-session-supported.scenarios.test>;ip=127.0.0.1;port=5060;primary=[% timer_session_supported_scenarios_test.testuser1001.phone_number %]',
       'P-D-Uri: sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060',
       'P-Proxy-Uri: sip:127.0.0.1:5062',
     ]

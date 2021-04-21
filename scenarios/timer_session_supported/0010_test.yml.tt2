@@ -17,8 +17,8 @@ flow:
   - return|dialog:start:
 sip_in:
   - 'SIP/2.0 200 OK'
-  - 'From: <sip:004321001@spce.test>;tag=[\w-]+'
-  - 'To: <sip:testuser1001@spce.test>;tag=[\w-]+'
+  - 'From: <sip:[% scenarios.0.username %]@timer-session-supported.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:[% scenarios.0.responders.0.username %]@timer-session-supported.scenarios.test>;tag=[\w-]+'
   - 'CSeq: \d+ INVITE'
   - 'Require: timer'
   - 'Supported: timer'
@@ -27,8 +27,8 @@ sip_in:
 sip_out:
   - [
       'SIP/2.0 200 OK',
-      'From: <sip:004321001@127.0.2.1>;tag=[\w-]+',
-      'To: <sip:testuser1001@spce.test>;tag=[\w-]+',
+      'From: <sip:[% scenarios.0.username %]@[% scenarios.0.domain %]>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.0.username %]@timer-session-supported.scenarios.test>;tag=[\w-]+',
       'CSeq: \d+ INVITE',
       'Require: timer',
       'Supported: timer',

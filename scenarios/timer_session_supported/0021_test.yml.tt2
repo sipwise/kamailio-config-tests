@@ -28,12 +28,12 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - 'BYE sip:127.0.0.1:508[08];prxroute=1 SIP/2.0'
-  - 'From: <sip:004321001@127.0.2.1>;tag=[\w-]+'
-  - 'To: <sip:testuser1001@spce.test>;tag=[\w-]+'
+  - 'From: <sip:[% scenarios.0.username %]@[% scenarios.0.domain %]>;tag=[\w-]+'
+  - 'To: <sip:[% scenarios.0.responders.0.username %]@timer-session-supported.scenarios.test>;tag=[\w-]+'
   - 'CSeq: \d+ BYE'
-  - 'Contact: <sip:004321001@127.0.2.1:\d+;transport=UDP>'
+  - 'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %];transport=UDP>'
   - 'Content-Length: 0'
-  - 'P-NGCP-Src-Ip: 127.0.2.1'
+  - 'P-NGCP-Src-Ip: [% scenarios.0.ip %]'
   - 'P-NGCP-Src-Port: \d+'
   - 'P-NGCP-Src-Proto: udp'
   - 'P-NGCP-Src-Af: 4'
@@ -42,22 +42,22 @@ sip_in:
 sip_out:
   - [
       'SIP/2.0 100 Trying',
-      'From: <sip:004321001@127.0.2.1>;tag=[\w-]+',
-      'To: <sip:testuser1001@spce.test>;tag=[\w-]+',
+      'From: <sip:[% scenarios.0.username %]@[% scenarios.0.domain %]>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.0.username %]@timer-session-supported.scenarios.test>;tag=[\w-]+',
       'CSeq: \d+ BYE',
       'P-Out-Socket: udp:127.0.0.1:5060',
-      'P-NGCP-Auth-IP: 127.0.2.1',
+      'P-NGCP-Auth-IP: [% scenarios.0.ip %]',
       'P-NGCP-Auth-UA: <null>',
       'Server: Sipwise NGCP Proxy',
       'Content-Length: 0',
     ]
   - [
       'BYE sip:127.0.0.1:508[08];prxroute=1 SIP/2.0',
-      'From: <sip:004321001@spce.test>;tag=[\w-]+',
-      'To: <sip:testuser1001@spce.test>;tag=[\w-]+',
+      'From: <sip:[% scenarios.0.username %]@timer-session-supported.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.0.username %]@timer-session-supported.scenarios.test>;tag=[\w-]+',
       'CSeq: \d+ BYE',
-      'Contact: <sip:004321001@127.0.2.1:\d+;transport=UDP>',
+      'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %];transport=UDP>',
       'Content-Length: 0',
       'P-LB-Uptime: \d+',
-      'P-Asserted-Identity: <sip:004321001@spce.test>',
+      'P-Asserted-Identity: <sip:[% scenarios.0.username %]@timer-session-supported.scenarios.test>',
     ]

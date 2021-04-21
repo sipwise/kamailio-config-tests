@@ -25,28 +25,28 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - 'BYE sip:127.1.0.1:\d+;transport=UDP SIP/2.0'
-  - 'From: <sip:004321001@spce.test>;tag=[\w-]+'
-  - 'To: <sip:testuser1001@spce.test>;tag=[\w-]+'
+  - 'BYE sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];transport=UDP SIP/2.0'
+  - 'From: <sip:[% scenarios.0.username %]@timer-session-supported.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:[% scenarios.0.responders.0.username %]@timer-session-supported.scenarios.test>;tag=[\w-]+'
   - 'CSeq: \d+ BYE'
   - 'P-LB-Uptime: \d+'
-  - 'P-Asserted-Identity: <sip:004321001@spce.test>'
+  - 'P-Asserted-Identity: <sip:[% scenarios.0.username %]@timer-session-supported.scenarios.test>'
   - 'Content-Length: 0'
 sip_out:
   - [
       'SIP/2.0 100 Trying',
-      'From: <sip:004321001@spce.test>;tag=[\w-]+',
-      'To: <sip:testuser1001@spce.test>;tag=[\w-]+',
+      'From: <sip:[% scenarios.0.username %]@timer-session-supported.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.0.username %]@timer-session-supported.scenarios.test>;tag=[\w-]+',
       'CSeq: \d+ BYE',
       'Server: Sipwise NGCP Proxy',
       'Content-Length: 0',
     ]
   - [
-      'BYE sip:127.1.0.1:\d+;transport=UDP SIP/2.0',
-      'From: <sip:004321001@spce.test>;tag=[\w-]+',
-      'To: <sip:testuser1001@spce.test>;tag=[\w-]+',
+      'BYE sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];transport=UDP SIP/2.0',
+      'From: <sip:[% scenarios.0.username %]@timer-session-supported.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.0.username %]@timer-session-supported.scenarios.test>;tag=[\w-]+',
       'CSeq: \d+ BYE',
       'P-LB-Uptime: \d+',
-      'P-Asserted-Identity: <sip:004321001@spce.test>',
+      'P-Asserted-Identity: <sip:[% scenarios.0.username %]@timer-session-supported.scenarios.test>',
       'Content-Length: 0',
     ]
