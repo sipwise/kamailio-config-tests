@@ -1,0 +1,9 @@
+{
+    "@invite-peerout-rewrite.scenarios.test": {
+        "rewrite_rule_set": "rw_invite_peerout_rewrite"
+    },
+    "peer_invite_peerout_rewrite_host0": {
+        "rewrite_rule_set": "rw_invite_peerout_rewrite",
+        "concurrent_max": 1
+    }
+}
