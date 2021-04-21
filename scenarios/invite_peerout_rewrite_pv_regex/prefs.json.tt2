@@ -1,0 +1,9 @@
+{
+    "@invite-peerout-rewrite-pv-regex.scenarios.test": {
+        "rewrite_rule_set": "rw_inv_peerout_rw_pv_regex"
+    },
+    "peer_invite_peerout_rewrite_pv_regex_host0": {
+        "rewrite_rule_set": "rw_inv_peerout_rw_pv_regex",
+        "concurrent_max": 1
+    }
+}

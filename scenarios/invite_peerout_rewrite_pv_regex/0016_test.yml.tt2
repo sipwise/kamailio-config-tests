@@ -16,13 +16,13 @@ sip_in:
   - '^SIP/2.0 200 OK'
   - 'CSeq: 3 BYE'
   - 'Content-Length: 0'
-  - 'From: <sip:1002@'
-  - 'To: <sip:004321001@'
+  - 'From: <sip:[% invite_peerout_rewrite_pv_regex_scenarios_test.testuser1002.sn %]@'
+  - 'To: <sip:[% scenarios.0.responders.0.username %]@'
 sip_out:
   - [
       '^SIP/2.0 200 OK',
       'CSeq: 3 BYE',
       'Content-Length: 0',
-      'From: <sip:testuser1002@',
-      'To: <sip:004321001@'
+      'From: <sip:[% scenarios.0.username %]@',
+      'To: <sip:[% scenarios.0.responders.0.username %]@'
     ]
