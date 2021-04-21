@@ -13,15 +13,14 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - 'INVITE sip:004321001@external.test SIP/2.0'
-  - 'From: <sip:4311002@spce.test>;tag=[\w-]+'
-  - 'To: <sip:004321001@external.test>'
+  - 'INVITE sip:[% scenarios.0.responders.0.username %]@invite-foreign-dom.external.test SIP/2.0'
+  - 'From: <sip:[% invite_foreign_dom_scenarios_test.testuser1002.phone_number %]@invite-foreign-dom.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:[% scenarios.0.responders.0.username %]@invite-foreign-dom.external.test>'
   - 'CSeq: \d+ INVITE'
   - 'P-LB-Uptime: \d+'
-  - '_:NOT:_P-Asserted-Identity:'
-  - 'P-Caller-UUID: [% spce_test.testuser1002.uuid %]'
-  - 'P-NGCP-Caller-Info: <sip:testuser1002@spce.test>;ip=127.126.0.1;port=\d+;primary=4311002'
-  - 'P-NGCP-Callee-Info: <sip:004321001@external.test>;ip=127.0.0.1;port=5060'
+  - 'P-Caller-UUID: [% invite_foreign_dom_scenarios_test.testuser1002.uuid %]'
+  - 'P-NGCP-Caller-Info: <sip:[% scenarios.0.username %]@invite-foreign-dom.scenarios.test>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %];primary=[% invite_foreign_dom_scenarios_test.testuser1002.phone_number %]'
+  - 'P-NGCP-Callee-Info: <sip:[% scenarios.0.responders.0.username %]@invite-foreign-dom.external.test>;ip=127.0.0.1;port=5060'
   - 'P-D-Uri: sip:127.0.0.1:5060'
   - 'Content-Type: application/sdp'
   - 'Contact: <sip:127.0.0.1:508[08];transport=udp>'
@@ -29,22 +28,21 @@ sip_in:
 sip_out:
   - [
       'SIP/2.0 100 Trying',
-      'From: <sip:4311002@spce.test>;tag=[\w-]+',
-      'To: <sip:004321001@external.test>',
+      'From: <sip:[% invite_foreign_dom_scenarios_test.testuser1002.phone_number %]@invite-foreign-dom.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.0.username %]@invite-foreign-dom.external.test>',
       'CSeq: \d+ INVITE',
       'Server: Sipwise NGCP Proxy',
       'Content-Length: 0',
     ]
   - [
-      'INVITE sip:004321001@external.test SIP/2.0',
-      'From: <sip:4311002@spce.test>;tag=[\w-]+',
-      'To: <sip:004321001@external.test>',
+      'INVITE sip:[% scenarios.0.responders.0.username %]@invite-foreign-dom.external.test SIP/2.0',
+      'From: <sip:[% invite_foreign_dom_scenarios_test.testuser1002.phone_number %]@invite-foreign-dom.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.0.username %]@invite-foreign-dom.external.test>',
       'CSeq: \d+ INVITE',
       'P-LB-Uptime: \d+',
-      '_:NOT:_P-Asserted-Identity:',
-      'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
-      'P-NGCP-Caller-Info: <sip:testuser1002@spce.test>;ip=127.126.0.1;port=\d+;primary=4311002',
-      'P-NGCP-Callee-Info: <sip:004321001@external.test>;ip=127.0.0.1;port=5060',
+      'P-Caller-UUID: [% invite_foreign_dom_scenarios_test.testuser1002.uuid %]',
+      'P-NGCP-Caller-Info: <sip:[% scenarios.0.username %]@invite-foreign-dom.scenarios.test>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %];primary=[% invite_foreign_dom_scenarios_test.testuser1002.phone_number %]',
+      'P-NGCP-Callee-Info: <sip:[% scenarios.0.responders.0.username %]@invite-foreign-dom.external.test>;ip=127.0.0.1;port=5060',
       'P-D-Uri: sip:127.0.0.1:5060',
       'Content-Type: application/sdp',
       'Contact: <sip:127.0.0.1:508[08];transport=udp>',

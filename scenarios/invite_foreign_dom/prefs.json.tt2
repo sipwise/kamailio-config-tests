@@ -1,5 +1,5 @@
 {
-    "@spce.test": {
+    "@invite-foreign-dom.scenarios.test": {
         "allow_out_foreign_domain": true
     }
 }
