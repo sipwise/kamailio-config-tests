@@ -1,6 +1,7 @@
+---
 test_uuid: invite_tcp_udp
 domains:
-  'spce.test':
+  invite-tcp-udp.scenarios.test:
     reseller_id: 1
 customers:
   'customer.test':
@@ -13,7 +14,7 @@ customers:
       billing_profile_id: 1
       reseller_id: 1
 subscribers:
-  spce.test:
+  invite-tcp-udp.scenarios.test:
     testuser1003:
       customer: 'customer.test'
       password: testuser
@@ -33,11 +34,11 @@ subscribers:
 scenarios:
   - ip: 127.126.0.1
     username: testuser1002
-    domain: spce.test
+    domain: invite-tcp-udp.scenarios.test
     proto: tcp
     responders:
       - ip: 127.1.0.1
         username: testuser1003
-        domain: spce.test
-        register: yes
+        domain: invite-tcp-udp.scenarios.test
+        register: 'yes'
         proto: udp
