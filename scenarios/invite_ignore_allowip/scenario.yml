@@ -1,6 +1,7 @@
+---
 test_uuid: invite_ignore_allowip
 domains:
-  'spce.test':
+  'invite-ignore-allowip.scenarios.test':
     reseller_id: 1
 customers:
   'customer.test':
@@ -13,7 +14,7 @@ customers:
       billing_profile_id: 1
       reseller_id: 1
 subscribers:
-  spce.test:
+  invite-ignore-allowip.scenarios.test:
     testuser1003:
       customer: 'customer.test'
       password: testuser
@@ -28,10 +29,10 @@ subscribers:
       sn: 1002
 scenarios:
   - ip: 127.126.0.1
-    domain: spce.test
+    domain: invite-ignore-allowip.scenarios.test
     username: testuser1002
     responders:
       - ip: 127.1.0.1
-        domain: spce.test
-        register: yes
+        domain: invite-ignore-allowip.scenarios.test
+        register: 'yes'
         username: testuser1003

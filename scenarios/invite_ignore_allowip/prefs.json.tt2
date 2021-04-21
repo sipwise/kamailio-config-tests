@@ -1,5 +1,5 @@
 {
-    "testuser1002@spce.test": {
+    "[% scenarios.0.username %]@invite-ignore-allowip.scenarios.test": {
         "allowed_ips": [
             "1.2.3.4"
         ],
