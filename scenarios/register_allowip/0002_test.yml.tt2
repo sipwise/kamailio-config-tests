@@ -3,7 +3,7 @@ flow:
   - start|ROUTE_ENTRY:
   - return|ROUTE_ENTRY:
   - start|ROUTE_NET_INFO:
-      $x_hdr(From): sip:testuser1003@
+      $x_hdr(From): sip:[% scenarios.0.username %]@
   - return|ROUTE_NET_INFO:
   - start|ROUTE_CHECK_TEL_URI:
   - return|ROUTE_CHECK_TEL_URI:
@@ -29,27 +29,27 @@ flow:
       $xavp(caller_dom_prefs[0]=>dummy[*]):
         - caller
       $xavp(caller_peer_prefs): None
-      $xavp(caller_real_prefs[0]=>ac[*]): [1]
+      $xavp(caller_real_prefs[0]=>ac[*]): [[% register_allowip_scenarios_test.testuser1003.ac %]]
       $xavp(caller_real_prefs[0]=>account_id): '\d+'
       $xavp(caller_real_prefs[0]=>allowed_ips_grp): '\d+'
-      $xavp(caller_real_prefs[0]=>cc[*]): [43]
-      $xavp(caller_real_prefs[0]=>cli[*]): [4311003]
+      $xavp(caller_real_prefs[0]=>cc[*]): [[% register_allowip_scenarios_test.testuser1003.cc %]]
+      $xavp(caller_real_prefs[0]=>cli[*]): [[% register_allowip_scenarios_test.testuser1003.phone_number %]]
       $xavp(caller_real_prefs[0]=>dummy[*]):
         - caller
       $xavp(caller_real_prefs[0]=>man_allowed_ips_grp[*]): [0]
-      $xavp(caller_usr_prefs[0]=>ac[*]): [1]
+      $xavp(caller_usr_prefs[0]=>ac[*]): [[% register_allowip_scenarios_test.testuser1003.ac %]]
       $xavp(caller_usr_prefs[0]=>account_id): '\d+'
       $xavp(caller_usr_prefs[0]=>allowed_ips_grp): '\d+'
-      $xavp(caller_usr_prefs[0]=>cc[*]): [43]
-      $xavp(caller_usr_prefs[0]=>cli[*]): [4311003]
+      $xavp(caller_usr_prefs[0]=>cc[*]): [[% register_allowip_scenarios_test.testuser1003.cc %]]
+      $xavp(caller_usr_prefs[0]=>cli[*]): [[% register_allowip_scenarios_test.testuser1003.phone_number %]]
       $xavp(caller_usr_prefs[0]=>dummy[*]):
         - caller
 sip_in:
   - '^REGISTER'
-  - 'Contact: sip:testuser1003@'
+  - 'Contact: sip:[% scenarios.0.username %]@'
   - 'Content-Length: 0'
   - 'Expires: 600'
-  - 'Authorization: Digest username="testuser1003"'
+  - 'Authorization: Digest username="[% scenarios.0.username %]"'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
@@ -58,6 +58,6 @@ sip_out:
   - [
       '^SIP/2.0 403 Unauthorized IP detected',
       'Content-Length: 0',
-      'P-NGCP-Authorization: testuser1003@',
+      'P-NGCP-Authorization: [% scenarios.0.username %]@',
       'P-NGCP-Authorized: 1'
     ]

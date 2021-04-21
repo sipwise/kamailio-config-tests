@@ -1,0 +1,7 @@
+{
+    "[% scenarios.0.username %]@register-allowip.scenarios.test": {
+        "allowed_ips": [
+            "1.2.3.4"
+        ]
+    }
+}
