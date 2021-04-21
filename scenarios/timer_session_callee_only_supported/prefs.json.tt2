@@ -1,0 +1,9 @@
+{
+   "testuser1001@timer-session-callee-only-supported.scenarios.test": {
+   "sst_refresh_method": "INVITE",
+   "sst_enable": "yes",
+   "sst_expires": 10,
+   "sst_min_timer": 2,
+   "sst_max_timer": 20
+   }
+}
