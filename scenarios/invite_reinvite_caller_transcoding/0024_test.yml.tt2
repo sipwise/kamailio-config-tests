@@ -14,15 +14,15 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - 'SIP/2.0 200 OK'
-  - 'From: <sip:4311002@spce.test>;tag=[\w-]+'
-  - 'To: <sip:004321001@spce.test>;tag=[\w-]+'
+  - 'From: <sip:[% invite_reinvite_caller_transcoding_scenarios_test.testuser1002.phone_number %]@invite-reinvite-caller-transcoding.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:[% scenarios.0.responders.0.username %]@invite-reinvite-caller-transcoding.scenarios.test>;tag=[\w-]+'
   - 'CSeq: \d+ BYE'
   - 'Content-Length: 0'
 sip_out:
   - [
       'SIP/2.0 200 OK',
-      'From: <sip:testuser1002@spce.test>;tag=[\w-]+',
-      'To: <sip:004321001@spce.test>;tag=[\w-]+',
+      'From: <sip:[% scenarios.0.username %]@invite-reinvite-caller-transcoding.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.0.username %]@invite-reinvite-caller-transcoding.scenarios.test>;tag=[\w-]+',
       'CSeq: \d+ BYE',
       'Content-Length: 0',
       'P-Out-Socket: udp:127.0.0.1:5060',

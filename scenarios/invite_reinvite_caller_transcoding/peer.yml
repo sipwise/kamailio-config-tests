@@ -1,31 +1,31 @@
 ---
-peer_00:
+peer_invite_reinvite_caller_transcoding:
   contact:
-    company: peer_00
-    email: peer_00@host0.not
+    company: peer_invite_reinvite_caller_transcoding
+    email: peer_invite_reinvite_caller_transcoding@host0.not
   contract:
     billing_profile_id: 1
     status: active
     type: sippeering
   groups:
-    - name: peer_00_group
+    - name: peer_invite_reinvite_caller_transcoding_group
       priority: 1
       description:
   rules:
-    - group_id: peer_00_group
+    - group_id: peer_invite_reinvite_caller_transcoding_group
       callee_prefix: ""
       callee_pattern: ''
-      caller_pattern: '^sip:.+@spce.test'
+      caller_pattern: '^sip:.+@invite-reinvite-caller-transcoding.scenarios.test'
       description: ""
   inboundrules:
-    - group_id: peer_00_group
+    - group_id: peer_invite_reinvite_caller_transcoding_group
       field: "ruri_uri"
       pattern: '.*'
       priority: 50
       enabled: 1
   hosts:
-    - group_id: peer_00_group
-      name: peer_00_host0
+    - group_id: peer_invite_reinvite_caller_transcoding_group
+      name: peer_invite_reinvite_caller_transcoding_host0
       ip: 127.0.2.1
       port: 51602
       host:

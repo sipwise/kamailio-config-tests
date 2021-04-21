@@ -9,8 +9,8 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - 'SIP/2.0 100 Trying'
-  - 'From: <sip:4311002@spce.test>;tag=[\w-]+'
-  - 'To: <sip:004321001@127.0.2.1>'
+  - 'From: <sip:[% invite_reinvite_caller_transcoding_scenarios_test.testuser1002.phone_number %]@invite-reinvite-caller-transcoding.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:[% scenarios.0.responders.0.username %]@[% scenarios.0.responders.0.ip %]>'
   - 'CSeq: \d+ INVITE'
   - 'Server: Sipwise NGCP LB'
   - 'Content-Length: 0'
