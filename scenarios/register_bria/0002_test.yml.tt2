@@ -3,7 +3,7 @@ flow:
   - start|ROUTE_ENTRY:
   - return|ROUTE_ENTRY:
   - start|ROUTE_NET_INFO:
-      $x_hdr(From): sip:testuser1004@
+      $x_hdr(From): sip:[% scenarios.0.username %]@
   - return|ROUTE_NET_INFO:
   - start|ROUTE_CHECK_TEL_URI:
   - return|ROUTE_CHECK_TEL_URI:
@@ -11,12 +11,12 @@ flow:
   - start|ROUTE_REG_HANDLE:
   - start|ROUTE_AUTH:
   - start|ROUTE_AUTH_HELPER:
-      $x_hdr(From): spce.test
-      $var(realm_user): testuser1004
-      $var(realm_domain): spce.test
+      $x_hdr(From): register-bria.scenarios.test
+      $var(realm_user): [% scenarios.0.username %]
+      $var(realm_domain): register-bria.scenarios.test
   - return|ROUTE_AUTH_HELPER:
-      $avp(orig_acc_caller_user): ['testuser1004']
-      $avp(orig_acc_caller_domain): ['spce.test']
+      $avp(orig_acc_caller_user): ['[% scenarios.0.username %]']
+      $avp(orig_acc_caller_domain): ['register-bria.scenarios.test']
   - start|ROUTE_ADD_CALLINFO_REPLY:
   - return|ROUTE_ADD_CALLINFO_REPLY:
   - return|ROUTE_AUTH:
@@ -30,10 +30,10 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - '^REGISTER'
-  - 'Contact: "TestBria" <sip:testuser1004@127.126.0.1:6666;ob>;reg-id=1;\+sip.instance="<urn:uuid:C3DD6013-20E8-40E3-8EA2-5849B02ED0C4>"'
+  - 'Contact: "TestBria" <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:6666;ob>;reg-id=1;\+sip.instance="<urn:uuid:C3DD6013-20E8-40E3-8EA2-5849B02ED0C4>"'
   - 'Content-Length: 0'
   - 'Expires: 600'
-  - 'Authorization: Digest username="testuser1004"'
+  - 'Authorization: Digest username="[% scenarios.0.username %]"'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
@@ -41,8 +41,8 @@ sip_out:
     ]
   - [
       '^SIP/2.0 200 OK',
-      'Contact: <sip:testuser1004@127.126.0.1:6666;ob>;expires=\d{3};\+sip.instance="<urn:uuid:C3DD6013-20E8-40E3-8EA2-5849B02ED0C4>";reg-id=1',
+      'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:6666;ob>;expires=\d{3};\+sip.instance="<urn:uuid:C3DD6013-20E8-40E3-8EA2-5849B02ED0C4>";reg-id=1',
       'Content-Length: 0',
-      'P-NGCP-Authorization: testuser1004@',
+      'P-NGCP-Authorization: [% scenarios.0.username %]@',
       'P-NGCP-Authorized: 1'
     ]

@@ -1,6 +1,7 @@
+---
 test_uuid: register_bria
 domains:
-  'spce.test':
+  register-bria.scenarios.test:
     reseller_id: 1
 customers:
   'customer.test':
@@ -13,7 +14,7 @@ customers:
       billing_profile_id: 1
       reseller_id: 1
 subscribers:
-  spce.test:
+  register-bria.scenarios.test:
     testuser1004:
       customer: 'customer.test'
       password: testuser
@@ -28,29 +29,29 @@ subscribers:
       sn: 1003
 scenarios:
   - ip: 127.126.0.1
-    domain: spce.test
+    domain: register-bria.scenarios.test
     username: testuser1004
     responders:
       - ip: 127.2.0.1
-        domain: spce.test
-        register: no
+        domain: register-bria.scenarios.test
+        register: 'no'
         username: testuser1004
-        active: no
+        active: 'no'
   - ip: 127.126.0.1
-    domain: spce.test
+    domain: register-bria.scenarios.test
     username: testuser1003
     responders:
       - ip: 127.1.0.1
-        domain: spce.test
-        register: no
+        domain: register-bria.scenarios.test
+        register: 'no'
         username: testuser1003
-        active: no
+        active: 'no'
   - ip: 127.126.0.1
-    domain: spce.test
+    domain: register-bria.scenarios.test
     username: testuser1003
     responders:
       - ip: 127.1.0.1
-        domain: spce.test
-        register: no
+        domain: register-bria.scenarios.test
+        register: 'no'
         username: testuser1003
-        active: no
+        active: 'no'
