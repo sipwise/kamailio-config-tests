@@ -16,7 +16,7 @@ sip_in:
   - '^SIP/2.0 200 OK'
   - 'CSeq: 3 BYE'
   - 'Content-Length: 0'
-  - 'FROM: <sip:4311002@'
+  - 'FROM: <sip:[% invite_hdr_scenarios_test.testuser1002.phone_number %]@'
   - 'TO: <sip:testuser1003@'
 sip_out:
   - [
