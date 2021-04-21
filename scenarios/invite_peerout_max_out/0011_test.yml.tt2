@@ -31,7 +31,7 @@ sip_in:
   - 'Max-Forwards: 69'
   - 'Content-Length: 0'
   - 'From: <sip:testuser1002@'
-  - 'To: <sip:004321001@'
+  - 'To: <sip:[% scenarios.0.responders.0.username %]@'
 
 sip_out:
   - [
@@ -40,6 +40,6 @@ sip_out:
       'CSeq: 2 ACK',
       'Max-Forwards: 68',
       'Content-Length: 0',
-      'From: <sip:4311002@',
-      'To: <sip:004321001@'
+      'From: <sip:[% invite_peerout_max_out_scenarios_test.testuser1002.phone_number %]@',
+      'To: <sip:[% scenarios.0.responders.0.username %]@'
     ]

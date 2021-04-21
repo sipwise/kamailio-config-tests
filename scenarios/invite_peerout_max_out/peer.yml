@@ -1,40 +1,40 @@
 ---
-peer_00:
+peer_00_invite_peerout_max_out:
   contact:
-    company: peer_00
-    email: peer_00@host0.not
+    company: peer_00_invite_peerout_max_out
+    email: peer_00_invite_peerout_max_out@host0.not
   contract:
     billing_profile_id: 1
     status: active
     type: sippeering
   groups:
-    - name: peer_00_group
+    - name: peer_00_invite_peerout_max_out_group
       priority: 2
       description:
-    - name: peer_01_group
+    - name: peer_01_invite_peerout_max_out_group
       priority: 1
       description:
   rules:
-    - group_id: peer_00_group
+    - group_id: peer_00_invite_peerout_max_out_group
       callee_prefix: ""
       callee_pattern: ''
-      caller_pattern: '^sip:.+@spce.test'
+      caller_pattern: '^sip:.+@invite-peerout-max-out.scenarios.test'
       description: ""
-    - group_id: peer_01_group
+    - group_id: peer_01_invite_peerout_max_out_group
       callee_prefix: ""
       callee_pattern: ''
-      caller_pattern: '^sip:.+@spce.test'
+      caller_pattern: '^sip:.+@invite-peerout-max-out.scenarios.test'
       description: ""
   hosts:
-    - group_id: peer_00_group
-      name: peer_00_host0
+    - group_id: peer_00_invite_peerout_max_out_group
+      name: peer_00_invite_peerout_max_out_host0
       ip: 127.0.2.1
       port: 51602
       host:
       transport: 1
       weight: 1
-    - group_id: peer_01_group
-      name: peer_01_host0
+    - group_id: peer_01_invite_peerout_max_out_group
+      name: peer_01_invite_peerout_max_out_host0
       ip: 127.0.3.1
       port: 51602
       host:
