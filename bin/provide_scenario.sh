@@ -191,6 +191,7 @@ generate_template() {
 generate_templates() {
   local prefs=( "prefs.json" )
   prefs+=( "callforward.yml" )
+  prefs+=( "trusted.yml" )
 
   for t in "${prefs[@]}"; do
     generate_template "${t}"
