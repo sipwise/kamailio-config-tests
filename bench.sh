@@ -63,10 +63,10 @@ BASE_DIR=$(pwd)
 export BASE_DIR
 
 if ! "${SKIP_CONFIG}" ; then
-	export PERL5LIB="${BASE_DIR}/lib"
-	echo "add configuration for tests"
-	./bin/config_debug.pl -c 5 -g "${GROUP}" on
-  ./bin/network_config.pl -g "${GROUP}" on
+  export PERL5LIB="${BASE_DIR}/lib"
+  echo "add configuration for tests"
+  ./bin/config_debug.pl -c 5 -g "${GROUP}" "${BASE_DIR}/config.yml" on
+  ./bin/network_config.pl -g "${GROUP}" "${BASE_DIR}/config.yml" on
 	(
     cd /etc/ngcp-config || true
     ngcpcfg --summary-only apply "k-c-t ${GROUP} on"
@@ -96,9 +96,9 @@ done
 set +o pipefail
 
 if ! "${SKIP_CONFIG}" ; then
-	echo "remove configuration for tests"
-	./bin/config_debug.pl -g"${GROUP}" off
-  ./bin/network_config.pl -g"${GROUP}" off
+  echo "remove configuration for tests"
+  ./bin/config_debug.pl -g"${GROUP}" "${BASE_DIR}/config.yml" off
+  ./bin/network_config.pl -g"${GROUP}" "${BASE_DIR}/config.yml" off
 	(
     cd /etc/ngcp-config || true
     ngcpcfg --summary-only apply "k-c-t ${GROUP} off"

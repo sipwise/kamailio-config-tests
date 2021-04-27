@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #
-# Copyright: 2016 Sipwise Development Team <support@sipwise.com>
+# Copyright: 2016-2021 Sipwise Development Team <support@sipwise.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -31,13 +31,26 @@ sub usage
   $output .= "Options:\n";
   $output .= "\t-h: this help\n";
   $output .= "\t-p: PRO scenario\n";
+  $output .= "\t-c: k-c-t config.yml\n";
   return $output
 }
 
+my $base_dir = '/usr/share/kamailio-config-tests';
 my $help = 0;
 my $PRO = 0;
-GetOptions ("h|help" => \$help, "p|pro" =>\$PRO)
-  or die("Error in command line arguments\n".usage());
+my $kct_conf_yaml = undef;
+
+GetOptions (
+  "h|help" => \$help,
+  "p|pro" =>\$PRO,
+  "c|config=s" =>\$kct_conf_yaml,
+) or die("Error in command line arguments\n".usage());
+
+if (exists $ENV{'BASE_DIR'})
+{
+  $base_dir = $ENV{'BASE_DIR'};
+}
+$kct_conf_yaml = "${base_dir}/config.yml" unless(defined($kct_conf_yaml));
 
 die(usage()) unless (!$help);
 die("Wrong number of arguments\n".usage()) unless ($#ARGV == 1);
@@ -48,6 +61,8 @@ if($PRO) {
 } else {
   $ids->{CE} = 1;
 }
+${ids}->{config} = LoadFile($kct_conf_yaml);
+
 my $template = Template->new({ABSOLUTE => 1});
 $template->process(abs_path($ARGV[0]), $ids)
   or die $template->error();

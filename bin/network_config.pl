@@ -30,10 +30,11 @@ use Hash::Merge qw(merge);
 
 sub usage
 {
-  my $output = "usage: $PROGRAM_NAME [-hg] MODE\n";
+  my $output = "usage: $PROGRAM_NAME [-hg] kct_config.yml MODE\n";
   $output .= "Options:\n";
   $output .= "\t-h: this help\n";
   $output .= "\t-g: scenarios group\n";
+  $output .= "\tkct_config.yml: config file for k-c-t environment\n";
   $output .= "\tMODE: on|off\tdefault: off\n";
   return $output
 }
@@ -54,14 +55,14 @@ GetOptions (
   "g|group=s" => \$group)
   or die("Error in command line arguments\n".usage());
 
-if($#ARGV>0 || $help)
+if($#ARGV>1 || $help)
 {
   die("Wrong number of arguments\n".usage())
 }
 
 my $base_dir = '/usr/share/kamailio-config-tests';
 my $file_net_yaml = '/etc/ngcp-config/network.yml';
-my ($action) = @ARGV;
+my ($kct_conf_yaml, $action) = @ARGV;
 
 $action = 'off' unless defined($action);
 
@@ -72,7 +73,7 @@ if (exists $ENV{'BASE_DIR'})
 
 sub get_domains
 {
-  my $ip = "127.0.0.1";
+  my $ip = shift;
   my $entries = shift;
   my @scenarios = qx{${base_dir}/bin/get_scenarios.sh -x ${group}};
   my @domains = ();
@@ -94,12 +95,13 @@ sub get_domains
 
 sub change_network
 {
+  my $kct_conf = shift;
   my $net_yaml = LoadFile($file_net_yaml);
 
   for my $host (keys %{$net_yaml->{hosts}}) {
     $net_yaml->{hosts}->{$host}->{dummy0} = {
-      ip => '172.30.1.2',
-      netmask => '255.255.255.0',
+      ip => $kct_conf->{rtpengine}->{rtp_flag}->{ip},
+      netmask => $kct_conf->{rtpengine}->{rtp_flag}->{netmask},
       type => ['rtp_tag']
     };
     push @{$net_yaml->{hosts}->{$host}->{interfaces}}, 'dummy0';
@@ -107,7 +109,7 @@ sub change_network
 
   $net_yaml->{hosts_common}->{etc_hosts_global_extra_entries} //= ();
   my $entries = $net_yaml->{hosts_common}->{etc_hosts_global_extra_entries};
-  $entries = get_domains($entries);
+  $entries = get_domains($kct_conf->{kamailio}->{lb}->{ip}, $entries);
   $net_yaml->{hosts_common}->{etc_hosts_global_extra_entries} = $entries;
   DumpFile($file_net_yaml, $net_yaml);
 }
@@ -123,7 +125,9 @@ else
   for my $file ($file_net_yaml) {
     cp($file, $file.".orig") or die "Copy $file failed: $ERRNO" unless(-e $file.".orig");
   }
-  change_network();
+  print "loading $kct_conf_yaml\n";
+  my $kct_conf = LoadFile($kct_conf_yaml);
+  change_network($kct_conf);
 }
 
 #EOF

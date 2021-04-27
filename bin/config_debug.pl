@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #
-# Copyright: 2013 Sipwise Development Team <support@sipwise.com>
+# Copyright: 2013-2021 Sipwise Development Team <support@sipwise.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -29,11 +29,12 @@ use Hash::Merge qw(merge);
 
 sub usage
 {
-  my $output = "usage: config_debug.pl [-hgc] MODE\n";
+  my $output = "usage: $PROGRAM_NAME [-hgc] kct_config.yml MODE\n";
   $output .= "Options:\n";
   $output .= "\t-h: this help\n";
   $output .= "\t-g: scenarios group\n";
   $output .= "\t-c: number of kamailio.proxy.children\n";
+  $output .= "\tkct_config.yml: config file for k-c-t environment\n";
   $output .= "\tMODE: on|off\tdefault: off\n";
   return $output
 }
@@ -53,8 +54,8 @@ else
 GetOptions (
   "h|help" => \$help,
   "g|group=s" => \$group,
-  "c|children=i" => \$children)
-  or die("Error in command line arguments\n".usage());
+  "c|children=i" => \$children,
+) or die("Error in command line arguments\n".usage());
 
 if($#ARGV>1 || $help)
 {
@@ -63,7 +64,7 @@ if($#ARGV>1 || $help)
 
 my $base_dir = '/usr/share/kamailio-config-tests';
 my $file_yaml = '/etc/ngcp-config/config.yml';
-my ($action) = @ARGV;
+my ($kct_conf_yaml, $action) = @ARGV;
 
 $action = 'off' unless defined($action);
 
@@ -74,11 +75,15 @@ if (exists $ENV{'BASE_DIR'})
 
 sub change_config
 {
+  my $kct_conf = shift;
   my $yaml = LoadFile($file_yaml);
+  my $es_test = $kct_conf->{kamailio}->{lb}->{extra_sockets}->{test};
+  my $es_other = $kct_conf->{kamailio}->{lb}->{extra_sockets}->{other};
+
   $yaml->{kamailio}{lb}{cfgt} = 'yes';
   $yaml->{kamailio}{lb}{dns}{use_dns_cache} = 'off';
-  $yaml->{kamailio}{lb}{extra_sockets}->{test} = "udp:127.2.0.1:5064";
-  $yaml->{kamailio}{lb}{extra_sockets}->{other} = "tcp:127.3.0.1:5074";
+  $yaml->{kamailio}{lb}{extra_sockets}->{test} = "$es_test->{transport}:$es_test->{ip}:$es_test->{port}";
+  $yaml->{kamailio}{lb}{extra_sockets}->{other} = "$es_other->{transport}:$es_other->{ip}:$es_other->{port}";;
   $yaml->{kamailio}{proxy}{children} = $children if($children > 0);
   $yaml->{kamailio}{proxy}{permissions_reload_delta} = 0;
   $yaml->{kamailio}{proxy}{cfgt} = 'yes';
@@ -112,7 +117,9 @@ if (lc($action) eq "off")
 else
 {
   cp($file_yaml, "${file_yaml}.orig") or die "Copy $file_yaml failed: $ERRNO" unless(-e "${file_yaml}.orig");
-  change_config();
+  print "loading $kct_conf_yaml\n";
+  my $kct_conf = LoadFile($kct_conf_yaml);
+  change_config($kct_conf);
 }
 
 #EOF

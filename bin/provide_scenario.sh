@@ -178,6 +178,7 @@ generate_template() {
   local base=$1
   if [ -f "${SCEN_CHECK_DIR}/${base}.tt2" ]; then
     if ! "${BIN_DIR}/generate_test.pl" \
+      --config="${BASE_DIR}/config.yml" \
       "${SCEN_CHECK_DIR}/${base}.tt2" \
       "${SCEN_CHECK_DIR}/scenario_ids.yml" > "${SCEN_CHECK_DIR}/${base}"
     then

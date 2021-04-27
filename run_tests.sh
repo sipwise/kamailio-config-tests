@@ -45,9 +45,9 @@ cfg_debug_off() {
     echo "$(date) - Removed apicert.pem"
     rm -f "${BASE_DIR}/apicert.pem"
     echo "$(date) - Setting config debug off"
-    "${BIN_DIR}/config_debug.pl" -g "${GROUP}" off
+    "${BIN_DIR}/config_debug.pl" -g "${GROUP}" "${BASE_DIR}/config.yml" off
     echo "$(date) - Setting network config off"
-    "${BIN_DIR}/network_config.pl" -g "${GROUP}" off
+    "${BIN_DIR}/network_config.pl" -g "${GROUP}" "${BASE_DIR}/config.yml" off
     dummy_ip=$(ip addr show dummy0 | grep inet | awk '{print $2}' | head -1)
     if [ -n "${dummy_ip}" ]; then
       echo "$(date) - start dummy0 interface"
@@ -310,9 +310,9 @@ mkdir -p "${MLOG_DIR}" "${LOG_DIR}"
 
 if ! "${SKIP_CONFIG}" ; then
   echo "$(date) - Setting config debug on"
-  "${BIN_DIR}/config_debug.pl" -c 5 -g "${GROUP}" on
+  "${BIN_DIR}/config_debug.pl" -c 5 -g "${GROUP}" "${BASE_DIR}/config.yml" on
   echo "$(date) - Setting network config"
-  "${BIN_DIR}/network_config.pl" -g "${GROUP}" on
+  "${BIN_DIR}/network_config.pl" -g "${GROUP}" "${BASE_DIR}/config.yml" on
   if [ "${PROFILE}" == "PRO" ]; then
     echo "$(date) - Exec pid_watcher with timeout[${TIMEOUT}]"
     ( timeout "${TIMEOUT}" "${BIN_DIR}/pid_watcher.py" ${PIDWATCH_OPTS} )&

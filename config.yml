@@ -7,6 +7,22 @@ peer:
   ip: 127.0.2.1
   port: 51602
   mport: 45003
+kamailio:
+  lb:
+    ip: 127.0.0.1
+    extra_sockets:
+      test:
+        transport: udp
+        ip: 127.2.0.1
+        port: 5064
+      other:
+        transport: tcp
+        ip: 127.3.0.1
+        port: 5074
+rtpengine:
+  rtp_flag:
+    ip: 172.30.1.2
+    netmask: 255.255.255.0
 phone:
   cc: 43
   ac: 1
