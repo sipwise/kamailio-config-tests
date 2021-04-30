@@ -119,6 +119,7 @@ sub manage_phones
             $ids->{$key_dom}->{$subs}->{ac} = $subs_data->{ac} = $phone_ac;
             $ids->{$key_dom}->{$subs}->{sn} = $subs_data->{sn} = $phone_sn++;
             $ids->{$key_dom}->{$subs}->{phone_number} = $subs_data->{cc} . $subs_data->{ac} . $subs_data->{sn};
+            $subs_data->{phone_number} = $ids->{$key_dom}->{$subs}->{phone_number};
         }
         foreach my $subs (sort keys %{$data->{subscribers}->{$domain}}) {
             my $subs_data = $data->{subscribers}->{$domain}->{$subs};
@@ -176,9 +177,13 @@ sub get_subs_info
             } else {
                 $data->{devid} = $username;
                 $data->{auth_username} = $username;
-                eval { $data->{number} = $subs->{cc}.$subs->{ac}.$subs->{sn}; } unless defined($presence);
+                eval { $data->{number} = $subs->{phone_number}; } unless defined($presence);
             }
             $data->{'pbx_extension'} = $subs->{'pbx_extension'};
+            $data->{alias} = [];
+            foreach (@{$subs->{alias_numbers}}) {
+                push(@{$data->{alias}}, $_->{phone_number});
+            }
         }
         else
         {
@@ -279,6 +284,7 @@ sub generate
         } catch {
             $scen->{devid} = $scen->{username};
             $scen->{auth_username} = $scen->{username};
+            $scen->{alias} = [];
         };
         $scen->{password} = "" unless defined($scen->{password});
         # by default proto is udp
@@ -289,10 +295,23 @@ sub generate
             $scen->{password} = "wrongpass";
         }
         my $auth   = "[authentication username=$scen->{auth_username} password=$scen->{password}]";
-        my $csv_data = [$scen->{devid}, $auth, $scen->{domain}, $test_uuid, $scen->{'pbx_extension'}];
+        my $csv_data = [
+            $scen->{devid},
+            $auth,
+            $scen->{domain},
+            $test_uuid,
+            $scen->{'pbx_extension'},
+            @{$scen->{alias}}, # must be the last one!!
+        ];
         $csv->{caller}->print($io_caller, $csv_data);
         network_data($scen);
-        $csv_data = ["sipp_scenario".sprintf("%02i", $id).".xml", $scen->{proto}, $scen->{ip}, $scen->{port}, $scen->{mport}];
+        $csv_data = [
+            "sipp_scenario".sprintf("%02i", $id).".xml",
+            $scen->{proto},
+            $scen->{ip},
+            $scen->{port},
+            $scen->{mport},
+        ];
         $csv->{scenario}->print($io_scenario, $csv_data);
         foreach my $resp (@{$scen->{responders}})
         {
@@ -304,6 +323,7 @@ sub generate
             } else {
                 $resp->{devid} = $resp->{username};
                 $resp->{auth_username} = $resp->{username};
+                $resp->{alias} = [];
             }
             $resp->{password} = "" unless defined($resp->{password});
             # by default responder is active
@@ -313,7 +333,15 @@ sub generate
             # by default proto is udp
             $resp->{proto} = "udp" unless defined($resp->{proto});
             $auth   = "[authentication username=$resp->{auth_username} password=$resp->{password}]";
-            $csv_data = [$resp->{devid}, $resp->{number}, $auth, $resp->{domain}, $test_uuid, $resp->{'pbx_extension'}];
+            $csv_data = [
+                $resp->{devid},
+                $resp->{number},
+                $auth,
+                $resp->{domain},
+                $test_uuid,
+                $resp->{'pbx_extension'},
+                @{$resp->{alias}}, # must be the last one!!
+            ];
             $csv->{callee}->print($io_callee, $csv_data);
             $csv_data = [
                 "sipp_scenario_responder".sprintf("%02i", $res_id).".xml",
