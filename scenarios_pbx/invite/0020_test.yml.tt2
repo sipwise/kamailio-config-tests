@@ -49,9 +49,9 @@ sip_out:
       'To: <sip:1003@'
     ]
   - [
-      '^PUBLISH sip:testuser1002@spce.test SIP/2.0',
-      'From: <sip:testuser1002@spce.test>',
-      'To: <sip:testuser1002@spce.test>',
+      '^PUBLISH sip:testuser1002@invite.scenarios-pbx.test SIP/2.0',
+      'From: <sip:testuser1002@invite.scenarios-pbx.test>',
+      'To: <sip:testuser1002@invite.scenarios-pbx.test>',
       'Event: dialog',
       'Content-Type: application/dialog-info\+xml',
     ]

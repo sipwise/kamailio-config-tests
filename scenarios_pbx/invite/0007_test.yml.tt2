@@ -149,8 +149,8 @@ sip_in:
   - 'CSeq: \d+ INVITE'
   - 'Max-Forwards: 70'
   - 'P-NGCP-Lookup-Type: ext'
-  - 'P-NGCP-Orig-User: 43110021003'
-  - 'P-NGCP-Orig-Domain: spce.test'
+  - 'P-NGCP-Orig-User: [% invite_scenarios_pbx_test.testuser1003.pbx_phone_number %]'
+  - 'P-NGCP-Orig-Domain: invite.scenarios-pbx.test'
   - 'P-NGCP-Orig-Dialed: 1003'
   - 'P-NGCP-BlockOut-Override: 0'
   - 'P-NGCP-AdmBlockOut-Override: 0'
@@ -160,7 +160,7 @@ sip_in:
   - 'P-Caller-UUID: [% spce_test.testuser1002.uuid %]'
   - 'P-Callee-UUID: [% spce_test.testuser1003.uuid %]'
   - 'P-NGCP-Caller-Info: <sip:testuser1002@'
-  - 'P-NGCP-Callee-Info: <sip:43110021003@spce.test>;ip=127.0.0.1;port=5080;'
+  - 'P-NGCP-Callee-Info: <sip:[% invite_scenarios_pbx_test.testuser1003.pbx_phone_number %]@invite.scenarios-pbx.test>;ip=127.0.0.1;port=5080;'
   - 'P-To-Device: 1'
   - 'Content-Type: application/sdp'
   - 'Contact: <sip:127.0.0.1:5080;transport=udp>'
@@ -175,7 +175,7 @@ sip_out:
    ]
   - [
        'INVITE sip:testuser1003@',
-       'From: <sip:4311002@',
+       'From: <sip:[% invite_scenarios_pbx_test.testuser1002.phone_number %]@',
        'To: <sip:1003@',
        'CSeq: \d+ INVITE',
        'Max-Forwards: 69',
@@ -183,11 +183,11 @@ sip_out:
        'Contact: <sip:127.0.0.1:5080;transport=udp>',
        'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
        'P-Callee-UUID: [% spce_test.testuser1003.uuid %]',
-       'P-Asserted-Identity: <sip:4311002@',
+       'P-Asserted-Identity: <sip:[% invite_scenarios_pbx_test.testuser1002.phone_number %]@',
        'P-Called-Party-ID: <sip:testuser1003@',
        'P-App-Param: ;calltimer=21600;aleg_sst_enable=no;sst_enable=no',
        'P-App-Name: sbc',
        'P-NGCP-Caller-Info: <sip:testuser1002@',
-       'P-NGCP-Callee-Info: <sip:43110021003@',
+       'P-NGCP-Callee-Info: <sip:[% invite_scenarios_pbx_test.testuser1003.pbx_phone_number %]@',
        'P-D-Uri: sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060'
     ]

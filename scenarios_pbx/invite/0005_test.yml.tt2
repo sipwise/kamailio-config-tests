@@ -17,12 +17,12 @@ flow:
   - start|ROUTE_FIND_CALLER:
   - start|ROUTE_AUTH:
   - start|ROUTE_AUTH_HELPER:
-      $x_hdr(From): spce.test
+      $x_hdr(From): invite.scenarios-pbx.test
       $var(realm_user): testuser1002
-      $var(realm_domain): spce.test
+      $var(realm_domain): invite.scenarios-pbx.test
   - return|ROUTE_AUTH_HELPER:
       $avp(orig_acc_caller_user): ['testuser1002']
-      $avp(orig_acc_caller_domain): ['spce.test']
+      $avp(orig_acc_caller_domain): ['invite.scenarios-pbx.test']
   - start|ROUTE_ADD_CALLINFO_REPLY:
   - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
   - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
@@ -67,7 +67,7 @@ flow:
   - return|ROUTE_SET_CALLEE_DIALOG:
       $avp(lua_dlg_profile): [
         "totalaccount:[% customerpbx_test.id %]",
-        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "totaluser:[% invite_scenarios_pbx_test.testuser1003.uuid %]",
         "total"
       ]
   - start|ROUTE_BLOCK_IN:
@@ -95,11 +95,11 @@ flow:
   - return|ROUTE_SET_CALLER_DIALOG:
       $avp(lua_dlg_profile): [
         "totalaccountout:[% customerpbx_test.id %]",
-        "totaluserout:[% spce_test.testuser1002.uuid %]",
+        "totaluserout:[% invite_scenarios_pbx_test.testuser1002.uuid %]",
         "totalaccount:[% customerpbx_test.id %]",
-        "totaluser:[% spce_test.testuser1002.uuid %]",
+        "totaluser:[% invite_scenarios_pbx_test.testuser1002.uuid %]",
         "totalaccount:[% customerpbx_test.id %]",
-        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "totaluser:[% invite_scenarios_pbx_test.testuser1003.uuid %]",
         "total"
       ]
   - start|ROUTE_ACC_CALLER:
@@ -138,11 +138,11 @@ flow:
   - start|ROUTE_EXIT:
       $avp(lua_dlg_profile): [
         "totalaccountout:[% customerpbx_test.id %]",
-        "totaluserout:[% spce_test.testuser1002.uuid %]",
+        "totaluserout:[% invite_scenarios_pbx_test.testuser1002.uuid %]",
         "totalaccount:[% customerpbx_test.id %]",
-        "totaluser:[% spce_test.testuser1002.uuid %]",
+        "totaluser:[% invite_scenarios_pbx_test.testuser1002.uuid %]",
         "totalaccount:[% customerpbx_test.id %]",
-        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "totaluser:[% invite_scenarios_pbx_test.testuser1003.uuid %]",
         "total"
       ]
   - start|ROUTE_RUNTIME:
@@ -167,13 +167,13 @@ sip_out:
       'CSeq: 2 INVITE',
       'From: <sip:testuser1002@',
       'To: <sip:1003@',
-      'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
+      'P-Caller-UUID: [% invite_scenarios_pbx_test.testuser1002.uuid %]',
       'P-NGCP-Caller-Info: <sip:testuser1002@'
     ]
   - [
-      '^PUBLISH sip:testuser1002@spce.test SIP/2.0',
-      'From: <sip:testuser1002@spce.test>',
-      'To: <sip:testuser1002@spce.test>',
+      '^PUBLISH sip:testuser1002@invite.scenarios-pbx.test SIP/2.0',
+      'From: <sip:testuser1002@invite.scenarios-pbx.test>',
+      'To: <sip:testuser1002@invite.scenarios-pbx.test>',
       'Event: dialog',
       'Content-Type: application/dialog-info\+xml',
     ]
@@ -183,10 +183,10 @@ sip_out:
       'From: <sip:testuser1002@',
       'To: <sip:1003@',
       'Content-Type: application/sdp',
-      'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
-      'P-Callee-UUID: [% spce_test.testuser1003.uuid %]',
+      'P-Caller-UUID: [% invite_scenarios_pbx_test.testuser1002.uuid %]',
+      'P-Callee-UUID: [% invite_scenarios_pbx_test.testuser1003.uuid %]',
       'P-NGCP-Lookup-Type: ext',
-      'P-NGCP-Orig-User: 43110021003',
+      'P-NGCP-Orig-User: [% invite_scenarios_pbx_test.testuser1003.pbx_phone_number %]',
       'P-NGCP-Orig-Dialed: 1003',
       'P-App-Param: (;calltimer=21600)?;profile=ngcp_pbx;a_park_domain=\d+;b_park_domain=\d+',
       'P-App-Name: sbc'

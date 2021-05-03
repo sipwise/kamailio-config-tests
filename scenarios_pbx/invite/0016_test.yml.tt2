@@ -21,11 +21,11 @@ flow:
   - return|dialog:start:
       $avp(lua_dlg_profile): [
         "totalaccountout:[% customerpbx_test.id %]",
-        "totaluserout:[% spce_test.testuser1002.uuid %]",
+        "totaluserout:[% invite_scenarios_pbx_test.testuser1002.uuid %]",
         "totalaccount:[% customerpbx_test.id %]",
-        "totaluser:[% spce_test.testuser1002.uuid %]",
+        "totaluser:[% invite_scenarios_pbx_test.testuser1002.uuid %]",
         "totalaccount:[% customerpbx_test.id %]",
-        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "totaluser:[% invite_scenarios_pbx_test.testuser1003.uuid %]",
         "total"
       ]
   - return|dialog:start:
@@ -34,9 +34,9 @@ sip_in:
   - 'CSeq: 2 INVITE'
 sip_out:
   - [
-      '^PUBLISH sip:testuser1002@spce.test SIP/2.0',
-      'From: <sip:testuser1002@spce.test>',
-      'To: <sip:testuser1002@spce.test>',
+      '^PUBLISH sip:testuser1002@invite.scenarios-pbx.test SIP/2.0',
+      'From: <sip:testuser1002@invite.scenarios-pbx.test>',
+      'To: <sip:testuser1002@invite.scenarios-pbx.test>',
       'Event: dialog',
       'Content-Type: application/dialog-info\+xml',
     ]

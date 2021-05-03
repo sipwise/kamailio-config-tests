@@ -28,6 +28,6 @@ sip_out:
   - [
       '^ACK sip:127.0.0.1:5080;transport=udp SIP/2.0',
       'CSeq: \d+ ACK',
-      'From: <sip:4311002@',
+      'From: <sip:[% invite_scenarios_pbx_test.testuser1002.phone_number %]@',
       'To: <sip:1003@'
     ]

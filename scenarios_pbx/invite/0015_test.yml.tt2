@@ -25,9 +25,9 @@ sip_in:
   - 'CSeq: \d+ INVITE'
 sip_out:
   - [
-      '^PUBLISH sip:testuser1003@spce.test SIP/2.0',
-      'From: <sip:testuser1003@spce.test>',
-      'To: <sip:testuser1003@spce.test>',
+      '^PUBLISH sip:testuser1003@invite.scenarios-pbx.test SIP/2.0',
+      'From: <sip:testuser1003@invite.scenarios-pbx.test>',
+      'To: <sip:testuser1003@invite.scenarios-pbx.test>',
       'Event: dialog',
       'Content-Type: application/dialog-info\+xml',
     ]
