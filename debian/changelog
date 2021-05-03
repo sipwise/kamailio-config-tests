@@ -1,3 +1,10 @@
+kamailio-config-tests (9.4.2.0+0~mr9.4.2.0) unstable; urgency=medium
+
+  [ Mohammed Ghettas ]
+  * [4bb2967] TT#118950 Fix kct scenarios after the rework of the call forward
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 03 May 2021 23:52:15 +0200
+
 kamailio-config-tests (9.4.1.0+0~mr9.4.1.0) unstable; urgency=medium
 
   [ Alessio Garzi ]
