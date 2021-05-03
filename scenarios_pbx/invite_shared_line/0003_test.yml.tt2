@@ -21,19 +21,19 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^INVITE sip:1003@spce.test SIP/2.0'
-  - 'From: <sip:testuser1002@spce.test>;tag='
-  - 'To: <sip:1003@spce.test>'
-  - 'Call-Info: <sip:spce.test>;appearance-index=1'
+  - '^INVITE sip:1003@invite-shared-line.scenarios-pbx.test SIP/2.0'
+  - 'From: <sip:[% scenarios.0.username %]@invite-shared-line.scenarios-pbx.test>;tag='
+  - 'To: <sip:1003@invite-shared-line.scenarios-pbx.test>'
+  - 'Call-Info: <sip:invite-shared-line.scenarios-pbx.test>;appearance-index=1'
   - 'CSeq: 1 INVITE'
-  - 'Contact: sip:testuser1002@127.126.0.1:\d+'
+  - 'Contact: sip:[% scenarios.0.username %]@[% scenarios.2.ip %]:[% scenarios.2.port %]'
   - 'Content-Type: application/sdp'
   - 'Content-Length:\s+\d+'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
-      'From: <sip:testuser1002@spce.test>;tag=',
-      'To: <sip:1003@spce.test>',
+      'From: <sip:[% scenarios.0.username %]@invite-shared-line.scenarios-pbx.test>;tag=',
+      'To: <sip:1003@invite-shared-line.scenarios-pbx.test>',
       'CSeq: 1 INVITE',
     ]
   - [

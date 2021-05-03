@@ -21,47 +21,47 @@ flow:
   - return|dialog:start:
       $avp(lua_dlg_profile): [
         "totalaccountout:[% customerpbx_test.id %]",
-        "totaluserout:[% spce_test.testuser1002.uuid %]",
+        "totaluserout:[% invite_shared_line_scenarios_pbx_test.testuser1002.uuid %]",
         "totalaccount:[% customerpbx_test.id %]",
-        "totaluser:[% spce_test.testuser1002.uuid %]",
+        "totaluser:[% invite_shared_line_scenarios_pbx_test.testuser1002.uuid %]",
         "totalaccount:[% customerpbx_test.id %]",
-        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "totaluser:[% invite_shared_line_scenarios_pbx_test.testuser1003.uuid %]",
         "total"
       ]
   - return|dialog:start:
 sip_in:
   - '^SIP/2.0 200 OK'
-  - 'From: <sip:testuser1002@spce.test>;tag='
-  - 'To: <sip:1003@spce.test>;tag='
+  - 'From: <sip:[% scenarios.0.username %]@invite-shared-line.scenarios-pbx.test>;tag='
+  - 'To: <sip:1003@invite-shared-line.scenarios-pbx.test>;tag='
   - 'CSeq: 2 INVITE'
   - 'Contact: <sip:127.0.0.1:5080;transport=udp>'
   - 'Content-Type: application/sdp'
 sip_out:
   - [
-      '^NOTIFY sip:testuser1002@127.1.0.1:\d+ SIP/2.0',
-      'To: <sip:testuser1002@spce.test>;tag=',
-      'From: <sip:testuser1002@spce.test>;tag=',
+      '^NOTIFY sip:testuser1002@[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %] SIP/2.0',
+      'To: <sip:[% scenarios.0.username %]@invite-shared-line.scenarios-pbx.test>;tag=',
+      'From: <sip:[% scenarios.0.username %]@invite-shared-line.scenarios-pbx.test>;tag=',
       'CSeq: 5 NOTIFY',
       'Contact: sip:127.0.0.1:5062',
-      'Call-Info: <sip:spce.test>;appearance-index=1;appearance-state=active;appearance-uri=\"<sip:testuser1003@spce.test>\",<sip:spce.test>;appearance-index=\*;appearance-state=idle',
+      'Call-Info: <sip:invite-shared-line.scenarios-pbx.test>;appearance-index=1;appearance-state=active;appearance-uri=\"<sip:testuser1003@invite-shared-line.scenarios-pbx.test>\",<sip:invite-shared-line.scenarios-pbx.test>;appearance-index=\*;appearance-state=idle',
       'Event: call-info',
       'Subscription-State: active;expires=\d+'
     ]
   - [
-      '^PUBLISH sip:testuser1002@spce.test SIP/2.0',
-      'From: <sip:testuser1002@spce.test>',
-      'To: <sip:testuser1002@spce.test>',
+      '^PUBLISH sip:[% scenarios.0.username %]@invite-shared-line.scenarios-pbx.test SIP/2.0',
+      'From: <sip:[% scenarios.0.username %]@invite-shared-line.scenarios-pbx.test>',
+      'To: <sip:[% scenarios.0.username %]@invite-shared-line.scenarios-pbx.test>',
       'Event: dialog',
       'Content-Type: application/dialog-info\+xml',
     ]
   - [
       '^SIP/2.0 200 OK',
-      'From: <sip:testuser1002@spce.test>;tag=',
-      'To: <sip:1003@spce.test>;tag=',
+      'From: <sip:[% scenarios.0.username %]@invite-shared-line.scenarios-pbx.test>;tag=',
+      'To: <sip:1003@invite-shared-line.scenarios-pbx.test>;tag=',
       'CSeq: 2 INVITE',
       'Contact: <sip:127.0.0.1:5080;transport=udp>',
       'Content-Type: application/sdp',
-      'P-COLP-Identity: \"1003\" <sip:1003@spce.test>',
+      'P-COLP-Identity: \"1003\" <sip:1003@invite-shared-line.scenarios-pbx.test>',
       '_:NOT:_P-Asserted-Identity:',
       'P-Out-Socket: udp:127.0.0.1:5060'
     ]

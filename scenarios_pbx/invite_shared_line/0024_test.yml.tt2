@@ -14,15 +14,15 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - '^SIP/2.0 200 OK'
-  - 'From: <sip:4311002@spce.test>;tag='
-  - 'To: <sip:1003@spce.test>;tag='
+  - 'From: <sip:[% invite_shared_line_scenarios_pbx_test.testuser1002.phone_number %]@invite-shared-line.scenarios-pbx.test>;tag='
+  - 'To: <sip:1003@invite-shared-line.scenarios-pbx.test>;tag='
   - 'CSeq: \d+ BYE'
   - 'Content-Length: 0'
 sip_out:
   - [
       '^SIP/2.0 200 OK',
-      'From: <sip:testuser1002@spce.test>;tag=',
-      'To: <sip:1003@spce.test>;tag=',
+      'From: <sip:[% scenarios.0.username %]@invite-shared-line.scenarios-pbx.test>;tag=',
+      'To: <sip:1003@invite-shared-line.scenarios-pbx.test>;tag=',
       'CSeq: \d+ BYE',
       'Content-Length: 0'
     ]

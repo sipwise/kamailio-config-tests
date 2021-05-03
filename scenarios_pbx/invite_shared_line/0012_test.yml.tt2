@@ -18,16 +18,16 @@ sip_in:
   - 'Content-Length:\s+0'
 sip_out:
   - [
-      '^PUBLISH sip:testuser1003@spce.test SIP/2.0',
-      'From: <sip:testuser1003@spce.test>',
-      'To: <sip:testuser1003@spce.test>',
+      '^PUBLISH sip:testuser1003@invite-shared-line.scenarios-pbx.test SIP/2.0',
+      'From: <sip:testuser1003@invite-shared-line.scenarios-pbx.test>',
+      'To: <sip:testuser1003@invite-shared-line.scenarios-pbx.test>',
       'Event: dialog',
       'Content-Type: application/dialog-info\+xml',
     ]
   - [
       '^SIP/2.0 180 Ringing',
-      'From: <sip:testuser1002@spce.test>;tag=',
-      'To: <sip:1003@spce.test>;tag=',
+      'From: <sip:[% scenarios.0.username %]@invite-shared-line.scenarios-pbx.test>;tag=',
+      'To: <sip:1003@invite-shared-line.scenarios-pbx.test>;tag=',
       'CSeq: \d+ INVITE',
       'Contact: <sip:127.0.0.1:5080;transport=udp>',
       'Content-Length:\s+0'

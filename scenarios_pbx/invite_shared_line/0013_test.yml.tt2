@@ -16,45 +16,45 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - '^SIP/2.0 180 Ringing'
-  - 'From: <sip:testuser1002@spce.test>;tag='
-  - 'To: <sip:1003@spce.test>;tag='
+  - 'From: <sip:[% scenarios.0.username %]@invite-shared-line.scenarios-pbx.test>;tag='
+  - 'To: <sip:1003@invite-shared-line.scenarios-pbx.test>;tag='
   - 'CSeq: 2 INVITE'
   - 'Contact: <sip:127.0.0.1:5080;transport=udp>'
 sip_out:
   - [
-      '^NOTIFY sip:testuser1002@127.1.0.2:\d+ SIP/2.0',
-      'To: <sip:testuser1002@spce.test>;tag=',
-      'From: <sip:testuser1002@spce.test>;tag=',
+      '^NOTIFY sip:testuser1002@[% scenarios.1.responders.0.ip %]:[% scenarios.1.responders.0.port %] SIP/2.0',
+      'To: <sip:[% scenarios.0.username %]@invite-shared-line.scenarios-pbx.test>;tag=',
+      'From: <sip:[% scenarios.0.username %]@invite-shared-line.scenarios-pbx.test>;tag=',
       'CSeq: 2 NOTIFY',
       'Contact: sip:127.0.0.1:5062',
-      'Call-Info: <sip:spce.test>;appearance-index=1',
+      'Call-Info: <sip:invite-shared-line.scenarios-pbx.test>;appearance-index=1',
       'Event: line-seize',
       'Subscription-State: terminated;reason=noresource'
     ]
   - [
-      '^NOTIFY sip:testuser1002@127.1.0.1:\d+ SIP/2.0',
-      'To: <sip:testuser1002@spce.test>;tag=',
-      'From: <sip:testuser1002@spce.test>;tag=',
+      '^NOTIFY sip:testuser1002@[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %] SIP/2.0',
+      'To: <sip:[% scenarios.0.username %]@invite-shared-line.scenarios-pbx.test>;tag=',
+      'From: <sip:[% scenarios.0.username %]@invite-shared-line.scenarios-pbx.test>;tag=',
       'CSeq: 4 NOTIFY',
       'Contact: sip:127.0.0.1:5062',
-      'Call-Info: <sip:spce.test>;appearance-index=1;appearance-state=progressing,<sip:spce.test>;appearance-index=\*;appearance-state=idle',
+      'Call-Info: <sip:invite-shared-line.scenarios-pbx.test>;appearance-index=1;appearance-state=progressing,<sip:invite-shared-line.scenarios-pbx.test>;appearance-index=\*;appearance-state=idle',
       'Event: call-info',
       'Subscription-State: active;expires=\d+'
     ]
   - [
-      '^PUBLISH sip:testuser1002@spce.test SIP/2.0',
-      'From: <sip:testuser1002@spce.test>',
-      'To: <sip:testuser1002@spce.test>',
+      '^PUBLISH sip:[% scenarios.0.username %]@invite-shared-line.scenarios-pbx.test SIP/2.0',
+      'From: <sip:[% scenarios.0.username %]@invite-shared-line.scenarios-pbx.test>',
+      'To: <sip:[% scenarios.0.username %]@invite-shared-line.scenarios-pbx.test>',
       'Event: dialog',
       'Content-Type: application/dialog-info\+xml',
     ]
   - [
       '^SIP/2.0 180 Ringing',
-      'From: <sip:testuser1002@spce.test>;tag=',
-      'To: <sip:1003@spce.test>;tag=',
+      'From: <sip:[% scenarios.0.username %]@invite-shared-line.scenarios-pbx.test>;tag=',
+      'To: <sip:1003@invite-shared-line.scenarios-pbx.test>;tag=',
       'CSeq: 2 INVITE',
       'Contact: <sip:127.0.0.1:5080;transport=udp>',
       'Content-Length:\s+0',
-      'P-COLP-Identity: \"1003\" <sip:1003@spce.test>',
+      'P-COLP-Identity: \"1003\" <sip:1003@invite-shared-line.scenarios-pbx.test>',
       'P-Out-Socket: udp:127.0.0.1:5060'
     ]
