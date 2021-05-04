@@ -134,6 +134,8 @@ sub manage_phones
 
     foreach my $domain (sort keys %{$data->{subscribers}}) {
         my $key_dom = key_domain($domain);
+        my $pbx_pilot_number = undef;
+
         push(@{$ids->{domains}}, $key_dom);
         foreach my $subs (sort keys %{$data->{subscribers}->{$domain}}) {
             my $subs_data = $data->{subscribers}->{$domain}->{$subs};
@@ -142,6 +144,9 @@ sub manage_phones
             $ids->{$key_dom}->{$subs}->{sn} = $subs_data->{sn} = $phone_sn++;
             $ids->{$key_dom}->{$subs}->{phone_number} = $subs_data->{cc} . $subs_data->{ac} . $subs_data->{sn};
             $subs_data->{phone_number} = $ids->{$key_dom}->{$subs}->{phone_number};
+            if(defined($subs_data->{is_pbx_pilot}) && $subs_data->{is_pbx_pilot} == 1) {
+                $pbx_pilot_number = $subs_data->{phone_number};
+            }
         }
         foreach my $subs (sort keys %{$data->{subscribers}->{$domain}}) {
             my $subs_data = $data->{subscribers}->{$domain}->{$subs};
@@ -159,6 +164,9 @@ sub manage_phones
             }
             if(defined($ids->{$key_dom}->{$subs}->{alias_numbers})) {
                 $subs_data->{alias_numbers} = $ids->{$key_dom}->{$subs}->{alias_numbers};
+            }
+            if(defined($subs_data->{pbx_extension})) {
+                $ids->{$key_dom}->{$subs}->{pbx_phone_number} = $pbx_pilot_number.$subs_data->{pbx_extension};
             }
         }
     }
