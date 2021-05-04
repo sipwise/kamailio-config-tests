@@ -9,25 +9,25 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - 'SIP/2.0 180 Ringing'
-  - 'From: <sip:4311002@spce.test>;tag=[\w-]+'
-  - 'To: <sip:testuser1003@spce.test>;tag=[\w-]+'
+  - 'From: <sip:[% invite_alias_scenarios_pbx_test.testuser1002.phone_number %]@invite-alias.scenarios-pbx.test>;tag=[\w-]+'
+  - 'To: <sip:testuser1003@invite-alias.scenarios-pbx.test>;tag=[\w-]+'
   - 'CSeq: \d+ INVITE'
-  - 'Contact: <sip:127.2.0.1:\d+;transport=UDP>'
+  - 'Contact: <sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];transport=UDP>'
   - 'Content-Length: 0'
-  - 'P-NGCP-Src-Ip: 127.2.0.1'
-  - 'P-NGCP-Src-Port: \d+'
+  - 'P-NGCP-Src-Ip: [% scenarios.0.responders.0.ip %]'
+  - 'P-NGCP-Src-Port: [% scenarios.0.responders.0.port %]'
   - 'P-NGCP-Src-Proto: udp'
   - 'P-NGCP-Src-Af: 4'
 sip_out:
   - [
       'SIP/2.0 180 Ringing',
-      'From: <sip:4311002@spce.test>;tag=[\w-]+',
-      'To: <sip:testuser1003@spce.test>;tag=[\w-]+',
+      'From: <sip:[% invite_alias_scenarios_pbx_test.testuser1002.phone_number %]@invite-alias.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:testuser1003@invite-alias.scenarios-pbx.test>;tag=[\w-]+',
       'CSeq: \d+ INVITE',
-      'Contact: <sip:127.2.0.1:\d+;transport=UDP>',
+      'Contact: <sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];transport=UDP>',
       'Content-Length: 0',
-      'P-NGCP-Src-Ip: 127.2.0.1',
-      'P-NGCP-Src-Port: \d+',
+      'P-NGCP-Src-Ip: [% scenarios.0.responders.0.ip %]',
+      'P-NGCP-Src-Port: [% scenarios.0.responders.0.port %]',
       'P-NGCP-Src-Proto: udp',
       'P-NGCP-Src-Af: 4',
     ]

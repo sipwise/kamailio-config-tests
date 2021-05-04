@@ -14,8 +14,8 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - 'SIP/2.0 100 Trying'
-  - 'From: <sip:4311002@spce.test>;tag=[\w-]+'
-  - 'To: <sip:439333111@spce.test>'
+  - 'From: <sip:[% invite_alias_scenarios_pbx_test.testuser1002.phone_number %]@invite-alias.scenarios-pbx.test>;tag=[\w-]+'
+  - 'To: <sip:[% invite_alias_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@invite-alias.scenarios-pbx.test>'
   - 'CSeq: \d+ INVITE'
   - 'Content-Length: 0'
 sip_out: []

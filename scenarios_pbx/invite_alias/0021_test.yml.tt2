@@ -28,24 +28,24 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - 'BYE sip:127.0.0.1:508[08];transport=udp SIP/2.0'
-  - 'From: <sip:testuser1002@spce.test>;tag=[\w-]+'
-  - 'To: <sip:439333111@spce.test>;tag=[\w-]+'
+  - 'From: <sip:testuser1002@invite-alias.scenarios-pbx.test>;tag=[\w-]+'
+  - 'To: <sip:[% invite_alias_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@invite-alias.scenarios-pbx.test>;tag=[\w-]+'
   - 'CSeq: \d+ BYE'
   - 'P-LB-Uptime: \d+'
   - 'Content-Length: 0'
 sip_out:
   - [
       'SIP/2.0 100 Trying',
-      'From: <sip:testuser1002@spce.test>;tag=[\w-]+',
-      'To: <sip:439333111@spce.test>;tag=[\w-]+',
+      'From: <sip:testuser1002@invite-alias.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:[% invite_alias_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@invite-alias.scenarios-pbx.test>;tag=[\w-]+',
       'CSeq: \d+ BYE',
       'Server: Sipwise NGCP Proxy',
       'Content-Length: 0',
     ]
   - [
-      'PUBLISH sip:testuser1003@spce.test SIP/2.0',
-      'To: <sip:testuser1003@spce.test>',
-      'From: <sip:testuser1003@spce.test>;tag=[\w-]+',
+      'PUBLISH sip:testuser1003@invite-alias.scenarios-pbx.test SIP/2.0',
+      'To: <sip:testuser1003@invite-alias.scenarios-pbx.test>',
+      'From: <sip:testuser1003@invite-alias.scenarios-pbx.test>;tag=[\w-]+',
       'CSeq: \d+ PUBLISH',
       'Content-Length:\s+\d+',
       'User-Agent: Sipwise NGCP Proxy',
@@ -55,10 +55,10 @@ sip_out:
     ]
   - [
       'BYE sip:127.0.0.1:508[08];transport=udp SIP/2.0',
-      'From: <sip:4311002@spce.test>;tag=[\w-]+',
-      'To: <sip:439333111@spce.test>;tag=[\w-]+',
+      'From: <sip:[% invite_alias_scenarios_pbx_test.testuser1002.phone_number %]@invite-alias.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:[% invite_alias_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@invite-alias.scenarios-pbx.test>;tag=[\w-]+',
       'CSeq: \d+ BYE',
       'P-LB-Uptime: \d+',
       'Content-Length: 0',
-      'P-Asserted-Identity: <sip:4311002@spce.test>',
+      'P-Asserted-Identity: <sip:[% invite_alias_scenarios_pbx_test.testuser1002.phone_number %]@invite-alias.scenarios-pbx.test>',
     ]
