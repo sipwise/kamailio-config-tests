@@ -14,16 +14,16 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - 'SIP/2.0 180 Ringing'
-  - 'From: <sip:4311002@spce.test>;tag=[\w-]+'
-  - 'To: <sip:439333111@spce.test>;tag=[\w-]+'
+  - 'From: <sip:[% invite_alias_devid_scenarios_pbx_test.testuser1002.phone_number %]@invite-alias-devid.scenarios-pbx.test>;tag=[\w-]+'
+  - 'To: <sip:[% invite_alias_devid_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@invite-alias-devid.scenarios-pbx.test>;tag=[\w-]+'
   - 'CSeq: \d+ INVITE'
   - 'Contact: <sip:127.0.0.1:508[08];transport=udp>'
   - 'Content-Length: 0'
 sip_out:
   - [
-      'PUBLISH sip:439333111@spce.test SIP/2.0',
-      'To: <sip:439333111@spce.test>',
-      'From: <sip:439333111@spce.test>;tag=[\w-]+',
+      'PUBLISH sip:[% invite_alias_devid_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@invite-alias-devid.scenarios-pbx.test SIP/2.0',
+      'To: <sip:[% invite_alias_devid_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@invite-alias-devid.scenarios-pbx.test>',
+      'From: <sip:[% invite_alias_devid_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@invite-alias-devid.scenarios-pbx.test>;tag=[\w-]+',
       'CSeq: \d+ PUBLISH',
       'Content-Length:\s+\d+',
       'User-Agent: Sipwise NGCP Proxy',
@@ -32,8 +32,8 @@ sip_out:
     ]
   - [
       'SIP/2.0 180 Ringing',
-      'From: <sip:testuser1002@spce.test>;tag=[\w-]+',
-      'To: <sip:439333111@spce.test>;tag=[\w-]+',
+      'From: <sip:testuser1002@invite-alias-devid.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:[% invite_alias_devid_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@invite-alias-devid.scenarios-pbx.test>;tag=[\w-]+',
       'CSeq: \d+ INVITE',
       'Contact: <sip:127.0.0.1:508[08];transport=udp>',
       'Content-Length: 0',

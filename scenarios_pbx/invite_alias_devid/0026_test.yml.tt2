@@ -29,28 +29,28 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - 'BYE sip:127.2.0.3:\d+;transport=UDP SIP/2.0'
-  - 'From: <sip:4311002@spce.test>;tag=[\w-]+'
-  - 'To: <sip:439333111@spce.test>;tag=[\w-]+'
+  - 'BYE sip:[% scenarios.2.responders.0.ip %]:[% scenarios.2.responders.0.port %];transport=UDP SIP/2.0'
+  - 'From: <sip:[% invite_alias_devid_scenarios_pbx_test.testuser1002.phone_number %]@invite-alias-devid.scenarios-pbx.test>;tag=[\w-]+'
+  - 'To: <sip:[% invite_alias_devid_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@invite-alias-devid.scenarios-pbx.test>;tag=[\w-]+'
   - 'CSeq: \d+ BYE'
   - 'P-LB-Uptime: \d+'
-  - 'P-Asserted-Identity: <sip:4311002@spce.test>'
+  - 'P-Asserted-Identity: <sip:[% invite_alias_devid_scenarios_pbx_test.testuser1002.phone_number %]@invite-alias-devid.scenarios-pbx.test>'
   - 'Content-Length: 0'
 sip_out:
   - [
       'SIP/2.0 100 Trying',
-      'From: <sip:4311002@spce.test>;tag=[\w-]+',
-      'To: <sip:439333111@spce.test>;tag=[\w-]+',
+      'From: <sip:[% invite_alias_devid_scenarios_pbx_test.testuser1002.phone_number %]@invite-alias-devid.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:[% invite_alias_devid_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@invite-alias-devid.scenarios-pbx.test>;tag=[\w-]+',
       'CSeq: \d+ BYE',
       'Server: Sipwise NGCP Proxy',
       'Content-Length: 0',
     ]
   - [
-      'BYE sip:127.2.0.3:\d+;transport=UDP SIP/2.0',
-      'From: <sip:4311002@spce.test>;tag=[\w-]+',
-      'To: <sip:439333111@spce.test>;tag=[\w-]+',
+      'BYE sip:[% scenarios.2.responders.0.ip %]:[% scenarios.2.responders.0.port %];transport=UDP SIP/2.0',
+      'From: <sip:[% invite_alias_devid_scenarios_pbx_test.testuser1002.phone_number %]@invite-alias-devid.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:[% invite_alias_devid_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@invite-alias-devid.scenarios-pbx.test>;tag=[\w-]+',
       'CSeq: \d+ BYE',
       'P-LB-Uptime: \d+',
-      'P-Asserted-Identity: <sip:4311002@spce.test>',
+      'P-Asserted-Identity: <sip:[% invite_alias_devid_scenarios_pbx_test.testuser1002.phone_number %]@invite-alias-devid.scenarios-pbx.test>',
       'Content-Length: 0',
     ]
