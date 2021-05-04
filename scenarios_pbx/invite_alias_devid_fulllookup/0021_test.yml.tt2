@@ -27,13 +27,13 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - 'ACK sip:127.0.0.1:508[08];prxroute=1 SIP/2.0'
-  - 'From: <sip:testuser1002@spce.test>;tag=[\w-]+'
-  - 'To: <sip:439333111@spce.test>;tag=[\w-]+'
+  - 'From: <sip:testuser1002@invite-alias-devid-fulllookup.scenarios-pbx.test>;tag=[\w-]+'
+  - 'To: <sip:[% invite_alias_devid_fulllookup_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@invite-alias-devid-fulllookup.scenarios-pbx.test>;tag=[\w-]+'
   - 'CSeq: \d+ ACK'
-  - 'Contact: sip:testuser1002@127.126.0.1:\d+'
+  - 'Contact: sip:testuser1002@[% scenarios.2.ip %]:[% scenarios.2.port %]'
   - 'Content-Length: 0'
-  - 'P-NGCP-Src-Ip: 127.126.0.1'
-  - 'P-NGCP-Src-Port: \d+'
+  - 'P-NGCP-Src-Ip: [% scenarios.2.ip %]'
+  - 'P-NGCP-Src-Port: [% scenarios.2.port %]'
   - 'P-NGCP-Src-Proto: udp'
   - 'P-NGCP-Src-Af: 4'
   - 'P-Sock-Info: udp:127.0.0.1:5060'
@@ -41,13 +41,13 @@ sip_in:
 sip_out:
   - [
       'ACK sip:127.0.0.1:508[08];prxroute=1 SIP/2.0',
-      'From: <sip:testuser1002@spce.test>;tag=[\w-]+',
-      'To: <sip:439333111@spce.test>;tag=[\w-]+',
+      'From: <sip:testuser1002@invite-alias-devid-fulllookup.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:[% invite_alias_devid_fulllookup_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@invite-alias-devid-fulllookup.scenarios-pbx.test>;tag=[\w-]+',
       'CSeq: \d+ ACK',
-      'Contact: sip:testuser1002@127.126.0.1:\d+',
+      'Contact: sip:testuser1002@[% scenarios.2.ip %]:[% scenarios.2.port %]',
       'Content-Length: 0',
-      'P-NGCP-Src-Ip: 127.126.0.1',
-      'P-NGCP-Src-Port: \d+',
+      'P-NGCP-Src-Ip: [% scenarios.2.ip %]',
+      'P-NGCP-Src-Port: [% scenarios.2.port %]',
       'P-NGCP-Src-Proto: udp',
       'P-NGCP-Src-Af: 4',
       'P-Sock-Info: udp:127.0.0.1:5060',
