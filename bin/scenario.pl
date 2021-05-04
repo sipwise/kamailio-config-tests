@@ -106,6 +106,28 @@ sub key_domain
     return $key_dom =~ tr/\-/_/r;
 }
 
+sub replace_devid
+{
+    my ($data, $old_alias, $alias) = @_;
+
+    foreach my $scen (@{$data->{scenarios}})
+    {
+        if(defined($scen->{devid})) {
+            if($scen->{devid} eq $old_alias) {
+                $scen->{devid} = $alias;
+            }
+        }
+        foreach my $resp (@{$scen->{responders}})
+        {
+            if(defined($resp->{devid})) {
+                if($resp->{devid} eq $old_alias) {
+                    $resp->{devid} = $alias;
+                }
+            }
+        }
+    }
+}
+
 sub manage_phones
 {
     my ($data) = @_;
@@ -124,12 +146,15 @@ sub manage_phones
         foreach my $subs (sort keys %{$data->{subscribers}->{$domain}}) {
             my $subs_data = $data->{subscribers}->{$domain}->{$subs};
             foreach (@{$subs_data->{alias_numbers}}) {
+                my $old_alias = $_->{cc} . $_->{ac} . $_->{sn};
                 my $alias_data = {
                     cc => $phone_cc,
                     ac => $phone_ac,
                     sn => $phone_sn++,
                 };
+                if(defined($_->{is_devid})) { $alias_data->{is_devid} = $_->{is_devid}; }
                 $alias_data->{phone_number} = $alias_data->{cc} . $alias_data->{ac} . $alias_data->{sn};
+                replace_devid($data, $old_alias, $alias_data->{phone_number});
                 push(@{$ids->{$key_dom}->{$subs}->{alias_numbers}}, $alias_data);
             }
             if(defined($ids->{$key_dom}->{$subs}->{alias_numbers})) {
@@ -231,6 +256,7 @@ sub network_data
     } else {
         $data = generate_net_values($net_data->{scen});
     }
+    if(defined($scen->{devid})) { $data->{devid} = $scen->{devid}; }
     $data->{username} = $scen->{username};
     $scen->{ip} = $data->{ip};
     $scen->{port} = $data->{port};
@@ -245,6 +271,7 @@ sub network_data
         } else {
             $rdata = generate_net_values($net_data->{scen});
         }
+        if(defined($resp->{devid})) { $data->{devid} = $resp->{devid}; }
         $rdata->{username} = $resp->{username};
         if (defined($resp->{foreign}) && $resp->{foreign} eq "yes") {
             $rdata->{port} = 5060;
