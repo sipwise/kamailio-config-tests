@@ -32,66 +32,66 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - '^BYE sip:127.0.0.1:5080;prxroute=1 SIP/2.0'
-  - 'From: <sip:testuser1003@spce.test>;tag='
-  - 'To: <sip:1002@spce.test>;tag='
-  - 'Call-Info: <sip:spce\.test>;appearance-index=1'
+  - 'From: <sip:[% scenarios.2.username %]@incoming-shared-line.scenarios-pbx.test>;tag='
+  - 'To: <sip:1002@incoming-shared-line.scenarios-pbx.test>;tag='
+  - 'Call-Info: <sip:incoming-shared-line.scenarios-pbx.test>;appearance-index=1'
   - 'CSeq: 3 BYE'
-  - 'Contact: sip:testuser1003@127.126.0.3:\d+'
+  - 'Contact: sip:[% scenarios.2.username %]@[% scenarios.2.ip %]:[% scenarios.2.port %]'
   - 'Max-Forwards: 69'
   - 'Content-Length: 0'
-  - 'P-NGCP-Src-Ip: 127.126.0.3'
-  - 'P-NGCP-Src-Port: 51602'
+  - 'P-NGCP-Src-Ip: [% scenarios.2.ip %]'
+  - 'P-NGCP-Src-Port: [% scenarios.2.port %]'
   - 'P-NGCP-Src-Proto: udp'
   - 'P-NGCP-Src-Af: 4'
   - 'P-Sock-Info: udp:127.0.0.1:5060'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
-      'From: <sip:testuser1003@spce.test>;tag=',
-      'To: <sip:1002@spce.test>;tag=',
+      'From: <sip:[% scenarios.2.username %]@incoming-shared-line.scenarios-pbx.test>;tag=',
+      'To: <sip:1002@incoming-shared-line.scenarios-pbx.test>;tag=',
       'CSeq: 3 BYE',
       'P-Out-Socket: udp:127.0.0.1:5060',
-      'P-NGCP-Auth-IP: 127.126.0.3',
+      'P-NGCP-Auth-IP: [% scenarios.2.ip %]',
       'P-NGCP-Auth-UA: <null>',
       'Content-Length: 0',
     ]
   - [
-      '^PUBLISH sip:testuser1003@spce.test SIP/2.0',
-      'From: <sip:testuser1003@spce.test>',
-      'To: <sip:testuser1003@spce.test>',
+      '^PUBLISH sip:[% scenarios.2.username %]@incoming-shared-line.scenarios-pbx.test SIP/2.0',
+      'From: <sip:[% scenarios.2.username %]@incoming-shared-line.scenarios-pbx.test>',
+      'To: <sip:[% scenarios.2.username %]@incoming-shared-line.scenarios-pbx.test>',
       'Event: dialog',
       'Content-Type: application/dialog-info\+xml',
     ]
   - [
-      '^NOTIFY sip:testuser1002@127.1.0.2:\d+ SIP/2.0',
-      'To: <sip:testuser1002@spce.test>;tag=',
-      'From: <sip:testuser1002@spce.test>;tag=',
+      '^NOTIFY sip:[% scenarios.0.username %]@',
+      'To: <sip:[% scenarios.0.username %]@incoming-shared-line.scenarios-pbx.test>;tag=',
+      'From: <sip:[% scenarios.0.username %]@incoming-shared-line.scenarios-pbx.test>;tag=',
       'CSeq: 3 NOTIFY',
       'Max-Forwards: 70',
       'Content-Length: 0',
       'Contact: sip:127.0.0.1:5062',
-      'Call-Info: <sip:spce\.test>;appearance-index=\*;appearance-state=idle',
+      'Call-Info: <sip:incoming-shared-line.scenarios-pbx.test>;appearance-index=\*;appearance-state=idle',
       'Event: call-info',
       'Subscription-State: active;expires=\d+',
     ]
   - [
-      '^NOTIFY sip:testuser1002@127.1.0.1:\d+ SIP/2.0',
-      'To: <sip:testuser1002@spce.test>;tag=',
-      'From: <sip:testuser1002@spce.test>;tag=',
+      '^NOTIFY sip:[% scenarios.1.username %]@',
+      'To: <sip:[% scenarios.0.username %]@incoming-shared-line.scenarios-pbx.test>;tag=',
+      'From: <sip:[% scenarios.0.username %]@incoming-shared-line.scenarios-pbx.test>;tag=',
       'CSeq: 3 NOTIFY',
       'Max-Forwards: 70',
       'Content-Length: 0',
       'Contact: sip:127.0.0.1:5062',
-      'Call-Info: <sip:spce\.test>;appearance-index=\*;appearance-state=idle',
+      'Call-Info: <sip:incoming-shared-line.scenarios-pbx.test>;appearance-index=\*;appearance-state=idle',
       'Event: call-info',
       'Subscription-State: active;expires=\d+',
     ]
   - [
       '^BYE sip:127.0.0.1:5080;prxroute=1 SIP/2.0',
-      'From: <sip:testuser1003@spce.test>;tag=',
-      'To: <sip:1002@spce.test>;tag=',
+      'From: <sip:[% scenarios.2.username %]@incoming-shared-line.scenarios-pbx.test>;tag=',
+      'To: <sip:1002@incoming-shared-line.scenarios-pbx.test>;tag=',
       'CSeq: 3 BYE',
-      'Contact: sip:testuser1003@127.126.0.3:\d+',
+      'Contact: sip:[% scenarios.2.username %]@[% scenarios.2.ip %]:[% scenarios.2.port %]',
       'Max-Forwards: 68',
       'Content-Length: 0',
     ]

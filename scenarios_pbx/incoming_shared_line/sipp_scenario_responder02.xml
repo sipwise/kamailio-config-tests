@@ -22,7 +22,7 @@
       [last_Call-ID:]
       [last_CSeq:]
       Allow: INVITE, INFO, PRACK, ACK, BYE, CANCEL, OPTIONS, NOTIFY, REGISTER, SUBSCRIBE, REFER, PUBLISH, UPDATE, MESSAGE
-      Call-Info: <sip:spce.test>;appearance-index=1
+      Call-Info: <sip:[field3 file="callee.csv" line=1]>;appearance-index=1
       Allow-Events: talk,hold,conference,refer,check-sync
       Contact: <sip:[local_ip]:[local_port];transport=[transport]>
       Content-Length: 0

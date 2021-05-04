@@ -22,29 +22,29 @@ flow:
   - return|dialog:start:
 sip_in:
   - '^SIP/2.0 200 OK'
-  - 'From: <sip:testuser1003@spce.test>;tag='
-  - 'To: <sip:1002@spce.test>;tag='
+  - 'From: <sip:[% scenarios.2.username %]@incoming-shared-line.scenarios-pbx.test>;tag='
+  - 'To: <sip:1002@incoming-shared-line.scenarios-pbx.test>;tag='
   - 'CSeq: 2 INVITE'
-  - 'Call-Info: <sip:spce\.test>;appearance-index=1'
+  - 'Call-Info: <sip:incoming-shared-line.scenarios-pbx.test>;appearance-index=1'
   - 'Contact: <sip:127.0.0.1:5080;transport=udp>'
   - 'Content-Type: application/sdp'
   - 'Content-Length: \d+'
 sip_out:
   - [
-      '^PUBLISH sip:testuser1003@spce.test SIP/2.0',
-      'From: <sip:testuser1003@spce.test>',
-      'To: <sip:testuser1003@spce.test>',
+      '^PUBLISH sip:[% scenarios.2.username %]@incoming-shared-line.scenarios-pbx.test SIP/2.0',
+      'From: <sip:[% scenarios.2.username %]@incoming-shared-line.scenarios-pbx.test>',
+      'To: <sip:[% scenarios.2.username %]@incoming-shared-line.scenarios-pbx.test>',
       'Event: dialog',
       'Content-Type: application/dialog-info\+xml',
     ]
   - [
       '^SIP/2.0 200 OK',
-      'From: <sip:testuser1003@spce.test>;tag=',
-      'To: <sip:1002@spce.test>;tag=',
+      'From: <sip:[% scenarios.2.username %]@incoming-shared-line.scenarios-pbx.test>;tag=',
+      'To: <sip:1002@incoming-shared-line.scenarios-pbx.test>;tag=',
       'CSeq: 2 INVITE',
       'Contact: <sip:127.0.0.1:5080;transport=udp>',
       'Content-Type: application/sdp',
       'Content-Length: \d+',
-      'P-COLP-Identity: \"1002\" <sip:1002@spce.test>',
+      'P-COLP-Identity: \"1002\" <sip:1002@incoming-shared-line.scenarios-pbx.test>',
       'P-Out-Socket: udp:127.0.0.1:5060',
     ]

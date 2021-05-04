@@ -21,38 +21,38 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^INVITE sip:1002@spce.test SIP/2.0'
-  - 'From: <sip:testuser1003@spce.test>;tag='
-  - 'To: <sip:1002@spce.test>'
-  - 'Call-Info: <sip:spce\.test>;appearance-index=1'
+  - '^INVITE sip:1002@incoming-shared-line.scenarios-pbx.test SIP/2.0'
+  - 'From: <sip:[% scenarios.2.username %]@incoming-shared-line.scenarios-pbx.test>;tag='
+  - 'To: <sip:1002@incoming-shared-line.scenarios-pbx.test>'
+  - 'Call-Info: <sip:incoming-shared-line.scenarios-pbx.test>;appearance-index=1'
   - 'CSeq: 1 INVITE'
-  - 'Contact: sip:testuser1003@127.126.0.3:\d+'
+  - 'Contact: sip:[% scenarios.2.username %]@[% scenarios.2.ip %]:[% scenarios.2.port %]'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
   - 'Content-Length:\s+\d+'
-  - 'P-NGCP-Src-Ip: 127.126.0.3'
-  - 'P-NGCP-Src-Port: \d+'
+  - 'P-NGCP-Src-Ip: [% scenarios.2.ip %]'
+  - 'P-NGCP-Src-Port: [% scenarios.2.port %]'
   - 'P-NGCP-Src-Proto: udp'
   - 'P-NGCP-Src-Af: 4'
   - 'P-Sock-Info: udp:127.0.0.1:5060'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
-      'From: <sip:testuser1003@spce.test>;tag=',
-      'To: <sip:1002@spce.test>',
+      'From: <sip:[% scenarios.2.username %]@incoming-shared-line.scenarios-pbx.test>;tag=',
+      'To: <sip:1002@incoming-shared-line.scenarios-pbx.test>',
       'CSeq: 1 INVITE',
       'P-Out-Socket: udp:127.0.0.1:5060',
-      'P-NGCP-Auth-IP: 127.126.0.3',
+      'P-NGCP-Auth-IP: [% scenarios.2.ip %]',
       'P-NGCP-Auth-UA: <null>',
       'Content-Length: 0',
     ]
   - [
       '^SIP/2.0 407 Proxy Authentication Required',
-      'From: <sip:testuser1003@spce.test>;tag=',
-      'To: <sip:1002@spce.test>;tag=',
+      'From: <sip:[% scenarios.2.username %]@incoming-shared-line.scenarios-pbx.test>;tag=',
+      'To: <sip:1002@incoming-shared-line.scenarios-pbx.test>;tag=',
       'CSeq: 1 INVITE',
       'P-Out-Socket: udp:127.0.0.1:5060',
-      'P-NGCP-Auth-IP: 127.126.0.3',
+      'P-NGCP-Auth-IP: [% scenarios.2.ip %]',
       'P-NGCP-Auth-UA: <null>',
       'Proxy-Authenticate: Digest',
       'Content-Length: 0',

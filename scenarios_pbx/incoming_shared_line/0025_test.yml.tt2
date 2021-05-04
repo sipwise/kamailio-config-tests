@@ -14,15 +14,15 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - '^SIP/2.0 487 Request terminated'
-  - 'From: <sip:43110021003@spce.test>;tag='
-  - 'To: <sip:1002@spce.test>;tag='
+  - 'From: <sip:[% incoming_shared_line_scenarios_pbx_test.testuser1003.pbx_phone_number %]@incoming-shared-line.scenarios-pbx.test>;tag='
+  - 'To: <sip:1002@incoming-shared-line.scenarios-pbx.test>;tag='
   - 'CSeq: \d+ INVITE'
   - 'Content-Length: 0'
 sip_out:
   - [
-      '^ACK sip:testuser1002@127.1.0.3:\d+ SIP/2.0',
-      'From: <sip:43110021003@spce.test>;tag=',
-      'To: <sip:1002@spce.test>;tag=',
+      '^ACK sip:[% scenarios.0.username %]@[% scenarios.2.responders.0.ip %]:[% scenarios.2.responders.0.port %] SIP/2.0',
+      'From: <sip:[% incoming_shared_line_scenarios_pbx_test.testuser1003.pbx_phone_number %]@incoming-shared-line.scenarios-pbx.test>;tag=',
+      'To: <sip:1002@incoming-shared-line.scenarios-pbx.test>;tag=',
       'CSeq: \d+ ACK',
       'Route: <sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060>',
       'Max-Forwards: 69',

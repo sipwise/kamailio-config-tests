@@ -121,70 +121,70 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^INVITE sip:1002@spce.test SIP/2.0'
-  - 'From: <sip:testuser1003@spce.test>;tag='
-  - 'To: <sip:1002@spce.test>'
-  - 'Call-Info: <sip:spce\.test>;appearance-index=1'
+  - '^INVITE sip:1002@incoming-shared-line.scenarios-pbx.test SIP/2.0'
+  - 'From: <sip:[% scenarios.2.username %]@incoming-shared-line.scenarios-pbx.test>;tag='
+  - 'To: <sip:1002@incoming-shared-line.scenarios-pbx.test>'
+  - 'Call-Info: <sip:incoming-shared-line.scenarios-pbx.test>;appearance-index=1'
   - 'CSeq: 2 INVITE'
-  - 'Contact: sip:testuser1003@127.126.0.3:\d+'
+  - 'Contact: sip:[% scenarios.2.username %]@[% scenarios.2.ip %]:[% scenarios.2.port %]'
   - 'Max-Forwards: 69'
   - 'Proxy-Authorization: Digest'
   - 'Content-Type: application/sdp'
   - 'Content-Length:\s+\d+'
-  - 'P-NGCP-Src-Ip: 127.126.0.3'
-  - 'P-NGCP-Src-Port: \d+'
+  - 'P-NGCP-Src-Ip: [% scenarios.2.ip %]'
+  - 'P-NGCP-Src-Port: [% scenarios.2.port %]'
   - 'P-NGCP-Src-Proto: udp'
   - 'P-NGCP-Src-Af: 4'
   - 'P-Sock-Info: udp:127.0.0.1:5060'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
-      'From: <sip:testuser1003@spce.test>;tag=',
-      'To: <sip:1002@spce.test>',
+      'From: <sip:[% scenarios.2.username %]@incoming-shared-line.scenarios-pbx.test>;tag=',
+      'To: <sip:1002@incoming-shared-line.scenarios-pbx.test>',
       'CSeq: 2 INVITE',
       'P-Out-Socket: udp:127.0.0.1:5060',
-      'P-NGCP-Auth-IP: 127.126.0.3',
+      'P-NGCP-Auth-IP: [% scenarios.2.ip %]',
       'P-NGCP-Auth-UA: <null>',
       'Content-Length: 0',
     ]
   - [
       '^SIP/2.0 101 Connecting',
-      'From: <sip:testuser1003@spce.test>;tag=',
-      'To: <sip:1002@spce.test>',
+      'From: <sip:[% scenarios.2.username %]@incoming-shared-line.scenarios-pbx.test>;tag=',
+      'To: <sip:1002@incoming-shared-line.scenarios-pbx.test>',
       'CSeq: 2 INVITE',
       'P-Out-Socket: udp:127.0.0.1:5060',
-      'P-NGCP-Auth-IP: 127.126.0.3',
+      'P-NGCP-Auth-IP: [% scenarios.2.ip %]',
       'P-NGCP-Auth-UA: <null>',
-      'P-NGCP-Authorization: testuser1003@spce.test',
+      'P-NGCP-Authorization: [% scenarios.2.username %]@incoming-shared-line.scenarios-pbx.test',
       'P-NGCP-Authorized: 1',
-      'P-NGCP-Caller-Info: <sip:testuser1003@spce.test>;ip=127.126.0.3;port=\d+;primary=43110021003',
-      'P-Caller-UUID: [% spce_test.testuser1003.uuid %]',
+      'P-NGCP-Caller-Info: <sip:[% scenarios.2.username %]@incoming-shared-line.scenarios-pbx.test>;ip=[% scenarios.2.ip %];port=\d+;primary=[% incoming_shared_line_scenarios_pbx_test.testuser1003.pbx_phone_number %]',
+      'P-Caller-UUID: [% incoming_shared_line_scenarios_pbx_test.testuser1003.uuid %]',
       'Content-Length: 0',
     ]
   - [
-      '^PUBLISH sip:testuser1003@spce.test SIP/2.0',
-      'From: <sip:testuser1003@spce.test>',
-      'To: <sip:testuser1003@spce.test>',
+      '^PUBLISH sip:[% scenarios.2.username %]@incoming-shared-line.scenarios-pbx.test SIP/2.0',
+      'From: <sip:[% scenarios.2.username %]@incoming-shared-line.scenarios-pbx.test>',
+      'To: <sip:[% scenarios.2.username %]@incoming-shared-line.scenarios-pbx.test>',
       'Event: dialog',
       'Content-Type: application/dialog-info\+xml',
     ]
   - [
-      '^INVITE sip:testuser1002@spce.test SIP/2.0',
-      'From: <sip:testuser1003@spce.test>;tag=',
-      'To: <sip:1002@spce.test>',
+      '^INVITE sip:[% scenarios.0.username %]@incoming-shared-line.scenarios-pbx.test SIP/2.0',
+      'From: <sip:[% scenarios.2.username %]@incoming-shared-line.scenarios-pbx.test>;tag=',
+      'To: <sip:1002@incoming-shared-line.scenarios-pbx.test>',
       'CSeq: 2 INVITE',
-      'Contact: sip:testuser1003@127.126.0.3:\d+',
+      'Contact: sip:[% scenarios.2.username %]@[% scenarios.2.ip %]:[% scenarios.2.port %]',
       'Max-Forwards: 68',
       'Content-Type: application/sdp',
       'Content-Length:\s+\d+',
-      'P-NGCP-Src-Ip: 127.126.0.3',
-      'P-NGCP-Src-Port: \d+',
+      'P-NGCP-Src-Ip: [% scenarios.2.ip %]',
+      'P-NGCP-Src-Port: [% scenarios.2.port %]',
       'P-NGCP-Src-Proto: udp',
       'P-NGCP-Src-Af: 4',
       'P-NGCP-Src-Nat: 0',
       'P-Caller-CLIR: 0',
-      'P-NGCP-Orig-User: 4311002',
-      'P-NGCP-Orig-Domain: spce.test',
+      'P-NGCP-Orig-User: [% incoming_shared_line_scenarios_pbx_test.testuser1002.phone_number %]',
+      'P-NGCP-Orig-Domain: incoming-shared-line.scenarios-pbx.test',
       'P-NGCP-Orig-Dialed: 1002',
       'P-NGCP-Orig-PBX-Ext: 1002',
       'P-First-Caller-Cloud-PBX: \d+',
@@ -193,12 +193,12 @@ sip_out:
       'P-NGCP-AdmBlockOut-Override: 0',
       'P-NGCP-ContBlockOut-Override: 0',
       'P-NGCP-ContAdmBlockOut-Override: 0',
-      'P-Caller-UUID: [% spce_test.testuser1003.uuid %]',
-      'P-Callee-UUID: [% spce_test.testuser1002.uuid %]',
+      'P-Caller-UUID: [% incoming_shared_line_scenarios_pbx_test.testuser1003.uuid %]',
+      'P-Callee-UUID: [% incoming_shared_line_scenarios_pbx_test.testuser1002.uuid %]',
       'P-App-Name: sbc',
       'P-App-Param: ;profile=ngcp_pbx;a_park_domain=\d+;b_park_domain=\d+',
       'P-NGCP-Acc-Src-Leg: \w+',
       'P-NGCP-Acc-Dst-Leg: \w+',
-      'P-NGCP-Caller-Info: <sip:testuser1003@spce.test>;ip=127.126.0.3;port=\d+;primary=43110021003',
-      'P-NGCP-Callee-Info: <sip:4311002@spce.test>;ip=127.0.0.1;port=5080;primary=4311002',
+      'P-NGCP-Caller-Info: <sip:[% scenarios.2.username %]@incoming-shared-line.scenarios-pbx.test>;ip=[% scenarios.2.ip %];port=[% scenarios.2.port %];primary=[% incoming_shared_line_scenarios_pbx_test.testuser1003.pbx_phone_number %]',
+      'P-NGCP-Callee-Info: <sip:[% incoming_shared_line_scenarios_pbx_test.testuser1002.phone_number %]@incoming-shared-line.scenarios-pbx.test>;ip=127.0.0.1;port=5080;primary=[% incoming_shared_line_scenarios_pbx_test.testuser1002.phone_number %]',
     ]

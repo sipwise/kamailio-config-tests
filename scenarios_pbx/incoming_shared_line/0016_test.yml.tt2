@@ -9,31 +9,31 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - 'SIP/2.0 180 Ringing'
-  - 'From: <sip:43110021003@spce.test>;tag=[\w-]+'
-  - 'To: <sip:testuser1002@spce.test>;tag=[\w-]+'
+  - 'From: <sip:[% incoming_shared_line_scenarios_pbx_test.testuser1003.pbx_phone_number %]@incoming-shared-line.scenarios-pbx.test>;tag=[\w-]+'
+  - 'To: <sip:[% scenarios.0.username %]@incoming-shared-line.scenarios-pbx.test>;tag=[\w-]+'
   - 'CSeq: \d+ INVITE'
   - 'Allow: INVITE, PRACK, ACK, BYE, CANCEL, OPTIONS, NOTIFY, REGISTER, SUBSCRIBE, REFER, PUBLISH, UPDATE, MESSAGE'
-  - 'Call-Info: <sip:spce.test>;appearance-index=1'
+  - 'Call-Info: <sip:incoming-shared-line.scenarios-pbx.test>;appearance-index=1'
   - 'Allow-Events: talk,hold,conference,refer,check-sync'
-  - 'Contact: <sip:127.1.0.3:\d+;transport=UDP>'
+  - 'Contact: <sip:[% scenarios.2.responders.0.ip %]:[% scenarios.2.responders.0.port %];transport=UDP>'
   - 'Content-Length: 0'
-  - 'P-NGCP-Src-Ip: 127.1.0.3'
-  - 'P-NGCP-Src-Port: \d+'
+  - 'P-NGCP-Src-Ip: [% scenarios.2.responders.0.ip %]'
+  - 'P-NGCP-Src-Port: [% scenarios.2.responders.0.port %]'
   - 'P-NGCP-Src-Proto: udp'
   - 'P-NGCP-Src-Af: 4'
 sip_out:
   - [
       'SIP/2.0 180 Ringing',
-      'From: <sip:43110021003@spce.test>;tag=[\w-]+',
-      'To: <sip:testuser1002@spce.test>;tag=[\w-]+',
+      'From: <sip:[% incoming_shared_line_scenarios_pbx_test.testuser1003.pbx_phone_number %]@incoming-shared-line.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.username %]@incoming-shared-line.scenarios-pbx.test>;tag=[\w-]+',
       'CSeq: \d+ INVITE',
       'Allow: INVITE, PRACK, ACK, BYE, CANCEL, OPTIONS, NOTIFY, REGISTER, SUBSCRIBE, REFER, PUBLISH, UPDATE, MESSAGE',
-      'Call-Info: <sip:spce.test>;appearance-index=1',
+      'Call-Info: <sip:incoming-shared-line.scenarios-pbx.test>;appearance-index=1',
       'Allow-Events: talk,hold,conference,refer,check-sync',
-      'Contact: <sip:127.1.0.3:\d+;transport=UDP>',
+      'Contact: <sip:[% scenarios.2.responders.0.ip %]:[% scenarios.2.responders.0.port %];transport=UDP>',
       'Content-Length: 0',
-      'P-NGCP-Src-Ip: 127.1.0.3',
-      'P-NGCP-Src-Port: \d+',
+      'P-NGCP-Src-Ip: [% scenarios.2.responders.0.ip %]',
+      'P-NGCP-Src-Port: [% scenarios.2.responders.0.port %]',
       'P-NGCP-Src-Proto: udp',
       'P-NGCP-Src-Af: 4',
     ]

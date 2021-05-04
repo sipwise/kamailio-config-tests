@@ -28,30 +28,30 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - '^BYE sip:127.0.0.1:5080;transport=udp SIP/2.0'
-  - 'From: <sip:testuser1003@spce.test>;tag='
-  - 'To: <sip:1002@spce.test>;tag='
+  - 'From: <sip:[% scenarios.2.username %]@incoming-shared-line.scenarios-pbx.test>;tag='
+  - 'To: <sip:1002@incoming-shared-line.scenarios-pbx.test>;tag='
   - 'CSeq: \d+ BYE'
   - 'Max-Forwards: 70'
   - 'Content-Length: 0'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
-      'From: <sip:testuser1003@spce.test>;tag=',
-      'To: <sip:1002@spce.test>;tag=',
+      'From: <sip:[% scenarios.2.username %]@incoming-shared-line.scenarios-pbx.test>;tag=',
+      'To: <sip:1002@incoming-shared-line.scenarios-pbx.test>;tag=',
       'CSeq: \d+ BYE',
       'Content-Length: 0',
     ]
   - [
-      '^PUBLISH sip:testuser1002@spce.test SIP/2.0',
-      'From: <sip:testuser1002@spce.test>',
-      'To: <sip:testuser1002@spce.test>',
+      '^PUBLISH sip:[% scenarios.0.username %]@incoming-shared-line.scenarios-pbx.test SIP/2.0',
+      'From: <sip:[% scenarios.0.username %]@incoming-shared-line.scenarios-pbx.test>',
+      'To: <sip:[% scenarios.0.username %]@incoming-shared-line.scenarios-pbx.test>',
       'Event: dialog',
       'Content-Type: application/dialog-info\+xml',
     ]
   - [
       '^BYE sip:127.0.0.1:5080;transport=udp SIP/2.0',
-      'From: <sip:43110021003@spce.test>;tag=',
-      'To: <sip:1002@spce.test>;tag=',
+      'From: <sip:[% incoming_shared_line_scenarios_pbx_test.testuser1003.pbx_phone_number %]@incoming-shared-line.scenarios-pbx.test>;tag=',
+      'To: <sip:1002@incoming-shared-line.scenarios-pbx.test>;tag=',
       'CSeq: \d+ BYE',
       'Max-Forwards: 69',
       'Content-Length: 0',
