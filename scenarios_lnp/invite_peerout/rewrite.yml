@@ -1,7 +1,8 @@
-rw_00:
+---
+rw_invite_peerout_lnp:
   - direction: lnp
     field: callee
     match_pattern: '^0043([0-9]+)$'
     replace_pattern: '0043$avp(s:callee_lnp_prefix)\1'
     priority: 1
-    description: add LNP prefix 
+    description: add LNP prefix

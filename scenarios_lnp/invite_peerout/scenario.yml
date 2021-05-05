@@ -1,6 +1,7 @@
+---
 test_uuid: invite_peerout
 domains:
-  'spce.test':
+  invite-peerout.scenarios-lnp.test:
     reseller_id: 1
 customers:
   'customer.test':
@@ -13,7 +14,7 @@ customers:
       billing_profile_id: 1
       reseller_id: 1
 subscribers:
-  spce.test:
+  invite-peerout.scenarios-lnp.test:
     testuser1002:
       customer: 'customer.test'
       password: testuser
@@ -23,11 +24,14 @@ subscribers:
 scenarios:
   - ip: 127.126.0.1
     username: testuser1002
-    domain: spce.test
+    domain: invite-peerout.scenarios-lnp.test
     responders:
       - ip: 127.0.2.1
         number: 004321001
         username: 004321001
-        domain: spce.test
-        peer_host: peer_00_host0
-        register: no
+        domain: invite-peerout.scenarios-lnp.test
+        peer_host: peer_invite_peerout_host0
+        register: 'no'
+extra_info:
+  phone_numbers:
+    - '004328881001'
