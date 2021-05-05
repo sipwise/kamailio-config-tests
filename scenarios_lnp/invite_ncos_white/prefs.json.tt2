@@ -1,12 +1,12 @@
 {
-    "@spce.test": {
+    "@invite-ncos-white.scenarios-lnp.test": {
         "lnp_for_local_sub": true,
         "ncos": "ncos_white"
     },
-    "peer_00_host0": {
+    "peer_invite_ncos_white_lnp_host0": {
         "concurrent_max": 1
     },
-    "peer_00_host1": {
+    "peer_invite_ncos_white_lnp_host1": {
         "concurrent_max": 1
     }
 }

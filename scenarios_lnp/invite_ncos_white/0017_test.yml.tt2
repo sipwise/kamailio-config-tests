@@ -21,12 +21,12 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^INVITE sip:43999200@'
-  - 'From: <sip:testuser1002'
-  - 'To: <sip:43999200@'
+  - '^INVITE sip:[% extra_info.phone_numbers.3 %]@'
+  - 'From: <sip:[% scenarios.0.username %]'
+  - 'To: <sip:[% extra_info.phone_numbers.3 %]@'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
-  - 'P-NGCP-Src-Ip: 127.126.0.2'
+  - 'P-NGCP-Src-Ip: [% scenarios.0.ip %]'
   - 'P-NGCP-Src-Port: \d+'
   - 'P-NGCP-Src-Proto: udp'
   - 'P-NGCP-Src-Af: 4'
@@ -36,7 +36,7 @@ sip_out:
       '^SIP/2.0 100 Trying',
       'CSeq: 1 INVITE',
       'P-Out-Socket: udp:127.0.0.1:5060',
-      'P-NGCP-Auth-IP: 127.126.0.2',
+      'P-NGCP-Auth-IP: [% scenarios.0.ip %]',
       'Content-Length: 0'
     ]
   - [

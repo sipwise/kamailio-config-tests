@@ -13,39 +13,39 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - 'INVITE sip:4318881001@127.0.2.2:\d+;transport=udp SIP/2.0'
-  - 'From: <sip:4311002@spce.test>;tag=[\w-]+'
-  - 'To: <sip:4318881001@127.0.2.2>'
+  - 'INVITE sip:4318881001@[% peer_invite_ncos_white_lnp_host1.ip %]:\d+;transport=udp SIP/2.0'
+  - 'From: <sip:[% invite_ncos_white_scenarios_lnp_test.testuser1002.phone_number %]@invite-ncos-white.scenarios-lnp.test>;tag=[\w-]+'
+  - 'To: <sip:4318881001@[% peer_invite_ncos_white_lnp_host1.ip %]>'
   - 'CSeq: \d+ INVITE'
   - 'P-LB-Uptime: \d+'
-  - 'P-Asserted-Identity: <sip:4311002@spce.test>'
-  - 'P-Caller-UUID: [% spce_test.testuser1002.uuid %]'
-  - 'P-NGCP-Caller-Info: <sip:testuser1002@spce.test>;ip=127.126.0.2;port=\d+;primary=4311002'
-  - 'P-NGCP-Callee-Info: <sip:43999200@spce.test>;ip=127.0.2.2;port=\d+'
-  - 'P-D-Uri: sip:127.0.0.1:5060;received=sip:127.0.2.2:\d+%3blr%3btransport%3dudp'
+  - 'P-Asserted-Identity: <sip:[% invite_ncos_white_scenarios_lnp_test.testuser1002.phone_number %]@invite-ncos-white.scenarios-lnp.test>'
+  - 'P-Caller-UUID: [% invite_ncos_white_scenarios_lnp_test.testuser1002.uuid %]'
+  - 'P-NGCP-Caller-Info: <sip:[% scenarios.1.username %]@invite-ncos-white.scenarios-lnp.test>;ip=[% scenarios.1.ip %];port=[% scenarios.1.port %];primary=[% invite_ncos_white_scenarios_lnp_test.testuser1002.phone_number %]'
+  - 'P-NGCP-Callee-Info: <sip:[% extra_info.phone_numbers.3 %]@invite-ncos-white.scenarios-lnp.test>;ip=[% peer_invite_ncos_white_lnp_host1.ip %];port=[% peer_invite_ncos_white_lnp_host1.port %]'
+  - 'P-D-Uri: sip:127.0.0.1:5060;received=sip:[% peer_invite_ncos_white_lnp_host1.ip %]:[% peer_invite_ncos_white_lnp_host1.port %]%3blr%3btransport%3dudp'
   - 'Content-Type: application/sdp'
   - 'Contact: <sip:127.0.0.1:508[08];transport=udp>'
   - 'Content-Length:\s+\d+'
 sip_out:
   - [
       'SIP/2.0 100 Trying',
-      'From: <sip:4311002@spce.test>;tag=[\w-]+',
-      'To: <sip:4318881001@127.0.2.2>',
+      'From: <sip:[% invite_ncos_white_scenarios_lnp_test.testuser1002.phone_number %]@invite-ncos-white.scenarios-lnp.test>;tag=[\w-]+',
+      'To: <sip:4318881001@[% peer_invite_ncos_white_lnp_host1.ip %]>',
       'CSeq: \d+ INVITE',
       'Server: Sipwise NGCP Proxy',
       'Content-Length: 0',
     ]
   - [
-      'INVITE sip:4318881001@127.0.2.2:\d+;transport=udp SIP/2.0',
-      'From: <sip:4311002@spce.test>;tag=[\w-]+',
-      'To: <sip:4318881001@127.0.2.2>',
+      'INVITE sip:4318881001@[% peer_invite_ncos_white_lnp_host1.ip %]:\d+;transport=udp SIP/2.0',
+      'From: <sip:[% invite_ncos_white_scenarios_lnp_test.testuser1002.phone_number %]@invite-ncos-white.scenarios-lnp.test>;tag=[\w-]+',
+      'To: <sip:4318881001@[% peer_invite_ncos_white_lnp_host1.ip %]>',
       'CSeq: \d+ INVITE',
       'P-LB-Uptime: \d+',
-      'P-Asserted-Identity: <sip:4311002@spce.test>',
-      'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
-      'P-NGCP-Caller-Info: <sip:testuser1002@spce.test>;ip=127.126.0.2;port=\d+;primary=4311002',
-      'P-NGCP-Callee-Info: <sip:43999200@spce.test>;ip=127.0.2.2;port=\d+',
-      'P-D-Uri: sip:127.0.0.1:5060;received=sip:127.0.2.2:\d+%3blr%3btransport%3dudp',
+      'P-Asserted-Identity: <sip:[% invite_ncos_white_scenarios_lnp_test.testuser1002.phone_number %]@invite-ncos-white.scenarios-lnp.test>',
+      'P-Caller-UUID: [% invite_ncos_white_scenarios_lnp_test.testuser1002.uuid %]',
+      'P-NGCP-Caller-Info: <sip:[% scenarios.1.username %]@invite-ncos-white.scenarios-lnp.test>;ip=[% scenarios.1.ip %];port=[% scenarios.1.port %];primary=[% invite_ncos_white_scenarios_lnp_test.testuser1002.phone_number %]',
+      'P-NGCP-Callee-Info: <sip:[% extra_info.phone_numbers.3 %]@invite-ncos-white.scenarios-lnp.test>;ip=[% peer_invite_ncos_white_lnp_host1.ip %];port=[% peer_invite_ncos_white_lnp_host1.port %]',
+      'P-D-Uri: sip:127.0.0.1:5060;received=sip:[% peer_invite_ncos_white_lnp_host1.ip %]:[% peer_invite_ncos_white_lnp_host1.port %]%3blr%3btransport%3dudp',
       'Content-Type: application/sdp',
       'Contact: <sip:127.0.0.1:508[08];transport=udp>',
       'Content-Length:\s+\d+',

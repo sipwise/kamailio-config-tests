@@ -90,8 +90,8 @@ flow:
   - start|ROUTE_OUTBOUND:
       $avp(lua_dlg_profile): [
         "relay",
-        "peerout:[% peer_00_host0.id %]",
-        "peer:[% peer_00_host0.id %]",
+        "peerout:[% peer_invite_ncos_white_lnp_host0.id %]",
+        "peer:[% peer_invite_ncos_white_lnp_host0.id %]",
         "outgoing"
       ]
   - start|ROUTE_SET_CALLER_DIALOG:
@@ -100,17 +100,17 @@ flow:
   - return|ROUTE_SET_CALLER_DIALOG:
       $avp(lua_dlg_profile): [
         "accountout:[% customer_test.id %]",
-        "userout:[% spce_test.testuser1002.uuid %]",
+        "userout:[% invite_ncos_white_scenarios_lnp_test.testuser1002.uuid %]",
         "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1002.uuid %]",
+        "user:[% invite_ncos_white_scenarios_lnp_test.testuser1002.uuid %]",
         "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% spce_test.testuser1002.uuid %]",
+        "totaluserout:[% invite_ncos_white_scenarios_lnp_test.testuser1002.uuid %]",
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1002.uuid %]",
+        "totaluser:[% invite_ncos_white_scenarios_lnp_test.testuser1002.uuid %]",
         "total",
         "relay",
-        "peerout:[% peer_00_host0.id %]",
-        "peer:[% peer_00_host0.id %]",
+        "peerout:[% peer_invite_ncos_white_lnp_host0.id %]",
+        "peer:[% peer_invite_ncos_white_lnp_host0.id %]",
         "outgoing"
       ]
   - start|ROUTE_ACC_CALLER:
@@ -172,49 +172,49 @@ flow:
   - exit|ROUTE_EXIT:
       $avp(lua_dlg_profile): [
         "accountout:[% customer_test.id %]",
-        "userout:[% spce_test.testuser1002.uuid %]",
+        "userout:[% invite_ncos_white_scenarios_lnp_test.testuser1002.uuid %]",
         "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1002.uuid %]",
+        "user:[% invite_ncos_white_scenarios_lnp_test.testuser1002.uuid %]",
         "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% spce_test.testuser1002.uuid %]",
+        "totaluserout:[% invite_ncos_white_scenarios_lnp_test.testuser1002.uuid %]",
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1002.uuid %]",
+        "totaluser:[% invite_ncos_white_scenarios_lnp_test.testuser1002.uuid %]",
         "total",
         "relay",
-        "peerout:[% peer_00_host0.id %]",
-        "peer:[% peer_00_host0.id %]",
+        "peerout:[% peer_invite_ncos_white_lnp_host0.id %]",
+        "peer:[% peer_invite_ncos_white_lnp_host0.id %]",
         "outgoing"
       ]
 sip_in:
-  - '^INVITE sip:43999100@'
-  - 'Contact: sip:testuser1002@'
+  - '^INVITE sip:[% extra_info.phone_numbers.2 %]@'
+  - 'Contact: sip:[% scenarios.0.username %]@'
   - 'CSeq: 2 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
-  - 'Proxy-Authorization: Digest username="testuser1002"'
+  - 'Proxy-Authorization: Digest username="[% scenarios.0.username %]"'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: 2 INVITE',
-      'From: <sip:testuser1002@',
-      'To: <sip:43999100@'
+      'From: <sip:[% scenarios.0.username %]@',
+      'To: <sip:[% extra_info.phone_numbers.2 %]@'
     ]
   - [
       '^SIP/2.0 101 Connecting',
       'CSeq: 2 INVITE',
-      'From: <sip:testuser1002@',
-      'To: <sip:43999100@'
+      'From: <sip:[% scenarios.0.username %]@',
+      'To: <sip:[% extra_info.phone_numbers.2 %]@'
     ]
   - [
-      '^INVITE sip:43999100@',
+      '^INVITE sip:[% extra_info.phone_numbers.2 %]@',
       'CSeq: 2 INVITE',
-      'From: <sip:4311002@',
-      'To: <sip:43999100@',
+      'From: <sip:[% invite_ncos_white_scenarios_lnp_test.testuser1002.phone_number %]@',
+      'To: <sip:[% extra_info.phone_numbers.2 %]@',
       'Content-Type: application/sdp',
-      'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
+      'P-Caller-UUID: [% invite_ncos_white_scenarios_lnp_test.testuser1002.uuid %]',
       'P-Callee-UUID: 0',
-      'P-Asserted-Identity: <sip:4311002@',
-      'P-Called-Party-ID: <sip:43999100@',
+      'P-Asserted-Identity: <sip:[% invite_ncos_white_scenarios_lnp_test.testuser1002.phone_number %]@',
+      'P-Called-Party-ID: <sip:[% extra_info.phone_numbers.2 %]@',
       'P-App-Param: ;calltimer=21600;aleg_sst_enable=no;sst_enable=no',
       'P-App-Name: sbc'
     ]

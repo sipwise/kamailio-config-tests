@@ -17,12 +17,12 @@ flow:
   - start|ROUTE_FIND_CALLER:
   - start|ROUTE_AUTH:
   - start|ROUTE_AUTH_HELPER:
-      $x_hdr(From): spce.test
-      $var(realm_user): testuser1002
-      $var(realm_domain): spce.test
+      $x_hdr(From): invite-ncos-white.scenarios-lnp.test
+      $var(realm_user): [% scenarios.1.username %]
+      $var(realm_domain): invite-ncos-white.scenarios-lnp.test
   - return|ROUTE_AUTH_HELPER:
-      $avp(orig_acc_caller_user): ['testuser1002']
-      $avp(orig_acc_caller_domain): ['spce.test']
+      $avp(orig_acc_caller_user): ['[% scenarios.1.username %]']
+      $avp(orig_acc_caller_domain): ['invite-ncos-white.scenarios-lnp.test']
   - start|ROUTE_ADD_CALLINFO_REPLY:
   - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
   - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
@@ -97,25 +97,25 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^INVITE sip:43999300@'
-  - 'Contact: sip:testuser1002@'
+  - '^INVITE sip:[% extra_info.phone_numbers.4 %]@'
+  - 'Contact: sip:[% scenarios.1.username %]@'
   - 'CSeq: 2 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
-  - 'Proxy-Authorization: Digest username="testuser1002"'
+  - 'Proxy-Authorization: Digest username="[% scenarios.1.username %]"'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: 2 INVITE',
-      'From: <sip:testuser1002@'
+      'From: <sip:[% scenarios.1.username %]@'
     ]
   - [
       '^SIP/2.0 101 Connecting',
       'CSeq: 2 INVITE',
-      'From: <sip:testuser1002@'
+      'From: <sip:[% scenarios.1.username %]@'
     ]
   - [
       '^SIP/2.0 403 Blocked by NCOS level',
       'CSeq: 2 INVITE',
-      'From: <sip:testuser1002@'
+      'From: <sip:[% scenarios.1.username %]@'
     ]

@@ -7,17 +7,17 @@ flow:
   - return|ROUTE_APPLY_HEADER_RULES:
       $avp(lua_dlg_profile): [
         "accountout:[% customer_test.id %]",
-        "userout:[% spce_test.testuser1002.uuid %]",
+        "userout:[% invite_ncos_white_scenarios_lnp_test.testuser1002.uuid %]",
         "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1002.uuid %]",
+        "user:[% invite_ncos_white_scenarios_lnp_test.testuser1002.uuid %]",
         "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% spce_test.testuser1002.uuid %]",
+        "totaluserout:[% invite_ncos_white_scenarios_lnp_test.testuser1002.uuid %]",
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1002.uuid %]",
+        "totaluser:[% invite_ncos_white_scenarios_lnp_test.testuser1002.uuid %]",
         "total",
         "relay",
-        "peerout:[% peer_00_host1.id %]",
-        "peer:[% peer_00_host1.id %]",
+        "peerout:[% peer_invite_ncos_white_lnp_host1.id %]",
+        "peer:[% peer_invite_ncos_white_lnp_host1.id %]",
         "outgoing"
       ]
   - start|ROUTE_PREPARE_UA:
@@ -30,12 +30,12 @@ flow:
 sip_in:
   - '^SIP/2.0 180 Ringing'
   - 'CSeq: 2 INVITE'
-  - 'From: <sip:4311002@'
-  - 'To: <sip:43999200@'
+  - 'From: <sip:[% invite_ncos_white_scenarios_lnp_test.testuser1002.phone_number %]@'
+  - 'To: <sip:[% extra_info.phone_numbers.3 %]@'
 sip_out:
   - [
       '^SIP/2.0 180 Ringing',
       'CSeq: 2 INVITE',
-      'From: <sip:testuser1002@',
-      'To: <sip:43999200@',
+      'From: <sip:[% scenarios.1.username %]@',
+      'To: <sip:[% extra_info.phone_numbers.3 %]@',
     ]
