@@ -121,16 +121,16 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - 'INVITE sip:1003@spce.test SIP/2.0'
-  - 'From: <sip:testuser1002@spce.test>;tag=[\w-]+'
-  - 'To: <sip:1003@spce.test>'
+  - 'INVITE sip:1003@invite-username-devid.scenarios-pbx.test SIP/2.0'
+  - 'From: <sip:testuser1002@invite-username-devid.scenarios-pbx.test>;tag=[\w-]+'
+  - 'To: <sip:1003@invite-username-devid.scenarios-pbx.test>'
   - 'CSeq: \d+ INVITE'
-  - 'Contact: sip:testuser1002@127.126.0.1:\d+'
-  - 'Proxy-Authorization: Digest username="testuser1002",realm="spce.test",uri="sip:127.0.0.1:5060",nonce=".+",response=".+",algorithm=MD5'
+  - 'Contact: sip:testuser1002@[% scenarios.2.ip %]:[% scenarios.2.port %]'
+  - 'Proxy-Authorization: Digest username="testuser1002",realm="invite-username-devid.scenarios-pbx.test",uri="sip:127.0.0.1:5060",nonce=".+",response=".+",algorithm=MD5'
   - 'Content-Type: application/sdp'
   - 'Content-Length:\s+\d+'
-  - 'P-NGCP-Src-Ip: 127.126.0.1'
-  - 'P-NGCP-Src-Port: \d+'
+  - 'P-NGCP-Src-Ip: [% scenarios.2.ip %]'
+  - 'P-NGCP-Src-Port: [% scenarios.2.port %]'
   - 'P-NGCP-Src-Proto: udp'
   - 'P-NGCP-Src-Af: 4'
   - 'P-Sock-Info: udp:127.0.0.1:5060'
@@ -138,8 +138,8 @@ sip_in:
 sip_out:
   - [
       'SIP/2.0 100 Trying',
-      'From: <sip:testuser1002@spce.test>;tag=[\w-]+',
-      'To: <sip:1003@spce.test>',
+      'From: <sip:testuser1002@invite-username-devid.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:1003@invite-username-devid.scenarios-pbx.test>',
       'CSeq: \d+ INVITE',
       'P-Out-Socket: udp:127.0.0.1:5060',
       'P-NGCP-Auth-IP: 127.126.0.1',
@@ -149,23 +149,23 @@ sip_out:
     ]
   - [
       'SIP/2.0 101 Connecting',
-      'From: <sip:testuser1002@spce.test>;tag=[\w-]+',
-      'To: <sip:1003@spce.test>',
+      'From: <sip:testuser1002@invite-username-devid.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:1003@invite-username-devid.scenarios-pbx.test>',
       'CSeq: \d+ INVITE',
       'P-Out-Socket: udp:127.0.0.1:5060',
-      'P-NGCP-Auth-IP: 127.126.0.1',
+      'P-NGCP-Auth-IP: [% scenarios.2.ip %]',
       'P-NGCP-Auth-UA: <null>',
-      'P-NGCP-Authorization: testuser1002@spce.test',
+      'P-NGCP-Authorization: testuser1002@invite-username-devid.scenarios-pbx.test',
       'P-NGCP-Authorized: 1',
-      'P-NGCP-Caller-Info: <sip:testuser1002@spce.test>;ip=127.126.0.1;port=\d+;primary=4311002',
-      'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
+      'P-NGCP-Caller-Info: <sip:testuser1002@invite-username-devid.scenarios-pbx.test>;ip=[% scenarios.2.ip %];port=[% scenarios.2.port %];primary=[% invite_username_devid_scenarios_pbx_test.testuser1002.phone_number %]',
+      'P-Caller-UUID: [% invite_username_devid_scenarios_pbx_test.testuser1002.uuid %]',
       'Server: Sipwise NGCP Proxy',
       'Content-Length: 0',
     ]
   - [
-      'PUBLISH sip:testuser1002@spce.test SIP/2.0',
-      'To: <sip:testuser1002@spce.test>',
-      'From: <sip:testuser1002@spce.test>;tag=[\w-]+',
+      'PUBLISH sip:testuser1002@invite-username-devid.scenarios-pbx.test SIP/2.0',
+      'To: <sip:testuser1002@invite-username-devid.scenarios-pbx.test>',
+      'From: <sip:testuser1002@invite-username-devid.scenarios-pbx.test>;tag=[\w-]+',
       'CSeq: \d+ PUBLISH',
       'Content-Length:\s+\d+',
       'User-Agent: Sipwise NGCP Proxy',
@@ -173,22 +173,22 @@ sip_out:
       'Content-Type: application/dialog\-info\+xml',
     ]
   - [
-      'INVITE sip:testuser1003@spce.test SIP/2.0',
-      'From: <sip:testuser1002@spce.test>;tag=[\w-]+',
-      'To: <sip:1003@spce.test>',
+      'INVITE sip:testuser1003@invite-username-devid.scenarios-pbx.test SIP/2.0',
+      'From: <sip:testuser1002@invite-username-devid.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:1003@invite-username-devid.scenarios-pbx.test>',
       'CSeq: \d+ INVITE',
-      'Contact: sip:testuser1002@127.126.0.1:\d+',
+      'Contact: sip:testuser1002@[% scenarios.2.ip %]:[% scenarios.2.port %]',
       'Content-Type: application/sdp',
       'Content-Length:\s+\d+',
-      'P-NGCP-Src-Ip: 127.126.0.1',
-      'P-NGCP-Src-Port: \d+',
+      'P-NGCP-Src-Ip: [% scenarios.2.ip %]',
+      'P-NGCP-Src-Port: [% scenarios.2.port %]',
       'P-NGCP-Src-Proto: udp',
       'P-NGCP-Src-Af: 4',
       'P-LB-Uptime: \d+',
       'P-NGCP-Src-Nat: 0',
       'P-Caller-CLIR: 0',
-      'P-NGCP-Orig-User: 43110021003',
-      'P-NGCP-Orig-Domain: spce.test',
+      'P-NGCP-Orig-User: [% invite_username_devid_scenarios_pbx_test.testuser1003.pbx_phone_number %]',
+      'P-NGCP-Orig-Domain: invite-username-devid.scenarios-pbx.test',
       'P-NGCP-Orig-Dialed: 1003',
       'P-NGCP-Orig-PBX-Ext: 1003',
       'P-First-Caller-Cloud-PBX: [% customerpbx_test.id %]',
@@ -198,14 +198,14 @@ sip_out:
       'P-NGCP-AdmBlockOut-Override: 0',
       'P-NGCP-ContBlockOut-Override: 0',
       'P-NGCP-ContAdmBlockOut-Override: 0',
-      'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
-      'P-Callee-UUID: [% spce_test.testuser1003.uuid %]',
+      'P-Caller-UUID: [% invite_username_devid_scenarios_pbx_test.testuser1002.uuid %]',
+      'P-Callee-UUID: [% invite_username_devid_scenarios_pbx_test.testuser1003.uuid %]',
       'P-App-Name: sbc',
       'P-App-Param: ;profile=ngcp_pbx;a_park_domain=[% customerpbx_test.id %];b_park_domain=[% customerpbx_test.id %]',
       'P-NGCP-Acc-Src-Leg: .+',
       'P-NGCP-Acc-Dst-Leg: .+',
       'P-NGCP-Sems-Instance: pbx',
       'P-Proxy-Uri: 127.0.0.1:5062',
-      'P-NGCP-Caller-Info: <sip:testuser1002@spce.test>;ip=127.126.0.1;port=\d+;primary=4311002',
-      'P-NGCP-Callee-Info: <sip:43110021003@spce.test>;ip=127.0.0.1;port=508[08];primary=43110021003',
+      'P-NGCP-Caller-Info: <sip:testuser1002@invite-username-devid.scenarios-pbx.test>;ip=[% scenarios.2.ip %];port=[% scenarios.2.port %];primary=[% invite_username_devid_scenarios_pbx_test.testuser1002.phone_number %]',
+      'P-NGCP-Callee-Info: <sip:[% invite_username_devid_scenarios_pbx_test.testuser1003.pbx_phone_number %]@invite-username-devid.scenarios-pbx.test>;ip=127.0.0.1;port=508[08];primary=[% invite_username_devid_scenarios_pbx_test.testuser1003.pbx_phone_number %]',
     ]

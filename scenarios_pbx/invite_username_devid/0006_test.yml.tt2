@@ -23,15 +23,15 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - 'REGISTER sip:439333333@spce.test SIP/2.0'
-  - 'From: <sip:439333333@spce.test>;tag=[\w-]+'
-  - 'To: "TestBria" <sip:439333333@spce.test>'
+  - 'REGISTER sip:[% invite_username_devid_scenarios_pbx_test.testuser1003.alias_numbers.2.phone_number %]@invite-username-devid.scenarios-pbx.test SIP/2.0'
+  - 'From: <sip:[% invite_username_devid_scenarios_pbx_test.testuser1003.alias_numbers.2.phone_number %]@invite-username-devid.scenarios-pbx.test>;tag=[\w-]+'
+  - 'To: "TestBria" <sip:[% invite_username_devid_scenarios_pbx_test.testuser1003.alias_numbers.2.phone_number %]@invite-username-devid.scenarios-pbx.test>'
   - 'CSeq: \d+ REGISTER'
-  - 'Authorization: Digest username="439333333",realm="spce.test",uri="sip:127.0.0.1:5060",nonce=".+",response=".+",algorithm=MD5'
-  - 'Contact: "TestBria" <sip:439333333@127.2.0.2:\d+;ob>;reg-id=1;\+sip.instance="<urn:uuid:C3DD6013-20E8-40E3-8EA2-5849B02ED0C4>"'
+  - 'Authorization: Digest username="[% invite_username_devid_scenarios_pbx_test.testuser1003.alias_numbers.2.phone_number %]",realm="invite-username-devid.scenarios-pbx.test",uri="sip:127.0.0.1:5060",nonce=".+",response=".+",algorithm=MD5'
+  - 'Contact: "TestBria" <sip:[% invite_username_devid_scenarios_pbx_test.testuser1003.alias_numbers.2.phone_number %]@[% scenarios.1.ip %]:6666;ob>;reg-id=1;\+sip.instance="<urn:uuid:C3DD6013-20E8-40E3-8EA2-5849B02ED0C4>"'
   - 'Content-Length: 0'
-  - 'P-NGCP-Src-Ip: 127.2.0.2'
-  - 'P-NGCP-Src-Port: \d+'
+  - 'P-NGCP-Src-Ip: [% scenarios.1.ip %]'
+  - 'P-NGCP-Src-Port: [% scenarios.1.port %]'
   - 'P-NGCP-Src-Proto: udp'
   - 'P-NGCP-Src-Af: 4'
   - 'P-Sock-Info: udp:127.0.0.1:5060'
@@ -40,27 +40,27 @@ sip_in:
 sip_out:
   - [
       'SIP/2.0 100 Trying',
-      'From: <sip:439333333@spce.test>;tag=[\w-]+',
-      'To: "TestBria" <sip:439333333@spce.test>',
+      'From: <sip:[% invite_username_devid_scenarios_pbx_test.testuser1003.alias_numbers.2.phone_number %]@invite-username-devid.scenarios-pbx.test>;tag=[\w-]+',
+      'To: "TestBria" <sip:[% invite_username_devid_scenarios_pbx_test.testuser1003.alias_numbers.2.phone_number %]@invite-username-devid.scenarios-pbx.test>',
       'CSeq: \d+ REGISTER',
       'P-Out-Socket: udp:127.0.0.1:5060',
-      'P-NGCP-Auth-IP: 127.2.0.2',
+      'P-NGCP-Auth-IP: [% scenarios.1.ip %]',
       'P-NGCP-Auth-UA: <null>',
       'Server: Sipwise NGCP Proxy',
       'Content-Length: 0',
     ]
   - [
       'SIP/2.0 200 OK',
-      'From: <sip:439333333@spce.test>;tag=[\w-]+',
-      'To: "TestBria" <sip:439333333@spce.test>;tag=[\w-]+',
+      'From: <sip:[% invite_username_devid_scenarios_pbx_test.testuser1003.alias_numbers.2.phone_number %]@invite-username-devid.scenarios-pbx.test>;tag=[\w-]+',
+      'To: "TestBria" <sip:[% invite_username_devid_scenarios_pbx_test.testuser1003.alias_numbers.2.phone_number %]@invite-username-devid.scenarios-pbx.test>;tag=[\w-]+',
       'CSeq: \d+ REGISTER',
       'P-Out-Socket: udp:127.0.0.1:5060',
-      'P-NGCP-Auth-IP: 127.2.0.2',
+      'P-NGCP-Auth-IP: [% scenarios.1.ip %]',
       'P-NGCP-Auth-UA: <null>',
-      'P-NGCP-Authorization: 439333333@spce.test',
+      'P-NGCP-Authorization: [% invite_username_devid_scenarios_pbx_test.testuser1003.alias_numbers.2.phone_number %]@invite-username-devid.scenarios-pbx.test',
       'P-NGCP-Authorized: 1',
-      'P-Caller-UUID: [% spce_test.testuser1003.uuid %]',
-      'Contact: <sip:439333333@127.2.0.2:\d+;ob>;expires=\d+;\+sip.instance="<urn:uuid:C3DD6013-20E8-40E3-8EA2-5849B02ED0C4>";reg-id=1',
+      'P-Caller-UUID: [% invite_username_devid_scenarios_pbx_test.testuser1003.uuid %]',
+      'Contact: <sip:[% invite_username_devid_scenarios_pbx_test.testuser1003.alias_numbers.2.phone_number %]@[% scenarios.1.ip %]:6666;ob>;expires=\d+;\+sip.instance="<urn:uuid:C3DD6013-20E8-40E3-8EA2-5849B02ED0C4>";reg-id=1',
       'Server: Sipwise NGCP Proxy',
       'Content-Length: 0',
     ]

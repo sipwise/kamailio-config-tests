@@ -15,15 +15,15 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - 'INVITE sip:testuser1003@127.2.0.3:\d+ SIP/2.0'
-  - 'From: <sip:4311002@spce.test>;tag=[\w-]+'
-  - 'To: <sip:testuser1003@spce.test>'
+  - 'INVITE sip:testuser1003@[% scenarios.2.responders.0.ip %]:[% scenarios.2.responders.0.port %] SIP/2.0'
+  - 'From: <sip:[% invite_username_devid_scenarios_pbx_test.testuser1002.phone_number %]@invite-username-devid.scenarios-pbx.test>;tag=[\w-]+'
+  - 'To: <sip:testuser1003@invite-username-devid.scenarios-pbx.test>'
   - 'CSeq: \d+ INVITE'
   - 'P-LB-Uptime: \d+'
-  - 'P-Caller-UUID: [% spce_test.testuser1002.uuid %]'
-  - 'P-NGCP-Caller-Info: <sip:testuser1002@spce.test>;ip=127.126.0.1;port=\d+;primary=4311002'
-  - 'P-NGCP-Callee-Info: <sip:43110021003@spce.test>;ip=127.0.0.1;port=5060;primary=43110021003'
-  - 'P-Asserted-Identity: <sip:4311002@spce.test>'
+  - 'P-Caller-UUID: [% invite_username_devid_scenarios_pbx_test.testuser1002.uuid %]'
+  - 'P-NGCP-Caller-Info: <sip:testuser1002@invite-username-devid.scenarios-pbx.test>;ip=[% scenarios.2.ip %];port=[% scenarios.2.port %];primary=[% invite_username_devid_scenarios_pbx_test.testuser1002.phone_number %]'
+  - 'P-NGCP-Callee-Info: <sip:[% invite_username_devid_scenarios_pbx_test.testuser1003.pbx_phone_number %]@invite-username-devid.scenarios-pbx.test>;ip=127.0.0.1;port=5060;primary=[% invite_username_devid_scenarios_pbx_test.testuser1003.pbx_phone_number %]'
+  - 'P-Asserted-Identity: <sip:[% invite_username_devid_scenarios_pbx_test.testuser1002.phone_number %]@invite-username-devid.scenarios-pbx.test>'
   - 'P-D-Uri: sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060'
   - 'Content-Type: application/sdp'
   - 'Content-Length:\s+\d+'
@@ -31,22 +31,22 @@ sip_in:
 sip_out:
   - [
       'SIP/2.0 100 Trying',
-      'From: <sip:4311002@spce.test>;tag=[\w-]+',
-      'To: <sip:testuser1003@spce.test>',
+      'From: <sip:[% invite_username_devid_scenarios_pbx_test.testuser1002.phone_number %]@invite-username-devid.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:testuser1003@invite-username-devid.scenarios-pbx.test>',
       'CSeq: \d+ INVITE',
       'Server: Sipwise NGCP Proxy',
       'Content-Length: 0',
     ]
   - [
-      'INVITE sip:testuser1003@127.2.0.3:\d+ SIP/2.0',
-      'From: <sip:4311002@spce.test>;tag=[\w-]+',
-      'To: <sip:testuser1003@spce.test>',
+      'INVITE sip:testuser1003@[% scenarios.2.responders.0.ip %]:[% scenarios.2.responders.0.port %] SIP/2.0',
+      'From: <sip:[% invite_username_devid_scenarios_pbx_test.testuser1002.phone_number %]@invite-username-devid.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:testuser1003@invite-username-devid.scenarios-pbx.test>',
       'CSeq: \d+ INVITE',
       'P-LB-Uptime: \d+',
-      'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
-      'P-NGCP-Caller-Info: <sip:testuser1002@spce.test>;ip=127.126.0.1;port=\d+;primary=4311002',
-      'P-NGCP-Callee-Info: <sip:43110021003@spce.test>;ip=127.0.0.1;port=5060;primary=43110021003',
-      'P-Asserted-Identity: <sip:4311002@spce.test>',
+      'P-Caller-UUID: [% invite_username_devid_scenarios_pbx_test.testuser1002.uuid %]',
+      'P-NGCP-Caller-Info: <sip:testuser1002@invite-username-devid.scenarios-pbx.test>;ip=[% scenarios.2.ip %];port=[% scenarios.2.port %];primary=[% invite_username_devid_scenarios_pbx_test.testuser1002.phone_number %]',
+      'P-NGCP-Callee-Info: <sip:[% invite_username_devid_scenarios_pbx_test.testuser1003.pbx_phone_number %]@invite-username-devid.scenarios-pbx.test>;ip=127.0.0.1;port=5060;primary=[% invite_username_devid_scenarios_pbx_test.testuser1003.pbx_phone_number %]',
+      'P-Asserted-Identity: <sip:[% invite_username_devid_scenarios_pbx_test.testuser1002.phone_number %]@invite-username-devid.scenarios-pbx.test>',
       'P-D-Uri: sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060',
       'Content-Type: application/sdp',
       'Content-Length:\s+\d+',

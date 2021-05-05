@@ -24,17 +24,17 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - 'ACK sip:127.2.0.3:\d+;transport=UDP SIP/2.0'
-  - 'From: <sip:4311002@spce.test>;tag=[\w-]+'
-  - 'To: <sip:testuser1003@spce.test>;tag=[\w-]+'
+  - 'ACK sip:[% scenarios.2.responders.0.ip %]:[% scenarios.2.responders.0.port %];transport=UDP SIP/2.0'
+  - 'From: <sip:[% invite_username_devid_scenarios_pbx_test.testuser1002.phone_number %]@invite-username-devid.scenarios-pbx.test>;tag=[\w-]+'
+  - 'To: <sip:testuser1003@invite-username-devid.scenarios-pbx.test>;tag=[\w-]+'
   - 'CSeq: \d+ ACK'
   - 'Content-Length: 0'
   - 'Contact: <sip:127.0.0.1:508[08];transport=udp>'
 sip_out:
   - [
-      'ACK sip:127.2.0.3:\d+;transport=UDP SIP/2.0',
-      'From: <sip:4311002@spce.test>;tag=[\w-]+',
-      'To: <sip:testuser1003@spce.test>;tag=[\w-]+',
+      'ACK sip:[% scenarios.2.responders.0.ip %]:[% scenarios.2.responders.0.port %];transport=UDP SIP/2.0',
+      'From: <sip:[% invite_username_devid_scenarios_pbx_test.testuser1002.phone_number %]@invite-username-devid.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:testuser1003@invite-username-devid.scenarios-pbx.test>;tag=[\w-]+',
       'CSeq: \d+ ACK',
       'Content-Length: 0',
       'Contact: <sip:127.0.0.1:508[08];transport=udp>',
