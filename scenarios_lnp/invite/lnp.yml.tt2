@@ -1,0 +1,8 @@
+---
+lnp_test_invite:
+  data:
+    name: lnp_test_invite
+    prefix: test
+  numbers:
+    - number: '[% invite_scenarios_lnp_test.testuser1001.phone_number %]'
+      routing_number: '[% extra_info.phone_numbers.0 %]'

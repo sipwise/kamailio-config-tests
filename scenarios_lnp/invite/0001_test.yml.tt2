@@ -21,9 +21,9 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^INVITE sip:4311001@'
-  - 'Contact: sip:testuser1002@'
-  - 'To: <sip:4311001@'
+  - '^INVITE sip:[% invite_scenarios_lnp_test.testuser1001.phone_number %]@'
+  - 'Contact: sip:[% scenarios.0.username %]@'
+  - 'To: <sip:[% invite_scenarios_lnp_test.testuser1001.phone_number %]@'
   - 'CSeq: 1 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
@@ -31,12 +31,12 @@ sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: 1 INVITE',
-      'From: <sip:testuser1002@',
-      'To: <sip:4311001@'
+      'From: <sip:[% scenarios.0.username %]@',
+      'To: <sip:[% invite_scenarios_lnp_test.testuser1001.phone_number %]@'
     ]
   - [
       '^SIP/2.0 407 Proxy Authentication Required',
       'CSeq: 1 INVITE',
-      'From: <sip:testuser1002@',
-      'To: <sip:4311001@'
+      'From: <sip:[% scenarios.0.username %]@',
+      'To: <sip:[% invite_scenarios_lnp_test.testuser1001.phone_number %]@'
     ]

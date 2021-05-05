@@ -1,8 +1,8 @@
 {
-    "@spce.test": {
+    "@invite.scenarios-lnp.test": {
         "lnp_for_local_sub": true
     },
-    "peer_00_host0": {
+    "peer_invite_lnp_host0": {
         "concurrent_max": 1
     }
 }
