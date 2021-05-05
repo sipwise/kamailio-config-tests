@@ -29,19 +29,19 @@ flow:
       $xavp(caller_dom_prefs[0]=>dummy[*]):
         - caller
       $xavp(caller_peer_prefs): None
-      $xavp(caller_real_prefs[0]=>ac[*]): [1]
+      $xavp(caller_real_prefs[0]=>ac[*]): [[% register_lock_ported_scenarios_lpn_test.testuser1003.ac %]]
       $xavp(caller_real_prefs[0]=>account_id): '\d+'
       $xavp(caller_real_prefs[0]=>allowed_ips_grp): '\d+'
-      $xavp(caller_real_prefs[0]=>cc[*]): [43]
-      $xavp(caller_real_prefs[0]=>cli[*]): [4311003]
+      $xavp(caller_real_prefs[0]=>cc[*]): [[% register_lock_ported_scenarios_lpn_test.testuser1003.cc %]]
+      $xavp(caller_real_prefs[0]=>cli[*]): [[% register_lock_ported_scenarios_lpn_test.testuser1003.phone_number %]]
       $xavp(caller_real_prefs[0]=>dummy[*]):
         - caller
       $xavp(caller_real_prefs[0]=>lock[*]): [5]
-      $xavp(caller_usr_prefs[0]=>ac[*]): [1]
+      $xavp(caller_usr_prefs[0]=>ac[*]): [[% register_lock_ported_scenarios_lpn_test.testuser1003.ac %]]
       $xavp(caller_usr_prefs[0]=>account_id): '\d+'
       $xavp(caller_usr_prefs[0]=>allowed_ips_grp): '\d+'
-      $xavp(caller_usr_prefs[0]=>cc[*]): [43]
-      $xavp(caller_usr_prefs[0]=>cli[*]): [4311003]
+      $xavp(caller_usr_prefs[0]=>cc[*]): [[% register_lock_ported_scenarios_lpn_test.testuser1003.cc %]]
+      $xavp(caller_usr_prefs[0]=>cli[*]): [[% register_lock_ported_scenarios_lpn_test.testuser1003.phone_number %]]
       $xavp(caller_usr_prefs[0]=>dummy[*]):
         - caller
 sip_in:

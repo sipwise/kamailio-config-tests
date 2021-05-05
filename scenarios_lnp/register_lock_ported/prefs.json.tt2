@@ -1,0 +1,8 @@
+{
+    "testuser1003@register-lock-ported.scenarios-lpn.test": {
+        "allowed_ips": [
+            "[% scenarios.0.ip %]"
+        ],
+        "lock": 5
+    }
+}

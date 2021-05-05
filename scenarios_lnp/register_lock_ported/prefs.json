@@ -1,8 +1,0 @@
-{
-    "testuser1003@spce.test": {
-        "allowed_ips": [
-            "127.126.0.1"
-        ],
-        "lock": 5
-    }
-}
