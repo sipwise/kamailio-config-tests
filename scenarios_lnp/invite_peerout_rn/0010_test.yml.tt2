@@ -20,12 +20,12 @@ flow:
 sip_in:
   - '^SIP/2.0 200 OK'
   - 'CSeq: 2 INVITE'
-  - 'From: <sip:4311002@'
-  - 'To: <sip:004321001@'
+  - 'From: <sip:[% invite_peerout_rn_scenarios_lnp_test.testuser1002.phone_number %]@'
+  - 'To: <sip:[% scenarios.0.responders.0.username %]@'
 sip_out:
   - [
       '^SIP/2.0 200 OK',
       'CSeq: 2 INVITE',
-      'From: <sip:testuser1002@',
-      'To: <sip:004321001@',
+      'From: <sip:[% scenarios.0.username %]@',
+      'To: <sip:[% scenarios.0.responders.0.username %]@',
     ]

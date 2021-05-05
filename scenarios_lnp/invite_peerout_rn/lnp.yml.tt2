@@ -1,0 +1,8 @@
+---
+lnp_invite_peerout_rn_lnp_00:
+  data:
+    name: lnp_invite_peerout_rn_lnp_00
+    prefix: test
+  numbers:
+    - number: '[% scenarios.0.responders.0.username %]'
+      routing_number: '[% extra_info.phone_numbers.0 %]'

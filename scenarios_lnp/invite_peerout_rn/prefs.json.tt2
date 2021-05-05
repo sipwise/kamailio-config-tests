@@ -1,5 +1,5 @@
 {
-    "peer_00_host0": {
+    "peer_invite_peerout_rn_host0": {
         "lnp_to_rn": true,
         "lnp_add_npdi": true,
         "concurrent_max": 1
