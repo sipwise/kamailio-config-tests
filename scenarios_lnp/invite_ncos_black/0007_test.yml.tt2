@@ -99,14 +99,14 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^INVITE sip:43999200@'
-  - 'From: <sip:testuser1002@'
-  - 'To: <sip:43999200@'
+  - '^INVITE sip:[% extra_info.phone_numbers.3 %]@'
+  - 'From: <sip:[% scenarios.0.username %]@'
+  - 'To: <sip:[% extra_info.phone_numbers.3 %]@'
   - 'CSeq: 2 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
-  - 'P-NGCP-Src-Ip: 127.126.0.2'
-  - 'P-NGCP-Src-Port: \d+'
+  - 'P-NGCP-Src-Ip: [% scenarios.1.ip %]'
+  - 'P-NGCP-Src-Port: [% scenarios.1.port %]'
   - 'P-NGCP-Src-Proto: udp'
   - 'P-NGCP-Src-Af: 4'
   - 'P-Sock-Info: udp:127.0.0.1:5060'
@@ -120,23 +120,23 @@ sip_out:
       '^SIP/2.0 101 Connecting',
       'CSeq: 2 INVITE',
       'P-Out-Socket: udp:127.0.0.1:5060',
-      'P-NGCP-Auth-IP: 127.126.0.2',
-      'P-NGCP-Authorization: testuser1002@',
+      'P-NGCP-Auth-IP: [% scenarios.1.ip %]',
+      'P-NGCP-Authorization: [% scenarios.0.username %]@',
       'P-NGCP-Authorized: 1',
       'P-NGCP-Caller-Info:',
-      'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
+      'P-Caller-UUID: [% invite_ncos_black_scenarios_lnp_test.testuser1002.uuid %]',
       'Content-Length: 0'
     ]
   - [
       '^SIP/2.0 403 Blocked by NCOS level',
-      'From: <sip:testuser1002@',
-      'To: <sip:43999200@',
+      'From: <sip:[% scenarios.0.username %]@',
+      'To: <sip:[% extra_info.phone_numbers.3 %]@',
       'CSeq: 2 INVITE',
       'P-Out-Socket: udp:127.0.0.1:5060',
-      'P-NGCP-Auth-IP: 127.126.0.2',
-      'P-NGCP-Authorization: testuser1002@',
+      'P-NGCP-Auth-IP: [% scenarios.1.ip %]',
+      'P-NGCP-Authorization: [% scenarios.0.username %]@',
       'P-NGCP-Authorized: 1',
       'P-NGCP-Caller-Info:',
-      'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
+      'P-Caller-UUID: [% invite_ncos_black_scenarios_lnp_test.testuser1002.uuid %]',
       'Content-Length: 0'
     ]

@@ -1,6 +1,7 @@
+---
 test_uuid: invite_ncos_black
 domains:
-  'spce.test':
+  invite-ncos-black.scenarios-lnp.test:
     reseller_id: 1
 customers:
   'customer.test':
@@ -13,7 +14,7 @@ customers:
       billing_profile_id: 1
       reseller_id: 1
 subscribers:
-  spce.test:
+  invite-ncos-black.scenarios-lnp.test:
     testuser1001:
       customer: 'customer.test'
       password: testuser
@@ -29,33 +30,40 @@ subscribers:
 scenarios:
   - ip: 127.126.0.1
     username: testuser1002
-    domain: spce.test
+    domain: invite-ncos-black.scenarios-lnp.test
     responders:
       - ip: 127.0.2.1
         number: 43999100
         username: testuser1001
-        domain: spce.test
-        peer_host: peer_00_host0
-        register: no
-        active: no
+        domain: invite-ncos-black.scenarios-lnp.test
+        peer_host: peer_invite_ncos_black_lnp_host0
+        register: 'no'
+        active: 'no'
   - ip: 127.126.0.2
     username: testuser1002
-    domain: spce.test
+    domain: invite-ncos-black.scenarios-lnp.test
     responders:
       - ip: 127.0.2.1
         number: 43999200
         username: testuser1001
-        domain: spce.test
-        peer_host: peer_00_host0
-        register: no
-        active: no
+        domain: invite-ncos-black.scenarios-lnp.test
+        peer_host: peer_invite_ncos_black_lnp_host0
+        register: 'no'
+        active: 'no'
   - ip: 127.126.0.3
     username: testuser1002
-    domain: spce.test
+    domain: invite-ncos-black.scenarios-lnp.test
     responders:
       - ip: 127.0.2.1
         number: 43999300
         username: testuser1001
-        domain: spce.test
-        peer_host: peer_00_host0
-        register: no
+        domain: invite-ncos-black.scenarios-lnp.test
+        peer_host: peer_invite_ncos_black_lnp_host0
+        register: 'no'
+extra_info:
+  phone_numbers:
+    - 439992
+    - 4318881001
+    - 43999100
+    - 43999200
+    - 43999300

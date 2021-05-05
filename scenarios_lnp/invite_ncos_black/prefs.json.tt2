@@ -1,0 +1,10 @@
+{
+    "@invite-ncos-black.scenarios-lnp.test": {
+        "lnp_for_local_sub": true,
+        "ncos": "ncos_black"
+    },
+    "peer_invite_ncos_black_lnp_host0": {
+        "concurrent_max": 1,
+        "rewrite_rule_set": "rw_invite_ncos_black_lnp"
+    }
+}

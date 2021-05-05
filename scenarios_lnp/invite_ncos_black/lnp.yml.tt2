@@ -1,11 +1,11 @@
 ---
-lnp_test_00:
+lnp_invite_ncos_black_lnp_00:
   data:
-    name: lnp_test_00
+    name: lnp_invite_ncos_black_lnp_00
     prefix: AA
   numbers:
-    - number: '439992'
-      routing_number: '4318881001'
+    - number: '[% extra_info.phone_numbers.0 %]'
+      routing_number: '[% extra_info.phone_numbers.1 %]'
   ncos:
     - level: ncos_black
       reseller_id: 1

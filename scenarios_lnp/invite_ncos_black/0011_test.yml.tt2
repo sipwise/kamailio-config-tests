@@ -88,8 +88,8 @@ flow:
   - start|ROUTE_OUTBOUND:
       $avp(lua_dlg_profile): [
         "relay",
-        "peerout:[% peer_00_host0.id %]",
-        "peer:[% peer_00_host0.id %]",
+        "peerout:[% peer_invite_ncos_black_lnp_host0.id %]",
+        "peer:[% peer_invite_ncos_black_lnp_host0.id %]",
         "outgoing"
       ]
   - start|ROUTE_SET_CALLER_DIALOG:
@@ -98,17 +98,17 @@ flow:
   - return|ROUTE_SET_CALLER_DIALOG:
       $avp(lua_dlg_profile): [
         "accountout:[% customer_test.id %]",
-        "userout:[% spce_test.testuser1002.uuid %]",
+        "userout:[% invite_ncos_black_scenarios_lnp_test.testuser1002.uuid %]",
         "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1002.uuid %]",
+        "user:[% invite_ncos_black_scenarios_lnp_test.testuser1002.uuid %]",
         "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% spce_test.testuser1002.uuid %]",
+        "totaluserout:[% invite_ncos_black_scenarios_lnp_test.testuser1002.uuid %]",
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1002.uuid %]",
+        "totaluser:[% invite_ncos_black_scenarios_lnp_test.testuser1002.uuid %]",
         "total",
         "relay",
-        "peerout:[% peer_00_host0.id %]",
-        "peer:[% peer_00_host0.id %]",
+        "peerout:[% peer_invite_ncos_black_lnp_host0.id %]",
+        "peer:[% peer_invite_ncos_black_lnp_host0.id %]",
         "outgoing"
       ]
   - start|ROUTE_ACC_CALLER:
@@ -182,59 +182,59 @@ flow:
   - exit|ROUTE_EXIT:
       $avp(lua_dlg_profile): [
         "accountout:[% customer_test.id %]",
-        "userout:[% spce_test.testuser1002.uuid %]",
+        "userout:[% invite_ncos_black_scenarios_lnp_test.testuser1002.uuid %]",
         "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1002.uuid %]",
+        "user:[% invite_ncos_black_scenarios_lnp_test.testuser1002.uuid %]",
         "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% spce_test.testuser1002.uuid %]",
+        "totaluserout:[% invite_ncos_black_scenarios_lnp_test.testuser1002.uuid %]",
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1002.uuid %]",
+        "totaluser:[% invite_ncos_black_scenarios_lnp_test.testuser1002.uuid %]",
         "total",
         "relay",
-        "peerout:[% peer_00_host0.id %]",
-        "peer:[% peer_00_host0.id %]",
+        "peerout:[% peer_invite_ncos_black_lnp_host0.id %]",
+        "peer:[% peer_invite_ncos_black_lnp_host0.id %]",
         "outgoing"
       ]
 sip_in:
-  - '^INVITE sip:43999300'
-  - 'From: <sip:testuser1002@'
-  - 'To: <sip:43999300@'
+  - '^INVITE sip:[% extra_info.phone_numbers.4 %]'
+  - 'From: <sip:[% scenarios.0.username %]@'
+  - 'To: <sip:[% extra_info.phone_numbers.4 %]@'
   - 'CSeq: 2 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
-  - 'P-NGCP-Src-Ip: 127.126.0.3'
-  - 'P-NGCP-Src-Port: \d+'
+  - 'P-NGCP-Src-Ip: [% scenarios.2.ip %]'
+  - 'P-NGCP-Src-Port: [% scenarios.2.port %]'
   - 'P-NGCP-Src-Proto: udp'
   - 'P-NGCP-Src-Af: 4'
   - 'P-Sock-Info: udp:127.0.0.1:5060'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
-      'From: <sip:testuser1002@',
-      'To: <sip:43999300@',
+      'From: <sip:[% scenarios.0.username %]@',
+      'To: <sip:[% extra_info.phone_numbers.4 %]@',
       'CSeq: 2 INVITE',
       'P-Out-Socket: udp:127.0.0.1:5060',
-      'P-NGCP-Auth-IP: 127.126.0.3',
+      'P-NGCP-Auth-IP: [% scenarios.2.ip %]',
       'Content-Length: 0'
     ]
   - [
       '^SIP/2.0 101 Connecting'
     ]
   - [
-      '^INVITE sip:43999300@127.0.2.1:\d+;transport=udp SIP/2.0',
-      'From: <sip:4311002@',
-      'To: <sip:43999300@',
+      '^INVITE sip:[% extra_info.phone_numbers.4 %]@[% scenarios.2.responders.0.ip %]:[% scenarios.2.responders.0.port %];transport=udp SIP/2.0',
+      'From: <sip:[% invite_ncos_black_scenarios_lnp_test.testuser1002.phone_number %]@',
+      'To: <sip:[% extra_info.phone_numbers.4 %]@',
       'CSeq: 2 INVITE',
-      'Contact: sip:testuser1002@127.126.0.3:\d+',
+      'Contact: sip:[% scenarios.0.username %]@[% scenarios.2.ip %]:[% scenarios.2.port %]',
       'Max-Forwards: 68',
       'Content-Type: application/sdp',
-      'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
+      'P-Caller-UUID: [% invite_ncos_black_scenarios_lnp_test.testuser1002.uuid %]',
       'P-Callee-UUID: 0',
-      'P-Asserted-Identity: <sip:4311002@spce.test>',
-      'P-Called-Party-ID: <sip:43999300@127.0.2.1>',
+      'P-Asserted-Identity: <sip:[% invite_ncos_black_scenarios_lnp_test.testuser1002.phone_number %]@invite-ncos-black.scenarios-lnp.test>',
+      'P-Called-Party-ID: <sip:[% extra_info.phone_numbers.4 %]@[% scenarios.2.responders.0.ip %]>',
       'P-App-Param: ;calltimer=21600;aleg_sst_enable=no;sst_enable=no',
       'P-App-Name: sbc',
-      'P-NGCP-Caller-Info: <sip:testuser1002@spce.test>;ip=127.126.0.3;port=\d+',
-      'P-NGCP-Callee-Info: <sip:43999300@spce.test>;ip=127.0.2.1;port=\d+',
+      'P-NGCP-Caller-Info: <sip:[% scenarios.0.username %]@invite-ncos-black.scenarios-lnp.test>;ip=[% scenarios.2.ip %];port=[% scenarios.2.port %]',
+      'P-NGCP-Callee-Info: <sip:[% extra_info.phone_numbers.4 %]@invite-ncos-black.scenarios-lnp.test>;ip=[% scenarios.2.responders.0.ip %];port=[% scenarios.2.responders.0.port %]',
       'P-D-Uri:'
     ]
