@@ -352,14 +352,14 @@ sub generate
         {
             # by default foreign is no
             $resp->{foreign} = "no" unless defined($resp->{foreign});
-            if(not defined($resp->{peer_host}) and $resp->{foreign} ne "yes")
+            try
             {
                 get_subs_info($data->{subscribers}, $resp);
-            } else {
+            } catch {
                 $resp->{devid} = $resp->{username};
                 $resp->{auth_username} = $resp->{username};
                 $resp->{alias} = [];
-            }
+            };
             $resp->{password} = "" unless defined($resp->{password});
             # by default responder is active
             $resp->{active} = "yes" unless defined($resp->{active});
