@@ -24,14 +24,14 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^ACK sip:(4318881003@)?127.0.0.1:5080(;transport=udp)? SIP/2.0'
+  - '^ACK sip:([% extra_info.phone_numbers.1 %]@)?127.0.0.1:5080(;transport=udp)? SIP/2.0'
   - 'CSeq: \d+ ACK'
-  - 'From: <sip:004321001@'
-  - 'To: <sip:4311001@'
+  - 'From: <sip:[% scenarios.0.username %]@'
+  - 'To: <sip:[% incoming_peer_scenarios_lnp_test.testuser1001.phone_number %]@'
 sip_out:
   - [
-      '^ACK sip:(4318881003@)?127.0.0.1:5080(;transport=udp)? SIP/2.0',
+      '^ACK sip:([% extra_info.phone_numbers.1 %]@)?127.0.0.1:5080(;transport=udp)? SIP/2.0',
       'CSeq: \d+ ACK',
-      'From: <sip:004321001@',
-      'To: <sip:4311001@'
+      'From: <sip:[% scenarios.0.username %]@',
+      'To: <sip:[% incoming_peer_scenarios_lnp_test.testuser1001.phone_number %]@'
     ]

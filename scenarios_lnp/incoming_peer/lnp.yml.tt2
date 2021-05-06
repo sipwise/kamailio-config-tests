@@ -1,0 +1,8 @@
+---
+lnp_incoming_peer_00:
+  data:
+    name: lnp_incoming_peer_00
+    prefix: test
+  numbers:
+    - number: '[% extra_info.phone_numbers.0 %]'
+      routing_number: '[% extra_info.phone_numbers.1 %]'

@@ -48,10 +48,10 @@ flow:
   - start|ROUTE_CLEAR_CALLEE_PREF:
   - return|ROUTE_CLEAR_CALLEE_PREF:
   - start|ROUTE_LNP:
-      $avp(callee_cli): ['4311003']
+      $avp(callee_cli): ['[% extra_info.phone_numbers.0 %]']
   - start|ROUTE_APPLY_CALLEE_LNP_RWR:
   - start|ROUTE_LNP_SET_URI:
-      $var(lnp_dst): 4318881003
+      $var(lnp_dst): [% extra_info.phone_numbers.1 %]
   - return|ROUTE_LNP_SET_URI:
   - return|ROUTE_APPLY_CALLEE_LNP_RWR:
   - return|ROUTE_LNP:
@@ -92,8 +92,8 @@ flow:
   - start|ROUTE_OUTBOUND:
       $avp(lua_dlg_profile): [
         "relay",
-        "peerout:[% peer_01_host1.id %]",
-        "peer:[% peer_01_host1.id %]",
+        "peerout:[% peer_incoming_peer_01_host1.id %]",
+        "peer:[% peer_incoming_peer_01_host1.id %]",
         "outgoing"
       ]
   - start|ROUTE_SET_CALLER_DIALOG:
@@ -102,16 +102,16 @@ flow:
   - return|ROUTE_SET_CALLER_DIALOG:
       $avp(lua_dlg_profile): [
         "accountout:[% customer_test.id %]",
-        "userout:[% spce_test.testuser1003.uuid %]",
+        "userout:[% incoming_peer_scenarios_lnp_test.testuser1003.uuid %]",
         "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1003.uuid %]",
+        "user:[% incoming_peer_scenarios_lnp_test.testuser1003.uuid %]",
         "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% spce_test.testuser1003.uuid %]",
+        "totaluserout:[% incoming_peer_scenarios_lnp_test.testuser1003.uuid %]",
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "totaluser:[% incoming_peer_scenarios_lnp_test.testuser1003.uuid %]",
         "relay",
-        "peerout:[% peer_01_host1.id %]",
-        "peer:[% peer_01_host1.id %]",
+        "peerout:[% peer_incoming_peer_01_host1.id %]",
+        "peer:[% peer_incoming_peer_01_host1.id %]",
         "outgoing"
       ]
   - start|ROUTE_ACC_CALLER:
@@ -178,46 +178,46 @@ flow:
   - exit|ROUTE_EXIT:
       $avp(lua_dlg_profile): [
         "accountout:[% customer_test.id %]",
-        "userout:[% spce_test.testuser1003.uuid %]",
+        "userout:[% incoming_peer_scenarios_lnp_test.testuser1003.uuid %]",
         "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1003.uuid %]",
+        "user:[% incoming_peer_scenarios_lnp_test.testuser1003.uuid %]",
         "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% spce_test.testuser1003.uuid %]",
+        "totaluserout:[% incoming_peer_scenarios_lnp_test.testuser1003.uuid %]",
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "totaluser:[% incoming_peer_scenarios_lnp_test.testuser1003.uuid %]",
         "relay",
-        "peerout:[% peer_01_host1.id %]",
-        "peer:[% peer_01_host1.id %]",
+        "peerout:[% peer_incoming_peer_01_host1.id %]",
+        "peer:[% peer_incoming_peer_01_host1.id %]",
         "outgoing"
       ]
 sip_in:
-  - '^INVITE sip:4311003@'
+  - '^INVITE sip:[% extra_info.phone_numbers.0 %]@'
   - 'P-HIH-Cause: 302'
   - 'P-From-Peer: 1'
-  - 'P-Caller-UUID: [% spce_test.testuser1003.uuid %]'
-  - 'P-First-Caller-UPN: 004321001'
-  - 'P-First-Caller-NPN: 004321001'
+  - 'P-Caller-UUID: [% incoming_peer_scenarios_lnp_test.testuser1003.uuid %]'
+  - 'P-First-Caller-UPN: [% scenarios.0.username %]'
+  - 'P-First-Caller-NPN: [% scenarios.0.username %]'
   - 'P-Acc-Caller-User: testuser1001'
   - 'P-CF-Depth: 1'
-  - 'P-Orig-Callee-Dialed: 4311001'
+  - 'P-Orig-Callee-Dialed: [% incoming_peer_scenarios_lnp_test.testuser1001.phone_number %]'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: \d+ INVITE',
-      'From: <sip:004321001@',
-      'To: <sip:4311001@'
+      'From: <sip:[% scenarios.0.username %]@',
+      'To: <sip:[% incoming_peer_scenarios_lnp_test.testuser1001.phone_number %]@'
     ]
   - [
-      '^INVITE sip:4318881003@',
+      '^INVITE sip:[% extra_info.phone_numbers.1 %]@',
       'CSeq: \d+ INVITE',
-      'From: <sip:004321001@',
+      'From: <sip:[% scenarios.0.username %]@',
       'Contact: <sip:127.0.0.1:5080(;transport=udp)?>',
-      'To: <sip:4311001@',
+      'To: <sip:[% incoming_peer_scenarios_lnp_test.testuser1001.phone_number %]@',
       'Content-Type: application/sdp',
       'P-CF-Depth: 1',
       'P-Callee-UUID: 0',
-      'P-Asserted-Identity: <sip:004321001@',
-      'P-Called-Party-ID: <sip:4318881003@',
+      'P-Asserted-Identity: <sip:[% scenarios.0.username %]@',
+      'P-Called-Party-ID: <sip:[% extra_info.phone_numbers.1 %]@',
       'P-App-Param: ;calltimer=21600;aleg_sst_enable=no;sst_enable=no',
       'P-App-Name: sbc'
     ]

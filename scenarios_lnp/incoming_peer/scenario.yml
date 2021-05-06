@@ -1,6 +1,7 @@
+---
 test_uuid: incoming_peer
 domains:
-  'spce.test':
+  incoming-peer.scenarios-lnp.test:
     reseller_id: 1
 customers:
   'customer.test':
@@ -13,7 +14,7 @@ customers:
       billing_profile_id: 1
       reseller_id: 1
 subscribers:
-  spce.test:
+  incoming-peer.scenarios-lnp.test:
     testuser1001:
       customer: 'customer.test'
       password: testuser
@@ -24,10 +25,14 @@ scenarios:
   - ip: 127.0.2.1
     username: 004321001
     domain: 127.0.2.1
+    peer_host: peer_incoming_peer_00_host0
     responders:
       - ip: 127.1.0.1
-        number: 4311001
-        username: 4311001
-        domain: spce.test
-        peer_host: peer_01_host1
-        register: no
+        username: testuser1001
+        domain: incoming-peer.scenarios-lnp.test
+        peer_host: peer_incoming_peer_01_host1
+        register: 'no'
+extra_info:
+  phone_numbers:
+    - 4341003
+    - 4318881003

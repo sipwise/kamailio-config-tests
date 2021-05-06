@@ -23,7 +23,7 @@ flow:
   - start|ROUTE_DLG_MANAGE:
   - return|ROUTE_DLG_MANAGE:
   - return|ROUTE_LOAD_PEER_IN_PREF:
-      $avp(lua_dlg_profile): ["peer:[% peer_00_host0.id %]", "total"]
+      $avp(lua_dlg_profile): ["peer:[% peer_incoming_peer_00_host0.id %]", "total"]
   - return|ROUTE_FIND_CALLER:
   - start|ROUTE_APPLY_HEADER_RULES:
   - return|ROUTE_APPLY_HEADER_RULES:
@@ -49,10 +49,10 @@ flow:
   - return|ROUTE_SET_CALLEE_DIALOG:
         $avp(lua_dlg_profile): [
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "totaluser:[% incoming_peer_scenarios_lnp_test.testuser1003.uuid %]",
         "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1003.uuid %]",
-        "peer:[% peer_00_host0.id %]",
+        "user:[% incoming_peer_scenarios_lnp_test.testuser1003.uuid %]",
+        "peer:[% peer_incoming_peer_00_host0.id %]",
         "total"
       ]
   - start|ROUTE_BLOCK_IN:
@@ -128,15 +128,15 @@ flow:
   - exit|ROUTE_EXIT:
       $avp(lua_dlg_profile): [
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% spce_test.testuser1003.uuid %]",
+        "totaluser:[% incoming_peer_scenarios_lnp_test.testuser1003.uuid %]",
         "account:[% customer_test.id %]",
-        "user:[% spce_test.testuser1003.uuid %]",
-        "peer:[% peer_00_host0.id %]",
+        "user:[% incoming_peer_scenarios_lnp_test.testuser1003.uuid %]",
+        "peer:[% peer_incoming_peer_00_host0.id %]",
         "total"
       ]
 sip_in:
-  - '^INVITE sip:4311001@'
-  - 'Contact: sip:004321001@'
+  - '^INVITE sip:[% incoming_peer_scenarios_lnp_test.testuser1001.phone_number %]@'
+  - 'Contact: sip:[% scenarios.0.username %]@'
   - 'CSeq: 1 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
@@ -144,24 +144,24 @@ sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: 1 INVITE',
-      'From: <sip:004321001@',
-      'To: <sip:4311001@'
+      'From: <sip:[% scenarios.0.username %]@',
+      'To: <sip:[% incoming_peer_scenarios_lnp_test.testuser1001.phone_number %]@'
     ]
   - [
-      '^INVITE sip:4311003@',
+      '^INVITE sip:[% extra_info.phone_numbers.0 %]@',
       'CSeq: 1 INVITE',
-      'From: <sip:004321001@',
-      'To: <sip:4311001@',
-      'Contact: sip:004321001@',
+      'From: <sip:[% scenarios.0.username %]@',
+      'To: <sip:[% incoming_peer_scenarios_lnp_test.testuser1001.phone_number %]@',
+      'Contact: sip:[% scenarios.0.username %]@',
       'Content-Type: application/sdp',
       'P-HIH-Cause: 302',
       'P-From-Peer: 1',
-      'P-Caller-UUID: [% spce_test.testuser1003.uuid %]',
-      'P-First-Caller-UPN: 004321001',
-      'P-First-Caller-NPN: 004321001',
+      'P-Caller-UUID: [% incoming_peer_scenarios_lnp_test.testuser1003.uuid %]',
+      'P-First-Caller-UPN: [% scenarios.0.username %]',
+      'P-First-Caller-NPN: [% scenarios.0.username %]',
       'P-Acc-Caller-User: testuser1001',
       'P-CF-Depth: 1',
-      'P-Orig-Callee-Dialed: 4311001',
+      'P-Orig-Callee-Dialed: [% incoming_peer_scenarios_lnp_test.testuser1001.phone_number %]',
       'P-App-Param: ;profile=ngcp_cf',
       'P-App-Name: sbc'
     ]

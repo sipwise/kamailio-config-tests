@@ -1,8 +1,8 @@
 ---
-testuser1001@spce.test:
+testuser1001@incoming-peer.scenarios-lnp.test:
   destinations:
     destinations:
-      - destination: sip:4311003@spce.test
+      - destination: sip:[% extra_info.phone_numbers.0 %]@incoming-peer.scenarios-lnp.test
         priority: 0
         timeout: 5
     name: dest1001
