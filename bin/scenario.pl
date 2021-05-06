@@ -28,6 +28,7 @@ use File::Spec;
 use IO::File;
 use YAML::XS qw(DumpFile LoadFile);
 use Hash::Merge qw(merge);
+use Storable 'dclone';
 use Text::CSV;
 use Template;
 use Try::Tiny;
@@ -97,6 +98,12 @@ our $tt = Template->new({
 }) || die "$Template::ERROR\n";
 our ($phone_cc, $phone_ac, $phone_sn) = split(/:/, $phone);
 $phone_sn = int($phone_sn);
+
+sub extra_info
+{
+    my $data = shift;
+    $ids->{extra_info} = dclone($data->{extra_info});
+}
 
 sub key_domain
 {
@@ -458,6 +465,7 @@ sub generate_foreign_dom
     return;
 }
 
+extra_info($cf);
 manage_phones($cf);
 generate($cf);
 generate_presence($cf);
