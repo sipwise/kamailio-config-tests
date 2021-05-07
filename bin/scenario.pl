@@ -102,7 +102,7 @@ $phone_sn = int($phone_sn);
 sub extra_info
 {
     my $data = shift;
-    if(defined($ids->{extra_info})) {
+    if(defined($data->{extra_info})) {
         $ids->{extra_info} = dclone($data->{extra_info});
     } else {
         $ids->{extra_info} = {};
