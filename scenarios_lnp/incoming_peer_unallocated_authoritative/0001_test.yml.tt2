@@ -23,7 +23,7 @@ flow:
   - start|ROUTE_DLG_MANAGE:
   - return|ROUTE_DLG_MANAGE:
   - return|ROUTE_LOAD_PEER_IN_PREF:
-      $avp(lua_dlg_profile): ["peer:[% peer_00_host0.id %]", "total"]
+      $avp(lua_dlg_profile): ["peer:[% peer_incoming_peer_ua_00_host0.id %]", "total"]
   - return|ROUTE_FIND_CALLER:
   - start|ROUTE_APPLY_HEADER_RULES:
   - return|ROUTE_APPLY_HEADER_RULES:
@@ -73,35 +73,35 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^INVITE sip:4321001@'
-  - 'From: <sip:004411001@127.0.2.1>'
-  - 'To: <sip:4321001@'
+  - '^INVITE sip:[% extra_info.phone_numbers.0 %]@'
+  - 'From: <sip:[% scenarios.0.username %]@[% scenarios.0.domain %]>'
+  - 'To: <sip:[% extra_info.phone_numbers.0 %]@'
   - 'CSeq: 1 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
-  - 'P-NGCP-Src-Ip: 127.0.2.1'
-  - 'P-NGCP-Src-Port: \d+'
+  - 'P-NGCP-Src-Ip: [% scenarios.0.ip %]'
+  - 'P-NGCP-Src-Port: [% scenarios.0.port %]'
   - 'P-NGCP-Src-Proto: udp'
   - 'P-NGCP-Src-Af: 4'
   - 'P-Sock-Info: udp:127.0.0.1:5060'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
-      'From: <sip:004411001@127.0.2.1>',
-      'To: <sip:4321001',
+      'From: <sip:[% scenarios.0.username %]@[% scenarios.0.domain %]>',
+      'To: <sip:[% extra_info.phone_numbers.0 %]',
       'CSeq: 1 INVITE',
       'P-Out-Socket: udp:127.0.0.1:5060',
-      'P-NGCP-Auth-IP: 127.0.2.1',
+      'P-NGCP-Auth-IP: [% scenarios.0.ip %]',
       'Content-Length:\s+0'
     ]
   - [
       '^SIP/2.0 404 Not Found',
-      'From: <sip:004411001@127.0.2.1>',
-      'To: <sip:4321001@',
+      'From: <sip:[% scenarios.0.username %]@[% scenarios.0.domain %]>',
+      'To: <sip:[% extra_info.phone_numbers.0 %]@',
       'CSeq: 1 INVITE',
       'P-Out-Socket: udp:127.0.0.1:5060',
-      'P-NGCP-Auth-IP: 127.0.2.1',
-      'P-NGCP-Caller-Info: <sip:004411001@127.0.2.1>;ip=127.0.2.1;port=\d+',
-      'P-NGCP-Callee-Info: <sip:4321001@spce.test>;ip=spce.test;port=5060',
+      'P-NGCP-Auth-IP: [% scenarios.0.ip %]',
+      'P-NGCP-Caller-Info: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %]',
+      'P-NGCP-Callee-Info: <sip:[% extra_info.phone_numbers.0 %]@incoming-peer-unallocated-authoritative.scenarios-lnp.test>;ip=incoming-peer-unallocated-authoritative.scenarios-lnp.test;port=5060',
       'Content-Length:\s+0'
     ]

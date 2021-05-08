@@ -1,9 +1,0 @@
----
-lnp_test_00:
-  data:
-    name: lnp_test_00
-    prefix: test
-    authoritative: 1
-  numbers:
-    - number: '4321001'
-      routing_number: '4318881003'

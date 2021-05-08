@@ -1,0 +1,9 @@
+---
+lnp_test_00:
+  data:
+    name: lnp_test_00
+    prefix: test
+    authoritative: 1
+  numbers:
+    - number: '[% extra_info.phone_numbers.0 %]'
+      routing_number: '[% extra_info.phone_numbers.1 %]'

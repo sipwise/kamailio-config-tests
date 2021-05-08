@@ -1,5 +1,5 @@
 {
-    "peer_00_host0": {
+    "peer_incoming_peer_ua_00_host0": {
     	"lnp_add_npdi": true,
     	"lnp_to_rn": true,
         "concurrent_max": 1
