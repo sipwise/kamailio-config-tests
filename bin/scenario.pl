@@ -221,7 +221,7 @@ sub get_subs_info
             } else {
                 $data->{devid} = $username;
                 $data->{auth_username} = $username;
-                eval { $data->{number} = $subs->{phone_number}; } unless defined($presence);
+                eval { $data->{number} = $subs->{phone_number}; } unless defined($data->{number});
             }
             $data->{'pbx_extension'} = $subs->{'pbx_extension'};
             $data->{alias} = [];
