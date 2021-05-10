@@ -95,7 +95,8 @@ sub contact
     {
       if( $resp->{username} eq $subscriber && $resp->{domain} eq $domain)
       {
-        return "sip:$resp->{ip}:$resp->{port}";
+        $resp->{proto} = 'udp' unless(defined($resp->{proto}));
+        return "sip:$resp->{ip}:$resp->{port};transport=$resp->{proto}";
       }
     }
   }

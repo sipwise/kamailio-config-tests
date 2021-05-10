@@ -284,7 +284,11 @@ sub network_data
     foreach my $resp (@{$scen->{responders}})
     {
         my $rdata = {};
-        if(defined($resp->{peer_host})) {
+        if(defined($resp->{register}) && $resp->{register} eq "permanent") {
+            $rdata->{ip} = $resp->{ip};
+            $rdata->{port} = $resp->{port};
+            $rdata->{mport} = $resp->{mport};
+        } elsif(defined($resp->{peer_host})) {
             $rdata->{peer} = $resp->{peer_host};
             $rdata = $hm->merge($rdata, peer_data($resp->{peer_host}));
         } else {
@@ -299,6 +303,11 @@ sub network_data
         $resp->{port} = $rdata->{port};
         $resp->{mport} = $rdata->{mport};
         if(defined($resp->{domain})) { $rdata->{domain} = $resp->{domain}; }
+        if(defined($resp->{register})) {
+            $rdata->{register} = $resp->{register};
+            $resp->{proto} = 'udp' unless(defined($resp->{proto}));
+            $rdata->{proto} = $resp->{proto};
+        }
         push @{$data->{responders}}, $rdata;
     }
     push @{$ids->{scenarios}}, $data;
