@@ -1,5 +1,6 @@
 bench.sh /usr/share/kamailio-config-tests/
 bin/ /usr/share/kamailio-config-tests/
+config.yml /usr/share/kamailio-config-tests/
 get_results.sh /usr/share/kamailio-config-tests/
 lib/ /usr/share/kamailio-config-tests/
 run_tests.sh /usr/share/kamailio-config-tests/
