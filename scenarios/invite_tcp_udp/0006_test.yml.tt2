@@ -20,7 +20,7 @@ sip_in:
   - 'P-LB-Uptime: \d+'
   - 'P-Asserted-Identity: <sip:[% invite_tcp_udp_scenarios_test.testuser1002.phone_number %]@invite-tcp-udp.scenarios.test>'
   - 'P-Caller-UUID: [% invite_tcp_udp_scenarios_test.testuser1002.uuid %]'
-  - 'P-NGCP-Caller-Info: <sip:testuser1002@invite-tcp-udp.scenarios.test>;ip=127.0.0.1;port=51602;primary=[% invite_tcp_udp_scenarios_test.testuser1002.phone_number %]'
+  - 'P-NGCP-Caller-Info: <sip:testuser1002@invite-tcp-udp.scenarios.test>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %];primary=[% invite_tcp_udp_scenarios_test.testuser1002.phone_number %]'
   - 'P-NGCP-Callee-Info: <sip:[% scenarios.0.responders.0.username %]@invite-tcp-udp.scenarios.test>;ip=127.0.0.1;port=5060;primary=[% invite_tcp_udp_scenarios_test.testuser1003.phone_number %]'
   - 'P-D-Uri: sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060'
   - 'Content-Type: application/sdp'
@@ -43,7 +43,7 @@ sip_out:
       'P-LB-Uptime: \d+',
       'P-Asserted-Identity: <sip:[% invite_tcp_udp_scenarios_test.testuser1002.phone_number %]@invite-tcp-udp.scenarios.test>',
       'P-Caller-UUID: [% invite_tcp_udp_scenarios_test.testuser1002.uuid %]',
-      'P-NGCP-Caller-Info: <sip:testuser1002@invite-tcp-udp.scenarios.test>;ip=127.0.0.1;port=51602;primary=[% invite_tcp_udp_scenarios_test.testuser1002.phone_number %]',
+      'P-NGCP-Caller-Info: <sip:testuser1002@invite-tcp-udp.scenarios.test>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %];primary=[% invite_tcp_udp_scenarios_test.testuser1002.phone_number %]',
       'P-NGCP-Callee-Info: <sip:[% scenarios.0.responders.0.username %]@invite-tcp-udp.scenarios.test>;ip=127.0.0.1;port=5060;primary=[% invite_tcp_udp_scenarios_test.testuser1003.phone_number %]',
       'P-D-Uri: sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060',
       'Content-Type: application/sdp',
