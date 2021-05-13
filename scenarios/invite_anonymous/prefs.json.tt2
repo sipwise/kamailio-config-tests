@@ -1,5 +1,5 @@
 {
     "testuser1002@invite-anonymous.scenarios.test": {
-        "cli": 4311002
+        "cli": [% invite_anonymous_scenarios_test.testuser1002.phone_number %]
      }
 }

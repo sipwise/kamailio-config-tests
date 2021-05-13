@@ -1,10 +1,10 @@
 cdr:
   - source_user: '[% scenarios.0.username %]'
     source_domain: 'invite-redirect-blocked.scenarios.test'
-    source_cli: '[% invite_redirect_scenarios_test.testuser1002.phone_number %]'
-    destination_user: '[% scenarios.0.username %]'
+    source_cli: '[% invite_redirect_blocked_scenarios_test.testuser1002.phone_number %]'
+    destination_user: '[% scenarios.0.responders.0.username %]'
     destination_domain: 'invite-redirect-blocked.scenarios.test'
-    destination_user_dialed: '[% scenarios.0.username %]'
+    destination_user_dialed: '[% scenarios.0.responders.0.username %]'
     call_type: 'call'
     call_status: 'other'
     call_code: '302'
