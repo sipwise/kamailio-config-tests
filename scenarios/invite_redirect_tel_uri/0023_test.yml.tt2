@@ -1,0 +1,51 @@
+flow:
+  - start|DEFAULT_ROUTE:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_NET_INFO:
+  - return|ROUTE_NET_INFO:
+  - start|ROUTE_CHECK_TEL_URI:
+  - exit|ROUTE_CHECK_TEL_URI:
+  - start|ROUTE_PRX_REQUEST:
+  - start|ROUTE_INITVARS:
+  - return|ROUTE_INITVARS:
+  - start|dialog:end:
+  - return|dialog:end:
+  - return|dialog:end:
+  - start|ROUTE_STOP_RTPPROXY:
+  - start|ROUTE_RESTORE_CLUSTERSET:
+  - return|ROUTE_RESTORE_CLUSTERSET:
+  - return|ROUTE_STOP_RTPPROXY:
+  - start|ROUTE_PREPARE_UA:
+  - return|ROUTE_PREPARE_UA:
+  - start|ROUTE_OUTBOUND:
+  - start|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+sip_in:
+  - '^BYE sip:127.0.0.1:5080(;prxroute=1)? SIP/2.0'
+  - 'From: <tel:\+[% invite_redirect_tel_uri_scenarios_test.testuser1000.phone_number %]>;tag=[\w-]+'
+  - 'To: <tel:\+[% invite_redirect_tel_uri_scenarios_test.testuser1001.phone_number %]>;tag=[\w-]+'
+  - 'CSeq: \d+ BYE'
+  - 'Max-Forwards: 69'
+  - 'Content-Length: 0'
+sip_out:
+  - [
+      '^SIP/2.0 100 Trying',
+      'From: <tel:\+[% invite_redirect_tel_uri_scenarios_test.testuser1000.phone_number %]>;tag=[\w-]+',
+      'To: <tel:\+[% invite_redirect_tel_uri_scenarios_test.testuser1001.phone_number %]>;tag=[\w-]+',
+      'CSeq: \d+ BYE',
+      'Content-Length: 0'
+    ]
+  - [
+      '^BYE sip:127.0.0.1:5080(;prxroute=1)? SIP/2.0',
+      'CSeq: \d+ BYE',
+      'Max-Forwards: 68',
+      'Content-Length: 0',
+      'From: <sip:[% invite_redirect_tel_uri_scenarios_test.testuser1000.phone_number %]@invite-redirect-tel-uri.scenarios.test>;tag=[\w-]+',
+      'To: <sip:\+[% invite_redirect_tel_uri_scenarios_test.testuser1001.phone_number %]@invite-redirect-tel-uri.scenarios.test'
+    ]

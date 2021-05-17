@@ -1,0 +1,10 @@
+flow:
+  - start|sl:filtered-ack:
+sip_in:
+  - '^ACK sip:[% scenarios.0.responders.0.username %]@invite-redirect-tel-uri.scenarios.test SIP/2.0'
+  - 'From: <tel:\+[% invite_redirect_tel_uri_scenarios_test.testuser1000.phone_number %]>;tag=[\w-]+'
+  - 'To: <tel:\+[% invite_redirect_tel_uri_scenarios_test.testuser1001.phone_number %]>'
+  - 'CSeq: \d+ ACK'
+  - 'Max-Forwards: 69'
+  - 'Content-Length: 0'
+sip_out: []

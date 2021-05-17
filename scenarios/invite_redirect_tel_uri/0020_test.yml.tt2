@@ -1,0 +1,30 @@
+flow:
+  - start|DEFAULT_ONREPLY:
+  - start|REPLY_ROUTE_NAT:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - start|ROUTE_PREPARE_UA:
+  - return|ROUTE_PREPARE_UA:
+  - start|REPLY_ROUTE_RTPENGINE:
+  - return|REPLY_ROUTE_RTPENGINE:
+  - start|REPLY_ROUTE_NAT_CONTINUE:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - start|dialog:start:
+  - return|dialog:start:
+  - return|dialog:start:
+sip_in:
+  - '^SIP/2.0 200 OK'
+  - 'From: <sip:[% invite_redirect_tel_uri_scenarios_test.testuser1000.phone_number %]@invite-redirect-tel-uri.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:\+[% invite_redirect_tel_uri_scenarios_test.testuser1001.phone_number %]@invite-redirect-tel-uri.scenarios.test'
+  - 'CSeq: 2 INVITE'
+sip_out:
+  - [
+      '^SIP/2.0 200 OK',
+      'From: <tel:\+[% invite_redirect_tel_uri_scenarios_test.testuser1000.phone_number %]>;tag=[\w-]+',
+      'To: <tel:\+[% invite_redirect_tel_uri_scenarios_test.testuser1001.phone_number %]>;tag=[\w-]+',
+      'CSeq: \d+ INVITE'
+    ]
