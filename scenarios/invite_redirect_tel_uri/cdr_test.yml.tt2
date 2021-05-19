@@ -10,7 +10,7 @@ cdr:
     call_code: '200'
   - source_user: '[% scenarios.0.responders.0.username %]'
     source_domain: 'invite-redirect-tel-uri.scenarios.test'
-    source_cli: '[% invite_redirect_tel_uri_scenarios_test.testuser1003.phone_number %]'
+    source_cli: '[% invite_redirect_tel_uri_scenarios_test.testuser1001.phone_number %]'
     destination_user: '[% scenarios.0.responders.1.username %]'
     destination_domain: 'invite-redirect-tel-uri.scenarios.test'
     destination_user_dialed: '[% scenarios.0.responders.1.username %]'
