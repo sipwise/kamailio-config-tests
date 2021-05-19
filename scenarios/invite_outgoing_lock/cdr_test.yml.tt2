@@ -1,0 +1,10 @@
+cdr:
+  - source_user: '[% scenarios.0.username %]'
+    source_domain: 'invite-outgoing-lock.scenarios.test'
+    source_cli: '[% invite_outgoing_lock_scenarios_test.testuser1000.phone_number %]'
+    destination_user: '[% invite_outgoing_lock_scenarios_test.testuser1001.phone_number %]'
+    destination_domain: 'invite-outgoing-lock.scenarios.test'
+    destination_user_dialed: '[% invite_outgoing_lock_scenarios_test.testuser1001.phone_number %]'
+    call_type: 'call'
+    call_status: 'other'
+    call_code: '403'

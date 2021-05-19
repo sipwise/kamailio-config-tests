@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<scenario name="Sipwise NGCP Benchmark UAS Responder">
+
+  <recv request="INVITE" rtd="true"/>
+
+  <send>
+    <![CDATA[
+
+      SIP/2.0 480 Temporarily Unavailable
+      [last_Via:]
+      [last_From:]
+      [last_To:];tag=[pid]SIPpTag00[call_number]
+      [last_Call-ID:]
+      [last_CSeq:]
+      Content-Length: 0
+
+    ]]>
+  </send>
+
+  <recv request="ACK"/>
+
+  <ResponseTimeRepartition value="10, 20, 30, 40, 50, 100, 150, 200"/>
+  <CallLengthRepartition value="10, 50, 100, 500, 1000, 5000, 10000"/>
+
+</scenario>

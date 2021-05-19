@@ -1,0 +1,5 @@
+{
+    "[% scenarios.0.responders.0.username %]@invite-callforward-but-callee-locked-cfna.scenarios.test": {
+        "lock": 2
+    }
+}

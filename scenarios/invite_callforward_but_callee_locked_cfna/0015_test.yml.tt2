@@ -1,0 +1,45 @@
+flow:
+  - start|DEFAULT_ONREPLY:
+  - start|REPLY_ROUTE_CF_LOOP:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - start|ROUTE_PREPARE_UA:
+  - return|ROUTE_PREPARE_UA:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+  - start|FAILURE_ROUTE_HUNT:
+  - start|ROUTE_STOP_RTPPROXY_BRANCH:
+  - start|ROUTE_RESTORE_CLUSTERSET:
+  - return|ROUTE_RESTORE_CLUSTERSET:
+  - return|ROUTE_STOP_RTPPROXY_BRANCH:
+  - start|ROUTE_INITVARS:
+  - return|ROUTE_INITVARS:
+  - return|FAILURE_ROUTE_HUNT:
+  - start|dialog:failed:
+  - return|dialog:failed:
+  - return|dialog:failed:
+sip_in:
+  - 'SIP/2.0 403 Caller locked'
+  - 'From: <sip:[% scenarios.0.username %]@invite-callforward-but-callee-locked-cfna.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:[% scenarios.0.responders.0.username %]@invite-callforward-but-callee-locked-cfna.scenarios.test>;tag=[\w-]+'
+  - 'CSeq: \d+ INVITE'
+  - 'Content-Length: 0'
+sip_out:
+  - [
+      'ACK sip:4311002@invite-callforward-but-callee-locked-cfna.scenarios.test SIP/2.0',
+      'From: <sip:[% scenarios.0.username %]@invite-callforward-but-callee-locked-cfna.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.0.username %]@invite-callforward-but-callee-locked-cfna.scenarios.test>;tag=[\w-]+',
+      'CSeq: \d+ ACK',
+      'Content-Length: 0',
+    ]
+  - [
+      'SIP/2.0 403 Caller locked',
+      'From: <sip:[% scenarios.0.username %]@invite-callforward-but-callee-locked-cfna.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.0.username %]@invite-callforward-but-callee-locked-cfna.scenarios.test>;tag=[\w-]+',
+      'CSeq: \d+ INVITE',
+      'Content-Length: 0',
+    ]

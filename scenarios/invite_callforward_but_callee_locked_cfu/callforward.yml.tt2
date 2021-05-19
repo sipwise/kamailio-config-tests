@@ -1,0 +1,21 @@
+---
+testuser1001@invite-callforward-but-callee-locked-cfu.scenarios.test:
+  destinations:
+    destinations:
+      - destination: sip:[% invite_callforward_but_callee_locked_cfu_scenarios_test.testuser1002.phone_number %]@invite-callforward-but-callee-locked-cfu.scenarios.test
+        priority: 1
+        timeout: 5
+    name: dest1001
+  mappings:
+    cfu:
+      - bnumberset: null
+        destinationset: dest1001
+        sourceset: null
+        timeset: null
+        enabled: true
+    cfb: []
+    cfna: []
+    cft: []
+    cfs: []
+    cfr: []
+    cfo: []

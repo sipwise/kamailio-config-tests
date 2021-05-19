@@ -1,0 +1,9 @@
+flow:
+  - start|sl:filtered-ack:
+sip_in:
+  - '^ACK sip:[% scenarios.0.responders.0.username %]@invite-callforward-but-callee-locked-cfu.scenarios.test SIP/2.0'
+  - 'From: <sip:[% scenarios.0.username %]@invite-callforward-but-callee-locked-cfu.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:[% scenarios.0.responders.0.username %]@invite-callforward-but-callee-locked-cfu.scenarios.test>;tag=[\w-]+'
+  - 'CSeq: \d+ ACK'
+  - 'Content-Length: 0'
+sip_out: []
