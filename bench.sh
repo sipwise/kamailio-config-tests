@@ -67,6 +67,7 @@ if ! "${SKIP_CONFIG}" ; then
   echo "add configuration for tests"
   ./bin/config_debug.pl -c 5 -g "${GROUP}" "${BASE_DIR}/config.yml" on
   ./bin/network_config.pl -g "${GROUP}" "${BASE_DIR}/config.yml" on
+  ./bin/config_files.sh "${GROUP}"
 	(
     cd /etc/ngcp-config || true
     ngcpcfg --summary-only apply "k-c-t ${GROUP} on"

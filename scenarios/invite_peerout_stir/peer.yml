@@ -1,0 +1,27 @@
+---
+peer_invite_peerout_stir:
+  contact:
+    company: peer_invite_peerout_stir
+    email: peer_00@host0.not
+  contract:
+    billing_profile_id: 1
+    status: active
+    type: sippeering
+  groups:
+    - name: peer_invite_peerout_stir_group
+      priority: 1
+      description:
+  rules:
+    - group_id: peer_invite_peerout_stir_group
+      callee_prefix: ""
+      callee_pattern: ''
+      caller_pattern: '^sip:.+@invite-peerout-stir.scenarios.test'
+      description: ""
+  hosts:
+    - group_id: peer_invite_peerout_stir_group
+      name: peer_invite_peerout_stir_host0
+      ip: 127.0.2.1
+      port: 51602
+      host:
+      transport: 1
+      weight: 1

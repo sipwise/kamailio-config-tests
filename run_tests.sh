@@ -317,6 +317,8 @@ if ! "${SKIP_CONFIG}" ; then
     echo "$(date) - Exec pid_watcher with timeout[${TIMEOUT}]"
     ( timeout "${TIMEOUT}" "${BIN_DIR}/pid_watcher.py" ${PIDWATCH_OPTS} )&
   fi
+  echo "$(date) - Config files"
+  "${BIN_DIR}/config_files.sh" "${GROUP}"
   if ! ngcpcfg --summary-only apply "config debug on via kamailio-config-tests" ; then
     echo "$(date) - ngcp apply returned $?"
     echo "$(date) - Done[3]"

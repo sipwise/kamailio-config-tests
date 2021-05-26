@@ -1,0 +1,10 @@
+cdr:
+  - source_user: '[% scenarios.0.username %]'
+    source_domain: 'invite-peerout-stir.scenarios.test'
+    source_cli: '[% invite_peerout_stir_scenarios_test.testuser1002.phone_number %]'
+    destination_user: '[% scenarios.0.responders.0.username %]'
+    destination_domain: '[% scenarios.0.responders.0.ip %]'
+    destination_user_dialed: '[% scenarios.0.responders.0.username %]'
+    call_type: 'call'
+    call_status: 'ok'
+    call_code: '200'

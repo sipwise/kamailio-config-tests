@@ -1,3 +1,4 @@
+---
 kamailio:
   proxy:
     presence:
@@ -7,3 +8,8 @@ kamailio:
         - '112'
         - '110'
         - '118[0-9]{2}'
+    stir:
+      enable: 'yes'
+      domains:
+        - name: invite-peerout-stir.scenarios.test
+          private_key: /etc/kamailio/stir/invite-peerout-stir.scenarios.test.key

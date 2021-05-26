@@ -34,6 +34,8 @@ echo "$(date) - Setting config debug on"
 "${BIN_DIR}/config_debug.pl" -c 5 -g "${GROUP}" "${BASE_DIR}/config.yml" on
 echo "$(date) - Setting network config"
 "${BIN_DIR}/network_config.pl" -g "${GROUP}" "${BASE_DIR}/config.yml" on
+echo "$(date) - Config files"
+"${BIN_DIR}/config_files.sh" "${GROUP}"
 cd /etc/ngcp-config || exit 3
 if ! ngcpcfg --summary-only apply "config debug on via kamailio-config-tests" ; then
   echo "$(date) - ngcpcfg apply returned $?"
