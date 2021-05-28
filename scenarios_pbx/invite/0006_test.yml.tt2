@@ -1,15 +1,6 @@
 flow:
   - start|DEFAULT_ONREPLY:
   - start|REPLY_ROUTE_NAT:
-      $avp(lua_dlg_profile): [
-        "totalaccountout:[% customerpbx_test.id %]",
-        "totaluserout:[% spce_test.testuser1002.uuid %]",
-        "totalaccount:[% customerpbx_test.id %]",
-        "totaluser:[% spce_test.testuser1002.uuid %]",
-        "totalaccount:[% customerpbx_test.id %]",
-        "totaluser:[% spce_test.testuser1003.uuid %]",
-        "total"
-      ]
   - start|ROUTE_ENTRY:
   - return|ROUTE_ENTRY:
   - start|ROUTE_APPLY_HEADER_RULES:
@@ -23,8 +14,8 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - 'SIP/2.0 100 Trying'
-  - 'From: <sip:testuser1002@'
-  - 'To: <sip:1003@'
-  - 'CSeq: 2 INVITE'
+  - 'From: <sip:[% invite_scenarios_pbx_test.testuser1002.phone_number %]@invite.scenarios-pbx.test>;tag=[\w-]+'
+  - 'To: <sip:1003@invite.scenarios-pbx.test>'
+  - 'CSeq: \d+ INVITE'
   - 'Content-Length: 0'
 sip_out: []

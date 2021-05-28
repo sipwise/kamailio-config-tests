@@ -28,10 +28,10 @@ sip_in:
   - 'To: <sip:[% invite_alias_devid_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@invite-alias-devid.scenarios-pbx.test>'
   - 'CSeq: \d+ REGISTER'
   - 'Authorization: Digest username="[% invite_alias_devid_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]",realm="invite-alias-devid.scenarios-pbx.test",uri="sip:127.0.0.1:5060",nonce=".+",response=".+",algorithm=MD5'
-  - 'Contact: sip:[% invite_alias_devid_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@[% scenarios.2.responders.0.ip %]:[% scenarios.2.responders.0.port %];transport=UDP'
+  - 'Contact: sip:[% invite_alias_devid_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@127.126.0.1:\d+;transport=UDP'
   - 'Content-Length: 0'
   - 'P-NGCP-Src-Ip: [% scenarios.2.responders.0.ip %]'
-  - 'P-NGCP-Src-Port: \d+'
+  - 'P-NGCP-Src-Port: [% scenarios.2.responders.0.port %]'
   - 'P-NGCP-Src-Proto: udp'
   - 'P-NGCP-Src-Af: 4'
   - 'P-Sock-Info: udp:127.0.0.1:5060'
@@ -44,7 +44,7 @@ sip_out:
       'To: <sip:[% invite_alias_devid_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@invite-alias-devid.scenarios-pbx.test>',
       'CSeq: \d+ REGISTER',
       'P-Out-Socket: udp:127.0.0.1:5060',
-      'P-NGCP-Auth-IP: [% scenarios.2.responders.0.ip %]',
+      'P-NGCP-Auth-IP: 127.126.0.1',
       'P-NGCP-Auth-UA: <null>',
       'Server: Sipwise NGCP Proxy',
       'Content-Length: 0',
@@ -60,7 +60,7 @@ sip_out:
       'P-NGCP-Authorization: [% invite_alias_devid_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@invite-alias-devid.scenarios-pbx.test',
       'P-NGCP-Authorized: 1',
       'P-Caller-UUID: [% invite_alias_devid_scenarios_pbx_test.testuser1003.uuid %]',
-      'Contact: <sip:[% invite_alias_devid_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@[% scenarios.2.responders.0.ip %]:[% scenarios.2.responders.0.port %]>;expires=\d+',
+      'Contact: <sip:[% invite_alias_devid_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@127.126.0.1:\d+>;expires=\d+',
       'Server: Sipwise NGCP Proxy',
       'Content-Length: 0',
     ]

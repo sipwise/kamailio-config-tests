@@ -1,21 +1,35 @@
 flow:
   - start|DEFAULT_ONREPLY:
-  - start|REPLY_ROUTE_NAT:
+  - start|REPLY_ROUTE_LEG_B:
   - start|ROUTE_ENTRY:
   - return|ROUTE_ENTRY:
-  - start|ROUTE_APPLY_HEADER_RULES:
-  - return|ROUTE_APPLY_HEADER_RULES:
-  - start|ROUTE_PREPARE_UA:
-  - return|ROUTE_PREPARE_UA:
-  - start|REPLY_ROUTE_NAT_CONTINUE:
   - start|ROUTE_EXIT:
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - 'SIP/2.0 100 Trying'
+  - 'SIP/2.0 180 Ringing'
   - 'From: <sip:[% invite_username_devid_scenarios_pbx_test.testuser1002.phone_number %]@invite-username-devid.scenarios-pbx.test>;tag=[\w-]+'
-  - 'To: <sip:1003@invite-username-devid.scenarios-pbx.test>'
+  - 'To: <sip:testuser1003@invite-username-devid.scenarios-pbx.test>;tag=[\w-]+'
   - 'CSeq: \d+ INVITE'
   - 'Content-Length: 0'
-sip_out: []
+  - 'P-NGCP-Src-Af: 4'
+sip_out:
+  - [
+      'PUBLISH sip:testuser1003@invite-username-devid.scenarios-pbx.test SIP/2.0',
+      'To: <sip:testuser1003@invite-username-devid.scenarios-pbx.test>',
+      'From: <sip:testuser1003@invite-username-devid.scenarios-pbx.test>;tag=[\w-]+',
+      'CSeq: \d+ PUBLISH',
+      'Content-Length:\s+\d+',
+      'User-Agent: Sipwise NGCP Proxy',
+      'Event: dialog',
+      'Content-Type: application/dialog\-info\+xml',
+    ]
+  - [
+      'SIP/2.0 180 Ringing',
+      'From: <sip:[% invite_username_devid_scenarios_pbx_test.testuser1002.phone_number %]@invite-username-devid.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:testuser1003@invite-username-devid.scenarios-pbx.test>;tag=[\w-]+',
+      'CSeq: \d+ INVITE',
+      'Content-Length: 0',
+      'P-NGCP-Src-Af: 4',
+    ]

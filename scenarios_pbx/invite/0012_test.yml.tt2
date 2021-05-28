@@ -1,33 +1,50 @@
 flow:
   - start|DEFAULT_ONREPLY:
   - start|REPLY_ROUTE_NAT:
-      $avp(lua_dlg_profile): [
-        "local",
-        "total"
-      ]
   - start|ROUTE_ENTRY:
   - return|ROUTE_ENTRY:
   - start|ROUTE_APPLY_HEADER_RULES:
   - return|ROUTE_APPLY_HEADER_RULES:
+  - start|REPLY_SCA_UPDATE:
+  - return|REPLY_SCA_UPDATE:
   - start|ROUTE_PREPARE_UA:
   - return|ROUTE_PREPARE_UA:
+  - start|REPLY_ROUTE_RTPENGINE:
+  - return|REPLY_ROUTE_RTPENGINE:
   - start|REPLY_ROUTE_NAT_CONTINUE:
   - start|ROUTE_EXIT:
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:
-  - exit|ROUTE_EXIT:
+  - start|dialog:start:
+  - return|dialog:start:
+  - return|dialog:start:
 sip_in:
-  - '^SIP/2.0 180 Ringing'
+  - 'SIP/2.0 200 OK'
+  - 'From: <sip:[% invite_scenarios_pbx_test.testuser1002.phone_number %]@invite.scenarios-pbx.test>;tag=[\w-]+'
+  - 'To: <sip:1003@invite.scenarios-pbx.test>;tag=[\w-]+'
   - 'CSeq: \d+ INVITE'
+  - 'Contact: <sip:127.0.0.1:508[08];transport=udp>'
+  - 'Content-Type: application/sdp'
+  - 'Content-Length:\s+\d+'
 sip_out:
   - [
-      '^PUBLISH sip:testuser1003@invite.scenarios-pbx.test SIP/2.0',
-      'From: <sip:testuser1003@invite.scenarios-pbx.test>',
-      'To: <sip:testuser1003@invite.scenarios-pbx.test>',
+      'PUBLISH sip:testuser1002@invite.scenarios-pbx.test SIP/2.0',
+      'To: <sip:testuser1002@invite.scenarios-pbx.test>',
+      'From: <sip:testuser1002@invite.scenarios-pbx.test>;tag=[\w-]+',
+      'CSeq: \d+ PUBLISH',
+      'Content-Length:\s+\d+',
+      'User-Agent: Sipwise NGCP Proxy',
       'Event: dialog',
-      'Content-Type: application/dialog-info\+xml',
+      'SIP-If-Match: .+',
+      'Content-Type: application/dialog\-info\+xml',
     ]
   - [
-      '^SIP/2.0 180 Ringing',
+      'SIP/2.0 200 OK',
+      'From: <sip:testuser1002@invite.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:1003@invite.scenarios-pbx.test>;tag=[\w-]+',
       'CSeq: \d+ INVITE',
+      'Contact: <sip:127.0.0.1:508[08];transport=udp>',
+      'Content-Type: application/sdp',
+      'Content-Length:\s+\d+',
+      'P-Out-Socket: udp:127.0.0.1:5060',
     ]

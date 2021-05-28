@@ -18,10 +18,10 @@ sip_in:
   - 'From: <sip:[% invite_alias_devid_fulllookup_scenarios_pbx_test.testuser1003.alias_numbers.2.phone_number %]@invite-alias-devid-fulllookup.scenarios-pbx.test>;tag=[\w-]+'
   - 'To: "TestBria" <sip:[% invite_alias_devid_fulllookup_scenarios_pbx_test.testuser1003.alias_numbers.2.phone_number %]@invite-alias-devid-fulllookup.scenarios-pbx.test>'
   - 'CSeq: \d+ REGISTER'
-  - 'Contact: "TestBria" <sip:[% invite_alias_devid_fulllookup_scenarios_pbx_test.testuser1003.alias_numbers.2.phone_number %]@[% scenarios.1.ip %]:6666;ob>;reg-id=1;\+sip.instance="<urn:uuid:C3DD6013-20E8-40E3-8EA2-5849B02ED0C4>"'
+  - 'Contact: "TestBria" <sip:[% invite_alias_devid_fulllookup_scenarios_pbx_test.testuser1003.alias_numbers.2.phone_number %]@[% scenarios.0.ip %]:\d+;ob>;reg-id=1;\+sip.instance="<urn:uuid:C3DD6013-20E8-40E3-8EA2-5849B02ED0C4>"'
   - 'Content-Length: 0'
-  - 'P-NGCP-Src-Ip: [% scenarios.1.ip %]'
-  - 'P-NGCP-Src-Port: [% scenarios.1.port %]'
+  - 'P-NGCP-Src-Ip: [% scenarios.0.ip %]'
+  - 'P-NGCP-Src-Port: \d+'
   - 'P-NGCP-Src-Proto: udp'
   - 'P-NGCP-Src-Af: 4'
   - 'P-Sock-Info: udp:127.0.0.1:5060'
@@ -34,7 +34,7 @@ sip_out:
       'To: "TestBria" <sip:[% invite_alias_devid_fulllookup_scenarios_pbx_test.testuser1003.alias_numbers.2.phone_number %]@invite-alias-devid-fulllookup.scenarios-pbx.test>',
       'CSeq: \d+ REGISTER',
       'P-Out-Socket: udp:127.0.0.1:5060',
-      'P-NGCP-Auth-IP: [% scenarios.1.ip %]',
+      'P-NGCP-Auth-IP: [% scenarios.0.ip %]',
       'P-NGCP-Auth-UA: <null>',
       'Server: Sipwise NGCP Proxy',
       'Content-Length: 0',
@@ -45,7 +45,7 @@ sip_out:
       'To: "TestBria" <sip:[% invite_alias_devid_fulllookup_scenarios_pbx_test.testuser1003.alias_numbers.2.phone_number %]@invite-alias-devid-fulllookup.scenarios-pbx.test>;tag=[\w-]+',
       'CSeq: \d+ REGISTER',
       'P-Out-Socket: udp:127.0.0.1:5060',
-      'P-NGCP-Auth-IP: [% scenarios.1.ip %]',
+      'P-NGCP-Auth-IP: [% scenarios.0.ip %]',
       'P-NGCP-Auth-UA: <null>',
       'WWW-Authenticate: Digest realm="invite-alias-devid-fulllookup.scenarios-pbx.test", nonce=".+"',
       'Server: Sipwise NGCP Proxy',

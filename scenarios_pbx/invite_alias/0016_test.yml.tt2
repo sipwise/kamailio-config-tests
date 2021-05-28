@@ -1,38 +1,54 @@
 flow:
-  - start|DEFAULT_ONREPLY:
-  - start|REPLY_ROUTE_NAT:
+  - start|DEFAULT_ROUTE:
   - start|ROUTE_ENTRY:
   - return|ROUTE_ENTRY:
-  - start|ROUTE_APPLY_HEADER_RULES:
-  - return|ROUTE_APPLY_HEADER_RULES:
-  - start|REPLY_SCA_UPDATE:
-  - return|REPLY_SCA_UPDATE:
-  - start|ROUTE_PREPARE_UA:
-  - return|ROUTE_PREPARE_UA:
+  - start|ROUTE_NET_INFO:
+  - return|ROUTE_NET_INFO:
+  - start|ROUTE_CHECK_TEL_URI:
+  - return|ROUTE_CHECK_TEL_URI:
+  - start|ROUTE_PRX_REQUEST:
+  - start|ROUTE_INITVARS:
+  - return|ROUTE_INITVARS:
+  - start|dialog:end:
+  - return|dialog:end:
+  - return|dialog:end:
   - start|ROUTE_FIX_PBX_STOP_RECORDS:
   - return|ROUTE_FIX_PBX_STOP_RECORDS:
-  - start|REPLY_ROUTE_RTPENGINE:
-  - return|REPLY_ROUTE_RTPENGINE:
-  - start|REPLY_ROUTE_NAT_CONTINUE:
+  - start|ROUTE_STOP_RTPPROXY:
+  - start|ROUTE_RESTORE_CLUSTERSET:
+  - return|ROUTE_RESTORE_CLUSTERSET:
+  - return|ROUTE_STOP_RTPPROXY:
+  - start|ROUTE_PREPARE_UA:
+  - return|ROUTE_PREPARE_UA:
+  - start|ROUTE_OUTBOUND:
+  - start|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
   - start|ROUTE_EXIT:
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:
-  - start|dialog:start:
-  - return|dialog:start:
-  - return|dialog:start:
+  - exit|ROUTE_EXIT:
 sip_in:
-  - 'SIP/2.0 200 OK'
-  - 'From: <sip:testuser1002@invite-alias.scenarios-pbx.test>;tag=[\w-]+'
-  - 'To: <sip:[% invite_alias_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@invite-alias.scenarios-pbx.test>;tag=[\w-]+'
-  - 'CSeq: \d+ INVITE'
-  - 'Contact: <sip:127.0.0.1:508[08];transport=udp>'
-  - 'Content-Type: application/sdp'
-  - 'Content-Length:\s+\d+'
+  - '^BYE'
+  - 'From: <sip:[% invite_alias_scenarios_pbx_test.testuser1002.phone_number %]@invite-alias.scenarios-pbx.test>;tag=[\w-]+'
+  - 'To: <sip:testuser1003@invite-alias.scenarios-pbx.test>;tag=[\w-]+'
+  - 'CSeq: \d+ BYE'
+  - 'P-LB-Uptime: \d+'
+  - 'P-Asserted-Identity: <sip:[% invite_alias_scenarios_pbx_test.testuser1002.phone_number %]@invite-alias.scenarios-pbx.test>'
+  - 'Content-Length: 0'
 sip_out:
   - [
-      'PUBLISH sip:testuser1002@invite-alias.scenarios-pbx.test SIP/2.0',
-      'To: <sip:testuser1002@invite-alias.scenarios-pbx.test>',
-      'From: <sip:testuser1002@invite-alias.scenarios-pbx.test>;tag=[\w-]+',
+      'SIP/2.0 100 Trying',
+      'From: <sip:[% invite_alias_scenarios_pbx_test.testuser1002.phone_number %]@invite-alias.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:testuser1003@invite-alias.scenarios-pbx.test>;tag=[\w-]+',
+      'CSeq: \d+ BYE',
+      'Server: Sipwise NGCP Proxy',
+      'Content-Length: 0',
+    ]
+  - [
+      'PUBLISH sip:testuser1003@invite-alias.scenarios-pbx.test SIP/2.0',
+      'To: <sip:testuser1003@invite-alias.scenarios-pbx.test>',
+      'From: <sip:testuser1003@invite-alias.scenarios-pbx.test>;tag=[\w-]+',
       'CSeq: \d+ PUBLISH',
       'Content-Length:\s+\d+',
       'User-Agent: Sipwise NGCP Proxy',
@@ -41,13 +57,11 @@ sip_out:
       'Content-Type: application/dialog\-info\+xml',
     ]
   - [
-      'SIP/2.0 200 OK',
-      'From: <sip:testuser1002@invite-alias.scenarios-pbx.test>;tag=[\w-]+',
-      'To: <sip:[% invite_alias_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@invite-alias.scenarios-pbx.test>;tag=[\w-]+',
-      'CSeq: \d+ INVITE',
-      'Contact: <sip:127.0.0.1:508[08];transport=udp>',
-      'Content-Type: application/sdp',
-      'Content-Length:\s+\d+',
-      'P-COLP-Identity: "1003" <sip:1003@invite-alias.scenarios-pbx.test>',
-      'P-Out-Socket: udp:127.0.0.1:5060',
+      '^BYE',
+      'From: <sip:[% invite_alias_scenarios_pbx_test.testuser1002.phone_number %]@invite-alias.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:testuser1003@invite-alias.scenarios-pbx.test>;tag=[\w-]+',
+      'CSeq: \d+ BYE',
+      'P-LB-Uptime: \d+',
+      'P-Asserted-Identity: <sip:[% invite_alias_scenarios_pbx_test.testuser1002.phone_number %]@invite-alias.scenarios-pbx.test>',
+      'Content-Length: 0',
     ]

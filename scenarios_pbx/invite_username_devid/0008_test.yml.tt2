@@ -1,0 +1,9 @@
+flow:
+  - start|sl:filtered-ack:
+sip_in:
+  - 'ACK sip:1003@invite-username-devid.scenarios-pbx.test SIP/2.0'
+  - 'From: <sip:testuser1002@invite-username-devid.scenarios-pbx.test>;tag=[\w-]+'
+  - 'To: <sip:1003@invite-username-devid.scenarios-pbx.test>;tag=[\w-]+'
+  - 'CSeq: \d+ ACK'
+  - 'Content-Length: 0'
+sip_out: []

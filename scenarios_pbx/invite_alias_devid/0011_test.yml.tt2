@@ -1,21 +1,60 @@
 flow:
-  - start|DEFAULT_ONREPLY:
-  - start|REPLY_ROUTE_NAT:
+  - start|DEFAULT_ROUTE:
   - start|ROUTE_ENTRY:
   - return|ROUTE_ENTRY:
-  - start|ROUTE_APPLY_HEADER_RULES:
-  - return|ROUTE_APPLY_HEADER_RULES:
-  - start|ROUTE_PREPARE_UA:
-  - return|ROUTE_PREPARE_UA:
-  - start|REPLY_ROUTE_NAT_CONTINUE:
+  - start|ROUTE_LEG_B:
+  - start|ROUTE_INITVARS:
+  - return|ROUTE_INITVARS:
+  - start|ROUTE_BRANCH_ACC_RTP:
+  - return|ROUTE_BRANCH_ACC_RTP:
+  - start|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
   - start|ROUTE_EXIT:
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - 'SIP/2.0 100 Trying'
-  - 'From: <sip:testuser1002@invite-alias-devid.scenarios-pbx.test>;tag=[\w-]+'
+  - 'INVITE sip:[% invite_alias_devid_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@[% scenarios.2.ip %]:[% scenarios.2.responders.0.port %] SIP/2.0'
+  - 'From: <sip:[% invite_alias_devid_scenarios_pbx_test.testuser1002.phone_number %]@invite-alias-devid.scenarios-pbx.test>;tag=[\w-]+'
   - 'To: <sip:[% invite_alias_devid_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@invite-alias-devid.scenarios-pbx.test>'
   - 'CSeq: \d+ INVITE'
-  - 'Content-Length: 0'
-sip_out: []
+  - 'P-LB-Uptime: \d+'
+  - 'P-Asserted-Identity: <sip:[% invite_alias_devid_scenarios_pbx_test.testuser1002.phone_number %]@invite-alias-devid.scenarios-pbx.test>'
+  - 'P-Caller-UUID: [% invite_alias_devid_scenarios_pbx_test.testuser1002.uuid %]'
+  - 'P-Callee-UUID: [% invite_alias_devid_scenarios_pbx_test.testuser1003.uuid %]'
+  - 'P-NGCP-Rtpengine-Bleg: 1'
+  - 'P-NGCP-Caller-Info: <sip:testuser1002@invite-alias-devid.scenarios-pbx.test>;ip=[% scenarios.2.ip %];port=[% scenarios.2.port %];primary=[% invite_alias_devid_scenarios_pbx_test.testuser1002.phone_number %]'
+  - 'P-NGCP-Callee-Info: <sip:[% invite_alias_devid_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@invite-alias-devid.scenarios-pbx.test>;ip=127.0.0.1;port=5060;primary=[% invite_alias_devid_scenarios_pbx_test.testuser1002.phone_number %]1003;alias=[% invite_alias_devid_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]'
+  - 'P-NGCP-Presence-Caller: sip:testuser1002@invite-alias-devid.scenarios-pbx.test'
+  - 'P-NGCP-Presence-Callee: sip:[% invite_alias_devid_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@invite-alias-devid.scenarios-pbx.test'
+  - 'P-D-Uri: sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060'
+  - 'Content-Type: application/sdp'
+  - 'Content-Length:\s+\d+'
+  - 'Contact: <sip:127.0.0.1:508[08];transport=udp>'
+sip_out:
+  - [
+      'SIP/2.0 100 Trying',
+      'From: <sip:[% invite_alias_devid_scenarios_pbx_test.testuser1002.phone_number %]@invite-alias-devid.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:[% invite_alias_devid_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@invite-alias-devid.scenarios-pbx.test>',
+      'CSeq: \d+ INVITE',
+      'Server: Sipwise NGCP Proxy',
+      'Content-Length: 0',
+    ]
+  - [
+      'INVITE sip:[% invite_alias_devid_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@[% scenarios.2.responders.0.ip %]:[% scenarios.2.responders.0.port %] SIP/2.0',
+      'From: <sip:[% invite_alias_devid_scenarios_pbx_test.testuser1002.phone_number %]@invite-alias-devid.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:[% invite_alias_devid_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@invite-alias-devid.scenarios-pbx.test>',
+      'CSeq: \d+ INVITE',
+      'P-LB-Uptime: \d+',
+      'P-Asserted-Identity: <sip:[% invite_alias_devid_scenarios_pbx_test.testuser1002.phone_number %]@invite-alias-devid.scenarios-pbx.test>',
+      'P-Caller-UUID: [% invite_alias_devid_scenarios_pbx_test.testuser1002.uuid %]',
+      'P-Callee-UUID: [% invite_alias_devid_scenarios_pbx_test.testuser1003.uuid %]',
+      'P-NGCP-Rtpengine-Bleg: 1',
+      'P-NGCP-Caller-Info: <sip:testuser1002@invite-alias-devid.scenarios-pbx.test>;ip=[% scenarios.2.ip %];port=[% scenarios.2.port %];primary=[% invite_alias_devid_scenarios_pbx_test.testuser1002.phone_number %]',
+      'P-NGCP-Callee-Info: <sip:[% invite_alias_devid_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@invite-alias-devid.scenarios-pbx.test>;ip=127.0.0.1;port=5060;primary=[% invite_alias_devid_scenarios_pbx_test.testuser1002.phone_number %]1003;alias=[% invite_alias_devid_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]',
+      'P-D-Uri: sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060',
+      'Content-Type: application/sdp',
+      'Content-Length:\s+\d+',
+      'Contact: <sip:127.0.0.1:508[08];transport=udp>',
+    ]
