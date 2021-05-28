@@ -1,0 +1,114 @@
+flow:
+  - start|DEFAULT_ROUTE:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_NET_INFO:
+  - return|ROUTE_NET_INFO:
+  - start|ROUTE_CHECK_TEL_URI:
+  - return|ROUTE_CHECK_TEL_URI:
+  - start|ROUTE_PRX_REQUEST:
+  - start|ROUTE_INITVARS:
+  - return|ROUTE_INITVARS:
+  - start|ROUTE_INVITE:
+  - start|ROUTE_LOAD_CALLEE_DOMAIN_PREF:
+  - start|ROUTE_CLEAR_CALLEE_DOMAIN_PREF:
+  - return|ROUTE_CLEAR_CALLEE_DOMAIN_PREF:
+  - return|ROUTE_LOAD_CALLEE_DOMAIN_PREF:
+  - start|ROUTE_FIND_CALLER:
+  - start|ROUTE_PSTN_SELECT_INBOUND_PEER:
+  - return|ROUTE_PSTN_SELECT_INBOUND_PEER:
+  - start|ROUTE_CLEAR_PEER_IN_PREF:
+  - return|ROUTE_CLEAR_PEER_IN_PREF:
+  - start|ROUTE_LOAD_PEER_IN_PREF:
+  - start|ROUTE_DLG_MANAGE:
+  - return|ROUTE_DLG_MANAGE:
+  - return|ROUTE_LOAD_PEER_IN_PREF:
+      $avp(lua_dlg_profile): ["peer:[% peer_00_host0.id %]", "total"]
+      $avp(from_pstn): [1]
+  - return|ROUTE_FIND_CALLER:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - start|ROUTE_GET_CALLER_CLI:
+  - return|ROUTE_GET_CALLER_CLI:
+  - start|ROUTE_GET_CALLER_CLI:
+  - return|ROUTE_GET_CALLER_CLI:
+  - start|ROUTE_GET_FORWARDER_CLI:
+  - return|ROUTE_GET_FORWARDER_CLI:
+  - start|ROUTE_CLIR:
+  - return|ROUTE_CLIR:
+  - start|ROUTE_CALLER_BLOCK_CLI:
+  - return|ROUTE_CALLER_BLOCK_CLI:
+  - start|ROUTE_FIND_CALLEE:
+  - start|ROUTE_CLEAR_CALLEE_PREF:
+  - return|ROUTE_CLEAR_CALLEE_PREF:
+  - start|ROUTE_LOAD_CALLEE_PREF:
+  - start|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
+  - return|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
+  - start|ROUTE_SET_CALLEE_DIALOG:
+  - start|ROUTE_CNT_DLG_CHECK:
+  - return|ROUTE_CNT_DLG_CHECK:
+  - return|ROUTE_SET_CALLEE_DIALOG:
+     $avp(lua_dlg_profile): [
+        "totalaccount:[% customer_test.id %]",
+        "totaluser:[% incoming_peer_stir.scenarios.test.testuser1003.uuid %]",
+        "account:[% customer_test.id %]",
+        "user:[% incoming_peer_stir.scenarios.test.testuser1003.uuid %]",
+        "peer:[% peer_00_host0.id %]",
+        "total"
+      ]
+  - start|ROUTE_BLOCK_IN:
+  - return|ROUTE_BLOCK_IN:
+  - return|ROUTE_LOAD_CALLEE_PREF:
+      $xavp(caller_peer_prefs[0]=>concurrent_max[*]): [1]
+  - start|ROUTE_STIR_CHECK:
+      $xavp(callee_real_prefs[0]=>stir_check[*]): [1]
+      $x_fd: incoming-peer-stir.host0.peer.scenarios.test
+  - start|ROUTE_ACC_FAILURE:
+  - start|ROUTE_ACC_CALLER:
+  - start|ROUTE_SET_ACC_CALLER_CALL_COUNTERS:
+  - return|ROUTE_SET_ACC_CALLER_CALL_COUNTERS:
+  - return|ROUTE_ACC_CALLER:
+  - start|ROUTE_ACC_CALLEE:
+  - start|ROUTE_SET_ACC_CALLEE_CALL_COUNTERS:
+  - return|ROUTE_SET_ACC_CALLEE_CALL_COUNTERS:
+  - return|ROUTE_ACC_CALLEE:
+  - return|ROUTE_ACC_FAILURE:
+  - start|ROUTE_EARLY_REJECT:
+  - start|ROUTE_ADD_CALLINFO_REPLY:
+  - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
+  - start|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_REPLY:
+  - start|ROUTE_LOCAL_REPLY:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - start|dialog:failed:
+  - return|dialog:failed:
+  - return|dialog:failed:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+      $avp(lua_dlg_profile): None
+sip_in:
+  - '^INVITE sip:[% incoming_peer_stir_scenarios_test.testuser1003.phone_number %]@'
+  - 'Contact: sip:[% scenarios.2.username %]@'
+  - 'CSeq: 1 INVITE'
+  - 'Max-Forwards: 69'
+  - 'Content-Type: application/sdp'
+  - '_:NOT:_Identity: [^;]+;info=<http://fake.url/pub.key>;alg=ES256;ppt=shaken'
+  - 'P-Asserted-Identity: <sip:[% scenarios.2.username %]@[% scenarios.2.domain %]>'
+sip_out:
+  - [
+      '^SIP/2.0 100 Trying',
+      'CSeq: 1 INVITE',
+      'From: <sip:[% scenarios.2.username %]@',
+      'To: <sip:[% incoming_peer_stir_scenarios_test.testuser1003.phone_number %]@'
+    ]
+  - [
+      '^SIP/2.0 428 Use Identity Header',
+      'CSeq: 1 INVITE',
+      'From: <sip:[% scenarios.2.username %]@[% scenarios.2.domain %]>;tag=[\w-]+',
+      'To: <sip:[% incoming_peer_stir_scenarios_test.testuser1003.phone_number %]@incoming-peer-stir.scenarios.test>;tag=[\w-]+',
+    ]

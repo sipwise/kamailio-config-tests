@@ -1,0 +1,8 @@
+{
+    "@incoming-peer-stir.scenarios.test": {
+        "stir_check": true
+    },
+    "peer_incoming_peer_stir_host0": {
+        "concurrent_max": 1
+    }
+}

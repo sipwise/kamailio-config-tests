@@ -12,7 +12,7 @@ fi
 case ${GROUP} in
   scenarios)
     mkdir -p /etc/kamailio/stir/
-    cp "${BASE_DIR}/${GROUP}/invite-peerout-stir.scenarios.test.key" \
+    cp "${BASE_DIR}/${GROUP}"/invite-peerout-stir.scenarios.test.*key \
       /etc/kamailio/stir/
     chown -R kamailio:kamailio /etc/kamailio/stir/
     echo "$(date) - Added stir file keys"

@@ -14,3 +14,4 @@ presence_*xml
 presence.sh
 apicert.pem
 .ngcpcfg_perms
+prefs.json
