@@ -1,0 +1,59 @@
+flow:
+  - start|DEFAULT_ROUTE:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_NET_INFO:
+  - return|ROUTE_NET_INFO:
+  - start|ROUTE_CHECK_TEL_URI:
+  - return|ROUTE_CHECK_TEL_URI:
+  - start|ROUTE_PRX_REQUEST:
+  - start|ROUTE_INITVARS:
+  - return|ROUTE_INITVARS:
+  - start|ROUTE_INVITE:
+  - start|ROUTE_LOAD_CALLEE_DOMAIN_PREF:
+  - start|ROUTE_CLEAR_CALLEE_DOMAIN_PREF:
+  - return|ROUTE_CLEAR_CALLEE_DOMAIN_PREF:
+  - return|ROUTE_LOAD_CALLEE_DOMAIN_PREF:
+  - start|ROUTE_FIND_CALLER:
+  - start|ROUTE_AUTH:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+sip_in:
+  - '^INVITE sip:1002@incoming-shared-line.scenarios-pbx.test SIP/2.0'
+  - 'From: <sip:[% scenarios.2.username %]@incoming-shared-line.scenarios-pbx.test>;tag='
+  - 'To: <sip:1002@incoming-shared-line.scenarios-pbx.test>'
+  - 'Call-Info: <sip:incoming-shared-line.scenarios-pbx.test>;appearance-index=1'
+  - 'CSeq: 1 INVITE'
+  - 'Contact: sip:[% scenarios.2.username %]@[% scenarios.2.ip %]:[% scenarios.2.port %]'
+  - 'Max-Forwards: 69'
+  - 'Content-Type: application/sdp'
+  - 'Content-Length:\s+\d+'
+  - 'P-NGCP-Src-Ip: [% scenarios.2.ip %]'
+  - 'P-NGCP-Src-Port: [% scenarios.2.port %]'
+  - 'P-NGCP-Src-Proto: udp'
+  - 'P-NGCP-Src-Af: 4'
+  - 'P-Sock-Info: udp:127.0.0.1:5060'
+sip_out:
+  - [
+      '^SIP/2.0 100 Trying',
+      'From: <sip:[% scenarios.2.username %]@incoming-shared-line.scenarios-pbx.test>;tag=',
+      'To: <sip:1002@incoming-shared-line.scenarios-pbx.test>',
+      'CSeq: 1 INVITE',
+      'P-Out-Socket: udp:127.0.0.1:5060',
+      'P-NGCP-Auth-IP: [% scenarios.2.ip %]',
+      'P-NGCP-Auth-UA: <null>',
+      'Content-Length: 0',
+    ]
+  - [
+      '^SIP/2.0 407 Proxy Authentication Required',
+      'From: <sip:[% scenarios.2.username %]@incoming-shared-line.scenarios-pbx.test>;tag=',
+      'To: <sip:1002@incoming-shared-line.scenarios-pbx.test>;tag=',
+      'CSeq: 1 INVITE',
+      'P-Out-Socket: udp:127.0.0.1:5060',
+      'P-NGCP-Auth-IP: [% scenarios.2.ip %]',
+      'P-NGCP-Auth-UA: <null>',
+      'Proxy-Authenticate: Digest',
+      'Content-Length: 0',
+    ]

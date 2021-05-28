@@ -1,0 +1,17 @@
+flow:
+  - start|DEFAULT_ONREPLY:
+  - start|REPLY_ROUTE_LEG_B:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+sip_in:
+  - 'SIP/2.0 100 Trying'
+  - 'From: <sip:[% invite_scenarios_pbx_test.testuser1002.phone_number %]@invite.scenarios-pbx.test>;tag=[\w-]+'
+  - 'To: <sip:testuser1003@invite.scenarios-pbx.test>'
+  - 'CSeq: \d+ INVITE'
+  - 'Server: Sipwise NGCP LB'
+  - 'Content-Length: 0'
+sip_out: []

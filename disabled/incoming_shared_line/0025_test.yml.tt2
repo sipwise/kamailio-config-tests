@@ -1,0 +1,54 @@
+flow:
+  - start|DEFAULT_ONREPLY:
+  - start|REPLY_ROUTE_LEG_B:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+  - start|FAILURE_ROUTE_LEG_B:
+  - start|ROUTE_STOP_RTPPROXY_BRANCH:
+  - start|ROUTE_RESTORE_CLUSTERSET:
+  - return|ROUTE_RESTORE_CLUSTERSET:
+  - return|ROUTE_STOP_RTPPROXY_BRANCH:
+  - start|FAILURE_ROUTE_LEG_B:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+  - start|dialog:failed:
+  - return|dialog:failed:
+  - return|dialog:failed:
+sip_in:
+  - 'SIP/2.0 487 Request terminated'
+  - 'From: <sip:[% incoming_shared_line_scenarios_pbx_test.testuser1003.pbx_phone_number %]@incoming-shared-line.scenarios-pbx.test>;tag=[\w-]+'
+  - 'To: <sip:testuser1002@incoming-shared-line.scenarios-pbx.test>'
+  - 'CSeq: \d+ INVITE'
+  - 'Content-Length: \s+0'
+  - 'P-NGCP-Src-Af: 4'
+sip_out:
+  - [
+      'From: <sip:[% incoming_shared_line_scenarios_pbx_test.testuser1003.pbx_phone_number %]@incoming-shared-line.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:testuser1002@incoming-shared-line.scenarios-pbx.test>',
+      'CSeq: \d+ ACK',
+      'Content-Length: 0',
+    ]
+  - [
+      'PUBLISH sip:testuser1002@incoming-shared-line.scenarios-pbx.test SIP/2.0',
+      'To: <sip:testuser1002@incoming-shared-line.scenarios-pbx.test>',
+      'From: <sip:testuser1002@incoming-shared-line.scenarios-pbx.test>;tag=[\w-]+',
+      'CSeq: \d+ PUBLISH',
+      'Content-Length:\s+\d+',
+      'User-Agent: Sipwise NGCP Proxy',
+      'Event: dialog',
+      'SIP-If-Match: .+',
+      'Content-Type: application/dialog\-info\+xml',
+    ]
+  - [
+      'SIP/2.0 487 Request terminated',
+      'From: <sip:[% incoming_shared_line_scenarios_pbx_test.testuser1003.pbx_phone_number %]@incoming-shared-line.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:testuser1002@incoming-shared-line.scenarios-pbx.test>',
+      'CSeq: \d+ INVITE',
+      'Content-Length: \s+0',
+      'P-NGCP-Src-Af: 4',
+    ]

@@ -76,10 +76,17 @@ flow:
   - start|ROUTE_BLOCK_OUT:
   - return|ROUTE_BLOCK_OUT:
   - start|ROUTE_CHECK_PBX:
-  - start|ROUTE_APPEND_PBX_HDRS:
-  - start|ROUTE_ADD_DEVALIAS_HEADERS:
-  - return|ROUTE_ADD_DEVALIAS_HEADERS:
-  - return|ROUTE_APPEND_PBX_HDRS:
+  - return|ROUTE_CHECK_PBX:
+  - start|ROUTE_CALLEE_DISPATCH:
+  - start|ROUTE_INVITE_TO_INT:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - start|ROUTE_CF_CFU:
+  - return|ROUTE_CF_CFU:
+  - start|ROUTE_CNT_DLG_CHECK:
+  - return|ROUTE_CNT_DLG_CHECK:
+  - start|ROUTE_LOOKUP_SUBSCRIBER_LOCATIONS:
+  - return|ROUTE_LOOKUP_SUBSCRIBER_LOCATIONS:
   - start|ROUTE_OUTBOUND:
   - start|ROUTE_SET_CALLER_DIALOG:
   - start|ROUTE_CNT_DLG_CHECK:
@@ -95,17 +102,45 @@ flow:
   - return|ROUTE_ACC_CALLEE:
   - start|ROUTE_SCA_UPDATE:
   - return|ROUTE_SCA_UPDATE:
-  - start|BRANCH_ROUTE_NO_SBC:
-  - start|ROUTE_BRANCH_ACC_RTP:
-  - return|ROUTE_BRANCH_ACC_RTP:
+  - start|ROUTE_ADD_AOC_HEADER:
+  - return|ROUTE_ADD_AOC_HEADER:
+  - start|BRANCH_ROUTE_SBC:
+  - start|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
+  - return|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
+  - start|ROUTE_SET_CALLEE_DIALOG:
+  - start|ROUTE_CNT_DLG_CHECK:
+  - return|ROUTE_CNT_DLG_CHECK:
+  - return|ROUTE_SET_CALLEE_DIALOG:
   - start|ROUTE_SET_BRANCH_HDRS:
   - start|ROUTE_PREPARE_UA:
   - return|ROUTE_PREPARE_UA:
   - return|ROUTE_SET_BRANCH_HDRS:
+  - start|ROUTE_SET_RUSER:
+  - return|ROUTE_SET_RUSER:
+  - start|ROUTE_BRANCH_ACC_RTP:
+  - return|ROUTE_BRANCH_ACC_RTP:
   - start|ROUTE_FILTER_PRACK:
   - return|ROUTE_FILTER_PRACK:
-  - start|ROUTE_LOAD_PBXSRV:
-  - return|ROUTE_LOAD_PBXSRV:
+  - start|ROUTE_PREPARE_SST:
+  - return|ROUTE_PREPARE_SST:
+  - start|ROUTE_PREPARE_MOH:
+  - return|ROUTE_PREPARE_MOH:
+  - start|ROUTE_SET_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - return|ROUTE_PREPARE_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - return|ROUTE_PREPARE_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - return|ROUTE_PREPARE_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - return|ROUTE_PREPARE_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - return|ROUTE_PREPARE_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - return|ROUTE_PREPARE_CALLER_CLI:
+  - return|ROUTE_SET_CALLER_CLI:
+  - start|ROUTE_SET_CALLEE:
+  - return|ROUTE_SET_CALLEE:
   - start|ROUTE_ADD_CALLINFO:
   - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
   - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
@@ -114,7 +149,7 @@ flow:
   - return|ROUTE_ADD_CALLINFO:
   - start|ROUTE_APPLY_HEADER_RULES:
   - return|ROUTE_APPLY_HEADER_RULES:
-  - return|BRANCH_ROUTE_NO_SBC:
+  - return|BRANCH_ROUTE_SBC:
   - start|DEFAULT_SEND:
   - exit|DEFAULT_SEND:
   - exit|DEFAULT_SEND:
@@ -159,7 +194,7 @@ sip_out:
       'P-NGCP-Auth-UA: <null>',
       'P-NGCP-Authorization: testuser1002@invite-alias.scenarios-pbx.test',
       'P-NGCP-Authorized: 1',
-      'P-NGCP-Caller-Info: <sip:testuser1002@invite-alias.scenarios-pbx.test>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %];primary=[% invite_alias_scenarios_pbx_test.testuser1002.phone_number %]',
+      'P-NGCP-Caller-Info: <sip:testuser1002@invite-alias.scenarios-pbx.test>;ip=127.126.0.1;port=\d+;primary=4311000',
       'P-Caller-UUID: [% invite_alias_scenarios_pbx_test.testuser1002.uuid %]',
       'Server: Sipwise NGCP Proxy',
       'Content-Length: 0',
@@ -175,41 +210,25 @@ sip_out:
       'Content-Type: application/dialog\-info\+xml',
     ]
   - [
-      'INVITE sip:testuser1003@invite-alias.scenarios-pbx.test SIP/2.0',
-      'From: <sip:testuser1002@invite-alias.scenarios-pbx.test>;tag=[\w-]+',
+      'INVITE sip:testuser1003@[% scenarios.0.ip %]:\d+ SIP/2.0',
+      'From: <sip:4311000@invite-alias.scenarios-pbx.test>;tag=[\w-]+',
       'To: <sip:[% invite_alias_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@invite-alias.scenarios-pbx.test>',
       'CSeq: \d+ INVITE',
-      'Contact: sip:testuser1002@[% scenarios.0.ip %]:[% scenarios.0.port %]',
+      'Contact: sip:testuser1002@[% scenarios.0.ip %]:\d+',
       'Content-Type: application/sdp',
       'Content-Length:\s+\d+',
-      'P-NGCP-Src-Ip: [% scenarios.0.ip %]',
-      'P-NGCP-Src-Port: [% scenarios.0.port %]',
-      'P-NGCP-Src-Proto: udp',
-      'P-NGCP-Src-Af: 4',
       'P-LB-Uptime: \d+',
-      'P-NGCP-Alias-Base: [% invite_alias_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]',
-      'P-NGCP-Alias-DevId: 0',
-      'P-NGCP-Src-Nat: 0',
-      'P-Caller-CLIR: 0',
-      'P-NGCP-Orig-User: [% invite_alias_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]',
-      'P-NGCP-Orig-Domain: invite-alias.scenarios-pbx.test',
-      'P-NGCP-Orig-Dialed: [% invite_alias_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]',
-      'P-NGCP-Orig-PBX-Ext: 1003',
-      'P-First-Caller-Cloud-PBX: [% customerpbx_test.id %]',
-      'P-AA-Caller-CLIR: 0',
-      'P-NGCP-Lookup-Type: alias',
-      'P-NGCP-BlockOut-Override: 0',
-      'P-NGCP-AdmBlockOut-Override: 0',
-      'P-NGCP-ContBlockOut-Override: 0',
-      'P-NGCP-ContAdmBlockOut-Override: 0',
+      'P-Asserted-Identity: <sip:4311000@invite-alias.scenarios-pbx.test>',
       'P-Caller-UUID: [% invite_alias_scenarios_pbx_test.testuser1002.uuid %]',
       'P-Callee-UUID: [% invite_alias_scenarios_pbx_test.testuser1003.uuid %]',
+      'P-NGCP-Rtpengine-Bleg: 1',
+      'P-Called-Party-ID: <sip:testuser1003@invite-alias.scenarios-pbx.test>',
+      'P-App-Param: ;calltimer=21600;aleg_sst_enable=no;sst_enable=no;hold_alter_b2b_bleg=no;hold_alter_b2b_aleg=no;fast_ack=no;a_park_domain=[% customerpbx_test.id %];b_park_domain=[% customerpbx_test.id %]',
       'P-App-Name: sbc',
-      'P-App-Param: ;profile=ngcp_pbx;a_park_domain=[% customerpbx_test.id %];b_park_domain=[% customerpbx_test.id %]',
-      'P-NGCP-Acc-Src-Leg: .+',
-      'P-NGCP-Acc-Dst-Leg: .+',
-      'P-NGCP-Sems-Instance: pbx',
-      'P-Proxy-Uri: 127.0.0.1:5062',
-      'P-NGCP-Caller-Info: <sip:testuser1002@invite-alias.scenarios-pbx.test>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %];primary=[% invite_alias_scenarios_pbx_test.testuser1002.phone_number %]',
-      'P-NGCP-Callee-Info: <sip:[% invite_alias_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@invite-alias.scenarios-pbx.test>;ip=127.0.0.1;port=508[08];primary=[% invite_alias_scenarios_pbx_test.testuser1002.phone_number %]1003;alias=[% invite_alias_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]',
+      'P-NGCP-Caller-Info: <sip:testuser1002@invite-alias.scenarios-pbx.test>;ip=[% scenarios.0.ip %];port=\d+;primary=[% invite_alias_scenarios_pbx_test.testuser1002.phone_number %]',
+      'P-NGCP-Callee-Info: <sip:[% invite_alias_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@invite-alias.scenarios-pbx.test>;ip=127.0.0.1;port=5060;primary=[% invite_alias_scenarios_pbx_test.testuser1002.phone_number %]1003;alias=[% invite_alias_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]',
+      'P-NGCP-Presence-Caller: sip:testuser1002@invite-alias.scenarios-pbx.test',
+      'P-NGCP-Presence-Callee: sip:testuser1003@invite-alias.scenarios-pbx.test',
+      'P-D-Uri: sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060',
+      'P-Proxy-Uri: sip:127.0.0.1:5062',
     ]

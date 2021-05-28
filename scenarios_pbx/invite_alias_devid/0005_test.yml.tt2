@@ -18,7 +18,7 @@ sip_in:
   - 'From: <sip:[% invite_alias_devid_scenarios_pbx_test.testuser1003.alias_numbers.2.phone_number %]@invite-alias-devid.scenarios-pbx.test>;tag=[\w-]+'
   - 'To: "TestBria" <sip:[% invite_alias_devid_scenarios_pbx_test.testuser1003.alias_numbers.2.phone_number %]@invite-alias-devid.scenarios-pbx.test>'
   - 'CSeq: \d+ REGISTER'
-  - 'Contact: "TestBria" <sip:[% invite_alias_devid_scenarios_pbx_test.testuser1003.alias_numbers.2.phone_number %]@[% scenarios.0.ip %]:6666;ob>;reg-id=1;\+sip.instance="<urn:uuid:C3DD6013-20E8-40E3-8EA2-5849B02ED0C4>"'
+  - 'Contact: "TestBria" <sip:[% invite_alias_devid_scenarios_pbx_test.testuser1003.alias_numbers.2.phone_number %]@127.126.0.1:\d+;ob>;reg-id=1;\+sip.instance="<urn:uuid:C3DD6013-20E8-40E3-8EA2-5849B02ED0C4>"'
   - 'Content-Length: 0'
   - 'P-NGCP-Src-Ip: [% scenarios.0.ip %]'
   - 'P-NGCP-Src-Port: \d+'

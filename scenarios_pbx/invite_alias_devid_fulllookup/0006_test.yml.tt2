@@ -28,10 +28,10 @@ sip_in:
   - 'To: "TestBria" <sip:[% invite_alias_devid_fulllookup_scenarios_pbx_test.testuser1003.alias_numbers.2.phone_number %]@invite-alias-devid-fulllookup.scenarios-pbx.test>'
   - 'CSeq: \d+ REGISTER'
   - 'Authorization: Digest username="[% invite_alias_devid_fulllookup_scenarios_pbx_test.testuser1003.alias_numbers.2.phone_number %]",realm="invite-alias-devid-fulllookup.scenarios-pbx.test",uri="sip:127.0.0.1:5060",nonce=".+",response=".+",algorithm=MD5'
-  - 'Contact: "TestBria" <sip:[% invite_alias_devid_fulllookup_scenarios_pbx_test.testuser1003.alias_numbers.2.phone_number %]@[% scenarios.1.ip %]:6666;ob>;reg-id=1;\+sip.instance="<urn:uuid:C3DD6013-20E8-40E3-8EA2-5849B02ED0C4>"'
+  - 'Contact: "TestBria" <sip:[% invite_alias_devid_fulllookup_scenarios_pbx_test.testuser1003.alias_numbers.2.phone_number %]@127.126.0.1:\d+;ob>;reg-id=1;\+sip.instance="<urn:uuid:C3DD6013-20E8-40E3-8EA2-5849B02ED0C4>"'
   - 'Content-Length: 0'
   - 'P-NGCP-Src-Ip: [% scenarios.1.ip %]'
-  - 'P-NGCP-Src-Port: [% scenarios.1.port %]'
+  - 'P-NGCP-Src-Port: \d+'
   - 'P-NGCP-Src-Proto: udp'
   - 'P-NGCP-Src-Af: 4'
   - 'P-Sock-Info: udp:127.0.0.1:5060'
@@ -59,8 +59,8 @@ sip_out:
       'P-NGCP-Auth-UA: <null>',
       'P-NGCP-Authorization: [% invite_alias_devid_fulllookup_scenarios_pbx_test.testuser1003.alias_numbers.2.phone_number %]@invite-alias-devid-fulllookup.scenarios-pbx.test',
       'P-NGCP-Authorized: 1',
-      'P-Caller-UUID: [% spce_test.testuser1003.uuid %]',
-      'Contact: <sip:[% invite_alias_devid_fulllookup_scenarios_pbx_test.testuser1003.alias_numbers.2.phone_number %]@[% scenarios.1.ip %]:6666;ob>;expires=\d+;\+sip.instance="<urn:uuid:C3DD6013-20E8-40E3-8EA2-5849B02ED0C4>";reg-id=1',
+      'P-Caller-UUID: [% invite_alias_devid_fulllookup_scenarios_pbx_test.testuser1003.uuid %]',
+      'Contact: <sip:[% invite_alias_devid_fulllookup_scenarios_pbx_test.testuser1003.alias_numbers.2.phone_number %]@127.126.0.1:\d+;ob>;expires=\d+;\+sip.instance="<urn:uuid:C3DD6013-20E8-40E3-8EA2-5849B02ED0C4>";reg-id=1',
       'Server: Sipwise NGCP Proxy',
       'Content-Length: 0',
     ]

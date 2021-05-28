@@ -65,11 +65,6 @@ flow:
   - start|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_SET_CALLEE_DIALOG:
-      $avp(lua_dlg_profile): [
-        "totalaccount:[% customerpbx_test.id %]",
-        "totaluser:[% invite_scenarios_pbx_test.testuser1003.uuid %]",
-        "total"
-      ]
   - start|ROUTE_BLOCK_IN:
   - return|ROUTE_BLOCK_IN:
   - return|ROUTE_LOAD_CALLEE_PREF:
@@ -84,24 +79,22 @@ flow:
   - return|ROUTE_NCOS:
   - return|ROUTE_NCOS_CHECK:
   - start|ROUTE_CHECK_PBX:
-  - start|ROUTE_APPEND_PBX_HDRS:
-  - start|ROUTE_ADD_DEVALIAS_HEADERS:
-  - return|ROUTE_ADD_DEVALIAS_HEADERS:
-  - return|ROUTE_APPEND_PBX_HDRS:
+  - return|ROUTE_CHECK_PBX:
+  - start|ROUTE_CALLEE_DISPATCH:
+  - start|ROUTE_INVITE_TO_INT:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - start|ROUTE_CF_CFU:
+  - return|ROUTE_CF_CFU:
+  - start|ROUTE_CNT_DLG_CHECK:
+  - return|ROUTE_CNT_DLG_CHECK:
+  - start|ROUTE_LOOKUP_SUBSCRIBER_LOCATIONS:
+  - return|ROUTE_LOOKUP_SUBSCRIBER_LOCATIONS:
   - start|ROUTE_OUTBOUND:
   - start|ROUTE_SET_CALLER_DIALOG:
   - start|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_SET_CALLER_DIALOG:
-      $avp(lua_dlg_profile): [
-        "totalaccountout:[% customerpbx_test.id %]",
-        "totaluserout:[% invite_scenarios_pbx_test.testuser1002.uuid %]",
-        "totalaccount:[% customerpbx_test.id %]",
-        "totaluser:[% invite_scenarios_pbx_test.testuser1002.uuid %]",
-        "totalaccount:[% customerpbx_test.id %]",
-        "totaluser:[% invite_scenarios_pbx_test.testuser1003.uuid %]",
-        "total"
-      ]
   - start|ROUTE_ACC_CALLER:
   - start|ROUTE_SET_ACC_CALLER_CALL_COUNTERS:
   - return|ROUTE_SET_ACC_CALLER_CALL_COUNTERS:
@@ -112,17 +105,45 @@ flow:
   - return|ROUTE_ACC_CALLEE:
   - start|ROUTE_SCA_UPDATE:
   - return|ROUTE_SCA_UPDATE:
-  - start|BRANCH_ROUTE_NO_SBC:
-  - start|ROUTE_BRANCH_ACC_RTP:
-  - return|ROUTE_BRANCH_ACC_RTP:
+  - start|ROUTE_ADD_AOC_HEADER:
+  - return|ROUTE_ADD_AOC_HEADER:
+  - start|BRANCH_ROUTE_SBC:
+  - start|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
+  - return|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
+  - start|ROUTE_SET_CALLEE_DIALOG:
+  - start|ROUTE_CNT_DLG_CHECK:
+  - return|ROUTE_CNT_DLG_CHECK:
+  - return|ROUTE_SET_CALLEE_DIALOG:
   - start|ROUTE_SET_BRANCH_HDRS:
   - start|ROUTE_PREPARE_UA:
   - return|ROUTE_PREPARE_UA:
   - return|ROUTE_SET_BRANCH_HDRS:
+  - start|ROUTE_SET_RUSER:
+  - return|ROUTE_SET_RUSER:
+  - start|ROUTE_BRANCH_ACC_RTP:
+  - return|ROUTE_BRANCH_ACC_RTP:
   - start|ROUTE_FILTER_PRACK:
   - return|ROUTE_FILTER_PRACK:
-  - start|ROUTE_LOAD_PBXSRV:
-  - return|ROUTE_LOAD_PBXSRV:
+  - start|ROUTE_PREPARE_SST:
+  - return|ROUTE_PREPARE_SST:
+  - start|ROUTE_PREPARE_MOH:
+  - return|ROUTE_PREPARE_MOH:
+  - start|ROUTE_SET_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - return|ROUTE_PREPARE_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - return|ROUTE_PREPARE_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - return|ROUTE_PREPARE_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - return|ROUTE_PREPARE_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - return|ROUTE_PREPARE_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - return|ROUTE_PREPARE_CALLER_CLI:
+  - return|ROUTE_SET_CALLER_CLI:
+  - start|ROUTE_SET_CALLEE:
+  - return|ROUTE_SET_CALLEE:
   - start|ROUTE_ADD_CALLINFO:
   - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
   - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
@@ -131,20 +152,11 @@ flow:
   - return|ROUTE_ADD_CALLINFO:
   - start|ROUTE_APPLY_HEADER_RULES:
   - return|ROUTE_APPLY_HEADER_RULES:
-  - return|BRANCH_ROUTE_NO_SBC:
+  - return|BRANCH_ROUTE_SBC:
   - start|DEFAULT_SEND:
   - exit|DEFAULT_SEND:
   - exit|DEFAULT_SEND:
   - start|ROUTE_EXIT:
-      $avp(lua_dlg_profile): [
-        "totalaccountout:[% customerpbx_test.id %]",
-        "totaluserout:[% invite_scenarios_pbx_test.testuser1002.uuid %]",
-        "totalaccount:[% customerpbx_test.id %]",
-        "totaluser:[% invite_scenarios_pbx_test.testuser1002.uuid %]",
-        "totalaccount:[% customerpbx_test.id %]",
-        "totaluser:[% invite_scenarios_pbx_test.testuser1003.uuid %]",
-        "total"
-      ]
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
@@ -180,14 +192,11 @@ sip_out:
   - [
       '^INVITE sip:testuser1003@',
       'CSeq: 2 INVITE',
-      'From: <sip:testuser1002@',
+      'From: <sip:[% invite_scenarios_pbx_test.testuser1002.phone_number %]@',
       'To: <sip:1003@',
       'Content-Type: application/sdp',
       'P-Caller-UUID: [% invite_scenarios_pbx_test.testuser1002.uuid %]',
       'P-Callee-UUID: [% invite_scenarios_pbx_test.testuser1003.uuid %]',
-      'P-NGCP-Lookup-Type: ext',
-      'P-NGCP-Orig-User: [% invite_scenarios_pbx_test.testuser1003.pbx_phone_number %]',
-      'P-NGCP-Orig-Dialed: 1003',
-      'P-App-Param: (;calltimer=21600)?;profile=ngcp_pbx;a_park_domain=\d+;b_park_domain=\d+',
+      'P-App-Param: ;calltimer=21600;aleg_sst_enable=no;sst_enable=no;hold_alter_b2b_bleg=no;hold_alter_b2b_aleg=no;fast_ack=no;a_park_domain=[% customerpbx_test.id %];b_park_domain=[% customerpbx_test.id %]',
       'P-App-Name: sbc'
     ]
