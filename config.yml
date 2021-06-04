@@ -5,8 +5,8 @@ sip:
   mport: 45003
 peer:
   ip: 127.0.2.1
-  port: 51602
-  mport: 45003
+  port: 52602
+  mport: 46003
 kamailio:
   lb:
     ip: 127.0.0.1
