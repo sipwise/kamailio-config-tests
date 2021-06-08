@@ -467,6 +467,7 @@ run_sipp() {
       if ps -p"${pid}" &> /dev/null ; then
         echo "$(date) - sipp responder ${base} pid ${pid} not finished yet. Killing it"
         kill -SIGUSR1 "${pid}"
+        status=1
       fi
     fi
   done
