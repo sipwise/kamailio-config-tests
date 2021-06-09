@@ -1,0 +1,10 @@
+cdr:
+  - source_user: '[% scenarios.0.username %]'
+    source_domain: 'invite-locmap-offline.scenarios.test'
+    source_cli: '[% invite_locmap_offline_scenarios_test.testuser1000.phone_number %]'
+    destination_user: '[% scenarios.0.responders.0.username %]'
+    destination_domain: 'invite-locmap-offline.scenarios.test'
+    destination_user_dialed: '[% scenarios.0.responders.0.username %]'
+    call_type: 'call'
+    call_status: 'ok'
+    call_code: '200'

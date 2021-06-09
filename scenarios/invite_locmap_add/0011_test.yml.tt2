@@ -1,0 +1,25 @@
+flow:
+  - start|DEFAULT_ONREPLY:
+  - start|REPLY_ROUTE_LEG_B:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+sip_in:
+  - 'SIP/2.0 180 Ringing'
+  - 'From: <sip:[% invite_locmap_add_scenarios_test.testuser1000.phone_number %]@invite-locmap-add.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:[% scenarios.0.responders.0.username %]@invite-locmap-add.scenarios.test>;tag=[\w-]+'
+  - 'CSeq: \d+ INVITE'
+  - 'Contact: <sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];transport=UDP>'
+  - 'Content-Length: 0'
+sip_out:
+  - [
+      'SIP/2.0 180 Ringing',
+      'From: <sip:[% invite_locmap_add_scenarios_test.testuser1000.phone_number %]@invite-locmap-add.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.0.username %]@invite-locmap-add.scenarios.test>;tag=[\w-]+',
+      'CSeq: \d+ INVITE',
+      'Contact: <sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];transport=UDP>',
+      'Content-Length: 0',
+    ]

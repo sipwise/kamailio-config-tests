@@ -1,0 +1,49 @@
+flow:
+  - start|DEFAULT_ROUTE:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_NET_INFO:
+  - return|ROUTE_NET_INFO:
+  - start|ROUTE_CHECK_TEL_URI:
+  - return|ROUTE_CHECK_TEL_URI:
+  - start|ROUTE_PRX_REQUEST:
+  - start|ROUTE_INITVARS:
+  - return|ROUTE_INITVARS:
+  - start|dialog:end:
+  - return|dialog:end:
+  - return|dialog:end:
+  - start|ROUTE_STOP_RTPPROXY:
+  - return|ROUTE_STOP_RTPPROXY:
+  - start|ROUTE_PREPARE_UA:
+  - return|ROUTE_PREPARE_UA:
+  - start|ROUTE_OUTBOUND:
+  - start|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+sip_in:
+  - 'BYE sip:[% scenarios.0.responders.1.ip %]:[% scenarios.0.responders.1.port %];transport=UDP SIP/2.0'
+  - 'From: <sip:[% invite_locmap_add_scenarios_test.testuser1000.phone_number %]@invite-locmap-add.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:[% scenarios.0.responders.1.username %]@invite-locmap-add.scenarios.test>;tag=[\w-]+'
+  - 'CSeq: \d+ BYE'
+  - 'P-Asserted-Identity: <sip:[% invite_locmap_add_scenarios_test.testuser1000.phone_number %]@invite-locmap-add.scenarios.test>'
+  - 'Content-Length: 0'
+sip_out:
+  - [
+      'SIP/2.0 100 Trying',
+      'From: <sip:[% invite_locmap_add_scenarios_test.testuser1000.phone_number %]@invite-locmap-add.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.1.username %]@invite-locmap-add.scenarios.test>;tag=[\w-]+',
+      'CSeq: \d+ BYE',
+      'Content-Length: 0',
+    ]
+  - [
+      'BYE sip:[% scenarios.0.responders.1.ip %]:[% scenarios.0.responders.1.port %];transport=UDP SIP/2.0',
+      'From: <sip:[% invite_locmap_add_scenarios_test.testuser1000.phone_number %]@invite-locmap-add.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.1.username %]@invite-locmap-add.scenarios.test>;tag=[\w-]+',
+      'CSeq: \d+ BYE',
+      'P-Asserted-Identity: <sip:[% invite_locmap_add_scenarios_test.testuser1000.phone_number %]@invite-locmap-add.scenarios.test>',
+      'Content-Length: 0',
+    ]

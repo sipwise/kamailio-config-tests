@@ -1023,4 +1023,11 @@ sub delete_banneduser {
 	return $self->_delete($urldata);
 }
 
+sub create_locationmapping {
+	my ($self, $data) = @_;
+	my $urldata = '/api/subscriberlocationmappings/';
+
+	return $self->_create($data, $urldata);
+}
+
 1;

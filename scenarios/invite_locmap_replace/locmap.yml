@@ -1,0 +1,7 @@
+---
+testuser1001@invite-locmap-replace.scenarios.test:
+  - caller_pattern: .+
+    callee_pattern: .+
+    enabled: 1
+    location: sip:testuser1002@invite-locmap-replace.scenarios.test
+    mode: replace

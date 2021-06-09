@@ -1,0 +1,42 @@
+flow:
+  - start|DEFAULT_ROUTE:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_LEG_B:
+  - start|ROUTE_INITVARS:
+  - return|ROUTE_INITVARS:
+  - start|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+sip_in:
+  - 'INVITE sip:[% scenarios.0.responders.1.username %]@[% scenarios.0.responders.1.ip %]:[% scenarios.0.responders.1.port %] SIP/2.0'
+  - 'From: <sip:[% invite_locmap_add_scenarios_test.testuser1000.phone_number %]@invite-locmap-add.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:[% scenarios.0.responders.1.username %]@invite-locmap-add.scenarios.test>'
+  - 'CSeq: \d+ INVITE'
+  - 'P-Asserted-Identity: <sip:[% invite_locmap_add_scenarios_test.testuser1000.phone_number %]@invite-locmap-add.scenarios.test>'
+  - 'Content-Type: application/sdp'
+  - 'Content-Length:\s+\d+'
+  - 'Contact: <sip:127.0.0.1:508[08];transport=udp>'
+sip_out:
+  - [
+      'SIP/2.0 100 Trying',
+      'From: <sip:[% invite_locmap_add_scenarios_test.testuser1000.phone_number %]@invite-locmap-add.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.1.username %]@invite-locmap-add.scenarios.test>',
+      'CSeq: \d+ INVITE',
+      'Server: Sipwise NGCP Proxy',
+      'Content-Length: 0',
+    ]
+  - [
+      'INVITE sip:[% scenarios.0.responders.1.username %]@[% scenarios.0.responders.1.ip %]:[% scenarios.0.responders.1.port %] SIP/2.0',
+      'From: <sip:[% invite_locmap_add_scenarios_test.testuser1000.phone_number %]@invite-locmap-add.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.1.username %]@invite-locmap-add.scenarios.test>',
+      'CSeq: \d+ INVITE',
+      'P-Asserted-Identity: <sip:[% invite_locmap_add_scenarios_test.testuser1000.phone_number %]@invite-locmap-add.scenarios.test>',
+      'Content-Type: application/sdp',
+      'Content-Length:\s+\d+',
+      'Contact: <sip:127.0.0.1:508[08];transport=udp>',
+    ]

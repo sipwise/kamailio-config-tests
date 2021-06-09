@@ -115,6 +115,11 @@ create_voip_prefs() {
     echo "$(date) - Setting preferences"
     "${BIN_DIR}/set_preferences.pl" "${SCEN_CHECK_DIR}/prefs.json"
   fi
+
+  if [ -f "${SCEN_CHECK_DIR}/locmap.yml" ]; then
+    echo "$(date) - Setting location mappings"
+    "${BIN_DIR}/set_subscribers_location_map.pl" "${SCEN_CHECK_DIR}/locmap.yml"
+  fi
 }
 
 # $1 domain
