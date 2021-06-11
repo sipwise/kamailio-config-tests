@@ -177,6 +177,7 @@ sub manage_phones
                 $subs_data->{alias_numbers} = $ids->{$key_dom}->{$subs}->{alias_numbers};
             }
             if(defined($subs_data->{pbx_extension})) {
+                $ids->{$key_dom}->{$subs}->{pbx_extension} = $subs_data->{pbx_extension};
                 $ids->{$key_dom}->{$subs}->{pbx_phone_number} = $pbx_pilot_number.$subs_data->{pbx_extension};
             }
         }
