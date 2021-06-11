@@ -98,6 +98,12 @@ get_config() {
   PHONE_CC=${data[6]}
   PHONE_AC=${data[7]}
   PHONE_SN=${data[8]}
+  if [[ ${ACTION} == "create" ]] ; then
+    echo "*** configs from ${CONFIG}"
+    echo -e "\\tIP:${IP} PORT:${PORT} MPORT:${MPORT}"
+    echo -e "\\tPEER_IP:${PEER_IP} PEER_PORT:${PEER_PORT} MPORT:${PEER_MPORT}"
+    echo -e "\\tPHONE_CC:${PHONE_CC} PHONE_ACC:${PHONE_AC} PHONE_SN:${PHONE_SN}"
+  fi
 }
 
 update_network() {
@@ -126,13 +132,16 @@ update_network() {
 
 create() {
   local scen=${BASE_DIR}/${GROUP}/$1
-  echo "*** Providing:$1 IP:${IP} PORT:${PORT} MPORT:${MPORT} PEER_IP:${PEER_IP} PEER_PORT:${PEER_PORT} MPORT:${PEER_MPORT}***"
+  echo "*** Providing:$1 ************************************"
+  echo -e "\\tIP:${IP} PORT:${PORT} MPORT:${MPORT}"
+  echo -e "\\tPEER_IP:${PEER_IP} PEER_PORT:${PEER_PORT} MPORT:${PEER_MPORT}"
+  echo -e "\\tPHONE_CC:${PHONE_CC} PHONE_ACC:${PHONE_AC} PHONE_SN:${PHONE_SN}"
   "${BIN_DIR}/provide_scenario.sh" \
     -i "${IP}" -p "${PORT}" -m "${MPORT}" \
     -n "${PHONE_CC}:${PHONE_AC}:${PHONE_SN}" \
     -I "${PEER_IP}" -P "${PEER_PORT}" -M "${PEER_MPORT}" \
     "${scen}" "${ACTION}"
-  echo "*** done $1 ***"
+  echo "*** done $1 *****************************************"
   update_network "${scen}"
 }
 

@@ -68,4 +68,4 @@ foreach my $scen (@{$ids->{scenarios}})
 }
 $port = $port +1;
 $mport = $mport + 2;
-print "${port}:${mport}\n";
+print "${port}:${mport}";

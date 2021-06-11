@@ -66,4 +66,5 @@ foreach my $domain (@{$ids->{domains}})
     }
   }
 }
-print "$phone->{cc}:$phone->{ac}:$phone->{sn}\n";
+$phone->{sn}++;
+print "$phone->{cc}:$phone->{ac}:$phone->{sn}";

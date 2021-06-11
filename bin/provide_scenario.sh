@@ -213,6 +213,7 @@ scenario_csv() {
   echo "$(date) - Generating csv/reg.xml files"
   echo "IP=${IP} PORT=${PORT} MPORT=${MPORT}"
   echo "PEER_IP=${PEER_IP} PEER_PORT=${PEER_PORT} PEER_MPORT=${PEER_MPORT}"
+  echo "PHONE:${PHONE}"
   if ! "${BIN_DIR}/scenario.pl" \
     --ip="${IP}" --port="${PORT}" --mport="${MPORT}" --phone="${PHONE}" \
     --peer-ip="${PEER_IP}" --peer-port="${PEER_PORT}" --peer-mport="${PEER_MPORT}" \
