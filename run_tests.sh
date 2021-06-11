@@ -16,7 +16,7 @@ TMP_LOG_DIR="/tmp"
 KAM_DIR="/tmp/cfgtest"
 COREDUMP_DIR="/ngcp-data/coredumps"
 PROFILE="${PROFILE:-}"
-OPTS=(-P -T -M) #SKIP_PARSE=true, SKIP_TESTS=true, SKIP_MOVE_JSON_KAM=true
+OPTS=(-P -T -M -C) #SKIP_PARSE=true, SKIP_TESTS=true, SKIP_MOVE_JSON_KAM=true, SKIP=true
 
 TIMEOUT=${TIMEOUT:-300}
 SHOW_SCENARIOS=false
@@ -26,6 +26,7 @@ SINGLE_CAPTURE=false
 FIX_RETRANS=false
 MEMDBG=false
 CDR=false
+PROV_TYPE="step"
 START_TIME=$(date +%s)
 error_flag=0
 SCEN=()
@@ -220,7 +221,7 @@ cdr_export() {
 }
 
 usage() {
-  echo "Usage: run_test.sh [-p PROFILE] [-C] [-t]"
+  echo "Usage: run_test.sh [-p PROFILE] [-C] [-t] [-P <full|step|none>]"
   echo "Options:"
   echo -e "\\t-p CE|PRO default is autodetect"
   echo -e "\\t-l print available SCENARIOS in GROUP"
@@ -232,18 +233,23 @@ usage() {
   echo -e "\\t-r fix retransmission issues"
   echo -e "\\t-c export CDRs at the end of the test"
   echo -e "\\t-m mem debug"
+  echo -e "\\t-P provisioning, default:step"
+  echo -e "\\t\\tfull: provision all scenarios in one step"
+  echo -e "\\t\\tstep: provision scenario one by one before execution"
+  echo -e "\\t\\tnone: skip any provision"
   echo -e "\\t-h this help"
 
   echo "BASE_DIR:${BASE_DIR}"
   echo "BIN_DIR:${BIN_DIR}"
 }
 
-while getopts 'hlCcp:kKx:t:rm' opt; do
+while getopts 'hlCcP:p:kKx:t:rm' opt; do
   case $opt in
     h) usage; exit 0;;
     l) SHOW_SCENARIOS=true;;
     C) SKIP_CONFIG=true;;
     p) PROFILE=${OPTARG};;
+    P) PROV_TYPE=${OPTARG};;
     k) SINGLE_CAPTURE=true;;
     K) CAPTURE=true;;
     x) GROUP=${OPTARG};;
@@ -284,6 +290,11 @@ if [ "${PROFILE}" != "CE" ] && [ "${PROFILE}" != "PRO" ]; then
   usage
   exit 2
 fi
+
+case "${PROV_TYPE}" in
+  full|step|none) ;;
+  *) echo "provisioning type:${PROV_TYPE} unknown" >&2; exit 2
+esac
 
 if [ "${GROUP}" = "scenarios_pbx" ] ; then
   PIDWATCH_OPTS="--pbx"
@@ -371,6 +382,12 @@ elif "${SINGLE_CAPTURE}" ; then
   OPTS+=(-K)
 fi
 
+if [[ "${PROV_TYPE}" == "full" ]] ; then
+  echo "$(date) - Provide all scenarios"
+  SCENARIOS="${SCEN[*]}" "${BIN_DIR}/provide_scenarios.sh" \
+    -f "${BASE_DIR}/config.yml" -x "${GROUP}" create || error_flag=1
+fi
+
 for t in "${SCEN[@]}"; do
   echo "$(date) - ================================================================================="
   echo "$(date) - Run [${GROUP}/${PROFILE}]: ${t}"
@@ -387,9 +404,19 @@ for t in "${SCEN[@]}"; do
     rm -rf "${json_temp}"
   fi
 
+  if [[ "${PROV_TYPE}" == "step" ]] ; then
+    SCENARIOS="${t}" "${BIN_DIR}/provide_scenarios.sh" \
+      -f "${BASE_DIR}/config.yml" -x "${GROUP}" create
+  fi
+
   if ! "${BIN_DIR}/check.sh" "${OPTS[@]}" -p "${PROFILE}" -s "${GROUP}" "${t}" ; then
     echo "ERROR: ${t}"
     error_flag=1
+  fi
+
+  if [[ "${PROV_TYPE}" == "step" ]] ; then
+    SCENARIOS="${t}" "${BIN_DIR}/provide_scenarios.sh" \
+      -f "${BASE_DIR}/config.yml" -x "${GROUP}" delete
   fi
 
   echo "$(date) - ================================================================================="
@@ -406,6 +433,12 @@ for t in "${SCEN[@]}"; do
     break
   fi
 done
+
+if [[ "${PROV_TYPE}" == "full" ]] ; then
+  echo "$(date) - Delete provided scenarios"
+  SCENARIOS="${SCEN[*]}" "${BIN_DIR}/provide_scenarios.sh" \
+    -f "${BASE_DIR}/config.yml" -x "${GROUP}" delete
+fi
 
 # Hack to allow:
 # - tcpdump to capture all the packages

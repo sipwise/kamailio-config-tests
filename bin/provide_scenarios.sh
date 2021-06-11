@@ -126,13 +126,13 @@ update_network() {
 
 create() {
   local scen=${BASE_DIR}/${GROUP}/$1
-  echo "*** $1 IP:${IP} PORT:${PORT} MPORT:${MPORT} ***"
+  echo "*** Providing:$1 IP:${IP} PORT:${PORT} MPORT:${MPORT} PEER_IP:${PEER_IP} PEER_PORT:${PEER_PORT} MPORT:${PEER_MPORT}***"
   "${BIN_DIR}/provide_scenario.sh" \
     -i "${IP}" -p "${PORT}" -m "${MPORT}" \
     -n "${PHONE_CC}:${PHONE_AC}:${PHONE_SN}" \
     -I "${PEER_IP}" -P "${PEER_PORT}" -M "${PEER_MPORT}" \
     "${scen}" "${ACTION}"
-  echo "*** done ***"
+  echo "*** done $1 ***"
   update_network "${scen}"
 }
 
@@ -149,4 +149,4 @@ case ${ACTION} in
   delete) for t in "${SCEN[@]}"; do delete "${t}"; done;;
   *) echo "action ${ACTION} unknown" >&2; exit 2 ;;
 esac
-echo "$(date) - Done"
+echo "$(date) - Done provide_scenarios.sh ${ACTION}"
