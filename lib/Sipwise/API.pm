@@ -344,6 +344,15 @@ sub create_reseller {
 	return $self->_create($data, $urldata);
 }
 
+sub get_domains {
+	my ($self, $data) = @_;
+	my $urldata = "/api/domains/";
+	my $collection_id = 'ngcp:domains';
+
+	my $collection = $self->_get_content(undef, $urldata);
+	return $collection->{_embedded}->{$collection_id};
+}
+
 sub check_domain_exists {
 	my ($self, $data) = @_;
 	my $urldata = "/api/domains/";
@@ -373,6 +382,13 @@ sub create_domain {
 	my $urldata = '/api/domains/';
 
 	return $self->_create($data, $urldata);
+}
+
+sub delete_domain {
+	my ($self, $id) = @_;
+	my $urldata = "/api/domains/${id}";
+
+	return $self->_delete($urldata);
 }
 
 sub check_customer_exists {
