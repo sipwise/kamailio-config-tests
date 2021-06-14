@@ -1,3 +1,151 @@
+kamailio-config-tests (10.0.0.0+0~mr10.0.0.0) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [4b846db] TT#104401 run_test.sh: stop dummy0 and remove dummy module
+  * [9360639] TT#116100 move creation of scenario.csv to provide_scenario
+  * [41d1e14] TT#116100 bin/scenario.pl: define sipp port and mport
+  * [216e99e] TT#116100 bin/check.sh: use defined port/mport from scenario.csv
+  * [bce4b35] TT#116100 bin/provide_scenario.sh: support IP/port selections
+  * [53ba3ec] TT#116100 provide_scenarios.sh
+  * [b0d54e0] TT#116100 k-c-t config.yml
+  * [786a800] TT#116100 bin/create_subscribers.pl: use dynamic phone numbers
+  * [b3219d2] TT#116100 bin/create_registrations.pl: use scenario_ids.yml
+  * [53f0979] TT#116100 bin/create_peers.pl: use defined IP/port from scenario_ids.yml
+  * [47cf91e] TT#116100 foreign domain
+  * [e8e8529] TT#116100 bin/provide_scenario.sh: dynamic preferences
+  * [92e24a8] TT#116100 bin/provide_scenario.sh: add trusted.yml as template
+  * [e738085] TT#116100 config: add kamailio and rtpengine info
+  * [ac24a71] TT#116100 bin/scenario.pl: add alias info to csv
+  * [15ab97b] TT#116100 bin/scenario.pl: manage devid
+  * [3b0cfa3] TT#116100 bin/scenario.pl: define pbx_phone_number
+  * [b6dc5b7] TT#116100 bin/scenario.pl: try to get subscribe info even with peer_host
+  * [ddf2e5c] TT#116100 bin/provide_scenario.sh: add lnp.yml as template
+  * [1876468] TT#116100 bin/scenario.pl: support extra_info
+  * [31000c8] TT#116100 bin/scenario.pl: fix error with no extra_info
+  * [0149080] TT#116100 scenarios/auth_fail
+  * [6022164] TT#116100 scenarios/incoming_foreign_dom
+  * [aea3306] TT#116100 scenarios/incoming_hih
+  * [01387cf] TT#116100 scenarios/incoming_peer
+  * [1ed859c] TT#116100 scenarios/invite
+  * [6abbc46] TT#116100 scenarios/invite_allowedcli_match
+  * [023e079] TT#116100 scenarios/invite_allowedcli_match_alias
+  * [b6e255c] TT#116100 bin/scenario.pl: fix typo
+  * [91b0681] TT#116100 scenarios/invite_allowedcli_nonmatch
+  * [6530625] TT#116100 scenarios/invite_allowedcli_nonmatch_reject
+  * [d87d869] TT#116100 scenarios/invite_allowip
+  * [140a5af] TT#116100 scenarios/invite_allowip_soundset
+  * [efcb70e] TT#116100 scenarios/invite_anonymous
+  * [033969d] TT#116100 scenarios/invite_blockin_blst
+  * [3ff44f5] TT#116100 scenarios/invite_blockin_clir
+  * [ea37348] TT#116100 scenarios/invite_blockin_wlst
+  * [981613f] TT#116100 scenarios/invite_blockout_ncos
+  * [c6fd9e5] TT#116100 scenarios/invite_blockout_pinoverride
+  * [996de97] TT#116100 scenarios/invite_blockout_wlst
+  * [512805e] TT#116100 scenarios/invite_callee_bye
+  * [d3b6f75] TT#116100 scenarios/invite_callforward
+  * [237b861] TT#116100 scenarios/invite_concurrent_max
+  * [45341d9] TT#116100 scenarios/invite_concurrent_max_out
+  * [854e557] TT#116100 scenarios/invite_concurrent_max_out_per_account
+  * [731e2a9] TT#116100 invite_concurrent_max_per_account
+  * [676e270] TT#116100 scenarios/invite_conference_update
+  * [d1068ea] TT#116100 scenarios/invite_emergency
+  * [8a7ac97] TT#116100 scenarios/invite_emergency_cirpack
+  * [3d3d775] TT#116100 scenarios/invite_emergency_pidflo
+  * [379c7ca] TT#116100 scenarios/invite_force_inbound_calls_to_peer
+  * [1317662] TT#116100 scenarios/invite_force_outbound_calls_to_peer
+  * [89273cc] TT#116100 scenarios/invite_foreign_dom
+  * [d91f517] TT#116100 scenarios/invite_hdr
+  * [93684e9] TT#116100 scenarios/invite_offline
+  * [8970d7f] TT#116100 scenarios/invite_pai_none
+  * [866868c] TT#116100 scenarios/invite_peerout
+  * [4f32809] TT#116100 scenarios/invite_peerout_failover
+  * [10ddce4] TT#116100 scenarios/invite_blockout_blst
+  * [62f846b] TT#116100 scenarios/invite_ignore_allowip
+  * [155bae9] TT#116100 scenarios/invite_no_refer
+  * [26fc5fb] TT#116100 scenarios/invite_lateoam
+  * [5f9a184] TT#116100 scenarios/invite_peerout_max_out
+  * [f9be433] TT#116100 scenarios/invite_peerout_rewrite
+  * [9149985] TT#116100 scenarios/invite_peerout_rewrite_pv_regex
+  * [bf6be15] TT#116100 scenarios/invite_redirect
+  * [b490b97] TT#116100 scenarios/invite_redirect_blocked
+  * [3bc3e35] TT#116100 scenarios/invite_record_call
+  * [6250b06] TT#116100 scenarios/invite_reinvite_caller_transcoding
+  * [e32d9a5] TT#116100 scenarios/invite_reinvite_transcoding
+  * [42308d3] TT#116100 scenarios/invite_retrans
+  * [3f09c4f] TT#116100 scenarios/invite_tcp_udp
+  * [41147af] TT#116100 scenarios/invite_tcp_udp_reinvite
+  * [67443a3] TT#116100 scenarios/invite_trusted_anonymous
+  * [25ba2ac] TT#116100 scenarios/invite_voicebox
+  * [b629c23] TT#116100 scenarios/invite_wrong_reg
+  * [7bdea8a] TT#116100 scenarios/lock_ported
+  * [8091370] TT#116100 scenarios/register
+  * [4181ee8] TT#116100 scenarios/register_allowip
+  * [096e115] TT#116100 scenarios/register_bria
+  * [6a49370] TT#116100 scenarios/register_ignore_allowip
+  * [79e32b5] TT#116100 scenarios/register_tcp
+  * [0ac1a52] TT#116100 scenarios/reminder
+  * [7e2ca06] TT#116100 scenarios/timer_session_callee_only_supported
+  * [61af4ba] TT#116100 scenarios/timer_session_caller_only_supported
+  * [8c429d8] TT#116100 scenarios/timer_session_supported
+  * [c8400ad] TT#116100 scenarios/invite_prack
+  * [242bd7a] TT#116100 scenarios/invite_force_inbound_calls_to_peer: remove prefs.json
+  * [5ea1fc2] TT#116100 scenarios_pbx/invite
+  * [84c9bbb] TT#116100 scenarios_pbx/invite_alias
+  * [97925b1] TT#116100 scenarios_pbx/invite_alias_devid_fulllookup
+  * [695676e] TT#116100 scenarios_pbx/invite_username_devid
+  * [512346a] TT#116100 scenarios_lnp/incoming_peer_unallocated_authoritative
+  * [e82f121] TT#116100 bin/scenarios.pl: obey number if defined
+  * [d301b5f] TT#116100 scenarios/invite_hm
+  * [d850b66] TT#116100 scenarios/invite_hm_peerout
+  * [e116ced] TT#116100 scenarios/invite_hm_callforward
+  * [28b6d7d] TT#116100 permanent registrations
+  * [3b88e0b] TT#116100 scenarios/invite_perm_reg
+  * [7a9504f] TT#116100 scenarios/invite_q_forking
+  * [b6f5c5a] TT#116100 debian: install config.yml file
+  * [fb1df6f] TT#116100 missing changes on tests
+  * [b6c960a] TT#116100 fix scenarios checks
+  * [90a6e1c] TT#81700 bin/cdr_check.py: add info of what failed as comment
+  * [e702ef2] TT#91051 STIR scenarios
+  * [f44a0eb] TT#116100 config.yml: use different start ports for peers
+  * [0c0fedb] TT#91051 SHAKEN
+  * [b8cc633] TT#81700 check.sh: mark as failed if any responder proc is killed
+  * [1973c68] TT#116100 bin/scenario.pl: add pbx_extension info
+  * [4c5189f] TT#116100 bin/delete_domains.pl: helper to clean provisioning
+  * [52d6755] TT#116100 run_tests.sh: support different provisioning types
+  * [9c9cede] TT#116100 fix provisioning phone number
+  * [499f69f] TT#116100 scenarios: fix peer_host definition
+
+  [ Mohammed Ghettas ]
+  * [eb58296] TT#118950 Fix kct scenarios after the rework of the call forward
+
+  [ Manuel Montecelo ]
+  * [ea79ff0] TT#118659 Switch Dockerfile from Debian buster to bullseye
+
+  [ Ozzyboshi ]
+  * [cc14571] TT#116100 scenarios_pbx/incoming_shared_line
+  * [cd574c9] TT#116100 scenarios_pbx/invite_alias_devid
+  * [8b35be0] TT#116100 scenarios_pbx/invite_shared_line
+  * [7f69bac] TT#116100 scenarios_lnp/invite
+
+  [ Alessio Garzi ]
+  * [5404858] TT#116100 scenarios_lnp/incoming_peer
+  * [befb94e] TT#116100 scenarios_pbx/invite_ncos_black
+  * [56ffcd0] TT#116100 scenarios_lnp/invite_ncos_white
+  * [366cb4e] TT#116100 scenarios_lnp/invite_peerout_rn
+  * [60b4a8e] TT#116100 scenarios_lnp/invite_peerout
+  * [ca2ab97] TT#116100 scenarios_lnp/register_lock_ported
+
+  [ donat zenichev ]
+  * [8a3b2b4] TT#121782 Create a new k-c-t scenario to test the tel2uri conversions
+  * [944c46a] TT#121782 Create a new k-c-t scenario to test the tel2uri conversions
+  * [c0747d8] TT#123203 scenarios for checking 'lock' preference
+  * [43705a5] TT#101300 add support for location mappings
+
+  [ Marco Capetta ]
+  * [a5b1b2e] TT#83601 Fix scenarios after CFNA check postponed
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 14 Jun 2021 16:35:52 +0200
+
 kamailio-config-tests (9.5.0.0+0~mr9.5.0.0) unstable; urgency=medium
 
   [ Alessio Garzi ]
