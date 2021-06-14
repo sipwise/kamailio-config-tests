@@ -17,10 +17,10 @@ sip_in:
   - 'From: <sip:[% invite_emergency_cirpack_scenarios_test.testuser1002.phone_number %]@invite-emergency-cirpack.scenarios.test>;tag=[\w-]+'
   - 'To: <sip:E1112@[% scenarios.0.responders.0.ip %]>;tag=[\w-]+'
   - 'CSeq: \d+ BYE'
-  - 'Contact: <sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.port %];transport=UDP>'
+  - 'Contact: <sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];transport=UDP>'
   - 'Content-Length: \s+0'
   - 'P-NGCP-Src-Ip: [% scenarios.0.responders.0.ip %]'
-  - 'P-NGCP-Src-Port: [% scenarios.0.port %]'
+  - 'P-NGCP-Src-Port: [% scenarios.0.responders.0.port %]'
   - 'P-NGCP-Src-Proto: udp'
   - 'P-NGCP-Src-Af: 4'
 sip_out:
@@ -29,10 +29,10 @@ sip_out:
       'From: <sip:[% invite_emergency_cirpack_scenarios_test.testuser1002.phone_number %]@invite-emergency-cirpack.scenarios.test>;tag=[\w-]+',
       'To: <sip:E1112@[% scenarios.0.responders.0.ip %]>;tag=[\w-]+',
       'CSeq: \d+ BYE',
-      'Contact: <sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.port %];transport=UDP>',
+      'Contact: <sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];transport=UDP>',
       'Content-Length: \s+0',
       'P-NGCP-Src-Ip: [% scenarios.0.responders.0.ip %]',
-      'P-NGCP-Src-Port: [% scenarios.0.port %]',
+      'P-NGCP-Src-Port: [% scenarios.0.responders.0.port %]',
       'P-NGCP-Src-Proto: udp',
       'P-NGCP-Src-Af: 4',
     ]

@@ -1,6 +1,11 @@
 ---
 test_uuid: invite_emergency_cirpack
 description: emergency call to a peer adding geolocation with cirpack format
+kamailio:
+  proxy:
+    debugger:
+      - name: textops
+        level: 3
 domains:
   invite-emergency-cirpack.scenarios.test:
     reseller_id: 1
@@ -31,5 +36,5 @@ scenarios:
         number: 112
         username: 112
         domain: invite-emergency-cirpack.scenarios.test
-        peer_host: peer_emergency_cirpack_host0
+        peer_host: peer_invite_emergency_cirpack_host0
         register: 'no'
