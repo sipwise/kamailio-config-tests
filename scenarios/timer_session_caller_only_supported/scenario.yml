@@ -25,7 +25,7 @@ scenarios:
   - ip: 127.0.2.1
     username: 004321001
     domain: timer-session-caller-only-supported.host0.scenarios.test
-    peer_host: peer_timer_session_caller_only_supported
+    peer_host: peer_timer_session_caller_only_supported_host0
     responders:
       - ip: 127.1.0.1
         username: testuser1001
