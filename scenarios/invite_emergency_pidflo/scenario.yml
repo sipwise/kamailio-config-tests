@@ -1,6 +1,11 @@
 ---
 test_uuid: invite_emergency_pidflo
 description: emergency call to a peer adding geolocation with pidflo format
+kamailio:
+  proxy:
+    debugger:
+      - name: textops
+        level: 3
 domains:
   invite-emergency-pidflo.scenarios.test:
     reseller_id: 1
@@ -31,5 +36,5 @@ scenarios:
         number: 112
         username: 112
         domain: invite-emergency-pidflo.scenarios.test
-        peer_host: peer_invite_emergency_pidflo
+        peer_host: peer_invite_emergency_pidflo_host0
         register: 'no'
