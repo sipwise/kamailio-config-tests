@@ -19,11 +19,23 @@
 # Public License version 3 can be found in "/usr/share/common-licenses/GPL-3".
 #
 #ngcp-kamcmd proxy dbg.reset_msgid
-LOGS="/var/log/ngcp/kamailio-proxy.log /var/log/ngcp/sems.log \
- /var/log/ngcp/sems-pbx.log /var/log/ngcp/kamailio-lb.log /var/log/ngcp/rtp.log"
+BASE_LOG="/var/log/ngcp"
+LOGS=()
+LOGS+=( "kamailio-proxy.log" )
+LOGS+=( "sems.log" )
+LOGS+=( "sems-b2b.log" )
+LOGS+=( "kamailio-lb.log" )
+LOGS+=( "rtp.log" )
+
 # shellcheck disable=SC2086
-rm -rf $LOGS
+(cd ${BASE_LOG} || exit 2; rm -rf ${LOGS[*]})
 service rsyslog restart
-for l in $LOGS ; do
-  touch --reference=/var/log/ngcp/panel.log "$l"
+
+log_ref="panel.log"
+if ! [ -f "${BASE_LOG}/${log_ref}" ] ; then
+  log_ref="panel-fcgi.log"
+fi
+
+for l in ${LOGS[*]} ; do
+  touch --reference="${BASE_LOG}/${log_ref}" "${BASE_LOG}/$l"
 done
