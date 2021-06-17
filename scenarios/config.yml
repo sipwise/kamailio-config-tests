@@ -15,3 +15,5 @@ kamailio:
           private_key: /etc/kamailio/stir/invite-peerout-stir.scenarios.test.key
         - name: invite-trusted-peerout-stir.scenarios.test
           private_key: /etc/kamailio/stir/invite-peerout-stir.scenarios.test.key
+        - name: invite-stir.scenarios.test
+          private_key: /etc/kamailio/stir/invite-peerout-stir.scenarios.test.key

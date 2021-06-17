@@ -1,0 +1,9 @@
+{
+    "@invite-stir.scenarios.test": {
+        "stir_pub_url": "http://fake.url/pub.key",
+        "stir_check": true
+    },
+    "[% scenarios.1.responders.0.username %]@invite-stir.scenarios.test": {
+        "stir_check": false
+    }
+}

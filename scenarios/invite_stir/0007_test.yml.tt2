@@ -15,21 +15,32 @@ flow:
   - return|ROUTE_CLEAR_CALLEE_DOMAIN_PREF:
   - return|ROUTE_LOAD_CALLEE_DOMAIN_PREF:
   - start|ROUTE_FIND_CALLER:
-  - start|ROUTE_PSTN_SELECT_INBOUND_PEER:
-  - return|ROUTE_PSTN_SELECT_INBOUND_PEER:
-  - start|ROUTE_CLEAR_PEER_IN_PREF:
-  - return|ROUTE_CLEAR_PEER_IN_PREF:
-  - start|ROUTE_LOAD_PEER_IN_PREF:
+  - start|ROUTE_AUTH:
+  - start|ROUTE_AUTH_HELPER:
+      $x_hdr(From): invite-stir.scenarios.test
+      $var(realm_user): [% scenarios.0.username %]
+      $var(realm_domain): invite-stir.scenarios.test
+  - return|ROUTE_AUTH_HELPER:
+      $avp(orig_acc_caller_user): ['[% scenarios.0.username %]']
+      $avp(orig_acc_caller_domain): ['invite-stir.scenarios.test']
+  - start|ROUTE_ADD_CALLINFO_REPLY:
+  - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_REPLY:
+  - return|ROUTE_AUTH:
+  - return|ROUTE_FIND_CALLER:
+  - start|ROUTE_LOAD_CALLER_PREF:
+  - start|ROUTE_CLEAR_CALLER_PREF:
+  - return|ROUTE_CLEAR_CALLER_PREF:
+  - start|ROUTE_CHECK_UA:
+  - return|ROUTE_CHECK_UA:
+  - start|ROUTE_LOAD_CALLER_CONTRACT_PREF:
+  - return|ROUTE_LOAD_CALLER_CONTRACT_PREF:
+  - return|ROUTE_LOAD_CALLER_PREF:
   - start|ROUTE_DLG_MANAGE:
   - return|ROUTE_DLG_MANAGE:
-  - return|ROUTE_LOAD_PEER_IN_PREF:
-      $avp(lua_dlg_profile): ["peer:[% peer_00_host0.id %]", "total"]
-      $avp(from_pstn): [1]
-  - return|ROUTE_FIND_CALLER:
   - start|ROUTE_APPLY_HEADER_RULES:
   - return|ROUTE_APPLY_HEADER_RULES:
-  - start|ROUTE_GET_CALLER_CLI:
-  - return|ROUTE_GET_CALLER_CLI:
   - start|ROUTE_GET_CALLER_CLI:
   - return|ROUTE_GET_CALLER_CLI:
   - start|ROUTE_GET_FORWARDER_CLI:
@@ -38,6 +49,10 @@ flow:
   - return|ROUTE_CLIR:
   - start|ROUTE_CALLER_BLOCK_CLI:
   - return|ROUTE_CALLER_BLOCK_CLI:
+  - start|ROUTE_CHECK_USERPROV_CLI:
+  - start|ROUTE_CHECK_CLI_ALLOWED:
+  - return|ROUTE_CHECK_CLI_ALLOWED:
+  - return|ROUTE_CHECK_USERPROV_CLI:
   - start|ROUTE_FIND_CALLEE:
   - start|ROUTE_CLEAR_CALLEE_PREF:
   - return|ROUTE_CLEAR_CALLEE_PREF:
@@ -48,29 +63,20 @@ flow:
   - start|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_SET_CALLEE_DIALOG:
-     $avp(lua_dlg_profile): [
+      $avp(lua_dlg_profile): [
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% incoming_peer_stir.scenarios.test.testuser1003.uuid %]",
+        "totaluser:[% invite_stir_scenarios_test.testuser1003.uuid %]",
+        "total",
         "account:[% customer_test.id %]",
-        "user:[% incoming_peer_stir.scenarios.test.testuser1003.uuid %]",
-        "peer:[% peer_00_host0.id %]",
-        "total"
+        "user:[% invite_stir_scenarios_test.testuser1003.uuid %]"
       ]
   - start|ROUTE_BLOCK_IN:
   - return|ROUTE_BLOCK_IN:
   - return|ROUTE_LOAD_CALLEE_PREF:
-      $xavp(caller_peer_prefs[0]=>concurrent_max[*]): [1]
-  - start|ROUTE_STIR_CHECK:
-      $xavp(callee_real_prefs[0]=>stir_check[*]): [1]
-      $x_fd: invite-peerout-stir.scenarios.test
-      $sht(stir=>invite-peerout-stir.scenarios.test): "/etc/kamailio/stir/invite-peerout-stir.scenarios.test.key"
   - start|ROUTE_STIR_PAI:
-      $var(idtt_attest): A
+      $var(idtt_attest): 0
   - return|ROUTE_STIR_PAI:
       $avp(pai_params): [';verstat=TN-Validation-Passed-A']
-  - return|ROUTE_STIR_CHECK:
-      $var(tmp): "/etc/kamailio/stir/invite-peerout-stir.scenarios.test.pubkey"
-      $var(rc): 1
   - start|ROUTE_NCOS_CHECK:
   - start|ROUTE_NCOS:
   - return|ROUTE_NCOS:
@@ -98,17 +104,32 @@ flow:
   - start|ROUTE_OUTBOUND:
   - start|ROUTE_SET_CALLER_DIALOG:
       $avp(lua_dlg_profile): [
-        "incoming",
+        "local",
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% incoming_peer_stir.scenarios.test.testuser1003.uuid %]",
+        "totaluser:[% invite_stir_scenarios_test.testuser1003.uuid %]",
+        "total",
         "account:[% customer_test.id %]",
-        "user:[% incoming_peer_stir.scenarios.test.testuser1003.uuid %]",
-        "peer:[% peer_00_host0.id %]",
-        "total"
+        "user:[% invite_stir_scenarios_test.testuser1003.uuid %]"
       ]
   - start|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_SET_CALLER_DIALOG:
+      $avp(lua_dlg_profile): [
+        "accountout:[% customer_test.id %]",
+        "userout:[% invite_stir_scenarios_test.testuser1002.uuid %]",
+        "account:[% customer_test.id %]",
+        "user:[% invite_stir_scenarios_test.testuser1002.uuid %]",
+        "totalaccountout:[% customer_test.id %]",
+        "totaluserout:[% invite_stir_scenarios_test.testuser1002.uuid %]",
+        "totalaccount:[% customer_test.id %]",
+        "totaluser:[% invite_stir_scenarios_test.testuser1002.uuid %]",
+        "local",
+        "totalaccount:[% customer_test.id %]",
+        "totaluser:[% invite_stir_scenarios_test.testuser1003.uuid %]",
+        "total",
+        "account:[% customer_test.id %]",
+        "user:[% invite_stir_scenarios_test.testuser1003.uuid %]"
+      ]
   - start|ROUTE_ACC_CALLER:
   - start|ROUTE_SET_ACC_CALLER_CALL_COUNTERS:
   - return|ROUTE_SET_ACC_CALLER_CALL_COUNTERS:
@@ -155,6 +176,10 @@ flow:
   - return|ROUTE_PREPARE_CALLER_CLI:
   - return|ROUTE_SET_CALLER_CLI:
   - start|ROUTE_SET_CALLEE:
+  - start|ROUTE_STIR:
+      $var(idtt_attest): A
+  - return|ROUTE_STIR:
+      $avp(pai_params): None
   - return|ROUTE_SET_CALLEE:
   - start|ROUTE_ADD_CALLINFO:
   - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
@@ -165,7 +190,6 @@ flow:
   - start|ROUTE_APPLY_HEADER_RULES:
   - return|ROUTE_APPLY_HEADER_RULES:
   - return|BRANCH_ROUTE_SBC:
-  # branch ??
   - start|DEFAULT_SEND:
   - exit|DEFAULT_SEND:
   - exit|DEFAULT_SEND:
@@ -174,41 +198,52 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
       $avp(lua_dlg_profile): [
-        "incoming",
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% incoming_peer_stir.scenarios.test.testuser1003.uuid %]",
+        "accountout:[% customer_test.id %]",
+        "userout:[% invite_stir_scenarios_test.testuser1002.uuid %]",
         "account:[% customer_test.id %]",
-        "user:[% incoming_peer_stir.scenarios.test.testuser1003.uuid %]",
-        "peer:[% peer_00_host0.id %]",
-        "total"
+        "user:[% invite_stir_scenarios_test.testuser1002.uuid %]",
+        "totalaccountout:[% customer_test.id %]",
+        "totaluserout:[% invite_stir_scenarios_test.testuser1002.uuid %]",
+        "totalaccount:[% customer_test.id %]",
+        "totaluser:[% invite_stir_scenarios_test.testuser1002.uuid %]",
+        "local",
+        "totalaccount:[% customer_test.id %]",
+        "totaluser:[% invite_stir_scenarios_test.testuser1003.uuid %]",
+        "total",
+        "account:[% customer_test.id %]",
+        "user:[% invite_stir_scenarios_test.testuser1003.uuid %]"
       ]
 sip_in:
-  - '^INVITE sip:[% incoming_peer_stir_scenarios_test.testuser1003.phone_number %]@'
+  - '^INVITE'
   - 'Contact: sip:[% scenarios.0.username %]@'
-  - 'CSeq: 1 INVITE'
+  - 'CSeq: 2 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
-  - 'Identity: [^;]+;info=<http://fake.url/pub.key>;alg=ES256;ppt=shaken'
-  - 'P-Asserted-Identity: <sip:[% scenarios.0.username %]@[% scenarios.0.domain %]>'
+  - 'Proxy-Authorization: Digest username="[% scenarios.0.username %]"'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
-      'CSeq: 1 INVITE',
-      'From: <sip:[% scenarios.0.username %]@',
-      'To: <sip:[% incoming_peer_stir_scenarios_test.testuser1003.phone_number %]@'
+      'CSeq: 2 INVITE',
+      'From: <sip:[% scenarios.0.username %]@invite-stir.scenarios.test>',
+      'To: <sip:[% scenarios.0.responders.0.username %]@invite-stir.scenarios.test>'
     ]
   - [
-      '^INVITE sip:testuser1003@',
-      'CSeq: 1 INVITE',
-      'From: <sip:[% scenarios.0.username %]@',
-      'To: <sip:[% incoming_peer_stir_scenarios_test.testuser1003.phone_number %]@',
-      'Contact: sip:[% scenarios.0.username %]@',
+      '^SIP/2.0 101 Connecting',
+      'CSeq: 2 INVITE',
+      'From: <sip:[% scenarios.0.username %]@invite-stir.scenarios.test>',
+      'To: <sip:[% scenarios.0.responders.0.username %]@invite-stir.scenarios.test>'
+    ]
+  - [
+      '^INVITE sip:[% scenarios.0.responders.0.username %]@',
+      'CSeq: 2 INVITE',
+      'From: <sip:[% invite_stir_scenarios_test.testuser1002.phone_number %]@invite-stir.scenarios.test>',
+      'To: <sip:[% scenarios.0.responders.0.username %]@invite-stir.scenarios.test>',
       'Content-Type: application/sdp',
-      'Identity: [^;]+;info=<http://fake.url/pub.key>;alg=ES256;ppt=shaken',
-      'P-Caller-UUID: 0',
-      'P-Callee-UUID: [% incoming_peer_stir_scenarios_test.testuser1003.uui %]',
-      'P-Asserted-Identity: <sip:[% scenarios.0.username %]@incoming-peer-stir.scenarios.test>;verstat=TN-Validation-Passed',
-      'P-Called-Party-ID: <sip:testuser1003@',
+      'P-Caller-UUID: [% invite_stir_scenarios_test.testuser1002.uuid %]',
+      'P-Callee-UUID: [% invite_stir_scenarios_test.testuser1003.uuid %]',
+      '_:NOT:_\r\nIdentity: ',
+      'P-Asserted-Identity: <sip:[% invite_stir_scenarios_test.testuser1002.phone_number %]@invite-stir.scenarios.test>;verstat=TN-Validation-Passed-A',
+      'P-Called-Party-ID: <sip:[% scenarios.0.responders.0.username %]@',
       'P-App-Param: ;calltimer=21600;aleg_sst_enable=no;sst_enable=no',
       'P-App-Name: sbc'
     ]
