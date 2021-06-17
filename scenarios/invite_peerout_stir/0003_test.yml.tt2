@@ -150,6 +150,10 @@ flow:
   - start|ROUTE_STIR:
       $x_fU: [% invite_peerout_stir_scenarios_test.testuser1002.phone_number %]
       $x_fd: invite-peerout-stir.scenarios.test
+  - start|ROUTE_STIR_PAI:
+      $var(idtt_attest): A
+  - return|ROUTE_STIR_PAI:
+      $avp(pai_params): [';verstat=TN-Validation-Passed-A']
   - return|ROUTE_STIR:
   - return|ROUTE_SET_CALLEE:
   - start|ROUTE_ADD_CALLINFO:
