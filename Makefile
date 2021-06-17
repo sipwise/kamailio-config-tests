@@ -15,8 +15,14 @@ all:
 clean:
 	@echo "Clean files"
 	for SCENARIO in $(SCENARIOS); do
-		find "$${SCENARIO}" -name '*_test.yml' -exec rm {} \;
-		find "$${SCENARIO}" -name '*.csv' -exec rm {} \;
+		find "$${SCENARIO}" -type f \( \
+			-name 'callforward.yml' -o \
+			-name 'trusted.yml' -o \
+  			-name 'lnp.yml' -o \
+			-name 'prefs.json' -o \
+			-name '*_test.yml' -o \
+			-name '*.csv' \
+			\) -exec rm {} \;
 	done
 
 syntaxcheck: bashismcheck perlcheck pythoncheck shellcheck
