@@ -1,6 +1,7 @@
 {
     "@invite-peerout-stir.scenarios.test": {
-        "stir_pub_url": "http://fake.url/pub.key"
+        "stir_pub_url": "http://fake.url/pub.key",
+        "stir_check": true
     },
     "peer_invite_peerout_stir_host0": {
         "concurrent_max": 1
