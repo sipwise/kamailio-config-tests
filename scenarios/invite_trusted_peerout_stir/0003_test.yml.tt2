@@ -14,15 +14,15 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - 'INVITE sip:[% scenarios.0.responders.0.username %]@[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];transport=udp SIP/2.0'
-  - 'From: <sip:[% invite_peerout_stir_scenarios_test.testuser1002.phone_number %]@invite-peerout-stir.scenarios.test>;tag=[\w-]+'
+  - 'From: <sip:[% invite_trusted_peerout_stir_scenarios_test.testuser1002.phone_number %]@invite-trusted-peerout-stir.scenarios.test>;tag=[\w-]+'
   - 'To: <sip:[% scenarios.0.responders.0.username %]@[% scenarios.0.responders.0.ip %]>'
   - 'CSeq: \d+ INVITE'
   - 'Identity: [^;]+;info=<http://fake.url/pub.key>;alg=ES256;ppt=shaken'
   - 'P-LB-Uptime: \d+'
-  - 'P-Asserted-Identity: <sip:[% invite_peerout_stir_scenarios_test.testuser1002.phone_number %]@invite-peerout-stir.scenarios.test>\r\n'
-  - 'P-Caller-UUID: [% invite_peerout_stir_scenarios_test.testuser1002.uuid %]'
-  - 'P-NGCP-Caller-Info: <sip:[% scenarios.0.username %]@invite-peerout-stir.scenarios.test>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %];primary=[% invite_peerout_stir_scenarios_test.testuser1002.phone_number %]'
-  - 'P-NGCP-Callee-Info: <sip:[% scenarios.0.responders.0.username %]@invite-peerout-stir.scenarios.test>;ip=[% scenarios.0.responders.0.ip %];port=\d+'
+  - 'P-Asserted-Identity: <sip:[% invite_trusted_peerout_stir_scenarios_test.testuser1002.phone_number %]@invite-trusted-peerout-stir.scenarios.test>'
+  - 'P-Caller-UUID: [% invite_trusted_peerout_stir_scenarios_test.testuser1002.uuid %]'
+  - 'P-NGCP-Caller-Info: <sip:[% scenarios.0.username %]@invite-trusted-peerout-stir.scenarios.test>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %];primary=[% invite_trusted_peerout_stir_scenarios_test.testuser1002.phone_number %]'
+  - 'P-NGCP-Callee-Info: <sip:[% scenarios.0.responders.0.username %]@invite-trusted-peerout-stir.scenarios.test>;ip=[% scenarios.0.responders.0.ip %];port=\d+'
   - 'P-D-Uri: sip:127.0.0.1:5060;received=sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %]%3blr%3btransport%3dudp'
   - 'Content-Type: application/sdp'
   - 'Contact: <sip:127.0.0.1:508[08];transport=udp>'
@@ -30,7 +30,7 @@ sip_in:
 sip_out:
   - [
       'SIP/2.0 100 Trying',
-      'From: <sip:[% invite_peerout_stir_scenarios_test.testuser1002.phone_number %]@invite-peerout-stir.scenarios.test>;tag=[\w-]+',
+      'From: <sip:[% invite_trusted_peerout_stir_scenarios_test.testuser1002.phone_number %]@invite-trusted-peerout-stir.scenarios.test>;tag=[\w-]+',
       'To: <sip:[% scenarios.0.responders.0.username %]@[% scenarios.0.responders.0.ip %]>',
       'CSeq: \d+ INVITE',
       'Server: Sipwise NGCP Proxy',
@@ -38,15 +38,15 @@ sip_out:
     ]
   - [
       'INVITE sip:[% scenarios.0.responders.0.username %]@[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];transport=udp SIP/2.0',
-      'From: <sip:[% invite_peerout_stir_scenarios_test.testuser1002.phone_number %]@invite-peerout-stir.scenarios.test>;tag=[\w-]+',
+      'From: <sip:[% invite_trusted_peerout_stir_scenarios_test.testuser1002.phone_number %]@invite-trusted-peerout-stir.scenarios.test>;tag=[\w-]+',
       'To: <sip:[% scenarios.0.responders.0.username %]@[% scenarios.0.responders.0.ip %]>',
       'CSeq: \d+ INVITE',
       'P-LB-Uptime: \d+',
       'Identity: [^;]+;info=<http://fake.url/pub.key>;alg=ES256;ppt=shaken',
-      'P-Asserted-Identity: <sip:[% invite_peerout_stir_scenarios_test.testuser1002.phone_number %]@invite-peerout-stir.scenarios.test>\r\n',
-      'P-Caller-UUID: [% invite_peerout_stir_scenarios_test.testuser1002.uuid %]',
-      'P-NGCP-Caller-Info: <sip:[% scenarios.0.username %]@invite-peerout-stir.scenarios.test>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %];primary=[% invite_peerout_stir_scenarios_test.testuser1002.phone_number %]',
-      'P-NGCP-Callee-Info: <sip:[% scenarios.0.responders.0.username %]@invite-peerout-stir.scenarios.test>;ip=[% scenarios.0.responders.0.ip %];port=\d+',
+      'P-Asserted-Identity: <sip:[% invite_trusted_peerout_stir_scenarios_test.testuser1002.phone_number %]@invite-trusted-peerout-stir.scenarios.test>',
+      'P-Caller-UUID: [% invite_trusted_peerout_stir_scenarios_test.testuser1002.uuid %]',
+      'P-NGCP-Caller-Info: <sip:[% scenarios.0.username %]@invite-trusted-peerout-stir.scenarios.test>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %];primary=[% invite_trusted_peerout_stir_scenarios_test.testuser1002.phone_number %]',
+      'P-NGCP-Callee-Info: <sip:[% scenarios.0.responders.0.username %]@invite-trusted-peerout-stir.scenarios.test>;ip=[% scenarios.0.responders.0.ip %];port=\d+',
       'P-D-Uri: sip:127.0.0.1:5060;received=sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %]%3blr%3btransport%3dudp',
       'Content-Type: application/sdp',
       'Contact: <sip:127.0.0.1:508[08];transport=udp>',
