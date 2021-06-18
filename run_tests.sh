@@ -18,7 +18,6 @@ COREDUMP_DIR="/ngcp-data/coredumps"
 PROFILE="${PROFILE:-}"
 OPTS=(-P -T -M -C) #SKIP_PARSE=true, SKIP_TESTS=true, SKIP_MOVE_JSON_KAM=true, SKIP=true
 
-TIMEOUT=${TIMEOUT:-300}
 SHOW_SCENARIOS=false
 SKIP_CONFIG=false
 CAPTURE=false
@@ -51,26 +50,7 @@ get_scenarios() {
 
 cfg_debug_off() {
   if ! "${SKIP_CONFIG}" ; then
-    echo "$(date) - Removed apicert.pem"
-    rm -f "${BASE_DIR}/apicert.pem"
-    echo "$(date) - Setting config debug off"
-    "${BIN_DIR}/config_debug.pl" -g "${GROUP}" "${BASE_DIR}/config.yml" off
-    echo "$(date) - Setting network config off"
-    "${BIN_DIR}/network_config.pl" -g "${GROUP}" "${BASE_DIR}/config.yml" off
-    dummy_ip=$(ip addr show dummy0 | grep inet | awk '{print $2}' | head -1)
-    if [ -n "${dummy_ip}" ]; then
-      echo "$(date) - start dummy0 interface"
-      ifdown dummy0
-    fi
-    if lsmod | grep -q dummy ; then
-      echo "$(date) - remove dummy module"
-      rmmod dummy
-    fi
-    if ! ngcpcfg --summary-only apply "config debug off via kamailio-config-tests" ; then
-      echo "$(date) - ngcpcfg apply returned $?"
-      error_flag=4
-    fi
-    echo "$(date) - Setting config debug off. Done[${error_flag}]"
+    "${BASE_DIR}/set_config.sh" -c -x "${GROUP}" -p "${PROFILE}"
   fi
 }
 
@@ -229,7 +209,7 @@ cdr_export() {
 }
 
 usage() {
-  echo "Usage: run_test.sh [-p PROFILE] [-C] [-t] [-P <full|step|none>]"
+  echo "Usage: run_test.sh [-p PROFILE] [-C] [-P <full|step|none>]"
   echo "Options:"
   echo -e "\\t-p CE|PRO default is autodetect"
   echo -e "\\t-l print available SCENARIOS in GROUP"
@@ -237,7 +217,6 @@ usage() {
   echo -e "\\t-k capture messages with tcpdump, per scenario"
   echo -e "\\t-K capture messages with tcpdump. One big file for all scenarios"
   echo -e "\\t-x set GROUP scenario. Default: scenarios"
-  echo -e "\\t-t set timeout in secs for pid_watcher.py [PRO]. Default: 300"
   echo -e "\\t-r fix retransmission issues"
   echo -e "\\t-c export CDRs at the end of the test"
   echo -e "\\t-m mem debug"
@@ -252,7 +231,7 @@ usage() {
   echo "BIN_DIR:${BIN_DIR}"
 }
 
-while getopts 'f:hlCcP:p:kKx:t:rm' opt; do
+while getopts 'f:hlCcP:p:kKx:rm' opt; do
   case $opt in
     h) usage; exit 0;;
     l) SHOW_SCENARIOS=true;;
@@ -262,7 +241,6 @@ while getopts 'f:hlCcP:p:kKx:t:rm' opt; do
     k) SINGLE_CAPTURE=true;;
     K) CAPTURE=true;;
     x) GROUP=${OPTARG};;
-    t) TIMEOUT=${OPTARG};;
     r) FIX_RETRANS=true;;
     c) CDR=true;;
     m) MEMDBG=true;;
@@ -306,16 +284,6 @@ case "${PROV_TYPE}" in
   *) echo "provisioning type:${PROV_TYPE} unknown" >&2; exit 2
 esac
 
-if [ "${GROUP}" = "scenarios_pbx" ] ; then
-  PIDWATCH_OPTS="--pbx"
-  # hack for pid_watcher ( sems-pbx was not active )
-  mkdir -p /run/sems-pbx/
-  touch /run/sems-pbx/sems-pbx.pid
-  chown -R sems-pbx:sems-pbx /run/sems-pbx/
-else
-  PIDWATCH_OPTS=""
-fi
-
 LOG_DIR="${BASE_DIR}/log/${GROUP}"
 
 echo "$(date) - Create temporary folder for json files"
@@ -330,33 +298,7 @@ rm -rf "${MLOG_DIR}"
 mkdir -p "${MLOG_DIR}" "${LOG_DIR}"
 
 if ! "${SKIP_CONFIG}" ; then
-  echo "$(date) - Setting config debug on"
-  "${BIN_DIR}/config_debug.pl" -c 5 -g "${GROUP}" "${BASE_DIR}/config.yml" on
-  echo "$(date) - Setting network config"
-  "${BIN_DIR}/network_config.pl" -g "${GROUP}" "${BASE_DIR}/config.yml" on
-  if [ "${PROFILE}" == "PRO" ]; then
-    echo "$(date) - Exec pid_watcher with timeout[${TIMEOUT}]"
-    ( timeout "${TIMEOUT}" "${BIN_DIR}/pid_watcher.py" ${PIDWATCH_OPTS} )&
-  fi
-  echo "$(date) - Config files"
-  "${BIN_DIR}/config_files.sh" "${GROUP}"
-  if ! ngcpcfg --summary-only apply "config debug on via kamailio-config-tests" ; then
-    echo "$(date) - ngcp apply returned $?"
-    echo "$(date) - Done[3]"
-    cfg_debug_off
-    exit 3
-  fi
-  if [ "${PROFILE}" == "PRO" ]; then
-    echo "$(date) - waiting for pid_watcher[$!] result"
-    if ! wait "$!" ; then
-      echo "$(date) - error on apply config. Some expected service didn't restart"
-      echo "$(date) - check log/pid_watcher.log for details"
-      cfg_debug_off
-      echo "$(date) - Done[1]"
-      exit 1
-    fi
-  fi
-  echo "$(date) - Setting config debug on. Done[${error_flag}]."
+  "${BASE_DIR}/set_config.sh" -x "${GROUP}" -p "${PROFILE}"
 fi
 
 echo "$(date) - Initial mem stats"
