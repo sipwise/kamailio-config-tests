@@ -4,6 +4,7 @@ PROFILE="${PROFILE:-}"
 GROUP="${GROUP:-scenarios}"
 CAPTURE=false
 SINGLE_CAPTURE=false
+PROV_TYPE=step
 
 usage() {
   echo "Usage: bench.sh [-p PROFILE] [-C] [num_runs]"
@@ -13,17 +14,19 @@ usage() {
   echo -e "\\t-k capture messages with tcpdump, per scenario"
   echo -e "\\t-K capture messages with tcpdump. One big file for all scenarios"
   echo -e "\\t-x set GROUP scenario. Default: scenarios"
+  echo -e "\\t-P provisioning, default:step"
   echo -e "\\t-h this help"
   echo -e "num_runs default is 20"
 }
 
-while getopts 'hCkKp:x:' opt; do
+while getopts 'hCkKP:p:x:' opt; do
   case $opt in
     h) usage; exit 0;;
     C) SKIP_CONFIG=true;;
     k) SINGLE_CAPTURE=true;;
     K) CAPTURE=true;;
     p) PROFILE=${OPTARG};;
+    P) PROV_TYPE=${OPTARG};;
     x) GROUP=${OPTARG};;
 	*) echo "Unknown option $opt"; usage; exit 1;;
   esac
@@ -47,8 +50,13 @@ if [ "${PROFILE}" != "CE" ] && [ "${PROFILE}" != "PRO" ]; then
   exit 2
 fi
 
+case "${PROV_TYPE}" in
+  full|step|none) ;;
+  *) echo "provisioning type:${PROV_TYPE} unknown" >&2; exit 2
+esac
+
 NUM=${1:-20}
-RUN_OPS=(-C -c -r -p"${PROFILE}" -x"${GROUP}")
+RUN_OPS=(-C -c -r -p"${PROFILE}" -x"${GROUP}" -P"${PROV_TYPE}")
 
 if "${CAPTURE}" ; then
   RUN_OPS+=(-K)
@@ -63,15 +71,7 @@ BASE_DIR=$(pwd)
 export BASE_DIR
 
 if ! "${SKIP_CONFIG}" ; then
-  export PERL5LIB="${BASE_DIR}/lib"
-  echo "add configuration for tests"
-  ./bin/config_debug.pl -c 5 -g "${GROUP}" "${BASE_DIR}/config.yml" on
-  ./bin/network_config.pl -g "${GROUP}" "${BASE_DIR}/config.yml" on
-  ./bin/config_files.sh "${GROUP}"
-	(
-    cd /etc/ngcp-config || true
-    ngcpcfg --summary-only apply "k-c-t ${GROUP} on"
-  )
+  "${BASE_DIR}/set_config.sh" -x "${GROUP}" -p "${PROFILE}"
 fi
 
 echo "$(date) - Starting $NUM tests"
@@ -97,11 +97,5 @@ done
 set +o pipefail
 
 if ! "${SKIP_CONFIG}" ; then
-  echo "remove configuration for tests"
-  ./bin/config_debug.pl -g"${GROUP}" "${BASE_DIR}/config.yml" off
-  ./bin/network_config.pl -g"${GROUP}" "${BASE_DIR}/config.yml" off
-	(
-    cd /etc/ngcp-config || true
-    ngcpcfg --summary-only apply "k-c-t ${GROUP} off"
-  )
+  "${BASE_DIR}/set_config.sh" -c -x "${GROUP}" -p "${PROFILE}"
 fi
