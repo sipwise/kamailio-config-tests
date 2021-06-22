@@ -200,6 +200,26 @@ cdr_export() {
   echo "$(date) - ================================================================================="
 }
 
+get_config() {
+  local data=()
+  if [ ! -f "${BASE_DIR}/config.yml" ]; then
+    echo "can't read ${BASE_DIR}/config.yml file" >&2
+    exit 4
+  fi
+  mapfile -t data < <("${BIN_DIR}/get_config.pl" "${BASE_DIR}/config.yml")
+  # not used here
+  #IP=${data[0]}
+  #PORT=${data[1]}
+  #MPORT=${data[2]}
+  #PEER_IP=${data[3]}
+  #PEER_PORT=${data[4]}
+  #PEER_MPORT=${data[5]}
+  #PHONE_CC=${data[6]}
+  #PHONE_AC=${data[7]}
+  #PHONE_SN=${data[8]}
+  OPTS+=( "-I${data[9]}" )
+}
+
 usage() {
   echo "Usage: run_test.sh [-p PROFILE] [-C] [-P <full|step|none>]"
   echo "Options:"
@@ -329,6 +349,9 @@ if [[ "${PROV_TYPE}" == "full" ]] ; then
   SCENARIOS="${SCEN[*]}" "${BIN_DIR}/provide_scenarios.sh" \
     -f "${BASE_DIR}/config.yml" -x "${GROUP}" create || error_flag=1
 fi
+
+# find SERVER_IP
+get_config
 
 for t in "${SCEN[@]}"; do
   echo "$(date) - ================================================================================="

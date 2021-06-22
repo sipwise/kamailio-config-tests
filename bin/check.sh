@@ -34,6 +34,7 @@ SKIP_MOVE_JSON_KAM=false
 CDR=false
 ERR_FLAG=0
 RETRANS_SIZE=2
+SIP_SERVER=127.0.0.1
 
 rtpengine_ctl_ip=$(grep 'listen-cli' /etc/rtpengine/rtpengine.conf|\
   awk '{print $3}')
@@ -431,16 +432,18 @@ run_sipp() {
     get_ip "$(basename "${res}")"
 
     if [ -f "${SCEN_CHECK_DIR}/${base}_reg.xml" ]; then
-      echo "$(date) - Register ${base} ${ip}:${port}-${mport}"
-      "${BIN_DIR}/sipp.sh" -T "$transport" -i "${ip}" -p "${port}" \
+      echo "$(date) - Register ${base} ${ip}:${port}-${mport} => ${SIP_SERVER}"
+      "${BIN_DIR}/sipp.sh" -I"${SIP_SERVER}" \
+        -T "$transport" -i "${ip}" -p "${port}" \
         -e "${LOG_DIR}/${base}_reg_errors.log" \
         -r "${SCEN_CHECK_DIR}/${base}_reg.xml"
     fi
-    pid=$("${BIN_DIR}/sipp.sh" -b -T "$transport" -i "${ip}" -p "${port}" \
+    pid=$("${BIN_DIR}/sipp.sh" -b -I"${SIP_SERVER}" \
+      -T "$transport" -i "${ip}" -p "${port}" \
       -l "${LOG_DIR}/${base}.msg" \
       -e "${LOG_DIR}/${base}_errors.log" \
       -m "${mport}" -r "${SCEN_CHECK_DIR}/${base}.xml")
-    echo "$(date) - Running ${base}[${pid}] ${ip}:${port}-${mport}"
+    echo "$(date) - Running ${base}[${pid}] ${ip}:${port}-${mport} => ${SIP_SERVER}"
     responder_pid="${responder_pid} ${base}:${pid}"
   done
 
@@ -453,8 +456,9 @@ run_sipp() {
       continue
     fi
     get_ip "$(basename "${send}")"
-    echo "$(date) - Running ${base} ${ip}:${port}-${mport}"
-    if ! "${BIN_DIR}/sipp.sh" -e "${LOG_DIR}/${base}_errors.log" -l "${LOG_DIR}/${base}.msg" \
+    echo "$(date) - Running ${base} ${ip}:${port}-${mport} => ${SIP_SERVER}"
+    if ! "${BIN_DIR}/sipp.sh" -I"${SIP_SERVER}" \
+        -e "${LOG_DIR}/${base}_errors.log" -l "${LOG_DIR}/${base}.msg" \
         -T "${transport}" -i "${ip}" -p "${port}" -m "${mport}" "${send}"
     then
       echo "$(date) - ${base} error"
@@ -583,6 +587,7 @@ cdr_check() {
 usage() {
   echo "Usage: check.sh [-hCDRTGgJKm] [-p PROFILE ] -s [GROUP] check_name"
   echo "Options:"
+  echo -e "\\t-I: SIP_SERVER IP, default:127.0.0.1"
   echo -e "\\t-C: skip creation of domain and subscribers"
   echo -e "\\t-R: skip run sipp"
   echo -e "\\t-D: skip deletion of domain and subscribers as final step"
@@ -602,9 +607,10 @@ usage() {
   echo -e "\\tcheck_name. Scenario name to check. This is the name of the directory on GROUP dir."
 }
 
-while getopts 'hCp:Rs:DTPGgrcJKMmw:' opt; do
+while getopts 'hI:Cp:Rs:DTPGgrcJKMmw:' opt; do
   case $opt in
     h) usage; exit 0;;
+    I) SIP_SERVER=${OPTARG};;
     C) SKIP=true;;
     p) PROFILE=${OPTARG};;
     R) SKIP_RUNSIPP=true; SKIP_DELDOMAIN=true;;

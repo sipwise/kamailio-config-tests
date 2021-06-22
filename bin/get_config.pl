@@ -60,3 +60,7 @@ my $phone = $data->{phone};
 print "$phone->{cc}\n";
 print "$phone->{ac}\n";
 print "$phone->{sn}\n";
+
+# server
+my $kamailio = $data->{kamailio};
+print "$kamailio->{lb}->{ip}\n";

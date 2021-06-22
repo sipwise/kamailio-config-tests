@@ -25,6 +25,7 @@ usage() {
   echo -e "\\t-m: media port"
   echo -e "\\t-t: timeout. default 10/25(responder)"
   echo -e "\\t-i: IP. default 127.0.0.1"
+  echo -e "\\t-I: SIP_SERVER IP. default 127.0.0.1"
   echo -e "\\t-T: transport [UDP|TCP] default UDP"
   echo -e "\\t-r: responder"
   echo -e "\\t-b: run sipp in background (responder)"
@@ -34,13 +35,14 @@ usage() {
   echo -e "\\t sipp_scenario.xml file"
 }
 
-while getopts 'hrp:m:t:i:T:bl:e:' opt; do
+while getopts 'hrp:m:t:I:i:T:bl:e:' opt; do
   case $opt in
     h) usage; exit 0;;
     r) RESP=1;;
     p) PORT=$OPTARG;;
     m) MPORT=$OPTARG;;
     t) TIMEOUT=$OPTARG;;
+    I) IP_SERVER=$OPTARG;;
     i) IP=$OPTARG;;
     T) TRANSPORT=${OPTARG,,};;
     b) BACK="-bg";;

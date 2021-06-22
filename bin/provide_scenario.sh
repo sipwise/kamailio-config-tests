@@ -212,10 +212,11 @@ scenario_csv() {
   find "${SCEN_CHECK_DIR}" -name 'sipp_scenario_responder*_reg.xml' -exec rm {} \;
   find "${SCEN_CHECK_DIR}" -name '*.csv' -exec rm {} \;
   echo "$(date) - Generating csv/reg.xml files"
+  echo "SERVER_IP=${SERVER_IP}"
   echo "IP=${IP} PORT=${PORT} MPORT=${MPORT}"
   echo "PEER_IP=${PEER_IP} PEER_PORT=${PEER_PORT} PEER_MPORT=${PEER_MPORT}"
   echo "PHONE:${PHONE}"
-  if ! "${BIN_DIR}/scenario.pl" \
+  if ! "${BIN_DIR}/scenario.pl" --server-ip="${SERVER_IP}" \
     --ip="${IP}" --port="${PORT}" --mport="${MPORT}" --phone="${PHONE}" \
     --peer-ip="${PEER_IP}" --peer-port="${PEER_PORT}" --peer-mport="${PEER_MPORT}" \
     "${SCEN_CHECK_DIR}/scenario.yml" "${SCEN_CHECK_DIR}/scenario_ids.yml"
@@ -248,6 +249,7 @@ Usage: ${ME} [options] scenario_dir action
 
 Options:
   -h: this help
+  -S: SIP SERVER IP. Default: 127.0.0.1
   -i: IP
   -p: sipp port base
   -m: sipp multimedia port base
@@ -261,6 +263,7 @@ Arguments:
 EOF
 }
 
+SERVER_IP="127.0.0.1"
 IP="127.126.0.1"
 PORT=51602
 MPORT=45003
@@ -268,8 +271,9 @@ PHONE=43:1:1000
 PEER_IP="127.0.2.1"
 PEER_PORT=51602
 PEER_MPORT=45003
-while getopts 'hi:p:m:I:P:M:n:' opt; do
+while getopts 'hS:i:p:m:I:P:M:n:' opt; do
   case $opt in
+    S) SERVER_IP=${OPTARG};;
     i) IP=${OPTARG};;
     p) PORT=${OPTARG};;
     m) MPORT=${OPTARG};;

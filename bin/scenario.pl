@@ -39,6 +39,7 @@ sub usage
   my $output = "usage: scenario.pl [options] scenario.yml scenario_ids.yml\n";
   $output .= "Options:\n";
   $output .= "\t-h: this help\n";
+  $output .= "\t--server-ip: SIP SERVER IP\n";
   $output .= "\t--ip: IP\n";
   $output .= "\t--port: base sipp port\n";
   $output .= "\t--mport: base sipp media port\n";
@@ -51,6 +52,7 @@ sub usage
 
 my $ids = {};
 my $help = 0;
+my $server_ip = "127.0.0.1";
 my $net_data = {
     scen => {
         ip => "127.126.0.1",
@@ -66,6 +68,7 @@ my $net_data = {
 my $phone = "43:1:1000";
 GetOptions (
     "h|help" => \$help,
+    "server-ip=s" => \$server_ip,
     "ip=s" => \$net_data->{scen}->{ip},
     "port=i" => \$net_data->{scen}->{port},
     "mport=i" => \$net_data->{scen}->{mport},
@@ -98,6 +101,11 @@ our $tt = Template->new({
 }) || die "$Template::ERROR\n";
 our ($phone_cc, $phone_ac, $phone_sn) = split(/:/, $phone);
 $phone_sn = int($phone_sn);
+
+sub server_info
+{
+    $ids->{server_ip} = $server_ip;
+}
 
 sub extra_info
 {
@@ -479,6 +487,7 @@ sub generate_foreign_dom
     return;
 }
 
+server_info();
 extra_info($cf);
 manage_phones($cf);
 generate($cf);
