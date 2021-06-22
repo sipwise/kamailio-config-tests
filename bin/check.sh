@@ -605,7 +605,7 @@ usage() {
 while getopts 'hCp:Rs:DTPGgrcJKMmw:' opt; do
   case $opt in
     h) usage; exit 0;;
-    C) SKIP=true;;
+    C) SKIP=true; SKIP_DELDOMAIN=true;;
     p) PROFILE=${OPTARG};;
     R) SKIP_RUNSIPP=true; SKIP_DELDOMAIN=true;;
     s) GROUP=${OPTARG};;
