@@ -11,7 +11,7 @@
       Call-ID: NGCP%[field4 file="callee.csv" line=1]%///[call_id]
       CSeq: 1 INVITE
       P-Asserted-Identity: <sip:[field0 file="caller.csv" line=1]@[field2 file="caller.csv" line=1]>
-      Contact: sip:[field0 file="caller.csv" line=1]@[local_ip]:[local_port]
+      Contact: <sip:[field0 file="caller.csv" line=1]@[local_ip]:[local_port]>
       Max-Forwards: 70
       Content-Type: application/sdp
       Content-Length: [len]
@@ -40,7 +40,7 @@
       To: <sip:[field1 file="callee.csv" line=1]@[field3 file="callee.csv" line=1]>[peer_tag_param]
       Call-ID: NGCP%[field4 file="callee.csv" line=1]%///[call_id]
       CSeq: 1 ACK
-      Contact: sip:[field0 file="caller.csv" line=1]@[local_ip]:[local_port]
+      Contact: <sip:[field0 file="caller.csv" line=1]@[local_ip]:[local_port]>
       Max-Forwards: 70
       Content-Length: 0
 

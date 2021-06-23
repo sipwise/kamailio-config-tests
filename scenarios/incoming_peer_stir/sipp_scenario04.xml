@@ -12,7 +12,7 @@
       CSeq: 1 INVITE
       Identity: eyJhbGciOiJFUzI1NiIsInBwdCI6InNoYWtlbiIsInR5cCI6InBhc3Nwb3J0IiwieDV1IjoiaHR0cDovL2Zha2UudXJsL3B1Yi5rZXkifQ.eyJhdHRlc3QiOiJBIiwiZGVzdCI6eyJ0biI6WyI0MzExMDAzIl19LCJpYXQiOjE2MjIxOTU2MzAsIm9yaWciOnsidG4iOiIwMDQzMjEwMDEifSwib3JpZ2lkIjoiZTFhMTdiYmEtZTFjNS00MGEyLTljMDItMTRiZWIzODY4ZjAwIn0.u4q2URmDnODO5OvbXoqsqSoCHJzdcv4WZLrdxeI7GdU17aGEr6Dxpwh2LCGgGlX5SR9Gh343iXbnmdqusJQ59g;info=<http://[field3 file="callee.csv" line=4]/pub.key>;alg=whatever;ppt=shaken
       P-Asserted-Identity: <sip:[field0 file="caller.csv" line=4]@[field2 file="caller.csv" line=4]>
-      Contact: sip:[field0 file="caller.csv" line=4]@[local_ip]:[local_port]
+      Contact: <sip:[field0 file="caller.csv" line=4]@[local_ip]:[local_port]>
       Max-Forwards: 70
       Content-Type: application/sdp
       Content-Length: [len]
@@ -41,7 +41,7 @@
       To: <sip:[field1 file="callee.csv" line=4]@[field3 file="callee.csv" line=4]>[peer_tag_param]
       Call-ID: NGCP%[field4 file="callee.csv" line=4]%///[call_id]
       CSeq: 1 ACK
-      Contact: sip:[field0 file="caller.csv" line=4]@[local_ip]:[local_port]
+      Contact: <sip:[field0 file="caller.csv" line=4]@[local_ip]:[local_port]>
       Max-Forwards: 70
       Content-Length: 0
 
