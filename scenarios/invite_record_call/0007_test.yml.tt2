@@ -130,7 +130,7 @@ sip_out:
       'From: <sip:[% invite_record_call_scenarios_test.testuser1002.phone_number %]@',
       'To: <sip:[% scenarios.0.responders.0.username %]@',
       'CSeq: 2 INVITE',
-      'Contact: sip:[% scenarios.0.username %]@',
+      'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>',
       'Max-Forwards: 68',
       'Content-Type: application/sdp',
       'P-Caller-UUID: [% invite_record_call_scenarios_test.testuser1002.uuid %]',

@@ -1,6 +1,6 @@
 {
     "@invite-record-call.scenarios.test": {
-        "sound_set": "default_soundset"
+        "sound_set": "invite_record_call"
     },
     "[% scenarios.0.responders.0.username %]@invite-record-call.scenarios.test": {
         "play_announce_before_recording": true,
