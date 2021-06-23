@@ -136,8 +136,8 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^INVITE sip:[% incoming_hih_scenarios_test.testuser1003.phone_number %]@'
-  - 'Contact: sip:[% scenarios.0.username %]@'
+  - '^INVITE sip:[% incoming_hih_scenarios_test.testuser1003.phone_number %]@incoming-hih.scenarios.test SIP/2.0'
+  - 'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>'
   - 'CSeq: 1 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
@@ -149,7 +149,7 @@ sip_out:
       'To: <sip:[% incoming_hih_scenarios_test.testuser1003.phone_number %]@'
     ]
   - [
-      '^INVITE sip:[% incoming_hih_scenarios_test.testuser1002.phone_number %]@',
+      '^INVITE sip:[% incoming_hih_scenarios_test.testuser1002.phone_number %]@incoming-hih.scenarios.test SIP/2.0',
       'CSeq: 1 INVITE',
       'From: <sip:[% scenarios.0.username %]@',
       'To: <sip:[% incoming_hih_scenarios_test.testuser1003.phone_number %]@',
