@@ -189,7 +189,7 @@ flow:
 sip_in:
   - '^INVITE'
   - 'From: "Anonymous" <sip:anonymous@anonymous.invalid>;tag='
-  - 'Contact: sip:[% scenarios.0.username %]@'
+  - 'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>'
   - 'CSeq: 1 INVITE'
   - 'P-Asserted-Identity: "long name here" <sip:[% scenarios.0.username %]@invite-trusted-anonymous.scenarios.test>'
   - 'Max-Forwards: 69'

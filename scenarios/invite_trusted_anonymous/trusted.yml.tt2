@@ -1,5 +1,5 @@
 ---
 [% scenarios.0.username %]@invite-trusted-anonymous.scenarios.test:
-  from_pattern: 1002
+  from_pattern: 1002@invite-trusted-anonymous.scenarios.test
   protocol: UDP
   src_ip: [% scenarios.0.ip %]

@@ -11,7 +11,7 @@
       Call-ID: NGCP%[field4 file="callee.csv" line=0]%///[call_id]
       CSeq: 1 INVITE
       P-Asserted-Identity: "long name here" <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>
-      Contact: sip:[field0 file="caller.csv"]@[local_ip]:[local_port]
+      Contact: <sip:[field0 file="caller.csv"]@[local_ip]:[local_port]>
       Max-Forwards: 70
       Content-Type: application/sdp
       Content-Length: [len]
@@ -51,7 +51,7 @@
       [routes]
       CSeq: 1 ACK
       P-Asserted-Identity: "long name here" <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>
-      Contact: sip:[field0 file="caller.csv"]@[local_ip]:[local_port]
+      Contact: <sip:[field0 file="caller.csv"]@[local_ip]:[local_port]>
       Max-Forwards: 70
       Content-Length: 0
 
@@ -77,7 +77,7 @@
       Call-ID: NGCP%[field4 file="callee.csv" line=0]%///[call_id]
       CSeq: 2 BYE
       P-Asserted-Identity: "long name here" <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>
-      Contact: sip:[field0 file="caller.csv"]@[local_ip]:[local_port]
+      Contact: <sip:[field0 file="caller.csv"]@[local_ip]:[local_port]>
       [routes]
       Max-Forwards: 70
       Content-Length: 0
