@@ -12,7 +12,7 @@
       To: <sip:[field0 file="caller.csv" line=0]@[field2 file="caller.csv" line=0]>
       Call-ID: NGCP%[field4 file="callee.csv" line=0]%///[call_id]
       CSeq: [cseq] REGISTER
-      Contact: sip:[field0 file="caller.csv" line=0]@[local_ip]:[local_port]
+      Contact: <sip:[field0 file="caller.csv" line=0]@[local_ip]:[local_port]>
       Expires: 600
       Max-Forwards: 70
       Content-Length: 0
@@ -33,7 +33,7 @@
       Call-ID: NGCP%[field4 file="callee.csv" line=0]%///[call_id]
       CSeq: [cseq] REGISTER
       [field1 file="caller.csv"]
-      Contact: sip:[field0 file="caller.csv" line=0]@[local_ip]:[local_port]
+      Contact: <sip:[field0 file="caller.csv" line=0]@[local_ip]:[local_port]>
       Expires: 600
       Max-Forwards: 70
       Content-Length: 0
@@ -54,7 +54,7 @@
       Call-ID: NGCP%[field4 file="callee.csv" line=0]%///[call_id]
       CSeq: [cseq] REGISTER
       [field1 file="caller.csv"]
-      Contact: sip:[field0 file="caller.csv" line=0]@[local_ip]:[local_port]
+      Contact: <sip:[field0 file="caller.csv" line=0]@[local_ip]:[local_port]>
       Expires: 600
       Max-Forwards: 70
       Content-Length: 0
@@ -75,7 +75,7 @@
       Call-ID: NGCP%[field4 file="callee.csv" line=0]%///[call_id]
       CSeq: [cseq] REGISTER
       [field1 file="caller.csv"]
-      Contact: sip:[field0 file="caller.csv" line=0]@[local_ip]:[local_port]
+      Contact: <sip:[field0 file="caller.csv" line=0]@[local_ip]:[local_port]>
       Expires: 600
       Max-Forwards: 70
       Content-Length: 0
@@ -96,7 +96,7 @@
       Call-ID: NGCP%[field4 file="callee.csv" line=0]%///[call_id]
       CSeq: [cseq] REGISTER
       [field1 file="caller.csv"]
-      Contact: sip:[field0 file="caller.csv" line=0]@[local_ip]:[local_port]
+      Contact: <sip:[field0 file="caller.csv" line=0]@[local_ip]:[local_port]>
       Expires: 600
       Max-Forwards: 70
       Content-Length: 0
