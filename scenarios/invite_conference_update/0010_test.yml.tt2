@@ -21,7 +21,7 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - '^UPDATE sip:127.0.0.1:5080(;prxroute=1)?(;transport=udp)? SIP/2.0'
-  - 'Contact: sip:testuser1002@'
+  - 'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>'
   - 'CSeq: 3 UPDATE'
   - 'Max-Forwards: 69'
   - 'Content-Length: 0'
@@ -38,7 +38,7 @@ sip_out:
     ]
   - [
       '^UPDATE sip:127.0.0.1:5080(;prxroute=1)?(;transport=udp)? SIP/2.0',
-      'Contact: sip:testuser1002@',
+      'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>',
       'CSeq: 3 UPDATE',
       'Max-Forwards: 68',
       'Content-Length: 0',

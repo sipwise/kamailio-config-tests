@@ -1,5 +1,5 @@
 {
     "@invite-conference-update.scenarios.test": {
-            "sound_set": "default_soundset"
+            "sound_set": "invite_conference_update"
     }
 }

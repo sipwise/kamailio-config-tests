@@ -1,6 +1,6 @@
 ---
 soundsets:
-  'default_soundset':
+  'invite_conference_update':
     reseller_id: 1
     sounds:
       conference_first:
