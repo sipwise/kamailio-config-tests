@@ -29,27 +29,27 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - '^BYE sip:127.0.0.1:5080(;prxroute=1)? SIP/2.0'
-  - 'Contact: sip:external@'
+  - 'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>'
   - 'CSeq: 2 BYE'
   - 'Max-Forwards: 69'
   - 'Content-Length: 0'
-  - 'From: <sip:external@'
-  - 'To: <sip:[% incoming_foreign_dom_scenarios_test.testuser1003.phone_number %]@'
+  - 'From: <sip:external@incoming-foreign-dom.external.test>;tag=[\w-]+'
+  - 'To: <sip:[% incoming_foreign_dom_scenarios_test.testuser1003.phone_number %]@incoming-foreign-dom.scenarios.test>;tag=[\w-]+'
 
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: 2 BYE',
       'Content-Length: 0',
-      'From: <sip:external@',
-      'To: <sip:[% incoming_foreign_dom_scenarios_test.testuser1003.phone_number %]@'
+      'From: <sip:external@incoming-foreign-dom.external.test>;tag=[\w-]+',
+      'To: <sip:[% incoming_foreign_dom_scenarios_test.testuser1003.phone_number %]@incoming-foreign-dom.scenarios.test>;tag=[\w-]+',
     ]
   - [
       '^BYE sip:127.0.0.1:5080(;prxroute=1)? SIP/2.0',
-      'Contact: sip:external@',
+      'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>',
       'CSeq: 2 BYE',
       'Max-Forwards: 68',
       'Content-Length: 0',
-      'From: <sip:external@',
-      'To: <sip:[% incoming_foreign_dom_scenarios_test.testuser1003.phone_number %]@'
+      'From: <sip:external@incoming-foreign-dom.external.test>;tag=[\w-]+',
+      'To: <sip:[% incoming_foreign_dom_scenarios_test.testuser1003.phone_number %]@incoming-foreign-dom.scenarios.test>;tag=[\w-]+',
     ]

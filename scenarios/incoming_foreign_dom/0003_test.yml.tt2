@@ -192,9 +192,9 @@ flow:
         "user:[% incoming_foreign_dom_scenarios_test.testuser1003.uuid %]"
       ]
 sip_in:
-  - '^INVITE sip:[% incoming_foreign_dom_scenarios_test.testuser1003.phone_number %]@'
-  - 'From: <sip:external@incoming-foreign-dom.external.test>'
-  - 'Contact: sip:external@'
+  - '^INVITE sip:[% incoming_foreign_dom_scenarios_test.testuser1003.phone_number %]@incoming-foreign-dom.scenarios.test SIP/2.0'
+  - 'From: <sip:[% scenarios.0.username %]@incoming-foreign-dom.external.test>'
+  - 'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>'
   - 'CSeq: 1 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
@@ -202,29 +202,29 @@ sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: 1 INVITE',
-      'From: <sip:external@incoming-foreign-dom.external.test>',
+      'From: <sip:[% scenarios.0.username %]@incoming-foreign-dom.external.test>',
       'To: <sip:[% incoming_foreign_dom_scenarios_test.testuser1003.phone_number %]@',
       'Content-Length: 0'
     ]
   - [
       '^SIP/2.0 101 Connecting',
       'CSeq: 1 INVITE',
-      'From: <sip:external@incoming-foreign-dom.external.test>',
+      'From: <sip:[% scenarios.0.username %]@incoming-foreign-dom.external.test>',
       'To: <sip:[% incoming_foreign_dom_scenarios_test.testuser1003.phone_number %]@',
-      'P-NGCP-Caller-Info: <sip:external@incoming-foreign-dom.external.test>',
+      'P-NGCP-Caller-Info: <sip:[% scenarios.0.username %]@incoming-foreign-dom.external.test>',
       'P-Caller-UUID: 0',
       'Content-Length: 0'
     ]
   - [
-      '^INVITE sip:testuser1003@',
+      '^INVITE sip:[% scenarios.0.responders.0.username %]@[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %] SIP/2.0',
       'CSeq: 1 INVITE',
-      'From: <sip:external@incoming-foreign-dom.external.test>',
+      'From: <sip:[% scenarios.0.username %]@incoming-foreign-dom.external.test>',
       'To: <sip:[% incoming_foreign_dom_scenarios_test.testuser1003.phone_number %]@',
-      'Contact: sip:external@',
+      'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>',
       'Content-Type: application/sdp',
       'P-Caller-UUID: 0',
       'P-Callee-UUID: [% incoming_foreign_dom_scenarios_test.testuser1003.uuid %]',
-      'P-Asserted-Identity: <sip:external@incoming-foreign-dom.external.test>',
-      'P-Called-Party-ID: <sip:testuser1003@',
+      'P-Asserted-Identity: <sip:[% scenarios.0.username %]@incoming-foreign-dom.external.test>',
+      'P-Called-Party-ID: <sip:[% scenarios.0.responders.0.username %]@incoming-foreign-dom.scenarios.test>',
       'P-App-Name: sbc'
     ]
