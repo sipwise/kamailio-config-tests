@@ -28,7 +28,7 @@ sip_in:
   - '^INVITE'
   - 'P-Asserted-Identity: "long name here" <sip:testuser1002@invite-anonymous.scenarios.test>'
   - 'From: "Anonymous" <sip:anonymous@anonymous.invalid>;tag='
-  - 'Contact: sip:testuser1002@'
+  - 'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>'
   - 'To: <sip:testuser1003@'
   - 'CSeq: 1 INVITE'
   - 'Max-Forwards: 69'
