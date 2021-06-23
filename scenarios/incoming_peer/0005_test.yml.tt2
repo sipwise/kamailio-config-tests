@@ -21,8 +21,8 @@ sip_in:
   - 'P-Asserted-Identity: <sip:[% scenarios.0.username %]@incoming-peer.scenarios.test>'
   - 'P-Caller-UUID: 0'
   - 'P-NGCP-Caller-Info: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %]'
-  - 'P-NGCP-Callee-Info: <sip:[% incoming_peer_scenarios_test.testuser1003.phone_number %]@incoming-peer.scenarios.test>;ip=127.0.0.1;port=5060;primary=[% incoming_peer_scenarios_test.testuser1003.phone_number %]'
-  - 'P-D-Uri: sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060'
+  - 'P-NGCP-Callee-Info: <sip:[% incoming_peer_scenarios_test.testuser1003.phone_number %]@incoming-peer.scenarios.test>;ip=[% scenarios.0.responders.0.ip %];port=[% scenarios.0.responders.0.port %];primary=[% incoming_peer_scenarios_test.testuser1003.phone_number %]'
+  - 'P-D-Uri: sip:lb@127.0.0.1;lr;(received=sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];)?socket=sip:[% server_ip %]:5060'
   - 'Content-Type: application/sdp'
   - 'Contact: <sip:127.0.0.1:508[08];transport=udp>'
   - 'Content-Length:\s+\d+'
@@ -44,8 +44,8 @@ sip_out:
       'P-Asserted-Identity: <sip:[% scenarios.0.username %]@incoming-peer.scenarios.test>',
       'P-Caller-UUID: 0',
       'P-NGCP-Caller-Info: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %]',
-      'P-NGCP-Callee-Info: <sip:[% incoming_peer_scenarios_test.testuser1003.phone_number %]@incoming-peer.scenarios.test>;ip=127.0.0.1;port=5060;primary=[% incoming_peer_scenarios_test.testuser1003.phone_number %]',
-      'P-D-Uri: sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060',
+      'P-NGCP-Callee-Info: <sip:[% incoming_peer_scenarios_test.testuser1003.phone_number %]@incoming-peer.scenarios.test>;ip=[% scenarios.0.responders.0.ip %];port=[% scenarios.0.responders.0.port %];primary=[% incoming_peer_scenarios_test.testuser1003.phone_number %]',
+      'P-D-Uri: sip:lb@127.0.0.1;lr;(received=sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];)?socket=sip:[% server_ip %]:5060',
       'Content-Type: application/sdp',
       'Contact: <sip:127.0.0.1:508[08];transport=udp>',
       'Content-Length:\s+\d+',
