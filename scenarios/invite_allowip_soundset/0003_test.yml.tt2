@@ -93,7 +93,7 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - '^INVITE'
-  - 'Contact: sip:testuser1002@'
+  - 'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>'
   - 'CSeq: 2 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
@@ -114,7 +114,7 @@ sip_out:
       'From: <sip:testuser1002@',
       'To: <sip:testuser1003@',
       'CSeq: 2 INVITE',
-      'Contact: sip:testuser1002@[% scenarios.0.ip %]:[% scenarios.0.port %]',
+      'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>',
       'Max-Forwards: 68',
       'Content-Type: application/sdp',
       'Content-Length:   \d+',

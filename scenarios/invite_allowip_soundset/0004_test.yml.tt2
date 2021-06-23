@@ -28,5 +28,5 @@ sip_out:
       'Contact: <sip:(earlyannounce@)?127.0.0.1:508[0|8](;transport=udp)?>',
       'Content-Type: application/sdp',
       'Content-Length: \d+',
-      'P-Out-Socket: udp:127.0.0.1:5060'
+      'P-Out-Socket: udp:[% server_ip %]:5060'
     ]
