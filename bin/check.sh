@@ -702,8 +702,8 @@ if ! "$SKIP_RUNSIPP" ; then
   run_sipp
   echo "$(date) - Done sipp"
 
-  echo "$(date) - move scenario_ids.yml file"
-  mv "${SCEN_CHECK_DIR}/scenario_ids.yml" "${LOG_DIR}"
+  echo "$(date) - copy scenario_ids.yml file"
+  cp "${SCEN_CHECK_DIR}/scenario_ids.yml" "${LOG_DIR}"
   echo "$(date) - Done"
 
   if "${JSON_KAM}" ; then
