@@ -20,9 +20,9 @@ sip_in:
   - 'P-Caller-UUID: [% invite_callforward_scenarios_test.testuser1001.uuid %]'
   - 'P-NGCP-Caller-Info: <sip:testuser1001@invite-callforward.scenarios.test>;ip=127.0.0.1;port=508[08];primary=[% invite_callforward_scenarios_test.testuser1001.phone_number %]'
   - 'P-NGCP-Forward-Info: <sip:testuser1001@invite-callforward.scenarios.test>;ip=127.0.0.1;port=508[08];primary=[% invite_callforward_scenarios_test.testuser1001.phone_number %]'
-  - 'P-NGCP-Callee-Info: <sip:[% invite_callforward_scenarios_test.testuser1003.phone_number %]@invite-callforward.scenarios.test>;ip=127.0.0.1;port=5060;primary=[% invite_callforward_scenarios_test.testuser1003.phone_number %]'
+  - 'P-NGCP-Callee-Info: <sip:[% invite_callforward_scenarios_test.testuser1003.phone_number %]@invite-callforward.scenarios.test>;ip=[% scenarios.0.responders.1.ip %];port=[% scenarios.0.responders.1.port %];primary=[% invite_callforward_scenarios_test.testuser1003.phone_number %]'
   - 'P-Asserted-Identity: <sip:[% invite_callforward_scenarios_test.testuser1002.phone_number %]@invite-callforward.scenarios.test>'
-  - 'P-D-Uri: sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060'
+  - 'P-D-Uri: sip:lb@127.0.0.1;lr;(received=sip:[% scenarios.0.responders.1.ip %]:[% scenarios.0.responders.1.port %];)?socket=sip:[% server_ip %]:5060'
   - 'Content-Type: application/sdp'
   - 'Contact: <sip:127.0.0.1:508[08];transport=udp>'
   - 'Content-Length:\s+\d+'
@@ -43,9 +43,9 @@ sip_out:
       'P-Caller-UUID: [% invite_callforward_scenarios_test.testuser1001.uuid %]',
       'P-NGCP-Caller-Info: <sip:testuser1001@invite-callforward.scenarios.test>;ip=127.0.0.1;port=508[08];primary=[% invite_callforward_scenarios_test.testuser1001.phone_number %]',
       'P-NGCP-Forward-Info: <sip:testuser1001@invite-callforward.scenarios.test>;ip=127.0.0.1;port=508[08];primary=[% invite_callforward_scenarios_test.testuser1001.phone_number %]',
-      'P-NGCP-Callee-Info: <sip:[% invite_callforward_scenarios_test.testuser1003.phone_number %]@invite-callforward.scenarios.test>;ip=127.0.0.1;port=5060;primary=[% invite_callforward_scenarios_test.testuser1003.phone_number %]',
+      'P-NGCP-Callee-Info: <sip:[% invite_callforward_scenarios_test.testuser1003.phone_number %]@invite-callforward.scenarios.test>;ip=[% scenarios.0.responders.1.ip %];port=[% scenarios.0.responders.1.port %];primary=[% invite_callforward_scenarios_test.testuser1003.phone_number %]',
       'P-Asserted-Identity: <sip:[% invite_callforward_scenarios_test.testuser1002.phone_number %]@invite-callforward.scenarios.test>',
-      'P-D-Uri: sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060',
+      'P-D-Uri: sip:lb@127.0.0.1;lr;(received=sip:[% scenarios.0.responders.1.ip %]:[% scenarios.0.responders.1.port %];)?socket=sip:[% server_ip %]:5060',
       'Content-Type: application/sdp',
       'Contact: <sip:127.0.0.1:508[08];transport=udp>',
       'Content-Length:\s+\d+',
