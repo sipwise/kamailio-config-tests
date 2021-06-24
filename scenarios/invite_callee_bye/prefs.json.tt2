@@ -1,0 +1,5 @@
+{
+    "@invite-callee-bye.scenarios.test": {
+        "nat_sipping": "no"
+    }
+}

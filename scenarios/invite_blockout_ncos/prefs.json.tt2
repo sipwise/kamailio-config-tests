@@ -1,4 +1,7 @@
 {
+    "@invite-blockout-ncos.scenarios.test": {
+        "nat_sipping": "no"
+    },
     "testuser1002@invite-blockout-ncos.scenarios.test": {
         "ncos": "ncos_test_00"
     }

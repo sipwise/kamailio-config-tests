@@ -1,4 +1,7 @@
 {
+    "@invite-anonymous.scenarios.test": {
+        "nat_sipping": "no"
+    },
     "testuser1002@invite-anonymous.scenarios.test": {
         "cli": [% invite_anonymous_scenarios_test.testuser1002.phone_number %]
      }

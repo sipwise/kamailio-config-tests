@@ -1,0 +1,5 @@
+{
+    "@invite-locmap-replace.scenarios.test": {
+        "nat_sipping": "no"
+    }
+}

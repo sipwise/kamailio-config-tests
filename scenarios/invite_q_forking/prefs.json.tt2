@@ -1,4 +1,7 @@
 {
+    "@invite-q-forking.scenarios.test": {
+        "nat_sipping": "no"
+    },
     "[% scenarios.0.responders.0.username %]@invite-q-forking.scenarios.test": {
         "serial_forking_by_q_value": "standard",
         "stop_forking_code_lists": [

@@ -1,4 +1,7 @@
 {
+    "@invite-concurrent-max-out.scenarios.test": {
+        "nat_sipping": "no"
+    },
     "testuser1002@invite-concurrent-max-out.scenarios.test": {
         "concurrent_max": 2,
         "concurrent_max_out": 1

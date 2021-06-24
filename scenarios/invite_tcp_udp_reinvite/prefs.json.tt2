@@ -1,4 +1,7 @@
 {
+    "@invite-tcp-udp-reinvite.scenarios.test": {
+        "nat_sipping": "no"
+    },
     "[% scenarios.0.responders.0.username %]@invite-tcp-udp-reinvite.scenarios.test": {
         "allow_out_foreign_domain": true
     }

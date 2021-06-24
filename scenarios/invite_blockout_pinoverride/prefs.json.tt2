@@ -1,4 +1,7 @@
 {
+    "@invite-blockout-pinoverride.scenarios.test": {
+        "nat_sipping": "no"
+    },
     "testuser1002@invite-blockout-pinoverride.scenarios.test": {
         "block_out_list": [
             "[% invite_blockout_pinoverride_scenarios_test.testuser1001.phone_number %]",

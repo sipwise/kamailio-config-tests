@@ -1,4 +1,7 @@
 {
+    "@invite-reinvite-caller-transcoding.scenarios.test": {
+        "nat_sipping": "no"
+    },
     "peer_invite_reinvite_caller_transcoding_host0": {
         "transcode_PCMA": true
     }

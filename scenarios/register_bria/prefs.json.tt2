@@ -1,0 +1,5 @@
+{
+    "@register-bria.scenarios.test": {
+        "nat_sipping": "no"
+    }
+}

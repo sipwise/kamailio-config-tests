@@ -1,4 +1,7 @@
 {
+    "@invite-blockout-wlst.scenarios.test": {
+        "nat_sipping": "no"
+    },
     "testuser1002@invite-blockout-wlst.scenarios.test": {
         "block_out_list": [
             "[% invite_blockout_wlst_scenarios_test.testuser1001.phone_number %]",

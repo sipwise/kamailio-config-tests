@@ -1,4 +1,7 @@
 {
+    "@timer-session-caller-only-supported.scenarios.test": {
+        "nat_sipping": "no"
+    },
     "peer_timer_session_caller_only_supported_host0": {
         "sst_refresh_method": "INVITE",
         "sst_enable": "yes",

@@ -1,4 +1,7 @@
 {
+    "@invite-allowedcli-nonmatch-reject.scenarios.test": {
+        "nat_sipping": "no"
+    },
     "testuser1002@invite-allowedcli-nonmatch-reject.scenarios.test": {
         "allowed_clis": [
             "[% invite_allowedcli_nonmatch_reject_scenarios_test.testuser1002.phone_number %]9*",

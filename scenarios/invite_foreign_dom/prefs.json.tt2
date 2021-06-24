@@ -1,5 +1,6 @@
 {
     "@invite-foreign-dom.scenarios.test": {
+        "nat_sipping": "no",
         "allow_out_foreign_domain": true
     }
 }

@@ -1,4 +1,7 @@
 {
+    "@invite-outgoing-lock.scenarios.test": {
+        "nat_sipping": "no"
+    },
     "[% scenarios.0.username %]@invite-outgoing-lock.scenarios.test": {
         "lock": 2
     }

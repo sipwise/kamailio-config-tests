@@ -1,0 +1,5 @@
+{
+    "@invite-hdr.scenarios.test": {
+        "nat_sipping": "no"
+    }
+}

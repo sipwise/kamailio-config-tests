@@ -1,4 +1,7 @@
 {
+    "@invite-callforward-but-callee-locked-cfu.scenarios.test": {
+        "nat_sipping": "no"
+    },
     "[% scenarios.0.responders.0.username %]@invite-callforward-but-callee-locked-cfu.scenarios.test": {
         "lock": 2
     }

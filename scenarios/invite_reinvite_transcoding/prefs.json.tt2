@@ -1,5 +1,6 @@
 {
     "@invite-reinvite-transcoding.scenarios.test": {
+        "nat_sipping": "no",
         "transcode_PCMA": true
     }
 }

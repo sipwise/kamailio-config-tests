@@ -1,5 +1,6 @@
 {
 	"@invite-allowip-soundset.scenarios.test": {
+        "nat_sipping": "no",
 		"sound_set": "invite_allowip_soundset"
 	},
     "testuser1002@invite-allowip-soundset.scenarios.test": {

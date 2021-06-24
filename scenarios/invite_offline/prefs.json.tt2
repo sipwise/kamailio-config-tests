@@ -1,0 +1,5 @@
+{
+    "@invite-offline.scenarios.test": {
+        "nat_sipping": "no"
+    }
+}

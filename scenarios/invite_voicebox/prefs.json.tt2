@@ -1,0 +1,5 @@
+{
+    "@invite-voicebox.scenarios.test": {
+        "nat_sipping": "no"
+    }
+}

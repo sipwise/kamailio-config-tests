@@ -1,4 +1,7 @@
 {
+    "@incoming-peer.scenarios.test": {
+        "nat_sipping": "no"
+    },
     "peer_incoming_peer_host0": {
         "concurrent_max": 1
     }

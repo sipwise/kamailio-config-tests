@@ -1,4 +1,7 @@
 {
+    "@invite-force-inbound-calls-to-peer.scenarios.test": {
+        "nat_sipping": "no"
+    },
     "[% scenarios.0.responders.0.username %]@invite-force-inbound-calls-to-peer.scenarios.test": {
         "force_inbound_calls_to_peer":"force_offline"
     }

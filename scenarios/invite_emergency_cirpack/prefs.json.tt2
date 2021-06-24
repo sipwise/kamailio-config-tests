@@ -1,5 +1,6 @@
 {
     "@invite-emergency-cirpack.scenarios.test": {
+        "nat_sipping": "no",
         "emergency_prefix": "E",
         "rewrite_rule_set": "rw_00_invite_emergency_cirpack"
     },

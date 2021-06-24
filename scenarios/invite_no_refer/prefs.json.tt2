@@ -1,0 +1,5 @@
+{
+    "@invite-no-refer.scenarios.test": {
+        "nat_sipping": "no"
+    }
+}

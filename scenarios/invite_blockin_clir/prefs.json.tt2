@@ -1,4 +1,7 @@
 {
+    "@invite-blockin-clir.scenarios.test": {
+        "nat_sipping": "no"
+    },
     "testuser1002@invite-blockin-clir.scenarios.test": {
         "clir": true
     },

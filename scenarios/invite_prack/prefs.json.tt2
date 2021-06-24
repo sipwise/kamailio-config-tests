@@ -1,5 +1,6 @@
 {
 	"@invite-prack.scenarios.test": {
+        "nat_sipping": "no",
 		"disable_prack_method": false
 	},
 	"peer_invite_prack_host0": {

@@ -1,4 +1,7 @@
 {
+    "@invite-pai-none.scenarios.test": {
+        "nat_sipping": "no"
+    },
     "[% scenarios.0.responders.0.username %]@invite-pai-none.scenarios.test": {
         "outbound_pai_user": "none"
     }

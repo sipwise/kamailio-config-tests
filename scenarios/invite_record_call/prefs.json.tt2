@@ -1,5 +1,6 @@
 {
     "@invite-record-call.scenarios.test": {
+        "nat_sipping": "no",
         "sound_set": "invite_record_call"
     },
     "[% scenarios.0.responders.0.username %]@invite-record-call.scenarios.test": {

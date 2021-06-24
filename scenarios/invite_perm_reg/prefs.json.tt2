@@ -1,0 +1,5 @@
+{
+    "@invite-perm-reg.scenarios.test": {
+        "nat_sipping": "no"
+    }
+}

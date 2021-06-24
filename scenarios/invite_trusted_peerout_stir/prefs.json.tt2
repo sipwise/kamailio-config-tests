@@ -1,5 +1,6 @@
 {
     "@invite-trusted-peerout-stir.scenarios.test": {
+        "nat_sipping": "no",
         "stir_pub_url": "http://fake.url/pub.key"
     },
     "peer_invite_trusted_peerout_stir_host0": {

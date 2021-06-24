@@ -1,0 +1,5 @@
+{
+    "@invite-lateoam.scenarios.test": {
+        "nat_sipping": "no"
+    }
+}

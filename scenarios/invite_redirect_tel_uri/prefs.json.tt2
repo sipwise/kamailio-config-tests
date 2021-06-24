@@ -1,4 +1,7 @@
 {
+    "@invite-redirect-tel-uri.scenarios.test": {
+        "nat_sipping": "no"
+    },
     "[% scenarios.0.responders.0.username %]@invite-redirect-tel-uri.scenarios.test": {
         "outbound_diversion": "uprn",
         "outbound_history_info": "uprn"

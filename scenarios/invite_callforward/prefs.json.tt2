@@ -1,0 +1,5 @@
+{
+    "@invite-callforward.scenarios.test": {
+        "nat_sipping": "no"
+    }
+}

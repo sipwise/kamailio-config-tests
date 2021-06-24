@@ -1,4 +1,7 @@
 {
+    "@invite-concurrent-max-per-account.scenarios.test": {
+        "nat_sipping": "no"
+    },
     "testuser1003@invite-concurrent-max-per-account.scenarios.test": {
         "concurrent_max_per_account": 2
     },

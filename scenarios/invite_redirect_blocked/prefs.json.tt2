@@ -1,4 +1,7 @@
 {
+    "@invite-redirect-blocked.scenarios.test": {
+        "nat_sipping": "no"
+    },
     "[% scenarios.0.responders.0.username %]@invite-redirect-blocked.scenarios.test": {
         "call_deflection": "disabled"
      }

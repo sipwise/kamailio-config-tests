@@ -1,0 +1,5 @@
+{
+    "@invite.scenarios.test": {
+        "nat_sipping": "no"
+    }
+}

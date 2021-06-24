@@ -1,0 +1,5 @@
+{
+    "@invite-trusted-anonymous.scenarios.test": {
+        "nat_sipping": "no"
+    }
+}

@@ -1,4 +1,7 @@
 {
+    "@incoming-hih.scenarios.test": {
+        "nat_sipping": "no"
+    },
     "testuser1002@incoming-hih.scenarios.test": {
         "outbound_history_info": "uprn"
     },

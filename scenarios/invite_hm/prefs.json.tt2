@@ -1,4 +1,7 @@
 {
+    "@invite-hm.scenarios.test": {
+        "nat_sipping": "no"
+    },
     "testuser1002@invite-hm.scenarios.test": {
         "header_rule_set": "hm_invite_hm_00"
     },

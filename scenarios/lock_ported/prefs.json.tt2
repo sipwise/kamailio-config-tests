@@ -1,4 +1,7 @@
 {
+    "@lock-ported.scenarios.test": {
+        "nat_sipping": "no"
+    },
     "testuser1001@lock-ported.scenarios.test": {
         "lock": 5
     }

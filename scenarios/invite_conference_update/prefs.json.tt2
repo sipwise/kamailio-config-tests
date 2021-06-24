@@ -1,5 +1,6 @@
 {
     "@invite-conference-update.scenarios.test": {
-            "sound_set": "invite_conference_update"
+        "nat_sipping": "no",
+        "sound_set": "invite_conference_update"
     }
 }

@@ -1,6 +1,7 @@
 {
     "@invite-emergency.scenarios.test": {
-       "emergency_prefix": "E",
+        "nat_sipping": "no",
+        "emergency_prefix": "E",
         "rewrite_rule_set": "rw_invite_emergency_00"
     },
     "peer_invite_emergency_host0": {

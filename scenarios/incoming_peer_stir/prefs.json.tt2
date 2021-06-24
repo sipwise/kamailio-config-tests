@@ -1,5 +1,6 @@
 {
     "@incoming-peer-stir.scenarios.test": {
+        "nat_sipping": "no",
         "stir_check": true
     },
     "peer_incoming_peer_stir_host0": {

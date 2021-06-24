@@ -1,5 +1,6 @@
 {
     "@invite-stir.scenarios.test": {
+        "nat_sipping": "no",
         "stir_pub_url": "http://fake.url/pub.key",
         "stir_check": true
     },

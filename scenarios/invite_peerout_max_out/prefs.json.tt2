@@ -1,4 +1,7 @@
 {
+    "@invite-peerout-max-out.scenarios.test": {
+        "nat_sipping": "no"
+    },
     "peer_00_invite_peerout_max_out_host0": {
         "concurrent_max_out": 0
     },

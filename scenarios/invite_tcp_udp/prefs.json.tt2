@@ -1,0 +1,5 @@
+{
+    "@invite-tcp-udp.scenarios.test": {
+        "nat_sipping": "no"
+    }
+}

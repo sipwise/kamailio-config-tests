@@ -1,4 +1,7 @@
 {
+    "@invite-allowip.scenarios.test": {
+        "nat_sipping": "no"
+    },
     "testuser1002@invite-allowip.scenarios.test": {
         "allowed_ips": [
             "1.2.3.4"

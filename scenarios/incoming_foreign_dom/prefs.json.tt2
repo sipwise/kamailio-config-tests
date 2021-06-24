@@ -1,5 +1,6 @@
 {
   "@incoming-foreign-dom.scenarios.test": {
+    "nat_sipping": "no",
     "unauth_inbound_calls": true
   }
 }

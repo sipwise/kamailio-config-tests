@@ -1,5 +1,6 @@
 {
     "@invite-peerout-rewrite.scenarios.test": {
+        "nat_sipping": "no",
         "rewrite_rule_set": "rw_invite_peerout_rewrite"
     },
     "peer_invite_peerout_rewrite_host0": {

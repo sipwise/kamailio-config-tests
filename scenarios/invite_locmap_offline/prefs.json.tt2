@@ -1,0 +1,5 @@
+{
+    "@invite-locmap-offline.scenarios.test": {
+        "nat_sipping": "no"
+    }
+}

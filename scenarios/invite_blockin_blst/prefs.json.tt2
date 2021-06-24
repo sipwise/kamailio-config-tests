@@ -1,4 +1,7 @@
 {
+    "@invite-blockin-blst.scenarios.test": {
+        "nat_sipping": "no"
+    },
     "testuser1003@invite-blockin-blst.scenarios.test": {
         "block_in_list": [
             "[% invite_blockin_blst_scenarios_test.testuser1001.phone_number %]",
