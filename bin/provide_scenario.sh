@@ -18,6 +18,7 @@
 # On Debian systems, the complete text of the GNU General
 # Public License version 3 can be found in "/usr/share/common-licenses/GPL-3".
 #
+set -e
 # shellcheck disable=SC2155
 declare -r ME="$(basename "$0")"
 BASE_DIR="${BASE_DIR:-/usr/share/kamailio-config-tests}"
@@ -233,7 +234,7 @@ scenario_csv() {
 
 create() {
   local DOMAIN=$1
-  delete "${DOMAIN}" # just to be sure nothing is there
+  delete "${DOMAIN}" || true # just to be sure nothing is there
   scenario_csv "${DOMAIN}"
   echo "$(date) - Creating ${DOMAIN}"
   create_voip "${DOMAIN}"
