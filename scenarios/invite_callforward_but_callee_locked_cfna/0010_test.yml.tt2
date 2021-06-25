@@ -80,7 +80,7 @@ sip_out:
       'From: <sip:[% scenarios.0.username %]@invite-callforward-but-callee-locked-cfna.scenarios.test>;tag=[\w-]+',
       'To: <sip:[% scenarios.0.responders.0.username %]@invite-callforward-but-callee-locked-cfna.scenarios.test>',
       'CSeq: \d+ INVITE',
-      'Contact: sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %]',
+      'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>',
       'Content-Type: application/sdp',
       'Content-Length:\s+\d+',
       'P-Acc-Caller-User: [% scenarios.0.responders.0.username %]',

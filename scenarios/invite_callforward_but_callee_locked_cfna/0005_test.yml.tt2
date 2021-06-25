@@ -158,7 +158,7 @@ sip_in:
   - 'From: <sip:[% scenarios.0.username %]@invite-callforward-but-callee-locked-cfna.scenarios.test>;tag=[\w-]+'
   - 'To: <sip:[% scenarios.0.responders.0.username %]@invite-callforward-but-callee-locked-cfna.scenarios.test>'
   - 'CSeq: \d+ INVITE'
-  - 'Contact: sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:\d+'
+  - 'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>'
   - 'Content-Type: application/sdp'
   - 'Content-Length:\s+\d+'
 sip_out:
@@ -181,7 +181,7 @@ sip_out:
       'From: <sip:[% invite_callforward_but_callee_locked_cfna_scenarios_test.testuser1000.phone_number %]@invite-callforward-but-callee-locked-cfna.scenarios.test>;tag=[\w-]+',
       'To: <sip:[% scenarios.0.responders.0.username %]@invite-callforward-but-callee-locked-cfna.scenarios.test>',
       'CSeq: \d+ INVITE',
-      'Contact: sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:\d+',
+      'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>',
       'Content-Type: application/sdp',
       'Content-Length:\s+\d+',
       'P-Asserted-Identity: <sip:[% invite_callforward_but_callee_locked_cfna_scenarios_test.testuser1000.phone_number %]@invite-callforward-but-callee-locked-cfna.scenarios.test>',
