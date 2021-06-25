@@ -10,7 +10,7 @@
       To: <sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]>
       Call-ID: NGCP%[field4 file="callee.csv" line=0]%///[call_id]
       CSeq: 1 INVITE
-      Contact: sip:[field0 file="caller.csv"]@[local_ip]:[local_port]
+      Contact: <sip:[field0 file="caller.csv"]@[local_ip]:[local_port]>
       Max-Forwards: 70
       Content-Type: application/sdp
       Content-Length: [len]
@@ -41,7 +41,7 @@
       To: <sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]>[peer_tag_param]
       Call-ID: NGCP%[field4 file="callee.csv" line=0]%///[call_id]
       CSeq: 1 ACK
-      Contact: sip:[field0 file="caller.csv"]@[local_ip]:[local_port]
+      Contact: <sip:[field0 file="caller.csv"]@[local_ip]:[local_port]>
       Max-Forwards: 70
       Content-Length: 0
 
@@ -59,7 +59,7 @@
       To: <sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]>
       Call-ID: NGCP%[field4 file="callee.csv" line=0]%///[call_id]
       CSeq: 2 INVITE
-      Contact: sip:[field0 file="caller.csv"]@[local_ip]:[local_port]
+      Contact: <sip:[field0 file="caller.csv"]@[local_ip]:[local_port]>
       Max-Forwards: 70
       [field1 file="caller.csv"]
       Content-Type: application/sdp
@@ -99,7 +99,7 @@
       [last_Call-ID:]
       [routes]
       CSeq: [cseq] ACK
-      Contact: sip:[field0 file="caller.csv"]@[local_ip]:[local_port]
+      Contact: <sip:[field0 file="caller.csv"]@[local_ip]:[local_port]>
       Max-Forwards: 70
       Content-Length: 0
 
@@ -118,7 +118,7 @@
       [last_Call-ID:]
       [routes]
       CSeq: [cseq] INVITE
-      Contact: sip:[field0 file="caller.csv"]@[local_ip]:[local_port]
+      Contact: <sip:[field0 file="caller.csv"]@[local_ip]:[local_port]>
       Max-Forwards: 70
       [field1 file="caller.csv"]
       Content-Type: application/sdp
@@ -157,7 +157,7 @@
       [last_Call-ID:]
       [routes]
       CSeq: [cseq] ACK
-      Contact: sip:[field0 file="caller.csv"]@[local_ip]:[local_port]
+      Contact: <sip:[field0 file="caller.csv"]@[local_ip]:[local_port]>
       Max-Forwards: 70
       Content-Length: 0
 
@@ -175,7 +175,7 @@
       To: <sip:[field0 file="callee.csv" line=1]@[field3 file="callee.csv" line=1]>
       Call-ID: NGCP%[field4 file="callee.csv" line=0]%NEW///[call_id]
       CSeq: 1 INVITE
-      Contact: sip:[field0 file="caller.csv"]@[local_ip]:[local_port]
+      Contact: <sip:[field0 file="caller.csv"]@[local_ip]:[local_port]>
       Max-Forwards: 70
       Content-Type: application/sdp
       Content-Length: [len]
@@ -206,7 +206,7 @@
       To: <sip:[field0 file="callee.csv" line=1]@[field3 file="callee.csv" line=1]>[peer_tag_param]
       Call-ID: NGCP%[field4 file="callee.csv" line=0]%NEW///[call_id]
       CSeq: 1 ACK
-      Contact: sip:[field0 file="caller.csv"]@[local_ip]:[local_port]
+      Contact: <sip:[field0 file="caller.csv"]@[local_ip]:[local_port]>
       Max-Forwards: 70
       Content-Length: 0
 
@@ -224,7 +224,7 @@
       To: <sip:[field0 file="callee.csv" line=1]@[field3 file="callee.csv" line=1]>
       Call-ID: NGCP%[field4 file="callee.csv" line=0]%NEW///[call_id]
       CSeq: 2 INVITE
-      Contact: sip:[field0 file="caller.csv"]@[local_ip]:[local_port]
+      Contact: <sip:[field0 file="caller.csv"]@[local_ip]:[local_port]>
       Max-Forwards: 70
       [field1 file="caller.csv"]
       Content-Type: application/sdp
@@ -266,7 +266,7 @@
       To: <sip:[field0 file="callee.csv" line=1]@[field3 file="callee.csv" line=1]>;tag=[$3]
       Call-ID: NGCP%[field4 file="callee.csv" line=0]%NEW///[call_id]
       CSeq: 2 ACK
-      Contact: sip:[field0 file="caller.csv"]@[local_ip]:[local_port]
+      Contact: <sip:[field0 file="caller.csv"]@[local_ip]:[local_port]>
       Max-Forwards: 70
       Content-Length: 0
 
@@ -284,7 +284,7 @@
       To: <sip:[field0 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]>;tag=[$2]
       Call-ID: NGCP%[field4 file="callee.csv" line=0]%///[call_id]
       CSeq: [cseq] BYE
-      Contact: sip:[field0 file="caller.csv"]@[local_ip]:[local_port]
+      Contact: <sip:[field0 file="caller.csv"]@[local_ip]:[local_port]>
       [routes]
       Max-Forwards: 70
       Content-Length: 0

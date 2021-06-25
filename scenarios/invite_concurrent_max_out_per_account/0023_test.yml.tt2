@@ -138,7 +138,7 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - '^INVITE sip:[% scenarios.0.responders.1.username %]@'
-  - 'Contact: sip:testuser1002@'
+  - 'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>'
   - 'From: <sip:testuser1002@'
   - 'To: <sip:[% scenarios.0.responders.1.username %]@'
   - 'CSeq: 2 INVITE'
