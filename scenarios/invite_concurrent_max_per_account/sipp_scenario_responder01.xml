@@ -13,7 +13,7 @@
       To: <sip:[field0 file="callee.csv" line=1]@[field3 file="callee.csv" line=1]>
       Call-ID: NGCP%[field4 file="callee.csv" line=0]%///[call_id]
       CSeq: 1 INVITE
-      Contact: sip:[field0 file="caller.csv"]@[local_ip]:[local_port]
+      Contact: <sip:[field0 file="caller.csv"]@[local_ip]:[local_port]>
       Max-Forwards: 70
       Content-Type: application/sdp
       Content-Length: [len]
@@ -44,7 +44,7 @@
       To: <sip:[field0 file="callee.csv" line=1]@[field3 file="callee.csv" line=1]>
       Call-ID: NGCP%[field4 file="callee.csv" line=0]%///[call_id]
       CSeq: 1 ACK
-      Contact: sip:[field0 file="caller.csv"]@[local_ip]:[local_port]
+      Contact: <sip:[field0 file="caller.csv"]@[local_ip]:[local_port]>
       Max-Forwards: 70
       Content-Length: 0
 
@@ -62,7 +62,7 @@
       To: <sip:[field0 file="callee.csv" line=1]@[field3 file="callee.csv" line=1]>
       Call-ID: NGCP%[field4 file="callee.csv" line=0]%///[call_id]
       CSeq: 2 INVITE
-      Contact: sip:[field0 file="caller.csv"]@[local_ip]:[local_port]
+      Contact: <sip:[field0 file="caller.csv"]@[local_ip]:[local_port]>
       Max-Forwards: 70
       [field1 file="caller.csv"]
       Content-Type: application/sdp
@@ -92,7 +92,7 @@
       To: <sip:[field0 file="callee.csv" line=1]@[field3 file="callee.csv" line=1]>
       Call-ID: NGCP%[field4 file="callee.csv" line=0]%///[call_id]
       CSeq: 2 ACK
-      Contact: sip:[field0 file="caller.csv"]@[local_ip]:[local_port]
+      Contact: <sip:[field0 file="caller.csv"]@[local_ip]:[local_port]>
       Max-Forwards: 70
       Content-Length: 0
 
