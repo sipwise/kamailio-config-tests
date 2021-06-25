@@ -25,14 +25,14 @@ sip_in:
   - 'From: <sip:testuser1002@invite-emergency-pidflo.scenarios.test>;tag=[\w-]+'
   - 'To: <sip:112@invite-emergency-pidflo.scenarios.test>'
   - 'CSeq: \d+ INVITE'
-  - 'Contact: sip:testuser1002@[% scenarios.0.ip %]:[% scenarios.0.port %]'
+  - 'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>'
   - 'Content-Type: application/sdp'
   - 'Content-Length:\s+\d+'
   - 'P-NGCP-Src-Ip: [% scenarios.0.ip %]'
   - 'P-NGCP-Src-Port: [% scenarios.0.port %]'
   - 'P-NGCP-Src-Proto: udp'
   - 'P-NGCP-Src-Af: 4'
-  - 'P-Sock-Info: udp:127.0.0.1:5060'
+  - 'P-Sock-Info: udp:[% server_ip %]:5060'
   - 'P-LB-Uptime: \d+'
 sip_out:
   - [
@@ -40,7 +40,7 @@ sip_out:
       'From: <sip:testuser1002@invite-emergency-pidflo.scenarios.test>;tag=[\w-]+',
       'To: <sip:112@invite-emergency-pidflo.scenarios.test>',
       'CSeq: \d+ INVITE',
-      'P-Out-Socket: udp:127.0.0.1:5060',
+      'P-Out-Socket: udp:[% server_ip %]:5060',
       'P-NGCP-Auth-IP: [% scenarios.0.ip %]',
       'P-NGCP-Auth-UA: <null>',
       'Server: Sipwise NGCP Proxy',
@@ -51,7 +51,7 @@ sip_out:
       'From: <sip:testuser1002@invite-emergency-pidflo.scenarios.test>;tag=[\w-]+',
       'To: <sip:112@invite-emergency-pidflo.scenarios.test>;tag=[\w-]+',
       'CSeq: \d+ INVITE',
-      'P-Out-Socket: udp:127.0.0.1:5060',
+      'P-Out-Socket: udp:[% server_ip %]:5060',
       'P-NGCP-Auth-IP: [% scenarios.0.ip %]',
       'P-NGCP-Auth-UA: <null>',
       'Proxy-Authenticate: Digest realm="invite-emergency-pidflo.scenarios.test", nonce=".+"',
