@@ -21,8 +21,8 @@ sip_in:
   - 'P-Asserted-Identity: <sip:11111111@invite-hm.scenarios.test>'
   - 'P-Caller-UUID: [% invite_hm_scenarios_test.testuser1002.uuid %]'
   - 'P-NGCP-Caller-Info: <sip:[% scenarios.0.username %]@invite-hm.scenarios.test>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %];primary=[% invite_hm_scenarios_test.testuser1002.phone_number %]'
-  - 'P-NGCP-Callee-Info: <sip:[% scenarios.0.responders.0.username %]@invite-hm.scenarios.test>;ip=127.0.0.1;port=5060;primary=[% invite_hm_scenarios_test.testuser1003.phone_number %]'
-  - 'P-D-Uri: sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060'
+  - 'P-NGCP-Callee-Info: <sip:[% scenarios.0.responders.0.username %]@invite-hm.scenarios.test>;ip=[% scenarios.0.responders.0.ip %];port=[% scenarios.0.responders.0.port %];primary=[% invite_hm_scenarios_test.testuser1003.phone_number %]'
+  - 'P-D-Uri: sip:lb@127.0.0.1;lr;(received=sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];)?socket=sip:[% server_ip %]:5060'
   - 'Content-Type: application/sdp'
   - 'Content-Length:\s+\d+'
   - 'Contact: <sip:127.0.0.1:508[08];transport=udp>'
@@ -44,8 +44,8 @@ sip_out:
       'P-Asserted-Identity: <sip:11111111@invite-hm.scenarios.test>',
       'P-Caller-UUID: [% invite_hm_scenarios_test.testuser1002.uuid %]',
       'P-NGCP-Caller-Info: <sip:[% scenarios.0.username %]@invite-hm.scenarios.test>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %];primary=[% invite_hm_scenarios_test.testuser1002.phone_number %]',
-      'P-NGCP-Callee-Info: <sip:[% scenarios.0.responders.0.username %]@invite-hm.scenarios.test>;ip=127.0.0.1;port=5060;primary=[% invite_hm_scenarios_test.testuser1003.phone_number %]',
-      'P-D-Uri: sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060',
+      'P-NGCP-Callee-Info: <sip:[% scenarios.0.responders.0.username %]@invite-hm.scenarios.test>;ip=[% scenarios.0.responders.0.ip %];port=[% scenarios.0.responders.0.port %];primary=[% invite_hm_scenarios_test.testuser1003.phone_number %]',
+      'P-D-Uri: sip:lb@127.0.0.1;lr;(received=sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];)?socket=sip:[% server_ip %]:5060',
       'Content-Type: application/sdp',
       'Content-Length:\s+\d+',
       'Contact: <sip:127.0.0.1:508[08];transport=udp>',
