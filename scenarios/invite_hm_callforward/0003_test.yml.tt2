@@ -22,7 +22,7 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - '^INVITE sip:testuser1001@'
-  - 'Contact: sip:testuser1002@'
+  - 'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>'
   - 'To: <sip:testuser1001@'
   - 'CSeq: 1 INVITE'
   - 'Max-Forwards: 69'
