@@ -20,9 +20,9 @@ sip_in:
   - 'P-LB-Uptime: \d+'
   - 'P-Asserted-Identity: <sip:[% invite_hdr_scenarios_test.testuser1002.phone_number %]@invite-hdr.scenarios.test>'
   - 'P-Caller-UUID: [% invite_hdr_scenarios_test.testuser1002.uuid %]'
-  - 'P-NGCP-Caller-Info: <sip:testuser1002@invite-hdr.scenarios.test>;ip=127.126.0.1;port=\d+;primary=[% invite_hdr_scenarios_test.testuser1002.phone_number %]'
-  - 'P-NGCP-Callee-Info: <sip:testuser1003@invite-hdr.scenarios.test>;ip=127.0.0.1;port=5060;primary=[% invite_hdr_scenarios_test.testuser1003.phone_number %]'
-  - 'P-D-Uri: sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060'
+  - 'P-NGCP-Caller-Info: <sip:testuser1002@invite-hdr.scenarios.test>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %];primary=[% invite_hdr_scenarios_test.testuser1002.phone_number %]'
+  - 'P-NGCP-Callee-Info: <sip:testuser1003@invite-hdr.scenarios.test>;ip=[% scenarios.0.responders.0.ip %];port=[% scenarios.0.responders.0.port %];primary=[% invite_hdr_scenarios_test.testuser1003.phone_number %]'
+  - 'P-D-Uri: sip:lb@127.0.0.1;lr;(received=sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];)?socket=sip:[% server_ip %]:5060'
   - 'Content-Type: application/sdp'
   - 'Contact: <sip:127.0.0.1:508[08];transport=udp>'
   - 'Content-Length:\s+\d+'
@@ -43,9 +43,9 @@ sip_out:
       'P-LB-Uptime: \d+',
       'P-Asserted-Identity: <sip:[% invite_hdr_scenarios_test.testuser1002.phone_number %]@invite-hdr.scenarios.test>',
       'P-Caller-UUID: [% invite_hdr_scenarios_test.testuser1002.uuid %]',
-      'P-NGCP-Caller-Info: <sip:testuser1002@invite-hdr.scenarios.test>;ip=127.126.0.1;port=\d+;primary=[% invite_hdr_scenarios_test.testuser1002.phone_number %]',
-      'P-NGCP-Callee-Info: <sip:testuser1003@invite-hdr.scenarios.test>;ip=127.0.0.1;port=5060;primary=[% invite_hdr_scenarios_test.testuser1003.phone_number %]',
-      'P-D-Uri: sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060',
+      'P-NGCP-Caller-Info: <sip:testuser1002@invite-hdr.scenarios.test>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %];primary=[% invite_hdr_scenarios_test.testuser1002.phone_number %]',
+      'P-NGCP-Callee-Info: <sip:testuser1003@invite-hdr.scenarios.test>;ip=[% scenarios.0.responders.0.ip %];port=[% scenarios.0.responders.0.port %];primary=[% invite_hdr_scenarios_test.testuser1003.phone_number %]',
+      'P-D-Uri: sip:lb@127.0.0.1;lr;(received=sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];)?socket=sip:[% server_ip %]:5060',
       'Content-Type: application/sdp',
       'Contact: <sip:127.0.0.1:508[08];transport=udp>',
       'Content-Length:\s+\d+',

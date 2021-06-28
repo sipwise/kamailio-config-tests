@@ -209,7 +209,7 @@ sip_in:
   - '^INVITE'
   - 'FroM:'
   - 'TO:'
-  - 'Contact: sip:testuser1002@'
+  - 'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>'
   - 'CSeq: 2 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
