@@ -10,7 +10,7 @@
       To: <sip:[field1 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]>
       Call-ID: NGCP%[field4 file="callee.csv" line=0]%///[call_id]
       CSeq: 1 INVITE
-      Contact: sip:[field0 file="caller.csv" line=0]@[local_ip]:[local_port]
+      Contact: <sip:[field0 file="caller.csv" line=0]@[local_ip]:[local_port]>
       Max-Forwards: 70
       Content-Type: application/sdp
       Content-Length: [len]
@@ -41,7 +41,7 @@
       To: <sip:[field1 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]>[peer_tag_param]
       Call-ID: NGCP%[field4 file="callee.csv" line=0]%///[call_id]
       CSeq: 1 ACK
-      Contact: sip:[field0 file="caller.csv" line=0]@[local_ip]:[local_port]
+      Contact: <sip:[field0 file="caller.csv" line=0]@[local_ip]:[local_port]>
       Max-Forwards: 70
       Content-Length: 0
 
@@ -59,7 +59,7 @@
       To: <sip:[field1 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]>
       Call-ID: NGCP%[field4 file="callee.csv" line=0]%///[call_id]
       CSeq: 2 INVITE
-      Contact: sip:[field0 file="caller.csv" line=0]@[local_ip]:[local_port]
+      Contact: <sip:[field0 file="caller.csv" line=0]@[local_ip]:[local_port]>
       Max-Forwards: 70
       [field1 file="caller.csv" line=0]
       Content-Type: application/sdp
@@ -99,7 +99,7 @@
       Call-ID: NGCP%[field4 file="callee.csv" line=0]%///[call_id]
       [routes]
       CSeq: 2 ACK
-      Contact: sip:[field0 file="caller.csv" line=0]@[local_ip]:[local_port]
+      Contact: <sip:[field0 file="caller.csv" line=0]@[local_ip]:[local_port]>
       Max-Forwards: 70
       Content-Length: 0
 
@@ -117,7 +117,7 @@
       To: <sip:[field1 file="callee.csv" line=0]@[field3 file="callee.csv" line=0]>[peer_tag_param]
       Call-ID: NGCP%[field4 file="callee.csv" line=0]%///[call_id]
       CSeq: 3 BYE
-      Contact: sip:[field0 file="caller.csv" line=0]@[local_ip]:[local_port]
+      Contact: <sip:[field0 file="caller.csv" line=0]@[local_ip]:[local_port]>
       [routes]
       Max-Forwards: 70
       Content-Length: 0
