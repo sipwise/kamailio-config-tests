@@ -161,26 +161,26 @@ flow:
   - '^SIP/2.0 408 Timeout'
 "sip_out":
   - [
-      '^ACK sip:004321001@[% scenarios.0.responders.0.ip %]:\d+;transport=udp SIP/2.0',
+      '^ACK sip:[% scenarios.0.responders.0.username %]@[% scenarios.0.responders.0.ip %]:\d+;transport=udp SIP/2.0',
       'From: <sip:[% invite_peerout_failover_scenarios_test.testuser1002.phone_number %]@invite-peerout-failover.scenarios.test>;tag=',
-      'To: <sip:004321001@invite-peerout-failover.scenarios.test>;tag=',
+      'To: <sip:[% scenarios.0.responders.0.username %]@invite-peerout-failover.scenarios.test>;tag=',
       'CSeq: 2 ACK',
       'Content-Length: 0'
     ]
   - [
-      '^INVITE sip:004321001@[% scenarios.0.responders.0.ip %]:\d+;transport=udp SIP/2.0',
+      '^INVITE sip:[% scenarios.0.responders.0.username %]@[% scenarios.0.responders.0.ip %]:\d+;transport=udp SIP/2.0',
       'From: <sip:[% invite_peerout_failover_scenarios_test.testuser1002.phone_number %]@invite-peerout-failover.scenarios.test>;tag=',
-      'To: <sip:004321001@invite-peerout-failover.scenarios.test>',
+      'To: <sip:[% scenarios.0.responders.0.username %]@invite-peerout-failover.scenarios.test>',
       'CSeq: 2 INVITE',
-      'Contact: sip:[% scenarios.0.username %]@',
+      'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>',
       'Content-Type: application/sdp',
       'P-Caller-UUID: [% invite_peerout_failover_scenarios_test.testuser1002.uuid %]',
       'P-Callee-UUID: [% invite_peerout_failover_scenarios_test.testuser1001.uuid %]',
       'P-Asserted-Identity: <sip:[% invite_peerout_failover_scenarios_test.testuser1002.phone_number %]@invite-peerout-failover.scenarios.test>',
-      'P-Called-Party-ID: <sip:004321001@[% scenarios.0.responders.0.ip %]>',
+      'P-Called-Party-ID: <sip:[% scenarios.0.responders.0.username %]@[% scenarios.0.responders.0.ip %]>',
       'P-App-Param: ;calltimer=21600;aleg_sst_enable=no;sst_enable=no',
       'P-App-Name: sbc',
       'P-NGCP-Caller-Info: <sip:[% scenarios.0.username %]@invite-peerout-failover.scenarios.test>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %];primary=[% invite_peerout_failover_scenarios_test.testuser1002.phone_number %]',
-      'P-NGCP-Callee-Info: <sip:004321001@invite-peerout-failover.scenarios.test>;ip=[% scenarios.0.responders.0.ip %];port=\d+',
+      'P-NGCP-Callee-Info: <sip:[% scenarios.0.responders.0.username %]@invite-peerout-failover.scenarios.test>;ip=[% scenarios.0.responders.2.ip %];port=[% scenarios.0.responders.2.port %]',
       'P-D-Uri: sip:127.0.0.1:5060;received=',
     ]
