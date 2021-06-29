@@ -43,3 +43,6 @@ scenarios:
         domain: invite-peerout-rewrite-pv-regex.scenarios.test
         peer_host: peer_invite_peerout_rewrite_pv_regex_host0
         register: 'no'
+extra_info:
+  phone_numbers:
+    - 4321001

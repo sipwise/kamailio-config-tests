@@ -56,7 +56,7 @@ flow:
   - start|ROUTE_FIND_CALLEE:
   - start|ROUTE_APPLY_REWRITE_RULE:
   - return|ROUTE_APPLY_REWRITE_RULE:
-      $var(dp_user): 4321001
+      $var(dp_user): [% extra_info.phone_numbers.0 %]
   - start|ROUTE_CLEAR_CALLEE_PREF:
   - return|ROUTE_CLEAR_CALLEE_PREF:
   - start|ROUTE_NCOS_CHECK:
@@ -203,8 +203,8 @@ flow:
         "outgoing"
       ]
 sip_in:
-  - '^INVITE sip:[% scenarios.0.responders.0.username %]@'
-  - 'Contact: sip:[% scenarios.0.username %]@'
+  - '^INVITE sip:[% scenarios.0.responders.0.username %]@invite-peerout-rewrite-pv-regex.scenarios.test'
+  - 'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>'
   - 'CSeq: 2 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
@@ -223,15 +223,15 @@ sip_out:
       'To: <sip:[% scenarios.0.responders.0.username %]@'
     ]
   - [
-      '^INVITE sip:4321001@',
+      '^INVITE sip:[% extra_info.phone_numbers.0 %]@[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %]',
       'CSeq: 2 INVITE',
       'From: <sip:[% invite_peerout_rewrite_pv_regex_scenarios_test.testuser1002.sn %]@',
       'To: <sip:[% scenarios.0.responders.0.username %]@',
       'Content-Type: application/sdp',
       'P-Caller-UUID: [% invite_peerout_rewrite_pv_regex_scenarios_test.testuser1002.uuid %]',
       'P-Callee-UUID: 0',
-      'P-Asserted-Identity: <sip:[% invite_peerout_rewrite_pv_regex_scenarios_test.testuser1002.sn %]@',
-      'P-Called-Party-ID: <sip:4321001@',
+      'P-Asserted-Identity: <sip:[% invite_peerout_rewrite_pv_regex_scenarios_test.testuser1002.sn %]@invite-peerout-rewrite-pv-regex.scenarios.test>',
+      'P-Called-Party-ID: <sip:[% extra_info.phone_numbers.0 %]@[% scenarios.0.responders.0.ip %]>',
       'P-App-Param: ;calltimer=21600;aleg_sst_enable=no;sst_enable=no',
       'P-App-Name: sbc'
     ]
