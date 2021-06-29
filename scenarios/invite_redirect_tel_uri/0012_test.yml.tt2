@@ -146,7 +146,7 @@ sip_in:
   - 'From: <sip:[% invite_redirect_tel_uri_scenarios_test.testuser1000.phone_number %]@invite-redirect-tel-uri.scenarios.test'
   - 'To: <sip:\+[% invite_redirect_tel_uri_scenarios_test.testuser1001.phone_number %]@invite-redirect-tel-uri.scenarios.test'
   - 'CSeq: 2 INVITE'
-  - 'Contact: <sip:[% scenarios.0.responders.1.username %]@'
+  - 'Contact: <sip:[% scenarios.0.responders.1.username %]@invite-redirect-tel-uri.scenarios.test(;alias=[% scenarios.0.responders.0.ip %]~[% scenarios.0.responders.0.port %]~1)?;transport=UDP>'
   - 'Diversion: <sip:[% invite_redirect_tel_uri_scenarios_test.testuser1001.phone_number %]@invite-redirect-tel-uri.scenarios.test'
   # particular case when customer adds one more Diversion into the call
 sip_out:
@@ -165,7 +165,7 @@ sip_out:
       'From: <sip:[% invite_redirect_tel_uri_scenarios_test.testuser1000.phone_number %]@invite-redirect-tel-uri.scenarios.test>;tag=[\w-]+',
       'To: <sip:\+[% invite_redirect_tel_uri_scenarios_test.testuser1001.phone_number %]@invite-redirect-tel-uri.scenarios.test',
       'CSeq: \d+ INVITE',
-      'Contact: sip:[% scenarios.0.username %]@',
+      'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>',
       'Max-Forwards: 68',
       'Content-Type: application/sdp',
       'P-Asserted-Identity: <sip:[% invite_redirect_tel_uri_scenarios_test.testuser1000.phone_number %]@invite-redirect-tel-uri.scenarios.test',

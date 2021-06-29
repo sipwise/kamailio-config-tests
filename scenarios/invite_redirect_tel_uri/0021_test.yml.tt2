@@ -27,7 +27,7 @@ sip_in:
   - '^ACK sip:127.0.0.1:5080(;prxroute=1)? SIP/2.0'
   - 'From: <tel:\+[% invite_redirect_tel_uri_scenarios_test.testuser1000.phone_number %]>;tag=[\w-]+'
   - 'To: <tel:\+[% invite_redirect_tel_uri_scenarios_test.testuser1001.phone_number %]>;tag=[\w-]+'
-  - 'Contact: sip:[% scenarios.0.username %]@'
+  - 'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>'
   - 'CSeq: \d+ ACK'
   - 'Max-Forwards: 69'
   - 'Content-Length: 0'
@@ -38,6 +38,6 @@ sip_out:
       'To: <sip:\+[% invite_redirect_tel_uri_scenarios_test.testuser1001.phone_number %]@invite-redirect-tel-uri.scenarios.test',
       'CSeq: \d+ ACK',
       'Max-Forwards: 68',
-      'Contact: sip:[% scenarios.0.username %]@',
+      'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>',
       'Content-Length: 0'
     ]

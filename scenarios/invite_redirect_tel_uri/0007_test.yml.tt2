@@ -173,7 +173,7 @@ sip_in:
   - 'Diversion: <tel:\+43111222333'
   - 'P-Asserted-Identity: <tel:\+[% invite_redirect_tel_uri_scenarios_test.testuser1000.phone_number %]>'
   - 'CSeq: \d+ INVITE'
-  - 'Contact: sip:[% scenarios.0.username %]@'
+  - 'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
   # PAI has no angles around tel value
@@ -203,8 +203,8 @@ sip_out:
       'From: <sip:[% invite_redirect_tel_uri_scenarios_test.testuser1000.phone_number %]@invite-redirect-tel-uri.scenarios.test',
       'To: <sip:\+[% invite_redirect_tel_uri_scenarios_test.testuser1001.phone_number %]@invite-redirect-tel-uri.scenarios.test',
       '_:NOT:_Diversion: \w+',
-      'P-Asserted-Identity: <sip:4311000@invite-redirect-tel-uri.scenarios.test',
+      'P-Asserted-Identity: <sip:[% invite_redirect_tel_uri_scenarios_test.testuser1000.phone_number %]@invite-redirect-tel-uri.scenarios.test',
       'CSeq: \d+ INVITE',
-      'Contact: sip:[% scenarios.0.username %]@',
+      'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>',
       'Content-Type: application/sdp'
     ]
