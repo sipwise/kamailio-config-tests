@@ -162,7 +162,7 @@ sip_out:
       'CSeq: \d+ INVITE',
     ]
   - [
-      'INVITE sip:[% scenarios.0.responders.0.username %]@127.0.2.1:\d+;transport=udp SIP/2.0',
+      'INVITE sip:[% scenarios.0.responders.0.username %]@[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];transport=udp SIP/2.0',
       'From: <sip:[% invite_prack_scenarios_test.testuser1012.phone_number %]@invite-prack.scenarios.test>;tag=[\w-]+',
       'To: <sip:[% scenarios.0.responders.0.username %]@invite-prack.scenarios.test>',
       'Supported: 100rel',
