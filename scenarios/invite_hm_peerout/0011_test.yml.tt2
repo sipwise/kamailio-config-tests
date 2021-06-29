@@ -28,13 +28,13 @@ sip_in:
   - 'From: <sip:[% scenarios.0.username %]@invite-hm-peerout.scenarios.test>;tag=[\w-]+'
   - 'To: <sip:[% scenarios.0.responders.0.username %]@invite-hm-peerout.scenarios.test>;tag=[\w-]+'
   - 'CSeq: \d+ ACK'
-  - 'Contact: sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %]'
+  - 'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>'
   - 'Content-Length: 0'
   - 'P-NGCP-Src-Ip: [% scenarios.0.ip %]'
   - 'P-NGCP-Src-Port: [% scenarios.0.port %]'
   - 'P-NGCP-Src-Proto: udp'
   - 'P-NGCP-Src-Af: 4'
-  - 'P-Sock-Info: udp:127.0.0.1:5060'
+  - 'P-Sock-Info: udp:[% server_ip %]:5060'
   - 'P-LB-Uptime: \d+'
 sip_out:
   - [
@@ -42,12 +42,12 @@ sip_out:
       'From: <sip:[% invite_hm_peerout_scenarios_test.testuser1002.phone_number %]@invite-hm-peerout.scenarios.test>;tag=[\w-]+',
       'To: <sip:[% scenarios.0.responders.0.username %]@invite-hm-peerout.scenarios.test>;tag=[\w-]+',
       'CSeq: \d+ ACK',
-      'Contact: sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %]',
+      'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>',
       'Content-Length: 0',
       'P-NGCP-Src-Ip: [% scenarios.0.ip %]',
       'P-NGCP-Src-Port: [% scenarios.0.port %]',
       'P-NGCP-Src-Proto: udp',
       'P-NGCP-Src-Af: 4',
-      'P-Sock-Info: udp:127.0.0.1:5060',
+      'P-Sock-Info: udp:[% server_ip %]:5060',
       'P-LB-Uptime: \d+',
     ]
