@@ -211,7 +211,7 @@ sip_in:
   - 'From: <sip:[% scenarios.0.username %]@'
   - 'To: <sip:[% scenarios.0.responders.0.username %]@'
   - 'CSeq: 2 INVITE'
-  - 'Contact: sip:[% scenarios.0.username %]@'
+  - 'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>'
   - 'Max-Forwards: 69'
   - 'Proxy-Authorization: Digest username="[% scenarios.0.username %]"'
   - 'Content-Type: application/sdp'
@@ -237,7 +237,7 @@ sip_out:
       'From: <sip:[% invite_redirect_blocked_scenarios_test.testuser1002.phone_number %]@',
       'To: <sip:[% scenarios.0.responders.0.username %]@',
       'CSeq: 2 INVITE',
-      'Contact: sip:[% scenarios.0.username %]@',
+      'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>',
       'Content-Type: application/sdp',
       'P-Caller-UUID: [% invite_redirect_blocked_scenarios_test.testuser1002.uuid %]',
       'P-Callee-UUID: [% invite_redirect_blocked_scenarios_test.testuser1003.uuid %]',
