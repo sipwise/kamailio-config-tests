@@ -129,7 +129,7 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - '^INVITE sip:[% invite_offline_scenarios_test.testuser1003.phone_number %]@'
-  - 'Contact: sip:[% scenarios.0.username %]@'
+  - 'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>'
   - 'CSeq: 3 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
