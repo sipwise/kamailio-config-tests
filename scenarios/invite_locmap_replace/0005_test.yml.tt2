@@ -158,8 +158,8 @@ sip_in:
   - 'From: <sip:[% scenarios.0.username %]@invite-locmap-replace.scenarios.test>;tag=[\w-]+'
   - 'To: <sip:[% scenarios.0.responders.0.username %]@invite-locmap-replace.scenarios.test>'
   - 'CSeq: \d+ INVITE'
-  - 'Contact: sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %]'
-  - 'Proxy-Authorization: Digest username="[% scenarios.0.username %]",realm="invite-locmap-replace.scenarios.test",uri="sip:127.0.0.1:5060",nonce=".+",response=".+",algorithm=MD5'
+  - 'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>'
+  - 'Proxy-Authorization: Digest username="[% scenarios.0.username %]",realm="invite-locmap-replace.scenarios.test",uri="sip:[% server_ip %]:5060",nonce=".+",response=".+",algorithm=MD5'
   - 'Content-Type: application/sdp'
   - 'Content-Length:\s+\d+'
 sip_out:
@@ -182,7 +182,7 @@ sip_out:
       'From: <sip:[% invite_locmap_replace_scenarios_test.testuser1000.phone_number %]@invite-locmap-replace.scenarios.test>;tag=[\w-]+',
       'To: <sip:[% scenarios.0.responders.0.username %]@invite-locmap-replace.scenarios.test>',
       'CSeq: \d+ INVITE',
-      'Contact: sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %]',
+      'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>',
       'Content-Type: application/sdp',
       'Content-Length:\s+\d+',
       'P-Asserted-Identity: <sip:[% invite_locmap_replace_scenarios_test.testuser1000.phone_number %]@invite-locmap-replace.scenarios.test>',
