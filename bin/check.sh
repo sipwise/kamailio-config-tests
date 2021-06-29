@@ -365,6 +365,10 @@ copy_logs() {
     # copy the sems-pbx log
     cp "${SEMS_PBX_LOG}" "${LOG_DIR}/sems-pbx.log"
   fi
+  if [ -f "${SEMS_B2B_LOG}" ] ; then
+    # copy the sems-b2b log
+    cp "${SEMS_B2B_LOG}" "${LOG_DIR}/sems-b2b.log"
+  fi
   # copy the kamailio-lb log
   cp "${KAMLB_LOG}" "${LOG_DIR}/kamailio-lb.log"
   # copy the rtpengine log
@@ -640,6 +644,7 @@ KAM_LOG=${KAM_LOG:-"/var/log/ngcp/kamailio-proxy.log"}
 KAMLB_LOG=${KAMLB_LOG:-"/var/log/ngcp/kamailio-lb.log"}
 SEMS_LOG=${SEMS_LOG:-"/var/log/ngcp/sems.log"}
 SEMS_PBX_LOG=${SEMS_PBX_LOG:-"/var/log/ngcp/sems-pbx.log"}
+SEMS_B2B_LOG=${SEMS_B2B_LOG:-"/var/log/ngcp/sems-b2b.log"}
 RTP_LOG=${RTP_LOG:-"/var/log/ngcp/rtp.log"}
 SCEN_DIR="${BASE_DIR}/${GROUP}"
 SCEN_CHECK_DIR="${SCEN_DIR}/${NAME_CHECK}"
