@@ -26,6 +26,10 @@ sip_in:
   - 'Content-Type: application/sdp'
   - 'Content-Length:\s+\d+'
   - 'Contact: <sip:127.0.0.1:508[08];transport=udp>'
+  - '--unique-boundary-1'
+  - 'Content-Type: application/sdp'
+  - '--unique-boundary-1'
+  - 'Content-Type: application/vnd\.cirpack\.isdn-ext'
 sip_out:
   - [
       'SIP/2.0 100 Trying',
@@ -49,8 +53,10 @@ sip_out:
       'Content-Type: multipart/mixed;boundary=\"unique-boundary-1\"',
       'Content-Length:\s+\d+',
       'Contact: <sip:127.0.0.1:508[08];transport=udp>',
+      '--unique-boundary-1',
       'Content-Type: application/sdp',
+      '--unique-boundary-1',
       'Content-Type: application/vnd\.cirpack\.isdn-ext',
       'Content-Disposition: signal;handling=required',
-      '7e Od 04 55 75 69 20 4d 61 6b 65 43 61 6c 6c',
+      '7e Od 04 55 75 69 20 4d 61 6b 65 43 61 6c 6c'
     ]
