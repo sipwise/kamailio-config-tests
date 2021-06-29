@@ -25,7 +25,7 @@ sip_in:
   - 'From: <sip:[% scenarios.0.username %]@invite-locmap-offline.scenarios.test>;tag=[\w-]+'
   - 'To: <sip:[% scenarios.0.responders.0.username %]@invite-locmap-offline.scenarios.test>'
   - 'CSeq: \d+ INVITE'
-  - 'Contact: sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %]'
+  - 'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>'
   - 'Content-Type: application/sdp'
   - 'Content-Length:\s+\d+'
 sip_out:
