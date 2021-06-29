@@ -207,7 +207,7 @@ flow:
       ]
 sip_in:
   - '^INVITE'
-  - 'Contact: sip:[% scenarios.0.username %]@'
+  - 'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>'
   - 'CSeq: 2 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
@@ -226,7 +226,7 @@ sip_out:
       'To: <sip:[% scenarios.0.responders.0.username %]@'
     ]
   - [
-      '^INVITE sip:127.3.0.5:',
+      '^INVITE sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %]',
       'CSeq: 2 INVITE',
       'From: <sip:[% invite_perm_reg_scenarios_test.testuser1002.phone_number %]@',
       'To: <sip:[% scenarios.0.responders.0.username %]@',
