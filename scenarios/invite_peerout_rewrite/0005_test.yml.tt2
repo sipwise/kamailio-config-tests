@@ -13,15 +13,15 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - 'INVITE sip:4321001@[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];transport=udp SIP/2.0'
+  - 'INVITE sip:[% extra_info.phone_numbers.0 %]@[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];transport=udp SIP/2.0'
   - 'From: <sip:[% invite_peerout_rewrite_scenarios_test.testuser1002.phone_number %]@invite-peerout-rewrite.scenarios.test>;tag=[\w-]+'
-  - 'To: <sip:4321001@[% scenarios.0.responders.0.ip %]>'
+  - 'To: <sip:[% extra_info.phone_numbers.0 %]@[% scenarios.0.responders.0.ip %]>'
   - 'CSeq: \d+ INVITE'
   - 'P-LB-Uptime: \d+'
   - 'P-Asserted-Identity: <sip:[% invite_peerout_rewrite_scenarios_test.testuser1002.phone_number %]@invite-peerout-rewrite.scenarios.test>'
   - 'P-Caller-UUID: [% invite_peerout_rewrite_scenarios_test.testuser1002.uuid %]'
   - 'P-NGCP-Caller-Info: <sip:testuser1002@invite-peerout-rewrite.scenarios.test>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %];primary=[% invite_peerout_rewrite_scenarios_test.testuser1002.phone_number %]'
-  - 'P-NGCP-Callee-Info: <sip:4321001@invite-peerout-rewrite.scenarios.test>;ip=[% scenarios.0.responders.0.ip %];port=[% scenarios.0.responders.0.port %]'
+  - 'P-NGCP-Callee-Info: <sip:[% extra_info.phone_numbers.0 %]@invite-peerout-rewrite.scenarios.test>;ip=[% scenarios.0.responders.0.ip %];port=[% scenarios.0.responders.0.port %]'
   - 'P-D-Uri: sip:127.0.0.1:5060;received=sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %]%3blr%3btransport%3dudp'
   - 'Content-Type: application/sdp'
   - 'Contact: <sip:127.0.0.1:508[08];transport=udp>'
@@ -30,21 +30,21 @@ sip_out:
   - [
       'SIP/2.0 100 Trying',
       'From: <sip:[% invite_peerout_rewrite_scenarios_test.testuser1002.phone_number %]@invite-peerout-rewrite.scenarios.test>;tag=[\w-]+',
-      'To: <sip:4321001@[% scenarios.0.responders.0.ip %]>',
+      'To: <sip:[% extra_info.phone_numbers.0 %]@[% scenarios.0.responders.0.ip %]>',
       'CSeq: \d+ INVITE',
       'Server: Sipwise NGCP Proxy',
       'Content-Length: 0',
     ]
   - [
-      'INVITE sip:4321001@[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];transport=udp SIP/2.0',
+      'INVITE sip:[% extra_info.phone_numbers.0 %]@[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];transport=udp SIP/2.0',
       'From: <sip:[% invite_peerout_rewrite_scenarios_test.testuser1002.phone_number %]@invite-peerout-rewrite.scenarios.test>;tag=[\w-]+',
-      'To: <sip:4321001@[% scenarios.0.responders.0.ip %]>',
+      'To: <sip:[% extra_info.phone_numbers.0 %]@[% scenarios.0.responders.0.ip %]>',
       'CSeq: \d+ INVITE',
       'P-LB-Uptime: \d+',
       'P-Asserted-Identity: <sip:[% invite_peerout_rewrite_scenarios_test.testuser1002.phone_number %]@invite-peerout-rewrite.scenarios.test>',
       'P-Caller-UUID: [% invite_peerout_rewrite_scenarios_test.testuser1002.uuid %]',
       'P-NGCP-Caller-Info: <sip:testuser1002@invite-peerout-rewrite.scenarios.test>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %];primary=[% invite_peerout_rewrite_scenarios_test.testuser1002.phone_number %]',
-      'P-NGCP-Callee-Info: <sip:4321001@invite-peerout-rewrite.scenarios.test>;ip=[% scenarios.0.responders.0.ip %];port=\d+',
+      'P-NGCP-Callee-Info: <sip:[% extra_info.phone_numbers.0 %]@invite-peerout-rewrite.scenarios.test>;ip=[% scenarios.0.responders.0.ip %];port=\d+',
       'P-D-Uri: sip:127.0.0.1:5060;received=sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %]%3blr%3btransport%3dudp',
       'Content-Type: application/sdp',
       'Contact: <sip:127.0.0.1:508[08];transport=udp>',
