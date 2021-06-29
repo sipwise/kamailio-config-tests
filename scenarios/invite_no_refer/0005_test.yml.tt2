@@ -208,7 +208,7 @@ flow:
       ]
 sip_in:
   - '^INVITE'
-  - 'Contact: sip:[% scenarios.0.username %]@'
+  - 'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>'
   - 'CSeq: 2 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
@@ -233,8 +233,8 @@ sip_out:
       'From: <sip:[% invite_no_refer_scenarios_test.testuser1002.phone_number %]@',
       'To: <sip:[% scenarios.0.responders.0.username %]@',
       'Content-Type: application/sdp',
-      'P-Caller-UUID: \w+',
-      'P-Callee-UUID: \w+',
+      'P-Caller-UUID: [% invite_no_refer_scenarios_test.testuser1002.uuid %]',
+      'P-Callee-UUID: [% invite_no_refer_scenarios_test.testuser1003.uuid %]',
       'P-Asserted-Identity: <sip:[% invite_no_refer_scenarios_test.testuser1002.phone_number %]@',
       'P-Called-Party-ID: <sip:[% scenarios.0.responders.0.username %]@',
       'P-App-Param: ;calltimer=21600;aleg_sst_enable=no;sst_enable=no',
