@@ -72,7 +72,7 @@
       BYE sip:ngcp-lb;tgrp=SIP_TripleC01@127.0.0.1:5060;ngcpct=[$2] SIP/2.0
       Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
       From: <sip:[field0 file="callee.csv"]@[field3 file="callee.csv"]>;tag=[pid]SIPpTag01[call_number]
-      To: <sip:4311002@[field2 file="caller.csv" line=0]>;tag=[$3]
+      To: <sip:[field5 file="caller.csv" line=0]@[field2 file="caller.csv" line=0]>;tag=[$3]
       [last_Call-ID:]
       CSeq: [cseq] BYE
       Contact: <sip:[field0 file="callee.csv"]@[local_ip]:[local_port];transport=[transport]>

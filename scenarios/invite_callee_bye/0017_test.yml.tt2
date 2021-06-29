@@ -17,7 +17,7 @@ sip_in:
   - 'From: <sip:[% scenarios.0.responders.0.username %]@invite-callee-bye.scenarios.test>;tag=[\w-]+'
   - 'To: <sip:[% scenarios.0.username %]@invite-callee-bye.scenarios.test>;tag=[\w-]+'
   - 'CSeq: \d+ BYE'
-  - 'Contact: <sip:[% scenarios.0.ip %]:[% scenarios.0.port %];transport=UDP>'
+  - 'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>'
   - 'Content-Length: \s+0'
   - 'P-NGCP-Src-Ip: [% scenarios.0.ip %]'
   - 'P-NGCP-Src-Port: \d+'
@@ -29,7 +29,7 @@ sip_out:
       'From: <sip:[% scenarios.0.responders.0.username %]@invite-callee-bye.scenarios.test>;tag=[\w-]+',
       'To: <sip:[% invite_callee_bye_scenarios_test.testuser1002.phone_number %]@invite-callee-bye.scenarios.test>;tag=[\w-]+',
       'CSeq: \d+ BYE',
-      'Contact: <sip:[% scenarios.0.ip %]:[% scenarios.0.port %];transport=UDP>',
+      'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>',
       'Content-Length: \s+0',
       'P-NGCP-Src-Ip: [% scenarios.0.ip %]',
       'P-NGCP-Src-Port: \d+',

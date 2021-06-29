@@ -158,15 +158,15 @@ sip_in:
   - 'From: <sip:[% scenarios.0.username %]@invite-callee-bye.scenarios.test>;tag=[\w-]+'
   - 'To: <sip:[% scenarios.0.responders.0.username %]@invite-callee-bye.scenarios.test>'
   - 'CSeq: \d+ INVITE'
-  - 'Contact: sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %]'
-  - 'Proxy-Authorization: Digest username="[% scenarios.0.username %]",realm="invite-callee-bye.scenarios.test",uri="sip:127.0.0.1:5060",nonce=".+",response=".+",algorithm=MD5'
+  - 'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>'
+  - 'Proxy-Authorization: Digest username="[% scenarios.0.username %]",realm="invite-callee-bye.scenarios.test",uri="sip:[% server_ip %]:5060",nonce=".+",response=".+",algorithm=MD5'
   - 'Content-Type: application/sdp'
   - 'Content-Length:\s+\d+'
   - 'P-NGCP-Src-Ip: [% scenarios.0.ip %]'
   - 'P-NGCP-Src-Port: [% scenarios.0.port %]'
   - 'P-NGCP-Src-Proto: udp'
   - 'P-NGCP-Src-Af: 4'
-  - 'P-Sock-Info: udp:127.0.0.1:5060'
+  - 'P-Sock-Info: udp:[% server_ip %]:5060'
   - 'P-LB-Uptime: \d+'
 sip_out:
   - [
@@ -174,7 +174,7 @@ sip_out:
       'From: <sip:[% scenarios.0.username %]@invite-callee-bye.scenarios.test>;tag=[\w-]+',
       'To: <sip:[% scenarios.0.responders.0.username %]@invite-callee-bye.scenarios.test>',
       'CSeq: \d+ INVITE',
-      'P-Out-Socket: udp:127.0.0.1:5060',
+      'P-Out-Socket: udp:[% server_ip %]:5060',
       'P-NGCP-Auth-IP: [% scenarios.0.ip %]',
       'P-NGCP-Auth-UA: <null>',
       'Server: Sipwise NGCP Proxy',
@@ -185,7 +185,7 @@ sip_out:
       'From: <sip:[% scenarios.0.username %]@invite-callee-bye.scenarios.test>;tag=[\w-]+',
       'To: <sip:[% scenarios.0.responders.0.username %]@invite-callee-bye.scenarios.test>',
       'CSeq: \d+ INVITE',
-      'P-Out-Socket: udp:127.0.0.1:5060',
+      'P-Out-Socket: udp:[% server_ip %]:5060',
       'P-NGCP-Auth-IP: [% scenarios.0.ip %]',
       'P-NGCP-Auth-UA: <null>',
       'P-NGCP-Authorization: [% scenarios.0.username %]@invite-callee-bye.scenarios.test',
@@ -200,7 +200,7 @@ sip_out:
       'From: <sip:[% invite_callee_bye_scenarios_test.testuser1002.phone_number %]@invite-callee-bye.scenarios.test>;tag=[\w-]+',
       'To: <sip:[% scenarios.0.responders.0.username %]@invite-callee-bye.scenarios.test>',
       'CSeq: \d+ INVITE',
-      'Contact: sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %]',
+      'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>',
       'Content-Type: application/sdp',
       'Content-Length:\s+\d+',
       'P-LB-Uptime: \d+',
@@ -211,7 +211,7 @@ sip_out:
       'P-App-Param: ;calltimer=21600;aleg_sst_enable=no;sst_enable=no;hold_alter_b2b_bleg=no;hold_alter_b2b_aleg=no',
       'P-App-Name: sbc',
       'P-NGCP-Caller-Info: <sip:[% scenarios.0.username %]@invite-callee-bye.scenarios.test>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %];primary=[% invite_redirect_scenarios_test.testuser1002.phone_number %]',
-      'P-NGCP-Callee-Info: <sip:[% scenarios.0.responders.0.username %]@invite-callee-bye.scenarios.test>;ip=127.0.0.1;port=5060;primary=[% invite_callee_bye_scenarios_test.testuser1003.alias_numbers.0.phone_number %]',
-      'P-D-Uri: sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060',
+      'P-NGCP-Callee-Info: <sip:[% scenarios.0.responders.0.username %]@invite-callee-bye.scenarios.test>;ip=[% scenarios.0.responders.0.ip %];port=[% scenarios.0.responders.0.port %];primary=[% invite_callee_bye_scenarios_test.testuser1003.alias_numbers.0.phone_number %]',
+      'P-D-Uri: sip:lb@127.0.0.1;lr;(received=sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];)?socket=sip:[% server_ip %]:5060',
       'P-Proxy-Uri: sip:127.0.0.1:5062',
     ]

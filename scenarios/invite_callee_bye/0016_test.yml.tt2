@@ -27,7 +27,7 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - 'BYE sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %] SIP/2.0'
+  - 'BYE sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;alias=[% scenarios.0.ip %]~[% scenarios.0.port %]~1)? SIP/2.0'
   - 'From: <sip:[% scenarios.0.responders.0.username %]@invite-callee-bye.scenarios.test>;tag=[\w-]+'
   - 'To: <sip:[% invite_callee_bye_scenarios_test.testuser1002.phone_number %]@invite-callee-bye.scenarios.test>;tag=[\w-]+'
   - 'CSeq: \d+ BYE'
@@ -42,7 +42,7 @@ sip_out:
       'Content-Length: 0',
     ]
   - [
-      'BYE sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %] SIP/2.0',
+      'BYE sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;alias=[% scenarios.0.ip %]~[% scenarios.0.port %]~1)? SIP/2.0',
       'From: <sip:[% scenarios.0.responders.0.username %]@invite-callee-bye.scenarios.test>;tag=[\w-]+',
       'To: <sip:[% scenarios.0.username %]@invite-callee-bye.scenarios.test>;tag=[\w-]+',
       'CSeq: \d+ BYE',
