@@ -34,6 +34,6 @@ sip_out:
       'Contact: <sip:127.0.0.1:508[08];transport=udp>',
       'Content-Type: application/sdp',
       'Content-Length:\s+\d+',
-      'P-Out-Socket: udp:127.0.0.1:5060',
+      'P-Out-Socket: udp:[% server_ip %]:5060',
       'a=rtpmap:8 PCMA/8000',
     ]
