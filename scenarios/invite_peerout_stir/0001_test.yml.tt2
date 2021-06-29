@@ -21,9 +21,9 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^INVITE sip:[% scenarios.0.responders.0.username %]@'
-  - 'Contact: sip:[% scenarios.0.username %]@'
-  - 'To: <sip:[% scenarios.0.responders.0.username %]@'
+  - '^INVITE sip:[% scenarios.0.responders.0.username %]@invite-peerout-stir.scenarios.test'
+  - 'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>'
+  - 'To: <sip:[% scenarios.0.responders.0.username %]@invite-peerout-stir.scenarios.test>'
   - 'CSeq: 1 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'

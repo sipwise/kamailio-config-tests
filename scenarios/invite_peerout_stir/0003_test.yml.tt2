@@ -189,8 +189,8 @@ flow:
         "outgoing"
       ]
 sip_in:
-  - '^INVITE sip:[% scenarios.0.responders.0.username %]@'
-  - 'Contact: sip:[% scenarios.0.username %]@'
+  - '^INVITE sip:[% scenarios.0.responders.0.username %]@invite-peerout-stir.scenarios.test'
+  - 'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>'
   - 'CSeq: 2 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
