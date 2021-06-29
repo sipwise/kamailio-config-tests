@@ -204,15 +204,15 @@ sip_in:
   - 'From: <sip:[% scenarios.0.username %]@invite-locmap-add.scenarios.test>;tag=[\w-]+'
   - 'To: <sip:[% scenarios.0.responders.0.username %]@invite-locmap-add.scenarios.test>'
   - 'CSeq: \d+ INVITE'
-  - 'Contact: sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %]'
-  - 'Proxy-Authorization: Digest username="[% scenarios.0.username %]",realm="invite-locmap-add.scenarios.test",uri="sip:127.0.0.1:5060",nonce=".+",response=".+",algorithm=MD5'
+  - 'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>'
+  - 'Proxy-Authorization: Digest username="[% scenarios.0.username %]",realm="invite-locmap-add.scenarios.test",uri="sip:[% server_ip %]:5060",nonce=".+",response=".+",algorithm=MD5'
   - 'Content-Type: application/sdp'
   - 'Content-Length:\s+\d+'
   - 'P-NGCP-Src-Ip: [% scenarios.0.ip %]'
   - 'P-NGCP-Src-Port: \d+'
   - 'P-NGCP-Src-Proto: udp'
   - 'P-NGCP-Src-Af: 4'
-  - 'P-Sock-Info: udp:127.0.0.1:5060'
+  - 'P-Sock-Info: udp:[% server_ip %]:5060'
   - 'P-LB-Uptime: \d+'
 sip_out:
   - [
@@ -234,7 +234,7 @@ sip_out:
       'From: <sip:[% invite_locmap_add_scenarios_test.testuser1000.phone_number %]@invite-locmap-add.scenarios.test>;tag=[\w-]+',
       'To: <sip:[% scenarios.0.responders.0.username %]@invite-locmap-add.scenarios.test>',
       'CSeq: \d+ INVITE',
-      'Contact: sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %]',
+      'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>',
       'Content-Type: application/sdp',
       'Content-Length:\s+\d+',
       'P-Asserted-Identity: <sip:[% invite_locmap_add_scenarios_test.testuser1000.phone_number %]@invite-locmap-add.scenarios.test>',
@@ -244,7 +244,7 @@ sip_out:
       'From: <sip:[% invite_locmap_add_scenarios_test.testuser1000.phone_number %]@invite-locmap-add.scenarios.test>;tag=[\w-]+',
       'To: <sip:[% scenarios.0.responders.0.username %]@invite-locmap-add.scenarios.test>',
       'CSeq: \d+ INVITE',
-      'Contact: sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %]',
+      'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>',
       'Content-Type: application/sdp',
       'Content-Length:\s+\d+',
       'P-Asserted-Identity: <sip:[% invite_locmap_add_scenarios_test.testuser1000.phone_number %]@invite-locmap-add.scenarios.test>',
