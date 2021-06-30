@@ -34,5 +34,5 @@ sip_out:
       'Supported: timer',
       'Contact: <sip:127.0.0.1:508[08];transport=udp>',
       'Content-Length: 0',
-      'P-Out-Socket: udp:127.0.0.1:5060',
+      'P-Out-Socket: udp:[% server_ip %]:5060',
     ]

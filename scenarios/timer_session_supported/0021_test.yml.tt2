@@ -34,10 +34,10 @@ sip_in:
   - 'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %];transport=UDP>'
   - 'Content-Length: 0'
   - 'P-NGCP-Src-Ip: [% scenarios.0.ip %]'
-  - 'P-NGCP-Src-Port: \d+'
+  - 'P-NGCP-Src-Port: [% scenarios.0.port %]'
   - 'P-NGCP-Src-Proto: udp'
   - 'P-NGCP-Src-Af: 4'
-  - 'P-Sock-Info: udp:127.0.0.1:5060'
+  - 'P-Sock-Info: udp:[% server_ip %]:5060'
   - 'P-LB-Uptime: \d+'
 sip_out:
   - [
@@ -45,7 +45,7 @@ sip_out:
       'From: <sip:[% scenarios.0.username %]@[% scenarios.0.domain %]>;tag=[\w-]+',
       'To: <sip:[% scenarios.0.responders.0.username %]@timer-session-supported.scenarios.test>;tag=[\w-]+',
       'CSeq: \d+ BYE',
-      'P-Out-Socket: udp:127.0.0.1:5060',
+      'P-Out-Socket: udp:[% server_ip %]:5060',
       'P-NGCP-Auth-IP: [% scenarios.0.ip %]',
       'P-NGCP-Auth-UA: <null>',
       'Server: Sipwise NGCP Proxy',

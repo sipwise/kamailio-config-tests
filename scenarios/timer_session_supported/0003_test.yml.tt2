@@ -153,10 +153,10 @@ sip_in:
   - 'Content-Type: application/sdp'
   - 'Content-Length: 0'
   - 'P-NGCP-Src-Ip: [% scenarios.0.ip %]'
-  - 'P-NGCP-Src-Port: \d+'
+  - 'P-NGCP-Src-Port: [% scenarios.0.port %]'
   - 'P-NGCP-Src-Proto: udp'
   - 'P-NGCP-Src-Af: 4'
-  - 'P-Sock-Info: udp:127.0.0.1:5060'
+  - 'P-Sock-Info: udp:[% server_ip %]:5060'
   - 'P-LB-Uptime: \d+'
 sip_out:
   - [
@@ -164,7 +164,7 @@ sip_out:
       'From: <sip:[% scenarios.0.username %]@[% scenarios.0.domain %]>;tag=[\w-]+',
       'To: <sip:[% scenarios.0.responders.0.username %]@timer-session-supported.scenarios.test>',
       'CSeq: \d+ INVITE',
-      'P-Out-Socket: udp:127.0.0.1:5060',
+      'P-Out-Socket: udp:[% server_ip %]:5060',
       'P-NGCP-Auth-IP: [% scenarios.0.ip %]',
       'P-NGCP-Auth-UA: <null>',
       'Server: Sipwise NGCP Proxy',
@@ -188,7 +188,7 @@ sip_out:
       'P-App-Param: ;calltimer=21600;aleg_sst_enable=yes;aleg_sst_expires=10;aleg_sst_min_timer=2;aleg_sst_max_timer=20;aleg_sst_refresh_method=INVITE;sst_enable=yes;sst_expires=8;sst_min_timer=2;sst_max_timer=20;sst_refresh_method=INVITE;hold_alter_b2b_bleg=no;hold_alter_b2b_aleg=no;(fast_ack=no;)?b_park_domain=[% customer_test.id %]',
       'P-App-Name: sbc',
       'P-NGCP-Caller-Info: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %]',
-      'P-NGCP-Callee-Info: <sip:[% scenarios.0.responders.0.username %]@timer-session-supported.scenarios.test>;ip=127.0.0.1;port=5060;primary=[% timer_session_supported_scenarios_test.testuser1001.phone_number %]',
-      'P-D-Uri: sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060',
+      'P-NGCP-Callee-Info: <sip:[% scenarios.0.responders.0.username %]@timer-session-supported.scenarios.test>;ip=[% scenarios.0.responders.0.ip %];port=[% scenarios.0.responders.0.port %];primary=[% timer_session_supported_scenarios_test.testuser1001.phone_number %]',
+      'P-D-Uri: sip:lb@127.0.0.1;lr;(received=sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];)?socket=sip:[% server_ip %]:5060',
       'P-Proxy-Uri: sip:127.0.0.1:5062',
     ]
