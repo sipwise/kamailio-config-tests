@@ -4,7 +4,6 @@ log
 result
 mem
 *.pyc
-*_test.yml
 scenario_ids.yml
 sipp_scenario_responder*_reg.xml
 *errors.log
@@ -14,4 +13,9 @@ presence_*xml
 presence.sh
 apicert.pem
 .ngcpcfg_perms
+# templates
+*_test.yml
 prefs.json
+callforward.yml
+trusted.yml
+lnp.yml
