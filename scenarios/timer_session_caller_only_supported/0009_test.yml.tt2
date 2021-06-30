@@ -20,7 +20,7 @@ sip_in:
   - 'Content-Type: application/sdp'
   - 'Content-Length: 0'
   - 'P-NGCP-Src-Ip: [% scenarios.0.responders.0.ip %]'
-  - 'P-NGCP-Src-Port: \d+'
+  - 'P-NGCP-Src-Port: [% scenarios.0.responders.0.port %]'
   - 'P-NGCP-Src-Proto: udp'
   - 'P-NGCP-Src-Af: 4'
 sip_out:
@@ -35,7 +35,7 @@ sip_out:
       'Content-Type: application/sdp',
       'Content-Length: 0',
       'P-NGCP-Src-Ip: [% scenarios.0.responders.0.ip %]',
-      'P-NGCP-Src-Port: \d+',
+      'P-NGCP-Src-Port: [% scenarios.0.responders.0.port %]',
       'P-NGCP-Src-Proto: udp',
       'P-NGCP-Src-Af: 4',
     ]
