@@ -87,11 +87,11 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - '^INVITE sip:[% scenarios.1.responders.0.username %]@'
-  - 'Contact: sip:[% scenarios.0.responders.0.username %]@'
+  - 'Contact: <sip:[% scenarios.1.username %]@[% scenarios.1.ip %]:[% scenarios.1.port %](;[^>]+)?>'
   - 'CSeq: 2 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
-  - 'Proxy-Authorization: Digest username="[% scenarios.0.responders.0.username %]"'
+  - 'Proxy-Authorization: Digest username="[% scenarios.1.username %]"'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
