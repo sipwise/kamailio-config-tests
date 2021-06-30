@@ -46,7 +46,7 @@ flow:
         - caller
 sip_in:
   - '^REGISTER'
-  - 'Contact: sip:[% scenarios.0.username %]@'
+  - 'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>'
   - 'Content-Length: 0'
   - 'Expires: 600'
   - 'Authorization: Digest username="[% scenarios.0.username %]"'
