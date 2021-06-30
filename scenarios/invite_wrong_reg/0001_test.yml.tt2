@@ -26,7 +26,7 @@ sip_out:
       'From: <sip:[% scenarios.0.responders.0.username %]@invite-wrong-reg.scenarios.test>;tag=',
       'To: <sip:[% scenarios.0.responders.0.username %]@invite-wrong-reg.scenarios.test>',
       'CSeq: 1 REGISTER',
-      'P-Out-Socket: udp:127.0.0.1:5060',
+      'P-Out-Socket: udp:[% server_ip %]:5060',
       'P-NGCP-Auth-IP: [% scenarios.0.responders.0.ip %]',
       'Content-Length: 0'
     ]
@@ -35,7 +35,7 @@ sip_out:
       'From: <sip:[% scenarios.0.responders.0.username %]@invite-wrong-reg.scenarios.test>;tag=',
       'To: <sip:[% scenarios.0.responders.0.username %]@invite-wrong-reg.scenarios.test>;tag=',
       'CSeq: 1 REGISTER',
-      'P-Out-Socket: udp:127.0.0.1:5060',
+      'P-Out-Socket: udp:[% server_ip %]:5060',
       'P-NGCP-Auth-IP: [% scenarios.0.responders.0.ip %]',
       'WWW-Authenticate: Digest',
       'Content-Length: 0'

@@ -137,7 +137,7 @@ flow:
       $avp(lua_dlg_profile): None
 sip_in:
   - '^INVITE sip:[% scenarios.0.responders.0.username %]@'
-  - 'Contact: sip:[% scenarios.0.username %]@'
+  - 'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>'
   - 'CSeq: 2 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
