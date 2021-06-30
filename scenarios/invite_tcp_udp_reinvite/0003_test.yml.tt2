@@ -23,7 +23,7 @@ flow:
       $avp(proto): ["tcp"]
 sip_in:
   - '^INVITE'
-  - 'Contact: <sip:[% scenarios.0.username %]@'
+  - 'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>'
   - 'To: <sip:[% scenarios.0.responders.0.username %]@'
   - 'CSeq: 1 INVITE'
   - 'Max-Forwards: 69'
