@@ -211,7 +211,7 @@ flow:
       ]
 sip_in:
   - '^INVITE'
-  - 'Contact: sip:[% scenarios.1.username %]@'
+  - 'Contact: <sip:[% scenarios.1.username %]@[% scenarios.1.ip %]:[% scenarios.1.port %](;[^>]+)?>'
   - 'CSeq: 2 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
