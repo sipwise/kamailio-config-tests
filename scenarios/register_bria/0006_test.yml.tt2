@@ -42,7 +42,7 @@ sip_out:
     ]
   - [
       '^SIP/2.0 200 OK',
-      'Contact: <sip:[% scenarios.2.username %]@[% scenarios.2.ip %]:[% scenarios.2.port %];ob>;expires=\d{3};\+sip.instance="<urn:uuid:C3DD6013-20E8-40E3-8EA2-5849B02ED0C4>";reg-id=1',
+      'Contact: <sip:[% scenarios.2.username %]@[% scenarios.2.ip %]:[% scenarios.2.port %];ob>;expires=\d{3};(received="sip:[% scenarios.2.ip %]:[% scenarios.2.port %]";)?\+sip.instance="<urn:uuid:C3DD6013-20E8-40E3-8EA2-5849B02ED0C4>";reg-id=1',
       '_:NOT:_Contact: <sip:[% scenarios.1.username %]@[% scenarios.2.ip %]:6666;ob>;expires=\d+',
       'Content-Length: 0',
       'P-NGCP-Authorization: [% scenarios.2.username %]@',
