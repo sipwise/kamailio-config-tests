@@ -207,7 +207,7 @@ flow:
       ]
 sip_in:
   - '^INVITE'
-  - 'Contact: sip:[% scenarios.0.username %]@'
+  - 'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>'
   - 'CSeq: \d+ INVITE'
   - 'Content-Type: application/sdp'
   - 'Proxy-Authorization: Digest username="testuser1002"'
