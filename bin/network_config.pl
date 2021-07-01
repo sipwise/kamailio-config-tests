@@ -100,11 +100,17 @@ sub change_network
 
   for my $host (keys %{$net_yaml->{hosts}}) {
     $net_yaml->{hosts}->{$host}->{dummy0} = {
-      ip => $kct_conf->{rtpengine}->{rtp_flag}->{ip},
-      netmask => $kct_conf->{rtpengine}->{rtp_flag}->{netmask},
+      ip => $kct_conf->{rtpengine}->{rtp_flag}[0]->{ip},
+      netmask => $kct_conf->{rtpengine}->{rtp_flag}[0]->{netmask},
       type => ['rtp_tag']
     };
     push @{$net_yaml->{hosts}->{$host}->{interfaces}}, 'dummy0';
+    $net_yaml->{hosts}->{$host}->{dummy1} = {
+      ip => $kct_conf->{rtpengine}->{rtp_flag}[1]->{ip},
+      netmask => $kct_conf->{rtpengine}->{rtp_flag}[1]->{netmask},
+      type => ['rtp_tag']
+    };
+    push @{$net_yaml->{hosts}->{$host}->{interfaces}}, 'dummy1';
   }
 
   $net_yaml->{hosts_common}->{etc_hosts_global_extra_entries} //= ();

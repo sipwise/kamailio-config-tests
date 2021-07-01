@@ -70,7 +70,11 @@ test_check: tests/test_check.py
 	mkdir -p $(RESULTS)
 	./tests/test_check.py > $(RESULTS)/$(@).xml
 
+test_detect_network: tests/test_detect_network.py
+	mkdir -p $(RESULTS)
+	pytest-3 --junitxml=${RESULTS}/$(@).xml $(<)
+
 # run this in parallel!! -j is your friend
-test: $(TESTS) test_check
+test: $(TESTS) test_check test_detect_network
 
 .PHONY: all $(TESTS)

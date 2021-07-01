@@ -1,4 +1,23 @@
 #!/bin/bash
+#
+# Copyright: 2013-2021 Sipwise Development Team <support@sipwise.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This package is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+# On Debian systems, the complete text of the GNU General
+# Public License version 3 can be found in "/usr/share/common-licenses/GPL-3".
+#
 set -e
 RUN_DIR="$(dirname "$0")"
 export BASE_DIR=${BASE_DIR:-$RUN_DIR}
@@ -64,6 +83,38 @@ fi
 
 error_flag=0
 
+dummy_up() {
+  local dummy_ip
+  dummy_ip=$(ip addr show "dummy$1" | grep inet | awk '{print $2}' | head -1)
+  if [ -z "${dummy_ip}" ]; then
+    echo "$(date) - start dummy$1 interface"
+    ifup "dummy$1"
+  fi
+}
+
+dummy_down() {
+  local dummy_ip
+  dummy_ip=$(ip addr show "dummy$1" | grep inet | awk '{print $2}' | head -1)
+  if [ -n "${dummy_ip}" ]; then
+    echo "$(date) - stop dummy$1 interface"
+    ifdown "dummy$1"
+  fi
+}
+
+dummy_add() {
+  if ! lsmod | grep -q dummy ; then
+    echo "$(date) - add dummy module"
+    modprobe dummy numdummies=2
+  fi
+}
+
+dummy_remove() {
+  if lsmod | grep -q dummy ; then
+    echo "$(date) - remove dummy module"
+    rmmod dummy
+  fi
+}
+
 clean() {
   echo "$(date) - Removed apicert.pem"
   rm -f "${BASE_DIR}/apicert.pem"
@@ -71,15 +122,9 @@ clean() {
   "${BIN_DIR}/config_debug.pl" -g "${GROUP}" "${BASE_DIR}/config.yml" off
   echo "$(date) - Setting network config off"
   "${BIN_DIR}/network_config.pl" -g "${GROUP}" "${BASE_DIR}/config.yml" off
-  dummy_ip=$(ip addr show dummy0 | grep inet | awk '{print $2}' | head -1)
-  if [ -n "${dummy_ip}" ]; then
-    echo "$(date) - stop dummy0 interface"
-    ifdown dummy0
-  fi
-  if lsmod | grep -q dummy ; then
-    echo "$(date) - remove dummy module"
-    rmmod dummy
-  fi
+  dummy_down 0|| error_flag=5
+  dummy_down 1|| error_flag=5
+  dummy_remove|| error_flag=5
   if ! ngcpcfg --summary-only apply "config debug off via kamailio-config-tests" ; then
     echo "$(date) - ngcpcfg apply returned $?"
     error_flag=4
@@ -108,15 +153,9 @@ config() {
     clean
     error_flag=4
   fi
-  if ! lsmod | grep -q dummy ; then
-    echo "$(date) - add dummy module"
-    modprobe dummy
-  fi
-  dummy_ip=$(ip addr show dummy0 | grep inet | awk '{print $2}' | head -1)
-  if [ -z "${dummy_ip}" ]; then
-    echo "$(date) - start dummy0 interface"
-    ifup dummy0
-  fi
+  dummy_add || error_flag=5
+  dummy_up 0|| error_flag=5
+  dummy_up 1|| error_flag=5
 
   if [ "${PROFILE}" == "PRO" ]; then
     echo "$(date) - waiting for pid_watcher[$!] result"

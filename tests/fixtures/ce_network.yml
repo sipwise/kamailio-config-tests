@@ -1,0 +1,51 @@
+---
+hosts:
+  self:
+    dbnode: '1'
+    interfaces:
+    - lo
+    - neth0
+    lo:
+      cluster_sets:
+      - default
+      ip: 127.0.0.1
+      netmask: 255.255.255.0
+      shared_ip: []
+      shared_v6ip: []
+      type:
+      - sip_int
+      - ha_int
+      - aux_ext
+      - ssh_ext
+      - api_int
+      - rtp_int
+      - stor_int
+      v6ip: ::1
+      v6netmask: 128
+    neth0:
+      dhcp: yes
+      dns_nameservers:
+      - 1.1.1.1
+      - 1.0.0.1
+      gateway: 192.168.209.1
+      hwaddr: 36:c4:1b:a4:02:26
+      ip: 192.168.209.201
+      netmask: 255.255.255.0
+      type:
+      - web_ext
+      - web_int
+      - sip_ext
+      - rtp_ext
+      - ssh_ext
+    role:
+    - proxy
+    - lb
+    - mgmt
+    - rtp
+    - db
+    - storage
+    status: online
+    swraiddevices: []
+    sysdescr: ''
+    syslocation: ''
+    sysname: ''

@@ -1,0 +1,164 @@
+---
+hosts:
+  sp1:
+    dbnode: '1'
+    dummy0:
+      ip: 172.30.1.2
+      netmask: 255.255.255.0
+      type:
+      - rtp_tag
+    interfaces:
+    - lo
+    - neth0
+    - neth1
+    - neth2
+    - dummy0
+    lo:
+      advertised_ip: []
+      cluster_sets:
+      - default
+      hwaddr: 00:00:00:00:00:00
+      ip: 127.0.0.1
+      netmask: 255.0.0.0
+      shared_ip: []
+      shared_v6ip: []
+      type:
+      - sip_int
+      - web_ext
+      - web_int
+      - aux_ext
+      - ssh_ext
+      - api_int
+      - rtp_int
+      - stor_int
+      v6ip: ::1
+      v6netmask: 128
+    neth0:
+      dhcp: yes
+      dns_nameservers:
+      - 10.15.20.30
+      gateway: 192.168.211.1
+      hwaddr: 08:00:27:18:f8:4e
+      ip: 10.0.2.15
+      netmask: 255.255.255.0
+      shared_ip: ~
+      shared_v6ip: ~
+      type:
+      - ssh_ext
+      - web_ext
+      - web_int
+    neth1:
+      hwaddr: f2:4e:ad:ac:20:0c
+      ip: 192.168.255.251
+      netmask: 255.255.255.248
+      shared_ip:
+      - 192.168.255.250
+      shared_v6ip: ~
+      type:
+      - ssh_ext
+      - ha_int
+      - boot_int
+    neth2:
+      hwaddr: 0a:00:27:42:8c:ce
+      ip: 192.168.2.183
+      netmask: 255.255.255.0
+      shared_ip:
+      - 192.168.2.109
+      shared_v6ip: ~
+      type:
+      - ssh_ext
+      - web_ext
+      - web_int
+      - sip_ext
+      - rtp_ext
+      - mon_ext
+    peer: sp2
+    role:
+    - proxy
+    - lb
+    - mgmt
+    - rtp
+    - db
+    - storage
+    status: online
+    swraiddevices: []
+    sysdescr: ''
+    syslocation: ''
+    sysname: ''
+  sp2:
+    dbnode: '2'
+    dummy0:
+      ip: 172.30.1.2
+      netmask: 255.255.255.0
+      type:
+      - rtp_tag
+    interfaces:
+    - lo
+    - neth0
+    - neth1
+    - neth2
+    - dummy0
+    lo:
+      cluster_sets:
+      - default
+      hwaddr: 00:00:00:00:00:00
+      ip: 127.0.0.1
+      netmask: 255.0.0.0
+      shared_ip: []
+      shared_v6ip: []
+      type:
+      - api_int
+      - stor_int
+      - sip_int
+      - web_int
+      - web_ext
+      - aux_ext
+      v6ip: ::1
+    neth0:
+      dhcp: yes
+      dns_nameservers:
+      - 10.15.20.30
+      gateway: 192.168.211.1
+      hwaddr: 00:00:00:00:00:00
+      ip: 192.168.211.203
+      netmask: 255.255.255.0
+      shared_ip: ~
+      shared_v6ip: ~
+      type:
+      - ssh_ext
+      - web_int
+      - web_ext
+      - sip_ext
+      - rtp_ext
+      - mon_ext
+    neth1:
+      hwaddr: 00:00:00:00:00:00
+      ip: 192.168.255.252
+      netmask: 255.255.255.248
+      shared_ip:
+      - 192.168.255.250
+      shared_v6ip: ~
+      type:
+      - ssh_ext
+      - ha_int
+      - boot_int
+    neth2:
+      hwaddr: 00:00:00:00:00:00
+      ip: 127.1.1.1
+      netmask: 255.255.255.255
+      shared_ip:
+      - 192.168.2.109
+      shared_v6ip: ~
+    peer: sp1
+    role:
+    - storage
+    - proxy
+    - lb
+    - mgmt
+    - rtp
+    - db
+    status: online
+    swraiddevices: []
+    sysdescr: ''
+    syslocation: ''
+    sysname: ''
