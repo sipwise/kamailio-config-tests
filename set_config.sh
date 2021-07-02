@@ -28,6 +28,7 @@ GROUP="${GROUP:-scenarios}"
 PROFILE="${PROFILE:-}"
 CLEAN=false
 TIMEOUT=${TIMEOUT:-300}
+SKIP_NET=false
 
 usage() {
   echo "Usage: set_config.sh [-cht] [-x GROUP] [-p PROFILE]"
@@ -36,17 +37,19 @@ usage() {
   echo -e "\t-x set GROUP scenario. Default: scenarios"
   echo -e "\\t-c clean config"
   echo -e "\\t-t set timeout in secs for pid_watcher.py [PRO]. Default: 300"
+  echo -e "\\t-s skip network IP detection, just use values at config.yml"
   echo -e "\t-h this help"
 
   echo "BASE_DIR:${BASE_DIR}"
   echo "BIN_DIR:${BIN_DIR}"
 }
 
-while getopts 'chp:t:x:' opt; do
+while getopts 'chp:st:x:' opt; do
   case $opt in
     c) CLEAN=true;;
     h) usage; exit 0;;
     p) PROFILE=${OPTARG};;
+    s) SKIP_NET=true;;
     t) TIMEOUT=${OPTARG};;
     x) GROUP=${OPTARG};;
     *) echo "Unknown option ${opt}"; usage; exit 1;;
@@ -135,6 +138,12 @@ clean() {
 config() {
   echo "$(date) - Removed apicert.pem"
   rm -f "${BASE_DIR}/apicert.pem"
+  if ${SKIP_NET} ; then
+    echo "$(date) - Use network IPs, from config.yml"
+  else
+    echo "$(date) - Guess network IPs"
+    "${BIN_DIR}/detect_network.py" --verbose "${BASE_DIR}/config.yml" /etc/ngcp-config/network.yml
+  fi
   echo "$(date) - Setting config debug on"
   "${BIN_DIR}/config_debug.pl" -c 5 -g "${GROUP}" "${BASE_DIR}/config.yml" on
   echo "$(date) - Setting network config"
