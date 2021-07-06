@@ -1,3 +1,21 @@
+kamailio-config-tests (9.5.2.0+0~mr9.5.2.0) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [cecc31d] TT#116100 scenarios: fix peer_host definitions
+  * [7f14491] TT#116100 scenarios_pbx/invite_alias_devid_fulllookup: fix prefs
+  * [0a16b17] TT#81700 bin/restart_log.sh: set fallback for reference file
+  * [cba5971] TT#81700 Makefile: update clean rule
+  * [0b417c2] TT#125300 invite_trusted_peerout_stir
+  * [792137b] TT#125303 invite_stir
+  * [d25fcff] TT#81700 bin/lnav.sh: helper for lnav
+  * [7f4dff2] TT#116100 trusted: add domain to from_pattern
+
+  [ Alessio Garzi ]
+  * [92bc122] TT#128200 invite_emercy_cirpack scenario check boundary
+  * [f608bfd] TT#128200 Copy sems-b2b.log
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 06 Jul 2021 14:35:48 +0200
+
 kamailio-config-tests (9.5.1.0+0~mr9.5.1.0) unstable; urgency=medium
 
   [ Victor Seva ]
