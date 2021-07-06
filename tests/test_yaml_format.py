@@ -24,6 +24,7 @@ import os
 import sys
 import unittest
 import fnmatch
+
 try:
     from yaml import CLoader as Loader
 except ImportError:
@@ -38,14 +39,16 @@ class ParametrizedTestCase(unittest.TestCase):
         2011/08/02/python-unit-testing-parametrized-test-cases
     """
 
-    def __init__(self, methodName='runTest', param=None):
+    def __init__(self, methodName="runTest", param=None):
         super(ParametrizedTestCase, self).__init__(methodName)
         self.param = param
         self.scenario = os.path.dirname(self.param)
 
     def id(self):
-        return "%s_%s" % (super(ParametrizedTestCase, self).id(),
-                          self.scenario)
+        return "%s_%s" % (
+            super(ParametrizedTestCase, self).id(),
+            self.scenario,
+        )
 
     @staticmethod
     def parametrize(testcase_klass, param=None):
@@ -61,30 +64,29 @@ class ParametrizedTestCase(unittest.TestCase):
 
 
 class TestYmlLint(ParametrizedTestCase):
-
     def setUp(self):
-        self.yaml = load(open(self.param, 'r'))
+        self.yaml = load(open(self.param, "r"), Loader=Loader)
 
     def testFlow(self):
-        self.assertTrue('flow' in self.yaml)
-        self.assertIsInstance(self.yaml['flow'], list)
+        self.assertTrue("flow" in self.yaml)
+        self.assertIsInstance(self.yaml["flow"], list)
 
     def testSipIn(self):
-        self.assertTrue('sip_in' in self.yaml)
-        self.assertIsInstance(self.yaml['sip_in'], list)
+        self.assertTrue("sip_in" in self.yaml)
+        self.assertIsInstance(self.yaml["sip_in"], list)
 
     def testSipOut(self):
-        self.assertTrue('sip_out' in self.yaml)
-        self.assertIsInstance(self.yaml['sip_out'], list)
+        self.assertTrue("sip_out" in self.yaml)
+        self.assertIsInstance(self.yaml["sip_out"], list)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     assert len(sys.argv) == 2
     assert os.path.exists(sys.argv[1])
     suite = unittest.TestSuite()
     suite.addTest(
-        ParametrizedTestCase.parametrize(TestYmlLint,
-                                         param=sys.argv[1]))
+        ParametrizedTestCase.parametrize(TestYmlLint, param=sys.argv[1])
+    )
     result = junitxml.JUnitXmlResult(sys.stdout)
     result.startTestRun()
     suite.run(result)
