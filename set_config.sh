@@ -95,6 +95,7 @@ config() {
   echo "$(date) - Setting network config"
   "${BIN_DIR}/network_config.pl" -g "${GROUP}" "${BASE_DIR}/config.yml" on
   if [ "${PROFILE}" == "PRO" ]; then
+    mkdir -p "${BASE_DIR}/log"
     echo "$(date) - Exec pid_watcher with timeout[${TIMEOUT}]"
     # shellcheck disable=SC2086
     ( timeout "${TIMEOUT}" "${BIN_DIR}/pid_watcher.py" ${PIDWATCH_OPTS[*]} )&
