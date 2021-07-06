@@ -1,0 +1,39 @@
+messages:
+  - [
+      '^SIP/2.0 100 Trying',
+      'CSeq: \d+ INVITE',
+      'From: <sip:[% scenarios.0.username %]@',
+      'To: <sip:[% scenarios.0.responders.0.username %]@'
+    ]
+  - [
+      '^SIP/2.0 407 Proxy Authentication Required',
+      'CSeq: \d+ INVITE',
+      'From: <sip:[% scenarios.0.username %]@',
+      'To: <sip:[% scenarios.0.responders.0.username %]@'
+    ]
+  - [
+      '^SIP/2.0 100 Trying',
+      'CSeq: \d+ INVITE',
+      'From: <sip:[% scenarios.0.username %]@',
+      'To: <sip:[% scenarios.0.responders.0.username %]@'
+    ]
+  - [
+      '^SIP/2.0 180 Ringing',
+      'CSeq: \d+ INVITE',
+      'From: <sip:[% scenarios.0.username %]@',
+      'To: <sip:[% scenarios.0.responders.0.username %]@'
+    ]
+  - [
+      '^SIP/2.0 200 OK',
+      'CSeq: \d+ INVITE',
+      'From: <sip:[% scenarios.0.username %]@',
+      'To: <sip:[% scenarios.0.responders.0.username %]@'
+    ]
+  - [
+      '^SIP/2.0 200 OK',
+      'CSeq: \d+ BYE',
+      'Content-Length: 0',
+      'From: <sip:[% scenarios.0.username %]@',
+      'To: <sip:[% scenarios.0.responders.0.username %]@'
+    ]
+

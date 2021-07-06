@@ -5,9 +5,10 @@ GROUP="${GROUP:-scenarios}"
 CAPTURE=false
 SINGLE_CAPTURE=false
 PROV_TYPE=step
+CHECK_TYPE=all
 
 usage() {
-  echo "Usage: bench.sh [-p PROFILE] [-C] [num_runs]"
+  echo "Usage: bench.sh [-hCkK] [-p PROFILE] [-x GROUP] [-P <none|all|step>] [-S <all|cfgt|sipp>] num_runs"
   echo "Options:"
   echo -e "\\t-p CE|PRO default is autodetect"
   echo -e "\\t-C skips configuration of the environment"
@@ -15,11 +16,12 @@ usage() {
   echo -e "\\t-K capture messages with tcpdump. One big file for all scenarios"
   echo -e "\\t-x set GROUP scenario. Default: scenarios"
   echo -e "\\t-P provisioning, default:step"
+  echo -e "\\t-S check type. Default: all (cfgt, sipp)"
   echo -e "\\t-h this help"
   echo -e "num_runs default is 20"
 }
 
-while getopts 'hCkKP:p:x:' opt; do
+while getopts 'hCkKP:p:S:x:' opt; do
   case $opt in
     h) usage; exit 0;;
     C) SKIP_CONFIG=true;;
@@ -27,6 +29,7 @@ while getopts 'hCkKP:p:x:' opt; do
     K) CAPTURE=true;;
     p) PROFILE=${OPTARG};;
     P) PROV_TYPE=${OPTARG};;
+    S) CHECK_TYPE=${OPTARG};;
     x) GROUP=${OPTARG};;
 	*) echo "Unknown option $opt"; usage; exit 1;;
   esac
@@ -83,7 +86,7 @@ for i in $(seq "$NUM"); do
   	echo "$(date) - ERROR[$status] run_tests $i"
   	break
   fi
-  ./get_results.sh -r -x"${GROUP}" | tee /tmp/get_results.log
+  ./get_results.sh -S"${CHECK_TYPE}" -r -c -x"${GROUP}" | tee /tmp/get_results.log
   status=$?
   if [[ $status -ne 0 ]]; then
   	echo "$(date) - ERROR[$status] get_results $i"

@@ -1,0 +1,22 @@
+messages:
+  - [
+      '^INVITE sip:[% scenarios.0.responders.0.username %]@',
+      'CSeq: \d+ INVITE',
+      'From: <sip:[% invite_scenarios_test.testuser1002.phone_number %]@',
+      'To: <sip:[% scenarios.0.responders.0.username %]@',
+      'Content-Type: application/sdp'
+    ]
+  - [
+      '^ACK sip:',
+      'CSeq: \d+ ACK',
+      'From: <sip:[% invite_scenarios_test.testuser1002.phone_number %]@',
+      'To: <sip:[% scenarios.0.responders.0.username %]@'
+    ]
+  - [
+      '^BYE sip:',
+      'From: <sip:[% invite_scenarios_test.testuser1002.phone_number %]@',
+      'To: <sip:[% scenarios.0.responders.0.username %]@',
+      'CSeq: \d+ BYE',
+      'Content-Length: 0'
+    ]
+

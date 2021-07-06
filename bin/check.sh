@@ -23,7 +23,7 @@ CAPTURE=false
 SKIP=false
 MEMDBG=false
 SKIP_DELDOMAIN=false
-SKIP_TESTS=false
+CHECK_TYPE=all
 SKIP_PARSE=false
 SKIP_RUNSIPP=false
 FIX_RETRANS=false
@@ -103,6 +103,7 @@ function str_check_error() {
   [[ $(($1 & 4)) -eq 4 ]] && err_type+=("FLOW_VARS")
   [[ $(($1 & 8)) -eq 8 ]] && err_type+=("SIP_IN")
   [[ $(($1 & 16)) -eq 16 ]] && err_type+=("SIP_OUT")
+  [[ $(($1 & 32)) -eq 32 ]] && err_type+=("SIP")
 
   echo "${err_type[*]}"
 }
@@ -215,6 +216,39 @@ check_retrans_block() {
   return 1
 }
 
+# $1 sip message test yml
+# $2 sipp msg parsed to .msg log file
+# $3 destination tap filename
+check_sip_test() {
+  local test_file="${1}"
+  local msg_file="${2}"
+  local dest_file="${3}"
+
+  if ! [ -f "$1" ]; then
+    generate_error_tap "$3" "$1"
+    ERR_FLAG=1
+    return 1
+  fi
+  if ! [ -f "$2" ]; then
+    generate_error_tap "$3" "$2"
+    ERR_FLAG=1
+    return 1
+  fi
+
+  sipp_msg=$(basename "${msg_file}")
+  if "${BIN_DIR}/check_sip.py" "${test_file}" "${msg_file}" > "${dest_file}" ; then
+    echo " ok"
+    test_ok+=("${sipp_msg}")
+    return 0
+  else
+    err_type=$(str_check_error $?)
+    echo " NOT ok[${err_type}]"
+    ERR_FLAG=1
+    # we have to add here show_sip.pl funcitoning to produce differences in results
+    return 1
+  fi
+}
+
 # $1 unit test yml
 # $2 kamailio msg parsed to yml
 # $3 destination tap filename
@@ -243,7 +277,7 @@ check_test() {
 
   kam_msg=$(basename "$2")
   echo -n "$(date) - Testing $(basename "$1") against ${kam_msg} -> $(basename "$3")"
-  if "${BIN_DIR}/check.py" ${kam_type} "$1" "$2" > "$3" ; then
+  if "${BIN_DIR}/check.py" "${kam_type}" "$1" "$2" > "$3" ; then
     echo " ok"
     test_ok+=("${kam_msg}")
     return 0
@@ -508,6 +542,18 @@ run_sipp() {
   fi
 }
 
+test_sip_filepath() {
+  local msg_name
+  msg_name=${1/_test.yml/.msg}
+  msg_name=${msg_name/sip_messages/sipp_scenario}
+  sip_msg="${LOG_DIR}/$(basename "${msg_name}")"
+  if ! [ -f "${sip_msg}" ]; then
+    echo "$(date) - WARNING: no sipp log file found! filename=<${sip_msg}>. Skipping."
+    return 1
+  fi
+  return 0
+}
+
 test_filepath() {
   local msg_name
 
@@ -585,13 +631,13 @@ cdr_check() {
 }
 
 usage() {
-  echo "Usage: check.sh [-hCDRTGgJKm] [-p PROFILE ] -s [GROUP] check_name"
+  echo "Usage: check.sh [-hCDRGgJKm] [-T <all|none|cfgt|sipp>] [-p PROFILE ] [-s GROUP] check_name"
   echo "Options:"
   echo -e "\\t-I: SIP_SERVER IP, default:127.0.0.1"
   echo -e "\\t-C: skip creation of domain and subscribers"
   echo -e "\\t-R: skip run sipp"
   echo -e "\\t-D: skip deletion of domain and subscribers as final step"
-  echo -e "\\t-T: skip checks"
+  echo -e "\\t-T check type. Default: all"
   echo -e "\\t-P: skip parse"
   echo -e "\\t-G: creation of graphviz image"
   echo -e "\\t-g: creation of graphviz image only if test fails"
@@ -607,7 +653,7 @@ usage() {
   echo -e "\\tcheck_name. Scenario name to check. This is the name of the directory on GROUP dir."
 }
 
-while getopts 'hI:Cp:Rs:DTPGgrcJKMmw:' opt; do
+while getopts 'hI:Cp:Rs:DT:PGgrcJKMmw:' opt; do
   case $opt in
     h) usage; exit 0;;
     I) SIP_SERVER=${OPTARG};;
@@ -616,7 +662,7 @@ while getopts 'hI:Cp:Rs:DTPGgrcJKMmw:' opt; do
     R) SKIP_RUNSIPP=true; SKIP_DELDOMAIN=true;;
     s) GROUP=${OPTARG};;
     D) SKIP_DELDOMAIN=true;;
-    T) SKIP_TESTS=true;;
+    T) CHECK_TYPE=${OPTARG};;
     P) SKIP_PARSE=true;;
     K) CAPTURE=true;;
     G) GRAPH=true;;
@@ -680,6 +726,11 @@ if [ -f "${SCEN_CHECK_DIR}/pro.yml" ] && [ "${PROFILE}" == "CE" ]; then
   echo "Skipping the tests because not in scope"
   exit 0
 fi
+
+case "${CHECK_TYPE}" in
+  all|sipp|cfgt|none) ;;
+  *) echo "unknown check type"; exit 1;;
+esac
 
 if ! "$SKIP" ; then
   "${BIN_DIR}/provide_scenario.sh" "${SCEN_CHECK_DIR}" create
@@ -780,9 +831,8 @@ if ! "${SKIP_PARSE}" ; then
   fi
 fi
 
-
 # let's check the results
-if ! "${SKIP_TESTS}" ; then
+if [[ ${CHECK_TYPE} != none ]] ; then
   echo "$(date) - ================================================================================="
   echo "$(date) - Check [${GROUP}/${PROFILE}]: ${NAME_CHECK}"
 
@@ -800,18 +850,33 @@ if ! "${SKIP_TESTS}" ; then
 
   test_ok=()
 
-  for t in "${SCEN_CHECK_DIR}"/[0-9][0-9][0-9][0-9]_test*.yml; do
-    test_filepath "${t}"
-    echo "$(date) - Check test ${t} on ${msg}"
-    dest=${RESULT_DIR}/$(basename "${t}" .yml)
-    check_test "${t}" "${msg}" "${dest}.tap" && result=OK || result=KO
-    echo "$(date) - $(basename "${t}" .yml) - Done[${result}]"
-    if "${GRAPH}" ; then
-      echo "$(date) - Generating flow image: ${dest}.png"
-      graph "${msg}" "${dest}.png"
-      echo "$(date) - Done"
-    fi
-  done
+  if [[ ${CHECK_TYPE} != sipp ]] ; then
+    for t in "${SCEN_CHECK_DIR}"/[0-9][0-9][0-9][0-9]_test*.yml; do
+      test_filepath "${t}"
+      echo "$(date) - Check test ${t} on ${msg}"
+      dest=${RESULT_DIR}/$(basename "${t}" .yml)
+      check_test "${t}" "${msg}" "${dest}.tap" && result=OK || result=KO
+      echo "$(date) - $(basename "${t}" .yml) - Done[${result}]"
+      if "${GRAPH}" ; then
+        echo "$(date) - Generating flow image: ${dest}.png"
+        graph "${msg}" "${dest}.png"
+        echo "$(date) - Done"
+      fi
+    done
+  fi
+
+  if [[ ${CHECK_TYPE} != cfgt ]] ; then
+      echo "$(date) - ~~~~~"
+      for t in "${SCEN_CHECK_DIR}"/sip_messages*[0-9][0-9]_test.yml; do
+        if test_sip_filepath "${t}"; then
+          echo -n "$(date) - SIP: Check test $(basename "${t}") on ${sip_msg}"
+          dest=$(basename "${sip_msg}")
+          dest=${RESULT_DIR}/${dest/.msg/.tap}
+          check_sip_test "${t}" "$sip_msg" "${dest}"
+        fi
+      done
+      echo "$(date) - ~~~~~"
+  fi
 
   if "${CDR}" ; then
     echo "$(date) - Validating CDRs"

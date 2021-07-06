@@ -21,8 +21,8 @@
 BASE_DIR="${BASE_DIR:-/usr/share/kamailio-config-tests}"
 DIR="${BASE_DIR}/scenarios"
 BIN_DIR="${BASE_DIR}/bin"
-DEST_DIR="${DEST_DIR}"
-
+DEST_DIR="${DEST_DIR:-}"
+FILTER="*_test.yml.tt2"
 error_flag=0
 
 function clean
@@ -32,20 +32,23 @@ function clean
 
 function usage
 {
-  echo "Usage: generate_tests.sh [-h] [-c] [-d directory] scenario_ids.yml profile"
+  echo "Usage: generate_tests.sh [-h] [-c] [-d directory] [-f filter] scenario_ids.yml profile"
   echo "Options:"
   echo -e "\tc: clean. Removes all generated test files"
   echo -e "\td: directory"
+  echo -e "\tf: filter. Default: '*_test.yml.tt2'"
   echo -e "\th: this help"
   echo "Args:"
   echo -e "\tprofile: CE|PRO"
 }
 
-while getopts 'hcd:' opt; do
+while getopts 'hcd:f:' opt; do
   case $opt in
     h) usage; exit 0;;
     c) clean; exit 0;;
     d) DIR=${OPTARG};;
+    f) FILTER=${OPTARG};;
+    *) usage; exit 1;;
   esac
 done
 shift $((OPTIND - 1))
@@ -73,7 +76,7 @@ if [ ! -x "${BIN_DIR}/generate_test.pl" ]; then
   exit 3
 fi
 
-for t in $(find "${DIR}" -not -regex '.+customtt.tt2' -type f -name '*_test.yml.tt2' | sort); do
+for t in $( find "${DIR}" -not -regex '.+customtt.tt2' -type f -name "${FILTER}" | sort); do
   origdir="$(dirname "${t}")"
   template="$(basename "${t}")"
   if [ -n "${DEST_DIR}" ] ; then
@@ -97,4 +100,3 @@ for t in $(find "${DIR}" -not -regex '.+customtt.tt2' -type f -name '*_test.yml.
 done
 
 exit ${error_flag}
-#EOF

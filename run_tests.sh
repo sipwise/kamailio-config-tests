@@ -16,7 +16,7 @@ TMP_LOG_DIR="/tmp"
 KAM_DIR="/tmp/cfgtest"
 COREDUMP_DIR="/ngcp-data/coredumps"
 PROFILE="${PROFILE:-}"
-OPTS=(-P -T -M -C) #SKIP_PARSE=true, SKIP_TESTS=true, SKIP_MOVE_JSON_KAM=true, SKIP=true
+OPTS=(-P -Tnone -M -C) #SKIP_PARSE=true, SKIP_TESTS=true, SKIP_MOVE_JSON_KAM=true, SKIP=true
 
 SHOW_SCENARIOS=false
 SKIP_CONFIG=false
