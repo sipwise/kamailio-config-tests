@@ -19,21 +19,28 @@ usage() {
   echo -e "\\t-R choose how many messages before and after to check"
   echo -e "\\t-c enable cdr validation"
   echo -e "\\t-x set GROUP scenario. Default: scenarios"
+  echo -e "\\t-f scenarios file"
   echo "BASE_DIR:${BASE_DIR}"
   echo "BIN_DIR:${BIN_DIR}"
 }
 
 get_scenarios() {
-  while read -r t; do
-    SCEN+=( "${t}" )
-  done < <("${BIN_DIR}/get_scenarios.sh" -p "${PROFILE}" -x "${GROUP}")
+  if [ -n "${SCEN_FILE}" ]; then
+    while read -r t; do
+      SCEN+=( "${t}" )
+    done < "${SCEN_FILE}"
+  else
+    while read -r t; do
+      SCEN+=( "${t}" )
+    done < <("${BIN_DIR}/get_scenarios.sh" -p "${PROFILE}" -x "${GROUP}")
+  fi
   if [[ ${#SCEN[@]} == 0 ]]; then
     echo "$(date) no scenarios found"
     exit 1
   fi
 }
 
-while getopts 'hgGp:TPrR:cx:' opt; do
+while getopts 'hf:gGp:TPrR:cx:' opt; do
   case $opt in
     h) usage; exit 0;;
     G) GRAPH="-G";;
@@ -45,6 +52,7 @@ while getopts 'hgGp:TPrR:cx:' opt; do
     c) CDR="-c";;
     p) PROFILE=${OPTARG};;
     x) GROUP=${OPTARG};;
+    f) SCEN_FILE=${OPTARG};;
     *) usage; exit 1;;
   esac
 done
@@ -83,5 +91,5 @@ tap_cmd=()
 for t in "${SCEN[@]}" ; do
   tap_cmd+=( "result/${GROUP}/${t}/"*tap )
 done
-prove -f -Q "${tap_cmd[@]}"
+prove -f -Q "${tap_cmd[@]}" |grep 'Failed:'|awk -F/ '{print $3}'|uniq > "result/${GROUP}/result_failed.txt"
 exit ${status}
