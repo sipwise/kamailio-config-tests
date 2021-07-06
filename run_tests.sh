@@ -31,9 +31,15 @@ error_flag=0
 SCEN=()
 
 get_scenarios() {
-  while read -r t; do
-    SCEN+=( "${t}" )
-  done < <("${BIN_DIR}/get_scenarios.sh" -p "${PROFILE}" -x "${GROUP}")
+  if [ -n "${SCEN_FILE}" ]; then
+    while read -r t; do
+      SCEN+=( "${t}" )
+    done < "${SCEN_FILE}"
+  else
+    while read -r t; do
+      SCEN+=( "${t}" )
+    done < <("${BIN_DIR}/get_scenarios.sh" -p "${PROFILE}" -x "${GROUP}")
+  fi
   if [[ ${#SCEN[@]} == 0 ]]; then
     echo "$(date) no scenarios found"
     exit 1
@@ -236,13 +242,14 @@ usage() {
   echo -e "\\t\\tfull: provision all scenarios in one step"
   echo -e "\\t\\tstep: provision scenario one by one before execution"
   echo -e "\\t\\tnone: skip any provision"
+  echo -e "\\t-f scenarios file"
   echo -e "\\t-h this help"
 
   echo "BASE_DIR:${BASE_DIR}"
   echo "BIN_DIR:${BIN_DIR}"
 }
 
-while getopts 'hlCcP:p:kKx:rm' opt; do
+while getopts 'f:hlCcP:p:kKx:rm' opt; do
   case $opt in
     h) usage; exit 0;;
     l) SHOW_SCENARIOS=true;;
@@ -255,6 +262,7 @@ while getopts 'hlCcP:p:kKx:rm' opt; do
     r) FIX_RETRANS=true;;
     c) CDR=true;;
     m) MEMDBG=true;;
+    f) SCEN_FILE=${OPTARG};;
     *) usage; exit 1;;
   esac
 done
@@ -353,6 +361,7 @@ fi
 # find SERVER_IP
 get_config
 
+failed=()
 for t in "${SCEN[@]}"; do
   echo "$(date) - ================================================================================="
   echo "$(date) - Run [${GROUP}/${PROFILE}]: ${t}"
@@ -376,6 +385,7 @@ for t in "${SCEN[@]}"; do
 
   if ! "${BIN_DIR}/check.sh" "${OPTS[@]}" -p "${PROFILE}" -s "${GROUP}" "${t}" ; then
     echo "ERROR: ${t}"
+    failed+=( "${t}" )
     error_flag=1
   fi
 
@@ -398,6 +408,15 @@ for t in "${SCEN[@]}"; do
     break
   fi
 done
+
+rm -f "${LOG_DIR}/run_failed.txt"
+for t in ${failed[*]}; do
+  echo "$t" >> "${LOG_DIR}/run_failed.txt"
+done
+if [ -f "${LOG_DIR}/run_failed.txt" ]; then
+  echo "$(date) - Failed scenarios:"
+  cat "${LOG_DIR}/run_failed.txt"
+fi
 
 if [[ "${PROV_TYPE}" == "full" ]] ; then
   echo "$(date) - Delete provided scenarios"
