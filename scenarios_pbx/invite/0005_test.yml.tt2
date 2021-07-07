@@ -161,39 +161,41 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^INVITE sip:1003'
-  - 'Contact: sip:testuser1002@'
+  - '^INVITE sip:[% invite_scenarios_pbx_test.testuser1003.pbx_extension %]@invite.scenarios-pbx.test SIP/2.0'
+  - 'From: <sip:[% scenarios.0.username %]@invite.scenarios-pbx.test>;tag=[\w-]+'
+  - 'To: <sip:[% invite_scenarios_pbx_test.testuser1003.pbx_extension %]@invite.scenarios-pbx.test>\r\n'
+  - 'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>'
   - 'CSeq: 2 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
-  - 'Proxy-Authorization: Digest username="testuser1002"'
+  - 'Proxy-Authorization: Digest username="[% scenarios.0.username %]"'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: 2 INVITE',
-      'From: <sip:testuser1002@',
-      'To: <sip:1003@'
+      'From: <sip:[% scenarios.0.username %]@invite.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:[% invite_scenarios_pbx_test.testuser1003.pbx_extension %]@invite.scenarios-pbx.test>\r\n',
     ]
   - [
       '^SIP/2.0 101 Connecting',
       'CSeq: 2 INVITE',
-      'From: <sip:testuser1002@',
-      'To: <sip:1003@',
+      'From: <sip:[% scenarios.0.username %]@invite.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:[% invite_scenarios_pbx_test.testuser1003.pbx_extension %]@invite.scenarios-pbx.test>\r\n',
       'P-Caller-UUID: [% invite_scenarios_pbx_test.testuser1002.uuid %]',
-      'P-NGCP-Caller-Info: <sip:testuser1002@'
+      'P-NGCP-Caller-Info: <sip:[% scenarios.0.username %]@'
     ]
   - [
-      '^PUBLISH sip:testuser1002@invite.scenarios-pbx.test SIP/2.0',
-      'From: <sip:testuser1002@invite.scenarios-pbx.test>',
-      'To: <sip:testuser1002@invite.scenarios-pbx.test>',
+      '^PUBLISH sip:[% scenarios.0.username %]@invite.scenarios-pbx.test SIP/2.0',
+      'From: <sip:[% scenarios.0.username %]@invite.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.username %]@invite.scenarios-pbx.test>\r\n',
       'Event: dialog',
       'Content-Type: application/dialog-info\+xml',
     ]
   - [
-      '^INVITE sip:testuser1003@',
+      '^INVITE sip:[% scenarios.0.responders.0.username %]@[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %] SIP/2.0',
       'CSeq: 2 INVITE',
-      'From: <sip:[% invite_scenarios_pbx_test.testuser1002.phone_number %]@',
-      'To: <sip:1003@',
+      'From: <sip:[% invite_scenarios_pbx_test.testuser1002.phone_number %]@invite.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:[% invite_scenarios_pbx_test.testuser1003.pbx_extension %]@invite.scenarios-pbx.test>\r\n',
       'Content-Type: application/sdp',
       'P-Caller-UUID: [% invite_scenarios_pbx_test.testuser1002.uuid %]',
       'P-Callee-UUID: [% invite_scenarios_pbx_test.testuser1003.uuid %]',

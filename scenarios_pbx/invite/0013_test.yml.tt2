@@ -27,21 +27,21 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - 'ACK sip:127.0.0.1:508[08];prxroute=1 SIP/2.0'
-  - 'From: <sip:testuser1002@invite.scenarios-pbx.test>;tag=[\w-]+'
-  - 'To: <sip:1003@invite.scenarios-pbx.test>;tag=[\w-]+'
+  - 'From: <sip:[% scenarios.0.username %]@invite.scenarios-pbx.test>;tag=[\w-]+'
+  - 'To: <sip:[% invite_scenarios_pbx_test.testuser1003.pbx_extension %]@invite.scenarios-pbx.test>;tag=[\w-]+'
   - 'CSeq: \d+ ACK'
-  - 'Contact: sip:testuser1002@127.126.0.1:\d+'
+  - 'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>'
   - 'Content-Length: 0'
-  - 'P-Sock-Info: udp:127.0.0.1:5060'
+  - 'P-Sock-Info: udp:[% server_ip %]:5060'
   - 'P-LB-Uptime: \d+'
 sip_out:
   - [
       'ACK sip:127.0.0.1:508[08];prxroute=1 SIP/2.0',
       'From: <sip:[% invite_scenarios_pbx_test.testuser1002.phone_number %]@invite.scenarios-pbx.test>;tag=[\w-]+',
-      'To: <sip:1003@invite.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:[% invite_scenarios_pbx_test.testuser1003.pbx_extension %]@invite.scenarios-pbx.test>;tag=[\w-]+',
       'CSeq: \d+ ACK',
-      'Contact: sip:testuser1002@127.126.0.1:\d+',
+      'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>',
       'Content-Length: 0',
-      'P-Sock-Info: udp:127.0.0.1:5060',
+      'P-Sock-Info: udp:[% server_ip %]:5060',
       'P-LB-Uptime: \d+',
     ]

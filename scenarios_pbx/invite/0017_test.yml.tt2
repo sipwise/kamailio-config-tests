@@ -15,14 +15,14 @@ flow:
 sip_in:
   - 'SIP/2.0 200 OK'
   - 'From: <sip:[% invite_scenarios_pbx_test.testuser1002.phone_number %]@invite.scenarios-pbx.test>;tag=[\w-]+'
-  - 'To: <sip:testuser1003@invite.scenarios-pbx.test>;tag=[\w-]+'
+  - 'To: <sip:[% scenarios.0.responders.0.username %]@invite.scenarios-pbx.test>;tag=[\w-]+'
   - 'CSeq: \d+ BYE'
   - 'Content-Length: \s+0'
 sip_out:
   - [
       'SIP/2.0 200 OK',
       'From: <sip:[% invite_scenarios_pbx_test.testuser1002.phone_number %]@invite.scenarios-pbx.test>;tag=[\w-]+',
-      'To: <sip:testuser1003@invite.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.0.username %]@invite.scenarios-pbx.test>;tag=[\w-]+',
       'CSeq: \d+ BYE',
       'Content-Length: \s+0',
     ]

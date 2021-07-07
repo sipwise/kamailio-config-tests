@@ -15,7 +15,7 @@ flow:
 sip_in:
   - 'SIP/2.0 100 Trying'
   - 'From: <sip:[% invite_scenarios_pbx_test.testuser1002.phone_number %]@invite.scenarios-pbx.test>;tag=[\w-]+'
-  - 'To: <sip:1003@invite.scenarios-pbx.test>'
+  - 'To: <sip:[% invite_scenarios_pbx_test.testuser1003.pbx_extension %]@invite.scenarios-pbx.test>'
   - 'CSeq: \d+ INVITE'
   - 'Content-Length: 0'
 sip_out: []

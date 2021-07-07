@@ -21,9 +21,11 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^INVITE'
-  - 'Contact: sip:testuser1002@'
-  - 'To: <sip:1003@'
+  - '^INVITE sip:[% invite_scenarios_pbx_test.testuser1003.pbx_extension %]@invite.scenarios-pbx.test SIP/2.0'
+  - 'From: <sip:[% scenarios.0.username %]@invite.scenarios-pbx.test>;tag=[\w-]+'
+  - 'To: <sip:[% invite_scenarios_pbx_test.testuser1003.pbx_extension %]@invite.scenarios-pbx.test>\r\n'
+  - 'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>'
+  - 'To: <sip:[% invite_scenarios_pbx_test.testuser1003.pbx_extension %]@'
   - 'CSeq: 1 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
@@ -31,12 +33,12 @@ sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: 1 INVITE',
-      'From: <sip:testuser1002@',
-      'To: <sip:1003@'
+      'From: <sip:[% scenarios.0.username %]@invite.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:[% invite_scenarios_pbx_test.testuser1003.pbx_extension %]@invite.scenarios-pbx.test>\r\n'
     ]
   - [
       '^SIP/2.0 407 Proxy Authentication Required',
       'CSeq: 1 INVITE',
-      'From: <sip:testuser1002@',
-      'To: <sip:1003@'
+      'From: <sip:[% scenarios.0.username %]@invite.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:[% invite_scenarios_pbx_test.testuser1003.pbx_extension %]@invite.scenarios-pbx.test>;tag=[\w-]+'
     ]
