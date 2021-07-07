@@ -21,7 +21,7 @@ flow:
 sip_in:
   - 'SIP/2.0 200 OK'
   - 'From: <sip:[% invite_username_devid_scenarios_pbx_test.testuser1002.phone_number %]@invite-username-devid.scenarios-pbx.test>;tag=[\w-]+'
-  - 'To: <sip:1003@invite-username-devid.scenarios-pbx.test>;tag=[\w-]+'
+  - 'To: <sip:[% invite_username_devid_scenarios_pbx_test.testuser1003.pbx_extension %]@invite-username-devid.scenarios-pbx.test>;tag=[\w-]+'
   - 'CSeq: \d+ INVITE'
   - 'Contact: <sip:127.0.0.1:508[08];transport=udp>'
   - 'Content-Type: application/sdp'
@@ -41,11 +41,11 @@ sip_out:
   - [
       'SIP/2.0 200 OK',
       'From: <sip:testuser1002@invite-username-devid.scenarios-pbx.test>;tag=[\w-]+',
-      'To: <sip:1003@invite-username-devid.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:[% invite_username_devid_scenarios_pbx_test.testuser1003.pbx_extension %]@invite-username-devid.scenarios-pbx.test>;tag=[\w-]+',
       'CSeq: \d+ INVITE',
       'Contact: <sip:127.0.0.1:508[08];transport=udp>',
       'Content-Type: application/sdp',
       'Content-Length:\s+\d+',
-      'P-COLP-Identity: "1003" <sip:1003@invite-username-devid.scenarios-pbx.test>',
-      'P-Out-Socket: udp:127.0.0.1:5060',
+      'P-COLP-Identity: "[% invite_username_devid_scenarios_pbx_test.testuser1003.pbx_extension %]" <sip:[% invite_username_devid_scenarios_pbx_test.testuser1003.pbx_extension %]@invite-username-devid.scenarios-pbx.test>',
+      'P-Out-Socket: udp:[% server_ip %]:5060',
     ]

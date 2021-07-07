@@ -21,26 +21,26 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - 'INVITE sip:1003@invite-username-devid.scenarios-pbx.test SIP/2.0'
+  - 'INVITE sip:[% invite_username_devid_scenarios_pbx_test.testuser1003.pbx_extension %]@invite-username-devid.scenarios-pbx.test SIP/2.0'
   - 'From: <sip:testuser1002@invite-username-devid.scenarios-pbx.test>;tag=[\w-]+'
-  - 'To: <sip:1003@invite-username-devid.scenarios-pbx.test>'
+  - 'To: <sip:[% invite_username_devid_scenarios_pbx_test.testuser1003.pbx_extension %]@invite-username-devid.scenarios-pbx.test>'
   - 'CSeq: \d+ INVITE'
-  - 'Contact: sip:testuser1002@[% scenarios.2.ip %]:[% scenarios.2.port %]'
+  - 'Contact: <sip:[% scenarios.2.username %]@[% scenarios.2.ip %]:[% scenarios.2.port %](;[^>]+)?>'
   - 'Content-Type: application/sdp'
   - 'Content-Length:\s+\d+'
   - 'P-NGCP-Src-Ip: [% scenarios.2.ip %]'
   - 'P-NGCP-Src-Port: [% scenarios.2.port %]'
   - 'P-NGCP-Src-Proto: udp'
   - 'P-NGCP-Src-Af: 4'
-  - 'P-Sock-Info: udp:127.0.0.1:5060'
+  - 'P-Sock-Info: udp:[% server_ip %]:5060'
   - 'P-LB-Uptime: \d+'
 sip_out:
   - [
       'SIP/2.0 100 Trying',
       'From: <sip:testuser1002@invite-username-devid.scenarios-pbx.test>;tag=[\w-]+',
-      'To: <sip:1003@invite-username-devid.scenarios-pbx.test>',
+      'To: <sip:[% invite_username_devid_scenarios_pbx_test.testuser1003.pbx_extension %]@invite-username-devid.scenarios-pbx.test>',
       'CSeq: \d+ INVITE',
-      'P-Out-Socket: udp:127.0.0.1:5060',
+      'P-Out-Socket: udp:[% server_ip %]:5060',
       'P-NGCP-Auth-IP: [% scenarios.2.ip %]',
       'P-NGCP-Auth-UA: <null>',
       'Server: Sipwise NGCP Proxy',
@@ -49,9 +49,9 @@ sip_out:
   - [
       'SIP/2.0 407 Proxy Authentication Required',
       'From: <sip:testuser1002@invite-username-devid.scenarios-pbx.test>;tag=[\w-]+',
-      'To: <sip:1003@invite-username-devid.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:[% invite_username_devid_scenarios_pbx_test.testuser1003.pbx_extension %]@invite-username-devid.scenarios-pbx.test>;tag=[\w-]+',
       'CSeq: \d+ INVITE',
-      'P-Out-Socket: udp:127.0.0.1:5060',
+      'P-Out-Socket: udp:[% server_ip %]:5060',
       'P-NGCP-Auth-IP: [% scenarios.2.ip %]',
       'P-NGCP-Auth-UA: <null>',
       'Proxy-Authenticate: Digest realm="invite-username-devid.scenarios-pbx.test", nonce=".+"',
