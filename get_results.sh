@@ -93,5 +93,6 @@ tap_cmd=()
 for t in "${SCEN[@]}" ; do
   tap_cmd+=( "result/${GROUP}/${t}/"*tap )
 done
-prove -f -Q "${tap_cmd[@]}" |grep 'Failed:'|awk -F/ '{print $3}'|uniq > "result/${GROUP}/result_failed.txt"
+prove -f -Q "${tap_cmd[@]}"|tee "result/${GROUP}/prove.log"
+grep 'Failed:' "result/${GROUP}/prove.log"|awk -F/ '{print $3}'|uniq > "result/${GROUP}/result_failed.txt"
 exit ${status}
