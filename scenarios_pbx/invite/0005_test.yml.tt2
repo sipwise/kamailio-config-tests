@@ -197,6 +197,6 @@ sip_out:
       'Content-Type: application/sdp',
       'P-Caller-UUID: [% invite_scenarios_pbx_test.testuser1002.uuid %]',
       'P-Callee-UUID: [% invite_scenarios_pbx_test.testuser1003.uuid %]',
-      'P-App-Param: ;calltimer=21600;aleg_sst_enable=no;sst_enable=no;hold_alter_b2b_bleg=no;hold_alter_b2b_aleg=no;fast_ack=no;a_park_domain=[% customerpbx_test.id %];b_park_domain=[% customerpbx_test.id %]',
+      'P-App-Param: ;calltimer=21600;aleg_sst_enable=no;sst_enable=no;hold_alter_b2b_bleg=no;hold_alter_b2b_aleg=no;fast_ack=no;a_park_domain=[% invite_customerpbx_test.id %];b_park_domain=[% invite_customerpbx_test.id %]',
       'P-App-Name: sbc'
     ]

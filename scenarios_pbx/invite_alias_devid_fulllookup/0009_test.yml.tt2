@@ -223,7 +223,7 @@ sip_out:
       'P-Callee-UUID: [% invite_alias_devid_fulllookup_scenarios_pbx_test.testuser1003.uuid %]',
       'P-NGCP-Rtpengine-Bleg: 1',
       'P-Called-Party-ID: <sip:[% invite_alias_devid_fulllookup_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@invite-alias-devid-fulllookup.scenarios-pbx.test>',
-      'P-App-Param: ;calltimer=21600;aleg_sst_enable=no;sst_enable=no;hold_alter_b2b_bleg=no;hold_alter_b2b_aleg=no;fast_ack=no;a_park_domain=[% customerpbx_test.id %];b_park_domain=[% customerpbx_test.id %]',
+      'P-App-Param: ;calltimer=21600;aleg_sst_enable=no;sst_enable=no;hold_alter_b2b_bleg=no;hold_alter_b2b_aleg=no;fast_ack=no;a_park_domain=[% invite_alias_devid_fulllookup_customerpbx_test.id %];b_park_domain=[% invite_alias_devid_fulllookup_customerpbx_test.id %]',
       'P-App-Name: sbc',
       'P-NGCP-Caller-Info: <sip:testuser1002@invite-alias-devid-fulllookup.scenarios-pbx.test>;ip=127.126.0.1;port=\d+;primary=[% invite_alias_devid_fulllookup_scenarios_pbx_test.testuser1002.phone_number %]',
       'P-NGCP-Callee-Info: <sip:[% invite_alias_devid_fulllookup_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@invite-alias-devid-fulllookup.scenarios-pbx.test>;ip=127.0.0.1;port=5060;primary=[% invite_alias_devid_fulllookup_scenarios_pbx_test.testuser1002.phone_number %]1003;alias=[% invite_alias_devid_fulllookup_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]',
