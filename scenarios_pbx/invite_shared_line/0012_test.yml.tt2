@@ -35,7 +35,7 @@ sip_out:
       'Content-Length: 0',
       'User-Agent: Sipwise NGCP Proxy',
       'Contact: sip:127.0.0.1:5062',
-      'Call-Info: <sip:invite-shared-line.scenarios-pbx.test>;appearance-index=1;appearance-state=active;appearance-uri=\"<sip:1003@invite-shared-line.scenarios-pbx.test>\",<sip:invite-shared-line.scenarios-pbx.test>;appearance-index=\*;appearance-state=idle',
+      'Call-Info: <sip:invite-shared-line.scenarios-pbx.test>;appearance-index=1;appearance-state=active;appearance-uri=\"<sip:testuser1003@invite-shared-line.scenarios-pbx.test>\",<sip:invite-shared-line.scenarios-pbx.test>;appearance-index=\*;appearance-state=idle',
       'Event: call-info',
       'Subscription-State: active;expires=\d+',
     ]
