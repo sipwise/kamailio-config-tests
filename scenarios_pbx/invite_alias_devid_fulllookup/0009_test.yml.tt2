@@ -162,15 +162,15 @@ sip_in:
   - 'From: <sip:testuser1002@invite-alias-devid-fulllookup.scenarios-pbx.test>;tag=[\w-]+'
   - 'To: <sip:[% invite_alias_devid_fulllookup_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@invite-alias-devid-fulllookup.scenarios-pbx.test>'
   - 'CSeq: \d+ INVITE'
-  - 'Contact: sip:testuser1002@[% scenarios.2.ip %]:[% scenarios.2.port %]'
-  - 'Proxy-Authorization: Digest username="testuser1002",realm="invite-alias-devid-fulllookup.scenarios-pbx.test",uri="sip:127.0.0.1:5060",nonce=".+",response=".+",algorithm=MD5'
+  - 'Contact: <sip:[% scenarios.2.username %]@[% scenarios.2.ip %]:[% scenarios.2.port %](;[^>]+)?>'
+  - 'Proxy-Authorization: Digest username="testuser1002",realm="invite-alias-devid-fulllookup.scenarios-pbx.test",uri="sip:[% server_ip %]:5060",nonce=".+",response=".+",algorithm=MD5'
   - 'Content-Type: application/sdp'
   - 'Content-Length:\s+\d+'
   - 'P-NGCP-Src-Ip: [% scenarios.2.ip %]'
   - 'P-NGCP-Src-Port: [% scenarios.2.port %]'
   - 'P-NGCP-Src-Proto: udp'
   - 'P-NGCP-Src-Af: 4'
-  - 'P-Sock-Info: udp:127.0.0.1:5060'
+  - 'P-Sock-Info: udp:[% server_ip %]:5060'
   - 'P-LB-Uptime: \d+'
 sip_out:
   - [
@@ -178,7 +178,7 @@ sip_out:
       'From: <sip:testuser1002@invite-alias-devid-fulllookup.scenarios-pbx.test>;tag=[\w-]+',
       'To: <sip:[% invite_alias_devid_fulllookup_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@invite-alias-devid-fulllookup.scenarios-pbx.test>',
       'CSeq: \d+ INVITE',
-      'P-Out-Socket: udp:127.0.0.1:5060',
+      'P-Out-Socket: udp:[% server_ip %]:5060',
       'P-NGCP-Auth-IP: [% scenarios.2.ip %]',
       'P-NGCP-Auth-UA: <null>',
       'Server: Sipwise NGCP Proxy',
@@ -189,7 +189,7 @@ sip_out:
       'From: <sip:testuser1002@invite-alias-devid-fulllookup.scenarios-pbx.test>;tag=[\w-]+',
       'To: <sip:[% invite_alias_devid_fulllookup_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@invite-alias-devid-fulllookup.scenarios-pbx.test>',
       'CSeq: \d+ INVITE',
-      'P-Out-Socket: udp:127.0.0.1:5060',
+      'P-Out-Socket: udp:[% server_ip %]:5060',
       'P-NGCP-Auth-IP: [% scenarios.2.ip %]',
       'P-NGCP-Auth-UA: <null>',
       'P-NGCP-Authorization: testuser1002@invite-alias-devid-fulllookup.scenarios-pbx.test',
@@ -210,11 +210,11 @@ sip_out:
       'Content-Type: application/dialog\-info\+xml',
     ]
   - [
-      'INVITE sip:[% invite_alias_devid_fulllookup_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@127.126.0.1:\d+ SIP/2.0',
+      'INVITE sip:[% invite_alias_devid_fulllookup_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@[% scenarios.2.responders.0.ip %]:[% scenarios.2.responders.0.port %] SIP/2.0',
       'From: <sip:[% invite_alias_devid_fulllookup_scenarios_pbx_test.testuser1002.phone_number %]@invite-alias-devid-fulllookup.scenarios-pbx.test>;tag=[\w-]+',
       'To: <sip:[% invite_alias_devid_fulllookup_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@invite-alias-devid-fulllookup.scenarios-pbx.test>',
       'CSeq: \d+ INVITE',
-      'Contact: sip:testuser1002@127.126.0.1:\d+',
+      'Contact: <sip:[% scenarios.2.username %]@[% scenarios.2.ip %]:[% scenarios.2.port %](;[^>]+)?>',
       'Content-Type: application/sdp',
       'Content-Length:\s+\d+',
       'P-LB-Uptime: \d+',
@@ -225,10 +225,10 @@ sip_out:
       'P-Called-Party-ID: <sip:[% invite_alias_devid_fulllookup_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@invite-alias-devid-fulllookup.scenarios-pbx.test>',
       'P-App-Param: ;calltimer=21600;aleg_sst_enable=no;sst_enable=no;hold_alter_b2b_bleg=no;hold_alter_b2b_aleg=no;fast_ack=no;a_park_domain=[% invite_alias_devid_fulllookup_customerpbx_test.id %];b_park_domain=[% invite_alias_devid_fulllookup_customerpbx_test.id %]',
       'P-App-Name: sbc',
-      'P-NGCP-Caller-Info: <sip:testuser1002@invite-alias-devid-fulllookup.scenarios-pbx.test>;ip=127.126.0.1;port=\d+;primary=[% invite_alias_devid_fulllookup_scenarios_pbx_test.testuser1002.phone_number %]',
-      'P-NGCP-Callee-Info: <sip:[% invite_alias_devid_fulllookup_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@invite-alias-devid-fulllookup.scenarios-pbx.test>;ip=127.0.0.1;port=5060;primary=[% invite_alias_devid_fulllookup_scenarios_pbx_test.testuser1002.phone_number %]1003;alias=[% invite_alias_devid_fulllookup_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]',
+      'P-NGCP-Caller-Info: <sip:testuser1002@invite-alias-devid-fulllookup.scenarios-pbx.test>;ip=[% scenarios.2.ip %];port=[% scenarios.2.port %];primary=[% invite_alias_devid_fulllookup_scenarios_pbx_test.testuser1002.phone_number %]',
+      'P-NGCP-Callee-Info: <sip:[% invite_alias_devid_fulllookup_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@invite-alias-devid-fulllookup.scenarios-pbx.test>;ip=[% scenarios.2.responders.0.ip %];port=[% scenarios.2.responders.0.port %];primary=[% invite_alias_devid_fulllookup_scenarios_pbx_test.testuser1002.phone_number %]1003;alias=[% invite_alias_devid_fulllookup_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]',
       'P-NGCP-Presence-Caller: sip:testuser1002@invite-alias-devid-fulllookup.scenarios-pbx.test',
       'P-NGCP-Presence-Callee: sip:[% invite_alias_devid_fulllookup_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@invite-alias-devid-fulllookup.scenarios-pbx.test',
-      'P-D-Uri: sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060',
+      'P-D-Uri: sip:lb@127.0.0.1;lr;(received=sip:[% scenarios.2.responders.0.ip %]:[% scenarios.2.responders.0.port %];)?socket=sip:[% server_ip %]:5060',
       'P-Proxy-Uri: sip:127.0.0.1:5062',
     ]
