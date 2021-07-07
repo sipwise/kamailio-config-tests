@@ -14,8 +14,8 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - 'SIP/2.0 200 OK'
-  - 'From: <sip:4311000@invite-alias.scenarios-pbx.test>;tag=[\w-]+'
-  - 'To: <sip:testuser1003@invite-alias.scenarios-pbx.test>;tag=[\w-]+'
+  - 'From: <sip:[% invite_alias_scenarios_pbx_test.testuser1002.phone_number %]@invite-alias.scenarios-pbx.test>;tag=[\w-]+'
+  - 'To: <sip:[% scenarios.0.responders.0.username %]@invite-alias.scenarios-pbx.test>;tag=[\w-]+'
   - 'CSeq: \d+ BYE'
   - 'Contact: <sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];transport=UDP>'
   - 'Content-Length: \s+0'
@@ -26,8 +26,8 @@ sip_in:
 sip_out:
   - [
       'SIP/2.0 200 OK',
-      'From: <sip:4311000@invite-alias.scenarios-pbx.test>;tag=[\w-]+',
-      'To: <sip:testuser1003@invite-alias.scenarios-pbx.test>;tag=[\w-]+',
+      'From: <sip:[% invite_alias_scenarios_pbx_test.testuser1002.phone_number %]@invite-alias.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.0.username %]@invite-alias.scenarios-pbx.test>;tag=[\w-]+',
       'CSeq: \d+ BYE',
       'Contact: <sip:[% scenarios.0.responders.0.ip %]:\d+;transport=UDP>',
       'Content-Length: \s+0',

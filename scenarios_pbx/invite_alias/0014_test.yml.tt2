@@ -24,17 +24,17 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - 'ACK sip:127.126.0.1:\d+;transport=UDP SIP/2.0'
+  - 'ACK sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];transport=UDP SIP/2.0'
   - 'From: <sip:[% invite_alias_scenarios_pbx_test.testuser1002.phone_number %]@invite-alias.scenarios-pbx.test>;tag=[\w-]+'
-  - 'To: <sip:testuser1003@invite-alias.scenarios-pbx.test>;tag=[\w-]+'
+  - 'To: <sip:[% scenarios.0.responders.0.username %]@invite-alias.scenarios-pbx.test>;tag=[\w-]+'
   - 'CSeq: \d+ ACK'
   - 'Content-Length: 0'
   - 'Contact: <sip:127.0.0.1:508[08];transport=udp>'
 sip_out:
   - [
-      'ACK sip:127.126.0.1:\d+;transport=UDP SIP/2.0',
+      'ACK sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];transport=UDP SIP/2.0',
       'From: <sip:[% invite_alias_scenarios_pbx_test.testuser1002.phone_number %]@invite-alias.scenarios-pbx.test>;tag=[\w-]+',
-      'To: <sip:testuser1003@invite-alias.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.0.username %]@invite-alias.scenarios-pbx.test>;tag=[\w-]+',
       'CSeq: \d+ ACK',
       'Content-Length: 0',
       'Contact: <sip:127.0.0.1:508[08];transport=udp>',

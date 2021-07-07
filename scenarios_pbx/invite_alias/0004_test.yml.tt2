@@ -2,7 +2,7 @@ flow:
   - start|sl:filtered-ack:
 sip_in:
   - 'ACK sip:[% invite_alias_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@invite-alias.scenarios-pbx.test SIP/2.0'
-  - 'From: <sip:testuser1002@invite-alias.scenarios-pbx.test>;tag=[\w-]+'
+  - 'From: <sip:[% scenarios.0.username %]@invite-alias.scenarios-pbx.test>;tag=[\w-]+'
   - 'To: <sip:[% invite_alias_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@invite-alias.scenarios-pbx.test>;tag=[\w-]+'
   - 'CSeq: \d+ ACK'
   - 'Content-Length: 0'

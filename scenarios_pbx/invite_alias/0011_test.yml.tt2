@@ -14,7 +14,7 @@ flow:
 sip_in:
   - 'SIP/2.0 200 OK'
   - 'From: <sip:[% invite_alias_scenarios_pbx_test.testuser1002.phone_number %]@invite-alias.scenarios-pbx.test>;tag=[\w-]+'
-  - 'To: <sip:testuser1003@invite-alias.scenarios-pbx.test>;tag=[\w-]+'
+  - 'To: <sip:[% scenarios.0.responders.0.username %]@invite-alias.scenarios-pbx.test>;tag=[\w-]+'
   - 'CSeq: \d+ INVITE'
   - 'Contact: <sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];transport=UDP>'
   - 'Content-Type: application/sdp'
@@ -25,9 +25,9 @@ sip_in:
   - 'P-NGCP-Src-Af: 4'
 sip_out:
   - [
-      'PUBLISH sip:testuser1003@invite-alias.scenarios-pbx.test SIP/2.0',
-      'To: <sip:testuser1003@invite-alias.scenarios-pbx.test>',
-      'From: <sip:testuser1003@invite-alias.scenarios-pbx.test>;tag=[\w-]+',
+      'PUBLISH sip:[% scenarios.0.responders.0.username %]@invite-alias.scenarios-pbx.test SIP/2.0',
+      'To: <sip:[% scenarios.0.responders.0.username %]@invite-alias.scenarios-pbx.test>',
+      'From: <sip:[% scenarios.0.responders.0.username %]@invite-alias.scenarios-pbx.test>;tag=[\w-]+',
       'CSeq: \d+ PUBLISH',
       'Content-Length:\s+\d+',
       'User-Agent: Sipwise NGCP Proxy',
@@ -38,7 +38,7 @@ sip_out:
   - [
       'SIP/2.0 200 OK',
       'From: <sip:[% invite_alias_scenarios_pbx_test.testuser1002.phone_number %]@invite-alias.scenarios-pbx.test>;tag=[\w-]+',
-      'To: <sip:testuser1003@invite-alias.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.0.username %]@invite-alias.scenarios-pbx.test>;tag=[\w-]+',
       'CSeq: \d+ INVITE',
       'Contact: <sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];transport=UDP>',
       'Content-Type: application/sdp',

@@ -28,9 +28,9 @@ sip_in:
   - 'Content-Length:\s+\d+'
 sip_out:
   - [
-      'PUBLISH sip:testuser1002@invite-alias.scenarios-pbx.test SIP/2.0',
-      'To: <sip:testuser1002@invite-alias.scenarios-pbx.test>',
-      'From: <sip:testuser1002@invite-alias.scenarios-pbx.test>;tag=[\w-]+',
+      'PUBLISH sip:[% scenarios.0.username %]@invite-alias.scenarios-pbx.test SIP/2.0',
+      'To: <sip:[% scenarios.0.username %]@invite-alias.scenarios-pbx.test>',
+      'From: <sip:[% scenarios.0.username %]@invite-alias.scenarios-pbx.test>;tag=[\w-]+',
       'CSeq: \d+ PUBLISH',
       'Content-Length:\s+\d+',
       'User-Agent: Sipwise NGCP Proxy',
@@ -40,12 +40,12 @@ sip_out:
     ]
   - [
       'SIP/2.0 200 OK',
-      'From: <sip:testuser1002@invite-alias.scenarios-pbx.test>;tag=[\w-]+',
+      'From: <sip:[% scenarios.0.username %]@invite-alias.scenarios-pbx.test>;tag=[\w-]+',
       'To: <sip:[% invite_alias_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@invite-alias.scenarios-pbx.test>;tag=[\w-]+',
       'CSeq: \d+ INVITE',
       'Contact: <sip:127.0.0.1:508[08];transport=udp>',
       'Content-Type: application/sdp',
       'Content-Length:\s+\d+',
-      'P-COLP-Identity: "1003" <sip:1003@invite-alias.scenarios-pbx.test>',
-      'P-Out-Socket: udp:127.0.0.1:5060',
+      'P-COLP-Identity: "[% invite_alias_scenarios_pbx_test.testuser1003.pbx_extension %]" <sip:[% invite_alias_scenarios_pbx_test.testuser1003.pbx_extension %]@invite-alias.scenarios-pbx.test>',
+      'P-Out-Socket: udp:[% server_ip %]:5060',
     ]
