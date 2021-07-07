@@ -1,3 +1,10 @@
+kamailio-config-tests (9.5.1.2+0~mr9.5.1.2) unstable; urgency=medium
+
+  [ Alessio Garzi ]
+  * [8b448dc] TT#124224 Fix kct pbx scenarios for pbx loop removal
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 07 Jul 2021 16:30:37 +0200
+
 kamailio-config-tests (9.5.1.1+0~mr9.5.1.1) unstable; urgency=medium
 
   [ Victor Seva ]
