@@ -36,15 +36,15 @@ sip_in:
   - 'P-NGCP-Src-Port: [% scenarios.2.responders.0.port %]'
   - 'P-NGCP-Src-Proto: udp'
   - 'P-NGCP-Src-Af: 4'
-  - 'P-Sock-Info: udp:127.0.0.1:5060'
-  - 'Path: <sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060>'
+  - 'P-Sock-Info: udp:[% server_ip %]:5060'
+  - 'Path: <sip:lb@127.0.0.1;lr;(received=sip:[% scenarios.2.responders.0.ip %]:[% scenarios.2.responders.0.port %];)?socket=sip:[% server_ip %]:5060>'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'From: <sip:[% scenarios.0.username %]@incoming-shared-line.scenarios-pbx.test>;tag=',
       'To: <sip:[% scenarios.0.username %]@incoming-shared-line.scenarios-pbx.test>',
       'CSeq: 2 REGISTER',
-      'P-Out-Socket: udp:127.0.0.1:5060',
+      'P-Out-Socket: udp:[% server_ip %]:5060',
       'P-NGCP-Auth-IP: [% scenarios.2.responders.0.ip %]',
       'P-NGCP-Auth-UA: <null>',
       'Content-Length: 0',
@@ -54,7 +54,7 @@ sip_out:
       'From: <sip:[% scenarios.0.username %]@incoming-shared-line.scenarios-pbx.test>;tag=',
       'To: <sip:[% scenarios.0.username %]@incoming-shared-line.scenarios-pbx.test>;tag=',
       'CSeq: 2 REGISTER',
-      'P-Out-Socket: udp:127.0.0.1:5060',
+      'P-Out-Socket: udp:[% server_ip %]:5060',
       'P-NGCP-Auth-IP: [% scenarios.2.responders.0.ip %]',
       'P-NGCP-Auth-UA: <null>',
       'P-NGCP-Authorization: [% scenarios.0.username %]@incoming-shared-line.scenarios-pbx.test',

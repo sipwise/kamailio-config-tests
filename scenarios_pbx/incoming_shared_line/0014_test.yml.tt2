@@ -10,7 +10,7 @@ flow:
 sip_in:
   - 'SIP/2.0 180 Ringing'
   - 'From: <sip:[% incoming_shared_line_scenarios_pbx_test.testuser1003.pbx_phone_number %]@incoming-shared-line.scenarios-pbx.test>;tag=[\w-]+'
-  - 'To: <sip:testuser1002@incoming-shared-line.scenarios-pbx.test>;tag=[\w-]+'
+  - 'To: <sip:[% scenarios.2.responders.0.username %]@incoming-shared-line.scenarios-pbx.test>;tag=[\w-]+'
   - 'CSeq: \d+ INVITE'
   - 'Allow: INVITE, PRACK, ACK, BYE, CANCEL, OPTIONS, NOTIFY, REGISTER, SUBSCRIBE, REFER, PUBLISH, UPDATE, MESSAGE'
   - 'Call-Info: <sip:incoming-shared-line.scenarios-pbx.test>;appearance-index=1'
@@ -19,9 +19,9 @@ sip_in:
   - 'P-NGCP-Src-Af: 4'
 sip_out:
   - [
-      'PUBLISH sip:testuser1002@incoming-shared-line.scenarios-pbx.test SIP/2.0',
-      'To: <sip:testuser1002@incoming-shared-line.scenarios-pbx.test>',
-      'From: <sip:testuser1002@incoming-shared-line.scenarios-pbx.test>;tag=[\w-]+',
+      'PUBLISH sip:[% scenarios.2.responders.0.username %]@incoming-shared-line.scenarios-pbx.test SIP/2.0',
+      'To: <sip:[% scenarios.2.responders.0.username %]@incoming-shared-line.scenarios-pbx.test>',
+      'From: <sip:[% scenarios.2.responders.0.username %]@incoming-shared-line.scenarios-pbx.test>;tag=[\w-]+',
       'CSeq: \d+ PUBLISH',
       'Content-Length:\s+\d+',
       'User-Agent: Sipwise NGCP Proxy',
@@ -31,7 +31,7 @@ sip_out:
   - [
       'SIP/2.0 180 Ringing',
       'From: <sip:[% incoming_shared_line_scenarios_pbx_test.testuser1003.pbx_phone_number %]@incoming-shared-line.scenarios-pbx.test>;tag=[\w-]+',
-      'To: <sip:testuser1002@incoming-shared-line.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.2.responders.0.username %]@incoming-shared-line.scenarios-pbx.test>;tag=[\w-]+',
       'CSeq: \d+ INVITE',
       'Allow: INVITE, PRACK, ACK, BYE, CANCEL, OPTIONS, NOTIFY, REGISTER, SUBSCRIBE, REFER, PUBLISH, UPDATE, MESSAGE',
       'Call-Info: <sip:incoming-shared-line.scenarios-pbx.test>;appearance-index=1',

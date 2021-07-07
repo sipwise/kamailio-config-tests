@@ -21,7 +21,7 @@ flow:
 sip_in:
   - 'SIP/2.0 200 OK'
   - 'From: <sip:[% incoming_shared_line_scenarios_pbx_test.testuser1003.pbx_phone_number %]@incoming-shared-line.scenarios-pbx.test>;tag=[\w-]+'
-  - 'To: <sip:1002@incoming-shared-line.scenarios-pbx.test>;tag=[\w-]+'
+  - 'To: <sip:[% incoming_shared_line_scenarios_pbx_test.testuser1002.pbx_extension %]@incoming-shared-line.scenarios-pbx.test>;tag=[\w-]+'
   - 'CSeq: \d+ INVITE'
   - 'Allow: INVITE, PRACK, ACK, BYE, CANCEL, OPTIONS, NOTIFY, REGISTER, SUBSCRIBE, REFER, PUBLISH, UPDATE, MESSAGE'
   - 'Call-Info: <sip:incoming-shared-line.scenarios-pbx.test>;appearance-index=1'
@@ -30,9 +30,9 @@ sip_in:
   - 'Content-Length:\s+\d+'
 sip_out:
   - [
-      'PUBLISH sip:testuser1003@incoming-shared-line.scenarios-pbx.test SIP/2.0',
-      'To: <sip:testuser1003@incoming-shared-line.scenarios-pbx.test>',
-      'From: <sip:testuser1003@incoming-shared-line.scenarios-pbx.test>;tag=[\w-]+',
+      'PUBLISH sip:[% scenarios.2.username %]@incoming-shared-line.scenarios-pbx.test SIP/2.0',
+      'To: <sip:[% scenarios.2.username %]@incoming-shared-line.scenarios-pbx.test>',
+      'From: <sip:[% scenarios.2.username %]@incoming-shared-line.scenarios-pbx.test>;tag=[\w-]+',
       'CSeq: \d+ PUBLISH',
       'Content-Length:\s+\d+',
       'User-Agent: Sipwise NGCP Proxy',
@@ -42,20 +42,20 @@ sip_out:
     ]
   - [
       'SIP/2.0 200 OK',
-      'From: <sip:testuser1003@incoming-shared-line.scenarios-pbx.test>;tag=[\w-]+',
-      'To: <sip:1002@incoming-shared-line.scenarios-pbx.test>;tag=[\w-]+',
+      'From: <sip:[% scenarios.2.username %]@incoming-shared-line.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:[% incoming_shared_line_scenarios_pbx_test.testuser1002.pbx_extension %]@incoming-shared-line.scenarios-pbx.test>;tag=[\w-]+',
       'CSeq: \d+ INVITE',
       'Allow: INVITE, PRACK, ACK, BYE, CANCEL, OPTIONS, NOTIFY, REGISTER, SUBSCRIBE, REFER, PUBLISH, UPDATE, MESSAGE',
       'Contact: <sip:127.0.0.1:508[08];transport=udp>',
       'Content-Type: application/sdp',
       'Content-Length:\s+\d+',
-      'P-COLP-Identity: "1002" <sip:1002@incoming-shared-line.scenarios-pbx.test>',
-      'P-Out-Socket: udp:127.0.0.1:5060',
+      'P-COLP-Identity: "[% incoming_shared_line_scenarios_pbx_test.testuser1002.pbx_extension %]" <sip:[% incoming_shared_line_scenarios_pbx_test.testuser1002.pbx_extension %]@incoming-shared-line.scenarios-pbx.test>',
+      'P-Out-Socket: udp:[% server_ip %]:5060',
     ]
   - [
       '^CANCEL',
       'From: <sip:[% incoming_shared_line_scenarios_pbx_test.testuser1003.pbx_phone_number %]@incoming-shared-line.scenarios-pbx.test>;tag=[\w-]+',
-      'To: <sip:1002@incoming-shared-line.scenarios-pbx.test>',
+      'To: <sip:[% incoming_shared_line_scenarios_pbx_test.testuser1002.pbx_extension %]@incoming-shared-line.scenarios-pbx.test>',
       'CSeq: \d+ CANCEL',
       'Content-Length: 0',
       'Reason: SIP;cause=200;text="Call completed elsewhere"',

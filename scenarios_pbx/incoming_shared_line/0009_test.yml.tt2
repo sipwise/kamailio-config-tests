@@ -15,7 +15,7 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - 'INVITE sip:testuser1002@[% scenarios.2.responders.0.ip %]:[% scenarios.2.responders.0.port %] SIP/2.0'
+  - 'INVITE sip:[% scenarios.2.responders.0.username %]@[% scenarios.2.responders.0.ip %]:[% scenarios.2.responders.0.port %] SIP/2.0'
   - 'From: <sip:[% incoming_shared_line_scenarios_pbx_test.testuser1003.pbx_phone_number %]@incoming-shared-line.scenarios-pbx.test>;tag=[\w-]+'
   - 'To: <sip:testuser1002@incoming-shared-line.scenarios-pbx.test>'
   - 'CSeq: \d+ INVITE'
@@ -24,11 +24,11 @@ sip_in:
   - 'P-Caller-UUID: [% incoming_shared_line_scenarios_pbx_test.testuser1003.uuid %]'
   - 'P-Callee-UUID: [% incoming_shared_line_scenarios_pbx_test.testuser1002.uuid %]'
   - 'P-NGCP-Rtpengine-Bleg: 1'
-  - 'P-NGCP-Caller-Info: <sip:testuser1003@incoming-shared-line.scenarios-pbx.test>;ip=[% scenarios.2.ip %];port=[% scenarios.2.port %];primary=[% incoming_shared_line_scenarios_pbx_test.testuser1003.pbx_phone_number %]'
-  - 'P-NGCP-Callee-Info: <sip:[% incoming_shared_line_scenarios_pbx_test.testuser1002.phone_number %]@incoming-shared-line.scenarios-pbx.test>;ip=127.0.0.1;port=5060;primary=[% incoming_shared_line_scenarios_pbx_test.testuser1002.phone_number %]'
-  - 'P-NGCP-Presence-Caller: sip:testuser1003@incoming-shared-line.scenarios-pbx.test'
-  - 'P-NGCP-Presence-Callee: sip:testuser1002@incoming-shared-line.scenarios-pbx.test'
-  - 'P-D-Uri: sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060'
+  - 'P-NGCP-Caller-Info: <sip:[% scenarios.2.username %]@incoming-shared-line.scenarios-pbx.test>;ip=[% scenarios.2.ip %];port=[% scenarios.2.port %];primary=[% incoming_shared_line_scenarios_pbx_test.testuser1003.pbx_phone_number %]'
+  - 'P-NGCP-Callee-Info: <sip:[% incoming_shared_line_scenarios_pbx_test.testuser1002.phone_number %]@incoming-shared-line.scenarios-pbx.test>;ip=[% scenarios.2.responders.0.ip %];port=[% scenarios.2.responders.0.port %];primary=[% incoming_shared_line_scenarios_pbx_test.testuser1002.phone_number %]'
+  - 'P-NGCP-Presence-Caller: sip:[% scenarios.2.username %]@incoming-shared-line.scenarios-pbx.test'
+  - 'P-NGCP-Presence-Callee: sip:[% scenarios.2.responders.0.username %]@incoming-shared-line.scenarios-pbx.test'
+  - 'P-D-Uri: sip:lb@127.0.0.1;lr;(received=sip:[% scenarios.2.responders.0.ip %]:[% scenarios.2.responders.0.port %];)?socket=sip:[% server_ip %]:5060'
   - 'Content-Type: application/sdp'
   - 'Content-Length:\s+\d+'
   - 'Contact: <sip:127.0.0.1:508[08];transport=udp>'
@@ -42,18 +42,18 @@ sip_out:
       'Content-Length: 0',
     ]
   - [
-      'INVITE sip:testuser1002@[% scenarios.2.responders.0.ip %]:[% scenarios.2.responders.0.port %] SIP/2.0',
+      'INVITE sip:[% scenarios.2.responders.0.username %]@[% scenarios.2.responders.0.ip %]:[% scenarios.2.responders.0.port %] SIP/2.0',
       'From: <sip:[% incoming_shared_line_scenarios_pbx_test.testuser1003.pbx_phone_number %]@incoming-shared-line.scenarios-pbx.test>;tag=[\w-]+',
-      'To: <sip:testuser1002@incoming-shared-line.scenarios-pbx.test>',
+      'To: <sip:[% scenarios.2.responders.0.username %]@incoming-shared-line.scenarios-pbx.test>',
       'CSeq: \d+ INVITE',
       'P-LB-Uptime: \d+',
       'P-Asserted-Identity: <sip:[% incoming_shared_line_scenarios_pbx_test.testuser1003.pbx_phone_number %]@incoming-shared-line.scenarios-pbx.test>',
       'P-Caller-UUID: [% incoming_shared_line_scenarios_pbx_test.testuser1003.uuid %]',
       'P-Callee-UUID: [% incoming_shared_line_scenarios_pbx_test.testuser1002.uuid %]',
       'P-NGCP-Rtpengine-Bleg: 1',
-      'P-NGCP-Caller-Info: <sip:testuser1003@incoming-shared-line.scenarios-pbx.test>;ip=[% scenarios.2.ip %];port=[% scenarios.2.port %];primary=[% incoming_shared_line_scenarios_pbx_test.testuser1003.pbx_phone_number %]',
-      'P-NGCP-Callee-Info: <sip:[% incoming_shared_line_scenarios_pbx_test.testuser1002.phone_number %]@incoming-shared-line.scenarios-pbx.test>;ip=127.0.0.1;port=5060;primary=[% incoming_shared_line_scenarios_pbx_test.testuser1002.phone_number %]',
-      'P-D-Uri: sip:lb@127.0.0.1;lr;socket=sip:127.0.0.1:5060',
+      'P-NGCP-Caller-Info: <sip:[% scenarios.2.username %]@incoming-shared-line.scenarios-pbx.test>;ip=[% scenarios.2.ip %];port=[% scenarios.2.port %];primary=[% incoming_shared_line_scenarios_pbx_test.testuser1003.pbx_phone_number %]',
+      'P-NGCP-Callee-Info: <sip:[% incoming_shared_line_scenarios_pbx_test.testuser1002.phone_number %]@incoming-shared-line.scenarios-pbx.test>;ip=[% scenarios.2.responders.0.ip %];port=[% scenarios.2.responders.0.port %];primary=[% incoming_shared_line_scenarios_pbx_test.testuser1002.phone_number %]',
+      'P-D-Uri: sip:lb@127.0.0.1;lr;(received=sip:[% scenarios.2.responders.0.ip %]:[% scenarios.2.responders.0.port %];)?socket=sip:[% server_ip %]:5060',
       'Content-Type: application/sdp',
       'Content-Length:\s+\d+',
       'Contact: <sip:127.0.0.1:508[08];transport=udp>',
