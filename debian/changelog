@@ -1,3 +1,11 @@
+kamailio-config-tests (9.4.1.2+0~mr9.4.1.2) unstable; urgency=medium
+
+  [ Alessio Garzi ]
+  * [73ab7ff] TT#128200 invite_emercy_cirpack scenario check boundary
+  * [86a7162] TT#128200 Copy sems-b2b.log
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 08 Jul 2021 13:31:54 +0200
+
 kamailio-config-tests (9.4.1.1+0~mr9.4.1.1) unstable; urgency=medium
 
   [ Mohammed Ghettas ]
