@@ -50,8 +50,10 @@ elif [ -f "${BASE_DIR}/log/${GROUP}/run_failed.txt" ]; then
   echo "$(date) - run_failed.txt detected"
   cp "${BASE_DIR}/log/${GROUP}/run_failed.txt" "${BASE_DIR}/failed.txt"
 fi
-
-if ! [ -f "${BASE_DIR}/failed.txt" ]; then
+if [ -f "${BASE_DIR}/failed.txt" ]; then
+  echo "*** failed.txt ***"
+  cat "${BASE_DIR}/failed.txt"
+else
   echo "$(date) - no failed scenarios found[${GROUP}]"
   exit 1
 fi

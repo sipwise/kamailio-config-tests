@@ -33,8 +33,10 @@ SCEN=()
 
 get_scenarios() {
   if [ -n "${SCEN_FILE}" ]; then
+    echo "$(date) - scenarios from file"
     while read -r t; do
       SCEN+=( "${t}" )
+      echo -e "\\t* ${t}"
     done < "${SCEN_FILE}"
   else
     while read -r t; do
