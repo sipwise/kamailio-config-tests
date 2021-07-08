@@ -1,0 +1,5 @@
+{
+  "@invite-alias-devid.scenarios-pbx.test": {
+    "nat_sipping": "no"
+  }
+}

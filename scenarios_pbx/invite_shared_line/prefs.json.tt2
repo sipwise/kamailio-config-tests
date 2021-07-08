@@ -1,0 +1,5 @@
+{
+  "@invite-shared-line.scenarios-pbx.test": {
+    "nat_sipping": "no"
+  }
+}
