@@ -3,5 +3,8 @@
     	"lnp_add_npdi": true,
     	"lnp_to_rn": true,
         "concurrent_max": 1
+    },
+    "@incoming-peer-unallocated-authoritative.scenarios-lnp.test": {
+        "nat_sipping": "no"
     }
 }

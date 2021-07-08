@@ -1,4 +1,7 @@
 {
+    "@invite-peerout.scenarios-lnp.test": {
+        "nat_sipping": "no"
+    },
     "testuser1002@invite-peerout.scenarios-lnp.test": {
         "rewrite_rule_set": "rw_invite_peerout_lnp"
     },

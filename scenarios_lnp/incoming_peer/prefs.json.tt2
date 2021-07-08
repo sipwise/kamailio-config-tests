@@ -4,6 +4,9 @@
     	"lnp_to_rn": true,
         "concurrent_max": 1
     },
+    "@incoming-peer.scenarios-lnp.test": {
+        "nat_sipping": "no"
+    },
     "testuser1001@incoming-peer.scenarios-lnp.test": {
         "lock": 5
     }

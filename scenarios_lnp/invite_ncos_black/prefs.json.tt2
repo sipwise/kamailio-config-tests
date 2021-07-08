@@ -1,5 +1,6 @@
 {
     "@invite-ncos-black.scenarios-lnp.test": {
+        "nat_sipping": "no",
         "lnp_for_local_sub": true,
         "ncos": "ncos_black"
     },

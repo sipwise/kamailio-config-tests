@@ -1,4 +1,7 @@
 {
+    "@invite-peerout-rn.scenarios-lnp.test": {
+        "nat_sipping": "no"
+    },
     "peer_invite_peerout_rn_host0": {
         "lnp_to_rn": true,
         "lnp_add_npdi": true,

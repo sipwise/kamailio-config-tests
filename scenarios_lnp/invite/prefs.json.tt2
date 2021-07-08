@@ -1,5 +1,6 @@
 {
     "@invite.scenarios-lnp.test": {
+        "nat_sipping": "no",
         "lnp_for_local_sub": true
     },
     "peer_invite_lnp_host0": {

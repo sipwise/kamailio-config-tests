@@ -1,4 +1,7 @@
 {
+    "@register-lock-ported.scenarios-lpn.test": {
+        "nat_sipping": "no"
+    },
     "testuser1003@register-lock-ported.scenarios-lpn.test": {
         "allowed_ips": [
             "[% scenarios.0.ip %]"
