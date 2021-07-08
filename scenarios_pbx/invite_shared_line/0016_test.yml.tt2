@@ -29,7 +29,7 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - 'BYE sip:127.126.0.1:\d+;transport=UDP SIP/2.0'
+  - 'BYE sip:[% scenarios.2.responders.0.ip %]:[% scenarios.2.responders.0.port %];transport=UDP SIP/2.0'
   - 'From: <sip:[% invite_shared_line_scenarios_pbx_test.testuser1002.phone_number %]@invite-shared-line.scenarios-pbx.test>;tag=[\w-]+'
   - 'To: <sip:testuser1003@invite-shared-line.scenarios-pbx.test>;tag=[\w-]+'
   - 'CSeq: \d+ BYE'
@@ -57,7 +57,7 @@ sip_out:
       'Content-Type: application/dialog\-info\+xml',
     ]
   - [
-      'BYE sip:127.126.0.1:\d+;transport=UDP SIP/2.0',
+      'BYE sip:[% scenarios.2.responders.0.ip %]:[% scenarios.2.responders.0.port %];transport=UDP SIP/2.0',
       'From: <sip:[% invite_shared_line_scenarios_pbx_test.testuser1002.phone_number %]@invite-shared-line.scenarios-pbx.test>;tag=[\w-]+',
       'To: <sip:testuser1003@invite-shared-line.scenarios-pbx.test>;tag=[\w-]+',
       'CSeq: \d+ BYE',

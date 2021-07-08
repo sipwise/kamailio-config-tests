@@ -14,7 +14,7 @@
       Call-ID: NGCP%[field4 file="callee.csv" line=2]%///[call_id]
       Call-Info: <sip:[field2 file="caller.csv" line=2]>;appearance-index=1
       CSeq: 1 INVITE
-      Contact: sip:[field0 file="caller.csv" line=2]@[local_ip]:[local_port]
+      Contact: <sip:[field0 file="caller.csv" line=2]@[local_ip]:[local_port]>
       Max-Forwards: 70
       Content-Type: application/sdp
       Content-Length: [len]
@@ -46,7 +46,7 @@
       Call-ID: NGCP%[field4 file="callee.csv" line=2]%///[call_id]
       Call-Info: <sip:[field2 file="caller.csv" line=2]>;appearance-index=1
       CSeq: 1 ACK
-      Contact: sip:[field0 file="caller.csv" line=2]@[local_ip]:[local_port]
+      Contact: <sip:[field0 file="caller.csv" line=2]@[local_ip]:[local_port]>
       Max-Forwards: 70
       Content-Length: 0
 
@@ -65,7 +65,7 @@
       Call-ID: NGCP%[field4 file="callee.csv" line=2]%///[call_id]
       Call-Info: <sip:[field2 file="caller.csv" line=2]>;appearance-index=1
       CSeq: 2 INVITE
-      Contact: sip:[field0 file="caller.csv" line=2]@[local_ip]:[local_port]
+      Contact: <sip:[field0 file="caller.csv" line=2]@[local_ip]:[local_port]>
       Max-Forwards: 70
       [field1 file="caller.csv" line=2]
       Content-Type: application/sdp
@@ -106,7 +106,7 @@
       Call-Info: <sip:[field2 file="caller.csv" line=2]>;appearance-index=1
       [routes]
       CSeq: 2 ACK
-      Contact: sip:[field0 file="caller.csv" line=2]@[local_ip]:[local_port]
+      Contact: <sip:[field0 file="caller.csv" line=2]@[local_ip]:[local_port]>
       Max-Forwards: 70
       Content-Length: 0
 
@@ -132,7 +132,7 @@
       Call-ID: NGCP%[field4 file="callee.csv" line=2]%///[call_id]
       Call-Info: <sip:[field2 file="caller.csv" line=2]>;appearance-index=1
       CSeq: 3 BYE
-      Contact: sip:[field0 file="caller.csv" line=2]@[local_ip]:[local_port]
+      Contact: <sip:[field0 file="caller.csv" line=2]@[local_ip]:[local_port]>
       [routes]
       Max-Forwards: 70
       Content-Length: 0

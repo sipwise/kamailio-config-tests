@@ -17,7 +17,7 @@ sip_in:
   - 'From: <sip:[% invite_shared_line_scenarios_pbx_test.testuser1002.phone_number %]@invite-shared-line.scenarios-pbx.test>;tag=[\w-]+'
   - 'To: <sip:testuser1003@invite-shared-line.scenarios-pbx.test>;tag=[\w-]+'
   - 'CSeq: \d+ BYE'
-  - 'Contact: <sip:127.126.0.1:\d+;transport=UDP>'
+  - 'Contact: <sip:[% scenarios.2.responders.0.ip %]:[% scenarios.2.responders.0.port %](;[^>]+)?>'
   - 'Content-Length: \s+0'
   - 'P-NGCP-Src-Af: 4'
 sip_out:
@@ -26,7 +26,7 @@ sip_out:
       'From: <sip:[% invite_shared_line_scenarios_pbx_test.testuser1002.phone_number %]@invite-shared-line.scenarios-pbx.test>;tag=[\w-]+',
       'To: <sip:testuser1003@invite-shared-line.scenarios-pbx.test>;tag=[\w-]+',
       'CSeq: \d+ BYE',
-      'Contact: <sip:127.126.0.1:\d+;transport=UDP>',
+      'Contact: <sip:[% scenarios.2.responders.0.ip %]:[% scenarios.2.responders.0.port %](;[^>]+)?>',
       'Content-Length: \s+0',
       'P-NGCP-Src-Af: 4',
     ]

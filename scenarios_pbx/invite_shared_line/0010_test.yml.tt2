@@ -17,13 +17,13 @@ flow:
 sip_in:
   - 'SIP/2.0 180 Ringing'
   - 'From: <sip:[% invite_shared_line_scenarios_pbx_test.testuser1002.phone_number %]@invite-shared-line.scenarios-pbx.test>;tag=[\w-]+'
-  - 'To: <sip:1003@invite-shared-line.scenarios-pbx.test>;tag=[\w-]+'
+  - 'To: <sip:[% invite_shared_line_scenarios_pbx_test.testuser1003.pbx_extension %]@invite-shared-line.scenarios-pbx.test>;tag=[\w-]+'
   - 'CSeq: \d+ INVITE'
   - 'Contact: <sip:127.0.0.1:508[08];transport=udp>'
   - 'Content-Length: 0'
 sip_out:
   - [
-      'NOTIFY sip:testuser1002@127.126.0.1:\d+ SIP/2.0',
+      'NOTIFY sip:[% scenarios.1.responders.0.username %]@[% scenarios.1.responders.0.ip %]:[% scenarios.1.responders.0.port %](;alias=[% scenarios.1.responders.0.ip %]~[% scenarios.1.responders.0.port %]~1) SIP/2.0',
       'To: <sip:testuser1002@invite-shared-line.scenarios-pbx.test>;tag=[\w-]+',
       'From: <sip:testuser1002@invite-shared-line.scenarios-pbx.test>;tag=[\w-]+',
       'CSeq: \d+ NOTIFY',
@@ -35,7 +35,7 @@ sip_out:
       'Subscription-State: terminated;reason=noresource',
     ]
   - [
-      'NOTIFY sip:testuser1002@127.126.0.1:\d+ SIP/2.0',
+      'NOTIFY sip:[% scenarios.0.responders.0.username %]@[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %](;alias=[% scenarios.0.responders.0.ip %]~[% scenarios.0.responders.0.port %]~1) SIP/2.0',
       'To: <sip:testuser1002@invite-shared-line.scenarios-pbx.test>;tag=[\w-]+',
       'From: <sip:testuser1002@invite-shared-line.scenarios-pbx.test>;tag=[\w-]+',
       'CSeq: \d+ NOTIFY',
@@ -60,10 +60,10 @@ sip_out:
   - [
       'SIP/2.0 180 Ringing',
       'From: <sip:testuser1002@invite-shared-line.scenarios-pbx.test>;tag=[\w-]+',
-      'To: <sip:1003@invite-shared-line.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:[% invite_shared_line_scenarios_pbx_test.testuser1003.pbx_extension %]@invite-shared-line.scenarios-pbx.test>;tag=[\w-]+',
       'CSeq: \d+ INVITE',
       'Contact: <sip:127.0.0.1:508[08];transport=udp>',
       'Content-Length: 0',
-      'P-COLP-Identity: "1003" <sip:1003@invite-shared-line.scenarios-pbx.test>',
-      'P-Out-Socket: udp:127.0.0.1:5060',
+      'P-COLP-Identity: "[% invite_shared_line_scenarios_pbx_test.testuser1003.pbx_extension %]" <sip:[% invite_shared_line_scenarios_pbx_test.testuser1003.pbx_extension %]@invite-shared-line.scenarios-pbx.test>',
+      'P-Out-Socket: udp:[% server_ip %]:5060',
     ]
