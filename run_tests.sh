@@ -450,10 +450,6 @@ rm -f "${LOG_DIR}/run_failed.txt"
 for t in ${failed[*]}; do
   echo "$t" >> "${LOG_DIR}/run_failed.txt"
 done
-if [ -f "${LOG_DIR}/run_failed.txt" ]; then
-  echo "$(date) - Failed scenarios:"
-  cat "${LOG_DIR}/run_failed.txt"
-fi
 
 if [[ "${PROV_TYPE}" == "full" ]] ; then
   echo "$(date) - Delete provided scenarios"
@@ -521,4 +517,8 @@ fi
 cfg_debug_off
 
 echo "$(date) - Done[${error_flag}]"
+if [ -f "${LOG_DIR}/run_failed.txt" ]; then
+  echo "$(date) - Failed scenarios:"
+  cat "${LOG_DIR}/run_failed.txt"
+fi
 exit ${error_flag}
