@@ -206,14 +206,14 @@ sip_in:
   - 'P-NGCP-Src-Port: [% scenarios.2.port %]'
   - 'P-NGCP-Src-Proto: udp'
   - 'P-NGCP-Src-Af: 4'
-  - 'P-Sock-Info: udp:127.0.0.1:5060'
+  - 'P-Sock-Info: udp:[% server_ip %]:5060'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'From: <sip:[% scenarios.0.username %]@',
       'To: <sip:[% extra_info.phone_numbers.4 %]@',
       'CSeq: 2 INVITE',
-      'P-Out-Socket: udp:127.0.0.1:5060',
+      'P-Out-Socket: udp:[% server_ip %]:5060',
       'P-NGCP-Auth-IP: [% scenarios.2.ip %]',
       'Content-Length: 0'
     ]
@@ -225,7 +225,7 @@ sip_out:
       'From: <sip:[% invite_ncos_black_scenarios_lnp_test.testuser1002.phone_number %]@',
       'To: <sip:[% extra_info.phone_numbers.4 %]@',
       'CSeq: 2 INVITE',
-      'Contact: sip:[% scenarios.0.username %]@[% scenarios.2.ip %]:[% scenarios.2.port %]',
+      'Contact: <sip:[% scenarios.2.username %]@[% scenarios.2.ip %]:[% scenarios.2.port %](;[^>]+)?>',
       'Max-Forwards: 68',
       'Content-Type: application/sdp',
       'P-Caller-UUID: [% invite_ncos_black_scenarios_lnp_test.testuser1002.uuid %]',

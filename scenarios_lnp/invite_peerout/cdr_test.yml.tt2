@@ -3,7 +3,7 @@ cdr:
     source_domain: 'invite-peerout.scenarios-lnp.test'
     source_cli: '[% invite_peerout_scenarios_lnp_test.testuser1002.phone_number %]'
     destination_user: '0043test28881001'
-    destination_domain: '127.0.2.1'
+    destination_domain: '[% scenarios.0.responders.0.ip %]'
     destination_user_dialed: '[% scenarios.0.responders.0.username %]'
     call_type: 'call'
     call_status: 'ok'

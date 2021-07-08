@@ -29,11 +29,11 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - '^BYE sip:127.0.0.1:5080(;prxroute=1)? SIP/2.0'
-  - 'Contact: sip:[% scenarios.0.username %]@'
+  - 'Contact: <sip:[% scenarios.2.username %]@[% scenarios.2.ip %]:[% scenarios.2.port %](;[^>]+)?>'
   - 'CSeq: 3 BYE'
   - 'Max-Forwards: 69'
   - 'Content-Length: 0'
-  - 'From: <sip:[% scenarios.0.username %]@'
+  - 'From: <sip:[% scenarios.2.username %]@'
   - 'To: <sip:[% extra_info.phone_numbers.4 %]@'
 
 sip_out:
@@ -41,12 +41,12 @@ sip_out:
       '^SIP/2.0 100 Trying',
       'CSeq: 3 BYE',
       'Content-Length: 0',
-      'From: <sip:[% scenarios.0.username %]@',
+      'From: <sip:[% scenarios.2.username %]@',
       'To: <sip:[% extra_info.phone_numbers.4 %]@'
     ]
   - [
       '^BYE sip:127.0.0.1:5080(;prxroute=1)? SIP/2.0',
-      'Contact: sip:[% scenarios.0.username %]@',
+      'Contact: <sip:[% scenarios.2.username %]@[% scenarios.2.ip %]:[% scenarios.2.port %](;[^>]+)?>',
       'CSeq: 3 BYE',
       'Max-Forwards: 68',
       'Content-Length: 0',

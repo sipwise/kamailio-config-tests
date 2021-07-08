@@ -21,7 +21,7 @@ sip_in:
   - 'P-NGCP-Caller-Info: <sip:testuser1001@incoming-peer.scenarios-lnp.test>;ip=127.0.0.1;port=508[08];primary=[% incoming_peer_scenarios_lnp_test.testuser1001.phone_number %]'
   - 'P-NGCP-Forward-Info: <sip:[% incoming_peer_scenarios_lnp_test.testuser1001.phone_number %]@incoming-peer.scenarios-lnp.test>;ip=127.0.0.1;port=508[08];primary=[% incoming_peer_scenarios_lnp_test.testuser1001.phone_number %]'
   - 'P-NGCP-Callee-Info: <sip:[% extra_info.phone_numbers.0 %]@incoming-peer.scenarios-lnp.test>;ip=[% scenarios.0.responders.0.ip %];port=[% scenarios.0.responders.0.port %]'
-  - 'P-Asserted-Identity: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]>'
+  - 'P-Asserted-Identity: <sip:[% scenarios.0.devid %]@[% scenarios.0.domain %]>'
   - 'P-D-Uri: sip:127.0.0.1:5060;received=sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %]%3blr%3btransport%3dudp'
   - 'Content-Type: application/sdp'
   - 'Contact: <sip:127.0.0.1:508[08];transport=udp>'
@@ -44,7 +44,7 @@ sip_out:
       'P-NGCP-Caller-Info: <sip:testuser1001@incoming-peer.scenarios-lnp.test>;ip=127.0.0.1;port=508[08];primary=[% incoming_peer_scenarios_lnp_test.testuser1001.phone_number %]',
       'P-NGCP-Forward-Info: <sip:[% incoming_peer_scenarios_lnp_test.testuser1001.phone_number %]@incoming-peer.scenarios-lnp.test>;ip=127.0.0.1;port=508[08];primary=[% incoming_peer_scenarios_lnp_test.testuser1001.phone_number %]',
       'P-NGCP-Callee-Info: <sip:[% extra_info.phone_numbers.0 %]@incoming-peer.scenarios-lnp.test>;ip=[% scenarios.0.responders.0.ip %];port=[% scenarios.0.responders.0.port %]',
-      'P-Asserted-Identity: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]>',
+      'P-Asserted-Identity: <sip:[% scenarios.0.devid %]@[% scenarios.0.domain %]>',
       'P-D-Uri: sip:127.0.0.1:5060;received=sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %]%3blr%3btransport%3dudp',
       'Content-Type: application/sdp',
       'Contact: <sip:127.0.0.1:508[08];transport=udp>',

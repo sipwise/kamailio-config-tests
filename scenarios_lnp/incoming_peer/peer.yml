@@ -14,7 +14,7 @@ peer_incoming_peer_00:
   inboundrules:
     - group_id: peer_incoming_peer_00_group
       field: "ruri_uri"
-      pattern: '.*'
+      pattern: "^sip:.+@incoming-peer.scenarios-lnp.test"
       priority: 50
       enabled: 1
   hosts:
@@ -40,8 +40,8 @@ peer_incoming_peer_01:
   rules:
     - group_id: peer_incoming_peer_01_group
       callee_prefix: ""
-      callee_pattern: ''
-      caller_pattern: '^sip:.+@incoming-peer.scenarios-lnp.test'
+      callee_pattern: ""
+      caller_pattern: "^sip:.+@incoming-peer.scenarios-lnp.test"
       description: ""
   hosts:
     - group_id: peer_incoming_peer_01_group

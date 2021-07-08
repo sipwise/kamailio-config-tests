@@ -136,7 +136,7 @@ flow:
       ]
 sip_in:
   - '^INVITE sip:[% incoming_peer_scenarios_lnp_test.testuser1001.phone_number %]@'
-  - 'Contact: sip:[% scenarios.0.username %]@'
+  - 'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>'
   - 'CSeq: 1 INVITE'
   - 'Max-Forwards: 69'
   - 'Content-Type: application/sdp'
@@ -152,7 +152,7 @@ sip_out:
       'CSeq: 1 INVITE',
       'From: <sip:[% scenarios.0.username %]@',
       'To: <sip:[% incoming_peer_scenarios_lnp_test.testuser1001.phone_number %]@',
-      'Contact: sip:[% scenarios.0.username %]@',
+      'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>',
       'Content-Type: application/sdp',
       'P-HIH-Cause: 302',
       'P-From-Peer: 1',

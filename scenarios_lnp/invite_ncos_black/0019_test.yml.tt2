@@ -25,17 +25,17 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - '^ACK sip:127.0.0.1:5080(;prxroute=1)? SIP/2.0'
-  - 'Contact: sip:[% scenarios.0.username %]@'
+  - 'Contact: <sip:[% scenarios.2.username %]@[% scenarios.2.ip %]:[% scenarios.2.port %](;[^>]+)?>'
   - 'CSeq: 2 ACK'
   - 'Max-Forwards: 69'
   - 'Content-Length: 0'
-  - 'From: <sip:[% scenarios.0.username %]@'
+  - 'From: <sip:[% scenarios.2.username %]@'
   - 'To: <sip:[% extra_info.phone_numbers.4 %]@'
 
 sip_out:
   - [
       '^ACK sip:127.0.0.1:5080(;prxroute=1)? SIP/2.0',
-      'Contact: sip:[% scenarios.0.username %]@',
+      'Contact: <sip:[% scenarios.2.username %]@[% scenarios.2.ip %]:[% scenarios.2.port %](;[^>]+)?>',
       'CSeq: 2 ACK',
       'Max-Forwards: 68',
       'Content-Length: 0',

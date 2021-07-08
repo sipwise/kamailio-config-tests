@@ -14,7 +14,7 @@ peer_incoming_peer_ua_00:
   inboundrules:
     - group_id: peer_incoming_peer_ua_00_group
       field: "ruri_uri"
-      pattern: '.*'
+      pattern: "^sip:.+@incoming-peer-unallocated-authoritative.scenarios-lnp.test"
       priority: 50
       enabled: 1
   hosts:
