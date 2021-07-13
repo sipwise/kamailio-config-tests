@@ -1,0 +1,29 @@
+---
+auth_fail_scenarios_test:
+  testuser1003:
+    ac: "1"
+    cc: "43"
+    phone_number: "4311000"
+    sn: 1000
+    uuid: 21b2b667-7e75-459a-9161-1eb93c57f90a
+customer_test:
+  id: "7"
+domains:
+  - auth_fail_scenarios_test
+extra_info: {}
+scenarios:
+  - devid: testuser1003
+    domain: auth-fail.scenarios.test
+    ip: 10.20.29.2
+    mport: 45003
+    port: 51602
+    responders:
+      - domain: auth-fail.scenarios.test
+        ip: 10.20.29.2
+        mport: 45006
+        port: 51603
+        proto: udp
+        register: no
+        username: testuser1003
+    username: testuser1003
+server_ip: 192.168.2.121

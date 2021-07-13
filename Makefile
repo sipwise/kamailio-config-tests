@@ -74,6 +74,10 @@ test_detect_network: tests/test_detect_network.py
 	mkdir -p $(RESULTS)
 	pytest-3 --junitxml=${RESULTS}/$(@).xml $(<)
 
+test_generate_test_tt2: tests/test_generate_test_tt2.py
+	mkdir -p $(RESULTS)
+	pytest-3 --junitxml=${RESULTS}/$(@).xml $(<)
+
 # run this in parallel!! -j is your friend
 test: $(TESTS) test_check test_detect_network
 
