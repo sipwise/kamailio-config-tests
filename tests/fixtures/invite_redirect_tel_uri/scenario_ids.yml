@@ -1,0 +1,55 @@
+---
+customer_test:
+  id: '7'
+domains:
+- invite_redirect_tel_uri_scenarios_test
+extra_info: {}
+invite_redirect_tel_uri_scenarios_test:
+  testuser1000:
+    ac: '1'
+    cc: '43'
+    phone_number: '4311129'
+    sn: 1129
+    uuid: f47f015d-5d94-478e-b5f6-e78eb51a5833
+  testuser1001:
+    ac: '1'
+    cc: '43'
+    phone_number: '4311130'
+    sn: 1130
+    uuid: d2fc87e1-6553-42a5-94df-580429a63a92
+  testuser1002:
+    ac: '1'
+    cc: '43'
+    phone_number: '4311131'
+    sn: 1131
+    uuid: 01776d5c-4192-438a-a661-6e5dfc165811
+scenarios:
+- devid: testuser1000
+  domain: invite-redirect-tel-uri.scenarios.test
+  ip: 10.20.30.1
+  mport: 46077
+  port: 52633
+  responders:
+  - domain: invite-redirect-tel-uri.scenarios.test
+    ip: 10.20.30.1
+    mport: 46080
+    port: 52634
+    proto: udp
+    register: yes
+    username: testuser1001
+  - domain: invite-redirect-tel-uri.scenarios.test
+    ip: 10.20.30.1
+    mport: 46083
+    port: 52635
+    proto: udp
+    register: yes
+    username: testuser1002
+  - domain: invite-redirect-tel-uri.scenarios.test
+    ip: 10.20.30.1
+    mport: 46086
+    port: 52636
+    proto: udp
+    register: no
+    username: testuser1000
+  username: testuser1000
+server_ip: 192.168.1.152

@@ -1,0 +1,81 @@
+---
+customer_test:
+  id: "7"
+domains:
+  - invite_callforward_scenarios_test
+extra_info: {}
+invite_callforward_scenarios_test:
+  testuser1001:
+    ac: "1"
+    cc: "43"
+    phone_number: "4311048"
+    sn: 1048
+    uuid: d34d9fff-2116-45a5-9271-4b5860a4d4b4
+  testuser1002:
+    ac: "1"
+    cc: "43"
+    phone_number: "4311049"
+    sn: 1049
+    uuid: 9f6e11aa-98e0-41e5-b1f4-a06666a76f87
+  testuser1003:
+    ac: "1"
+    cc: "43"
+    phone_number: "4311050"
+    sn: 1050
+    uuid: c5c2ae9f-6a3f-499c-bb4a-8f5fbcd14ea3
+  testuser1004:
+    ac: "1"
+    cc: "43"
+    phone_number: "4311051"
+    sn: 1051
+    uuid: 01531a99-323e-4045-86a7-b86390e000ac
+  testuser1005:
+    ac: "1"
+    cc: "43"
+    phone_number: "4311052"
+    sn: 1052
+    uuid: f3054009-078f-4f40-b43d-e74ac3886037
+scenarios:
+  - devid: testuser1002
+    domain: invite-callforward.scenarios.test
+    ip: 10.20.30.1
+    mport: 45126
+    port: 51650
+    responders:
+      - domain: invite-callforward.scenarios.test
+        ip: 10.20.30.1
+        mport: 45129
+        port: 51651
+        proto: udp
+        register: no
+        username: testuser1003
+      - domain: invite-callforward.scenarios.test
+        ip: 10.20.30.1
+        mport: 45132
+        port: 51652
+        proto: udp
+        register: yes
+        username: testuser1003
+    username: testuser1002
+  - devid: testuser1002
+    domain: invite-callforward.scenarios.test
+    ip: 10.20.30.1
+    mport: 45135
+    port: 51653
+    responders:
+      - domain: invite-callforward.scenarios.test
+        ip: 10.20.30.1
+        mport: 45138
+        port: 51654
+        proto: udp
+        register: yes
+        username: testuser1004
+      - domain: invite-callforward.scenarios.test
+        ip: 10.20.30.1
+        mport: 45141
+        port: 51655
+        proto: udp
+        register: yes
+        username: testuser1005
+    username: testuser1002
+server_ip: 192.168.1.152

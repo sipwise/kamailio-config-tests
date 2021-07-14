@@ -1,0 +1,48 @@
+---
+customer_test:
+  id: "7"
+domains:
+  - incoming_hih_scenarios_test
+extra_info: {}
+incoming_hih_scenarios_test:
+  testuser1002:
+    ac: "1"
+    cc: "43"
+    phone_number: "4311000"
+    sn: 1000
+    uuid: 23fca2a7-eafd-40c1-82b7-f36208838cff
+  testuser1003:
+    ac: "1"
+    cc: "43"
+    phone_number: "4311001"
+    sn: 1001
+    uuid: e8ce3151-f4d4-46e4-9e6a-90f785864033
+peer_incoming_hih_host0:
+  id: "71"
+  ip: 172.30.1.2
+  mport: 46003
+  port: 52602
+scenarios:
+  - devid: "004321001"
+    domain: incoming-hih.host0.peer.scenarios.test
+    ip: 172.30.1.2
+    mport: 46003
+    peer: peer_incoming_hih_host0
+    port: 52602
+    responders:
+      - domain: incoming-hih.scenarios.test
+        ip: 10.20.29.2
+        mport: 45003
+        port: 51602
+        proto: udp
+        register: no
+        username: testuser1003
+      - domain: incoming-hih.scenarios.test
+        ip: 10.20.29.2
+        mport: 45006
+        port: 51603
+        proto: udp
+        register: yes
+        username: testuser1002
+    username: "004321001"
+server_ip: 192.168.1.152

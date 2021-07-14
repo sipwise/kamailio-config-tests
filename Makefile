@@ -79,6 +79,6 @@ test_generate_test_tt2: tests/test_generate_test_tt2.py
 	pytest-3 --junitxml=${RESULTS}/$(@).xml $(<)
 
 # run this in parallel!! -j is your friend
-test: $(TESTS) test_check test_detect_network
+test: $(TESTS) test_check test_detect_network test_generate_test_tt2
 
 .PHONY: all $(TESTS)

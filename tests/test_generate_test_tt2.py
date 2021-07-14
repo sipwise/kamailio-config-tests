@@ -34,9 +34,9 @@ from generate_test_tt2 import Generator  # noqa
 Args = namedtuple(
     "GenratorArgs", ["scen_ids", "sipp_msg", "filter", "filter_common"]
 )
-IDS_FILE = "tests/fixtures/auth_fail/scenario_ids.yml"
-MSG_FILE = "tests/fixtures/auth_fail/sipp_scenario00.msg"
-TT2_FILE = "tests/fixtures/auth_fail/sipp_scenario00_test.yml.tt2"
+IDS_FILE = "tests/fixtures/{}/scenario_ids.yml"
+MSG_FILE = "tests/fixtures/{}/sipp_scenario{}.msg"
+TT2_FILE = "tests/fixtures/{}/sipp_scenario{}_test.yml.tt2"
 
 
 def check_filecontent(a, b):
@@ -50,7 +50,7 @@ def check_filecontent(a, b):
 
 
 def test_load_msg():
-    res = load_msg(MSG_FILE)
+    res = load_msg(MSG_FILE.format("auth_fail", "00"))
 
     for i in range(len(res)):
         print("res[{}][0]:{}".format(i, res[i][0]))
@@ -78,8 +78,8 @@ def test_get_header():
 
 
 def test_filter_hdr():
-    msgs = load_msg(MSG_FILE)
-    ids = load_yaml(IDS_FILE)
+    msgs = load_msg(MSG_FILE.format("auth_fail", "00"))
+    ids = load_yaml(IDS_FILE.format("auth_fail", "00"))
     g = Generator(Generator.common_hdrs, msgs, ids)
     assert g.filter_hdr(
         "ViA: SIP/2.0/UDP 10.20.29.2:51602;"
@@ -90,8 +90,8 @@ def test_filter_hdr():
 
 
 def test_process_msg():
-    msgs = load_msg(MSG_FILE)
-    ids = load_yaml(IDS_FILE)
+    msgs = load_msg(MSG_FILE.format("auth_fail", "00"))
+    ids = load_yaml(IDS_FILE.format("auth_fail", "00"))
     g = Generator(Generator.common_hdrs, msgs, ids)
     res = g.process_msg(msgs[0])
     assert len(res) == 7
@@ -132,9 +132,113 @@ def test_get_filters(generate_test_tt2):
     )
 
 
-def test_ok(generate_test_tt2_file, caplog):
+def test_ok_auth_fail(generate_test_tt2_file, caplog):
     caplog.set_level(logging.DEBUG)
-    res = generate_test_tt2_file(IDS_FILE, MSG_FILE)
+    res = generate_test_tt2_file(
+        IDS_FILE.format("auth_fail"), MSG_FILE.format("auth_fail", "00")
+    )
 
-    assert check_filecontent(TT2_FILE, res.out_file)
+    assert check_filecontent(TT2_FILE.format("auth_fail", "00"), res.out_file)
+    assert res.returncode == 0
+
+
+def test_ok_incoming_foreign_dom(generate_test_tt2_file, caplog):
+    caplog.set_level(logging.DEBUG)
+    res = generate_test_tt2_file(
+        IDS_FILE.format("incoming_foreign_dom"),
+        MSG_FILE.format("incoming_foreign_dom", "00"),
+    )
+
+    assert check_filecontent(
+        TT2_FILE.format("incoming_foreign_dom", "00"), res.out_file
+    )
+    assert res.returncode == 0
+
+
+def test_ok_incoming_foreign_dom_resp(generate_test_tt2_file, caplog):
+    caplog.set_level(logging.DEBUG)
+    res = generate_test_tt2_file(
+        IDS_FILE.format("incoming_foreign_dom"),
+        MSG_FILE.format("incoming_foreign_dom", "_responder00"),
+    )
+
+    assert check_filecontent(
+        TT2_FILE.format("incoming_foreign_dom", "_responder00"), res.out_file
+    )
+    assert res.returncode == 0
+
+
+def test_ok_invite_redirect_tel_uri(generate_test_tt2_file, caplog):
+    caplog.set_level(logging.DEBUG)
+    res = generate_test_tt2_file(
+        IDS_FILE.format("invite_redirect_tel_uri"),
+        MSG_FILE.format("invite_redirect_tel_uri", "00"),
+    )
+
+    assert check_filecontent(
+        TT2_FILE.format("invite_redirect_tel_uri", "00"), res.out_file
+    )
+    assert res.returncode == 0
+
+
+def test_invite_redirect_tel_uri_resp(generate_test_tt2_file, caplog):
+    caplog.set_level(logging.DEBUG)
+    res = generate_test_tt2_file(
+        IDS_FILE.format("invite_redirect_tel_uri"),
+        MSG_FILE.format("invite_redirect_tel_uri", "_responder00"),
+    )
+
+    assert check_filecontent(
+        TT2_FILE.format("invite_redirect_tel_uri", "_responder00"),
+        res.out_file,
+    )
+    assert res.returncode == 0
+
+    res = generate_test_tt2_file(
+        IDS_FILE.format("invite_redirect_tel_uri"),
+        MSG_FILE.format("invite_redirect_tel_uri", "_responder01"),
+    )
+
+    assert check_filecontent(
+        TT2_FILE.format("invite_redirect_tel_uri", "_responder01"),
+        res.out_file,
+    )
+    assert res.returncode == 0
+
+
+def test_ok_incoming_hih(generate_test_tt2_file, caplog):
+    caplog.set_level(logging.DEBUG)
+    res = generate_test_tt2_file(
+        IDS_FILE.format("incoming_hih"),
+        MSG_FILE.format("incoming_hih", "00"),
+    )
+
+    assert check_filecontent(
+        TT2_FILE.format("incoming_hih", "00"), res.out_file
+    )
+    assert res.returncode == 0
+
+
+def test_incoming_hih_resp(generate_test_tt2_file, caplog):
+    caplog.set_level(logging.DEBUG)
+    res = generate_test_tt2_file(
+        IDS_FILE.format("incoming_hih"),
+        MSG_FILE.format("incoming_hih", "_responder01"),
+    )
+
+    assert check_filecontent(
+        TT2_FILE.format("incoming_hih", "_responder01"),
+        res.out_file,
+    )
+    assert res.returncode == 0
+
+
+def test_mix(generate_test_tt2_file, caplog):
+    caplog.set_level(logging.DEBUG)
+    res = generate_test_tt2_file(
+        IDS_FILE.format("mix"),
+        MSG_FILE.format("mix", "00"),
+    )
+
+    assert check_filecontent(TT2_FILE.format("mix", "00"), res.out_file)
     assert res.returncode == 0

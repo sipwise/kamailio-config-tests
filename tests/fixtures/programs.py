@@ -99,11 +99,11 @@ def generate_test_tt2(*args):
 
 @pytest.fixture()
 def generate_test_tt2_file(tmpdir, *args):
-    fout = tmpdir.join("sip_messages00_test.yml.tt2")
+    fout = tmpdir.join("sipp_test.yml.tt2")
     ferr = tmpdir.join("stderr.txt")
 
     def run(*args):
-        cmd = ["./bin/generate_test_tt2.py"] + list(args)
+        cmd = ["./bin/generate_test_tt2.py", "--verbose"] + list(args)
         with open(fout, "wb") as fo, open(ferr, "wb") as fe:
             with subprocess.Popen(
                 cmd, stdout=fo, stderr=fe, encoding="utf-8"

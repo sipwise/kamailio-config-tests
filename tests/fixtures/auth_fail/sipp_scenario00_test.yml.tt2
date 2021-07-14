@@ -1,36 +1,35 @@
 messages:
-- - SIP/2.0 401 Unauthorized
+- - 'SIP/2.0 401 Unauthorized'
   - 'From: <sip:[% scenarios.0.username %]@auth-fail.scenarios.test>;tag=[\w-]+'
   - 'To: <sip:[% scenarios.0.username %]@auth-fail.scenarios.test>;tag=[\w-]+'
   - 'CSeq: 1 REGISTER'
   - 'WWW-Authenticate: Digest realm="auth-fail.scenarios.test", nonce="[^"]+"'
   - 'Server: Sipwise NGCP Proxy'
   - 'Content-Length: 0'
-- - SIP/2.0 401 Unauthorized
+- - 'SIP/2.0 401 Unauthorized'
   - 'From: <sip:[% scenarios.0.username %]@auth-fail.scenarios.test>;tag=[\w-]+'
   - 'To: <sip:[% scenarios.0.username %]@auth-fail.scenarios.test>;tag=[\w-]+'
   - 'CSeq: 2 REGISTER'
   - 'WWW-Authenticate: Digest realm="auth-fail.scenarios.test", nonce="[^"]+"'
   - 'Server: Sipwise NGCP Proxy'
   - 'Content-Length: 0'
-- - SIP/2.0 401 Unauthorized
+- - 'SIP/2.0 401 Unauthorized'
   - 'From: <sip:[% scenarios.0.username %]@auth-fail.scenarios.test>;tag=[\w-]+'
   - 'To: <sip:[% scenarios.0.username %]@auth-fail.scenarios.test>;tag=[\w-]+'
   - 'CSeq: 3 REGISTER'
   - 'WWW-Authenticate: Digest realm="auth-fail.scenarios.test", nonce="[^"]+"'
   - 'Server: Sipwise NGCP Proxy'
   - 'Content-Length: 0'
-- - SIP/2.0 401 Unauthorized
+- - 'SIP/2.0 401 Unauthorized'
   - 'From: <sip:[% scenarios.0.username %]@auth-fail.scenarios.test>;tag=[\w-]+'
   - 'To: <sip:[% scenarios.0.username %]@auth-fail.scenarios.test>;tag=[\w-]+'
   - 'CSeq: 4 REGISTER'
   - 'WWW-Authenticate: Digest realm="auth-fail.scenarios.test", nonce="[^"]+"'
   - 'Server: Sipwise NGCP Proxy'
   - 'Content-Length: 0'
-- - SIP/2.0 403 Try again later
+- - 'SIP/2.0 403 Try again later'
   - 'From: <sip:[% scenarios.0.username %]@auth-fail.scenarios.test>;tag=[\w-]+'
   - 'To: <sip:[% scenarios.0.username %]@auth-fail.scenarios.test>;tag=[\w-]+'
   - 'CSeq: 5 REGISTER'
   - 'Server: Sipwise NGCP LB'
   - 'Content-Length: 0'
-

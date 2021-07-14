@@ -1,0 +1,29 @@
+---
+customer_test:
+  id: '7'
+domains:
+- incoming_foreign_dom_scenarios_test
+extra_info: {}
+incoming_foreign_dom_scenarios_test:
+  testuser1003:
+    ac: '1'
+    cc: '43'
+    phone_number: '4311001'
+    sn: 1001
+    uuid: ac5ec97a-82eb-4036-9171-430402ef901a
+scenarios:
+- devid: external
+  domain: incoming-foreign-dom.external.test
+  ip: 10.20.29.2
+  mport: 45008
+  port: 51604
+  responders:
+  - domain: incoming-foreign-dom.scenarios.test
+    ip: 10.20.29.2
+    mport: 45011
+    port: 51605
+    proto: udp
+    register: yes
+    username: testuser1003
+  username: external
+server_ip: 192.168.1.152
