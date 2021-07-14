@@ -18,6 +18,7 @@
 # On Debian systems, the complete text of the GNU General
 # Public License version 3 can be found in "/usr/share/common-licenses/GPL-3".
 #
+set -e
 ERR_FLAG=0
 
 # $1 destination tap file
@@ -29,19 +30,6 @@ generate_error_tap() {
 not ok 1 - ERROR: File $2 does not exists
 EOF
 echo "$(date) - $(basename "$2") NOT ok"
-}
-
-test_sip_filepath() {
-  local msg_name
-  msg_name=${1/_test.yml/.msg}
-  msg_name=${msg_name/sip_messages/sipp_scenario}
-
-  msg="${LOG_DIR}/$(basename "${msg_name}")"
-  if [ -f "${msg}" ]; then
-    return 0
-  fi
-  echo "$(date) - WARNING: no sipp log file found! filename=<${msg}>. Skipping."
-  return 1
 }
 
 # $1 sip message test yml
@@ -142,22 +130,21 @@ echo "$(date) - Check [${GROUP}/${PROFILE}]: ${NAME_CHECK}"
 mkdir -p "${RESULT_DIR}"
 
 echo "$(date) - Cleaning tests files"
-find "${SCEN_CHECK_DIR}" -type f -name '*test.yml' -exec rm {} \;
+find "${SCEN_CHECK_DIR}" -type f -name 'sipp_scenario*test.yml' -exec rm {} \;
 echo "$(date) - Generating tests files"
 "${BIN_DIR}/generate_tests.sh" \
-  -f 'sip_messages*test.yml.tt2' \
+  -f 'sipp_scenario*test.yml.tt2' \
   -d "${SCEN_CHECK_DIR}" "${LOG_DIR}/scenario_ids.yml" "${PROFILE}"
 
 test_ok=()
-
-for t in "${SCEN_CHECK_DIR}"/sip_messages*[0-9][0-9]_test.yml; do
-    if test_sip_filepath "${t}"; then
-        echo -n "$(date) - SIP: Check test $(basename "${t}") on ${msg}"
-        dest=$(basename "${msg}")
-        dest=${RESULT_DIR}/${dest/.msg/.tap}
-        check_sip_test "${t}" "$msg" "${dest}"
-    fi
-done
+while read -r t; do
+    msg_name=${t/_test.yml/.msg}
+    msg="${LOG_DIR}/$(basename "${msg_name}")"
+    echo -n "$(date) - SIP: Check test $(basename "${t}") on ${msg}"
+    dest=$(basename "${msg}")
+    dest=${RESULT_DIR}/${dest/.msg/.tap}
+    check_sip_test "${t}" "$msg" "${dest}"
+done < <(find "${SCEN_CHECK_DIR}" -maxdepth 1 -name 'sipp_scenario*_test.yml'|sort)
 
 echo "$(date) - ================================================================================="
 

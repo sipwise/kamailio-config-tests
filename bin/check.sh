@@ -542,18 +542,6 @@ run_sipp() {
   fi
 }
 
-test_sip_filepath() {
-  local msg_name
-  msg_name=${1/_test.yml/.msg}
-  msg_name=${msg_name/sip_messages/sipp_scenario}
-  sip_msg="${LOG_DIR}/$(basename "${msg_name}")"
-  if ! [ -f "${sip_msg}" ]; then
-    echo "$(date) - WARNING: no sipp log file found! filename=<${sip_msg}>. Skipping."
-    return 1
-  fi
-  return 0
-}
-
 test_filepath() {
   local msg_name
 
@@ -867,13 +855,13 @@ if [[ ${CHECK_TYPE} != none ]] ; then
 
   if [[ ${CHECK_TYPE} != cfgt ]] ; then
       echo "$(date) - ~~~~~"
-      for t in "${SCEN_CHECK_DIR}"/sip_messages*[0-9][0-9]_test.yml; do
-        if test_sip_filepath "${t}"; then
-          echo -n "$(date) - SIP: Check test $(basename "${t}") on ${sip_msg}"
-          dest=$(basename "${sip_msg}")
-          dest=${RESULT_DIR}/${dest/.msg/.tap}
-          check_sip_test "${t}" "$sip_msg" "${dest}"
-        fi
+      for t in "${SCEN_CHECK_DIR}"/sipp_scenario*_test.yml; do
+        msg_name=${t/_test.yml/.msg}
+        sip_msg="${LOG_DIR}/$(basename "${msg_name}")"
+        echo -n "$(date) - SIP: Check test $(basename "${t}") on ${sip_msg}"
+        dest=$(basename "${sip_msg}")
+        dest=${RESULT_DIR}/${dest/.msg/.tap}
+        check_sip_test "${t}" "$sip_msg" "${dest}"
       done
       echo "$(date) - ~~~~~"
   fi
