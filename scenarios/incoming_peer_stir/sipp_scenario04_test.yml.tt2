@@ -1,0 +1,13 @@
+messages:
+- - 'SIP/2.0 100 Trying'
+  - 'From: <sip:[% scenarios.4.username %]@incoming-peer-stir.host0.peer.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:[% incoming_peer_stir_scenarios_test.testuser1003.phone_number %]@incoming-peer-stir.scenarios.test>'
+  - 'CSeq: \d+ INVITE'
+  - 'Server: Sipwise NGCP LB'
+  - 'Content-Length: 0'
+- - 'SIP/2.0 438 Invalid Identity Header'
+  - 'From: <sip:[% scenarios.4.username %]@incoming-peer-stir.host0.peer.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:[% incoming_peer_stir_scenarios_test.testuser1003.phone_number %]@incoming-peer-stir.scenarios.test>;tag=[\w-]+'
+  - 'CSeq: \d+ INVITE'
+  - 'Server: Sipwise NGCP Proxy'
+  - 'Content-Length: 0'
