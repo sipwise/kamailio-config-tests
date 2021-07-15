@@ -252,7 +252,6 @@ def main(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="generate TAP result")
-    grp = parser.add_mutually_exclusive_group()
     parser.add_argument("test_file", help="YAML file with checks")
     parser.add_argument("msg_file", help="sipp file")
     parser.add_argument("-d", "--debug", action="store_true")
