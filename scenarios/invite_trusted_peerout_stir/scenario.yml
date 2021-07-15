@@ -9,19 +9,19 @@ domains:
   invite-trusted-peerout-stir.scenarios.test:
     reseller_id: 1
 customers:
-  'customer.test':
+  "customer.test":
     contacts:
       - email: "customer.test@spce.test"
         reseller_id: 1
     details:
-      status: 'active'
-      type: 'sipaccount'
+      status: "active"
+      type: "sipaccount"
       billing_profile_id: 1
       reseller_id: 1
 subscribers:
   invite-trusted-peerout-stir.scenarios.test:
     testuser1002:
-      customer: 'customer.test'
+      customer: "customer.test"
       password: testuser
       cc: 43
       ac: 1
@@ -32,8 +32,8 @@ scenarios:
     domain: invite-trusted-peerout-stir.scenarios.test
     responders:
       - ip: 127.0.2.1
-        number: 004321001
-        username: 004321001
+        number: "004321001"
+        username: "004321001"
         domain: invite-trusted-peerout-stir.scenarios.test
         peer_host: peer_invite_trusted_peerout_stir_host0
-        register: 'no'
+        register: "no"

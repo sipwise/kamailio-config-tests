@@ -1,29 +1,29 @@
 ---
 test_uuid: incoming_peer_unallocated_authoritative
 domains:
-  'incoming-peer-unallocated-authoritative.scenarios-lnp.test':
+  "incoming-peer-unallocated-authoritative.scenarios-lnp.test":
     reseller_id: 1
 customers:
-  'customer.test':
+  "customer.test":
     contacts:
       - email: "customer.test@spce.test"
         reseller_id: 1
     details:
-      status: 'active'
-      type: 'sipaccount'
+      status: "active"
+      type: "sipaccount"
       billing_profile_id: 1
       reseller_id: 1
 subscribers:
   incoming-peer-unallocated-authoritative.scenarios-lnp.test:
     testuser1001:
-      customer: 'customer.test'
+      customer: "customer.test"
       password: testuser
       cc: 43
       ac: 1
       sn: 1001
 scenarios:
   - ip: 127.0.2.1
-    username: 004411001
+    username: "004411001"
     domain: incoming-peer-unallocated-authoritative.host0.scenarios-lnp.test
     peer_host: peer_incoming_peer_ua_00_host0
     responders:
@@ -32,8 +32,8 @@ scenarios:
         username: 4311001
         domain: incoming-peer-unallocated-authoritative.scenarios-lnp.test
         peer_host: peer_incoming_peer_ua_01_host1
-        register: 'no'
-        active: 'no'
+        register: "no"
+        active: "no"
 extra_info:
   phone_numbers:
     - 4321001

@@ -4,30 +4,30 @@ domains:
   invite-reinvite-transcoding.scenarios.test:
     reseller_id: 1
 customers:
-  'customer.test':
+  "customer.test":
     contacts:
       - email: "customer.test@invite-reinvite-transcoding.scenarios.test"
         reseller_id: 1
     details:
-      status: 'active'
-      type: 'sipaccount'
+      status: "active"
+      type: "sipaccount"
       billing_profile_id: 1
       reseller_id: 1
 subscribers:
   invite-reinvite-transcoding.scenarios.test:
     testuser1001:
-      customer: 'customer.test'
+      customer: "customer.test"
       password: testuser
       cc: 43
       ac: 1
       sn: 1001
 scenarios:
   - ip: 127.0.2.1
-    username: 004321001
+    username: "004321001"
     domain: invite-reinvite-transcoding.host0.scenarios.test
     peer_host: peer_invite_reinvite_transcoding_host0
     responders:
       - ip: 127.1.0.1
         username: testuser1001
         domain: invite-reinvite-transcoding.scenarios.test
-        register: 'yes'
+        register: "yes"

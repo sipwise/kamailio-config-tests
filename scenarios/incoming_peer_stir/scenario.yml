@@ -9,70 +9,70 @@ domains:
   incoming-peer-stir.scenarios.test:
     reseller_id: 1
 customers:
-  'customer.test':
+  "customer.test":
     contacts:
       - email: "customer.test@spce.test"
         reseller_id: 1
     details:
-      status: 'active'
-      type: 'sipaccount'
+      status: "active"
+      type: "sipaccount"
       billing_profile_id: 1
       reseller_id: 1
 subscribers:
   incoming-peer-stir.scenarios.test:
     testuser1003:
-      customer: 'customer.test'
+      customer: "customer.test"
       password: testuser
       cc: 43
       ac: 1
       sn: 1003
 scenarios:
   - ip: 127.0.2.1
-    username: 004321001
+    username: "004321001"
     domain: invite-peerout-stir.scenarios.test
     peer_host: peer_incoming_peer_stir_host0
     responders:
       - ip: 127.1.0.1
         username: testuser1003
         domain: incoming-peer-stir.scenarios.test
-        register: 'yes'
+        register: "yes"
   - ip: 127.0.2.2
-    username: 004321002
+    username: "004321002"
     domain: incoming-peer-stir.host0.peer.scenarios.test
     peer_host: peer_incoming_peer_stir_host0
     responders:
       - ip: 127.1.0.2
         username: testuser1003
         domain: incoming-peer-stir.scenarios.test
-        register: 'no'
-        active: 'no'
+        register: "no"
+        active: "no"
   - ip: 127.0.2.3
-    username: 004321003
+    username: "004321003"
     domain: incoming-peer-stir.host0.peer.scenarios.test
     peer_host: peer_incoming_peer_stir_host0
     responders:
       - ip: 127.1.0.3
         username: testuser1003
         domain: incoming-peer-stir.scenarios.test
-        register: 'no'
-        active: 'no'
+        register: "no"
+        active: "no"
   - ip: 127.0.2.4
-    username: 004321004
+    username: "004321004"
     domain: incoming-peer-stir.host0.peer.scenarios.test
     peer_host: peer_incoming_peer_stir_host0
     responders:
       - ip: 127.1.0.4
         username: testuser1003
         domain: incoming-peer-stir.scenarios.test
-        register: 'no'
-        active: 'no'
+        register: "no"
+        active: "no"
   - ip: 127.0.2.5
-    username: 004321005
+    username: "004321005"
     domain: incoming-peer-stir.host0.peer.scenarios.test
     peer_host: peer_incoming_peer_stir_host0
     responders:
       - ip: 127.1.0.5
         username: testuser1003
         domain: incoming-peer-stir.scenarios.test
-        register: 'no'
-        active: 'no'
+        register: "no"
+        active: "no"
