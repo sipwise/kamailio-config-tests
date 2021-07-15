@@ -839,7 +839,7 @@ if [[ ${CHECK_TYPE} != none ]] ; then
   test_ok=()
 
   if [[ ${CHECK_TYPE} != sipp ]] ; then
-    for t in "${SCEN_CHECK_DIR}"/[0-9][0-9][0-9][0-9]_test*.yml; do
+    while read -r t; do
       test_filepath "${t}"
       echo "$(date) - Check test ${t} on ${msg}"
       dest=${RESULT_DIR}/$(basename "${t}" .yml)
@@ -850,19 +850,19 @@ if [[ ${CHECK_TYPE} != none ]] ; then
         graph "${msg}" "${dest}.png"
         echo "$(date) - Done"
       fi
-    done
+    done < <(find "${SCEN_CHECK_DIR}" -maxdepth 1 -name '[0-9][0-9][0-9][0-9]_test*.yml'|sort)
   fi
 
   if [[ ${CHECK_TYPE} != cfgt ]] ; then
       echo "$(date) - ~~~~~"
-      for t in "${SCEN_CHECK_DIR}"/sipp_scenario*_test.yml; do
+      while read -r t; do
         msg_name=${t/_test.yml/.msg}
         sip_msg="${LOG_DIR}/$(basename "${msg_name}")"
         echo -n "$(date) - SIP: Check test $(basename "${t}") on ${sip_msg}"
         dest=$(basename "${sip_msg}")
         dest=${RESULT_DIR}/${dest/.msg/.tap}
         check_sip_test "${t}" "$sip_msg" "${dest}"
-      done
+      done < <(find "${SCEN_CHECK_DIR}" -maxdepth 1 -name 'sipp_scenario*_test.yml'|sort)
       echo "$(date) - ~~~~~"
   fi
 
