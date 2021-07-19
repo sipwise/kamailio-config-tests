@@ -108,6 +108,12 @@ class Generator:
                         r"\1:\2[% {}.{} %]\3".format(tt, field),
                     )
                 )
+            rules.append(
+                (
+                    r"\"{}\"".format(subs[field]),
+                    '"[% {}.{} %]"'.format(tt, field),
+                )
+            )
 
         def sdp_rule(val, tt):
             rules.append(
@@ -189,6 +195,13 @@ class Generator:
                 add_sip(resp, f"scenarios.{idx}.responders.{jdx}")
         for key in ids[id_dom]:
             sip_rule(ids[id_dom][key], f"{id_dom}.{key}", "phone_number")
+            if "alias_numbers" in ids[id_dom][key]:
+                for idx, alias in enumerate(ids[id_dom][key]["alias_numbers"]):
+                    sip_rule(
+                        alias,
+                        f"{id_dom}.{key}.alias_numbers.{idx}",
+                        "phone_number",
+                    )
         return rules
 
     def __init__(self, _hdrs, _msg, _ids):
@@ -237,6 +250,8 @@ class Generator:
         elif hdr == "contact":
             rules.append((r"expires=[1-9]\d*", r"expires=\\d+"))
             rules.append((r";ngcpct=[^;>]+", r";ngcpct=[^;]+"))
+        elif hdr == "cseq":
+            rules.append((r":\s+\d+", r": \\d+"))
         for rule in rules:
             line = re.sub(rule[0], rule[1], line, flags=re.IGNORECASE)
         return line

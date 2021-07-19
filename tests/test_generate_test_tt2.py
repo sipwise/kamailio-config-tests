@@ -242,3 +242,14 @@ def test_mix(generate_test_tt2_file, caplog):
 
     assert check_filecontent(TT2_FILE.format("mix", "00"), res.out_file)
     assert res.returncode == 0
+
+
+def test_mix_alias(generate_test_tt2_file, caplog):
+    caplog.set_level(logging.DEBUG)
+    res = generate_test_tt2_file(
+        IDS_FILE.format("mix"),
+        MSG_FILE.format("mix", "01"),
+    )
+
+    assert check_filecontent(TT2_FILE.format("mix", "01"), res.out_file)
+    assert res.returncode == 0

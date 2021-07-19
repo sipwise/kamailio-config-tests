@@ -17,6 +17,11 @@ invite_callforward_scenarios_test:
     phone_number: "4311049"
     sn: 1049
     uuid: 9f6e11aa-98e0-41e5-b1f4-a06666a76f87
+    alias_numbers:
+      - phone_number: "4311013"
+        ac: "1"
+        cc: "43"
+        sn: 1013
   testuser1003:
     ac: "1"
     cc: "43"
