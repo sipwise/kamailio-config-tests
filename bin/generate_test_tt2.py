@@ -255,6 +255,7 @@ class Generator:
             rules.append((r";ftag=[^;>]+", r";ftag=[^;]+"))
             rules.append((r";aset=[^;>]+", r";aset=\\d+"))
             rules.append((r";vsf=[^;>]+", r";vsf=[^;]+"))
+            rules.append((r";vst=[^;>]+", r";vst=[^;]+"))
         elif hdr == "contact":
             rules.append((r"expires=[1-9]\d*", r"expires=\\d+"))
             rules.append((r";ngcpct=[^;>]+", r";ngcpct=[^;]+"))
