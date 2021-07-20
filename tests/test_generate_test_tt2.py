@@ -209,8 +209,7 @@ def test_invite_redirect_tel_uri_resp(generate_test_tt2_file, caplog):
 def test_ok_incoming_hih(generate_test_tt2_file, caplog):
     caplog.set_level(logging.DEBUG)
     res = generate_test_tt2_file(
-        IDS_FILE.format("incoming_hih"),
-        MSG_FILE.format("incoming_hih", "00"),
+        IDS_FILE.format("incoming_hih"), MSG_FILE.format("incoming_hih", "00")
     )
 
     assert check_filecontent(
@@ -227,8 +226,7 @@ def test_incoming_hih_resp(generate_test_tt2_file, caplog):
     )
 
     assert check_filecontent(
-        TT2_FILE.format("incoming_hih", "_responder01"),
-        res.out_file,
+        TT2_FILE.format("incoming_hih", "_responder01"), res.out_file
     )
     assert res.returncode == 0
 
@@ -236,8 +234,7 @@ def test_incoming_hih_resp(generate_test_tt2_file, caplog):
 def test_mix(generate_test_tt2_file, caplog):
     caplog.set_level(logging.DEBUG)
     res = generate_test_tt2_file(
-        IDS_FILE.format("mix"),
-        MSG_FILE.format("mix", "00"),
+        IDS_FILE.format("mix"), MSG_FILE.format("mix", "00")
     )
 
     assert check_filecontent(TT2_FILE.format("mix", "00"), res.out_file)
@@ -247,9 +244,20 @@ def test_mix(generate_test_tt2_file, caplog):
 def test_mix_alias(generate_test_tt2_file, caplog):
     caplog.set_level(logging.DEBUG)
     res = generate_test_tt2_file(
-        IDS_FILE.format("mix"),
-        MSG_FILE.format("mix", "01"),
+        IDS_FILE.format("mix"), MSG_FILE.format("mix", "01")
     )
 
     assert check_filecontent(TT2_FILE.format("mix", "01"), res.out_file)
+    assert res.returncode == 0
+
+
+def test_mix_resp(generate_test_tt2_file, caplog):
+    caplog.set_level(logging.DEBUG)
+    res = generate_test_tt2_file(
+        IDS_FILE.format("mix"), MSG_FILE.format("mix", "_responder00")
+    )
+
+    assert check_filecontent(
+        TT2_FILE.format("mix", "_responder00"), res.out_file
+    )
     assert res.returncode == 0

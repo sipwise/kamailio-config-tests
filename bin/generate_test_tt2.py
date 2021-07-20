@@ -147,18 +147,26 @@ class Generator:
             )
             rules.append(
                 (
-                    r"sip:{}:{}([^\d])".format(subs["ip"], subs["port"]),
-                    r"sip:[% {0}.ip %]:[% {0}.port %]\1".format(tt),
+                    r"sip:([^@]+@)?{}:{}([^\d])".format(
+                        subs["ip"], subs["port"]
+                    ),
+                    r"sip:\1[% {0}.ip %]:[% {0}.port %]\2".format(tt),
+                )
+            )
+            rules.append(
+                (
+                    r"sip:([^@]+@)?{}([^:])".format(subs["ip"]),
+                    r"sip:\1[% {0}.ip %]\2".format(tt),
                 )
             )
 
         def add_socket(scen, tt):
             rules.append(
                 (
-                    r";socket=udp:{}:{}([^;>]+)".format(
+                    r";socket=(udp|tcp):{}:{}([^;>]+)".format(
                         scen["ip"], scen["port"]
                     ),
-                    r";socket=udp:[% {0}.ip %]:[% {0}.port %]\1".format(tt),
+                    r";socket=\1:[% {0}.ip %]:[% {0}.port %]\2".format(tt),
                 )
             )
             sdp_rule(scen["ip"], f"{tt}.ip")
@@ -172,7 +180,7 @@ class Generator:
         # server_ip rules
         rules.append(
             (
-                r";socket=(sip|udp):{}:5060".format(server_ip),
+                r";socket=(sip|udp|tcp):{}:5060".format(server_ip),
                 r";socket=\1:[% server_ip %]:5060",
             )
         )
