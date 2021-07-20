@@ -29,7 +29,7 @@ messages:
   - 'To: <sip:[% scenarios.0.responders.0.username %]@[% scenarios.0.responders.0.ip %]>;tag=[\w-]+'
   - 'CSeq: \d+ PRACK'
   - 'P-Asserted-Identity: <sip:[% invite_prack_scenarios_test.testuser1012.phone_number %]@invite-prack.scenarios.test>'
-  - 'RAck: 1452 1451 INVITE'
+  - 'RAck: \d+ \d+ INVITE'
   - 'Content-Length: 0'
   - 'Contact: <sip:ngcp-lb@[% server_ip %]:5060;ngcpct=[^;]+>'
 - - 'ACK sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];transport=UDP SIP/2.0'

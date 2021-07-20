@@ -6,7 +6,7 @@ messages:
   - 'From: <sip:[% invite_trusted_peerout_stir_scenarios_test.testuser1002.phone_number %]@invite-trusted-peerout-stir.scenarios.test>;tag=[\w-]+'
   - 'To: <sip:[% scenarios.0.responders.0.username %]@[% scenarios.0.responders.0.ip %]>'
   - 'CSeq: \d+ INVITE'
-  - 'Identity: eyJhbGciOiJFUzI1NiIsInBwdCI6InNoYWtlbiIsInR5cCI6InBhc3Nwb3J0IiwieDV1IjoiaHR0cDovL2Zha2UudXJsL3B1Yi5rZXkifQ.eyJhdHRlc3QiOiJCIiwiZGVzdCI6eyJ0biI6WyIwMDQzMjEwMDEiXX0sImlhdCI6MTYyNjc3MjEzNiwib3JpZyI6eyJ0biI6IjQzMTEwMDAifSwib3JpZ2lkIjoiZmUzOGMyZjItNzMxNy00YmI4LWE4NmItNWZiZjNkNjdmN2UzIn0.LV55WPY2PHky_qZKnpq3xAZ-AgBFop3q5aqLChNtxP7n8t82WVmpAAc7HZBT2tkr0rGKhgmufJrZcuaOIPXn8g;info=<http://fake.url/pub.key>;alg=ES256;ppt=shaken'
+  - 'Identity: [^;]+;info=<http://fake.url/pub.key>;alg=ES256;ppt=shaken'
   - 'P-Asserted-Identity: <sip:[% invite_trusted_peerout_stir_scenarios_test.testuser1002.phone_number %]@invite-trusted-peerout-stir.scenarios.test>'
   - 'Content-Type: application/sdp'
   - 'Content-Length: \d+'

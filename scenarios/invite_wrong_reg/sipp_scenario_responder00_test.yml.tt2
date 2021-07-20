@@ -10,6 +10,6 @@ messages:
   - 'From: <sip:[% scenarios.0.responders.0.username %]@invite-wrong-reg.scenarios.test>;tag=[\w-]+'
   - 'To: <sip:[% scenarios.0.responders.0.username %]@invite-wrong-reg.scenarios.test>;tag=[\w-]+'
   - 'CSeq: \d+ REGISTER'
-  - 'Contact: <sip:[% scenarios.0.responders.0.username %]@@10.20.29.2:52631>;expires=\d+'
+  - 'Contact: <sip:[% scenarios.0.responders.0.username %]@@[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %]>;expires=\d+'
   - 'Server: Sipwise NGCP Proxy'
   - 'Content-Length: 0'

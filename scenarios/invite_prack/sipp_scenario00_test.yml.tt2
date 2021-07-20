@@ -26,7 +26,7 @@ messages:
   - 'To: <sip:[% scenarios.0.responders.0.username %]@invite-prack.scenarios.test>;tag=[\w-]+'
   - 'CSeq: \d+ INVITE'
   - 'Require: 100rel'
-  - 'RSeq: 1452'
+  - 'RSeq: \d+'
   - 'Content-Length: 0'
   - 'Contact: <sip:ngcp-lb@[% server_ip %]:5060;ngcpct=[^;]+>'
 - - 'SIP/2.0 200 OK'
