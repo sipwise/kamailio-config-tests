@@ -202,9 +202,14 @@ class Generator:
             for jdx, resp in enumerate(scen["responders"]):
                 add_sip(resp, f"scenarios.{idx}.responders.{jdx}")
         for key in ids[id_dom]:
-            sip_rule(ids[id_dom][key], f"{id_dom}.{key}", "phone_number")
-            if "alias_numbers" in ids[id_dom][key]:
-                for idx, alias in enumerate(ids[id_dom][key]["alias_numbers"]):
+            subs = ids[id_dom][key]
+            sip_rule(subs, f"{id_dom}.{key}", "phone_number")
+            if "pbx_extension" in subs:
+                sip_rule(subs, f"{id_dom}.{key}", "pbx_extension")
+            if "pbx_phone_number" in subs:
+                sip_rule(subs, f"{id_dom}.{key}", "pbx_phone_number")
+            if "alias_numbers" in subs:
+                for idx, alias in enumerate(subs["alias_numbers"]):
                     sip_rule(
                         alias,
                         f"{id_dom}.{key}.alias_numbers.{idx}",

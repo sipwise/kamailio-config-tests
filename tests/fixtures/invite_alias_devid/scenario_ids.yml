@@ -1,0 +1,88 @@
+---
+domains:
+- invite_alias_devid_scenarios_pbx_test
+extra_info: {}
+invite_alias_devid_customerpbx_test:
+  id: '351'
+invite_alias_devid_scenarios_pbx_test:
+  testuser1002:
+    ac: '1'
+    alias_numbers:
+    - ac: '1'
+      cc: '43'
+      phone_number: '4311012'
+      sn: 1012
+    cc: '43'
+    pbx_extension: 1002
+    pbx_phone_number: '43110101002'
+    phone_number: '4311010'
+    sn: 1010
+    uuid: a56a5f69-8a46-4bb2-87cc-322ff926e09d
+  testuser1003:
+    ac: '1'
+    alias_numbers:
+    - ac: '1'
+      cc: '43'
+      is_devid: 1
+      phone_number: '4311013'
+      sn: 1013
+    - ac: '1'
+      cc: '43'
+      is_devid: 1
+      phone_number: '4311014'
+      sn: 1014
+    - ac: '1'
+      cc: '43'
+      is_devid: 1
+      phone_number: '4311015'
+      sn: 1015
+    cc: '43'
+    pbx_extension: 1003
+    pbx_phone_number: '43110101003'
+    phone_number: '4311011'
+    sn: 1011
+    uuid: 489cf47d-ab35-4db4-af3a-fdddbd953bdb
+scenarios:
+- devid: testuser1003
+  domain: invite-alias-devid.scenarios-pbx.test
+  ip: 10.20.29.2
+  mport: 45033
+  port: 51613
+  responders:
+  - domain: invite-alias-devid.scenarios-pbx.test
+    ip: 10.20.29.2
+    mport: 45036
+    port: 51614
+    proto: udp
+    register: no
+    username: testuser1003
+  username: testuser1003
+- devid: '4311015'
+  domain: invite-alias-devid.scenarios-pbx.test
+  ip: 10.20.29.2
+  mport: 45039
+  port: 51615
+  responders:
+  - domain: invite-alias-devid.scenarios-pbx.test
+    ip: 10.20.29.2
+    mport: 45042
+    port: 51616
+    proto: udp
+    register: no
+    username: testuser1003
+  username: testuser1003
+- devid: '4311013'
+  domain: invite-alias-devid.scenarios-pbx.test
+  ip: 10.20.29.2
+  mport: 45045
+  port: 51617
+  responders:
+  - domain: invite-alias-devid.scenarios-pbx.test
+    ip: 10.20.29.2
+    mport: 45048
+    port: 51618
+    proto: udp
+    register: yes
+    username: testuser1003
+  username: testuser1002
+server_ip: 192.168.2.109

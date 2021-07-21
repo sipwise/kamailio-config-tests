@@ -261,3 +261,30 @@ def test_mix_resp(generate_test_tt2_file, caplog):
         TT2_FILE.format("mix", "_responder00"), res.out_file
     )
     assert res.returncode == 0
+
+
+def test_ok_invite_alias_devid(generate_test_tt2_file, caplog):
+    caplog.set_level(logging.DEBUG)
+    for i in range(0, 3):
+        res = generate_test_tt2_file(
+            IDS_FILE.format("invite_alias_devid"),
+            MSG_FILE.format("invite_alias_devid", f"0{i}"),
+        )
+
+        assert check_filecontent(
+            TT2_FILE.format("invite_alias_devid", f"0{i}"), res.out_file
+        )
+        assert res.returncode == 0
+
+
+def test_invite_alias_devid_resp(generate_test_tt2_file, caplog):
+    caplog.set_level(logging.DEBUG)
+    res = generate_test_tt2_file(
+        IDS_FILE.format("invite_alias_devid"),
+        MSG_FILE.format("invite_alias_devid", "_responder02"),
+    )
+
+    assert check_filecontent(
+        TT2_FILE.format("invite_alias_devid", "_responder02"), res.out_file
+    )
+    assert res.returncode == 0
