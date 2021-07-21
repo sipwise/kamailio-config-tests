@@ -1,0 +1,13 @@
+messages:
+- - 'SIP/2.0 100 Trying'
+  - 'From: <sip:[% scenarios.0.username %]@incoming-peer-unallocated-authoritative.host0.scenarios-lnp.test>;tag=[\w-]+'
+  - 'To: <sip:[% extra_info.phone_numbers.0 %]@incoming-peer-unallocated-authoritative.scenarios-lnp.test>'
+  - 'CSeq: \d+ INVITE'
+  - 'Server: Sipwise NGCP LB'
+  - 'Content-Length: 0'
+- - 'SIP/2.0 404 Not Found'
+  - 'From: <sip:[% scenarios.0.username %]@incoming-peer-unallocated-authoritative.host0.scenarios-lnp.test>;tag=[\w-]+'
+  - 'To: <sip:[% extra_info.phone_numbers.0 %]@incoming-peer-unallocated-authoritative.scenarios-lnp.test>;tag=[\w-]+'
+  - 'CSeq: \d+ INVITE'
+  - 'Server: Sipwise NGCP Proxy'
+  - 'Content-Length: 0'
