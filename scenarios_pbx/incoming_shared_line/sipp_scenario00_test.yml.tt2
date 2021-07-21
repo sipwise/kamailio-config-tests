@@ -1,0 +1,9 @@
+messages:
+- - 'SIP/2.0 200 Alive'
+  - 'Record-Route: <sip:127.0.0.1;r2=on;lr=on;ftag=[^;]+;ngcplb=yes;nat=yes;socket=udp:[% server_ip %]:5060>'
+  - 'Record-Route: <sip:[% server_ip %];r2=on;lr=on;ftag=[^;]+;ngcplb=yes;nat=yes;socket=udp:[% server_ip %]:5060>'
+  - 'From: <sip:[% scenarios.0.username %]@incoming-shared-line.scenarios-pbx.test>;tag=[\w-]+'
+  - 'To: <sip:[% scenarios.0.username %]@incoming-shared-line.scenarios-pbx.test>;tag=[\w-]+'
+  - 'CSeq: \d+ OPTIONS'
+  - 'Server: Sipwise NGCP Proxy'
+  - 'Content-Length: 0'
