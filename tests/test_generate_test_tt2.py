@@ -288,3 +288,29 @@ def test_invite_alias_devid_resp(generate_test_tt2_file, caplog):
         TT2_FILE.format("invite_alias_devid", "_responder02"), res.out_file
     )
     assert res.returncode == 0
+
+
+def test_ok_incoming_peer(generate_test_tt2_file, caplog):
+    caplog.set_level(logging.DEBUG)
+    res = generate_test_tt2_file(
+        IDS_FILE.format("incoming_peer"),
+        MSG_FILE.format("incoming_peer", "00"),
+    )
+
+    assert check_filecontent(
+        TT2_FILE.format("incoming_peer", "00"), res.out_file
+    )
+    assert res.returncode == 0
+
+
+def test_incoming_peer_resp(generate_test_tt2_file, caplog):
+    caplog.set_level(logging.DEBUG)
+    res = generate_test_tt2_file(
+        IDS_FILE.format("incoming_peer"),
+        MSG_FILE.format("incoming_peer", "_responder00"),
+    )
+
+    assert check_filecontent(
+        TT2_FILE.format("incoming_peer", "_responder00"), res.out_file
+    )
+    assert res.returncode == 0

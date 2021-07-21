@@ -1,0 +1,44 @@
+---
+customer_test:
+  id: '13'
+domains:
+- incoming_peer_scenarios_lnp_test
+extra_info:
+  phone_numbers:
+  - '4341003'
+  - '4318881003'
+incoming_peer_scenarios_lnp_test:
+  testuser1001:
+    ac: '1'
+    cc: '43'
+    phone_number: '4311000'
+    sn: 1000
+    uuid: 0376332b-87ea-422e-8d99-921b67215035
+peer_incoming_peer_00_host0:
+  id: '111'
+  ip: 172.30.1.2
+  mport: 46003
+  port: 52602
+peer_incoming_peer_01_host1:
+  id: '113'
+  ip: 172.30.1.2
+  mport: 46006
+  port: 52603
+scenarios:
+- devid: '004321001'
+  domain: 127.0.2.1
+  ip: 172.30.1.2
+  mport: 46003
+  peer: peer_incoming_peer_00_host0
+  port: 52602
+  responders:
+  - domain: incoming-peer.scenarios-lnp.test
+    ip: 172.30.1.2
+    mport: 46006
+    peer: peer_incoming_peer_01_host1
+    port: 52603
+    proto: udp
+    register: no
+    username: testuser1001
+  username: '004321001'
+server_ip: 192.168.2.109

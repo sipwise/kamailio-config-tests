@@ -215,6 +215,10 @@ class Generator:
                         f"{id_dom}.{key}.alias_numbers.{idx}",
                         "phone_number",
                     )
+        if "phone_numbers" in ids["extra_info"]:
+            numbers = ids["extra_info"]["phone_numbers"]
+            for idx, phone_number in enumerate(numbers):
+                sip_rule(numbers, f"extra_info.phone_numbers", idx)
         return rules
 
     def __init__(self, _hdrs, _msg, _ids):
