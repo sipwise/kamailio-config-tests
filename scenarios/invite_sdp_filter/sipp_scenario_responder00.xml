@@ -45,7 +45,7 @@
       m=audio [media_port] RTP/AVP 8
       a=rtpmap:8 PCMA/8000
       a=ptime:50
-      m=video 0 RTP/AVPF
+      m=video 0 RTP/AVPF 34
 
     ]]>
   </send>
