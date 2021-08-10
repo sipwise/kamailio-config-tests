@@ -142,22 +142,6 @@ flow:
   - return|ROUTE_SET_BRANCH_HDRS:
   - start|ROUTE_FILTER_PRACK:
   - return|ROUTE_FILTER_PRACK:
-  - start|ROUTE_SET_CALLER_CLI:
-  - start|ROUTE_PREPARE_CALLER_CLI:
-  - return|ROUTE_PREPARE_CALLER_CLI:
-  - start|ROUTE_PREPARE_CALLER_CLI:
-  - return|ROUTE_PREPARE_CALLER_CLI:
-  - start|ROUTE_PREPARE_CALLER_CLI:
-  - return|ROUTE_PREPARE_CALLER_CLI:
-  - start|ROUTE_PREPARE_CALLER_CLI:
-  - return|ROUTE_PREPARE_CALLER_CLI:
-  - start|ROUTE_PREPARE_CALLER_CLI:
-  - return|ROUTE_PREPARE_CALLER_CLI:
-  - start|ROUTE_PREPARE_CALLER_CLI:
-  - return|ROUTE_PREPARE_CALLER_CLI:
-  - return|ROUTE_SET_CALLER_CLI:
-  - start|ROUTE_SET_CALLEE:
-  - return|ROUTE_SET_CALLEE:
   - start|ROUTE_ADD_CALLINFO:
   - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
   - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
@@ -214,12 +198,11 @@ sip_out:
   - [
       '^INVITE sip:pre_announce@app.local',
       'CSeq: 2 INVITE',
-      'From: <sip:[% invite_record_call_scenarios_test.testuser1002.phone_number %]@',
+      'From: <sip:[% scenarios.0.username %]@',
       'To: <sip:[% scenarios.0.responders.0.username %]@',
       'Content-Type: application/sdp',
       'P-Caller-UUID: [% invite_record_call_scenarios_test.testuser1002.uuid %]',
       'P-Callee-UUID: [% invite_record_call_scenarios_test.testuser1003.uuid %]',
-      'P-Asserted-Identity: <sip:[% invite_record_call_scenarios_test.testuser1002.phone_number %]@',
       'P-App-Param: audio_id=;audio2_id=;audio3_id=[0-9]+;reply_180=no',
       'P-App-Name: pre_announce'
     ]
