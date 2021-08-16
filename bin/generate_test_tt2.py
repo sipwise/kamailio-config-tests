@@ -270,6 +270,8 @@ class Generator:
             rules.append((r";ngcpct=[^;>]+", r";ngcpct=[^;]+"))
         elif hdr == "cseq":
             rules.append((r":\s+\d+", r": \\d+"))
+        elif hdr == "subscription-state":
+            rules.append((r";expires=[1-9]\d*", r";expires=\\d+"))
         for rule in rules:
             line = re.sub(rule[0], rule[1], line, flags=re.IGNORECASE)
         return line

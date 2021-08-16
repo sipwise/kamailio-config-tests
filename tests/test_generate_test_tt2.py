@@ -314,3 +314,83 @@ def test_incoming_peer_resp(generate_test_tt2_file, caplog):
         TT2_FILE.format("incoming_peer", "_responder00"), res.out_file
     )
     assert res.returncode == 0
+
+
+def test_ok_incoming_shared_line(generate_test_tt2_file, caplog):
+    caplog.set_level(logging.DEBUG)
+    res = generate_test_tt2_file(
+        IDS_FILE.format("incoming_shared_line"),
+        MSG_FILE.format("incoming_shared_line", "00"),
+    )
+
+    assert check_filecontent(
+        TT2_FILE.format("incoming_shared_line", "00"), res.out_file
+    )
+    assert res.returncode == 0
+
+    res = generate_test_tt2_file(
+        IDS_FILE.format("incoming_shared_line"),
+        MSG_FILE.format("incoming_shared_line", "01"),
+    )
+
+    assert check_filecontent(
+        TT2_FILE.format("incoming_shared_line", "01"), res.out_file
+    )
+    assert res.returncode == 0
+
+    res = generate_test_tt2_file(
+        IDS_FILE.format("incoming_shared_line"),
+        MSG_FILE.format("incoming_shared_line", "02"),
+    )
+
+    assert check_filecontent(
+        TT2_FILE.format("incoming_shared_line", "02"), res.out_file
+    )
+    assert res.returncode == 0
+
+
+def test_incoming_shared_line_resp(generate_test_tt2_file, caplog):
+    caplog.set_level(logging.DEBUG)
+    res = generate_test_tt2_file(
+        IDS_FILE.format("incoming_shared_line"),
+        MSG_FILE.format("incoming_shared_line", "_responder00"),
+    )
+
+    assert check_filecontent(
+        TT2_FILE.format("incoming_shared_line", "_responder00"),
+        res.out_file,
+    )
+    assert res.returncode == 0
+
+    res = generate_test_tt2_file(
+        IDS_FILE.format("incoming_shared_line"),
+        MSG_FILE.format("incoming_shared_line", "_responder01"),
+    )
+
+    assert check_filecontent(
+        TT2_FILE.format("incoming_shared_line", "_responder01"),
+        res.out_file,
+    )
+    assert res.returncode == 0
+
+    res = generate_test_tt2_file(
+        IDS_FILE.format("incoming_shared_line"),
+        MSG_FILE.format("incoming_shared_line", "_responder02"),
+    )
+
+    assert check_filecontent(
+        TT2_FILE.format("incoming_shared_line", "_responder02"),
+        res.out_file,
+    )
+    assert res.returncode == 0
+
+    res = generate_test_tt2_file(
+        IDS_FILE.format("incoming_shared_line"),
+        MSG_FILE.format("incoming_shared_line", "_responder03"),
+    )
+
+    assert check_filecontent(
+        TT2_FILE.format("incoming_shared_line", "_responder03"),
+        res.out_file,
+    )
+    assert res.returncode == 0

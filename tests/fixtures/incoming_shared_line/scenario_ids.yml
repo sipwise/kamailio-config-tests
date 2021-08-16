@@ -1,0 +1,74 @@
+---
+domains:
+- incoming_shared_line_scenarios_pbx_test
+extra_info: {}
+incoming_shared_line_customerpbx_test:
+  id: '345'
+incoming_shared_line_scenarios_pbx_test:
+  testuser1002:
+    ac: '1'
+    cc: '43'
+    pbx_extension: 1002
+    pbx_phone_number: '43110001002'
+    phone_number: '4311000'
+    sn: 1000
+    uuid: e3a33659-36d4-4f94-a527-15efbdff8d69
+  testuser1003:
+    ac: '1'
+    cc: '43'
+    pbx_extension: 1003
+    pbx_phone_number: '43110001003'
+    phone_number: '4311001'
+    sn: 1001
+    uuid: 4a108c90-8b33-4a74-b927-58e956846fd1
+scenarios:
+- devid: testuser1002
+  domain: incoming-shared-line.scenarios-pbx.test
+  ip: 10.20.29.2
+  mport: 45003
+  port: 51602
+  responders:
+  - domain: incoming-shared-line.scenarios-pbx.test
+    ip: 10.20.29.2
+    mport: 45006
+    port: 51603
+    proto: udp
+    register: no
+    username: testuser1002
+  username: testuser1002
+- devid: testuser1002
+  domain: incoming-shared-line.scenarios-pbx.test
+  ip: 10.20.29.2
+  mport: 45009
+  port: 51604
+  responders:
+  - domain: incoming-shared-line.scenarios-pbx.test
+    ip: 10.20.29.2
+    mport: 45012
+    port: 51605
+    proto: udp
+    register: no
+    username: testuser1002
+  username: testuser1002
+- devid: testuser1003
+  domain: incoming-shared-line.scenarios-pbx.test
+  ip: 10.20.29.2
+  mport: 45015
+  port: 51606
+  responders:
+  - domain: incoming-shared-line.scenarios-pbx.test
+    ip: 10.20.29.2
+    mport: 45018
+    port: 51607
+    proto: udp
+    register: yes
+    username: testuser1002
+  - domain: incoming-shared-line.scenarios-pbx.test
+    ip: 10.20.29.2
+    mport: 45021
+    port: 51608
+    proto: udp
+    register: yes
+    username: testuser1002
+  username: testuser1003
+server_ip: 192.168.211.202
