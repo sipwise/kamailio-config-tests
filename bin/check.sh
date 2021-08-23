@@ -801,7 +801,7 @@ if ! "$SKIP_RUNSIPP" ; then
   fi
 
   echo "$(date) - check RTP sessions, wait 5 secs first"
-  sleep 5
+  sleep 2
   check_rtp
 fi
 

@@ -426,6 +426,7 @@ fi
 # - tcpdump to capture all the packages
 # - kamailio to write all the json files
 # - rtpengine to close rtp ports
+# - write all the CDRs
 sleep 6
 
 # Check if there are still some rtp port open after tests execution
@@ -461,7 +462,6 @@ if "${FIX_RETRANS}" ; then
 fi
 
 if "${CDR}" ; then
-  sleep 2
   cdr_export
 fi
 

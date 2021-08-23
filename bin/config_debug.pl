@@ -92,7 +92,7 @@ sub change_config
   $yaml->{witnessd}{gather}{sip_responsiveness} = 'no';
   $yaml->{security}->{ngcp_panel}->{scripts}->{restapi}->{sslverify} = 'no';
   $yaml->{mediator}{interval} = '1';      # Necessary to speedup the creation of the CDRs
-  $yaml->{rtpproxy}{delete_delay} = '2';  # Necessary to speedup the deletetion of the used ports in rtpengine
+  $yaml->{rtpproxy}{delete_delay} = '1';  # Necessary to speedup the deletetion of the used ports in rtpengine
   $yaml->{rtpproxy}{log_level} = '7';
   $yaml->{modules}[0]->{enable} = 'yes'; # dummy module should be the first one
 
