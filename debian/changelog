@@ -1,3 +1,162 @@
+kamailio-config-tests (10.1.0.0+0~mr10.1.0.0) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [eedabd4] TT#116100 scenarios: fix peer_host definitions
+  * [c9a5c27] TT#116100 scenarios_pbx/invite_alias_devid_fulllookup: fix prefs
+  * [4e3411e] TT#81700 bin/restart_log.sh: set fallback for reference file
+  * [3d805f6] TT#81700 Makefile: update clean rule
+  * [6a8c295] TT#125300 invite_trusted_peerout_stir
+  * [21860b5] TT#125303 invite_stir
+  * [c7ce1b9] TT#81700 run_test.sh: move config logic to set_config.sh
+  * [a5a9f55] TT#81700 bin/lnav.sh: helper for lnav
+  * [2dd31da] TT#81700 .gitignore: add new templates
+  * [0c5b0f0] TT#116103 bin/provide_scenario.sh: fail if any command fails
+  * [95c40ce] TT#81700 set_config.sh: create log dir before pid_watcher execution
+  * [15051f2] TT#116103 use kamailio.lb.ip from config.yml
+  * [c483616] TT#116103 scenarios/invite: changes to support external SERVER_IP
+  * [bb00155] TT#81700 bench.sh: add provisioning type option
+  * [4ed5719] TT#116103 bin/check.sh: copy instead of move scenario_ids.yml
+  * [18ff1ea] TT#116103 scenarios/invite_trusted_anonymous
+  * [5335364] TT#116103 scenarios/invite_trusted_peerout_stir
+  * [b67d741] TT#116103 scenarios/auth_fail
+  * [7ffa166] TT#116103 scenarios/incoming_foreign_dom
+  * [b241ab2] TT#116103 scenarios/incoming_hih
+  * [9e6a02c] TT#116103 scenarios/incoming_peer
+  * [0bf7b4c] TT#116103 scenarios/incoming_peer_stir
+  * [a3f1fe2] TT#116103 scenarios/invite_allowedcli_match
+  * [976b105] TT#116103 scenarios/invite_allowedcli_match_alias
+  * [c05106f] TT#116103 scenarios/invite_allowedcli_nonmatch
+  * [68eb52b] TT#116103 scenarios/invite_allowedcli_nonmatch_reject
+  * [bc20d64] TT#116103 scenarios/invite_allowip
+  * [658d5ab] TT#116103 scenarios/invite_allowip_soundset
+  * [24230b5] TT#116103 scenarios/invite_anonymous
+  * [93978de] TT#116103 scenarios/invite_blockin_blst
+  * [f12b532] TT#116103 scenarios/invite_conference_update
+  * [46a7983] TT#116103 scenarios/invite_record_call
+  * [60647dc] TT#116103 scenarios/invite_blockin_clir
+  * [5a8d97e] TT#116103 scenarios/invite_blockin_wlst
+  * [37f8723] TT#116103 scenarios/invite_blockout_blst
+  * [d45209c] TT#116103 scenarios/invite_blockout_ncos
+  * [d8b8aa5] TT#116103 scenarios/invite_blockout_pinoverride
+  * [2830ad0] TT#116103 scenarios/invite_blockout_wlst
+  * [eff3f76] TT#116103 scenarios: add "nat_sipping": "no" domain pref
+  * [b88cbd0] TT#116103 scenarios/invite_callforward
+  * [f49a6b4] TT#116103 scenarios/invite_callforward_but_callee_locked_cfna
+  * [ec551d9] TT#116103 scenarios/invite_callforward_but_callee_locked_cfu
+  * [96ddd7e] TT#116103 scenarios/invite_concurrent_max
+  * [2f426d9] TT#116103 scenarios/invite_concurrent_max_out
+  * [c94a44c] TT#116103 scenarios/invite_concurrent_max_out_per_account
+  * [7f68c80] TT#116103 scenarios/invite_concurrent_max_per_account
+  * [7a96b9c] TT#116103 scenarios/invite_emergency
+  * [f5046aa] TT#116103 scenarios/invite_emergency_cirpack
+  * [c096b7b] TT#116103 scenarios/invite_emergency_pidflo
+  * [4c912d9] TT#116103 scenarios/invite_force_inbound_calls_to_peer
+  * [e9d11db] TT#116103 scenarios/invite_force_outbound_calls_to_peer
+  * [86ceb65] TT#116103 scenarios/invite_foreign_dom
+  * [f1ee9fc] TT#116103 scenarios/invite_hdr
+  * [3ba7a28] TT#116103 scenarios/invite_hm
+  * [2de9557] TT#116103 scenarios/invite_hm_callforward
+  * [eae1cbd] TT#116103 scenarios/invite_callee_bye
+  * [130e658] TT#116103 scenarios/invite_hm_peerout
+  * [06f34ed] TT#116103 scenarios/invite_ignore_allowip
+  * [a78cadc] TT#116103 scenarios/invite_lateoam
+  * [b0cd867] TT#116103 scenarios/invite_locmap_add
+  * [2aaae0b] TT#116103 scenarios/invite_locmap_offline
+  * [9be1572] TT#116103 scenarios/invite_locmap_replace
+  * [efc957c] TT#116103 scenarios/invite_no_refer
+  * [7b02d94] TT#116103 scenarios/invite_offline
+  * [06b3765] TT#116103 scenarios/invite_outgoing_lock
+  * [6fdeed8] TT#116103 scenarios/invite_pai_none
+  * [7b56efb] TT#116103 scenarios/invite_peerout
+  * [b5892ee] TT#116103 scenarios/invite_peerout_failover
+  * [f5c4ee3] TT#116103 scenarios/invite_peerout_max_out
+  * [fc95652] TT#116103 scenarios/invite_peerout_rewrite
+  * [09ed53c] TT#116103 scenarios/invite_peerout_rewrite_pv_regex
+  * [171c339] TT#116103 scenarios/invite_peerout_stir
+  * [b489b38] TT#116103 scenarios/invite_perm_reg
+  * [4fa524f] TT#116103 scenarios/invite_prack
+  * [c56ba5f] TT#116103 scenarios/invite_q_forking
+  * [f98b52d] TT#116103 scenarios/invite_redirect
+  * [3a2d38d] TT#116103 scenarios/invite_redirect_blocked
+  * [7114e2a] TT#116103 scenarios/invite_redirect_tel_uri
+  * [0bc3793] TT#116103 scenarios/invite_reinvite_caller_transcoding
+  * [183e8ea] TT#116103 scenarios/invite_reinvite_transcoding
+  * [9356ab2] TT#116103 scenarios/invite_retrans
+  * [c860670] TT#116103 scenarios/invite_sdp_filter
+  * [10d1fe6] TT#116103 scenarios/invite_stir
+  * [e3f2976] TT#116103 scenarios/invite_tcp_udp
+  * [44024aa] TT#116103 scenarios/invite_tcp_udp_reinvite
+  * [948359c] TT#116103 scenarios/invite_voicebox
+  * [35a6f52] TT#116103 scenarios/invite_wrong_reg
+  * [ba1839c] TT#116103 scenarios/lock_ported
+  * [03722e9] TT#116103 scenarios/register
+  * [024dd1a] TT#116103 scenarios/register_allowip
+  * [26ed3f0] TT#116103 scenarios/regiter_bria
+  * [cff4a26] TT#116103 scenarios/register_ignore_allowip
+  * [abd9841] TT#116103 scenarios/register_tcp
+  * [0aad390] TT#116103 scenarios/reminder
+  * [8dd448c] TT#116103 scenarios/timer_session_callee_only_supported
+  * [20dd637] TT#116103 scenarios/timer_session_caller_only_supported
+  * [2098f73] TT#116103 scenarios/timer_session_supported
+  * [8141463] TT#116103 bin/detect_network.py
+  * [bc665bd] TT#116103 set_config.sh: detect network by default
+  * [d784021] TT#81700 store failed scenarios in file
+  * [aa109d5] TT#81700 remove warning
+  * [5d64c38] TT#81700 bin/failed_scenarios.sh: helper for jenkins
+  * [722b433] TT#116103 scenarios_pbx: use different customer per scenario
+  * [47c0224] TT#81700 get_results.sh: show prove summary
+  * [1f30417] TT#116103 scenarios_pbx/invite
+  * [8bac745] TT#116103 scenarios_pbx/invite_alias
+  * [19c6786] TT#116103 scenarios_pbx/invite_alias_devid
+  * [130bd06] TT#116103 scenarios_pbx/invite_alias_devid_fulllookup
+  * [ff0e8cc] TT#116103 scenarios_pbx/invite_username_devid
+  * [3eafcf2] TT#116103 scenarios_pbx: use different customer per scenario, take two
+  * [a32a243] TT#116103 scenarios_pbx/incoming_shared_line
+  * [6f5f8c3] TT#116103 scenarios_pbx: add "nat_sipping": "no" domain pref
+  * [2ac71df] TT#116103 scenarios_pbx/invite_shared_line
+  * [74bab46] TT#116103 scenarios_lnp: add "nat_sipping": "no" domain pref
+  * [7e515ea] TT#116103 print selected scenarios from file
+  * [6fd4188] TT#81700 run_tests.sh: print failed scenarios at the end
+  * [b2b690a] TT#116103 scenarios_lnp
+  * [493423a] TT#116101 align sipp checks filename to sipp scenario files
+  * [e7b9a38] TT#116101 bin/generate_test_tt2.py
+  * [4742b3c] TT#116101 bin/generate_test_tt2.sh add sipp option
+  * [433441c] TT#116101 bin/check.sh: use find instead of just bash
+  * [777d7fc] TT#116101 bin/check_sip.py: fix error in argparse
+  * [52787ba] TT#116101 scenarios*/**/scenarios.yml: quote numbers starting with 00
+  * [5dc37b7] TT#116101 bin/generate_test_tt2.py improve subs rules
+  * [212a707] TT#116101 bin/generate_test_tt2.py: more rules
+  * [404b9f4] TT#116101 bin/generate_test_tt2.py: more rules
+  * [4060f46] TT#116101 scenarios: sipp generated templates
+  * [fb347c1] TT#116101 scenarios: manual fixes
+  * [392b25a] TT#116101 scenarios: sipp test manual fixes
+  * [54fda6e] TT#116101 scenarios/invite_sdp_filter: sdp fixes
+  * [8098e62] TT#116101 bin/generate_test_tt2.py: add pbx numbers
+  * [615215d] TT#116101 scenarios_pbx: sipp generated templates
+  * [83892bf] TT#116101 bin/generate_test_tt2.py: add phone_numbers from extra_info
+  * [91a7265] TT#116101 scenarios_lnp: sipp generated templates
+  * [03a5634] TT#116101 scenarios_pbx: fix sipp generated templates
+
+  [ Alessio Garzi ]
+  * [42fd449] TT#119400 New kct scenario for sdp filtering
+  * [5699a74] TT#128200 Copy sems-b2b.log
+  * [49aa6cc] TT#128200 invite_emercy_cirpack scenario check boundary
+  * [39930c4] TT#124224 Fix kct pbx scenarios for pbx loop removal
+
+  [ Marco Capetta ]
+  * [13fb17c] TT#124224 Re-enable shared_lines scenarios for pbx
+  * [770dbb7] TT#116101 scenarios/invite_sdp_filter: fix sdp in 200OK reply
+  * [646c70e] TT#32968 Added new scenarios to disabled folder
+  * [efb73e2] TT#131255 Add call to route ROUTE_CHECK_LOCATIONS
+
+  [ donat zenichev ]
+  * [e110dd3] TT#116101 Parsing of SIP messages expected/gotten result using sipp log
+
+  [ Donat Zenichev ]
+  * [1b65160] TT#135852 Update k-c-t scenarios for CE-trunk
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 24 Aug 2021 16:50:31 +0200
+
 kamailio-config-tests (10.0.0.0+0~mr10.0.0.0) unstable; urgency=medium
 
   [ Victor Seva ]
