@@ -1,3 +1,17 @@
+kamailio-config-tests (9.5.1.3+0~mr9.5.1.3) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [f52b9d6] TT#81700 bin/failed_scenarios.sh: helper for jenkins
+  * [566e345] TT#81700 store failed scenarios in file
+  * [db2befa] TT#116103 print selected scenarios from file
+  * [25d5e45] TT#81700 run_tests.sh: print failed scenarios at the end
+  * [892f3a2] TT#116103 bin/check.sh: copy instead of move scenario_ids.yml
+  * [5387a3c] TT#81700 bench.sh: add provisioning type option
+  * [3079bf0] TT#81700 run_test.sh: move config logic to set_config.sh
+  * [0a3bc08] TT#81700 set_config.sh: create log dir before pid_watcher execution
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 25 Aug 2021 09:01:47 +0200
+
 kamailio-config-tests (9.5.1.2+0~mr9.5.1.2) unstable; urgency=medium
 
   [ Alessio Garzi ]
