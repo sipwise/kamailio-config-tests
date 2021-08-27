@@ -25,10 +25,12 @@ use Cwd 'abs_path';
 use Data::Dumper;
 use Getopt::Long;
 use English;
+use utf8;
+use JSON;
 
 sub usage
 {
-  my $output = "usage: graph_flow.pl [-h] [-j] file_in file_out.png\n";
+  my $output = "usage: graph_flow.pl [-h] file_in file_out.png\n";
   $output .= "Options:\n";
   $output .= "\t-h: this help\n";
   $output .= "\t-j: file_in is json\n";
@@ -37,7 +39,7 @@ sub usage
 
 my $help = 0;
 my $json_in = 0;
-GetOptions ("h|help" => \$help, "j|json" => \$json_in)
+GetOptions ("h|help" => \$help)
   or die("Error in command line arguments\n".usage());
 
 if($#ARGV!=1)
@@ -56,22 +58,14 @@ my $g = GraphViz->new();
 my $filename = abs_path($ARGV[0]);
 my $outfilename = $ARGV[1];
 my $inlog;
-if($json_in) {
-  use utf8;
-  use JSON;
-  my $json;
-  {
-    local $INPUT_RECORD_SEPARATOR = undef; #Enable 'slurp' mode
-    open my $fh, "<", $filename;
-    $json = <$fh>;
-    close $fh;
-  }
-  $inlog = decode_json($json);
+my $json;
+{
+  local $INPUT_RECORD_SEPARATOR = undef; #Enable 'slurp' mode
+  open my $fh, "<", $filename;
+  $json = <$fh>;
+  close $fh;
 }
-else {
-  use YAML::XS;
-  $inlog = YAML::XS::LoadFile($filename);
-}
+$inlog = decode_json($json);
 my @prevs = ();
 my $name = '';
 my $action = '';

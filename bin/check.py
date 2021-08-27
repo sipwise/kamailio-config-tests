@@ -330,13 +330,6 @@ def load_json(filepath):
 
 
 def main(args):
-    # default -y
-    load_check = load_yaml
-
-    if args.yaml:
-        load_check = load_yaml
-    if args.json:
-        load_check = load_json
     if args.debug:
         logging.basicConfig(level=logging.DEBUG)
 
@@ -345,7 +338,7 @@ def main(args):
     test = Test()
 
     try:
-        check = load_check(args.kam_file)
+        check = load_json(args.kam_file)
     except Exception:
         check = {"flow": [], "sip_in": "", "sip_out": []}
         test.error("Error loading file:%s" % args[1])
@@ -363,12 +356,10 @@ def main(args):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='generate TAP result')
+    parser = argparse.ArgumentParser(description="generate TAP result")
     grp = parser.add_mutually_exclusive_group()
-    grp.add_argument('-y', '--yaml', action='store_true', help='YAML kam_file')
-    grp.add_argument('-j', '--json', action='store_true', help='JSON kam_file')
-    parser.add_argument('test_yaml_file', help='YAML file with checks')
-    parser.add_argument('kam_file', help='kamailio file')
-    parser.add_argument('-d', '--debug', action='store_true')
+    parser.add_argument("test_yaml_file", help="YAML file with checks")
+    parser.add_argument("kam_file", help="JSON cfgt kamailio file")
+    parser.add_argument("-d", "--debug", action="store_true")
     args = parser.parse_args()
     main(args)

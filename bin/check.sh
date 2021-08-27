@@ -24,12 +24,10 @@ SKIP=false
 MEMDBG=false
 SKIP_DELDOMAIN=false
 CHECK_TYPE=all
-SKIP_PARSE=false
 SKIP_RUNSIPP=false
 FIX_RETRANS=false
 GRAPH=false
 GRAPH_FAIL=false
-JSON_KAM=true
 SKIP_MOVE_JSON_KAM=false
 CDR=false
 ERR_FLAG=0
@@ -44,12 +42,8 @@ SIPP_VERSION=$(sipp -v | awk -F- '/SIPp/ { print $1 }' | awk '{print $2}')
 # $1 kamailio msg parsed to yml
 # $2 destination png filename
 graph() {
-  local OPTS
-  if "${JSON_KAM}" ; then
-    OPTS="--json"
-  fi
   if [ -f "$1" ]; then
-    "${BIN_DIR}/graph_flow.pl" $OPTS "$1" "$2"
+    "${BIN_DIR}/graph_flow.pl" "$1" "$2"
   else
     echo "No $1 found"
     ERR_FLAG=1
@@ -112,14 +106,12 @@ check_retrans_next() {
   # testing next json file, if exist. Necessary in case of retransmissions or wrong timing/order.
   local next_msg
   local next_tap
-  local kam_type
   local step
   local err_type
 
-  step=${4:-1}
+  step=${3:-1}
   next_test_filepath "$1"  "${step}"
-  kam_type=$2
-  next_tap=${3/_test.tap/_test_next.tap}
+  next_tap=${2/_test.tap/_test_next.tap}
   echo "$(date) - Fix retransmissions enabled: try to test the next[+${step}] json file"
   kam_msg=$(basename "${next_msg}")
 
@@ -129,11 +121,11 @@ check_retrans_next() {
       return 1
     fi
     echo -n "$(date) - Testing $(basename "$1") against ${kam_msg} -> $(basename "${next_tap}")"
-    if "${BIN_DIR}/check.py" "${kam_type}" "$1" "${next_msg}" > "${next_tap}" ; then
+    if "${BIN_DIR}/check.py" "$1" "${next_msg}" > "${next_tap}" ; then
       # Test using the next json file was fine. That means that, with high probability, there was a retransmission.
       # Next step is to backup the failed tap test and overwrite it with the working one
-      mv "$3" "${3}_retrans"
-      mv "${next_tap}" "$3"
+      mv "$2" "${2}_retrans"
+      mv "${next_tap}" "$2"
       test_ok+=("${kam_msg}")
       return 0
     else
@@ -157,15 +149,13 @@ check_retrans_prev() {
   # testing previous json file, if exist. Necessary in case of wrong timing/order.
   local prev_msg
   local prev_tap
-  local kam_type
   local step
   local err_type
   local kam_msg
 
-  step=${4:-1}
+  step=${3:-1}
   prev_test_filepath "$1" "${step}"
-  kam_type=$2
-  prev_tap=${3/_test.tap/_test_prev.tap}
+  prev_tap=${2/_test.tap/_test_prev.tap}
   echo "$(date) - Fix retransmissions enabled: try to test the previous[-${step}] json file"
   kam_msg=$(basename "${prev_msg}")
 
@@ -175,11 +165,11 @@ check_retrans_prev() {
       return 1
     fi
     echo -n "$(date) - Testing $(basename "$1") against ${kam_msg} -> $(basename "${prev_tap}")"
-    if "${BIN_DIR}/check.py" "${kam_type}" "$1" "${prev_msg}" > "${prev_tap}" ; then
+    if "${BIN_DIR}/check.py" "$1" "${prev_msg}" > "${prev_tap}" ; then
       # Test using the previous json file was fine. That means that, with high probability, there was a wrong timing/order.
       # Next step is to backup the failed tap test and overwrite it with the working one
-      mv "$3" "${3}_retrans"
-      mv "${prev_tap}" "$3"
+      mv "$2" "${2}_retrans"
+      mv "${prev_tap}" "$2"
       test_ok+=("${kam_msg}")
       return 0
     else
@@ -254,7 +244,6 @@ check_sip_test() {
 # $3 destination tap filename
 check_test() {
   local dest
-  local kam_type="--yaml"
   local err_type
   local kam_msg
 
@@ -271,13 +260,9 @@ check_test() {
     return 1
   fi
 
-  if "${JSON_KAM}" ; then
-    kam_type="--json"
-  fi
-
   kam_msg=$(basename "$2")
   echo -n "$(date) - Testing $(basename "$1") against ${kam_msg} -> $(basename "$3")"
-  if "${BIN_DIR}/check.py" "${kam_type}" "$1" "$2" > "$3" ; then
+  if "${BIN_DIR}/check.py" "$1" "$2" > "$3" ; then
     echo " ok"
     test_ok+=("${kam_msg}")
     return 0
@@ -288,7 +273,7 @@ check_test() {
   echo " NOT ok[${err_type}]"
 
   if "${FIX_RETRANS}" ; then
-    check_retrans_block "$1" "${kam_type}" "$3" "${RETRANS_SIZE}" && return 0
+    check_retrans_block "$1" "$3" "${RETRANS_SIZE}" && return 0
   fi
 
   ERR_FLAG=1
@@ -545,19 +530,15 @@ run_sipp() {
 test_filepath() {
   local msg_name
 
-  if ! "${JSON_KAM}" ; then
-    msg_name=${1/_test.yml/.yml}
-  else
-    if grep -q '^retrans: true' "${1}"; then
-      echo "$(date) - Detected a test for a retransmission"
-      msg_name=${1/_test_retransmission.yml/.json_retransmission}
-      msg="${LOG_DIR}/$(basename "${msg_name}")"
-      if [ -f "${msg}" ]; then
-        return
-      fi
+  if grep -q '^retrans: true' "${1}"; then
+    echo "$(date) - Detected a test for a retransmission"
+    msg_name=${1/_test_retransmission.yml/.json_retransmission}
+    msg="${LOG_DIR}/$(basename "${msg_name}")"
+    if [ -f "${msg}" ]; then
+      return
     fi
-    msg_name=${1/_test.yml/.json}
   fi
+  msg_name=${1/_test.yml/.json}
   msg="${LOG_DIR}/$(basename "${msg_name}")"
 }
 
@@ -567,11 +548,7 @@ next_test_filepath() {
   local new_json
   local step=${2:-1}
 
-  if ! "${JSON_KAM}" ; then
-    msg_name=${1/_test.yml/.yml}
-  else
-    msg_name=${1/_test.yml/.json}
-  fi
+  msg_name=${1/_test.yml/.json}
 
   msg_name=$(basename "${msg_name}")
   old_json="${msg_name:0:4}"
@@ -588,12 +565,7 @@ prev_test_filepath() {
   local new_json
   local step=${2:-1}
 
-  if ! "${JSON_KAM}" ; then
-    msg_name=${1/_test.yml/.yml}
-  else
-    msg_name=${1/_test.yml/.json}
-  fi
-
+  msg_name=${1/_test.yml/.json}
   msg_name=$(basename "${msg_name}")
   old_json="${msg_name:0:4}"
   new_json=$(((10#$old_json)-step))  # There should not be any problem since they start from 0001
@@ -619,7 +591,7 @@ cdr_check() {
 }
 
 usage() {
-  echo "Usage: check.sh [-hCDRGgJKm] [-T <all|none|cfgt|sipp>] [-p PROFILE ] [-s GROUP] check_name"
+  echo "Usage: check.sh [-hCDRGgKm] [-T <all|none|cfgt|sipp>] [-p PROFILE ] [-s GROUP] check_name"
   echo "Options:"
   echo -e "\\t-I: SIP_SERVER IP, default:127.0.0.1"
   echo -e "\\t-C: skip creation of domain and subscribers"
@@ -631,7 +603,6 @@ usage() {
   echo -e "\\t-g: creation of graphviz image only if test fails"
   echo -e "\\t-r: fix retransmission issues"
   echo -e "\\t-p: CE|PRO default is CE"
-  echo -e "\\t-J: kamailio json output OFF"
   echo -e "\\t-M: skip move of kamailio json output to log folder"
   echo -e "\\t-K: enable tcpdump capture"
   echo -e "\\t-s: scenario group. Default: scenarios"
@@ -641,7 +612,7 @@ usage() {
   echo -e "\\tcheck_name. Scenario name to check. This is the name of the directory on GROUP dir."
 }
 
-while getopts 'hI:Cp:Rs:DT:PGgrcJKMmw:' opt; do
+while getopts 'hI:Cp:Rs:DT:GgrcKMmw:' opt; do
   case $opt in
     h) usage; exit 0;;
     I) SIP_SERVER=${OPTARG};;
@@ -651,12 +622,10 @@ while getopts 'hI:Cp:Rs:DT:PGgrcJKMmw:' opt; do
     s) GROUP=${OPTARG};;
     D) SKIP_DELDOMAIN=true;;
     T) CHECK_TYPE=${OPTARG};;
-    P) SKIP_PARSE=true;;
     K) CAPTURE=true;;
     G) GRAPH=true;;
     g) GRAPH_FAIL=true;;
     r) FIX_RETRANS=true;;
-    J) JSON_KAM=false;;
     M) SKIP_MOVE_JSON_KAM=true;;
     m) MEMDBG=true;;
     c) CDR=true;;
@@ -725,7 +694,6 @@ if ! "$SKIP" ; then
 fi
 
 if ! "$SKIP_RUNSIPP" ; then
-  if "${JSON_KAM}" ; then
     if ! [ -d "${KAM_DIR}" ] ; then
       echo "$(date) - dir and perms for ${KAM_DIR}"
       mkdir -p "${KAM_DIR}"
@@ -735,7 +703,6 @@ if ! "$SKIP_RUNSIPP" ; then
       echo "$(date) - clean cfgt scenario ${test_uuid}"
       ngcp-kamcmd proxy cfgt.clean "${test_uuid}"
     fi
-  fi
 
   echo "$(date) - Running sipp scenarios"
   run_sipp
@@ -745,25 +712,23 @@ if ! "$SKIP_RUNSIPP" ; then
   cp "${SCEN_CHECK_DIR}/scenario_ids.yml" "${LOG_DIR}"
   echo "$(date) - Done"
 
-  if "${JSON_KAM}" ; then
-    if ! "${SKIP_MOVE_JSON_KAM}" ; then
-      echo "$(date) - Move kamailio json files"
-      if [ -d "${JSON_DIR}" ] ; then
-        for i in "${JSON_DIR}"/*.json ; do
-          json_size_before=$(stat -c%s "${i}")
-          moved_file="${LOG_DIR}/$(printf "%04d.json" "$(basename "${i}" .json)")"
-          expand -t1 "${i}" > "${moved_file}"
-          json_size_after=$(stat -c%s "${moved_file}")
-          echo "$(date) - Moved file ${i} with size before: ${json_size_before} and after: ${json_size_after}"
-          rm "${i}"
-        done
-      else
-        echo "$(date) - No json files found"
-      fi
-      echo "$(date) - clean cfgt scenario ${test_uuid}"
-      ngcp-kamcmd proxy cfgt.clean "${test_uuid}"
-      echo "$(date) - Done"
+  if ! "${SKIP_MOVE_JSON_KAM}" ; then
+    echo "$(date) - Move kamailio json files"
+    if [ -d "${JSON_DIR}" ] ; then
+      for i in "${JSON_DIR}"/*.json ; do
+        json_size_before=$(stat -c%s "${i}")
+        moved_file="${LOG_DIR}/$(printf "%04d.json" "$(basename "${i}" .json)")"
+        expand -t1 "${i}" > "${moved_file}"
+        json_size_after=$(stat -c%s "${moved_file}")
+        echo "$(date) - Moved file ${i} with size before: ${json_size_before} and after: ${json_size_after}"
+        rm "${i}"
+      done
+    else
+      echo "$(date) - No json files found"
     fi
+    echo "$(date) - clean cfgt scenario ${test_uuid}"
+    ngcp-kamcmd proxy cfgt.clean "${test_uuid}"
+    echo "$(date) - Done"
   fi
 
   if "${FIX_RETRANS}" ; then
@@ -805,18 +770,8 @@ if ! "$SKIP_RUNSIPP" ; then
   check_rtp
 fi
 
-
 if ! "${SKIP_DELDOMAIN}" ; then
   "${BIN_DIR}/provide_scenario.sh" "${SCEN_CHECK_DIR}" delete
-fi
-
-
-if ! "${SKIP_PARSE}" ; then
-  if ! "${JSON_KAM}" ; then
-    echo "$(date) - Parsing ${LOG_DIR}/kamailio.log"
-    "${BIN_DIR}/ulog_parser.pl" "${LOG_DIR}/kamailio.log ${LOG_DIR}"
-    echo "$(date) - Done"
-  fi
 fi
 
 # let's check the results
