@@ -7,14 +7,7 @@ FROM docker.mgm.sipwise.com/sipwise-bullseye:latest
 # old cached versions when the Dockerfile is built.
 ENV REFRESHED_AT 2021-07-01
 
-# test execution; we need the backport of python3-junitxml from our own
-# repository since it's not part of Debian/buster
-# files that get-code generates
-COPY t/sources.list.d/builddeps.list /etc/apt/sources.list.d/
-COPY t/sources.list.d/preferences /etc/apt/preferences.d/
-
-RUN apt-get update
-RUN apt-get install --assume-yes python3-yaml python3-junitxml \
+RUN apt-get update && apt-get install --assume-yes python3-yaml python3-junitxml \
   make libtemplate-perl libyaml-perl python3-pytest
 
 RUN echo './t/testrunner' >>/root/.bash_history
