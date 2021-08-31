@@ -190,15 +190,14 @@ check_retrans_prev() {
 }
 
 # $1 unit test yml
-# $2 kamailio msg parsed to yml
-# $3 destination tap filename
-# $4 number of messages to check before and after
+# $2 destination tap filename
+# $3 number of messages to check before and after
 check_retrans_block() {
-  for i in $(seq "${4:-2}") ; do
-    if check_retrans_next "$1" "$2" "$3" "$i" ; then
+  for i in $(seq "${3:-2}") ; do
+    if check_retrans_next "$1" "$2" "$i" ; then
       echo " ok"
       return 0
-    elif check_retrans_prev "$1" "$2" "$3" "$i" ; then
+    elif check_retrans_prev "$1" "$2" "$i" ; then
       echo " ok"
       return 0
     fi
