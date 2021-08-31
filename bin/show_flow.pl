@@ -25,6 +25,8 @@ use Cwd 'abs_path';
 use Data::Dumper;
 use Getopt::Long;
 use English;
+use utf8;
+use JSON;
 
 sub usage
 {
@@ -32,14 +34,13 @@ sub usage
   $output .= "\tOptions:\n";
   $output .= "-h --help: this help\n";
   $output .= "-y --yml: yaml output\n";
-  $output .= "-j --json: json input\n";
   return $output
 }
 
 my $yml = '';
 my $help = 0;
 my $json_in = 0;
-GetOptions ("y|yml" => \$yml, "h|help" => \$help, "j|json" => \$json_in)
+GetOptions ("y|yml" => \$yml, "h|help" => \$help)
   or die("Error in command line arguments\n".usage());
 
 if($#ARGV!=0 || $help)
@@ -48,22 +49,14 @@ if($#ARGV!=0 || $help)
 }
 my $filename = abs_path($ARGV[0]);
 my $inlog;
-if($json_in) {
-  use utf8;
-  use JSON;
-  my $json;
-  {
-    local $INPUT_RECORD_SEPARATOR = undef; #Enable 'slurp' mode
-    open my $fh, "<", $filename;
-    $json = <$fh>;
-    close $fh;
-  }
-  $inlog = decode_json($json);
+my $json;
+{
+  local $INPUT_RECORD_SEPARATOR = undef; #Enable 'slurp' mode
+  open my $fh, "<", $filename;
+  $json = <$fh>;
+  close $fh;
 }
-else {
-  use YAML::XS;
-  $inlog = YAML::XS::LoadFile($filename);
-}
+$inlog = decode_json($json);
 
 foreach my $i (@{$inlog->{'flow'}})
 {
