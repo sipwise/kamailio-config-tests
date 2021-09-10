@@ -1,3 +1,16 @@
+kamailio-config-tests (7.5.10.1+0~mr7.5.10.1) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [d37aa69] TT#81700 bin/check.sh: support checking up to two steps of messages
+  * [bebd5a3] TT#81700 bin/check.sh: use result of the check not ERR_FLAG
+  * [7aaeea7] TT#81700 bin/check.sh: add option to control RETRANS_SIZE
+  * [679e545] TT#81700 bin/check.sh: skip kam_msg that was already processed
+
+  [ Marco Capetta ]
+  * [9fef230] TT#139600 Update after removal of append_branch() command in redirect scenarios
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 10 Sep 2021 12:33:24 +0200
+
 kamailio-config-tests (7.5.10.0+0~mr7.5.10.0) unstable; urgency=medium
 
   * New release.
