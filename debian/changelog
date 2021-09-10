@@ -1,3 +1,10 @@
+kamailio-config-tests (10.0.2.0+0~mr10.0.2.0) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [dfb22e2] TT#139600 Update after removal of append_branch() command in redirect scenarios
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 10 Sep 2021 16:11:23 +0200
+
 kamailio-config-tests (10.0.1.0+0~mr10.0.1.0) unstable; urgency=medium
 
   [ Victor Seva ]
