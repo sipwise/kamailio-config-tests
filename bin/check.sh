@@ -83,6 +83,12 @@ detect_sipp_error_files() {
   find_cmd=$(find "${LOG_DIR}/" -type f -name '*errors.log' 2>/dev/null|wc -l)
   if [ "${find_cmd}" -ne 0 ]; then
     echo "$(date) - Detected sipp error files"
+    while read -r sipp_error ; do
+      echo "${sipp_error}:"
+      echo "---------"
+      cat "${sipp_error}" && echo
+      echo "---------"
+    done < <(find "${LOG_DIR}/" -type f -name '*errors.log')
     return 0
   else
     echo "$(date) - No sipp error files detected"
