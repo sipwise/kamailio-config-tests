@@ -1,3 +1,24 @@
+kamailio-config-tests (9.5.2.1+0~mr9.5.2.1) unstable; urgency=medium
+
+  [ Alessio Garzi ]
+  * [dcf8db7] TT#124224 Fix kct pbx scenarios for pbx loop removal
+  * [57ac76c] TT#101151 Stripped call ROUTE_SET_CALLEE_DIALOG for force_outbound_calls_to_peer
+
+  [ Victor Seva ]
+  * [34464dc] TT#81700 bin/failed_scenarios.sh: helper for jenkins
+  * [6157bea] TT#81700 store failed scenarios in file
+  * [b99131d] TT#116103 print selected scenarios from file
+  * [aa43cd7] TT#81700 run_tests.sh: print failed scenarios at the end
+  * [1295117] TT#116103 bin/check.sh: copy instead of move scenario_ids.yml
+  * [cfaecc2] TT#81700 bench.sh: add provisioning type option
+  * [dc261be] TT#81700 run_test.sh: move config logic to set_config.sh
+  * [6f6f848] TT#81700 set_config.sh: create log dir before pid_watcher execution
+
+  [ Marco Capetta ]
+  * [4db825b] TT#139600 Update after removal of append_branch() command in redirect scenarios
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 21 Sep 2021 16:25:31 +0200
+
 kamailio-config-tests (9.5.2.0+0~mr9.5.2.0) unstable; urgency=medium
 
   [ Victor Seva ]
