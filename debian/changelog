@@ -1,3 +1,22 @@
+kamailio-config-tests (10.2.0.0+0~mr10.2.0.0) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [e35be54] TT#131255 Reduce sleep time to check rtpengine ports
+  * [ed263b5] TT#139600 Update after removal of append_branch() command in redirect scenarios
+
+  [ Victor Seva ]
+  * [9bc3d5d] TT#131253 remove kamailio yaml flow info options
+  * [911d18e] TT#118659 remove sources.list.d no longer necessary
+  * [2453fed] TT#131253 check.sh: fix check_retrans_block
+  * [c5b1b1c] TT#81700 check.sh: print sipp_error in log
+  * [981fa37] TT#131253 show_flow.pl: remove kamailio yaml flow info options
+
+  [ Alessio Garzi ]
+  * [60e9d89] TT#101151 Stripped call ROUTE_SET_CALLEE_DIALOG for force_outbound_calls_to_peer
+  * [460c112] TT#121150 Update invite_record_call to new pref specs
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 05 Oct 2021 13:18:38 +0200
+
 kamailio-config-tests (10.1.0.0+0~mr10.1.0.0) unstable; urgency=medium
 
   [ Victor Seva ]
