@@ -33,7 +33,7 @@ scenarios:
     domain: invite-ncos-white.scenarios-lnp.test
     responders:
       - ip: 127.0.2.1
-        number: 43999100
+        number: 43888100
         username: testuser1001
         domain: invite-ncos-white.scenarios-lnp.test
         peer_host: peer_invite_ncos_white_lnp_host0
@@ -43,7 +43,7 @@ scenarios:
     domain: invite-ncos-white.scenarios-lnp.test
     responders:
       - ip: 127.0.2.2
-        number: 43999200
+        number: 43888200
         username: testuser1001
         domain: invite-ncos-white.scenarios-lnp.test
         peer_host: peer_invite_ncos_white_lnp_host1
@@ -53,7 +53,7 @@ scenarios:
     domain: invite-ncos-white.scenarios-lnp.test
     responders:
       - ip: 127.0.2.1
-        number: 43999300
+        number: 43888300
         username: testuser1001
         domain: invite-ncos-white.scenarios-lnp.test
         peer_host: peer_invite_ncos_white_lnp_host0
@@ -61,8 +61,8 @@ scenarios:
         active: 'no'
 extra_info:
   phone_numbers:
-    - 439992
+    - 438882
     - 4318881001
-    - 43999100
-    - 43999200
-    - 43999300
+    - 43888100
+    - 43888200
+    - 43888300
