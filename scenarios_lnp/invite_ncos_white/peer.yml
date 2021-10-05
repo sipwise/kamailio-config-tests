@@ -16,7 +16,7 @@ peer_invite_ncos_white_lnp:
       description:
   rules:
     - group_id: peer_invite_ncos_white_lnp_group0
-      callee_prefix: "439991"
+      callee_prefix: "438881"
       callee_pattern: ''
       caller_pattern: '^sip:.+@invite-ncos-white.scenarios-lnp.test'
       description: ""
