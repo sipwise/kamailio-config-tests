@@ -2,7 +2,7 @@
     "@invite-ncos-white.scenarios-lnp.test": {
         "nat_sipping": "no",
         "lnp_for_local_sub": true,
-        "ncos": "ncos_white"
+        "ncos": "ncos_whitelist_scenario_lnp_white"
     },
     "peer_invite_ncos_white_lnp_host0": {
         "concurrent_max": 1
