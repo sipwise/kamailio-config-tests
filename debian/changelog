@@ -1,3 +1,10 @@
+kamailio-config-tests (10.0.1.2+0~mr10.0.1.2) unstable; urgency=medium
+
+  [ Donat Zenichev ]
+  * [5ca6a47] TT#144200 LNP scenarios (invite_ncos_black, invite_ncos_white)
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 06 Oct 2021 16:58:58 +0200
+
 kamailio-config-tests (10.0.1.1+0~mr10.0.1.1) unstable; urgency=medium
 
   [ Marco Capetta ]
