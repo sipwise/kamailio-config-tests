@@ -7,11 +7,11 @@ lnp_invite_ncos_white_lnp_00:
     - number: '[% extra_info.phone_numbers.0 %]'
       routing_number: '[% extra_info.phone_numbers.1 %]'
   ncos:
-    - level: ncos_blacklist_scenario_lnp_white
+    - level: ncos_blacklist_scenario_white
       reseller_id: 1
       patterns:
         - '.*'
-    - level: ncos_whitelist_scenario_lnp_white
+    - level: ncos_whitelist_scenario_white
       reseller_id: 1
       patterns:
         - '.*'
