@@ -1,5 +1,5 @@
 ---
-ncos_blacklist_scenario_lnp_white:
+ncos_blacklist_scenario_white:
   data:
     mode: blacklist
     local_ac: 0
@@ -8,7 +8,7 @@ ncos_blacklist_scenario_lnp_white:
   patterns:
     - pattern: '^438881'
       description: block LNP call
-ncos_whitelist_scenario_lnp_white:
+ncos_whitelist_scenario_white:
   data:
     mode: whitelist
     local_ac: 0
