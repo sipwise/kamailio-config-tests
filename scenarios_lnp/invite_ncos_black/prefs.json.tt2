@@ -2,7 +2,7 @@
     "@invite-ncos-black.scenarios-lnp.test": {
         "nat_sipping": "no",
         "lnp_for_local_sub": true,
-        "ncos": "ncos_blacklist_scenario_lnp_black"
+        "ncos": "ncos_blacklist_scenario_black"
     },
     "peer_invite_ncos_black_lnp_host0": {
         "concurrent_max": 1,
