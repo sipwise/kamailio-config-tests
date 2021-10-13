@@ -1,3 +1,13 @@
+kamailio-config-tests (6.5.14.0+0~mr6.5.14.0) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [c684904] TT#81700 bin/check.sh: support checking up to two steps of messages
+  * [3c6f682] TT#81700 bin/check.sh: use result of the check not ERR_FLAG
+  * [6069346] TT#81700 bin/check.sh: add option to control RETRANS_SIZE
+  * [b69eb7e] TT#81700 bin/check.sh: skip kam_msg that was already processed
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 13 Oct 2021 18:00:37 +0200
+
 kamailio-config-tests (6.5.13.0+0~mr6.5.13.0) unstable; urgency=medium
 
   [ Alessio Garzi ]
