@@ -3,7 +3,7 @@ Section: devel
 Priority: optional
 Maintainer: Sipwise Development Team <support@sipwise.com>
 Build-Depends:
- debhelper-compat (= 12),
+ debhelper-compat (= 13),
  devscripts,
  libcapture-tiny-perl,
  libconfig-tiny-perl,
@@ -23,7 +23,7 @@ Build-Depends:
  python3:any,
 Recommends:
  libgraphviz-perl,
-Standards-Version: 3.9.8
+Standards-Version: 4.5.1
 Homepage: https://www.sipwise.com/
 
 Package: kamailio-config-tests
