@@ -118,6 +118,9 @@
     <action>
       <exec play_pcap_audio="media181sec.pcap"/>
     </action>
+    <action>
+      <exec play_pcap_audio="media181sec.pcap"/>
+    </action>
   </nop>
 
   <pause milliseconds="1000"/>
