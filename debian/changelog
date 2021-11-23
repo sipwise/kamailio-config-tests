@@ -1,3 +1,16 @@
+kamailio-config-tests (10.2.1.0+0~mr10.2.1.0) unstable; urgency=medium
+
+  [ Donat Zenichev ]
+  * [f253643] TT#144200 LNP scenarios (invite_ncos_black, invite_ncos_white)
+
+  [ Marco Capetta ]
+  * [0d5449d] TT#144200 Fix typos in LNP NCOS scenarios
+
+  [ Guillem Jover ]
+  * [8a1aeb7] TT#124273 Update packaging for bullseye
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 23 Nov 2021 14:17:29 +0100
+
 kamailio-config-tests (10.2.0.0+0~mr10.2.0.0) unstable; urgency=medium
 
   [ Marco Capetta ]
