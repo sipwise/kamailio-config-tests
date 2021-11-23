@@ -1,3 +1,11 @@
+kamailio-config-tests (8.5.6.2+0~mr8.5.6.2) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [15ca465] TT#150451 scenarios_pbx: fix incoming_shared_line
+  * [72a1a68] TT#150451 scenarios_pbx: fix invite_shared_line after backport
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 23 Nov 2021 17:24:40 +0100
+
 kamailio-config-tests (8.5.6.1+0~mr8.5.6.1) unstable; urgency=medium
 
   [ Marco Capetta ]
