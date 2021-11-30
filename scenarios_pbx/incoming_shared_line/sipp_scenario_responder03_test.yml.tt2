@@ -2,7 +2,7 @@ messages:
 - - 'INVITE sip:[% scenarios.2.responders.1.username %]@[% scenarios.2.responders.1.ip %]:[% scenarios.2.responders.1.port %] SIP/2.0'
   - 'Record-Route: <sip:[% server_ip %];r2=on;lr=on;ftag=[^;]+;ngcplb=yes;socket=sip:[% server_ip %]:5060>'
   - 'Record-Route: <sip:127.0.0.1;r2=on;lr=on;ftag=[^;]+;ngcplb=yes;socket=sip:[% server_ip %]:5060>'
-  - 'Record-Route: <sip:127.0.0.1:5062;lr=on;ftag=[^;]+;did=[^;]+;ice_caller=strip;ice_callee=strip;aset=\d+;rtpprx=yes>'
+  - 'Record-Route: <sip:127.0.0.1:5062;lr=on;ftag=[^;]+;leg_b=1;did=[^;]+;ice_caller=strip;ice_callee=strip;aset=\d+;rtpprx=yes>'
   - 'From: <sip:[% incoming_shared_line_scenarios_pbx_test.testuser1003.pbx_phone_number %]@incoming-shared-line.scenarios-pbx.test>;tag=[\w-]+'
   - 'To: <sip:[% scenarios.0.username %]@incoming-shared-line.scenarios-pbx.test>'
   - 'CSeq: \d+ INVITE'

@@ -2,7 +2,7 @@ messages:
 - - 'INVITE sip:[% scenarios.0.responders.0.username %]@[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %] SIP/2.0'
   - 'Record-Route: <sip:[% server_ip %];r2=on;lr=on;ftag=[^;]+;ngcplb=yes;socket=sip:[% server_ip %]:5060>'
   - 'Record-Route: <sip:127.0.0.1;r2=on;lr=on;ftag=[^;]+;ngcplb=yes;socket=sip:[% server_ip %]:5060>'
-  - 'Record-Route: <sip:127.0.0.1:5062;lr=on;ftag=[^;]+;did=[^;]+>'
+  - 'Record-Route: <sip:127.0.0.1:5062;lr=on;ftag=[^;]+;leg_b=1;did=[^;]+>'
   - 'From: <sip:[% invite_redirect_blocked_scenarios_test.testuser1002.phone_number %]@invite-redirect-blocked.scenarios.test>;tag=[\w-]+'
   - 'To: <sip:[% scenarios.0.responders.0.username %]@invite-redirect-blocked.scenarios.test>'
   - 'CSeq: \d+ INVITE'
