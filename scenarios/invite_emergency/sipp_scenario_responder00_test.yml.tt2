@@ -2,7 +2,7 @@ messages:
 - - 'INVITE sip:E1112@[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];transport=udp SIP/2.0'
   - 'Record-Route: <sip:[% server_ip %];r2=on;lr=on;ftag=[^;]+;ngcplb=yes>'
   - 'Record-Route: <sip:127.0.0.1;r2=on;lr=on;ftag=[^;]+;ngcplb=yes>'
-  - 'Record-Route: <sip:127.0.0.1:5062;lr=on;ftag=[^;]+;did=[^;]+>'
+  - 'Record-Route: <sip:127.0.0.1:5062;lr=on;ftag=[^;]+;leg_b=1;did=[^;]+>'
   - 'From: <sip:[% invite_emergency_scenarios_test.testuser1002.phone_number %]@invite-emergency.scenarios.test>;tag=[\w-]+'
   - 'To: <sip:E1112@[% scenarios.0.responders.0.ip %]>'
   - 'CSeq: \d+ INVITE'

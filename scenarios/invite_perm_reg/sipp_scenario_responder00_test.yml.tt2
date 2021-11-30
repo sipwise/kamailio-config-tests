@@ -2,7 +2,7 @@ messages:
 - - 'INVITE sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];transport=tcp SIP/2.0'
   - 'Record-Route: <sip:127.3.0.1:5074;transport=tcp;r2=on;lr=on;ftag=[^;]+;ngcplb=yes;socket=tcp:127.3.0.1:5074>'
   - 'Record-Route: <sip:127.0.0.1;r2=on;lr=on;ftag=[^;]+;ngcplb=yes;socket=tcp:127.3.0.1:5074>'
-  - 'Record-Route: <sip:127.0.0.1:5062;lr=on;ftag=[^;]+;did=[^;]+>'
+  - 'Record-Route: <sip:127.0.0.1:5062;lr=on;ftag=[^;]+;leg_b=1;did=[^;]+>'
   - 'From: <sip:[% invite_perm_reg_scenarios_test.testuser1002.phone_number %]@invite-perm-reg.scenarios.test>;tag=[\w-]+'
   - 'To: <sip:[% scenarios.0.responders.0.username %]@invite-perm-reg.scenarios.test>'
   - 'CSeq: \d+ INVITE'
