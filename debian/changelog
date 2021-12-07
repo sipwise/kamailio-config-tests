@@ -1,3 +1,13 @@
+kamailio-config-tests (10.2.1.1+0~mr10.2.1.1) unstable; urgency=medium
+
+  [ Alessio Garzi ]
+  * [18ae868] TT#146402 Fix scenario for leg_b=1 param
+
+  [ Marco Capetta ]
+  * [1285d82] TT#146402 Fix typo in Record-Route header of commit eab2b8bc1
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 07 Dec 2021 18:22:10 +0100
+
 kamailio-config-tests (10.2.1.0+0~mr10.2.1.0) unstable; urgency=medium
 
   [ Donat Zenichev ]
