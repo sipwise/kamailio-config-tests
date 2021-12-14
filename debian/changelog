@@ -1,3 +1,10 @@
+kamailio-config-tests (10.2.1.2+0~mr10.2.1.2) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [5195545] TT#147800 Fix test after MOS and RTPengine fixes
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 14 Dec 2021 11:39:47 +0100
+
 kamailio-config-tests (10.2.1.1+0~mr10.2.1.1) unstable; urgency=medium
 
   [ Alessio Garzi ]
