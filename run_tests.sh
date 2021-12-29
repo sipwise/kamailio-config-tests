@@ -13,7 +13,7 @@ SEMS_LOG=${SEMS_LOG:-"/var/log/ngcp/sems.log"}
 SEMS_PBX_LOG=${SEMS_PBX_LOG:-"/var/log/ngcp/sems-pbx.log"}
 RTP_LOG=${RTP_LOG:-"/var/log/ngcp/rtp.log"}
 TMP_LOG_DIR="/tmp"
-KAM_DIR="/tmp/cfgtest"
+KAM_DIR="/run/kamailio/cfgtest"
 COREDUMP_DIR="/ngcp-data/coredumps"
 PROFILE="${PROFILE:-}"
 OPTS=(-Tnone -M -C) #SKIP_TESTS=true, SKIP_MOVE_JSON_KAM=true, SKIP=true
