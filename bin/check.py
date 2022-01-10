@@ -341,7 +341,7 @@ def main(args):
         check = load_json(args.kam_file)
     except Exception:
         check = {"flow": [], "sip_in": "", "sip_out": []}
-        test.error("Error loading file:%s" % args[1])
+        test.error(Section.FLOW, "Error loading file:%s" % args.kam_file)
 
     test.comment("check flow")
     check_flow(scen["flow"], check["flow"], test)
