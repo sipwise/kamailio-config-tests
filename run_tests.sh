@@ -306,11 +306,14 @@ esac
 
 LOG_DIR="${BASE_DIR}/log/${GROUP}"
 
-echo "$(date) - Create temporary folder for json files"
-rm -rf "${KAM_DIR}"
-mkdir -p "${KAM_DIR}"
-if [ -d "${KAM_DIR}" ]; then
-  chown kamailio:kamailio "${KAM_DIR}"
+if ! [ -d "${KAM_DIR}" ]; then
+  echo "$(date) - Create temporary folder for json files"
+  mkdir -p "${KAM_DIR}"
+  chown kamailio:root "${KAM_DIR}"
+  chmod 0770 "${KAM_DIR}"
+else
+  echo "$(date) - Clean temporary folder for json files"
+  rm -rf "${KAM_DIR:?}/*"
 fi
 
 echo "$(date) - Clean mem log dir"
