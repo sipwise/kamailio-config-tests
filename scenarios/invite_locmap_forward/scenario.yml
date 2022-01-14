@@ -1,0 +1,47 @@
+---
+test_uuid: invite_locmap_forward
+domains:
+  'invite-locmap-forward.scenarios.test':
+    reseller_id: 1
+customers:
+  'customer.test':
+    contacts:
+      - email: "customer.test@spce.test"
+        reseller_id: 1
+    details:
+      status: 'active'
+      type: 'sipaccount'
+      billing_profile_id: 1
+      reseller_id: 1
+subscribers:
+  invite-locmap-forward.scenarios.test:
+    testuser1001:
+      customer: 'customer.test'
+      password: testuser
+      cc: 43
+      ac: 1
+      sn: 1001
+    testuser1000:
+      customer: 'customer.test'
+      password: testuser
+      cc: 43
+      ac: 1
+      sn: 1000
+      alias_numbers:
+        - cc: 34
+          ac: 96
+          sn: 5711942
+scenarios:
+  - ip: 127.126.0.1
+    username: testuser1000
+    domain: invite-locmap-forward.scenarios.test
+    responders:
+      - ip: 127.1.0.1
+        username: testuser1001
+        domain: invite-locmap-forward.scenarios.test
+        register: 'yes'
+      - ip: 127.1.0.2
+        username: "testuser1002"
+        domain: invite-locmap-forward.scenarios.test
+        peer_host: peer_invite_peerout_host0
+        register: "no"

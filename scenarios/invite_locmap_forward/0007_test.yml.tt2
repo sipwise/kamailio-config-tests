@@ -1,0 +1,54 @@
+flow:
+  - start|DEFAULT_ROUTE:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_LEG_B:
+  - start|ROUTE_INITVARS:
+  - return|ROUTE_INITVARS:
+  - start|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+sip_in:
+  - 'INVITE sip:testuser1001@10.20.29.2:51603 SIP/2.0'
+  - 'From: <sip:4311000@invite-locmap-forward.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:testuser1001@invite-locmap-forward.scenarios.test>'
+  - 'CSeq: \d+ INVITE'
+  - 'P-LB-Uptime: \d+'
+  - 'P-Asserted-Identity: <sip:4311000@invite-locmap-forward.scenarios.test>'
+  - 'P-Caller-UUID: [% invite_locmap_forward_scenarios_test.testuser1000.uuid %]'
+  - 'P-Callee-UUID: [% invite_locmap_forward_scenarios_test.testuser1001.uuid %]'
+  - 'P-NGCP-Caller-Info: <sip:testuser1000@invite-locmap-forward.scenarios.test>;ip=10.20.29.2;port=51602;primary=4311000'
+  - 'P-NGCP-Callee-Info: <sip:testuser1001@invite-locmap-forward.scenarios.test>;ip=10.20.29.2;port=51603;primary=4311001'
+  - 'P-D-Uri: sip:lb@127.0.0.1;lr;received=sip:10.20.29.2:51603;socket=sip:[% server_ip %]:5060'
+  - 'Content-Type: application/sdp'
+  - 'Content-Length:\s+\d+'
+  - 'Contact: <sip:127.0.0.1:508[08];transport=udp>'
+sip_out:
+  - [
+      'SIP/2.0 100 Trying',
+      'From: <sip:4311000@invite-locmap-forward.scenarios.test>;tag=[\w-]+',
+      'To: <sip:testuser1001@invite-locmap-forward.scenarios.test>',
+      'CSeq: \d+ INVITE',
+      'Server: Sipwise NGCP Proxy',
+      'Content-Length: 0',
+    ]
+  - [
+      'INVITE sip:testuser1001@10.20.29.2:51603 SIP/2.0',
+      'From: <sip:4311000@invite-locmap-forward.scenarios.test>;tag=[\w-]+',
+      'To: <sip:testuser1001@invite-locmap-forward.scenarios.test>',
+      'CSeq: \d+ INVITE',
+      'P-LB-Uptime: \d+',
+      'P-Asserted-Identity: <sip:4311000@invite-locmap-forward.scenarios.test>',
+      'P-Caller-UUID: [% invite_locmap_forward_scenarios_test.testuser1000.uuid %]',
+      'P-Callee-UUID: [% invite_locmap_forward_scenarios_test.testuser1001.uuid %]',
+      'P-NGCP-Caller-Info: <sip:testuser1000@invite-locmap-forward.scenarios.test>;ip=10.20.29.2;port=51602;primary=4311000',
+      'P-NGCP-Callee-Info: <sip:testuser1001@invite-locmap-forward.scenarios.test>;ip=10.20.29.2;port=51603;primary=4311001',
+      'P-D-Uri: sip:lb@127.0.0.1;lr;received=sip:10.20.29.2:51603;socket=sip:[% server_ip %]:5060',
+      'Content-Type: application/sdp',
+      'Content-Length:\s+\d+',
+      'Contact: <sip:127.0.0.1:508[08];transport=udp>',
+    ]
