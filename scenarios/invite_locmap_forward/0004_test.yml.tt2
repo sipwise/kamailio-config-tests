@@ -1,0 +1,9 @@
+flow:
+  - start|sl:filtered-ack:
+sip_in:
+  - 'ACK sip:testuser1001@invite-locmap-forward.scenarios.test SIP/2.0'
+  - 'From: <sip:testuser1000@invite-locmap-forward.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:testuser1001@invite-locmap-forward.scenarios.test>;tag=[\w-]+'
+  - 'CSeq: \d+ ACK'
+  - 'Content-Length: 0'
+sip_out: []

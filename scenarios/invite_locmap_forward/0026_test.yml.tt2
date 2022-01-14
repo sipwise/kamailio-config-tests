@@ -1,0 +1,48 @@
+flow:
+  - start|DEFAULT_ONREPLY:
+  - start|REPLY_ROUTE_LEG_B:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+  - start|FAILURE_ROUTE_LEG_B:
+  - start|FAILURE_ROUTE_LEG_B:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+  - start|dialog:failed:
+  - return|dialog:failed:
+  - return|dialog:failed:
+sip_in:
+  - 'SIP/2.0 487 Request terminated'
+  - 'From: <sip:4311000@invite-locmap-forward.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:testuser1001@invite-locmap-forward.scenarios.test>'
+  - 'CSeq: \d+ INVITE'
+  - 'Contact: <sip:10.20.29.2:51603;transport=UDP>'
+  - 'Content-Length: \s+0'
+  - 'P-NGCP-Src-Ip: 10.20.29.2'
+  - 'P-NGCP-Src-Port: \d+'
+  - 'P-NGCP-Src-Proto: udp'
+  - 'P-NGCP-Src-Af: 4'
+sip_out:
+  - [
+      'ACK sip:testuser1001@10.20.29.2:51603 SIP/2.0',
+      'From: <sip:4311000@invite-locmap-forward.scenarios.test>;tag=[\w-]+',
+      'To: <sip:testuser1001@invite-locmap-forward.scenarios.test>',
+      'CSeq: \d+ ACK',
+      'Content-Length: 0',
+    ]
+  - [
+      'SIP/2.0 487 Request terminated',
+      'From: <sip:4311000@invite-locmap-forward.scenarios.test>;tag=[\w-]+',
+      'To: <sip:testuser1001@invite-locmap-forward.scenarios.test>',
+      'CSeq: \d+ INVITE',
+      'Contact: <sip:10.20.29.2:51603;transport=UDP>',
+      'Content-Length: \s+0',
+      'P-NGCP-Src-Ip: 10.20.29.2',
+      'P-NGCP-Src-Port: \d+',
+      'P-NGCP-Src-Proto: udp',
+      'P-NGCP-Src-Af: 4',
+    ]

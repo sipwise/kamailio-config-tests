@@ -1,0 +1,37 @@
+flow:
+  - start|DEFAULT_ONREPLY:
+  - start|REPLY_ROUTE_LEG_B:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - start|dialog:start:
+  - return|dialog:start:
+  - return|dialog:start:
+sip_in:
+  - 'SIP/2.0 200 OK'
+  - 'From: <sip:4311000@invite-locmap-forward.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:testuser1002@172.30.1.2>;tag=[\w-]+'
+  - 'CSeq: \d+ INVITE'
+  - 'Contact: <sip:172.30.1.2:52602;transport=UDP>'
+  - 'Content-Type: application/sdp'
+  - 'Content-Length:\s+\d+'
+  - 'P-NGCP-Src-Ip: 172.30.1.2'
+  - 'P-NGCP-Src-Port: \d+'
+  - 'P-NGCP-Src-Proto: udp'
+  - 'P-NGCP-Src-Af: 4'
+sip_out:
+  - [
+      'SIP/2.0 200 OK',
+      'From: <sip:4311000@invite-locmap-forward.scenarios.test>;tag=[\w-]+',
+      'To: <sip:testuser1002@172.30.1.2>;tag=[\w-]+',
+      'CSeq: \d+ INVITE',
+      'Contact: <sip:172.30.1.2:52602;transport=UDP>',
+      'Content-Type: application/sdp',
+      'Content-Length:\s+\d+',
+      'P-NGCP-Src-Ip: 172.30.1.2',
+      'P-NGCP-Src-Port: \d+',
+      'P-NGCP-Src-Proto: udp',
+      'P-NGCP-Src-Af: 4',
+    ]
