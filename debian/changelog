@@ -1,3 +1,26 @@
+kamailio-config-tests (10.4.0.0+0~mr10.4.0.0) unstable; urgency=medium
+
+  [ Alessio Garzi ]
+  * [eab2b8b] TT#146402 Fix scenario for leg_b=1 param
+  * [8043bd3] TT#157352 Fix invite_sdp_filter scenario
+
+  [ Marco Capetta ]
+  * [feebcdb] TT#146402 Fix typo in Record-Route header of commit eab2b8bc1
+  * [ad8d1f1] TT#147800 Fix test after MOS and RTPengine fixes
+  * [edb1cd1] TT#155201 Fix Skip accounting in case the call reaches CFNA after call failure
+  * [26e6194] TT#155201 Fix routes in case the call reaches CFNA after call failure
+
+  [ Victor Seva ]
+  * [621e03e] TT#76552 KAM_DIR to /run/kamailio/cfgtest
+  * [b00f264] TT#76552 bin/check.py: fix error when loading JSON file
+  * [0dc289d] Revert "TT#76552 KAM_DIR to /run/kamailio/cfgtest"
+  * [326dfad] TT#76552 don't remove KAM_DIR, just clean it
+
+  [ Donat Zenichev ]
+  * [44bf39e] TT#159350 Fix flows for 'invite_callforward' / 'invite_callforward_but_callee_locked_cfna'
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 24 Jan 2022 16:55:09 +0100
+
 kamailio-config-tests (10.3.0.0+0~mr10.3.0.0) unstable; urgency=medium
 
   [ Donat Zenichev ]
