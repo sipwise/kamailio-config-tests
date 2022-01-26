@@ -45,8 +45,9 @@ flow:
   - return|ROUTE_CHECK_CLI_ALLOWED:
   - return|ROUTE_CHECK_USERPROV_CLI:
   - start|ROUTE_FIND_CALLEE:
-     $var(cf_loop): 1
-     $var(forward): 0
+      $var(cf_loop): 1
+      $var(forward): 0
+      $xavp(caller_real_prefs[0]=>lock[*]): [5]
   - start|ROUTE_CLEAR_CALLEE_PREF:
   - return|ROUTE_CLEAR_CALLEE_PREF:
   - start|ROUTE_LOAD_CALLEE_PREF:
@@ -64,9 +65,9 @@ flow:
   - return|ROUTE_SET_CALLEE_DIALOG:
       $avp(lua_dlg_profile): [
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% incoming_hih_scenarios_test.testuser1002.uuid %]",
+        "totaluser:[% lock_ported_scenarios_test.testuser1003.uuid %]",
         "account:[% customer_test.id %]",
-        "user:[% incoming_hih_scenarios_test.testuser1002.uuid %]"
+        "user:[% lock_ported_scenarios_test.testuser1003.uuid %]"
       ]
   - start|ROUTE_BLOCK_IN:
   - return|ROUTE_BLOCK_IN:
@@ -98,14 +99,14 @@ flow:
   - start|ROUTE_LOOKUP_SUBSCRIBER_LOCATIONS:
   - return|ROUTE_LOOKUP_SUBSCRIBER_LOCATIONS:
   - start|ROUTE_OUTBOUND:
+  - start|ROUTE_SET_CALLER_DIALOG:
       $avp(lua_dlg_profile): [
         "local",
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% incoming_hih_scenarios_test.testuser1002.uuid %]",
+        "totaluser:[% lock_ported_scenarios_test.testuser1003.uuid %]",
         "account:[% customer_test.id %]",
-        "user:[% incoming_hih_scenarios_test.testuser1002.uuid %]"
+        "user:[% lock_ported_scenarios_test.testuser1003.uuid %]"
       ]
-  - start|ROUTE_SET_CALLER_DIALOG:
   - start|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_CNT_DLG_CHECK:
   - start|ROUTE_SET_CALLER_DIALOG_TOTAL:
@@ -115,18 +116,18 @@ flow:
   - return|ROUTE_SET_CALLER_DIALOG:
       $avp(lua_dlg_profile): [
         "accountout:[% customer_test.id %]",
-        "userout:[% incoming_hih_scenarios_test.testuser1003.uuid %]",
+        "userout:[% lock_ported_scenarios_test.testuser1001.uuid %]",
         "account:[% customer_test.id %]",
-        "user:[% incoming_hih_scenarios_test.testuser1003.uuid %]",
+        "user:[% lock_ported_scenarios_test.testuser1001.uuid %]",
         "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% incoming_hih_scenarios_test.testuser1003.uuid %]",
+        "totaluserout:[% lock_ported_scenarios_test.testuser1001.uuid %]",
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% incoming_hih_scenarios_test.testuser1003.uuid %]",
+        "totaluser:[% lock_ported_scenarios_test.testuser1001.uuid %]",
         "local",
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% incoming_hih_scenarios_test.testuser1002.uuid %]",
+        "totaluser:[% lock_ported_scenarios_test.testuser1003.uuid %]",
         "account:[% customer_test.id %]",
-        "user:[% incoming_hih_scenarios_test.testuser1002.uuid %]"
+        "user:[% lock_ported_scenarios_test.testuser1003.uuid %]"
       ]
   - start|ROUTE_ACC_CALLER:
   - start|ROUTE_SET_ACC_CALLER_CALL_COUNTERS:
@@ -197,52 +198,49 @@ flow:
   - exit|ROUTE_EXIT:
       $avp(lua_dlg_profile): [
         "accountout:[% customer_test.id %]",
-        "userout:[% incoming_hih_scenarios_test.testuser1003.uuid %]",
+        "userout:[% lock_ported_scenarios_test.testuser1001.uuid %]",
         "account:[% customer_test.id %]",
-        "user:[% incoming_hih_scenarios_test.testuser1003.uuid %]",
+        "user:[% lock_ported_scenarios_test.testuser1001.uuid %]",
         "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% incoming_hih_scenarios_test.testuser1003.uuid %]",
+        "totaluserout:[% lock_ported_scenarios_test.testuser1001.uuid %]",
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% incoming_hih_scenarios_test.testuser1003.uuid %]",
+        "totaluser:[% lock_ported_scenarios_test.testuser1001.uuid %]",
         "local",
         "totalaccount:[% customer_test.id %]",
-        "totaluser:[% incoming_hih_scenarios_test.testuser1002.uuid %]",
+        "totaluser:[% lock_ported_scenarios_test.testuser1003.uuid %]",
         "account:[% customer_test.id %]",
-        "user:[% incoming_hih_scenarios_test.testuser1002.uuid %]"
+        "user:[% lock_ported_scenarios_test.testuser1003.uuid %]"
       ]
 sip_in:
-  - '^INVITE sip:[% incoming_hih_scenarios_test.testuser1002.phone_number %]@'
+  - '^INVITE sip:[% lock_ported_scenarios_test.testuser1003.phone_number %]@'
   - 'Contact: <sip:127.0.0.1:5080'
   - 'CSeq: \d+ INVITE'
   - 'Content-Type: application/sdp'
-  - 'P-Caller-UUID: \w+'
-  - 'P-First-Caller-UPN: [% scenarios.0.username %]'
-  - 'P-First-Caller-NPN: [% scenarios.0.username %]'
-  - 'P-Acc-Caller-User: testuser1003'
+  - 'P-Caller-UUID: [% lock_ported_scenarios_test.testuser1001.uuid %]'
+  - 'P-First-Caller-UPN: [% lock_ported_scenarios_test.testuser1002.phone_number %]'
+  - 'P-First-Caller-NPN: [% lock_ported_scenarios_test.testuser1002.phone_number %]'
+  - 'P-Acc-Caller-User: [% scenarios.0.responders.0.username %]'
   - 'P-Acc-State: cfu'
-  - 'P-From-Peer: 1'
+  - 'P-From-Peer: 0'
   - 'P-CF-Depth: 1'
 sip_out:
   - [
       '^SIP/2.0 100 Trying',
       'CSeq: \d+ INVITE',
       'From: <sip:[% scenarios.0.username %]@',
-      'To: <sip:[% incoming_hih_scenarios_test.testuser1003.phone_number %]@'
+      'To: <sip:[% scenarios.0.responders.0.username %]@'
     ]
   - [
-      '^INVITE sip:testuser1002@',
+      '^INVITE sip:[% scenarios.0.responders.1.username %]@',
       'CSeq: \d+ INVITE',
-      'From: <sip:[% scenarios.0.username %]@',
+      'From: <sip:[% lock_ported_scenarios_test.testuser1002.phone_number %]@',
       'Contact: <sip:127.0.0.1:5080(;transport=udp)?>',
-      'To: <sip:[% incoming_hih_scenarios_test.testuser1003.phone_number %]@',
+      'To: <sip:[% scenarios.0.responders.0.username %]@',
       'Content-Type: application/sdp',
-      'History-Info: <sip:\+4313012026@incoming-hih.scenarios.test;user=phone\?privacy=history>;index=1',
-      'History-Info: <sip:\+[% incoming_hih_scenarios_test.testuser1003.phone_number %]@incoming-hih.scenarios.test;user=phone;cause=302\?privacy=id>;index=1.1',
-      'History-Info: <sip:\+[% incoming_hih_scenarios_test.testuser1002.phone_number %]@incoming-hih.scenarios.test:5060;user=phone;cause=302>;index=1.1.1',
-      'P-Callee-UUID: \w+',
-      'P-Asserted-Identity: <sip:[% scenarios.0.username %]@',
-      'P-Called-Party-ID: <sip:testuser1002@',
+      'P-Callee-UUID: [% lock_ported_scenarios_test.testuser1003.uuid %]',
+      'P-Asserted-Identity: <sip:[% lock_ported_scenarios_test.testuser1002.phone_number %]@',
+      'P-Called-Party-ID: <sip:[% scenarios.0.responders.1.username %]@',
       'P-App-Name: sbc',
-      'P-NGCP-Caller-Info: <sip:testuser1003@',
-      'P-NGCP-Callee-Info: <sip:[% incoming_hih_scenarios_test.testuser1002.phone_number %]@'
+      'P-NGCP-Caller-Info: <sip:[% scenarios.0.responders.0.username %]@',
+      'P-NGCP-Callee-Info: <sip:[% lock_ported_scenarios_test.testuser1003.phone_number %]@'
     ]
