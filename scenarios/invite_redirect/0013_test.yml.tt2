@@ -39,6 +39,22 @@ flow:
   - start|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_SET_CALLEE_DIALOG:
+      $avp(lua_dlg_profile): [
+          "accountout:[% customer_test.id %]",
+          "userout:[% invite_redirect_scenarios_test.testuser1002.uuid %]",
+          "account:[% customer_test.id %]",
+          "user:[% invite_redirect_scenarios_test.testuser1002.uuid %]",
+          "totalaccountout:[% customer_test.id %]",
+          "totaluserout:[% invite_redirect_scenarios_test.testuser1002.uuid %]",
+          "totalaccount:[% customer_test.id %]",
+          "totaluser:[% invite_redirect_scenarios_test.testuser1002.uuid %]",
+          "local",
+          "totalaccount:[% customer_test.id %]",
+          "totaluser:[% invite_redirect_scenarios_test.testuser1003.uuid %]",
+          "total",
+          "account:[% customer_test.id %]",
+          "user:[% invite_redirect_scenarios_test.testuser1003.uuid %]"
+        ]
   - start|ROUTE_BLOCK_IN:
   - return|ROUTE_BLOCK_IN:
   - return|ROUTE_LOAD_CALLEE_PREF:
@@ -96,11 +112,12 @@ flow:
   - start|ROUTE_FILTER_PRACK:
   - return|ROUTE_FILTER_PRACK:
   - start|ROUTE_PREPARE_SST:
+  - start|ROUTE_REMOVE_TIMER_SUPP_REQ:
+  - return|ROUTE_REMOVE_TIMER_SUPP_REQ:
   - return|ROUTE_PREPARE_SST:
   - start|ROUTE_PREPARE_MOH:
   - return|ROUTE_PREPARE_MOH:
   - start|ROUTE_SET_CALLER_CLI:
-      $avp(forwarder_domain_userprov): ['invite-redirect-tel-uri.scenarios.test']
   - start|ROUTE_PREPARE_CALLER_CLI:
   - return|ROUTE_PREPARE_CALLER_CLI:
   - start|ROUTE_PREPARE_CALLER_CLI:
@@ -114,8 +131,6 @@ flow:
   - start|ROUTE_PREPARE_CALLER_CLI:
   - return|ROUTE_PREPARE_CALLER_CLI:
   - return|ROUTE_SET_CALLER_CLI:
-      $var(ccli_domain): invite-redirect-tel-uri.scenarios.test
-      $var(diversion_uri): sip:\+[% invite_redirect_tel_uri_scenarios_test.testuser1001.phone_number %]@invite-redirect-tel-uri.scenarios.test
   - start|ROUTE_SET_CALLEE:
   - return|ROUTE_SET_CALLEE:
   - start|ROUTE_ADD_CALLINFO:
@@ -134,38 +149,53 @@ flow:
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
+      $avp(lua_dlg_profile): [
+        "accountout:[% customer_test.id %]",
+        "userout:[% invite_redirect_scenarios_test.testuser1002.uuid %]",
+        "account:[% customer_test.id %]",
+        "user:[% invite_redirect_scenarios_test.testuser1002.uuid %]",
+        "totalaccountout:[% customer_test.id %]",
+        "totaluserout:[% invite_redirect_scenarios_test.testuser1002.uuid %]",
+        "totalaccount:[% customer_test.id %]",
+        "totaluser:[% invite_redirect_scenarios_test.testuser1002.uuid %]",
+        "local",
+        "totalaccount:[% customer_test.id %]",
+        "totaluser:[% invite_redirect_scenarios_test.testuser1003.uuid %]",
+        "total",
+        "account:[% customer_test.id %]",
+        "user:[% invite_redirect_scenarios_test.testuser1003.uuid %]"
+      ]
   - exit|ROUTE_EXIT:
 sip_in:
-  # From: <sip:0967451213@gp.dauphintelecom.com;user=phone>;tag=<something>
-  # To: <sip:590590779990@74.116.94.226:5060>
-  # Diversion: <sip:590590779990@74.116.94.226:5060;rinstance=d99c86941fbe0e10;user=phone>
   - '^SIP/2.0 302 Moved Temporarily'
-  - 'From: <sip:[% invite_redirect_tel_uri_scenarios_test.testuser1000.phone_number %]@invite-redirect-tel-uri.scenarios.test'
-  - 'To: <sip:\+[% invite_redirect_tel_uri_scenarios_test.testuser1001.phone_number %]@invite-redirect-tel-uri.scenarios.test'
+  - 'From: <sip:[% invite_redirect_scenarios_test.testuser1002.phone_number %]@'
+  - 'To: <sip:[% scenarios.0.responders.0.username %]@'
   - 'CSeq: 2 INVITE'
-  - 'Contact: <sip:[% scenarios.0.responders.1.username %]@invite-redirect-tel-uri.scenarios.test(;alias=[% scenarios.0.responders.0.ip %]~[% scenarios.0.responders.0.port %]~1)?;transport=UDP>'
-  - 'Diversion: <sip:[% invite_redirect_tel_uri_scenarios_test.testuser1001.phone_number %]@invite-redirect-tel-uri.scenarios.test'
-  # particular case when customer adds one more Diversion into the call
 sip_out:
   - [
       '^ACK sip:[% scenarios.0.responders.0.username %]@',
-      'From: <sip:[% invite_redirect_tel_uri_scenarios_test.testuser1000.phone_number %]@invite-redirect-tel-uri.scenarios.test',
-      'To: <sip:\+[% invite_redirect_tel_uri_scenarios_test.testuser1001.phone_number %]@invite-redirect-tel-uri.scenarios.test',
-      'CSeq: \d+ ACK',
+      'From: <sip:[% invite_redirect_scenarios_test.testuser1002.phone_number %]@',
+      'To: <sip:[% scenarios.0.responders.0.username %]@',
+      'CSeq: 2 ACK',
       'Max-Forwards: 68',
       'Content-Length: 0'
     ]
   - [
-    # we make sure that Diversion has domain part
-    # we make sure that From/To/Diversion/PAI headers have SIP scheme
-      '^INVITE sip:[% scenarios.0.responders.1.username %]@[% scenarios.0.ip %]',
-      'From: <sip:[% invite_redirect_tel_uri_scenarios_test.testuser1000.phone_number %]@invite-redirect-tel-uri.scenarios.test>;tag=[\w-]+',
-      'To: <sip:\+[% invite_redirect_tel_uri_scenarios_test.testuser1001.phone_number %]@invite-redirect-tel-uri.scenarios.test',
-      'CSeq: \d+ INVITE',
+      '^INVITE sip:[% scenarios.0.responders.1.username %]@',
+      'From: <sip:[% invite_redirect_scenarios_test.testuser1002.phone_number %]@',
+      'To: <sip:[% scenarios.0.responders.0.username %]@',
+      'CSeq: 2 INVITE',
       'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>',
       'Max-Forwards: 68',
       'Content-Type: application/sdp',
-      'P-Asserted-Identity: <sip:[% invite_redirect_tel_uri_scenarios_test.testuser1000.phone_number %]@invite-redirect-tel-uri.scenarios.test',
-      'Diversion: <sip:\+[% invite_redirect_tel_uri_scenarios_test.testuser1001.phone_number %]@invite-redirect-tel-uri.scenarios.test',
-      'P-App-Name: sbc'
+      'P-Caller-UUID: [% invite_redirect_scenarios_test.testuser1003.uuid %]',
+      'P-Callee-UUID: [% invite_redirect_scenarios_test.testuser1004.uuid %]',
+      'P-Asserted-Identity: <sip:[% invite_redirect_scenarios_test.testuser1002.phone_number %]@',
+      'P-Called-Party-ID: <sip:[% scenarios.0.responders.1.username %]@',
+      'P-App-Name: sbc',
+      'P-NGCP-Caller-Info: <sip:[% scenarios.0.username %]@',
+      'P-NGCP-Callee-Info: <sip:[% scenarios.0.responders.1.username %]@',
+      'Diversion: <sip:[% scenarios.0.responders.0.username %]@',
+      'History-Info: <sip:[% scenarios.0.responders.0.username %]@.*;user=phone\?Reason=SIP%3bcause%3d302>;index=1',
+      'History-Info: <sip:[% scenarios.0.responders.1.username %]@.*;user=phone;cause=302>;index=1.1'
     ]
