@@ -120,6 +120,8 @@ flow:
   - start|ROUTE_FILTER_PRACK:
   - return|ROUTE_FILTER_PRACK:
   - start|ROUTE_PREPARE_SST:
+  - start|ROUTE_REMOVE_TIMER_SUPP_REQ:
+  - return|ROUTE_REMOVE_TIMER_SUPP_REQ:
   - return|ROUTE_PREPARE_SST:
   - start|ROUTE_PREPARE_MOH:
   - return|ROUTE_PREPARE_MOH:
@@ -165,6 +167,8 @@ flow:
   - start|ROUTE_FILTER_PRACK:
   - return|ROUTE_FILTER_PRACK:
   - start|ROUTE_PREPARE_SST:
+  - start|ROUTE_REMOVE_TIMER_SUPP_REQ:
+  - return|ROUTE_REMOVE_TIMER_SUPP_REQ:
   - return|ROUTE_PREPARE_SST:
   - start|ROUTE_PREPARE_MOH:
   - return|ROUTE_PREPARE_MOH:
