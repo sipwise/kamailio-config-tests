@@ -1,25 +1,25 @@
 ---
 peer_invite_peerout:
   contact:
-    company: peer_invite_peerout
+    company: peer_invite_locmap_forward
     email: peer_00@host0.not
   contract:
     billing_profile_id: 1
     status: active
     type: sippeering
   groups:
-    - name: peer_invite_peerout_group
+    - name: peer_invite_locmap_forward_group
       priority: 1
       description:
   rules:
-    - group_id: peer_invite_peerout_group
+    - group_id: peer_invite_locmap_forward_group
       callee_prefix: ""
       callee_pattern: ''
       caller_pattern: '^sip:.+@invite-locmap-forward.scenarios.test'
       description: ""
   hosts:
-    - group_id: peer_invite_peerout_group
-      name: peer_invite_peerout_host0
+    - group_id: peer_invite_locmap_forward_group
+      name: peer_invite_locmap_forward_host0
       ip: 127.1.0.2
       port: 51602
       host:
