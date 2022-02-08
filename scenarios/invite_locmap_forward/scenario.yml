@@ -43,5 +43,5 @@ scenarios:
       - ip: 127.1.0.2
         username: "testuser1002"
         domain: invite-locmap-forward.scenarios.test
-        peer_host: peer_invite_peerout_host0
+        peer_host: peer_invite_locmap_forward_host0
         register: "no"
