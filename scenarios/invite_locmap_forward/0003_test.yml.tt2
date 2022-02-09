@@ -25,7 +25,7 @@ sip_in:
   - 'From: <sip:testuser1000@invite-locmap-forward.scenarios.test>;tag=[\w-]+'
   - 'To: <sip:testuser1001@invite-locmap-forward.scenarios.test>'
   - 'CSeq: \d+ INVITE'
-  - 'Contact: <sip:testuser1000@10.20.29.2:51602;alias=10.20.29.2~51602~1>'
+  - 'Contact: <sip:testuser1000@[% scenarios.0.ip %]:[% scenarios.0.port %];alias=[% scenarios.0.ip %]~[% scenarios.0.port %]~1>'
   - 'Content-Type: application/sdp'
   - 'Content-Length:\s+\d+'
   - 'P-NGCP-Src-Ip: 10.20.29.2'

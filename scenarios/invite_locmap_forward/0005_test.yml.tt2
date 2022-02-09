@@ -173,7 +173,7 @@ sip_in:
   - 'From: <sip:testuser1000@invite-locmap-forward.scenarios.test>;tag=[\w-]+'
   - 'To: <sip:testuser1001@invite-locmap-forward.scenarios.test>'
   - 'CSeq: \d+ INVITE'
-  - 'Contact: <sip:testuser1000@10.20.29.2:51602;alias=10.20.29.2~51602~1>'
+  - 'Contact: <sip:testuser1000@[% scenarios.0.ip %]:[% scenarios.0.port %];alias=[% scenarios.0.ip %]~[% scenarios.0.port %]~1>'
   - 'Proxy-Authorization: Digest username="testuser1000",realm="invite-locmap-forward.scenarios.test",uri="sip:[% server_ip %]:5060",nonce=".+",response=".+",algorithm=MD5'
   - 'Content-Type: application/sdp'
   - 'Content-Length:\s+\d+'
@@ -206,29 +206,29 @@ sip_out:
       'P-NGCP-Auth-UA: <null>',
       'P-NGCP-Authorization: testuser1000@invite-locmap-forward.scenarios.test',
       'P-NGCP-Authorized: 1',
-      'P-NGCP-Caller-Info: <sip:testuser1000@invite-locmap-forward.scenarios.test>;ip=10.20.29.2;port=51602;primary=4311000',
+      'P-NGCP-Caller-Info: <sip:testuser1000@invite-locmap-forward.scenarios.test>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %];primary=\d+',
       'P-Caller-UUID: [% invite_locmap_forward_scenarios_test.testuser1000.uuid %]',
       'Server: Sipwise NGCP Proxy',
       'Content-Length: 0',
     ]
   - [
-      'INVITE sip:testuser1001@10.20.29.2:51603 SIP/2.0',
-      'From: <sip:4311000@invite-locmap-forward.scenarios.test>;tag=[\w-]+',
+      'INVITE sip:testuser1001@[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %] SIP/2.0',
+      'From: <sip:\d+@invite-locmap-forward.scenarios.test>;tag=[\w-]+',
       'To: <sip:testuser1001@invite-locmap-forward.scenarios.test>',
       'CSeq: \d+ INVITE',
-      'Contact: <sip:testuser1000@10.20.29.2:51602;alias=10.20.29.2~51602~1>',
+      'Contact: <sip:testuser1000@[% scenarios.0.ip %]:[% scenarios.0.port %];alias=[% scenarios.0.ip %]~[% scenarios.0.port %]~1>',
       'Content-Type: application/sdp',
       'Content-Length:\s+\d+',
       'P-LB-Uptime: \d+',
-      'P-Asserted-Identity: <sip:4311000@invite-locmap-forward.scenarios.test>',
+      'P-Asserted-Identity: <sip:\d+@invite-locmap-forward.scenarios.test>',
       'P-Caller-UUID: [% invite_locmap_forward_scenarios_test.testuser1000.uuid %]',
       'P-Callee-UUID: [% invite_locmap_forward_scenarios_test.testuser1001.uuid %]',
       'P-Called-Party-ID: <sip:testuser1001@invite-locmap-forward.scenarios.test>',
-      'P-App-Param: ;calltimer=21600;aleg_sst_enable=no;sst_enable=no;hold_alter_b2b_bleg=no;hold_alter_b2b_aleg=no;fast_ack=no;a_park_domain=[% customer_test.id %];b_park_domain=\d+',
+      'P-App-Param: ;calltimer=21600;aleg_sst_enable=no;sst_enable=no;hold_alter_b2b_bleg=no;hold_alter_b2b_aleg=no;',
       'P-App-Name: sbc',
-      'P-NGCP-Caller-Info: <sip:testuser1000@invite-locmap-forward.scenarios.test>;ip=10.20.29.2;port=51602;primary=4311000',
-      'P-NGCP-Callee-Info: <sip:testuser1001@invite-locmap-forward.scenarios.test>;ip=10.20.29.2;port=51603;primary=4311001',
-      'P-D-Uri: sip:lb@127.0.0.1;lr;received=sip:10.20.29.2:51603;socket=sip:[% server_ip %]:5060',
+      'P-NGCP-Caller-Info: <sip:testuser1000@invite-locmap-forward.scenarios.test>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %];primary=\d+',
+      'P-NGCP-Callee-Info: <sip:testuser1001@invite-locmap-forward.scenarios.test>;ip=[% scenarios.0.responders.0.ip %];port=[% scenarios.0.responders.0.port %];primary=\d+',
+      'P-D-Uri: sip:lb@127.0.0.1;lr;received=sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];socket=sip:[% server_ip %]:5060',
       'P-Proxy-Uri: sip:127.0.0.1:5062',
     ]
   - [
@@ -236,7 +236,7 @@ sip_out:
       'From: <sip:testuser1000@invite-locmap-forward.scenarios.test>;tag=[\w-]+',
       'To: <sip:testuser1001@invite-locmap-forward.scenarios.test>',
       'CSeq: \d+ INVITE',
-      'Contact: <sip:testuser1000@10.20.29.2:51602;alias=10.20.29.2~51602~1>',
+      'Contact: <sip:testuser1000@[% scenarios.0.ip %]:[% scenarios.0.port %];alias=[% scenarios.0.ip %]~[% scenarios.0.port %]~1>',
       'Content-Type: application/sdp',
       'Content-Length:\s+\d+',
       'P-LB-Uptime: \d+',
@@ -245,8 +245,8 @@ sip_out:
       'P-D-Uri: sip:127.0.0.1:5062',
       'P-NGCP-Sems-Instance: sbc',
       'P-Caller-UUID: [% invite_locmap_forward_scenarios_test.testuser1001.uuid %]',
-      'P-First-Caller-UPN: 4311000',
-      'P-First-Caller-NPN: 4311000',
+      'P-First-Caller-UPN: \d+',
+      'P-First-Caller-NPN: \d+',
       'P-First-Caller-UPD: invite-locmap-forward.scenarios.test',
       'P-First-Caller-NPD: invite-locmap-forward.scenarios.test',
       'P-Acc-Caller-User: testuser1001',
@@ -267,6 +267,6 @@ sip_out:
       'P-First-Caller-RTP-Interface-Source: default',
       'P-NGCP-Alias-DevId: 0',
       'P-CF-LocMappingForward: [% invite_locmap_forward_scenarios_test.testuser1000.uuid %]',
-      'P-NGCP-Caller-Info: <sip:testuser1000@invite-locmap-forward.scenarios.test>;ip=10.20.29.2;port=51602;primary=4311000',
-      'P-NGCP-Callee-Info: <sip:testuser1001@invite-locmap-forward.scenarios.test>;ip=127.0.0.1;port=508[08];primary=4311001',
+      'P-NGCP-Caller-Info: <sip:testuser1000@invite-locmap-forward.scenarios.test>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %];primary=\d+',
+      'P-NGCP-Callee-Info: <sip:testuser1001@invite-locmap-forward.scenarios.test>;ip=127.0.0.1;port=508[08];primary=\d+',
     ]
