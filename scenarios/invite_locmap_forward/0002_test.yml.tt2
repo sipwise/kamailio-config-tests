@@ -28,7 +28,7 @@ sip_in:
   - 'To: <sip:testuser1001@invite-locmap-forward.scenarios.test>'
   - 'CSeq: \d+ REGISTER'
   - 'Authorization: Digest username="testuser1001",realm="invite-locmap-forward.scenarios.test",uri="sip:[% server_ip %]:5060",nonce=".+",response=".+",algorithm=MD5'
-  - 'Contact: sip:testuser1001@10.20.29.2:51603;transport=UDP'
+  - 'Contact: sip:testuser1001@[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];transport=UDP'
   - 'Content-Length: 0'
   - 'P-NGCP-Src-Ip: 10.20.29.2'
   - 'P-NGCP-Src-Port: \d+'
@@ -37,7 +37,7 @@ sip_in:
   - 'P-Sock-Info: udp:[% server_ip %]:5060'
   - 'P-LB-Uptime: \d+'
   - 'P-NGCP-Src-Nat: 1'
-  - 'Path: <sip:lb@127.0.0.1;lr;received=sip:10.20.29.2:51603;socket=sip:[% server_ip %]:5060>'
+  - 'Path: <sip:lb@127.0.0.1;lr;received=sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];socket=sip:[% server_ip %]:5060>'
 sip_out:
   - [
       'SIP/2.0 100 Trying',
@@ -61,7 +61,7 @@ sip_out:
       'P-NGCP-Authorization: testuser1001@invite-locmap-forward.scenarios.test',
       'P-NGCP-Authorized: 1',
       'P-Caller-UUID: [% invite_locmap_forward_scenarios_test.testuser1001.uuid %]',
-      'Contact: <sip:testuser1001@10.20.29.2:51603>;expires=\d+;received="sip:10.20.29.2:51603"',
+      'Contact: <sip:testuser1001@[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %]>;expires=\d+;received="sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %]"',
       'Server: Sipwise NGCP Proxy',
       'Content-Length: 0',
     ]
