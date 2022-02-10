@@ -156,12 +156,14 @@ config() {
   fi
   echo "$(date) - Config files"
   "${BIN_DIR}/config_files.sh" "${GROUP}"
-  cd /etc/ngcp-config || exit 3
-  if ! ngcpcfg --summary-only apply "config debug on via kamailio-config-tests" ; then
-    echo "$(date) - ngcpcfg apply returned $?"
-    clean
-    error_flag=4
-  fi
+  (
+    cd /etc/ngcp-config || exit 3
+    if ! ngcpcfg --summary-only apply "config debug on via kamailio-config-tests" ; then
+      echo "$(date) - ngcpcfg apply returned $?"
+      clean
+      exit 4
+    fi
+  )
   dummy_add || error_flag=5
   dummy_up 0|| error_flag=5
   dummy_up 1|| error_flag=5
