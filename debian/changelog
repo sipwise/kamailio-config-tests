@@ -1,3 +1,11 @@
+kamailio-config-tests (9.5.4.1+0~mr9.5.4.1) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [88dce9f] TT#155201 Fix Skip accounting in case the call reaches CFNA after call failure
+  * [788b8b2] TT#155201 Fix routes in case the call reaches CFNA after call failure
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 28 Feb 2022 10:24:45 +0100
+
 kamailio-config-tests (9.5.4.0+0~mr9.5.4.0) unstable; urgency=medium
 
   [ Marco Capetta ]
