@@ -62,6 +62,10 @@ flow:
   - start|ROUTE_SET_CALLEE_DIALOG:
   - start|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_CNT_DLG_CHECK:
+  - start|ROUTE_SET_CALLEE_DIALOG_BASE:
+  - return|ROUTE_SET_CALLEE_DIALOG_BASE:
+  - start|ROUTE_SET_CALLEE_DIALOG_TOTAL:
+  - return|ROUTE_SET_CALLEE_DIALOG_TOTAL:
   - return|ROUTE_SET_CALLEE_DIALOG:
       $avp(lua_dlg_profile): [
         "totalaccount:[% customer_test.id %]",
@@ -115,6 +119,10 @@ flow:
       ]
   - start|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_CNT_DLG_CHECK:
+  - start|ROUTE_SET_CALLER_DIALOG_TOTAL:
+  - return|ROUTE_SET_CALLER_DIALOG_TOTAL:
+  - start|ROUTE_SET_CALLER_DIALOG_BASE:
+  - return|ROUTE_SET_CALLER_DIALOG_BASE:
   - return|ROUTE_SET_CALLER_DIALOG:
       $avp(lua_dlg_profile): [
         "accountout:[% customer_test.id %]",
