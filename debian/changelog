@@ -1,3 +1,11 @@
+kamailio-config-tests (9.5.4.2+0~mr9.5.4.2) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [dfa5c3a] TT#156754 Fix scenarios after additions of counters helper routes
+  * [675de38] TT#156754 Fix calls to routes ROUTE_SET_CALLE[R/E]_DIALOG_ACTIVE
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 07 Mar 2022 17:31:39 +0100
+
 kamailio-config-tests (9.5.4.1+0~mr9.5.4.1) unstable; urgency=medium
 
   [ Marco Capetta ]
