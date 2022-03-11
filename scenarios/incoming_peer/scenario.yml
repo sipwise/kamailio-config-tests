@@ -21,6 +21,18 @@ subscribers:
       cc: 43
       ac: 1
       sn: 1003
+    testuser1004:
+      customer: "customer.test"
+      password: testuser
+      cc: 43
+      ac: 1
+      sn: 1004
+    testuser1005:
+      customer: "customer.test"
+      password: testuser
+      cc: 43
+      ac: 1
+      sn: 1004
 scenarios:
   - ip: 127.0.2.1
     username: "004321001"
@@ -29,5 +41,23 @@ scenarios:
     responders:
       - ip: 127.1.0.1
         username: testuser1003
+        domain: incoming-peer.scenarios.test
+        register: "yes"
+  - ip: 127.0.2.1
+    username: "004321001"
+    domain: incoming-peer.host0.peer.scenarios.test
+    peer_host: peer_incoming_peer_host0
+    responders:
+      - ip: 127.1.0.1
+        username: testuser1004
+        domain: incoming-peer.scenarios.test
+        register: "yes"
+  - ip: 127.0.2.1
+    username: "004321001"
+    domain: incoming-peer.host0.peer.scenarios.test
+    peer_host: peer_incoming_peer_host0
+    responders:
+      - ip: 127.1.0.1
+        username: testuser1005
         domain: incoming-peer.scenarios.test
         register: "yes"

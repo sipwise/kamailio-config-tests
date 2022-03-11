@@ -1,0 +1,30 @@
+flow:
+  - start|DEFAULT_ROUTE:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_LEG_B:
+  - start|ROUTE_INITVARS:
+  - return|ROUTE_INITVARS:
+  - start|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+sip_in:
+  - 'INVITE sip:[% scenarios.2.responders.0.username %]@'
+  - 'P-Early-Media: supported'
+sip_out:
+  - [
+      'SIP/2.0 100 Trying',
+      'Content-Length: 0'
+    ]
+  - [
+      'INVITE sip:[% scenarios.2.responders.0.username %]@',
+      'CSeq: \d+ INVITE',
+      'P-Early-Media: supported',
+      'P-LB-Uptime: \d+',
+      'Content-Type: application/sdp',
+      'Content-Length:\s+\d+',
+    ]
