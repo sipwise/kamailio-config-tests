@@ -1,0 +1,12 @@
+cdr:
+  - source_user: 'testuser1002'
+    source_domain: 'invite-group-serial.scenarios-pbx.test'
+    source_cli: '[% invite_group_serial_scenarios_pbx_test.testuser1002.phone_number %]'
+    destination_user: 'testgroup1010'
+    destination_domain: 'invite-group-serial.scenarios-pbx.test'
+    destination_user_dialed: '1010'
+    destination_user_in: 'testgroup1010'
+    destination_user_out: 'testgroup1010'
+    call_type: 'call'
+    call_status: 'ok'
+    call_code: '200'

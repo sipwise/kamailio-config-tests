@@ -1,0 +1,13 @@
+{
+    "@invite-sdp-filter-blacklist.scenarios.test": {
+        "nat_sipping": "no"
+    },
+    "[% scenarios.0.responders.0.username %]@invite-sdp-filter-blacklist.scenarios.test": {
+        "codecs_filter": "0",
+        "codecs_list": "opus,userinbandfec,speex,vbr,annexb"
+    },
+    "[% scenarios.1.responders.0.username %]@invite-sdp-filter-blacklist.scenarios.test": {
+        "codecs_id_filter": "0",
+        "codecs_id_list": "96,97,98,9,18"
+    }
+}
