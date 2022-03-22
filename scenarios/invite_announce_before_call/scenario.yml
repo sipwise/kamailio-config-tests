@@ -1,0 +1,84 @@
+---
+test_uuid: invite_announce_before_call
+domains:
+  invite-announce-before-call.scenarios.test:
+    reseller_id: 1
+customers:
+  'customer.test':
+    contacts:
+      - email: "customer.test@invite-announce-before-call.scenarios.test"
+        reseller_id: 1
+    details:
+      status: 'active'
+      type: 'sipaccount'
+      billing_profile_id: 1
+      reseller_id: 1
+subscribers:
+  invite-announce-before-call.scenarios.test:
+    testuser1003:
+      customer: 'customer.test'
+      password: testuser
+      cc: 43
+      ac: 1
+      sn: 1003
+    testuser1004:
+      customer: 'customer.test'
+      password: testuser
+      cc: 43
+      ac: 1
+      sn: 1004
+    testuser1005:
+      customer: 'customer.test'
+      password: testuser
+      cc: 43
+      ac: 1
+      sn: 1005
+    testuser1006:
+      customer: 'customer.test'
+      password: testuser
+      cc: 43
+      ac: 1
+      sn: 1006
+    testuser1002:
+      customer: 'customer.test'
+      password: testuser
+      cc: 43
+      ac: 1
+      sn: 1002
+      alias_numbers:
+        - cc: 34
+          ac: 96
+          sn: 5711941
+scenarios:
+  - ip: 127.126.0.1
+    username: testuser1002
+    domain: invite-announce-before-call.scenarios.test
+    responders:
+      - ip: 127.1.0.1
+        username: testuser1003
+        domain: invite-announce-before-call.scenarios.test
+        register: 'yes'
+  - ip: 127.126.0.1
+    username: testuser1002
+    domain: invite-announce-before-call.scenarios.test
+    responders:
+      - ip: 127.1.0.1
+        username: testuser1004
+        domain: invite-announce-before-call.scenarios.test
+        register: 'yes'
+  - ip: 127.126.0.1
+    username: testuser1002
+    domain: invite-announce-before-call.scenarios.test
+    responders:
+      - ip: 127.1.0.1
+        username: testuser1005
+        domain: invite-announce-before-call.scenarios.test
+        register: 'yes'
+  - ip: 127.126.0.1
+    username: testuser1002
+    domain: invite-announce-before-call.scenarios.test
+    responders:
+      - ip: 127.1.0.1
+        username: testuser1006
+        domain: invite-announce-before-call.scenarios.test
+        register: 'yes'

@@ -1,0 +1,8 @@
+---
+soundsets:
+  'invite_announce_before_call':
+    reseller_id: 1
+    sounds:
+      announce_before_call_setup:
+        filename: sounds/no_sh.wav
+        loopplay: 'false'

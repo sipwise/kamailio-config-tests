@@ -1,0 +1,18 @@
+{
+    "@invite-announce-before-call.scenarios.test": {
+        "nat_sipping": "no",
+        "sound_set": "invite_announce_before_call"
+    },
+    "[% scenarios.0.responders.0.username %]@invite-announce-before-call.scenarios.test": {
+        "play_announce_before_call_setup": true
+    },
+    "[% scenarios.1.responders.0.username %]@invite-announce-before-call.scenarios.test": {
+        "play_announce_before_call_setup": true
+    },
+    "[% scenarios.2.responders.0.username %]@invite-announce-before-call.scenarios.test": {
+        "play_announce_before_call_setup": true
+    },
+    "[% scenarios.3.responders.0.username %]@invite-announce-before-call.scenarios.test": {
+        "play_announce_before_call_setup": true
+    }
+}
