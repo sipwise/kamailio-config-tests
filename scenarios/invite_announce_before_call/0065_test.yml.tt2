@@ -103,26 +103,25 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - 'SIP/2.0 301 Message Ended'
-  - 'From: <sip:[% scenarios.1.username %]@invite-announce-before-call.scenarios.test>;tag=[\w-]+'
-  - 'To: <sip:[% scenarios.1.responders.0.username %]@invite-announce-before-call.scenarios.test>;tag=[\w-]+'
+  - 'From: <sip:testuser1002@invite-announce-before-call.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:[% scenarios.3.responders.0.username %]@invite-announce-before-call.scenarios.test>;tag=[\w-]+'
   - 'CSeq: \d+ INVITE'
   - 'Content-Length: 0'
 sip_out:
   - [
       'ACK sip:pre_announce@app.local SIP/2.0',
-      'From: <sip:[% scenarios.1.username %]@invite-announce-before-call.scenarios.test>;tag=[\w-]+',
-      'To: <sip:[% scenarios.1.responders.0.username %]@invite-announce-before-call.scenarios.test>;tag=[\w-]+',
+      'From: <sip:[% scenarios.3.username %]@invite-announce-before-call.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.3.responders.0.username %]@invite-announce-before-call.scenarios.test>;tag=[\w-]+',
       'CSeq: \d+ ACK',
       'Content-Length: 0',
     ]
   - [
-      'INVITE sip:[% scenarios.1.responders.0.username %]@10.20.29.2:51605 SIP/2.0',
+      'INVITE sip:[% scenarios.3.responders.0.username %]@',
       'From: <sip:[% invite_announce_before_call_scenarios_test.testuser1002.phone_number %]@invite-announce-before-call.scenarios.test>;tag=[\w-]+',
-      'To: <sip:[% scenarios.1.responders.0.username %]@invite-announce-before-call.scenarios.test>',
+      'To: <sip:[% scenarios.3.responders.0.username %]@invite-announce-before-call.scenarios.test>',
       'CSeq: \d+ INVITE',
-      'P-Early-Media: supported,gated',
+      'Contact: <sip:[% scenarios.3.username %]@[% scenarios.0.ip %]:[% scenarios.3.port %](;[^>]+)?>',
+      'P-Early-Media: supported,recvonly',
       'Content-Type: application/sdp',
       'Content-Length:\s+\d+',
-      'P-LB-Uptime: \d+',
-      'P-App-Name: sbc',
     ]

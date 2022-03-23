@@ -28,7 +28,7 @@ sip_out:
       'Content-Length: 0',
     ]
   - [
-      'INVITE sip:[% scenarios.1.responders.0.username %]@10.20.29.2:51605 SIP/2.0',
+      'INVITE sip:[% scenarios.1.responders.0.username %]@[% scenarios.1.responders.0.ip %]:[% scenarios.1.responders.0.port %] SIP/2.0',
       'From: <sip:[% invite_announce_before_call_scenarios_test.testuser1002.phone_number %]@invite-announce-before-call.scenarios.test>;tag=[\w-]+',
       'To: <sip:[% scenarios.1.responders.0.username %]@invite-announce-before-call.scenarios.test>',
       'CSeq: \d+ INVITE',

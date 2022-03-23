@@ -103,25 +103,26 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - 'SIP/2.0 301 Message Ended'
-  - 'From: <sip:testuser1002@invite-announce-before-call.scenarios.test>;tag=[\w-]+'
-  - 'To: <sip:[% scenarios.3.responders.0.username %]@invite-announce-before-call.scenarios.test>;tag=[\w-]+'
+  - 'From: <sip:[% scenarios.1.username %]@invite-announce-before-call.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:[% scenarios.1.responders.0.username %]@invite-announce-before-call.scenarios.test>;tag=[\w-]+'
   - 'CSeq: \d+ INVITE'
   - 'Content-Length: 0'
 sip_out:
   - [
       'ACK sip:pre_announce@app.local SIP/2.0',
-      'From: <sip:[% scenarios.3.username %]@invite-announce-before-call.scenarios.test>;tag=[\w-]+',
-      'To: <sip:[% scenarios.3.responders.0.username %]@invite-announce-before-call.scenarios.test>;tag=[\w-]+',
+      'From: <sip:[% scenarios.1.username %]@invite-announce-before-call.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.1.responders.0.username %]@invite-announce-before-call.scenarios.test>;tag=[\w-]+',
       'CSeq: \d+ ACK',
       'Content-Length: 0',
     ]
   - [
-      'INVITE sip:[% scenarios.3.responders.0.username %]@10.20.29.2:51609 SIP/2.0',
-      'From: <sip:4311000@invite-announce-before-call.scenarios.test>;tag=[\w-]+',
-      'To: <sip:[% scenarios.3.responders.0.username %]@invite-announce-before-call.scenarios.test>',
+      'INVITE sip:[% scenarios.1.responders.0.username %]@[% scenarios.1.responders.0.ip %]:[% scenarios.1.responders.0.port %] SIP/2.0',
+      'From: <sip:[% invite_announce_before_call_scenarios_test.testuser1002.phone_number %]@invite-announce-before-call.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.1.responders.0.username %]@invite-announce-before-call.scenarios.test>',
       'CSeq: \d+ INVITE',
-      'Contact: <sip:[% scenarios.3.username %]@10.20.29.2:51608;alias=10.20.29.2~51608~1>',
-      'P-Early-Media: supported,recvonly',
+      'P-Early-Media: supported,gated',
       'Content-Type: application/sdp',
       'Content-Length:\s+\d+',
+      'P-LB-Uptime: \d+',
+      'P-App-Name: sbc',
     ]

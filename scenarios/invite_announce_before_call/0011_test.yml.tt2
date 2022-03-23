@@ -34,8 +34,6 @@ flow:
   - return|ROUTE_LOAD_CALLER_PREF:
   - start|ROUTE_DLG_MANAGE:
   - return|ROUTE_DLG_MANAGE:
-  - start|ROUTE_PARSE_P_EARLY_MEDIA:
-  - return|ROUTE_PARSE_P_EARLY_MEDIA:
   - start|ROUTE_APPLY_HEADER_RULES:
   - return|ROUTE_APPLY_HEADER_RULES:
   - start|ROUTE_GET_CALLER_CLI:
@@ -121,38 +119,32 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - 'INVITE sip:[% scenarios.1.responders.0.username %]@invite-announce-before-call.scenarios.test SIP/2.0'
-  - 'From: <sip:[% scenarios.1.username %]@invite-announce-before-call.scenarios.test>;tag=[\w-]+'
-  - 'To: <sip:[% scenarios.1.responders.0.username %]@invite-announce-before-call.scenarios.test>'
+  - 'INVITE sip:[% scenarios.0.responders.0.username %]@invite-announce-before-call.scenarios.test SIP/2.0'
+  - 'From: <sip:[% scenarios.0.username %]@invite-announce-before-call.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:[% scenarios.0.responders.0.username %]@invite-announce-before-call.scenarios.test>'
   - 'CSeq: \d+ INVITE'
-  - 'Proxy-Authorization: Digest username="[% scenarios.1.username %]",realm="invite-announce-before-call.scenarios.test",uri="sip:[% server_ip %]:5060",nonce=".+",response=".+",algorithm=MD5'
-  - 'P-Early-Media: supported,gated'
+  - 'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>'
+  - 'Proxy-Authorization: Digest username="testuser1002",realm="invite-announce-before-call.scenarios.test",uri="sip:[% server_ip %]:5060",nonce=".+",response=".+",algorithm=MD5'
   - 'Content-Type: application/sdp'
-  - 'Content-Length:\s+\d+'
-  - 'P-LB-Uptime: \d+'
+  - 'P-NGCP-Src-Port: \d+'
 sip_out:
   - [
       'SIP/2.0 100 Trying',
-      'From: <sip:[% scenarios.1.username %]@invite-announce-before-call.scenarios.test>;tag=[\w-]+',
-      'To: <sip:[% scenarios.1.responders.0.username %]@invite-announce-before-call.scenarios.test>',
+      'From: <sip:[% scenarios.0.username %]@invite-announce-before-call.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.0.username %]@invite-announce-before-call.scenarios.test>',
       'CSeq: \d+ INVITE',
     ]
   - [
       'SIP/2.0 101 Connecting',
-      'From: <sip:[% scenarios.1.username %]@invite-announce-before-call.scenarios.test>;tag=[\w-]+',
-      'To: <sip:[% scenarios.1.responders.0.username %]@invite-announce-before-call.scenarios.test>',
+      'From: <sip:[% scenarios.0.username %]@invite-announce-before-call.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.0.username %]@invite-announce-before-call.scenarios.test>',
       'CSeq: \d+ INVITE',
-      'P-NGCP-Caller-Info: <sip:[% scenarios.1.username %]@invite-announce-before-call.scenarios.test>;ip=10.20.29.2;port=51604;primary=4311000',
-      'P-Caller-UUID: [% invite_announce_before_call_scenarios_test.testuser1002.uuid %]',
-      'Server: Sipwise NGCP Proxy',
-      'Content-Length: 0',
     ]
   - [
       'INVITE sip:pre_announce@app.local SIP/2.0',
       'From: <sip:[% scenarios.0.username %]@invite-announce-before-call.scenarios.test>;tag=[\w-]+',
-      'To: <sip:[% scenarios.1.responders.0.username %]@invite-announce-before-call.scenarios.test>',
+      'To: <sip:[% scenarios.0.responders.0.username %]@invite-announce-before-call.scenarios.test>',
       'CSeq: \d+ INVITE',
-      'P-Early-Media: supported,gated',
       'Content-Type: application/sdp',
       'Content-Length:\s+\d+',
       'P-LB-Uptime: \d+',

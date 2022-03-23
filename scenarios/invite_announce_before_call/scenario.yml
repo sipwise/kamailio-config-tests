@@ -6,7 +6,7 @@ domains:
 customers:
   'customer.test':
     contacts:
-      - email: "customer.test@invite-announce-before-call.scenarios.test"
+      - email: "customer.test@spce.test"
         reseller_id: 1
     details:
       status: 'active'
@@ -48,7 +48,7 @@ subscribers:
       alias_numbers:
         - cc: 34
           ac: 96
-          sn: 5711941
+          sn: 5711948
 scenarios:
   - ip: 127.126.0.1
     username: testuser1002
@@ -58,27 +58,27 @@ scenarios:
         username: testuser1003
         domain: invite-announce-before-call.scenarios.test
         register: 'yes'
-  - ip: 127.126.0.1
+  - ip: 127.126.0.2
     username: testuser1002
     domain: invite-announce-before-call.scenarios.test
     responders:
-      - ip: 127.1.0.1
+      - ip: 127.1.0.2
         username: testuser1004
         domain: invite-announce-before-call.scenarios.test
         register: 'yes'
-  - ip: 127.126.0.1
+  - ip: 127.126.0.3
     username: testuser1002
     domain: invite-announce-before-call.scenarios.test
     responders:
-      - ip: 127.1.0.1
+      - ip: 127.1.0.3
         username: testuser1005
         domain: invite-announce-before-call.scenarios.test
         register: 'yes'
-  - ip: 127.126.0.1
+  - ip: 127.126.0.4
     username: testuser1002
     domain: invite-announce-before-call.scenarios.test
     responders:
-      - ip: 127.1.0.1
+      - ip: 127.1.0.4
         username: testuser1006
         domain: invite-announce-before-call.scenarios.test
         register: 'yes'
