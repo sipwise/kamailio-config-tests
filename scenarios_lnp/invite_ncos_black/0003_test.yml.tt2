@@ -67,6 +67,7 @@ flow:
   - start|ROUTE_NCOS:
   - return|ROUTE_NCOS:
   - start|ROUTE_NCOS:
+  - start|ROUTE_FAILED_NCOS:
   - start|ROUTE_ACC_FAILURE:
       $avp(ncos_result): ['0']
       $avp(announce_reason): ["Blocked by NCOS level"]
