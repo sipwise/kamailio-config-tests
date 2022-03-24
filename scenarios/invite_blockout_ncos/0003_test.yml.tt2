@@ -78,6 +78,7 @@ flow:
   - start|ROUTE_NCOS:
   - return|ROUTE_NCOS:
   - start|ROUTE_NCOS:
+  - start|ROUTE_FAILED_NCOS:
   - start|ROUTE_ACC_FAILURE:
   - start|ROUTE_ACC_CALLER:
   - start|ROUTE_SET_ACC_CALLER_CALL_COUNTERS:
