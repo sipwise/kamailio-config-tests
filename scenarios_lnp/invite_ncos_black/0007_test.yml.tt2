@@ -70,6 +70,7 @@ flow:
   - return|ROUTE_NCOS_LNP_CHECK:
       $avp(ncos_mode): ["blacklist"]
       $avp(ncos_lnp_result): ["0"]
+  - start|ROUTE_FAILED_NCOS:
   - start|ROUTE_ACC_FAILURE:
   - start|ROUTE_ACC_CALLER:
   - start|ROUTE_SET_ACC_CALLER_CALL_COUNTERS:
