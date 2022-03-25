@@ -76,6 +76,8 @@ flow:
   - start|ROUTE_SET_RUSER:
   - return|ROUTE_SET_RUSER:
   - start|ROUTE_PREPARE_SST:
+  - start|ROUTE_REMOVE_TIMER_SUPP_REQ:
+  - return|ROUTE_REMOVE_TIMER_SUPP_REQ:
   - return|ROUTE_PREPARE_SST:
   - start|ROUTE_PREPARE_MOH:
   - return|ROUTE_PREPARE_MOH:
