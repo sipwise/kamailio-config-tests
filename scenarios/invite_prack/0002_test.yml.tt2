@@ -3,7 +3,6 @@ flow:
   - start|ROUTE_ENTRY:
   - return|ROUTE_ENTRY:
   - start|ROUTE_NET_INFO:
-      $x_hdr(Supported): 100rel
   - return|ROUTE_NET_INFO:
   - start|ROUTE_CHECK_TEL_URI:
   - return|ROUTE_CHECK_TEL_URI:
