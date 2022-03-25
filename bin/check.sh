@@ -362,6 +362,7 @@ check_rtp() {
   for callid in "${callids[@]}" ; do
     if [[ "${callid}" =~ NGCP%${uuid}%/// ]]; then
       echo "$(date) - Terminate RTP sessions for ${callid}"
+      ${RTPENGINE_CTL} list sessions "${callid}"
       ${RTPENGINE_CTL} terminate "${callid}"
       ERR_FLAG=1
     fi
