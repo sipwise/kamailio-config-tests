@@ -1,7 +1,6 @@
 flow:
   - start|DEFAULT_ROUTE:
   - start|ROUTE_ENTRY:
-      $x_hdr(Supported): 100rel
   - return|ROUTE_ENTRY:
   - start|ROUTE_LEG_B:
   - start|ROUTE_INITVARS:
