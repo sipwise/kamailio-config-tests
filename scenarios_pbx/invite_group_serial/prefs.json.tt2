@@ -1,0 +1,5 @@
+{
+  "@invite-group-serial.scenarios-pbx.test": {
+    "nat_sipping": "no"
+  }
+}
