@@ -1,5 +1,5 @@
 {
-  "@invite-group-parallel.scenarios-pbx.testt": {
+  "@invite-group-parallel.scenarios-pbx.test": {
     "nat_sipping": "no"
   }
 }
