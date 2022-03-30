@@ -1,3 +1,40 @@
+kamailio-config-tests (10.5.0.0+0~mr10.5.0.0) unstable; urgency=medium
+
+  [ Donat Zenichev ]
+  * [ea22502] TT#156700 Update k-c-t scenarios checking 'timer' supported
+  * [cfa7968] TT#156700 Update k-c-t scenarios due to last changes in processing Supported/Require
+  * [f8bc607] TT#156700 Update k-c-t scenarios due to last changes in processing Supported/Require (2 Part)
+  * [04f8874] TT#156700 Update k-c-t scenarios due to last changes in processing Supported/Require (3 Part)
+
+  [ Alessio Garzi ]
+  * [c5b2ff5] TT#109104 New location mapping forward scenario
+  * [86d1bef] TT#109104 Location mapping forward peer fix
+  * [f3361a2] TT#109104 Location mapping forward peer fix #2
+  * [34264f7] TT#109104 Location mapping forward peer fix #3
+  * [ebc53f8] TT#109104 Location mapping forward peer fix #4
+  * [1fafd72] TT#140851 reorder_tests_tt2.sh with usage() and new functionalities
+  * [3d79bbb] TT#140851 scenarios extended for P-Early-Media - incoming_peer
+  * [9da871c] TT#140851 fix incoming_peer ordering
+  * [884a094] TT#168201 ROUTE_NCOS in invite_redirect_* scenarios
+  * [87ac947] TT#140851 scenarios extended for P-Early-Media - invite_announce_before_call
+  * [c91aaaf] TT#140851 Disable scenario announce_before_call
+  * [cbc9491] TT#140851 re-enable invite_announce_before_call
+
+  [ Victor Seva ]
+  * [57b42d9] TT#81700 set_config.sh: fix error when ngcpcfg fails
+  * [573ec76] TT#81700 check.sh: show all info of RTP session before terminate
+  * [da7516b] TT#163700 scenarios_pbx fixes
+  * [95f04b0] TT#163700 scenarios_pbx/invite_group_parallel fix typo
+
+  [ Marco Capetta ]
+  * [188e452] TT#156754 Fix scenarios after additions of counters helper routes
+  * [a3322d2] TT#168850 Fix on tests after the addition of route ROUTE_FAILED_NCOS
+
+  [ Mohammed Ghettas ]
+  * [dc571c4] TT#163700 new scenarios for testing missing features
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 30 Mar 2022 23:59:08 +0200
+
 kamailio-config-tests (10.4.0.0+0~mr10.4.0.0) unstable; urgency=medium
 
   [ Alessio Garzi ]
