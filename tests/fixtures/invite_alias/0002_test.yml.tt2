@@ -1,0 +1,67 @@
+flow:
+  - start|DEFAULT_ROUTE:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_NET_INFO:
+  - return|ROUTE_NET_INFO:
+  - start|ROUTE_CHECK_TEL_URI:
+  - return|ROUTE_CHECK_TEL_URI:
+  - start|ROUTE_REG_REQUEST:
+  - start|ROUTE_REG_HANDLE:
+  - start|ROUTE_AUTH:
+  - start|ROUTE_AUTH_HELPER:
+  - return|ROUTE_AUTH_HELPER:
+  - start|ROUTE_ADD_CALLINFO_REPLY:
+  - return|ROUTE_ADD_CALLINFO_REPLY:
+  - return|ROUTE_AUTH:
+  - start|ROUTE_PREFERENCES:
+  - start|ROUTE_CHECK_UA:
+  - return|ROUTE_CHECK_UA:
+  - return|ROUTE_PREFERENCES:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+sip_in:
+ - 'REGISTER sip:[% scenarios.0.responders.0.username %]@invite-alias.scenarios-pbx.test SIP/2.0'
+ - 'From: <sip:[% scenarios.0.responders.0.username %]@invite-alias.scenarios-pbx.test>;tag=[\w-]+'
+ - 'To: <sip:[% scenarios.0.responders.0.username %]@invite-alias.scenarios-pbx.test>'
+ - 'CSeq: \d+ REGISTER'
+ - 'Authorization: Digest username="[% scenarios.0.responders.0.username %]",realm="invite-alias.scenarios-pbx.test",uri="sip:[% server_ip %]:5060",nonce="YkVQ2mJFT66j3lIeqArEM17Epo4eoSyC",response="9521fb6a40314ab7ea438d73e2f7dfae",algorithm=MD5'
+ - 'Contact: sip:[% scenarios.0.responders.0.username %]@[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];transport=UDP'
+ - 'Content-Length: 0'
+ - 'P-NGCP-Src-Ip: [% scenarios.0.ip %]'
+ - 'P-NGCP-Src-Port: [% scenarios.0.responders.0.port %]'
+ - 'P-NGCP-Src-Proto: udp'
+ - 'P-NGCP-Src-Af: 4'
+ - 'P-Sock-Info: udp:[% server_ip %]:5060'
+ - 'P-LB-Uptime: \d+'
+ - 'P-NGCP-Src-Nat: 1'
+ - 'Path: <sip:lb@127.0.0.1;lr;received=sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];socket=sip:[% server_ip %]:5060>'
+sip_out:
+  - [
+      'SIP/2.0 100 Trying',
+      'From: <sip:[% scenarios.0.responders.0.username %]@invite-alias.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.0.username %]@invite-alias.scenarios-pbx.test>',
+      'CSeq: \d+ REGISTER',
+      'P-Out-Socket: udp:[% server_ip %]:5060',
+      'P-NGCP-Auth-IP: [% scenarios.0.ip %]',
+      'P-NGCP-Auth-UA: <null>',
+      'Server: Sipwise NGCP Proxy',
+      'Content-Length: 0',
+    ]
+  - [
+      'SIP/2.0 200 OK',
+      'From: <sip:[% scenarios.0.responders.0.username %]@invite-alias.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.0.username %]@invite-alias.scenarios-pbx.test>;tag=[\w-]+',
+      'CSeq: \d+ REGISTER',
+      'P-Out-Socket: udp:[% server_ip %]:5060',
+      'P-NGCP-Auth-IP: [% scenarios.0.ip %]',
+      'P-NGCP-Auth-UA: <null>',
+      'P-NGCP-Authorization: testuser1003@invite-alias.scenarios-pbx.test',
+      'P-NGCP-Authorized: 1',
+      'P-Caller-UUID: [% invite_alias_scenarios_pbx_test.testuser1003.uuid %]',
+      'Contact: <sip:[% scenarios.0.responders.0.username %]@[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %]>;expires=\d+;received="sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %]"',
+      'Server: Sipwise NGCP Proxy',
+      'Content-Length: 0',
+    ]

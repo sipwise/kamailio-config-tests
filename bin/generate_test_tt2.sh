@@ -95,8 +95,7 @@ gen_cfgt() {
       IDS+=( "${file}" )
     done
   fi
-  CMD="${BIN_DIR}/generate_test_tt2.pl -F -i ${LOG_DIR}/scenario_ids.yml"
-  CMD+=" -n ${SCEN_DIR}/scenario.yml "
+  CMD="${BIN_DIR}/generate_test_tt2.py ${LOG_DIR}/scenario_ids.yml --type=cfgt"
   for t in "${IDS[@]}" ; do
     file="${SCEN_DIR}/$(basename "${t}" .json)"_test.yml.tt2
     echo "generating: ${file}"
@@ -112,7 +111,7 @@ gen_sipp() {
   fi
   mapfile -t IDS < <(find "${LOG_DIR}" -maxdepth 1 -name '*.msg' -exec basename {} \;| sort)
 
-  CMD="${BIN_DIR}/generate_test_tt2.py ${LOG_DIR}/scenario_ids.yml"
+  CMD="${BIN_DIR}/generate_test_tt2.py ${LOG_DIR}/scenario_ids.yml --type=sipp"
   for t in "${IDS[@]}" ; do
     file="${SCEN_DIR}/$(basename "${t}" .msg)"_test.yml.tt2
     echo "generating: ${file}"

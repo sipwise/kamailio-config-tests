@@ -1,0 +1,38 @@
+flow:
+  - start|DEFAULT_ONREPLY:
+  - start|REPLY_ROUTE_NAT:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - start|REPLY_SCA_UPDATE:
+  - return|REPLY_SCA_UPDATE:
+  - start|ROUTE_PREPARE_UA:
+  - return|ROUTE_PREPARE_UA:
+  - start|REPLY_ROUTE_NAT_CONTINUE:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+sip_in:
+ - 'SIP/2.0 200 OK'
+ - 'Record-Route: <sip:127.0.0.1:5062;lr=on;ftag=[^;]+;vsf=[^;]+;rtpprx=yes>'
+ - 'Record-Route: <sip:127.0.0.1;r2=on;lr=on;ftag=[^;]+;ngcplb=yes;nat=yes;socket=udp:[% server_ip %]:5060>'
+ - 'Record-Route: <sip:[% server_ip %];r2=on;lr=on;ftag=[^;]+;ngcplb=yes;nat=yes;socket=udp:[% server_ip %]:5060>'
+ - 'From: <sip:[% invite_alias_scenarios_pbx_test.testuser1002.phone_number %]@invite-alias.scenarios-pbx.test>;tag=[\w-]+'
+ - 'To: <sip:[% invite_alias_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@invite-alias.scenarios-pbx.test>;tag=[\w-]+'
+ - 'CSeq: \d+ BYE'
+ - 'Content-Length: 0'
+sip_out:
+  - [
+      'SIP/2.0 200 OK',
+      'Record-Route: <sip:127.0.0.1:5062;lr=on;ftag=[^;]+;vsf=[^;]+;rtpprx=yes>',
+      'Record-Route: <sip:127.0.0.1;r2=on;lr=on;ftag=[^;]+;ngcplb=yes;nat=yes;socket=udp:[% server_ip %]:5060>',
+      'Record-Route: <sip:[% server_ip %];r2=on;lr=on;ftag=[^;]+;ngcplb=yes;nat=yes;socket=udp:[% server_ip %]:5060>',
+      'From: <sip:[% scenarios.0.username %]@invite-alias.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:[% invite_alias_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@invite-alias.scenarios-pbx.test>;tag=[\w-]+',
+      'CSeq: \d+ BYE',
+      'Content-Length: 0',
+      'P-COLP-Identity: "[% invite_alias_scenarios_pbx_test.testuser1003.pbx_extension %]" <sip:[% invite_alias_scenarios_pbx_test.testuser1003.pbx_extension %]@invite-alias.scenarios-pbx.test>',
+      'P-Out-Socket: udp:[% server_ip %]:5060',
+    ]

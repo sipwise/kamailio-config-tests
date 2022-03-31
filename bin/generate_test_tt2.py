@@ -25,6 +25,7 @@ import logging
 import re
 import argparse
 import subprocess
+import json
 from yaml import load
 
 try:
@@ -40,7 +41,7 @@ def load_yaml(filepath):
     return output
 
 
-def load_msg(filepath):
+def load_sipp_msg(filepath):
     mark = re.compile(r"^-+ .+")
     recv = re.compile(r"^(TCP|UDP) message received .+")
     res = []
@@ -67,6 +68,13 @@ def load_msg(filepath):
     return res
 
 
+def load_json(filepath):
+    output = None
+    with open(filepath, "r") as file:
+        output = json.load(file)
+    return output
+
+
 def is_zero(matchobj):
     if matchobj.group(1) == "0":
         return ": 0"
@@ -76,6 +84,12 @@ def is_zero(matchobj):
 class Generator:
     common_hdrs = set(["Via", "Route", "Call-ID", "Expires", "Max-Forwards"])
     hdr_re = re.compile(r"^([\w-]+): .+")
+
+    def __init__(self, _hdrs, _ids):
+        # ignore case for headers
+        self.hdrs = [hdr.lower() for hdr in _hdrs]
+        self.ids = _ids
+        self.ids_rules = self.generate_rules(_ids)
 
     @classmethod
     def get_filters(cls, args):
@@ -87,7 +101,7 @@ class Generator:
         return cls.common_hdrs | filters
 
     @classmethod
-    def generate_rules(self, ids):
+    def generate_rules(self, ids) -> list:
         rules = []
         id_dom = ids["domains"][0]
         server_ip = ids["server_ip"]
@@ -188,6 +202,12 @@ class Generator:
             (r"sip:([^@]+@){}".format(server_ip), r"sip:\1[% server_ip %]")
         )
         rules.append((r"sip:{}".format(server_ip), f"sip:[% server_ip %]"))
+        rules.append(
+            (
+                r"(udp|tcp):{}:5060".format(server_ip),
+                r"\1:[% server_ip %]:5060",
+            )
+        )
         sdp_rule(server_ip, "server_ip")
 
         # priority on full match
@@ -221,13 +241,6 @@ class Generator:
                 sip_rule(numbers, f"extra_info.phone_numbers", idx)
         return rules
 
-    def __init__(self, _hdrs, _msg, _ids):
-        # ignore case for headers
-        self.hdrs = [hdr.lower() for hdr in _hdrs]
-        self.msgs = _msg
-        self.ids = _ids
-        self.ids_rules = self.generate_rules(_ids)
-
     @classmethod
     def get_header(self, line):
         m = self.hdr_re.match(line)
@@ -241,7 +254,7 @@ class Generator:
             return True, hdr
         return False, hdr
 
-    def subst_common(self, line, hdr):
+    def generate_common_rules(self, hdr):
         rules = []
         if hdr is None:
             rules.append((r"^a=rtcp:\d+", r"a=rtcp:\\d+"))
@@ -272,11 +285,16 @@ class Generator:
             rules.append((r":\s+\d+", r": \\d+"))
         elif hdr == "subscription-state":
             rules.append((r";expires=[1-9]\d*", r";expires=\\d+"))
+        return rules
+
+    def subst_common(self, line: str, hdr: str) -> str:
+        rules = self.generate_common_rules(hdr)
+
         for rule in rules:
             line = re.sub(rule[0], rule[1], line, flags=re.IGNORECASE)
         return line
 
-    def subst_ids(self, line, hdr):
+    def subst_ids(self, line: str, hdr: str) -> str:
         for rule in self.ids_rules:
             line = re.sub(rule[0], rule[1], line)
         return line
@@ -305,19 +323,19 @@ class Generator:
                 res.append(l)
         return res
 
-    def run(self):
+    def run(self, info: list):
         res = []
-        for msg in self.msgs:
+        for msg in info:
             res.append(self.process_msg(msg))
         return res
 
 
-def main(args):
-    msgs = load_msg(args.sipp_msg)
+def sipp_process(args):
+    msgs = load_sipp_msg(args.input)
     ids = load_yaml(args.scen_ids)
-    gen = Generator(Generator.get_filters(args), msgs, ids)
+    gen = Generator(Generator.get_filters(args), ids)
     print("messages:")
-    for msg in gen.run():
+    for msg in gen.run(msgs):
         sys.stdout.write("- - '")
         sys.stdout.write(msg[0])
         sys.stdout.write("'\n")
@@ -327,18 +345,105 @@ def main(args):
             sys.stdout.write("'\n")
 
 
+def get_msgs(info: list):
+    """ transform JSON sip msg in list of lines """
+    res = []
+    for msg in info:
+        res.append(msg.split("\r\n"))
+    return res
+
+
+class CFGTGenerator(Generator):
+    def generate_rules(self, ids) -> list:
+        id_dom = ids["domains"][0]
+        rules = super(CFGTGenerator, self).generate_rules(ids)
+
+        def add_ngcp(scen, tt):
+            rules.append(
+                (
+                    r"^P-NGCP-(Auth|Src)-I(p|P): {}".format(scen["ip"]),
+                    r"P-NGCP-\1-I\2: [% {0}.ip %]".format(tt),
+                )
+            )
+            rules.append(
+                (
+                    r"^P-NGCP-Src-Port: {}".format(scen["port"]),
+                    r"P-NGCP-Src-Port: [% {0}.port %]".format(tt),
+                )
+            )
+
+        def add_ngcp_info(subs, tt):
+            rules.append(
+                (
+                    r"^P-Calle(r|e)-UUID: {}".format(subs["uuid"]),
+                    r"P-Calle\1-UUID: [% {0}.uuid %]".format(tt),
+                )
+            )
+
+        for idx, scen in enumerate(ids["scenarios"]):
+            add_ngcp(scen, f"scenarios.{idx}")
+            for jdx, resp in enumerate(scen["responders"]):
+                add_ngcp(resp, f"scenarios.{idx}.responders.{jdx}")
+        for key in ids[id_dom]:
+            subs = ids[id_dom][key]
+            add_ngcp_info(subs, f"{id_dom}.{key}")
+
+        return rules
+
+    def generate_common_rules(self, hdr: str) -> list:
+        rules = super(CFGTGenerator, self).generate_common_rules(hdr)
+        if hdr == "p-lb-uptime":
+            rules.append((r":\s+(\d+)", is_zero))
+        return rules
+
+
+def cfgt_process(args):
+    info = load_json(args.input)
+    ids = load_yaml(args.scen_ids)
+    gen = CFGTGenerator(Generator.get_filters(args), ids)
+    print("flow:")
+    for flow in info["flow"]:
+        for key in flow.keys():
+            print(f"  - {key}:")
+    print("sip_in:")
+    msgs = get_msgs(info["sip_in"])
+    for msg in gen.run(msgs):
+        for line in msg:
+            print(f" - '{line}'")
+    if len(info["sip_out"]) > 0:
+        print("sip_out:")
+        msgs = get_msgs(info["sip_out"])
+        for msg in gen.run(msgs):
+            print("  - [")
+            for line in msg:
+                print(f"      '{line}',")
+            print("    ]")
+    else:
+        print("sip_out: []")
+
+
+def main(args):
+    if args.type == "sipp":
+        sipp_process(args)
+    else:
+        cfgt_process(args)
+
+
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(
-        description="generate test_yml.tt2 files from sipp msg file"
-    )
+    parser = argparse.ArgumentParser(description="generate test_yml.tt2 files")
     parser.add_argument(
         "scen_ids", help="path to the scenario_ids.yml file", type=Path
     )
-    parser.add_argument(
-        "sipp_msg", help="path to the sipp msg file", type=Path
-    )
+    parser.add_argument("input", help="path to the input file", type=Path)
     parser.add_argument("--filter", nargs="?", help="remove this header")
     parser.add_argument("--filter-common", help="filter common headers")
+    parser.add_argument(
+        "--type",
+        "-t",
+        choices=["sipp", "cfgt"],
+        default="sipp",
+        help="type of input file",
+    )
     parser.add_argument(
         "--verbose",
         "-v",
