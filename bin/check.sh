@@ -23,7 +23,7 @@ CAPTURE=false
 SKIP=false
 MEMDBG=false
 SKIP_DELDOMAIN=false
-CHECK_TYPE=all
+CHECK_TYPE=sipp
 SKIP_RUNSIPP=false
 FIX_RETRANS=false
 GRAPH=false
@@ -603,7 +603,7 @@ usage() {
   echo -e "\\t-C: skip creation of domain and subscribers"
   echo -e "\\t-R: skip run sipp"
   echo -e "\\t-D: skip deletion of domain and subscribers as final step"
-  echo -e "\\t-T check type. Default: all"
+  echo -e "\\t-T check type <all|cfgt|sipp>. Default: sipp"
   echo -e "\\t-P: skip parse"
   echo -e "\\t-G: creation of graphviz image"
   echo -e "\\t-g: creation of graphviz image only if test fails"
@@ -705,9 +705,11 @@ if ! "$SKIP_RUNSIPP" ; then
       mkdir -p "${KAM_DIR}"
       chown -R kamailio:kamailio "${KAM_DIR}"
     fi
-    if ngcp-kamcmd proxy cfgt.list | grep -q "uuid: ${test_uuid}" ; then
-      echo "$(date) - clean cfgt scenario ${test_uuid}"
-      ngcp-kamcmd proxy cfgt.clean "${test_uuid}"
+    if [[ ${CHECK_TYPE} != sipp ]] ; then
+      if ngcp-kamcmd proxy cfgt.list | grep -q "uuid: ${test_uuid}" ; then
+        echo "$(date) - clean cfgt scenario ${test_uuid}"
+        ngcp-kamcmd proxy cfgt.clean "${test_uuid}"
+      fi
     fi
 
   echo "$(date) - Running sipp scenarios"
@@ -718,7 +720,7 @@ if ! "$SKIP_RUNSIPP" ; then
   cp "${SCEN_CHECK_DIR}/scenario_ids.yml" "${LOG_DIR}"
   echo "$(date) - Done"
 
-  if ! "${SKIP_MOVE_JSON_KAM}" ; then
+  if [[ ${CHECK_TYPE} != sipp ]]  && ! ${SKIP_MOVE_JSON_KAM} ; then
     echo "$(date) - Move kamailio json files"
     if [ -d "${JSON_DIR}" ] ; then
       for i in "${JSON_DIR}"/*.json ; do
