@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #
-# Copyright: 2013-2021 Sipwise Development Team <support@sipwise.com>
+# Copyright: 2013-2022 Sipwise Development Team <support@sipwise.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -29,11 +29,12 @@ use Hash::Merge qw(merge);
 
 sub usage
 {
-  my $output = "usage: $PROGRAM_NAME [-hgc] kct_config.yml MODE\n";
+  my $output = "usage: $PROGRAM_NAME [-hgct] kct_config.yml MODE\n";
   $output .= "Options:\n";
   $output .= "\t-h: this help\n";
   $output .= "\t-g: scenarios group\n";
   $output .= "\t-c: number of kamailio.proxy.children\n";
+  $output .= "\t-t: enable cfgt\n";
   $output .= "\tkct_config.yml: config file for k-c-t environment\n";
   $output .= "\tMODE: on|off\tdefault: off\n";
   return $output
@@ -42,6 +43,7 @@ sub usage
 my $help = 0;
 my $children = 0;
 my $group;
+my $cfgt = 0;
 
 if (exists $ENV{'GROUP'})
 {
@@ -55,6 +57,7 @@ GetOptions (
   "h|help" => \$help,
   "g|group=s" => \$group,
   "c|children=i" => \$children,
+  "t" => \$cfgt,
 ) or die("Error in command line arguments\n".usage());
 
 if($#ARGV>1 || $help)
@@ -80,14 +83,18 @@ sub change_config
   my $es_test = $kct_conf->{kamailio}->{lb}->{extra_sockets}->{test};
   my $es_other = $kct_conf->{kamailio}->{lb}->{extra_sockets}->{other};
 
-  $yaml->{kamailio}{lb}{cfgt} = 'yes';
+  if ($cfgt)
+  {
+    print "enable cfgt\n";
+    $yaml->{kamailio}{lb}{cfgt} = 'yes';
+    $yaml->{kamailio}{proxy}{cfgt} = 'yes';
+    $yaml->{sems}{cfgt} = 'yes';
+  }
   $yaml->{kamailio}{lb}{dns}{use_dns_cache} = 'off';
   $yaml->{kamailio}{lb}{extra_sockets}->{test} = "$es_test->{transport}:$es_test->{ip}:$es_test->{port}";
   $yaml->{kamailio}{lb}{extra_sockets}->{other} = "$es_other->{transport}:$es_other->{ip}:$es_other->{port}";;
   $yaml->{kamailio}{proxy}{children} = $children if($children > 0);
   $yaml->{kamailio}{proxy}{permissions_reload_delta} = 0;
-  $yaml->{kamailio}{proxy}{cfgt} = 'yes';
-  $yaml->{sems}{cfgt} = 'yes';
   $yaml->{sems}{debug} = 'yes';
   $yaml->{witnessd}{gather}{sip_responsiveness} = 'no';
   $yaml->{security}->{ngcp_panel}->{scripts}->{restapi}->{sslverify} = 'no';

@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright: 2013-2021 Sipwise Development Team <support@sipwise.com>
+# Copyright: 2013-2022 Sipwise Development Team <support@sipwise.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -29,6 +29,7 @@ PROFILE="${PROFILE:-}"
 CLEAN=false
 TIMEOUT=${TIMEOUT:-300}
 SKIP_NET=false
+CFGT=false
 
 usage() {
   echo "Usage: set_config.sh [-cht] [-x GROUP] [-p PROFILE]"
@@ -38,6 +39,7 @@ usage() {
   echo -e "\\t-c clean config"
   echo -e "\\t-t set timeout in secs for pid_watcher.py [PRO]. Default: 300"
   echo -e "\\t-s skip network IP detection, just use values at config.yml"
+  echo -e "\\t-T enable cfgt"
   echo -e "\t-h this help"
 
   echo "BASE_DIR:${BASE_DIR}"
@@ -52,6 +54,7 @@ while getopts 'chp:st:x:' opt; do
     s) SKIP_NET=true;;
     t) TIMEOUT=${OPTARG};;
     x) GROUP=${OPTARG};;
+    T) CFGT=true;;
     *) echo "Unknown option ${opt}"; usage; exit 1;;
   esac
 done
@@ -136,6 +139,8 @@ clean() {
 }
 
 config() {
+  local opts
+
   echo "$(date) - Removed apicert.pem"
   rm -f "${BASE_DIR}/apicert.pem"
   if ${SKIP_NET} ; then
@@ -144,8 +149,13 @@ config() {
     echo "$(date) - Guess network IPs"
     "${BIN_DIR}/detect_network.py" --verbose "${BASE_DIR}/config.yml" /etc/ngcp-config/network.yml
   fi
+  opts="-c 5 -g ${GROUP}"
+  if ${CFGT} ; then
+    opts+=" -t"
+  fi
   echo "$(date) - Setting config debug on"
-  "${BIN_DIR}/config_debug.pl" -c 5 -g "${GROUP}" "${BASE_DIR}/config.yml" on
+  # shellcheck disable=SC2086
+  "${BIN_DIR}/config_debug.pl" ${opts} "${BASE_DIR}/config.yml" on
   echo "$(date) - Setting network config"
   "${BIN_DIR}/network_config.pl" -g "${GROUP}" "${BASE_DIR}/config.yml" on
   if [ "${PROFILE}" == "PRO" ]; then
