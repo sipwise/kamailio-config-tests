@@ -46,7 +46,7 @@ usage() {
   echo "BIN_DIR:${BIN_DIR}"
 }
 
-while getopts 'chp:st:x:' opt; do
+while getopts 'chp:sTt:x:' opt; do
   case $opt in
     c) CLEAN=true;;
     h) usage; exit 0;;
