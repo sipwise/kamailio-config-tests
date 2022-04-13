@@ -25,6 +25,7 @@ MEMDBG=false
 SKIP_DELDOMAIN=false
 CHECK_TYPE=sipp
 SKIP_RUNSIPP=false
+SKIP_CHECK=false
 FIX_RETRANS=false
 GRAPH=false
 GRAPH_FAIL=false
@@ -597,13 +598,14 @@ cdr_check() {
 }
 
 usage() {
-  echo "Usage: check.sh [-hCDRGgKm] [-T <all|none|cfgt|sipp>] [-p PROFILE ] [-s GROUP] check_name"
+  echo "Usage: check.sh [-hCDRGgKmt] [-T <all|cfgt|sipp>] [-p PROFILE ] [-s GROUP] check_name"
   echo "Options:"
   echo -e "\\t-I: SIP_SERVER IP, default:127.0.0.1"
   echo -e "\\t-C: skip creation of domain and subscribers"
   echo -e "\\t-R: skip run sipp"
   echo -e "\\t-D: skip deletion of domain and subscribers as final step"
   echo -e "\\t-T check type <all|cfgt|sipp>. Default: sipp"
+  echo -e "\\t-t skip check results"
   echo -e "\\t-P: skip parse"
   echo -e "\\t-G: creation of graphviz image"
   echo -e "\\t-g: creation of graphviz image only if test fails"
@@ -618,13 +620,14 @@ usage() {
   echo -e "\\tcheck_name. Scenario name to check. This is the name of the directory on GROUP dir."
 }
 
-while getopts 'hI:Cp:Rs:DT:GgrcKMmw:' opt; do
+while getopts 'hI:Cp:Rs:DtT:GgrcKMmw:' opt; do
   case $opt in
     h) usage; exit 0;;
     I) SIP_SERVER=${OPTARG};;
     C) SKIP=true; SKIP_DELDOMAIN=true;;
     p) PROFILE=${OPTARG};;
     R) SKIP_RUNSIPP=true; SKIP_DELDOMAIN=true;;
+    t) SKIP_CHECK=true;;
     s) GROUP=${OPTARG};;
     D) SKIP_DELDOMAIN=true;;
     T) CHECK_TYPE=${OPTARG};;
@@ -691,8 +694,8 @@ if [ -f "${SCEN_CHECK_DIR}/pro.yml" ] && [ "${PROFILE}" == "CE" ]; then
 fi
 
 case "${CHECK_TYPE}" in
-  all|sipp|cfgt|none) ;;
-  *) echo "unknown check type"; exit 1;;
+  all|sipp|cfgt) echo "check type:${CHECK_TYPE}" ;;
+  *) echo "unknown check type ${CHECK_TYPE}"; exit 1;;
 esac
 
 if ! "$SKIP" ; then
@@ -700,12 +703,12 @@ if ! "$SKIP" ; then
 fi
 
 if ! "$SKIP_RUNSIPP" ; then
-    if ! [ -d "${KAM_DIR}" ] ; then
-      echo "$(date) - dir and perms for ${KAM_DIR}"
-      mkdir -p "${KAM_DIR}"
-      chown -R kamailio:kamailio "${KAM_DIR}"
-    fi
     if [[ ${CHECK_TYPE} != sipp ]] ; then
+      if ! [ -d "${KAM_DIR}" ] ; then
+        echo "$(date) - dir and perms for ${KAM_DIR}"
+        mkdir -p "${KAM_DIR}"
+        chown -R kamailio:kamailio "${KAM_DIR}"
+      fi
       if ngcp-kamcmd proxy cfgt.list | grep -q "uuid: ${test_uuid}" ; then
         echo "$(date) - clean cfgt scenario ${test_uuid}"
         ngcp-kamcmd proxy cfgt.clean "${test_uuid}"
@@ -720,57 +723,59 @@ if ! "$SKIP_RUNSIPP" ; then
   cp "${SCEN_CHECK_DIR}/scenario_ids.yml" "${LOG_DIR}"
   echo "$(date) - Done"
 
-  if [[ ${CHECK_TYPE} != sipp ]]  && ! ${SKIP_MOVE_JSON_KAM} ; then
-    echo "$(date) - Move kamailio json files"
-    if [ -d "${JSON_DIR}" ] ; then
-      for i in "${JSON_DIR}"/*.json ; do
-        json_size_before=$(stat -c%s "${i}")
-        moved_file="${LOG_DIR}/$(printf "%04d.json" "$(basename "${i}" .json)")"
-        expand -t1 "${i}" > "${moved_file}"
-        json_size_after=$(stat -c%s "${moved_file}")
-        echo "$(date) - Moved file ${i} with size before: ${json_size_before} and after: ${json_size_after}"
-        rm "${i}"
-      done
-    else
-      echo "$(date) - No json files found"
-    fi
-    echo "$(date) - clean cfgt scenario ${test_uuid}"
-    ngcp-kamcmd proxy cfgt.clean "${test_uuid}"
-    echo "$(date) - Done"
-  fi
-
-  if "${FIX_RETRANS}" ; then
-    echo "$(date) - Checking retransmission issues"
-    RETRANS_ISSUE=false
-    mapfile -t file_find < <(find "${LOG_DIR}" -maxdepth 1 -name '*.json' | sort)
-    for json_file in "${file_find[@]}" ; do
-      file_find=("${file_find[@]:1}")
-      if ! [ -a "${json_file}" ] ; then
-        continue
+  if [[ ${CHECK_TYPE} != sipp ]] ; then
+    if ! ${SKIP_MOVE_JSON_KAM} ; then
+      echo "$(date) - Move kamailio json files"
+      if [ -d "${JSON_DIR}" ] ; then
+        for i in "${JSON_DIR}"/*.json ; do
+          json_size_before=$(stat -c%s "${i}")
+          moved_file="${LOG_DIR}/$(printf "%04d.json" "$(basename "${i}" .json)")"
+          expand -t1 "${i}" > "${moved_file}"
+          json_size_after=$(stat -c%s "${moved_file}")
+          echo "$(date) - Moved file ${i} with size before: ${json_size_before} and after: ${json_size_after}"
+          rm "${i}"
+        done
+      else
+        echo "$(date) - No json files found"
       fi
-      for next_json_file in "${file_find[@]}" ; do
-        if ! [ -a "${next_json_file}" ] ; then
+      echo "$(date) - clean cfgt scenario ${test_uuid}"
+      ngcp-kamcmd proxy cfgt.clean "${test_uuid}"
+      echo "$(date) - Done"
+    fi
+
+    if "${FIX_RETRANS}" ; then
+      echo "$(date) - Checking retransmission issues"
+      RETRANS_ISSUE=false
+      mapfile -t file_find < <(find "${LOG_DIR}" -maxdepth 1 -name '*.json' | sort)
+      for json_file in "${file_find[@]}" ; do
+        file_find=("${file_find[@]:1}")
+        if ! [ -a "${json_file}" ] ; then
           continue
         fi
-        if ( diff -q -u <(tail -n3 "${json_file}") <(tail -n3 "${next_json_file}") &> /dev/null ) ; then
-          echo "$(date) - $(basename "${next_json_file}") seems a retransmission of $(basename "${json_file}") ---> renaming the file in $(basename "${next_json_file}")_retransmission"
-          mv -f "${next_json_file}" "${next_json_file}_retransmission"
-          RETRANS_ISSUE=true
-        fi
+        for next_json_file in "${file_find[@]}" ; do
+          if ! [ -a "${next_json_file}" ] ; then
+            continue
+          fi
+          if ( diff -q -u <(tail -n3 "${json_file}") <(tail -n3 "${next_json_file}") &> /dev/null ) ; then
+            echo "$(date) - $(basename "${next_json_file}") seems a retransmission of $(basename "${json_file}") ---> renaming the file in $(basename "${next_json_file}")_retransmission"
+            mv -f "${next_json_file}" "${next_json_file}_retransmission"
+            RETRANS_ISSUE=true
+          fi
+        done
       done
-    done
 
-    if "${RETRANS_ISSUE}" ; then
-      echo "$(date) - Reordering kamailio json files"
-      mapfile -t file_find < <(find "${LOG_DIR}" -maxdepth 1 -name '*.json' | sort)
-      a=1
-      for json_file in "${file_find[@]}" ; do
-        new_name=$(printf "%04d.json" "${a}")
-        mv -n "${json_file}" "${LOG_DIR}/${new_name}" &> /dev/null
-        ((a++))
-      done
+      if "${RETRANS_ISSUE}" ; then
+        echo "$(date) - Reordering kamailio json files"
+        mapfile -t file_find < <(find "${LOG_DIR}" -maxdepth 1 -name '*.json' | sort)
+        a=1
+        for json_file in "${file_find[@]}" ; do
+          new_name=$(printf "%04d.json" "${a}")
+          mv -n "${json_file}" "${LOG_DIR}/${new_name}" &> /dev/null
+          ((a++))
+        done
+      fi
+      echo "$(date) - Done"
     fi
-    echo "$(date) - Done"
   fi
 
   echo "$(date) - check RTP sessions, wait 5 secs first"
@@ -783,7 +788,7 @@ if ! "${SKIP_DELDOMAIN}" ; then
 fi
 
 # let's check the results
-if [[ ${CHECK_TYPE} != none ]] ; then
+if ! ${SKIP_CHECK} ; then
   echo "$(date) - ================================================================================="
   echo "$(date) - Check [${GROUP}/${PROFILE}]: ${NAME_CHECK}"
 

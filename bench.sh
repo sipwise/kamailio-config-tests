@@ -25,7 +25,7 @@ CAPTURE=false
 SINGLE_CAPTURE=false
 PROV_TYPE=step
 CHECK_TYPE=sipp
-CFGT=""
+CFGT_OPTS=()
 
 usage() {
   echo "Usage: bench.sh [-hCkK] [-p PROFILE] [-x GROUP] [-P <none|all|step>] [-S <all|cfgt|sipp>] num_runs"
@@ -36,7 +36,7 @@ usage() {
   echo -e "\\t-K capture messages with tcpdump. One big file for all scenarios"
   echo -e "\\t-x set GROUP scenario. Default: scenarios"
   echo -e "\\t-P provisioning, default:step"
-  echo -e "\\t-S check type. Default: all (cfgt, sipp)"
+  echo -e "\\t-S check type. Default: sipp (all|cfgt|sipp)"
   echo -e "\\t-h this help"
   echo -e "num_runs default is 20"
 }
@@ -94,13 +94,15 @@ BASE_DIR=$(pwd)
 export BASE_DIR
 
 case "${CHECK_TYPE}" in
-  all|cfgt) CFGT="-T" ;;
+  all|cfgt) CFG_OPTS+=(-T); RUN_OPS+=(-T) ;;
   sipp) ;;
   *) echo "check type:${CHECK_TYPE} unknown" >&2; exit 2;;
 esac
 
 if ! "${SKIP_CONFIG}" ; then
-  "${BASE_DIR}/set_config.sh" "${CFGT}" -x "${GROUP}" -p "${PROFILE}"
+  CFG_OPTS+=(-x "${GROUP}" -p "${PROFILE}")
+  # shellcheck disable=SC2086
+  "${BASE_DIR}/set_config.sh" ${CFG_OPTS[*]}
 fi
 
 echo "$(date) - Starting $NUM tests"
@@ -126,5 +128,6 @@ done
 set +o pipefail
 
 if ! "${SKIP_CONFIG}" ; then
-  "${BASE_DIR}/set_config.sh" -c -x "${GROUP}" -p "${PROFILE}"
+  # shellcheck disable=SC2086
+  "${BASE_DIR}/set_config.sh" -c ${CFG_OPTS[*]}
 fi

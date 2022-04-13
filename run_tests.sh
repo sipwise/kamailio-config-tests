@@ -16,7 +16,8 @@ TMP_LOG_DIR="/tmp"
 KAM_DIR="/tmp/cfgtest"
 COREDUMP_DIR="/ngcp-data/coredumps"
 PROFILE="${PROFILE:-}"
-OPTS=(-Tnone -M -C) #SKIP_TESTS=true, SKIP_MOVE_JSON_KAM=true, SKIP=true
+OPTS=(-t -M -C) #SKIP_TESTS=true, SKIP_MOVE_JSON_KAM=true, SKIP=true
+CFG_OPTS=()
 
 SHOW_SCENARIOS=false
 SKIP_CONFIG=false
@@ -29,6 +30,7 @@ PROV_TYPE="step"
 START_TIME=$(date +%s)
 error_flag=0
 SCEN=()
+CFGT=false
 
 get_scenarios() {
   if [ -n "${SCEN_FILE}" ]; then
@@ -50,7 +52,7 @@ get_scenarios() {
 
 cfg_debug_off() {
   if ! "${SKIP_CONFIG}" ; then
-    "${BASE_DIR}/set_config.sh" -c -x "${GROUP}" -p "${PROFILE}"
+    "${BASE_DIR}/set_config.sh" -c "${CFG_OPTS[@]}"
   fi
 }
 
@@ -225,11 +227,11 @@ get_config() {
   #PHONE_CC=${data[6]}
   #PHONE_AC=${data[7]}
   #PHONE_SN=${data[8]}
-  OPTS+=( "-I${data[9]}" )
+  OPTS+=(-I"${data[9]}")
 }
 
 usage() {
-  echo "Usage: run_test.sh [-p PROFILE] [-C] [-P <full|step|none>]"
+  echo "Usage: run_test.sh [-x GROUP] [-p PROFILE] [-f file] [-hlCckKrTm] [-P <full|step|none>]"
   echo "Options:"
   echo -e "\\t-p CE|PRO default is autodetect"
   echo -e "\\t-l print available SCENARIOS in GROUP"
@@ -245,13 +247,14 @@ usage() {
   echo -e "\\t\\tstep: provision scenario one by one before execution"
   echo -e "\\t\\tnone: skip any provision"
   echo -e "\\t-f scenarios file"
+  echo -e "\\t-T enable cfgt"
   echo -e "\\t-h this help"
 
   echo "BASE_DIR:${BASE_DIR}"
   echo "BIN_DIR:${BIN_DIR}"
 }
 
-while getopts 'f:hlCcP:p:kKx:rm' opt; do
+while getopts 'f:hlCcP:p:kKx:rTm' opt; do
   case $opt in
     h) usage; exit 0;;
     l) SHOW_SCENARIOS=true;;
@@ -265,6 +268,7 @@ while getopts 'f:hlCcP:p:kKx:rm' opt; do
     c) CDR=true;;
     m) MEMDBG=true;;
     f) SCEN_FILE=${OPTARG};;
+    T) CFGT=true; CFG_OPTS+=(-T); OPTS+=(-Tall);;
     *) usage; exit 1;;
   esac
 done
@@ -306,14 +310,16 @@ esac
 
 LOG_DIR="${BASE_DIR}/log/${GROUP}"
 
-if ! [ -d "${KAM_DIR}" ]; then
-  echo "$(date) - Create temporary folder for json files"
-  mkdir -p "${KAM_DIR}"
-  chown kamailio:root "${KAM_DIR}"
-  chmod 0770 "${KAM_DIR}"
-else
-  echo "$(date) - Clean temporary folder for json files"
-  rm -rf "${KAM_DIR:?}/*"
+if ${CFGT} ; then
+  if ! [ -d "${KAM_DIR}" ]; then
+    echo "$(date) - Create temporary folder for json files"
+    mkdir -p "${KAM_DIR}"
+    chown kamailio:root "${KAM_DIR}"
+    chmod 0770 "${KAM_DIR}"
+  else
+    echo "$(date) - Clean temporary folder for json files"
+    rm -rf "${KAM_DIR:?}/*"
+  fi
 fi
 
 echo "$(date) - Clean mem log dir"
@@ -321,7 +327,8 @@ rm -rf "${MLOG_DIR}"
 mkdir -p "${MLOG_DIR}" "${LOG_DIR}"
 
 if ! "${SKIP_CONFIG}" ; then
-  "${BASE_DIR}/set_config.sh" -x "${GROUP}" -p "${PROFILE}"
+  CFG_OPTS+=( -x "${GROUP}" -p "${PROFILE}" )
+  "${BASE_DIR}/set_config.sh" "${CFG_OPTS[@]}"
 fi
 
 echo "$(date) - Initial mem stats"
@@ -458,10 +465,12 @@ echo "$(date) - restore kamailio and sems logs with the original content"
 copy_logs_from_tmp
 service rsyslog restart
 
-move_json_file
+if ${CFGT} ; then
+  move_json_file
 
-if "${FIX_RETRANS}" ; then
-  fix_retransmissions
+  if "${FIX_RETRANS}" ; then
+    fix_retransmissions
+  fi
 fi
 
 if "${CDR}" ; then
@@ -475,7 +484,7 @@ if [[ ${MEMDBG} = 1 ]] ; then
   ngcp-memdbg-csv /var/log/ngcp/kamailio-proxy.log "${MLOG_DIR}" >/dev/null
 fi
 
-if [ -d "${KAM_DIR}" ]; then
+if ${CFGT} && [ -d "${KAM_DIR}" ]; then
   echo "$(date) - clean cfgt scenarios"
   ngcp-kamcmd proxy cfgt.clean all
   echo "$(date) - Removing temporary json dir"
