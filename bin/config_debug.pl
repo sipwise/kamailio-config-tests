@@ -90,6 +90,7 @@ sub change_config
     $yaml->{kamailio}{proxy}{cfgt} = 'yes';
     $yaml->{sems}{cfgt} = 'yes';
   }
+  $yaml->{kct} = { enable => 'yes' };
   $yaml->{kamailio}{lb}{dns}{use_dns_cache} = 'off';
   $yaml->{kamailio}{lb}{extra_sockets}->{test} = "$es_test->{transport}:$es_test->{ip}:$es_test->{port}";
   $yaml->{kamailio}{lb}{extra_sockets}->{other} = "$es_other->{transport}:$es_other->{ip}:$es_other->{port}";;
