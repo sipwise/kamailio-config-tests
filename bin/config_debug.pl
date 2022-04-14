@@ -81,6 +81,7 @@ sub change_config
   my $es_other = $kct_conf->{kamailio}->{lb}->{extra_sockets}->{other};
 
   $yaml->{kamailio}{lb}{cfgt} = 'yes';
+  $yaml->{kct} = { enable => 'yes' };
   $yaml->{kamailio}{lb}{dns}{use_dns_cache} = 'off';
   $yaml->{kamailio}{lb}{extra_sockets}->{test} = "$es_test->{transport}:$es_test->{ip}:$es_test->{port}";
   $yaml->{kamailio}{lb}{extra_sockets}->{other} = "$es_other->{transport}:$es_other->{ip}:$es_other->{port}";;
