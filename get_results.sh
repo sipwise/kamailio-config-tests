@@ -6,7 +6,7 @@ PROFILE="${PROFILE:-}"
 GROUP="${GROUP:-scenarios}"
 RETRANS=""
 CDR=""
-CHECK_TYPE=all
+CHECK_TYPE=sipp
 
 usage() {
   echo "Usage: get_results.sh [-hcgGr] [-f FILE] [-p PROFILE] [-x GROUP] [-S <all|cfgt|sipp>] [-R number]"
@@ -19,7 +19,7 @@ usage() {
   echo -e "\\t-c enable cdr validation"
   echo -e "\\t-x set GROUP scenario. Default: scenarios"
   echo -e "\\t-f scenarios file"
-  echo -e "\\t-S check type. Default: all (cfgt, sipp)"
+  echo -e "\\t-S check type. Default: sipp <all|cfgt|sipp>"
   echo "BASE_DIR:${BASE_DIR}"
   echo "BIN_DIR:${BIN_DIR}"
 }
