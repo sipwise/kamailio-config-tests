@@ -1,0 +1,8 @@
+---
+soundsets:
+  'invite_offline_soundset':
+    reseller_id: 1
+    sounds:
+      callee_offline:
+        filename: sounds/no_sh.wav
+        loopplay: 'false'
