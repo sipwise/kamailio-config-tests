@@ -33,17 +33,27 @@ sub usage
   my $output = "usage: show_sip.pl [-h] file\n";
   $output .= "\tOptions:\n";
   $output .= "-h --help: this help\n";
+  $output .= "-i --sip_in: print sip_in\n";
+  $output .= "-o --sip_out: print sip_out\n";
+  $output .= "by default prints both\n";
   return $output
 }
 
 my $help = 0;
 my $json_in = 0;
-GetOptions ("h|help" => \$help)
+my $in = 0;
+my $out = 0;
+GetOptions ("h|help" => \$help, "i|sip_in" => \$in, "o|sip_out" => \$out)
   or die("Error in command line arguments\n".usage());
 
 if($#ARGV!=0 || $help)
 {
   die(usage())
+}
+if(!$in && !$out) {
+  # default behaviour
+  $in = 1;
+  $out = 1;
 }
 my $filename = abs_path($ARGV[0]);
 my $json;
@@ -55,14 +65,18 @@ my $json;
 }
 my $inlog = decode_json($json);
 
-print "=== sip_in ===\n";
-foreach my $i (@{$inlog->{'sip_in'}})
-{
-  print "$i\n---\n";
+if($in) {
+  print "=== sip_in ===\n";
+  foreach my $i (@{$inlog->{'sip_in'}})
+  {
+    print "$i\n---\n";
+  }
 }
-print "=== sip_out ===\n";
-foreach my $i (@{$inlog->{'sip_out'}})
-{
-  print "$i\n---\n"
+if($out) {
+  print "=== sip_out ===\n";
+  foreach my $i (@{$inlog->{'sip_out'}})
+  {
+    print "$i\n---\n"
+  }
 }
 #EOF

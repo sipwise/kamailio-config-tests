@@ -163,14 +163,14 @@ fix_retransmissions() {
           continue
         fi
         # Check if both sip_in and Sip_out are equals
-        if ( diff -q -u <(tail -n3 "${json_file}") <(tail -n3 "${next_json_file}") &> /dev/null ) ; then
+        if ( diff -q -u <("${BIN_DIR}/show_sip.pl" "${json_file}") <("${BIN_DIR}/show_sip.pl" "${next_json_file}") &> /dev/null ) ; then
           echo "$(date) - - - $(basename "${next_json_file}") seems a retransmission of $(basename "${json_file}") (case 1) ---> renaming the file in $(basename "${next_json_file}")_retransmission"
           mv -f "${next_json_file}" "${next_json_file}_retransmission"
           RETRANS_ISSUE=true
           continue
         fi
         # Check if only sip_in is equal
-        if ( diff -q -u <(tail -n3 "${json_file}" | sed -n 1p) <(tail -n3 "${next_json_file}" | sed -n 1p) &> /dev/null ) ; then
+        if ( diff -q -u <("${BIN_DIR}/show_sip.pl" -i "${json_file}" | sed -n 1p) <("${BIN_DIR}/show_sip.pl" -i "${next_json_file}") &> /dev/null ) ; then
           echo "$(date) - - - $(basename "${next_json_file}") seems a retransmission of $(basename "${json_file}") (case 2) ---> renaming the file in $(basename "${next_json_file}")_retransmission"
           mv -f "${next_json_file}" "${next_json_file}_retransmission"
           RETRANS_ISSUE=true
