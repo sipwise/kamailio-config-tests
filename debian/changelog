@@ -1,3 +1,16 @@
+kamailio-config-tests (10.4.1.1+0~mr10.4.1.1) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [a1b853d] TT#170350 support disable cfgt config
+  * [320a19f] TT#170350 fix cfgt disable
+  * [40c185d] TT#170350 config_debug.pl: set kct option
+  * [5745674] TT#170350 get_results.sh: default is check sipp only
+
+  [ Fabricio Santolin da Silva ]
+  * [f45d5ee] TT#159750 Check removal of timer on the Supported header
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 21 Apr 2022 13:01:12 +0200
+
 kamailio-config-tests (10.4.1.0+0~mr10.4.1.0) unstable; urgency=medium
 
   [ Donat Zenichev ]
