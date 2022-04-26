@@ -1,0 +1,11 @@
+cdr:
+  - source_user: 'testuser1002'
+    source_domain: 'invite-xfer-blind-caller-immediat-rel.scenarios-pbx.test'
+    source_cli: '[% invite_xfer_blind_caller_immediat_rel_scenarios_pbx_test.testuser1002.phone_number %]'
+    destination_user: 'testuser1003'
+    destination_domain: 'invite-xfer-blind-caller-immediat-rel.scenarios-pbx.test'
+    destination_user_dialed: '[% invite_xfer_blind_caller_immediat_rel_scenarios_pbx_test.testuser1003.phone_number %]'
+    destination_user_in: '[% invite_xfer_blind_caller_immediat_rel_scenarios_pbx_test.testuser1003.phone_number %]'
+    call_type: 'call'
+    call_status: 'ok'
+    call_code: '200'

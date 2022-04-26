@@ -1,7 +1,13 @@
+---
+b2b:
+  sbc:
+    xfer:
+      blind_immediate_release: yes
+      enable: yes
 kamailio:
   proxy:
-    allow_refer_method: 'yes'
+    allow_refer_method: yes
     presence:
-      enable: 'yes'
+      enable: yes
 pbx:
-  enable: 'yes'
+  enable: yes
