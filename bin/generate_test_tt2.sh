@@ -76,12 +76,13 @@ elif [ ! -f "${LOG_DIR}/scenario_ids.yml" ] ; then
 	exit 2
 fi
 
+if [ ! -x "${BIN_DIR}/generate_test_tt2.py" ]; then
+  echo "Cannot exec ${BIN_DIR}/generate_test_tt2.py" >&2
+  usage
+  exit 3
+fi
+
 gen_cfgt() {
-  if [ ! -x "${BIN_DIR}/generate_test_tt2.pl" ]; then
-    echo "Cannot exec ${BIN_DIR}/generate_test_tt2.pl" >&2
-    usage
-    exit 3
-  fi
   if [[ $# -eq 0 ]]; then
     mapfile -t IDS < <(find "${LOG_DIR}" -maxdepth 1 -name '*.json' -exec basename {} \;| sort)
   else
@@ -104,11 +105,6 @@ gen_cfgt() {
 }
 
 gen_sipp() {
-  if [ ! -x "${BIN_DIR}/generate_test_tt2.py" ]; then
-    echo "Cannot exec ${BIN_DIR}/generate_test_tt2.py" >&2
-    usage
-    exit 3
-  fi
   mapfile -t IDS < <(find "${LOG_DIR}" -maxdepth 1 -name '*.msg' -exec basename {} \;| sort)
 
   CMD="${BIN_DIR}/generate_test_tt2.py ${LOG_DIR}/scenario_ids.yml --type=sipp"
