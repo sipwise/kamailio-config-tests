@@ -88,7 +88,7 @@ sub change_config
     print "enable cfgt\n";
     $yaml->{kamailio}{lb}{cfgt} = 'yes';
     $yaml->{kamailio}{proxy}{cfgt} = 'yes';
-    $yaml->{sems}{cfgt} = 'yes';
+    $yaml->{b2b}{cfgt} = 'yes';
   }
   $yaml->{kct} = { enable => 'yes' };
   $yaml->{kamailio}{lb}{dns}{use_dns_cache} = 'off';
@@ -96,7 +96,7 @@ sub change_config
   $yaml->{kamailio}{lb}{extra_sockets}->{other} = "$es_other->{transport}:$es_other->{ip}:$es_other->{port}";;
   $yaml->{kamailio}{proxy}{children} = $children if($children > 0);
   $yaml->{kamailio}{proxy}{permissions_reload_delta} = 0;
-  $yaml->{sems}{debug} = 'yes';
+  $yaml->{b2b}{debug} = 'yes';
   $yaml->{witnessd}{gather}{sip_responsiveness} = 'no';
   $yaml->{security}->{ngcp_panel}->{scripts}->{restapi}->{sslverify} = 'no';
   $yaml->{mediator}{interval} = '1';      # Necessary to speedup the creation of the CDRs
