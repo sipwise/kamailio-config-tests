@@ -11,7 +11,8 @@ flow:
   - start|ROUTE_EXIT:
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:
-  - exit|ROUTE_EXIT:
+  - start|tm:branch-failure:local:
+  - return|tm:branch-failure:local:
   - start|FAILURE_ROUTE_LOCAL:
   - start|ROUTE_INITVARS:
   - return|ROUTE_INITVARS:
