@@ -1,3 +1,15 @@
+kamailio-config-tests (8.5.10.0+0~mr8.5.10.0) unstable; urgency=medium
+
+  [ Donat Zenichev ]
+  * [0f8431b] TT#156700 Update k-c-t scenarios due to last changes in processing Supported/Require
+  * [3191736] TT#156700 Update k-c-t scenarios due to last changes in processing Supported/Require (2 Part)
+  * [9396fdb] TT#156700 Update k-c-t scenarios due to last changes in processing Supported/Require (3 Part)
+
+  [ Fabricio Santolin da Silva ]
+  * [9ddba35] TT#159750 Check removal of timer on the Supported header
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 02 Jun 2022 19:55:26 +0200
+
 kamailio-config-tests (8.5.9.0+0~mr8.5.9.0) unstable; urgency=medium
 
   * New release.
