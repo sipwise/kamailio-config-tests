@@ -1,3 +1,20 @@
+kamailio-config-tests (9.5.5.1+0~mr9.5.5.1) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [af0ecc3] TT#156754 Fix scenarios after additions of counters helper routes
+  * [c9ac2e1] TT#156754 Fix calls to routes ROUTE_SET_CALLE[R/E]_DIALOG_ACTIVE
+
+  [ Donat Zenichev ]
+  * [1ff3101] TT#156700 Update k-c-t scenarios checking 'timer' supported
+  * [17ba688] TT#156700 Update k-c-t scenarios due to last changes in processing Supported/Require
+  * [d031d30] TT#156700 Update k-c-t scenarios due to last changes in processing Supported/Require (2 Part)
+  * [e7bbdb6] TT#156700 Update k-c-t scenarios due to last changes in processing Supported/Require (3 Part)
+
+  [ Fabricio Santolin da Silva ]
+  * [5c64665] TT#159750 Check removal of timer on the Supported header
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 03 Jun 2022 18:09:31 +0200
+
 kamailio-config-tests (9.5.5.0+0~mr9.5.5.0) unstable; urgency=medium
 
   [ Marco Capetta ]
