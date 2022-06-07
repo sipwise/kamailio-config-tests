@@ -1,3 +1,33 @@
+kamailio-config-tests (10.5.1.0+0~mr10.5.1.0) unstable; urgency=medium
+
+  [ Alessio Garzi ]
+  * [169be79] TT#140851 scenarios extended for P-Early-Media - invite_allowip_soundset
+  * [f647bc1] TT#140851 scenarios extended for P-Early-Media - invite_offline_soundset
+
+  [ Victor Seva ]
+  * [80f9ccf] TT#81700 bin/generate_test_tt2.py: support cfgt
+  * [48fca8d] TT#170350 support disable cfgt config
+  * [07da564] TT#170350 fix cfgt disable
+  * [82b9af1] TT#170350 config_debug.pl: set kct option
+  * [10b95d9] TT#170350 get_results.sh: default is check sipp only
+  * [da05177] TT#81700 run_tests.sh: use show_sip.pl to detect retransmissions
+  * [2759377] TT#81700 bin/generate_test_tt2.sh: fix generator check
+  * [fabaf3f] TT#173850 update cfgt checks after introducing branch-failure:local
+
+  [ Fabricio Santolin da Silva ]
+  * [1440756] TT#159750 Check removal of timer on the Supported header
+
+  [ Donat Zenichev ]
+  * [ff82e5d] TT#169602 Update 'config_debug.pl' parts related to 'sems' config.yml
+
+  [ Guillem Jover ]
+  * [a8394f7] TT#174407 Rename rtpproxy config.yml section to rtpengine
+
+  [ Mohammed Ghettas ]
+  * [4c39965] TT#163700 Create new kamailio-config-test for missing features
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 07 Jun 2022 11:42:34 +0200
+
 kamailio-config-tests (10.5.0.0+0~mr10.5.0.0) unstable; urgency=medium
 
   [ Donat Zenichev ]
