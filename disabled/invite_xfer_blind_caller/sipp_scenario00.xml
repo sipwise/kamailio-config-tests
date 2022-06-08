@@ -175,7 +175,7 @@
 
   <!-- XFER START -->
 
-  <send>
+  <send start_rtd="5" start_rtd="6">
     <![CDATA[
 
       REFER [next_url] SIP/2.0
@@ -187,20 +187,20 @@
       CSeq: 4 REFER
       Contact: sip:[field0 file="caller.csv"]@[local_ip]:[local_port]
       Max-Forwards: 70
-      Refer-To: <sip:testuser1004@spce.test>
-      Referred-By: <sip:testuser1002@spce.test>
+      Refer-To: <sip:[field5 file="callee.csv" line=1]@[field3 file="callee.csv" line=0]>
+      Referred-By:  <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>
       Content-Length: 0
 
     ]]>
   </send>
 
-  <recv response="202">
+  <recv response="202" rrs="true" rtd="5">
   </recv>
 
-  <recv request="INVITE" crlf="true" rtd="true">
+  <recv request="INVITE" rrs="true" rtd="6">
   </recv>
 
-  <send>
+  <send start_rtd="7" start_rtd="8">
     <![CDATA[
 
       SIP/2.0 200 OK
@@ -209,33 +209,22 @@
       [last_To:]
       [last_Call-ID:]
       [last_CSeq:]
-      [last_Record-Route:]
-      [last_Route:]
       Contact: <sip:[local_ip]:[local_port];transport=[transport]>
-      Content-Type: application/sdp
       Content-Length: [len]
-
-      v=0
-      o=user1 53655767 2353687639 IN IP[local_ip_type] [local_ip]
-      s=-
-      c=IN IP[media_ip_type] [media_ip]
-      t=0 0
-      m=audio [media_port] RTP/AVP 8
-      a=rtpmap:8 PCMA/8000
-      a=ptime:50
-      a=sendrecv
 
     ]]>
   </send>
 
-  <recv request="ACK" crlf="true">
+  <recv request="ACK" crlf="true" rtd="true" rrs="true">
   </recv>
 
-  <recv request="NOTIFY">
+
+  <recv request="NOTIFY" rrs="true" rtd="7">
   </recv>
 
   <send>
     <![CDATA[
+
       SIP/2.0 200 OK
       [last_Via:]
       [last_From:]
@@ -244,14 +233,16 @@
       [last_CSeq:]
       Contact: <sip:[local_ip]:[local_port];transport=[transport]>
       Content-Length: [len]
+
     ]]>
   </send>
 
-  <recv request="NOTIFY">
+  <recv request="NOTIFY" rrs="true" rtd="8">
   </recv>
 
-  <send>
+  <send start_rtd="9">
     <![CDATA[
+
       SIP/2.0 200 OK
       [last_Via:]
       [last_From:]
@@ -260,12 +251,13 @@
       [last_CSeq:]
       Contact: <sip:[local_ip]:[local_port];transport=[transport]>
       Content-Length: [len]
+
     ]]>
   </send>
 
   <!-- XFER COMPLETED -->
 
-  <recv request="BYE">
+  <recv request="BYE" rrs="true" rtd="9">
   </recv>
 
   <send>

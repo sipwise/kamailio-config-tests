@@ -1,11 +1,11 @@
 test_uuid: invite_xfer_blind_caller
 domains:
-  'spce.test':
+  invite-xfer-blind-caller.scenarios-pbx.test:
     reseller_id: 1
 customers:
-  'customerpbx.test':
+  'invite_xfer_blind_caller.customerpbx.test':
     contacts:
-      - email: "customerpbx.test@spce.test"
+      - email: "invite_xfer_blind_caller.customerpbx.test@spce.test"
         reseller_id: 1
     details:
       status: 'active'
@@ -13,9 +13,9 @@ customers:
       billing_profile_id: 1
       reseller_id: 1
 subscribers:
-  spce.test:
+  invite-xfer-blind-caller.scenarios-pbx.test:
     testuser1002:
-      customer: 'customerpbx.test'
+      customer: 'invite_xfer_blind_caller.customerpbx.test'
       password: testuser
       cc: 43
       ac: 1
@@ -23,7 +23,7 @@ subscribers:
       is_pbx_pilot: 1
       pbx_extension: 1002
     testuser1003:
-      customer: 'customerpbx.test'
+      customer: 'invite_xfer_blind_caller.customerpbx.test'
       password: testuser
       cc: 43
       ac: 1
@@ -31,7 +31,7 @@ subscribers:
       is_pbx_pilot: 0
       pbx_extension: 1003
     testuser1004:
-      customer: 'customerpbx.test'
+      customer: 'invite_xfer_blind_caller.customerpbx.test'
       password: testuser
       cc: 43
       ac: 1
@@ -41,13 +41,13 @@ subscribers:
 scenarios:
   - ip: 127.126.0.1
     username: testuser1002
-    domain: spce.test
+    domain: invite-xfer-blind-caller.scenarios-pbx.test
     responders:
       - ip: 127.1.0.1
         username: testuser1003
-        domain: spce.test
+        domain: invite-xfer-blind-caller.scenarios-pbx.test
         register: yes
       - ip: 127.1.0.2
         username: testuser1004
-        domain: spce.test
+        domain: invite-xfer-blind-caller.scenarios-pbx.test
         register: yes
