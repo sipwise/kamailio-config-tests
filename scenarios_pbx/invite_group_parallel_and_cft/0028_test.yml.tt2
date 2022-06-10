@@ -1,0 +1,47 @@
+flow:
+  - start|DEFAULT_ROUTE:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_NET_INFO:
+  - return|ROUTE_NET_INFO:
+  - start|ROUTE_CHECK_TEL_URI:
+  - return|ROUTE_CHECK_TEL_URI:
+  - start|ROUTE_PRX_REQUEST:
+  - start|ROUTE_INITVARS:
+  - return|ROUTE_INITVARS:
+  - start|ROUTE_LOCAL:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+sip_in:
+ - 'CANCEL sip:[% scenarios.0.responders.1.username %]@invite-group-parallel-and-cft.scenarios-pbx.test SIP/2.0'
+ - 'To: <sip:[% invite_group_parallel_and_cft_scenarios_pbx_test.testgroup1010.pbx_extension %]@invite-group-parallel-and-cft.scenarios-pbx.test>'
+ - 'From: <sip:[% scenarios.0.username %]@invite-group-parallel-and-cft.scenarios-pbx.test>;tag=[\w-]+'
+ - 'CSeq: \d+ CANCEL'
+ - 'P-To-Group: 1'
+ - 'P-To-Group-Policy: parallel'
+sip_out:
+  - [
+      'SIP/2.0 100 Trying',
+      'To: <sip:[% invite_group_parallel_and_cft_scenarios_pbx_test.testgroup1010.pbx_extension %]@invite-group-parallel-and-cft.scenarios-pbx.test>',
+      'From: <sip:[% scenarios.0.username %]@invite-group-parallel-and-cft.scenarios-pbx.test>;tag=[\w-]+',
+      'CSeq: \d+ CANCEL',
+      'Server: Sipwise NGCP Proxy',
+      'Content-Length: 0',
+    ]
+  - [
+      'CANCEL sip:[% scenarios.0.responders.1.username %]@[% scenarios.0.responders.1.ip %]:[% scenarios.0.responders.1.port %] SIP/2.0',
+      'From: <sip:[% invite_group_parallel_and_cft_scenarios_pbx_test.testuser1002.phone_number %]@invite-group-parallel-and-cft.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:[% invite_group_parallel_and_cft_scenarios_pbx_test.testgroup1010.pbx_extension %]@invite-group-parallel-and-cft.scenarios-pbx.test>',
+      'CSeq: \d+ CANCEL',
+      'Content-Length: 0',
+    ]
+  - [
+      'SIP/2.0 200 canceling',
+      'To: <sip:[% invite_group_parallel_and_cft_scenarios_pbx_test.testgroup1010.pbx_extension %]@invite-group-parallel-and-cft.scenarios-pbx.test>;tag=[\w-]+',
+      'From: <sip:[% scenarios.0.username %]@invite-group-parallel-and-cft.scenarios-pbx.test>;tag=[\w-]+',
+      'CSeq: \d+ CANCEL',
+      'Server: Sipwise NGCP Proxy',
+      'Content-Length: 0',
+    ]

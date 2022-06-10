@@ -1,0 +1,22 @@
+---
+[% scenarios.0.responders.0.username %]@invite-group-parallel-and-cft.scenarios-pbx.test:
+  destinations:
+    destinations:
+      - destination: sip:testuser1005@invite-group-parallel-and-cft.scenarios-pbx.test
+        priority: 1
+        timeout: 7
+    name: dest1001
+  mappings:
+    cft_ringtimeout: 3
+    cft:
+      - bnumberset: null
+        destinationset: dest1001
+        sourceset: null
+        timeset: null
+        enabled: true
+    cfb: []
+    cfna: []
+    cfu: []
+    cfs: []
+    cfr: []
+    cfo: []
