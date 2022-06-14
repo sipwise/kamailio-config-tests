@@ -1,0 +1,5 @@
+{
+  "@invite-xfer-blind-callee-immediat-rel.scenarios-pbx.test": {
+    "nat_sipping": "no"
+  }
+}
