@@ -1,5 +1,6 @@
 {
     "@invite-callforward.scenarios.test": {
-        "nat_sipping": "no"
+        "nat_sipping": "no",
+        "ua_reject_missing" : 1
     }
 }

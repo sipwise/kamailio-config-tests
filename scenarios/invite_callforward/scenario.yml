@@ -59,6 +59,7 @@ scenarios:
         username: testuser1003
         domain: invite-callforward.scenarios.test
         register: 'yes'
+        ua: 'KCT SIPP'
   - ip: 127.126.0.1
     username: testuser1002
     domain: invite-callforward.scenarios.test
@@ -67,7 +68,9 @@ scenarios:
         username: testuser1004
         domain: invite-callforward.scenarios.test
         register: 'yes'
+        ua: 'KCT SIPP'
       - ip: 127.1.0.5
         username: testuser1005
         domain: invite-callforward.scenarios.test
         register: 'yes'
+        ua: 'KCT SIPP'

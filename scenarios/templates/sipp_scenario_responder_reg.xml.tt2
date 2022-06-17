@@ -12,6 +12,7 @@
       Call-ID: NGCP%[field4 file="callee.csv" line=0]%///[call_id]
       CSeq: 1 REGISTER
       Contact: sip:[field0 file="callee.csv" line=[% line -%]]@[local_ip]:[local_port];transport=[transport][% IF q %];q=[% q %][% END %]
+      [% IF ua %]User-Agent: [% ua %][% END %]
       Expires: 600
       Max-Forwards: 70
       Content-Length: 0
@@ -36,6 +37,7 @@
       CSeq: 2 REGISTER
       [field2 file="callee.csv" line=[% line -%]]
       Contact: sip:[field0 file="callee.csv" line=[% line -%]]@[local_ip]:[local_port];transport=[transport][% IF q %];q=[% q %][% END %]
+      [% IF ua %]User-Agent: [% ua %][% END %]
       Expires: 600
       Max-Forwards: 70
       Content-Length: 0

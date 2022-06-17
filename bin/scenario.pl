@@ -421,7 +421,7 @@ sub generate
             $csv->{scenario}->print($io_scenario, $csv_data);
             if($resp->{register} eq "yes" && $resp->{active} eq "yes")
             {
-                generate_reg($res_id, $test_uuid, $resp->{q});
+                generate_reg($res_id, $test_uuid, $resp->{q}, $resp->{ua});
             }
             if($resp->{foreign} eq "yes")
             {
@@ -436,8 +436,8 @@ sub generate
 
 sub generate_reg
 {
-    my ($num, $test_uuid, $q) = @_;
-    my $vars = { line => $num, test_uuid => $test_uuid, q => $q };
+    my ($num, $test_uuid, $q, $ua) = @_;
+    my $vars = { line => $num, test_uuid => $test_uuid, q => $q, ua => $ua };
     my $fn = File::Spec->catfile($base_check_dir, "sipp_scenario_responder".(sprintf "%02i", $num)."_reg.xml");
     $tt->process($template_reg, $vars, $fn) or die($tt->error(), "\n");
     return;
