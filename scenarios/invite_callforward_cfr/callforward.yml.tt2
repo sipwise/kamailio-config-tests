@@ -1,0 +1,24 @@
+---
+testuser1002@invite-callforward-cfr.scenarios.test:
+  destinations:
+    destinations:
+      - destination: sip:[% invite_callforward_cfr_scenarios_test.testuser1003.phone_number %]@invite-callforward-cfr.scenarios.test
+        priority: 0
+        timeout: 5
+      - destination: sip:testuser1003@invite-callforward-cfr.scenarios.test
+        priority: 1
+        timeout: 5
+    name: dest1003
+  mappings:
+    cfu: []
+    cfb: []
+    cfna: []
+    cft: []
+    cfs: []
+    cfr:
+      - bnumberset: null
+        destinationset: dest1003
+        sourceset: null
+        timeset: null
+        enabled: true
+    cfo: []

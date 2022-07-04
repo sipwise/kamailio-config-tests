@@ -1,0 +1,83 @@
+flow:
+  - start|DEFAULT_ONREPLY:
+  - start|REPLY_ROUTE_NAT:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - start|ROUTE_PREPARE_UA:
+  - return|ROUTE_PREPARE_UA:
+  - start|REPLY_ROUTE_NAT_CONTINUE:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - start|tm:branch-failure:local:
+  - return|tm:branch-failure:local:
+  - start|FAILURE_ROUTE_LOCAL:
+  - start|ROUTE_INITVARS:
+  - return|ROUTE_INITVARS:
+  - start|ROUTE_STOP_RTPPROXY_BRANCH:
+  - start|ROUTE_RESTORE_CLUSTERSET:
+  - return|ROUTE_RESTORE_CLUSTERSET:
+  - return|ROUTE_STOP_RTPPROXY_BRANCH:
+  - start|ROUTE_CF_CFR:
+  - start|ROUTE_LOAD_CF_MAP:
+  - return|ROUTE_LOAD_CF_MAP:
+  - start|ROUTE_CHECK_CF:
+  - return|ROUTE_CHECK_CF:
+  - start|ROUTE_EXECUTE_CF_LOOP:
+  - start|ROUTE_ADD_AOC_HEADER:
+  - return|ROUTE_ADD_AOC_HEADER:
+  - start|BRANCH_ROUTE_FWD_LOOP:
+  - start|ROUTE_SET_HIH_CF:
+  - return|ROUTE_SET_HIH_CF:
+  - start|ROUTE_APPEND_CF_HDRS:
+  - start|ROUTE_ADD_DEVALIAS_HEADERS:
+  - return|ROUTE_ADD_DEVALIAS_HEADERS:
+  - return|ROUTE_APPEND_CF_HDRS:
+  - start|ROUTE_ADD_CALLINFO:
+  - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
+  - start|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - return|BRANCH_ROUTE_FWD_LOOP:
+  - start|ROUTE_DROP:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_DROP:
+  - start|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - start|ROUTE_EXECUTE_CF_LOOP:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+  - exit|ROUTE_EXIT:
+sip_in:
+ - 'SIP/2.0 500 Service Unavailable'
+ - 'From: <sip:[% invite_callforward_cfr_scenarios_test.testuser1001.phone_number %]@invite-callforward-cfr.scenarios.test>;tag=[\w-]+'
+ - 'To: <sip:[% scenarios.0.responders.0.username %]@invite-callforward-cfr.scenarios.test>;tag=[\w-]+'
+ - 'CSeq: \d+ INVITE'
+ - 'Content-Length: 0'
+sip_out:
+  - [
+      'ACK sip:[% scenarios.0.responders.0.username %]@[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %] SIP/2.0',
+      'From: <sip:[% invite_callforward_cfr_scenarios_test.testuser1001.phone_number %]@invite-callforward-cfr.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.0.username %]@invite-callforward-cfr.scenarios.test>;tag=[\w-]+',
+      'CSeq: \d+ ACK',
+      'Content-Length: 0',
+    ]
+  - [
+      'INVITE sip:[% invite_callforward_cfr_scenarios_test.testuser1003.phone_number %]@invite-callforward-cfr.scenarios.test SIP/2.0',
+      'From: <sip:[% scenarios.0.username %]@invite-callforward-cfr.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.0.username %]@invite-callforward-cfr.scenarios.test>',
+      'CSeq: \d+ INVITE',
+      'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>',
+      'Content-Type: application/sdp',
+      'P-Acc-Caller-User: testuser1002',
+      'P-Acc-Caller-Domain: invite-callforward-cfr.scenarios.test',
+      'P-Acc-State: cfr',
+    ]

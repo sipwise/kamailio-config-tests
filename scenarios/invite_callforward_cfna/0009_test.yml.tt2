@@ -1,0 +1,52 @@
+flow:
+  - start|DEFAULT_ROUTE:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_LEG_B:
+  - start|ROUTE_INITVARS:
+  - return|ROUTE_INITVARS:
+  - start|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+sip_in:
+ - 'INVITE sip:[% scenarios.0.responders.1.username %]@[% scenarios.0.responders.1.ip %]:[% scenarios.0.responders.1.port %] SIP/2.0'
+ - 'From: <sip:[% invite_callforward_cfna_scenarios_test.testuser1001.phone_number %]@invite-callforward-cfna.scenarios.test>;tag=[\w-]+'
+ - 'To: <sip:[% scenarios.0.responders.1.username %]@invite-callforward-cfna.scenarios.test>'
+ - 'CSeq: \d+ INVITE'
+ - 'P-Caller-UUID: [% invite_callforward_cfna_scenarios_test.testuser1002.uuid %]'
+ - 'P-NGCP-Caller-Info: <sip:[% scenarios.0.responders.0.username %]@invite-callforward-cfna.scenarios.test>;ip=127.0.0.1;port=5080;primary=[% invite_callforward_cfna_scenarios_test.testuser1002.phone_number %]'
+ - 'P-NGCP-Forward-Info: <sip:[% scenarios.0.responders.0.username %]@invite-callforward-cfna.scenarios.test>;ip=127.0.0.1;port=5080;primary=[% invite_callforward_cfna_scenarios_test.testuser1002.phone_number %]'
+ - 'P-NGCP-Callee-Info: <sip:[% invite_callforward_cfna_scenarios_test.testuser1003.phone_number %]@invite-callforward-cfna.scenarios.test>;ip=[% scenarios.0.responders.1.ip %];port=[% scenarios.0.responders.1.port %];primary=[% invite_callforward_cfna_scenarios_test.testuser1003.phone_number %]'
+ - 'P-Asserted-Identity: <sip:[% invite_callforward_cfna_scenarios_test.testuser1001.phone_number %]@invite-callforward-cfna.scenarios.test>'
+ - 'P-D-Uri: sip:lb@127.0.0.1;lr;received=sip:[% scenarios.0.responders.1.ip %]:[% scenarios.0.responders.1.port %];socket=sip:[% server_ip %]:5060'
+ - 'Content-Type: application/sdp'
+ - 'Content-Length: \d+'
+ - 'Contact: <sip:127.0.0.1:5080;transport=udp>'
+sip_out:
+  - [
+      'SIP/2.0 100 Trying',
+      'From: <sip:[% invite_callforward_cfna_scenarios_test.testuser1001.phone_number %]@invite-callforward-cfna.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.1.username %]@invite-callforward-cfna.scenarios.test>',
+      'CSeq: \d+ INVITE',
+      'Server: Sipwise NGCP Proxy',
+      'Content-Length: 0',
+    ]
+  - [
+      'INVITE sip:[% scenarios.0.responders.1.username %]@[% scenarios.0.responders.1.ip %]:[% scenarios.0.responders.1.port %] SIP/2.0',
+      'Record-Route: <sip:127.0.0.1:5062;lr=on;ftag=[^;]+;leg_b=1;did=[^;]+>',
+      'From: <sip:[% invite_callforward_cfna_scenarios_test.testuser1001.phone_number %]@invite-callforward-cfna.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.1.username %]@invite-callforward-cfna.scenarios.test>',
+      'CSeq: \d+ INVITE',
+      'P-Caller-UUID: [% invite_callforward_cfna_scenarios_test.testuser1002.uuid %]',
+      'P-NGCP-Caller-Info: <sip:[% scenarios.0.responders.0.username %]@invite-callforward-cfna.scenarios.test>;ip=127.0.0.1;port=5080;primary=[% invite_callforward_cfna_scenarios_test.testuser1002.phone_number %]',
+      'P-NGCP-Forward-Info: <sip:[% scenarios.0.responders.0.username %]@invite-callforward-cfna.scenarios.test>;ip=127.0.0.1;port=5080;primary=[% invite_callforward_cfna_scenarios_test.testuser1002.phone_number %]',
+      'P-NGCP-Callee-Info: <sip:[% invite_callforward_cfna_scenarios_test.testuser1003.phone_number %]@invite-callforward-cfna.scenarios.test>;ip=[% scenarios.0.responders.1.ip %];port=[% scenarios.0.responders.1.port %];primary=[% invite_callforward_cfna_scenarios_test.testuser1003.phone_number %]',
+      'P-Asserted-Identity: <sip:[% invite_callforward_cfna_scenarios_test.testuser1001.phone_number %]@invite-callforward-cfna.scenarios.test>',
+      'P-D-Uri: sip:lb@127.0.0.1;lr;received=sip:[% scenarios.0.responders.1.ip %]:[% scenarios.0.responders.1.port %];socket=sip:[% server_ip %]:5060',
+      'Content-Type: application/sdp',
+      'Content-Length: \d+',
+    ]

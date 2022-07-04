@@ -1,0 +1,41 @@
+flow:
+  - start|DEFAULT_ROUTE:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_LEG_B:
+  - start|ROUTE_INITVARS:
+  - return|ROUTE_INITVARS:
+  - start|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+sip_in:
+ - 'INVITE sip:[% scenarios.0.responders.0.username %]@[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %] SIP/2.0'
+ - 'From: <sip:[% invite_callforward_cfr_scenarios_test.testuser1001.phone_number %]@invite-callforward-cfr.scenarios.test>;tag=[\w-]+'
+ - 'To: <sip:[% scenarios.0.responders.0.username %]@invite-callforward-cfr.scenarios.test>'
+ - 'Contact: <sip:127.0.0.1:5080;transport=udp>'
+ - 'CSeq: \d+ INVITE'
+ - 'Content-Type: application/sdp'
+ - 'P-Caller-UUID: [% invite_callforward_cfr_scenarios_test.testuser1001.uuid %]'
+sip_out:
+  - [
+      'SIP/2.0 100 Trying',
+      'From: <sip:[% invite_callforward_cfr_scenarios_test.testuser1001.phone_number %]@invite-callforward-cfr.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.0.username %]@invite-callforward-cfr.scenarios.test>',
+      'CSeq: \d+ INVITE',
+      'Content-Length: 0',
+    ]
+  - [
+      'INVITE sip:[% scenarios.0.responders.0.username %]@[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %] SIP/2.0',
+      'From: <sip:[% invite_callforward_cfr_scenarios_test.testuser1001.phone_number %]@invite-callforward-cfr.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.0.username %]@invite-callforward-cfr.scenarios.test>',
+      'CSeq: \d+ INVITE',
+      'Content-Type: application/sdp',
+      'Contact: <sip:127.0.0.1:5080;transport=udp>',
+      'P-Caller-UUID: [% invite_callforward_cfr_scenarios_test.testuser1001.uuid %]',
+      'P-NGCP-Caller-Info: <sip:[% scenarios.0.username %]@invite-callforward-cfr.scenarios.test>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %];primary=[% invite_callforward_cfr_scenarios_test.testuser1001.phone_number %]',
+      'P-NGCP-Callee-Info: <sip:[% scenarios.0.responders.0.username %]@invite-callforward-cfr.scenarios.test>;ip=[% scenarios.0.responders.1.ip %];port=[% scenarios.0.responders.0.port %];primary=[% invite_callforward_cfr_scenarios_test.testuser1002.phone_number %]',
+    ]

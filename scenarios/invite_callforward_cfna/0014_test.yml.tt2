@@ -1,0 +1,31 @@
+flow:
+  - start|DEFAULT_ONREPLY:
+  - start|REPLY_ROUTE_LEG_B:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - start|dialog:start:
+  - return|dialog:start:
+  - return|dialog:start:
+sip_in:
+ - 'SIP/2.0 200 OK'
+ - 'From: <sip:[% invite_callforward_cfna_scenarios_test.testuser1001.phone_number %]@invite-callforward-cfna.scenarios.test>;tag=[\w-]+'
+ - 'To: <sip:[% scenarios.0.responders.1.username %]@invite-callforward-cfna.scenarios.test>;tag=[\w-]+'
+ - 'CSeq: \d+ INVITE'
+ - 'Record-Route: <sip:[% server_ip %];r2=on;lr=on;ftag=[^;]+;ngcplb=yes;socket=sip:[% server_ip %]:5060>, <sip:127.0.0.1;r2=on;lr=on;ftag=[^;]+;ngcplb=yes;socket=sip:[% server_ip %]:5060>, <sip:127.0.0.1:5062;lr=on;ftag=[^;]+;leg_b=1;did=[^;]+>'
+ - 'Contact: <sip:[% scenarios.0.responders.1.ip %]:[% scenarios.0.responders.1.port %];transport=UDP>'
+ - 'Content-Type: application/sdp'
+ - 'Content-Length:\s+\d+'
+sip_out:
+  - [
+      'SIP/2.0 200 OK',
+      'From: <sip:[% invite_callforward_cfna_scenarios_test.testuser1001.phone_number %]@invite-callforward-cfna.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.1.username %]@invite-callforward-cfna.scenarios.test>;tag=[\w-]+',
+      'CSeq: \d+ INVITE',
+      'Record-Route: <sip:[% server_ip %];r2=on;lr=on;ftag=[^;]+;ngcplb=yes;socket=sip:[% server_ip %]:5060>, <sip:127.0.0.1;r2=on;lr=on;ftag=[^;]+;ngcplb=yes;socket=sip:[% server_ip %]:5060>, <sip:127.0.0.1:5062;lr=on;ftag=[^;]+;leg_b=1;did=[^;]+>',
+      'Contact: <sip:[% scenarios.0.responders.1.ip %]:[% scenarios.0.responders.1.port %];transport=UDP>',
+      'Content-Type: application/sdp',
+      'Content-Length:\s+\d+',
+    ]

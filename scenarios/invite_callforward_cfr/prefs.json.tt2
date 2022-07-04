@@ -1,0 +1,10 @@
+{
+    "@invite-callforward-cfr.scenarios.test": {
+        "nat_sipping": "no",
+        "ua_reject_missing" : 1
+    },
+    "[% scenarios.0.responders.0.username %]@invite-callforward-cfr.scenarios.test": {
+        "rerouting_mode": "whitelist",
+        "rerouting_codes": [500,503]
+    }
+}
