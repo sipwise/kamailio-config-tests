@@ -58,7 +58,6 @@ messages:
   - 'a=rtpmap:18 G729/8000'
   - 'a=fmtp:18 annexb=no'
   - 'a=rtpmap:101 telephone-event/8000'
-  - 'a=fmtp:101 0-16'
   - 'a=sendrecv'
   - 'a=rtcp:\d+'
   - 'a=silenceSupp:off - - - -'
