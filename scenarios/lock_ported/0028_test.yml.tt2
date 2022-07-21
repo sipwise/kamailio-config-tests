@@ -54,6 +54,8 @@ flow:
   - return|ROUTE_CHECK_CLI_ALLOWED:
   - return|ROUTE_CHECK_USERPROV_CLI:
   - start|ROUTE_FIND_CALLEE:
+  - start|ROUTE_DETECT_LOOP:
+  - return|ROUTE_DETECT_LOOP:
      $var(cf_loop): 0
      $var(forward): 0
      $xavp(caller_real_prefs[0]=>lock[*]): [5]
