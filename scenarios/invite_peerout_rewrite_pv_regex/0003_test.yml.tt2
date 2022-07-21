@@ -57,6 +57,8 @@ flow:
   - start|ROUTE_APPLY_REWRITE_RULE:
   - return|ROUTE_APPLY_REWRITE_RULE:
       $var(dp_user): [% extra_info.phone_numbers.0 %]
+  - start|ROUTE_DETECT_LOOP:
+  - return|ROUTE_DETECT_LOOP:
   - start|ROUTE_CLEAR_CALLEE_PREF:
   - return|ROUTE_CLEAR_CALLEE_PREF:
   - start|ROUTE_NCOS_CHECK:

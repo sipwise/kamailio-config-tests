@@ -55,6 +55,8 @@ flow:
   - start|ROUTE_FIND_CALLEE:
   - start|ROUTE_APPLY_REWRITE_RULE:
   - return|ROUTE_APPLY_REWRITE_RULE:
+  - start|ROUTE_DETECT_LOOP:
+  - return|ROUTE_DETECT_LOOP:
   - start|ROUTE_EMERGENCY:
   - start|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_CNT_DLG_CHECK:
