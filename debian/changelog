@@ -1,3 +1,10 @@
+kamailio-config-tests (9.5.4.3+0~mr9.5.4.3) unstable; urgency=medium
+
+  [ Alessio Garzi ]
+  * [d005e00] TT#179200 Fix incoming_hih scenario
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 22 Jul 2022 09:42:01 +0200
+
 kamailio-config-tests (9.5.4.2+0~mr9.5.4.2) unstable; urgency=medium
 
   [ Marco Capetta ]
