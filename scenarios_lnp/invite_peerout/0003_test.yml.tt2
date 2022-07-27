@@ -55,6 +55,8 @@ flow:
   - start|ROUTE_FIND_CALLEE:
   - start|ROUTE_APPLY_REWRITE_RULE:
   - return|ROUTE_APPLY_REWRITE_RULE:
+  - start|ROUTE_DETECT_LOOP:
+  - return|ROUTE_DETECT_LOOP:
   - start|ROUTE_CLEAR_CALLEE_PREF:
   - return|ROUTE_CLEAR_CALLEE_PREF:
       $xavp(callee_real_prefs[0]=>lnp_for_local_sub): None
