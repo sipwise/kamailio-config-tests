@@ -51,6 +51,8 @@ flow:
   - return|ROUTE_CHECK_CLI_ALLOWED:
   - return|ROUTE_CHECK_USERPROV_CLI:
   - start|ROUTE_FIND_CALLEE:
+  - start|ROUTE_DETECT_LOOP:
+  - return|ROUTE_DETECT_LOOP:
   - start|ROUTE_CLEAR_CALLEE_PREF:
   - return|ROUTE_CLEAR_CALLEE_PREF:
   - start|ROUTE_LOAD_CALLEE_PREF:
@@ -185,5 +187,5 @@ sip_out:
       'P-Huntgroup-Members: sip:[% scenarios.0.responders.1.username %]@invite-group-parallel-and-cft.scenarios-pbx.test,sip:[% scenarios.0.responders.2.username %]@invite-group-parallel-and-cft.scenarios-pbx.test',
       'P-Hunting-Policy: parallel',
       'P-App-Name: sbc',
-      'P-App-Param: ;profile=ngcp_pbx;a_park_domain=379;b_park_domain=379',
+      'P-App-Param: ;profile=ngcp_pbx;a_park_domain=[0-9]+;b_park_domain=[0-9]+',
     ]

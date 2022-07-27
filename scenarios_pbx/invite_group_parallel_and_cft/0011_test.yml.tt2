@@ -49,6 +49,8 @@ flow:
   - return|ROUTE_CHECK_CLI_ALLOWED:
   - return|ROUTE_CHECK_USERPROV_CLI:
   - start|ROUTE_FIND_CALLEE:
+  - start|ROUTE_DETECT_LOOP:
+  - return|ROUTE_DETECT_LOOP:
   - start|ROUTE_CLEAR_CALLEE_PREF:
   - return|ROUTE_CLEAR_CALLEE_PREF:
   - start|ROUTE_LOAD_CALLEE_PREF:
@@ -170,6 +172,6 @@ sip_out:
       'CSeq: \d+ INVITE',
       'P-LB-Uptime: \d+',
       'P-To-Group-Policy: parallel',
-      'P-App-Param: ;calltimer=21600;aleg_sst_enable=no;sst_enable=no;hold_alter_b2b_bleg=no;hold_alter_b2b_aleg=no;fast_ack=no;a_park_domain=379;b_park_domain=379',
+      'P-App-Param: ;calltimer=21600;aleg_sst_enable=no;sst_enable=no;hold_alter_b2b_bleg=no;hold_alter_b2b_aleg=no;fast_ack=no;a_park_domain=[0-9]+;b_park_domain=[0-9]+',
       'P-App-Name: sbc',
     ]
