@@ -1,3 +1,10 @@
+kamailio-config-tests (9.5.5.3+0~mr9.5.5.3) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [ed5e336] TT#81700 fail if cdr_check don't pass
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 29 Jul 2022 13:53:57 +0200
+
 kamailio-config-tests (9.5.5.2+0~mr9.5.5.2) unstable; urgency=medium
 
   [ Alessio Garzi ]
