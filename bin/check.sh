@@ -813,7 +813,11 @@ if ! "${SKIP_TESTS}" ; then
     msg="${LOG_DIR}/cdr.txt"
     dest="${RESULT_DIR}/cdr_test.tap"
     echo "$(date) - Check test ${t_cdr} on ${msg}"
-    cdr_check "${t_cdr}" "${msg}" "${dest}" && result=OK || result=KO
+    if cdr_check "${t_cdr}" "${msg}" "${dest}" ; then
+      result=OK
+    else
+      result=KO; ERR_FLAG=1
+    fi
     echo "$(date) - Done[${result}]"
   fi
   echo "$(date) - ================================================================================="
