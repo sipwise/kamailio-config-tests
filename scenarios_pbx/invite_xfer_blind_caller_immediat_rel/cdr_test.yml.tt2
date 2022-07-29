@@ -1,5 +1,5 @@
 cdr:
-  - source_user: 'testuser1002'
+  - source_user: '[% invite_xfer_blind_caller_immediat_rel_scenarios_pbx_test.testuser1002.phone_number %]'
     source_domain: 'invite-xfer-blind-caller-immediat-rel.scenarios-pbx.test'
     source_cli: '[% invite_xfer_blind_caller_immediat_rel_scenarios_pbx_test.testuser1002.phone_number %]'
     destination_user: 'testuser1003'

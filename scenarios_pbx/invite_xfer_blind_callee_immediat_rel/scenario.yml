@@ -1,5 +1,5 @@
 
-test_uuid: invite_xfer_blind_callee_immediat_rel_immediat_rel
+test_uuid: invite_xfer_blind_callee_immediat_rel
 domains:
   invite-xfer-blind-callee-immediat-rel.scenarios-pbx.test:
     reseller_id: 1
