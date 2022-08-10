@@ -1,5 +1,14 @@
 ---
 kamailio:
+  lb:
+    block_useragents:
+      action: reject
+      block_absent: no
+      block_empty: no
+      enable: yes
+      mode: blacklist
+      ua_patterns:
+      - 'friendly-scanner'
   proxy:
     presence:
       enable: 'yes'

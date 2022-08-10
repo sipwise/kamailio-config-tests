@@ -1,0 +1,10 @@
+cdr:
+  - source_user: 'testuser1002'
+    source_domain: 'invite-ua-reject-missing.scenarios.test'
+    source_cli: '[% invite_ua_reject_missing_scenarios_test.testuser1002.phone_number %]'
+    destination_user: 'testuser1003'
+    destination_domain: 'invite-ua-reject-missing.scenarios.test'
+    destination_user_dialed: 'testuser1003'
+    call_type: 'call'
+    call_status: 'ok'
+    call_code: '200'

@@ -1,0 +1,5 @@
+{
+    "@invite-ua-reject-missing.scenarios.test": {
+        "nat_sipping": "no"
+    }
+}
