@@ -1,6 +1,8 @@
 #!/bin/bash
 RUN_DIR="$(dirname "$0")"
-export BASE_DIR=${BASE_DIR:-$RUN_DIR}
+BASE_DIR=${BASE_DIR:-$RUN_DIR}
+# absolute path
+export BASE_DIR=$(readlink -f "${BASE_DIR}")
 # Set up the environment, to use local perl modules
 export PERL5LIB="${BASE_DIR}/lib"
 BIN_DIR="${BASE_DIR}/bin"
