@@ -20,6 +20,7 @@
 #
 set -e
 ERR_FLAG=0
+CDR=false
 
 # $1 destination tap file
 # $2 file path
@@ -65,18 +66,31 @@ check_sip_test() {
   fi
 }
 
+cdr_check() {
+  if [ -f "$1" ] ; then
+    echo -n "$(date) - Testing $(basename "$1") against $(basename "$2") -> $(basename "$3")"
+    if ! "${BIN_DIR}/cdr_check.py" "--text" "$1" "$2" > "$3" ; then
+      ERR_FLAG=1
+    fi
+  else
+    echo "$(date) - CDR test file $1 doesn't exist, skipping CDR test"
+  fi
+}
+
 usage() {
   echo "Usage: check_sipp.sh [-h] [-p PROFILE ] -s [GROUP] check_name"
   echo "Options:"
+  echo -e "\\t-c enable cdr validation"
   echo -e "\\t-p: CE|PRO default is CE"
   echo -e "\\t-s: scenario group. Default: scenarios"
   echo "Arguments:"
   echo -e "\\tcheck_name. Scenario name to check. This is the name of the directory on GROUP dir."
 }
 
-while getopts 'hp:s:' opt; do
+while getopts 'hcp:s:' opt; do
   case $opt in
     h) usage; exit 0;;
+    c) CDR=true;;
     p) PROFILE=${OPTARG};;
     s) GROUP=${OPTARG};;
     *) usage; exit 1;;
@@ -135,6 +149,11 @@ echo "$(date) - Generating tests files"
 "${BIN_DIR}/generate_tests.sh" \
   -f 'sipp_scenario*test.yml.tt2' \
   -d "${SCEN_CHECK_DIR}" "${LOG_DIR}/scenario_ids.yml" "${PROFILE}"
+if ${CDR} ; then
+  "${BIN_DIR}/generate_tests.sh" \
+    -f 'cdr_test.yml.tt2' \
+    -d "${SCEN_CHECK_DIR}" "${LOG_DIR}/scenario_ids.yml" "${PROFILE}"
+fi
 
 test_ok=()
 while read -r t; do
@@ -145,6 +164,15 @@ while read -r t; do
     dest=${RESULT_DIR}/${dest/.msg/.tap}
     check_sip_test "${t}" "$msg" "${dest}"
 done < <(find "${SCEN_CHECK_DIR}" -maxdepth 1 -name 'sipp_scenario*_test.yml'|sort)
+
+if ${CDR} ; then
+  echo "$(date) - Validating CDRs"
+  t_cdr="${SCEN_CHECK_DIR}/cdr_test.yml"
+  msg="${LOG_DIR}/cdr.txt"
+  dest="${RESULT_DIR}/cdr_test.tap"
+  echo "$(date) - Check test ${t_cdr} on ${msg}"
+  cdr_check "${t_cdr}" "${msg}" "${dest}"
+fi
 
 echo "$(date) - ================================================================================="
 

@@ -99,7 +99,7 @@ check_sipp() {
   echo "$(date) - ================================================================================="
   echo "$(date) - ---- sipp checks ----- "
   echo "${SCEN[@]}" |  tr ' ' '\n' \
-     | parallel "${BIN_DIR}/check_sipp.sh -p ${PROFILE} -s ${GROUP}"
+     | parallel "${BIN_DIR}/check_sipp.sh ${CDR} -p ${PROFILE} -s ${GROUP}"
   status=$?
   echo "$(date) - All done[${status}]"
 }
