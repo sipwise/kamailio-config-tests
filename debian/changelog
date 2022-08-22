@@ -1,3 +1,35 @@
+kamailio-config-tests (11.1.0.0+0~mr11.1.0.0) unstable; urgency=medium
+
+  [ Alessio Garzi ]
+  * [cd9498f] TT#171150 New scenario invite_group_parallel_and_cft under scenarios_pbx
+  * [c63bbe9] TT#180200 KCT handles User Agent header in registration
+  * [c620ffa] TT#179200 Fix incoming_hih scenario
+  * [ab0e6e0] TT#181350 Fix routes loop detection for scenarios folder
+  * [af12a70] TT#181350 Fix routes loop detection for scenarios_lnp folder
+  * [be8f4b2] TT#181350 Fix routes loop detection for scenarios_pbx folder
+  * [f7c0930] TT#181350 Fix routes loop detection for scenarios_pbx folder part 2
+  * [7f816e6] TT#181350 Fix routes loop detection for scenarios_pbx folder part 3
+
+  [ Victor Seva ]
+  * [99649ea] TT#171150 invite_group_parallel_and_cft link for pcap
+  * [7f494d6] TT#163700 add nat_sipping: no preference to avoid unwanted OPTIONS
+  * [1e1caee] TT#81700 fail if cdr_check don't pass
+  * [aea373e] TT#163700 scenarios_pbx: fix xfer_blind cdr check
+  * [7ac76b0] TT#81700 run_tests.sh: don't use show_sip.pl to detect retransmissions
+  * [5da175a] TT#163700 scenarios_pbx: fix xfer_blind cdr check, take two
+  * [eb43ced] TT#81700 BASE_DIR as absolute path to avoid errors
+  * [38fb0e7] TT#81700 get_results.sh: add check for cdr for sipp only
+
+  [ Mohammed Ghettas ]
+  * [953e521] TT#163700 Create new kamailio-config-test for missing features
+  * [37611c2] TT#181757 Test CFNA and CFR with KCT
+  * [72e41a4] TT#181753 new KCT scenario to test user preference ua_reject_missing
+
+  [ dzenichev ]
+  * [25307b3] TT#184200 actualization of 'invite_reinvite_caller_transcoding' and 'invite_reinvite_transcoding'
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 22 Aug 2022 20:00:54 +0200
+
 kamailio-config-tests (11.0.0.0+0~mr11.0.0.0) unstable; urgency=medium
 
   [ Alessio Garzi ]
