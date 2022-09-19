@@ -1,3 +1,19 @@
+kamailio-config-tests (10.5.2.1+0~mr10.5.2.1) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [6278110] TT#163700 add nat_sipping: no preference to avoid unwanted OPTIONS
+  * [445ab61] TT#81700 fail if cdr_check don't pass
+  * [a5a45f5] TT#81700 run_tests.sh: don't use show_sip.pl to detect retransmissions
+  * [f8d951b] TT#81700 BASE_DIR as absolute path to avoid errors
+
+  [ dzenichev ]
+  * [8bb7c87] TT#184200 actualization of 'invite_reinvite_caller_transcoding' and 'invite_reinvite_transcoding'
+
+  [ Alessio Garzi ]
+  * [cae6ad7] TT#179200 Fix incoming_hih scenario
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 19 Sep 2022 14:35:38 +0200
+
 kamailio-config-tests (10.5.2.0+0~mr10.5.2.0) unstable; urgency=medium
 
   * New release.
