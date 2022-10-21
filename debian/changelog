@@ -1,3 +1,10 @@
+kamailio-config-tests (11.1.1.1+0~mr11.1.1.1) unstable; urgency=medium
+
+  [ Alessio Garzi ]
+  * [02b4eec] MT#55360 incoming hih with privacy=history
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 21 Oct 2022 14:37:04 +0200
+
 kamailio-config-tests (11.1.1.0+0~mr11.1.1.0) unstable; urgency=medium
 
   * New release.
