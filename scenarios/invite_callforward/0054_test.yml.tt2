@@ -14,8 +14,6 @@ flow:
       $avp(lua_dlg_profile): None
   - return|dialog:end:
   - start|ROUTE_STOP_RTPPROXY:
-  - start|ROUTE_RESTORE_CLUSTERSET:
-  - return|ROUTE_RESTORE_CLUSTERSET:
   - return|ROUTE_STOP_RTPPROXY:
   - start|ROUTE_PREPARE_UA:
   - return|ROUTE_PREPARE_UA:
