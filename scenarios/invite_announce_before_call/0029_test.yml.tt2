@@ -158,6 +158,6 @@ sip_out:
       'Content-Type: application/sdp',
       'Content-Length:\s+\d+',
       'P-LB-Uptime: \d+',
-      'P-App-Param: audio_id=;audio2_id=[% soundsets.invite_announce_before_call.announce_before_call_setup.id %];audio3_id=;reply_180=no',
+      'P-App-Param: force_early_announce=0;audio_id=;audio2_id=[% soundsets.invite_announce_before_call.announce_before_call_setup.id %];audio3_id=;reply_180=no',
       'P-App-Name: pre_announce',
     ]

@@ -214,6 +214,6 @@ sip_out:
       'Content-Type: application/sdp',
       'P-Caller-UUID: [% invite_record_call_scenarios_test.testuser1002.uuid %]',
       'P-Callee-UUID: [% invite_record_call_scenarios_test.testuser1003.uuid %]',
-      'P-App-Param: audio_id=;audio2_id=;audio3_id=[0-9]+;reply_180=no',
+      'P-App-Param: force_early_announce=0;audio_id=;audio2_id=;audio3_id=[0-9]+;reply_180=no',
       'P-App-Name: pre_announce'
     ]
