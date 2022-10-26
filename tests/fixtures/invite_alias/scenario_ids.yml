@@ -1,0 +1,57 @@
+---
+domains:
+- invite_alias_scenarios_pbx_test
+extra_info: {}
+invite_alias_customerpbx_test:
+  id: '7'
+invite_alias_scenarios_pbx_test:
+  testuser1002:
+    ac: '1'
+    alias_numbers:
+    - ac: '1'
+      cc: '43'
+      phone_number: '4311002'
+      sn: 1002
+    cc: '43'
+    pbx_extension: 1002
+    pbx_phone_number: '43110001002'
+    phone_number: '4311000'
+    sn: 1000
+    uuid: 7e11c428-65c2-44be-8753-3cee53fd0cab
+  testuser1003:
+    ac: '1'
+    alias_numbers:
+    - ac: '1'
+      cc: '43'
+      phone_number: '4311003'
+      sn: 1003
+    - ac: '1'
+      cc: '43'
+      phone_number: '4311004'
+      sn: 1004
+    - ac: '1'
+      cc: '43'
+      phone_number: '4311005'
+      sn: 1005
+    cc: '43'
+    pbx_extension: 1003
+    pbx_phone_number: '43110001003'
+    phone_number: '4311001'
+    sn: 1001
+    uuid: 07972f28-8b72-4015-a0a9-7a9b8a2ca9cb
+scenarios:
+- devid: testuser1002
+  domain: invite-alias.scenarios-pbx.test
+  ip: 10.20.29.2
+  mport: 45003
+  port: 51602
+  responders:
+  - domain: invite-alias.scenarios-pbx.test
+    ip: 10.20.29.2
+    mport: 45006
+    port: 51603
+    proto: udp
+    register: yes
+    username: testuser1003
+  username: testuser1002
+server_ip: 192.168.1.156

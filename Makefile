@@ -78,7 +78,15 @@ test_generate_test_tt2: tests/test_generate_test_tt2.py
 	mkdir -p $(RESULTS)
 	pytest-3 --junitxml=${RESULTS}/$(@).xml $(<)
 
+test_generate_test_tt2_sipp: tests/test_generate_test_tt2_sipp.py
+	mkdir -p $(RESULTS)
+	pytest-3 --junitxml=${RESULTS}/$(@).xml $(<)
+
+test_generate_test_tt2_cfgt: tests/test_generate_test_tt2_cfgt.py
+	mkdir -p $(RESULTS)
+	pytest-3 --junitxml=${RESULTS}/$(@).xml $(<)
+
 # run this in parallel!! -j is your friend
-test: $(TESTS) test_check test_detect_network test_generate_test_tt2
+test: $(TESTS) test_check test_detect_network test_generate_test_tt2 test_generate_test_tt2_sipp test_generate_test_tt2_cfgt
 
 .PHONY: all $(TESTS)
