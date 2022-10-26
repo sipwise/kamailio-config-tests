@@ -9,73 +9,55 @@ flow:
   - start|ROUTE_PRX_REQUEST:
   - start|ROUTE_INITVARS:
   - return|ROUTE_INITVARS:
-  - start|ROUTE_SCA_UPDATE:
-  - return|ROUTE_SCA_UPDATE:
-  - start|ROUTE_PREPARE_UA:
-  - return|ROUTE_PREPARE_UA:
+  - start|ROUTE_STOP_RTPPROXY:
   - start|ROUTE_RESTORE_CLUSTERSET:
   - return|ROUTE_RESTORE_CLUSTERSET:
-  - start|ROUTE_WITHINDLG_RTPENGINE:
-  - return|ROUTE_WITHINDLG_RTPENGINE:
-  - start|ROUTE_OUTBOUND:
-  - start|DEFAULT_SEND:
-  - exit|DEFAULT_SEND:
-  - exit|DEFAULT_SEND:
+  - return|ROUTE_STOP_RTPPROXY:
+  - start|ROUTE_LOCAL:
   - start|ROUTE_EXIT:
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - 'ACK sip:127.0.0.1:508[08];prxroute=1 SIP/2.0'
-  - 'From: <sip:testuser1003@incoming-shared-line.scenarios-pbx.test>;tag=[\w-]+'
-  - 'To: <sip:1002@incoming-shared-line.scenarios-pbx.test>;tag=[\w-]+'
-  - 'Call-Info: <sip:incoming-shared-line.scenarios-pbx.test>;appearance-index=1'
-  - 'CSeq: \d+ ACK'
-  - 'Contact: <sip:[% scenarios.2.username %]@[% scenarios.2.ip %]:[% scenarios.2.port %](;[^>]+)?>'
-  - 'Content-Length: 0'
-  - 'P-NGCP-Src-Ip: [% scenarios.2.ip %]'
-  - 'P-NGCP-Src-Port: [% scenarios.2.port %]'
-  - 'P-NGCP-Src-Proto: udp'
-  - 'P-NGCP-Src-Af: 4'
-  - 'P-Sock-Info: udp:[% server_ip %]:5060'
-  - 'P-LB-Uptime: \d+'
+ - 'CANCEL sip:[% scenarios.2.responders.0.username %]@[% scenarios.2.responders.0.ip %]:[% scenarios.2.responders.0.port %] SIP/2.0'
+ - 'To: <sip:[% scenarios.0.username %]@incoming-shared-line.scenarios-pbx.test>'
+ - 'From: <sip:[% incoming_shared_line_scenarios_pbx_test.testuser1003.pbx_phone_number %]@incoming-shared-line.scenarios-pbx.test>;tag=[\w-]+'
+ - 'CSeq: \d+ CANCEL'
+ - 'Contact: <sip:127.0.0.1:5080;transport=udp>'
+ - 'P-LB-Uptime: \d+'
+ - 'P-Asserted-Identity: <sip:[% incoming_shared_line_scenarios_pbx_test.testuser1003.pbx_phone_number %]@incoming-shared-line.scenarios-pbx.test>'
+ - 'P-Caller-UUID: [% incoming_shared_line_scenarios_pbx_test.testuser1003.uuid %]'
+ - 'P-Callee-UUID: [% incoming_shared_line_scenarios_pbx_test.testuser1002.uuid %]'
+ - 'P-NGCP-Rtpengine-Bleg: 1'
+ - 'P-NGCP-Caller-Info: <sip:[% scenarios.2.username %]@incoming-shared-line.scenarios-pbx.test>;ip=[% scenarios.2.ip %];port=[% scenarios.2.port %];primary=[% incoming_shared_line_scenarios_pbx_test.testuser1003.pbx_phone_number %]'
+ - 'P-NGCP-Callee-Info: <sip:[% incoming_shared_line_scenarios_pbx_test.testuser1002.phone_number %]@incoming-shared-line.scenarios-pbx.test>;ip=[% scenarios.2.responders.0.ip %];port=[% scenarios.2.responders.0.port %];primary=[% incoming_shared_line_scenarios_pbx_test.testuser1002.phone_number %]'
+ - 'P-NGCP-Presence-Caller: sip:[% scenarios.2.username %]@incoming-shared-line.scenarios-pbx.test'
+ - 'P-NGCP-Presence-Callee: sip:[% scenarios.0.username %]@incoming-shared-line.scenarios-pbx.test'
+ - 'P-D-Uri: sip:lb@127.0.0.1;lr;received=sip:[% scenarios.2.responders.0.ip %]:[% scenarios.2.responders.0.port %];socket=sip:[% server_ip %]:5060'
+ - 'Reason: SIP;cause=200;text="Call completed elsewhere"'
+ - 'Content-Length: 0'
 sip_out:
   - [
-      'NOTIFY sip:[% scenarios.0.responders.0.username %]@',
-      'To: <sip:testuser1002@incoming-shared-line.scenarios-pbx.test>;tag=[\w-]+',
-      'From: <sip:testuser1002@incoming-shared-line.scenarios-pbx.test>;tag=[\w-]+',
-      'CSeq: \d+ NOTIFY',
-      'Content-Length: 0',
-      'User-Agent: Sipwise NGCP Proxy',
-      'Contact: sip:127.0.0.1:5062',
-      'Call-Info: <sip:incoming-shared-line.scenarios-pbx.test>;appearance-index=1;appearance-state=active;appearance-uri=\"<sip:testuser1003@incoming-shared-line.scenarios-pbx.test>\",<sip:incoming-shared-line.scenarios-pbx.test>;appearance-index=\*;appearance-state=idle',
-      'Event: call-info',
-      'Subscription-State: active;expires=\d+',
-    ]
-  - [
-      'NOTIFY sip:[% scenarios.1.responders.0.username %]@',
-      'To: <sip:testuser1002@incoming-shared-line.scenarios-pbx.test>;tag=[\w-]+',
-      'From: <sip:testuser1002@incoming-shared-line.scenarios-pbx.test>;tag=[\w-]+',
-      'CSeq: \d+ NOTIFY',
-      'Content-Length: 0',
-      'User-Agent: Sipwise NGCP Proxy',
-      'Contact: sip:127.0.0.1:5062',
-      'Call-Info: <sip:incoming-shared-line.scenarios-pbx.test>;appearance-index=1;appearance-state=active;appearance-uri=\"<sip:testuser1003@incoming-shared-line.scenarios-pbx.test>\",<sip:incoming-shared-line.scenarios-pbx.test>;appearance-index=\*;appearance-state=idle',
-      'Event: call-info',
-      'Subscription-State: active;expires=\d+',
-    ]
-  - [
-      'ACK sip:127.0.0.1:508[08];prxroute=1 SIP/2.0',
+      'SIP/2.0 100 Trying',
+      'To: <sip:[% scenarios.0.username %]@incoming-shared-line.scenarios-pbx.test>',
       'From: <sip:[% incoming_shared_line_scenarios_pbx_test.testuser1003.pbx_phone_number %]@incoming-shared-line.scenarios-pbx.test>;tag=[\w-]+',
-      'To: <sip:[% incoming_shared_line_scenarios_pbx_test.testuser1002.pbx_extension %]@incoming-shared-line.scenarios-pbx.test>;tag=[\w-]+',
-      'Call-Info: <sip:incoming-shared-line.scenarios-pbx.test>;appearance-index=1',
-      'CSeq: \d+ ACK',
-      'Contact: <sip:[% scenarios.2.username %]@[% scenarios.2.ip %]:[% scenarios.2.port %](;[^>]+)?>',
+      'CSeq: \d+ CANCEL',
+      'Server: Sipwise NGCP Proxy',
       'Content-Length: 0',
-      'P-NGCP-Src-Ip: [% scenarios.2.ip %]',
-      'P-NGCP-Src-Port: [% scenarios.2.port %]',
-      'P-NGCP-Src-Proto: udp',
-      'P-NGCP-Src-Af: 4',
-      'P-Sock-Info: udp:[% server_ip %]:5060',
-      'P-LB-Uptime: \d+',
+    ]
+  - [
+      'CANCEL sip:[% scenarios.2.responders.0.username %]@[% scenarios.2.responders.0.ip %]:[% scenarios.2.responders.0.port %] SIP/2.0',
+      'From: <sip:[% incoming_shared_line_scenarios_pbx_test.testuser1003.pbx_phone_number %]@incoming-shared-line.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.username %]@incoming-shared-line.scenarios-pbx.test>',
+      'CSeq: \d+ CANCEL',
+      'Content-Length: 0',
+      'Reason: SIP;cause=200;text="Call completed elsewhere"',
+    ]
+  - [
+      'SIP/2.0 200 canceling',
+      'To: <sip:[% scenarios.0.username %]@incoming-shared-line.scenarios-pbx.test>;tag=[\w-]+',
+      'From: <sip:[% incoming_shared_line_scenarios_pbx_test.testuser1003.pbx_phone_number %]@incoming-shared-line.scenarios-pbx.test>;tag=[\w-]+',
+      'CSeq: \d+ CANCEL',
+      'Server: Sipwise NGCP Proxy',
+      'Content-Length: 0',
     ]
