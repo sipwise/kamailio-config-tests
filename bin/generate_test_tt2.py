@@ -104,7 +104,10 @@ class Generator:
     def generate_rules(self, ids) -> list:
         rules = []
         id_dom = ids["domains"][0]
-        server_ip = ids["server_ip"]
+        try:
+            server_ip = ids["server_ip"]
+        except KeyError:
+            server_ip = False
 
         def sip_rule(subs, tt, field):
             str_val = str(subs[field])
@@ -209,24 +212,24 @@ class Generator:
                 )
             )
 
-        # server_ip rules
-        rules.append(
-            (
-                r";socket=(sip|udp|tcp):{}:5060".format(server_ip),
-                r";socket=\1:[% server_ip %]:5060",
+        if server_ip:
+            rules.append(
+                (
+                    r";socket=(sip|udp|tcp):{}:5060".format(server_ip),
+                    r";socket=\1:[% server_ip %]:5060",
+                )
             )
-        )
-        rules.append(
-            (r"sip:([^@]+@){}".format(server_ip), r"sip:\1[% server_ip %]")
-        )
-        rules.append((r"sip:{}".format(server_ip), f"sip:[% server_ip %]"))
-        rules.append(
-            (
-                r"(udp|tcp):{}:5060".format(server_ip),
-                r"\1:[% server_ip %]:5060",
+            rules.append(
+                (r"sip:([^@]+@){}".format(server_ip), r"sip:\1[% server_ip %]")
             )
-        )
-        sdp_rule(server_ip, "server_ip")
+            rules.append((r"sip:{}".format(server_ip), f"sip:[% server_ip %]"))
+            rules.append(
+                (
+                    r"(udp|tcp):{}:5060".format(server_ip),
+                    r"\1:[% server_ip %]:5060",
+                )
+            )
+            sdp_rule(server_ip, "server_ip")
 
         # priority on full match
         for idx, scen in enumerate(ids["scenarios"]):
