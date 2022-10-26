@@ -14,6 +14,8 @@ flow:
       $avp(lua_dlg_profile): None
   - return|dialog:end:
   - start|ROUTE_STOP_RTPPROXY:
+  - start|ROUTE_RESTORE_CLUSTERSET:
+  - return|ROUTE_RESTORE_CLUSTERSET:
   - return|ROUTE_STOP_RTPPROXY:
   - start|ROUTE_PREPARE_UA:
   - return|ROUTE_PREPARE_UA:
@@ -27,23 +29,26 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - '^BYE sip:(testuser1002@)?127.0.0.1:5080(;transport=udp)? SIP/2.0'
+  - 'From: <sip:[% scenarios.1.username %]@invite-callforward.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:[% scenarios.1.responders.0.username %]@invite-callforward.scenarios.test>;tag=[\w-]+'
   - 'CSeq: \d+ BYE'
+  - 'P-Asserted-Identity: <sip:[% invite_callforward_scenarios_test.testuser1002.phone_number %]@invite-callforward.scenarios.test>'
   - 'Content-Length: 0'
-  - 'From: <sip:testuser1002@'
-  - 'To: <sip:testuser1004@'
 sip_out:
   - [
-      '^SIP/2.0 100 Trying',
+      'SIP/2.0 100 Trying',
+      'From: <sip:[% scenarios.1.username %]@invite-callforward.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.1.responders.0.username %]@invite-callforward.scenarios.test>;tag=[\w-]+',
       'CSeq: \d+ BYE',
+      'Server: Sipwise NGCP Proxy',
       'Content-Length: 0',
-      'From: <sip:testuser1002@',
-      'To: <sip:testuser1004@'
     ]
   - [
-      '^BYE sip:(testuser1002@)?127.0.0.1:5080(;transport=udp)? SIP/2.0',
+      'BYE sip:127.0.0.1:5080;transport=udp SIP/2.0',
+      'Record-Route: <sip:127.0.0.1:5062;lr=on;ftag=[^;]+;vsf=[^;]+;rtpprx=yes>',
+      'From: <sip:[% invite_callforward_scenarios_test.testuser1002.phone_number %]@invite-callforward.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.1.responders.0.username %]@invite-callforward.scenarios.test>;tag=[\w-]+',
       'CSeq: \d+ BYE',
-      'Max-Forwards: 69',
+      'P-Asserted-Identity: <sip:[% invite_callforward_scenarios_test.testuser1002.phone_number %]@invite-callforward.scenarios.test>',
       'Content-Length: 0',
-      'From: <sip:[% invite_callforward_scenarios_test.testuser1002.phone_number %]@',
-      'To: <sip:testuser1004@'
     ]
