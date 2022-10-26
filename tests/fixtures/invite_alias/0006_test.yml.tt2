@@ -24,8 +24,8 @@ sip_in:
  - 'P-Caller-UUID: [% invite_alias_scenarios_pbx_test.testuser1002.uuid %]'
  - 'P-Callee-UUID: [% invite_alias_scenarios_pbx_test.testuser1003.uuid %]'
  - 'P-NGCP-Rtpengine-Bleg: 1'
- - 'P-NGCP-Caller-Info: <sip:[% scenarios.0.username %]@invite-alias.scenarios-pbx.test>;ip=10.20.29.2;port=51602;primary=4311000'
- - 'P-NGCP-Callee-Info: <sip:[% invite_alias_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@invite-alias.scenarios-pbx.test>;ip=10.20.29.2;port=51603;primary=43110001003;alias=4311003'
+ - 'P-NGCP-Caller-Info: <sip:[% scenarios.0.username %]@invite-alias.scenarios-pbx.test>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %];primary=[% invite_alias_scenarios_pbx_test.testuser1002.phone_number %]'
+ - 'P-NGCP-Callee-Info: <sip:[% invite_alias_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@invite-alias.scenarios-pbx.test>;ip=[% scenarios.0.responders.0.ip %];port=[% scenarios.0.responders.0.port %];primary=[% invite_alias_scenarios_pbx_test.testuser1003.pbx_phone_number %];alias=[% invite_alias_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]'
  - 'P-NGCP-Presence-Caller: sip:[% scenarios.0.username %]@invite-alias.scenarios-pbx.test'
  - 'P-NGCP-Presence-Callee: sip:[% scenarios.0.responders.0.username %]@invite-alias.scenarios-pbx.test'
  - 'P-D-Uri: sip:lb@127.0.0.1;lr;received=sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];socket=sip:[% server_ip %]:5060'
@@ -63,8 +63,8 @@ sip_out:
       'P-Caller-UUID: [% invite_alias_scenarios_pbx_test.testuser1002.uuid %]',
       'P-Callee-UUID: [% invite_alias_scenarios_pbx_test.testuser1003.uuid %]',
       'P-NGCP-Rtpengine-Bleg: 1',
-      'P-NGCP-Caller-Info: <sip:[% scenarios.0.username %]@invite-alias.scenarios-pbx.test>;ip=10.20.29.2;port=51602;primary=4311000',
-      'P-NGCP-Callee-Info: <sip:[% invite_alias_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@invite-alias.scenarios-pbx.test>;ip=10.20.29.2;port=51603;primary=43110001003;alias=4311003',
+      'P-NGCP-Caller-Info: <sip:[% scenarios.0.username %]@invite-alias.scenarios-pbx.test>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %];primary=[% invite_alias_scenarios_pbx_test.testuser1002.phone_number %]',
+      'P-NGCP-Callee-Info: <sip:[% invite_alias_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@invite-alias.scenarios-pbx.test>;ip=[% scenarios.0.responders.0.ip %];port=[% scenarios.0.responders.0.port %];primary=[% invite_alias_scenarios_pbx_test.testuser1003.pbx_phone_number %];alias=[% invite_alias_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]',
       'P-D-Uri: sip:lb@127.0.0.1;lr;received=sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];socket=sip:[% server_ip %]:5060',
       'Content-Type: application/sdp',
       'Content-Length: \d+',

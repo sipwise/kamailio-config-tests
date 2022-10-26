@@ -50,3 +50,17 @@ def test_invite_alias(generate_test_tt2_file, caplog):
 
         assert check_filecontent(TT2_FILE.format(scenario, id), res.out_file)
         assert res.returncode == 0
+
+
+def test_primary_numbers(generate_test_tt2_file, caplog):
+    caplog.set_level(logging.DEBUG)
+    scenario = "incoming_shared_line"
+    for id in ["0023"]:
+        res = generate_test_tt2_file(
+            "--type=cfgt",
+            IDS_FILE.format(scenario),
+            MSG_FILE.format(scenario, id),
+        )
+
+        assert check_filecontent(TT2_FILE.format(scenario, id), res.out_file)
+        assert res.returncode == 0

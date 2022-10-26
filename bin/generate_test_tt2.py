@@ -128,6 +128,18 @@ class Generator:
                     '"[% {}.{} %]"'.format(tt, field),
                 )
             )
+            rules.append(
+                (
+                    r"primary={}([^0-9]+|$)".format(subs[field]),
+                    r"primary=[% {}.{} %]\1".format(tt, field),
+                )
+            )
+            rules.append(
+                (
+                    r"alias={}([^0-9]+|$)".format(subs[field]),
+                    r"alias=[% {}.{} %]\1".format(tt, field),
+                )
+            )
 
         def sdp_rule(val, tt):
             rules.append(
@@ -188,6 +200,12 @@ class Generator:
                 (
                     r"^m=audio {} (.+)".format(scen["mport"]),
                     r"m=audio [% {}.mport %] \1".format(tt),
+                )
+            )
+            rules.append(
+                (
+                    r";ip={};port={}(;?)".format(scen["ip"], scen["port"]),
+                    r";ip=[% {0}.ip %];port=[% {0}.port %]\1".format(tt),
                 )
             )
 
@@ -309,6 +327,8 @@ class Generator:
         res = []
         for line in msg:
             line = line.replace("\n", "")
+            if len(line) == 0:
+                continue
             # escape special characters
             line = self.escape_line(line)
             ok, hdr = self.filter_hdr(line)
@@ -346,7 +366,7 @@ def sipp_process(args):
 
 
 def get_msgs(info: list):
-    """ transform JSON sip msg in list of lines """
+    """transform JSON sip msg in list of lines"""
     res = []
     for msg in info:
         res.append(msg.split("\r\n"))
