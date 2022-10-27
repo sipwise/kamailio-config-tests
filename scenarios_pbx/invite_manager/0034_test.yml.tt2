@@ -1,0 +1,70 @@
+flow:
+  - start|DEFAULT_ONREPLY:
+  - start|REPLY_ROUTE_CF_LOOP:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - start|ROUTE_PREPARE_UA:
+  - return|ROUTE_PREPARE_UA:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - start|dialog:start:
+  - return|dialog:start:
+  - return|dialog:start:
+sip_in:
+ - 'SIP/2.0 200 OK'
+ - 'Record-Route: <sip:127.0.0.1:5062;lr=on;ftag=[^;]+;did=[^;]+>'
+ - 'Record-Route: <sip:127.0.0.1;r2=on;lr=on;ftag=[^;]+;ngcplb=yes;nat=yes;socket=udp:[% server_ip %]:5060>'
+ - 'Record-Route: <sip:[% server_ip %];r2=on;lr=on;ftag=[^;]+;ngcplb=yes;nat=yes;socket=udp:[% server_ip %]:5060>'
+ - 'From: <sip:[% scenarios.1.username %]@invite-manager.scenarios-pbx.test>;tag=[\w-]+'
+ - 'To: <sip:[% scenarios.0.responders.0.username %]@invite-manager.scenarios-pbx.test>;tag=[\w-]+'
+ - 'CSeq: \d+ INVITE'
+ - 'Contact: <sip:127.0.0.1:5080;transport=udp>'
+ - 'Content-Type: application/sdp'
+ - 'Content-Length:\s+\d+'
+ - 'v=0'
+ - 'o=user1 \d+ \d+ IN IP4 [% server_ip %]'
+ - 's=-'
+ - 'c=IN IP4 [% server_ip %]'
+ - 't=0 0'
+ - 'm=audio \d+ RTP/AVP 8'
+ - 'a=rtpmap:8 PCMA/8000'
+ - 'a=sendrecv'
+ - 'a=rtcp:\d+'
+ - 'a=ptime:50'
+sip_out:
+  - [
+      'PUBLISH sip:[% scenarios.1.username %]@invite-manager.scenarios-pbx.test SIP/2.0',
+      'To: <sip:[% scenarios.1.username %]@invite-manager.scenarios-pbx.test>',
+      'From: <sip:[% scenarios.1.username %]@invite-manager.scenarios-pbx.test>;tag=[\w-]+',
+      'CSeq: \d+ PUBLISH',
+      'Content-Length:\s+\d+',
+      'User-Agent: Sipwise NGCP Proxy',
+      'Event: dialog',
+      'SIP-If-Match:',
+      'Content-Type: application/dialog-info\+xml',
+    ]
+  - [
+      'SIP/2.0 200 OK',
+      'Record-Route: <sip:127.0.0.1:5062;lr=on;ftag=[^;]+;did=[^;]+>',
+      'Record-Route: <sip:127.0.0.1;r2=on;lr=on;ftag=[^;]+;ngcplb=yes;nat=yes;socket=udp:[% server_ip %]:5060>',
+      'Record-Route: <sip:[% server_ip %];r2=on;lr=on;ftag=[^;]+;ngcplb=yes;nat=yes;socket=udp:[% server_ip %]:5060>',
+      'From: <sip:[% scenarios.1.username %]@invite-manager.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.0.username %]@invite-manager.scenarios-pbx.test>;tag=[\w-]+',
+      'CSeq: \d+ INVITE',
+      'Contact: <sip:127.0.0.1:5080;transport=udp>',
+      'Content-Type: application/sdp',
+      'Content-Length:\s+\d+',
+      'v=0',
+      'o=user1 \d+ \d+ IN IP4 [% server_ip %]',
+      's=-',
+      'c=IN IP4 [% server_ip %]',
+      't=0 0',
+      'm=audio \d+ RTP/AVP 8',
+      'a=rtpmap:8 PCMA/8000',
+      'a=sendrecv',
+      'a=rtcp:\d+',
+      'a=ptime:50',
+    ]

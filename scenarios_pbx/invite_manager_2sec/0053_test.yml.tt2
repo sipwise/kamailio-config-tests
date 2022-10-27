@@ -1,0 +1,38 @@
+flow:
+  - start|DEFAULT_ONREPLY:
+  - start|REPLY_ROUTE_NAT:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - start|ROUTE_PREPARE_UA:
+  - return|ROUTE_PREPARE_UA:
+  - start|REPLY_ROUTE_NAT_CONTINUE:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+sip_in:
+ - 'SIP/2.0 200 OK'
+ - 'From: <sip:[% invite_manager_2sec_scenarios_pbx_test.testuser1003.pbx_phone_number %]@invite-manager-2sec.scenarios-pbx.test>;tag=[\w-]+'
+ - 'To: <sip:[% scenarios.0.username %]@invite-manager-2sec.scenarios-pbx.test>;tag=[\w-]+'
+ - 'CSeq: \d+ BYE'
+ - 'Contact: <sip:[% scenarios.1.responders.1.ip %]:[% scenarios.1.responders.1.port %];transport=UDP>'
+ - 'Content-Length:\s+0'
+ - 'P-NGCP-Src-Ip: [% scenarios.0.ip %]'
+ - 'P-NGCP-Src-Port: [% scenarios.1.responders.1.port %]'
+ - 'P-NGCP-Src-Proto: udp'
+ - 'P-NGCP-Src-Af: 4'
+sip_out:
+  - [
+      'SIP/2.0 200 OK',
+      'From: <sip:[% invite_manager_2sec_scenarios_pbx_test.testuser1003.pbx_phone_number %]@invite-manager-2sec.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.username %]@invite-manager-2sec.scenarios-pbx.test>;tag=[\w-]+',
+      'CSeq: \d+ BYE',
+      'Contact: <sip:[% scenarios.1.responders.1.ip %]:[% scenarios.1.responders.1.port %];transport=UDP>',
+      'Content-Length:\s+0',
+      'P-NGCP-Src-Ip: [% scenarios.0.ip %]',
+      'P-NGCP-Src-Port: [% scenarios.1.responders.1.port %]',
+      'P-NGCP-Src-Proto: udp',
+      'P-NGCP-Src-Af: 4',
+    ]

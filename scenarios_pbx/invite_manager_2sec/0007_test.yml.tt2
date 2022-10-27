@@ -1,0 +1,71 @@
+flow:
+  - start|DEFAULT_ROUTE:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_NET_INFO:
+  - return|ROUTE_NET_INFO:
+  - start|ROUTE_CHECK_TEL_URI:
+  - return|ROUTE_CHECK_TEL_URI:
+  - start|ROUTE_PRX_REQUEST:
+  - start|ROUTE_INITVARS:
+  - return|ROUTE_INITVARS:
+  - start|ROUTE_INVITE:
+  - start|ROUTE_LOAD_CALLEE_DOMAIN_PREF:
+  - start|ROUTE_CLEAR_CALLEE_DOMAIN_PREF:
+  - return|ROUTE_CLEAR_CALLEE_DOMAIN_PREF:
+  - return|ROUTE_LOAD_CALLEE_DOMAIN_PREF:
+  - start|ROUTE_FIND_CALLER:
+  - start|ROUTE_AUTH:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+sip_in:
+ - 'INVITE sip:[% invite_manager_2sec_scenarios_pbx_test.manager.pbx_extension %]@invite-manager-2sec.scenarios-pbx.test SIP/2.0'
+ - 'Record-Route: <sip:127.0.0.1;r2=on;lr=on;ftag=[^;]+;ngcplb=yes;nat=yes;socket=udp:[% server_ip %]:5060>'
+ - 'Record-Route: <sip:[% server_ip %];r2=on;lr=on;ftag=[^;]+;ngcplb=yes;nat=yes;socket=udp:[% server_ip %]:5060>'
+ - 'From: <sip:[% scenarios.0.username %]@invite-manager-2sec.scenarios-pbx.test>;tag=[\w-]+'
+ - 'To: <sip:[% invite_manager_2sec_scenarios_pbx_test.manager.pbx_extension %]@invite-manager-2sec.scenarios-pbx.test>'
+ - 'CSeq: \d+ INVITE'
+ - 'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %];alias=[^;]+>'
+ - 'Content-Type: application/sdp'
+ - 'Content-Length:\s+\d+'
+ - 'P-NGCP-Src-Ip: [% scenarios.0.ip %]'
+ - 'P-NGCP-Src-Port: [% scenarios.0.port %]'
+ - 'P-NGCP-Src-Proto: udp'
+ - 'P-NGCP-Src-Af: 4'
+ - 'P-Sock-Info: udp:[% server_ip %]:5060'
+ - 'P-LB-Uptime:\s+\d+'
+ - 'P-NGCP-Src-Nat: 1'
+ - 'v=0'
+ - 'o=user1 \d+ \d+ IN IP4 [% scenarios.0.ip %]'
+ - 's=-'
+ - 'c=IN IP4 [% scenarios.0.ip %]'
+ - 't=0 0'
+ - 'm=audio [% scenarios.0.mport %] RTP/AVP 8'
+ - 'a=rtpmap:8 PCMA/8000'
+ - 'a=ptime:50'
+sip_out:
+  - [
+      'SIP/2.0 100 Trying',
+      'From: <sip:[% scenarios.0.username %]@invite-manager-2sec.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:[% invite_manager_2sec_scenarios_pbx_test.manager.pbx_extension %]@invite-manager-2sec.scenarios-pbx.test>',
+      'CSeq: \d+ INVITE',
+      'P-Out-Socket: udp:[% server_ip %]:5060',
+      'P-NGCP-Auth-IP: [% scenarios.0.ip %]',
+      'P-NGCP-Auth-UA: <null>',
+      'Server: Sipwise NGCP Proxy',
+      'Content-Length:\s+0',
+    ]
+  - [
+      'SIP/2.0 407 Proxy Authentication Required',
+      'From: <sip:[% scenarios.0.username %]@invite-manager-2sec.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:[% invite_manager_2sec_scenarios_pbx_test.manager.pbx_extension %]@invite-manager-2sec.scenarios-pbx.test>;tag=[\w-]+',
+      'CSeq: \d+ INVITE',
+      'P-Out-Socket: udp:[% server_ip %]:5060',
+      'P-NGCP-Auth-IP: [% scenarios.0.ip %]',
+      'P-NGCP-Auth-UA: <null>',
+      'Proxy-Authenticate: Digest realm="invite-manager-2sec.scenarios-pbx.test", nonce="[^"]+"',
+      'Server: Sipwise NGCP Proxy',
+      'Content-Length:\s+0',
+    ]

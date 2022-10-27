@@ -1,0 +1,62 @@
+flow:
+  - start|DEFAULT_ONREPLY:
+  - start|REPLY_ROUTE_LEG_B:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+  - start|FAILURE_ROUTE_LEG_B:
+  - start|ROUTE_STOP_RTPPROXY_BRANCH:
+  - start|ROUTE_RESTORE_CLUSTERSET:
+  - return|ROUTE_RESTORE_CLUSTERSET:
+  - return|ROUTE_STOP_RTPPROXY_BRANCH:
+  - start|FAILURE_ROUTE_LEG_B:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+  - start|dialog:failed:
+  - return|dialog:failed:
+  - return|dialog:failed:
+sip_in:
+ - 'SIP/2.0 486 Busy Here'
+ - 'From: <sip:[% invite_manager_2sec_scenarios_pbx_test.testuser1003.pbx_phone_number %]@invite-manager-2sec.scenarios-pbx.test>;tag=[\w-]+'
+ - 'To: <sip:[% scenarios.1.responders.2.username %]@invite-manager-2sec.scenarios-pbx.test>;tag=[\w-]+'
+ - 'CSeq: \d+ INVITE'
+ - 'Contact: <sip:[% scenarios.1.responders.2.ip %]:[% scenarios.1.responders.2.port %];transport=UDP>'
+ - 'Content-Length:\s+0'
+ - 'P-NGCP-Src-Ip: [% scenarios.0.ip %]'
+ - 'P-NGCP-Src-Port: [% scenarios.1.responders.2.port %]'
+ - 'P-NGCP-Src-Proto: udp'
+ - 'P-NGCP-Src-Af: 4'
+sip_out:
+  - [
+      'ACK sip:[% scenarios.1.responders.2.username %]@[% scenarios.1.responders.2.ip %]:[% scenarios.1.responders.2.port %] SIP/2.0',
+      'From: <sip:[% invite_manager_2sec_scenarios_pbx_test.testuser1003.pbx_phone_number %]@invite-manager-2sec.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.1.responders.2.username %]@invite-manager-2sec.scenarios-pbx.test>;tag=[\w-]+',
+      'CSeq: \d+ ACK',
+      'Content-Length:\s+0',
+    ]
+  - [
+      'PUBLISH sip:[% scenarios.1.responders.2.username %]@invite-manager-2sec.scenarios-pbx.test SIP/2.0',
+      'To: <sip:[% scenarios.1.responders.2.username %]@invite-manager-2sec.scenarios-pbx.test>',
+      'From: <sip:[% scenarios.1.responders.2.username %]@invite-manager-2sec.scenarios-pbx.test>;tag=[\w-]+',
+      'CSeq: \d+ PUBLISH',
+      'Content-Length:\s+\d+',
+      'User-Agent: Sipwise NGCP Proxy',
+      'Event: dialog',
+      'Content-Type: application/dialog-info\+xml',
+    ]
+  - [
+      'SIP/2.0 486 Busy Here',
+      'From: <sip:[% invite_manager_2sec_scenarios_pbx_test.testuser1003.pbx_phone_number %]@invite-manager-2sec.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.1.responders.2.username %]@invite-manager-2sec.scenarios-pbx.test>;tag=[\w-]+',
+      'CSeq: \d+ INVITE',
+      'Contact: <sip:[% scenarios.1.responders.2.ip %]:[% scenarios.1.responders.2.port %];transport=UDP>',
+      'Content-Length:\s+0',
+      'P-NGCP-Src-Ip: [% scenarios.0.ip %]',
+      'P-NGCP-Src-Port: [% scenarios.1.responders.2.port %]',
+      'P-NGCP-Src-Proto: udp',
+      'P-NGCP-Src-Af: 4',
+    ]

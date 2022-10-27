@@ -1,0 +1,82 @@
+flow:
+  - start|DEFAULT_ROUTE:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_LEG_B:
+  - start|ROUTE_INITVARS:
+  - return|ROUTE_INITVARS:
+  - start|ROUTE_BRANCH_ACC_RTP:
+  - return|ROUTE_BRANCH_ACC_RTP:
+  - start|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+sip_in:
+ - 'INVITE sip:[% scenarios.0.responders.0.username %]@[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %] SIP/2.0'
+ - 'From: <sip:[% invite_manager_2sec_scenarios_pbx_test.secretary2.pbx_phone_number %]@invite-manager-2sec.scenarios-pbx.test>;tag=[\w-]+'
+ - 'To: <sip:[% scenarios.0.responders.0.username %]@invite-manager-2sec.scenarios-pbx.test>'
+ - 'CSeq: \d+ INVITE'
+ - 'P-LB-Uptime:\s+\d+'
+ - 'P-Asserted-Identity: <sip:[% invite_manager_2sec_scenarios_pbx_test.secretary2.pbx_phone_number %]@invite-manager-2sec.scenarios-pbx.test>'
+ - 'P-Caller-UUID: [% invite_manager_2sec_scenarios_pbx_test.secretary2.uuid %]'
+ - 'P-Callee-UUID: [% invite_manager_2sec_scenarios_pbx_test.manager.uuid %]'
+ - 'P-NGCP-Rtpengine-Bleg: 1'
+ - 'P-NGCP-Caller-Info: <sip:[% scenarios.0.username %]@invite-manager-2sec.scenarios-pbx.test>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %];primary=[% invite_manager_2sec_scenarios_pbx_test.secretary2.pbx_phone_number %]'
+ - 'P-NGCP-Callee-Info: <sip:[% invite_manager_2sec_scenarios_pbx_test.manager.phone_number %]@invite-manager-2sec.scenarios-pbx.test>;ip=[% scenarios.0.responders.0.ip %];port=[% scenarios.0.responders.0.port %];primary=[% invite_manager_2sec_scenarios_pbx_test.manager.phone_number %]'
+ - 'P-NGCP-Presence-Caller: sip:[% scenarios.0.username %]@invite-manager-2sec.scenarios-pbx.test'
+ - 'P-NGCP-Presence-Callee: sip:[% scenarios.0.responders.0.username %]@invite-manager-2sec.scenarios-pbx.test'
+ - 'P-D-Uri: sip:lb@127.0.0.1;lr;received=sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];socket=sip:[% server_ip %]:5060'
+ - 'Content-Type: application/sdp'
+ - 'Content-Length:\s+\d+'
+ - 'Contact: <sip:127.0.0.1:5080;transport=udp>'
+ - 'v=0'
+ - 'o=user1 \d+ \d+ IN IP4 [% server_ip %]'
+ - 's=-'
+ - 'c=IN IP4 [% server_ip %]'
+ - 't=0 0'
+ - 'm=audio \d+ RTP/AVP 8'
+ - 'a=rtpmap:8 PCMA/8000'
+ - 'a=sendrecv'
+ - 'a=rtcp:\d+'
+ - 'a=rtcp-mux'
+ - 'a=ptime:50'
+sip_out:
+  - [
+      'SIP/2.0 100 Trying',
+      'From: <sip:[% invite_manager_2sec_scenarios_pbx_test.secretary2.pbx_phone_number %]@invite-manager-2sec.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.0.username %]@invite-manager-2sec.scenarios-pbx.test>',
+      'CSeq: \d+ INVITE',
+      'Server: Sipwise NGCP Proxy',
+      'Content-Length:\s+0',
+    ]
+  - [
+      'INVITE sip:[% scenarios.0.responders.0.username %]@[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %] SIP/2.0',
+      'Record-Route: <sip:127.0.0.1:5062;lr=on;ftag=[^;]+;leg_b=1;did=[^;]+;ice_caller=strip;ice_callee=strip;aset=\d+;rtpprx=yes>',
+      'From: <sip:[% invite_manager_2sec_scenarios_pbx_test.secretary2.pbx_phone_number %]@invite-manager-2sec.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.0.username %]@invite-manager-2sec.scenarios-pbx.test>',
+      'CSeq: \d+ INVITE',
+      'P-LB-Uptime:\s+\d+',
+      'P-Asserted-Identity: <sip:[% invite_manager_2sec_scenarios_pbx_test.secretary2.pbx_phone_number %]@invite-manager-2sec.scenarios-pbx.test>',
+      'P-Caller-UUID: [% invite_manager_2sec_scenarios_pbx_test.secretary2.uuid %]',
+      'P-Callee-UUID: [% invite_manager_2sec_scenarios_pbx_test.manager.uuid %]',
+      'P-NGCP-Rtpengine-Bleg: 1',
+      'P-NGCP-Caller-Info: <sip:[% scenarios.0.username %]@invite-manager-2sec.scenarios-pbx.test>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %];primary=[% invite_manager_2sec_scenarios_pbx_test.secretary2.pbx_phone_number %]',
+      'P-NGCP-Callee-Info: <sip:[% invite_manager_2sec_scenarios_pbx_test.manager.phone_number %]@invite-manager-2sec.scenarios-pbx.test>;ip=[% scenarios.0.responders.0.ip %];port=[% scenarios.0.responders.0.port %];primary=[% invite_manager_2sec_scenarios_pbx_test.manager.phone_number %]',
+      'P-D-Uri: sip:lb@127.0.0.1;lr;received=sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];socket=sip:[% server_ip %]:5060',
+      'Content-Type: application/sdp',
+      'Content-Length:\s+\d+',
+      'Contact: <sip:127.0.0.1:5080;transport=udp>',
+      'v=0',
+      'o=user1 \d+ \d+ IN IP4 [% server_ip %]',
+      's=-',
+      'c=IN IP4 [% server_ip %]',
+      't=0 0',
+      'm=audio \d+ RTP/AVP 8',
+      'a=rtpmap:8 PCMA/8000',
+      'a=sendrecv',
+      'a=rtcp:\d+',
+      'a=ptime:50',
+    ]

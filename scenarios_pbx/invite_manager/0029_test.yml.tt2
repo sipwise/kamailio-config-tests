@@ -1,0 +1,43 @@
+flow:
+  - start|DEFAULT_ONREPLY:
+  - start|REPLY_ROUTE_LEG_B:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+sip_in:
+ - 'SIP/2.0 180 Ringing'
+ - 'From: <sip:[% invite_manager_scenarios_pbx_test.testuser1003.pbx_phone_number %]@invite-manager.scenarios-pbx.test>;tag=[\w-]+'
+ - 'To: <sip:[% scenarios.0.username %]@invite-manager.scenarios-pbx.test>;tag=[\w-]+'
+ - 'CSeq: \d+ INVITE'
+ - 'Contact: <sip:[% scenarios.1.responders.1.ip %]:[% scenarios.1.responders.1.port %];transport=UDP>'
+ - 'Content-Length:\s+0'
+ - 'P-NGCP-Src-Ip: [% scenarios.0.ip %]'
+ - 'P-NGCP-Src-Port: [% scenarios.1.responders.1.port %]'
+ - 'P-NGCP-Src-Proto: udp'
+ - 'P-NGCP-Src-Af: 4'
+sip_out:
+  - [
+      'PUBLISH sip:[% scenarios.0.username %]@invite-manager.scenarios-pbx.test SIP/2.0',
+      'To: <sip:[% scenarios.0.username %]@invite-manager.scenarios-pbx.test>',
+      'From: <sip:[% scenarios.0.username %]@invite-manager.scenarios-pbx.test>;tag=[\w-]+',
+      'CSeq: \d+ PUBLISH',
+      'Content-Length:\s+\d+',
+      'User-Agent: Sipwise NGCP Proxy',
+      'Event: dialog',
+      'Content-Type: application/dialog-info\+xml',
+    ]
+  - [
+      'SIP/2.0 180 Ringing',
+      'From: <sip:[% invite_manager_scenarios_pbx_test.testuser1003.pbx_phone_number %]@invite-manager.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.username %]@invite-manager.scenarios-pbx.test>;tag=[\w-]+',
+      'CSeq: \d+ INVITE',
+      'Contact: <sip:[% scenarios.1.responders.1.ip %]:[% scenarios.1.responders.1.port %];transport=UDP>',
+      'Content-Length:\s+0',
+      'P-NGCP-Src-Ip: [% scenarios.0.ip %]',
+      'P-NGCP-Src-Port: [% scenarios.1.responders.1.port %]',
+      'P-NGCP-Src-Proto: udp',
+      'P-NGCP-Src-Af: 4',
+    ]

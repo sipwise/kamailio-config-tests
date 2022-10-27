@@ -1,0 +1,21 @@
+---
+manager@invite-manager-2sec.scenarios-pbx.test:
+  destinations:
+    destinations:
+      - destination: sip:[% invite_manager_2sec_scenarios_pbx_test.manager.pbx_phone_number %]@managersecretary.local
+        priority: 0
+        timeout: 5
+    name: destmanager
+  mappings:
+    cfu:
+      - bnumberset: null
+        destinationset: destmanager
+        sourceset: null
+        timeset: null
+        enabled: true
+    cfb: []
+    cfna: []
+    cft: []
+    cfs: []
+    cfr: []
+    cfo: []

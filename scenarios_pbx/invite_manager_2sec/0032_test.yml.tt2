@@ -1,0 +1,64 @@
+flow:
+  - start|DEFAULT_ONREPLY:
+  - start|REPLY_ROUTE_NAT:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_PREPARE_UA:
+  - return|ROUTE_PREPARE_UA:
+  - start|REPLY_ROUTE_NAT_CONTINUE:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - start|tm:branch-failure:local:
+  - return|tm:branch-failure:local:
+  - start|FAILURE_ROUTE_LOCAL:
+  - start|ROUTE_INITVARS:
+  - return|ROUTE_INITVARS:
+  - start|ROUTE_STOP_RTPPROXY_BRANCH:
+  - start|ROUTE_RESTORE_CLUSTERSET:
+  - return|ROUTE_RESTORE_CLUSTERSET:
+  - return|ROUTE_STOP_RTPPROXY_BRANCH:
+  - start|ROUTE_CF_CFB:
+  - return|ROUTE_CF_CFB:
+  - start|ROUTE_EARLY_REJECT:
+  - start|ROUTE_ADD_CALLINFO_REPLY:
+  - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
+  - start|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_REPLY:
+  - start|ROUTE_LOCAL_REPLY:
+  - start|dialog:failed:
+  - return|dialog:failed:
+  - return|dialog:failed:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+  - exit|ROUTE_EXIT:
+sip_in:
+ - 'SIP/2.0 486 Busy Here'
+ - 'Record-Route: <sip:127.0.0.1:5062;lr=on;ftag=[^;]+;did=[^;]+;ice_caller=strip;ice_callee=strip;aset=\d+;rtpprx=yes;vsf=[^;]+>'
+ - 'From: <sip:[% invite_manager_2sec_scenarios_pbx_test.testuser1003.pbx_phone_number %]@invite-manager-2sec.scenarios-pbx.test>;tag=[\w-]+'
+ - 'To: <sip:[% scenarios.0.responders.0.username %]@invite-manager-2sec.scenarios-pbx.test>;tag=[\w-]+'
+ - 'CSeq: \d+ INVITE'
+ - 'Content-Length:\s+0'
+sip_out:
+  - [
+      'ACK sip:[% scenarios.1.responders.2.username %]@[% scenarios.1.responders.2.ip %]:[% scenarios.1.responders.2.port %] SIP/2.0',
+      'From: <sip:[% invite_manager_2sec_scenarios_pbx_test.testuser1003.pbx_phone_number %]@invite-manager-2sec.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.0.username %]@invite-manager-2sec.scenarios-pbx.test>;tag=[\w-]+',
+      'CSeq: \d+ ACK',
+      'Content-Length:\s+0',
+    ]
+  - [
+      'SIP/2.0 486 Busy Here',
+      'From: <sip:[% scenarios.1.username %]@invite-manager-2sec.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.0.username %]@invite-manager-2sec.scenarios-pbx.test>;tag=[\w-]+',
+      'CSeq: \d+ INVITE',
+      'P-Callee-Uuid: [% invite_manager_2sec_scenarios_pbx_test.secretary1.uuid %]',
+      'P-NGCP-Caller-Info: <sip:[% scenarios.0.responders.0.username %]@invite-manager-2sec.scenarios-pbx.test>;ip=127.0.0.1;port=5080;primary=[% invite_manager_2sec_scenarios_pbx_test.manager.phone_number %]',
+      'P-NGCP-Callee-Info: <sip:[% invite_manager_2sec_scenarios_pbx_test.secretary1.pbx_phone_number %]@invite-manager-2sec.scenarios-pbx.test>;ip=[% scenarios.1.responders.2.ip %];port=[% scenarios.1.responders.2.port %];primary=[% invite_manager_2sec_scenarios_pbx_test.secretary1.pbx_phone_number %]',
+      'Server: Sipwise NGCP Proxy',
+      'Content-Length:\s+0',
+    ]

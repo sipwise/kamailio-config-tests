@@ -1,0 +1,9 @@
+{
+  "@invite-manager-2sec.scenarios-pbx.test": {
+    "nat_sipping": "no"
+  },
+  "manager@invite-manager-2sec.scenarios-pbx.test": {
+    "manager_secretary": 1,
+    "secretary_numbers": ["[% invite_manager_2sec_scenarios_pbx_test.secretary1.pbx_phone_number %]", "[% invite_manager_2sec_scenarios_pbx_test.secretary2.pbx_phone_number %]"]
+  }
+}

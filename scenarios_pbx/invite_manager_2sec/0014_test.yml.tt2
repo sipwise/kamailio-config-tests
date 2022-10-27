@@ -1,0 +1,51 @@
+flow:
+  - start|DEFAULT_ONREPLY:
+  - start|REPLY_ROUTE_NAT:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - start|REPLY_SCA_UPDATE:
+  - return|REPLY_SCA_UPDATE:
+  - start|ROUTE_PREPARE_UA:
+  - return|ROUTE_PREPARE_UA:
+  - start|REPLY_ROUTE_NAT_CONTINUE:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+sip_in:
+ - 'SIP/2.0 180 Ringing'
+ - 'Record-Route: <sip:127.0.0.1:5062;lr=on;ftag=[^;]+;did=[^;]+;ice_caller=strip;ice_callee=strip;aset=\d+;rtpprx=yes;vsf=[^;]+>'
+ - 'Record-Route: <sip:127.0.0.1;r2=on;lr=on;ftag=[^;]+;ngcplb=yes;nat=yes;socket=udp:[% server_ip %]:5060>'
+ - 'Record-Route: <sip:[% server_ip %];r2=on;lr=on;ftag=[^;]+;ngcplb=yes;nat=yes;socket=udp:[% server_ip %]:5060>'
+ - 'From: <sip:[% invite_manager_2sec_scenarios_pbx_test.secretary2.pbx_phone_number %]@invite-manager-2sec.scenarios-pbx.test>;tag=[\w-]+'
+ - 'To: <sip:[% invite_manager_2sec_scenarios_pbx_test.manager.pbx_extension %]@invite-manager-2sec.scenarios-pbx.test>;tag=[\w-]+'
+ - 'CSeq: \d+ INVITE'
+ - 'Contact: <sip:127.0.0.1:5080;transport=udp>'
+ - 'Content-Length:\s+0'
+sip_out:
+  - [
+      'PUBLISH sip:[% scenarios.0.username %]@invite-manager-2sec.scenarios-pbx.test SIP/2.0',
+      'To: <sip:[% scenarios.0.username %]@invite-manager-2sec.scenarios-pbx.test>',
+      'From: <sip:[% scenarios.0.username %]@invite-manager-2sec.scenarios-pbx.test>;tag=[\w-]+',
+      'CSeq: \d+ PUBLISH',
+      'Content-Length:\s+\d+',
+      'User-Agent: Sipwise NGCP Proxy',
+      'Event: dialog',
+      'SIP-If-Match:',
+      'Content-Type: application/dialog-info\+xml',
+    ]
+  - [
+      'SIP/2.0 180 Ringing',
+      'Record-Route: <sip:127.0.0.1:5062;lr=on;ftag=[^;]+;did=[^;]+;ice_caller=strip;ice_callee=strip;aset=\d+;rtpprx=yes;vsf=[^;]+>',
+      'Record-Route: <sip:127.0.0.1;r2=on;lr=on;ftag=[^;]+;ngcplb=yes;nat=yes;socket=udp:[% server_ip %]:5060>',
+      'Record-Route: <sip:[% server_ip %];r2=on;lr=on;ftag=[^;]+;ngcplb=yes;nat=yes;socket=udp:[% server_ip %]:5060>',
+      'From: <sip:[% scenarios.0.username %]@invite-manager-2sec.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:[% invite_manager_2sec_scenarios_pbx_test.manager.pbx_extension %]@invite-manager-2sec.scenarios-pbx.test>;tag=[\w-]+',
+      'CSeq: \d+ INVITE',
+      'Contact: <sip:127.0.0.1:5080;transport=udp>',
+      'Content-Length:\s+0',
+      'P-COLP-Identity: "[% invite_manager_2sec_scenarios_pbx_test.manager.pbx_extension %]" <sip:[% invite_manager_2sec_scenarios_pbx_test.manager.pbx_extension %]@invite-manager-2sec.scenarios-pbx.test>',
+      'P-Out-Socket: udp:[% server_ip %]:5060',
+    ]

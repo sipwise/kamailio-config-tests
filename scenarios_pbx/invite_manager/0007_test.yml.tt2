@@ -1,0 +1,276 @@
+flow:
+  - start|DEFAULT_ROUTE:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_NET_INFO:
+  - return|ROUTE_NET_INFO:
+  - start|ROUTE_CHECK_TEL_URI:
+  - return|ROUTE_CHECK_TEL_URI:
+  - start|ROUTE_PRX_REQUEST:
+  - start|ROUTE_INITVARS:
+  - return|ROUTE_INITVARS:
+  - start|ROUTE_INVITE:
+  - start|ROUTE_LOAD_CALLEE_DOMAIN_PREF:
+  - start|ROUTE_CLEAR_CALLEE_DOMAIN_PREF:
+  - return|ROUTE_CLEAR_CALLEE_DOMAIN_PREF:
+  - return|ROUTE_LOAD_CALLEE_DOMAIN_PREF:
+  - start|ROUTE_FIND_CALLER:
+  - start|ROUTE_AUTH:
+  - start|ROUTE_AUTH_HELPER:
+  - return|ROUTE_AUTH_HELPER:
+  - start|ROUTE_ADD_CALLINFO_REPLY:
+  - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_REPLY:
+  - return|ROUTE_AUTH:
+  - return|ROUTE_FIND_CALLER:
+  - start|ROUTE_LOAD_CALLER_PREF:
+  - start|ROUTE_CLEAR_CALLER_PREF:
+  - return|ROUTE_CLEAR_CALLER_PREF:
+  - start|ROUTE_CHECK_UA:
+  - return|ROUTE_CHECK_UA:
+  - start|ROUTE_LOAD_CALLER_CONTRACT_PREF:
+  - return|ROUTE_LOAD_CALLER_CONTRACT_PREF:
+  - start|ROUTE_DLG_MANAGE:
+  - return|ROUTE_DLG_MANAGE:
+  - return|ROUTE_LOAD_CALLER_PREF:
+  - start|ROUTE_DLG_MANAGE:
+  - return|ROUTE_DLG_MANAGE:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - start|ROUTE_GET_CALLER_CLI:
+  - return|ROUTE_GET_CALLER_CLI:
+  - start|ROUTE_GET_FORWARDER_CLI:
+  - return|ROUTE_GET_FORWARDER_CLI:
+  - start|ROUTE_CLIR:
+  - return|ROUTE_CLIR:
+  - start|ROUTE_CALLER_BLOCK_CLI:
+  - return|ROUTE_CALLER_BLOCK_CLI:
+  - start|ROUTE_CHECK_USERPROV_CLI:
+  - start|ROUTE_CHECK_CLI_ALLOWED:
+  - return|ROUTE_CHECK_CLI_ALLOWED:
+  - return|ROUTE_CHECK_USERPROV_CLI:
+  - start|ROUTE_FIND_CALLEE:
+  - start|ROUTE_DETECT_LOOP:
+  - return|ROUTE_DETECT_LOOP:
+  - start|ROUTE_CLEAR_CALLEE_PREF:
+  - return|ROUTE_CLEAR_CALLEE_PREF:
+  - start|ROUTE_LOAD_CALLEE_PREF:
+  - start|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
+  - return|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
+  - start|ROUTE_SET_CALLEE_DIALOG:
+  - start|ROUTE_CNT_DLG_CHECK:
+  - return|ROUTE_CNT_DLG_CHECK:
+  - start|ROUTE_SET_CALLEE_DIALOG_TOTAL:
+  - return|ROUTE_SET_CALLEE_DIALOG_TOTAL:
+  - start|ROUTE_SET_CALLEE_DIALOG_ACTIVE:
+  - return|ROUTE_SET_CALLEE_DIALOG_ACTIVE:
+  - return|ROUTE_SET_CALLEE_DIALOG:
+  - start|ROUTE_BLOCK_IN:
+  - return|ROUTE_BLOCK_IN:
+  - return|ROUTE_LOAD_CALLEE_PREF:
+  - start|ROUTE_NCOS_CHECK:
+  - start|ROUTE_NCOS:
+  - return|ROUTE_NCOS:
+  - start|ROUTE_NCOS:
+  - return|ROUTE_NCOS:
+  - start|ROUTE_NCOS:
+  - return|ROUTE_NCOS:
+  - start|ROUTE_NCOS:
+  - return|ROUTE_NCOS:
+  - return|ROUTE_NCOS_CHECK:
+  - start|ROUTE_CHECK_PBX:
+  - return|ROUTE_CHECK_PBX:
+  - start|ROUTE_CALLEE_DISPATCH:
+  - start|ROUTE_INVITE_TO_INT:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - start|ROUTE_CF_CFU:
+  - start|ROUTE_LOAD_CF_MAP:
+  - return|ROUTE_LOAD_CF_MAP:
+  - return|ROUTE_CF_CFU:
+  - start|ROUTE_CNT_DLG_CHECK:
+  - return|ROUTE_CNT_DLG_CHECK:
+  - start|ROUTE_CHECK_LOCATIONS:
+  - start|ROUTE_LOOKUP_SUBSCRIBER_LOCATIONS:
+  - return|ROUTE_LOOKUP_SUBSCRIBER_LOCATIONS:
+  - start|ROUTE_OUTBOUND:
+  - start|ROUTE_SET_CALLER_DIALOG:
+  - start|ROUTE_CNT_DLG_CHECK:
+  - return|ROUTE_CNT_DLG_CHECK:
+  - start|ROUTE_SET_CALLER_DIALOG_TOTAL:
+  - return|ROUTE_SET_CALLER_DIALOG_TOTAL:
+  - start|ROUTE_SET_CALLER_DIALOG_ACTIVE:
+  - return|ROUTE_SET_CALLER_DIALOG_ACTIVE:
+  - return|ROUTE_SET_CALLER_DIALOG:
+  - start|ROUTE_ACC_CALLER:
+  - start|ROUTE_SET_ACC_CALLER_CALL_COUNTERS:
+  - return|ROUTE_SET_ACC_CALLER_CALL_COUNTERS:
+  - return|ROUTE_ACC_CALLER:
+  - start|ROUTE_ACC_CALLEE:
+  - start|ROUTE_SET_ACC_CALLEE_CALL_COUNTERS:
+  - return|ROUTE_SET_ACC_CALLEE_CALL_COUNTERS:
+  - return|ROUTE_ACC_CALLEE:
+  - start|ROUTE_SCA_UPDATE:
+  - return|ROUTE_SCA_UPDATE:
+  - start|ROUTE_ADD_AOC_HEADER:
+  - return|ROUTE_ADD_AOC_HEADER:
+  - start|BRANCH_ROUTE_SBC:
+  - start|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
+  - return|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
+  - start|ROUTE_SET_CALLEE_DIALOG:
+  - start|ROUTE_CNT_DLG_CHECK:
+  - return|ROUTE_CNT_DLG_CHECK:
+  - start|ROUTE_SET_CALLEE_DIALOG_TOTAL:
+  - return|ROUTE_SET_CALLEE_DIALOG_TOTAL:
+  - start|ROUTE_SET_CALLEE_DIALOG_ACTIVE:
+  - return|ROUTE_SET_CALLEE_DIALOG_ACTIVE:
+  - return|ROUTE_SET_CALLEE_DIALOG:
+  - start|ROUTE_SET_BRANCH_HDRS:
+  - start|ROUTE_PREPARE_UA:
+  - return|ROUTE_PREPARE_UA:
+  - return|ROUTE_SET_BRANCH_HDRS:
+  - start|ROUTE_SET_RUSER:
+  - return|ROUTE_SET_RUSER:
+  - start|ROUTE_BRANCH_ACC_RTP:
+  - return|ROUTE_BRANCH_ACC_RTP:
+  - start|ROUTE_FILTER_PRACK:
+  - return|ROUTE_FILTER_PRACK:
+  - start|ROUTE_PREPARE_SST:
+  - start|ROUTE_REMOVE_TIMER_SUPP_REQ:
+  - return|ROUTE_REMOVE_TIMER_SUPP_REQ:
+  - return|ROUTE_PREPARE_SST:
+  - start|ROUTE_PREPARE_MOH:
+  - return|ROUTE_PREPARE_MOH:
+  - start|ROUTE_SET_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - return|ROUTE_PREPARE_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - return|ROUTE_PREPARE_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - return|ROUTE_PREPARE_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - return|ROUTE_PREPARE_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - return|ROUTE_PREPARE_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - return|ROUTE_PREPARE_CALLER_CLI:
+  - return|ROUTE_SET_CALLER_CLI:
+  - start|ROUTE_SET_CALLEE:
+  - return|ROUTE_SET_CALLEE:
+  - start|ROUTE_ADD_CALLINFO:
+  - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
+  - start|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - return|BRANCH_ROUTE_SBC:
+  - start|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+sip_in:
+ - 'INVITE sip:[% invite_manager_scenarios_pbx_test.manager.pbx_extension %]@invite-manager.scenarios-pbx.test SIP/2.0'
+ - 'Record-Route: <sip:127.0.0.1;r2=on;lr=on;ftag=[^;]+;ngcplb=yes;nat=yes;socket=udp:[% server_ip %]:5060>'
+ - 'Record-Route: <sip:[% server_ip %];r2=on;lr=on;ftag=[^;]+;ngcplb=yes;nat=yes;socket=udp:[% server_ip %]:5060>'
+ - 'From: <sip:[% scenarios.0.username %]@invite-manager.scenarios-pbx.test>;tag=[\w-]+'
+ - 'To: <sip:[% invite_manager_scenarios_pbx_test.manager.pbx_extension %]@invite-manager.scenarios-pbx.test>'
+ - 'CSeq: \d+ INVITE'
+ - 'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %];alias=[^;]+>'
+ - 'Proxy-Authorization: Digest username="[% scenarios.0.username %]",realm="invite-manager.scenarios-pbx.test",uri="sip:[% server_ip %]:5060",nonce="[^"]+",response="[^"]+",algorithm=MD5'
+ - 'Content-Type: application/sdp'
+ - 'Content-Length:\s+\d+'
+ - 'P-NGCP-Src-Ip: [% scenarios.0.ip %]'
+ - 'P-NGCP-Src-Port: [% scenarios.0.port %]'
+ - 'P-NGCP-Src-Proto: udp'
+ - 'P-NGCP-Src-Af: 4'
+ - 'P-Sock-Info: udp:[% server_ip %]:5060'
+ - 'P-LB-Uptime:\s+\d+'
+ - 'P-NGCP-Src-Nat: 1'
+ - 'v=0'
+ - 'o=user1 \d+ \d+ IN IP4 [% scenarios.0.ip %]'
+ - 's=-'
+ - 'c=IN IP4 [% scenarios.0.ip %]'
+ - 't=0 0'
+ - 'm=audio [% scenarios.0.mport %] RTP/AVP 8'
+ - 'a=rtpmap:8 PCMA/8000'
+ - 'a=ptime:50'
+sip_out:
+  - [
+      'SIP/2.0 100 Trying',
+      'From: <sip:[% scenarios.0.username %]@invite-manager.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:[% invite_manager_scenarios_pbx_test.manager.pbx_extension %]@invite-manager.scenarios-pbx.test>',
+      'CSeq: \d+ INVITE',
+      'P-Out-Socket: udp:[% server_ip %]:5060',
+      'P-NGCP-Auth-IP: [% scenarios.0.ip %]',
+      'P-NGCP-Auth-UA: <null>',
+      'Server: Sipwise NGCP Proxy',
+      'Content-Length:\s+0',
+    ]
+  - [
+      'SIP/2.0 101 Connecting',
+      'From: <sip:[% scenarios.0.username %]@invite-manager.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:[% invite_manager_scenarios_pbx_test.manager.pbx_extension %]@invite-manager.scenarios-pbx.test>',
+      'CSeq: \d+ INVITE',
+      'P-Out-Socket: udp:[% server_ip %]:5060',
+      'P-NGCP-Auth-IP: [% scenarios.0.ip %]',
+      'P-NGCP-Auth-UA: <null>',
+      'P-NGCP-Authorization: secretary@invite-manager.scenarios-pbx.test',
+      'P-NGCP-Authorized: 1',
+      'P-NGCP-Caller-Info: <sip:[% scenarios.0.username %]@invite-manager.scenarios-pbx.test>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %];primary=[% invite_manager_scenarios_pbx_test.secretary.pbx_phone_number %]',
+      'P-Caller-UUID: [% invite_manager_scenarios_pbx_test.secretary.uuid %]',
+      'Server: Sipwise NGCP Proxy',
+      'Content-Length:\s+0',
+    ]
+  - [
+      'PUBLISH sip:[% scenarios.0.username %]@invite-manager.scenarios-pbx.test SIP/2.0',
+      'To: <sip:[% scenarios.0.username %]@invite-manager.scenarios-pbx.test>',
+      'From: <sip:[% scenarios.0.username %]@invite-manager.scenarios-pbx.test>;tag=[\w-]+',
+      'CSeq: \d+ PUBLISH',
+      'Content-Length:\s+\d+',
+      'User-Agent: Sipwise NGCP Proxy',
+      'Event: dialog',
+      'Content-Type: application/dialog-info\+xml',
+    ]
+  - [
+      'INVITE sip:[% scenarios.0.responders.0.username %]@[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %] SIP/2.0',
+      'Record-Route: <sip:127.0.0.1:5062;lr=on;ftag=[^;]+;did=[^;]+;ice_caller=strip;ice_callee=strip;aset=\d+;rtpprx=yes;vsf=[^;]+>',
+      'Record-Route: <sip:127.0.0.1;r2=on;lr=on;ftag=[^;]+;ngcplb=yes;nat=yes;socket=udp:[% server_ip %]:5060>',
+      'Record-Route: <sip:[% server_ip %];r2=on;lr=on;ftag=[^;]+;ngcplb=yes;nat=yes;socket=udp:[% server_ip %]:5060>',
+      'From: <sip:[% invite_manager_scenarios_pbx_test.secretary.pbx_phone_number %]@invite-manager.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:[% invite_manager_scenarios_pbx_test.manager.pbx_extension %]@invite-manager.scenarios-pbx.test>',
+      'CSeq: \d+ INVITE',
+      'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %];alias=[^;]+>',
+      'Content-Type: application/sdp',
+      'Content-Length:\s+\d+',
+      'P-LB-Uptime:\s+\d+',
+      'P-Asserted-Identity: <sip:[% invite_manager_scenarios_pbx_test.secretary.pbx_phone_number %]@invite-manager.scenarios-pbx.test>',
+      'P-Caller-UUID: [% invite_manager_scenarios_pbx_test.secretary.uuid %]',
+      'P-Callee-UUID: [% invite_manager_scenarios_pbx_test.manager.uuid %]',
+      'P-NGCP-Rtpengine-Bleg: 1',
+      'P-Called-Party-ID: <sip:[% scenarios.0.responders.0.username %]@invite-manager.scenarios-pbx.test>',
+      'P-App-Param: ;calltimer=21600;aleg_sst_enable=no;sst_enable=no;hold_alter_b2b_bleg=no;hold_alter_b2b_aleg=no;fast_ack=no;a_park_domain=[% invite_manager_customerpbx_test.id %];b_park_domain=[% invite_manager_customerpbx_test.id %]',
+      'P-App-Name: sbc',
+      'P-NGCP-Caller-Info: <sip:[% scenarios.0.username %]@invite-manager.scenarios-pbx.test>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %];primary=[% invite_manager_scenarios_pbx_test.secretary.pbx_phone_number %]',
+      'P-NGCP-Callee-Info: <sip:[% invite_manager_scenarios_pbx_test.manager.phone_number %]@invite-manager.scenarios-pbx.test>;ip=[% scenarios.0.responders.0.ip %];port=[% scenarios.0.responders.0.port %];primary=[% invite_manager_scenarios_pbx_test.manager.phone_number %]',
+      'P-NGCP-Presence-Caller: sip:[% scenarios.0.username %]@invite-manager.scenarios-pbx.test',
+      'P-NGCP-Presence-Callee: sip:[% scenarios.0.responders.0.username %]@invite-manager.scenarios-pbx.test',
+      'P-D-Uri: sip:lb@127.0.0.1;lr;received=sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];socket=sip:[% server_ip %]:5060',
+      'P-Proxy-Uri: sip:127.0.0.1:5062',
+      'v=0',
+      'o=user1 \d+ \d+ IN IP4 [% server_ip %]',
+      's=-',
+      'c=IN IP4 [% server_ip %]',
+      't=0 0',
+      'm=audio \d+ RTP/AVP 8',
+      'a=rtpmap:8 PCMA/8000',
+      'a=sendrecv',
+      'a=rtcp:\d+',
+      'a=rtcp-mux',
+      'a=ptime:50',
+    ]

@@ -1,0 +1,63 @@
+---
+test_uuid: invite_manager
+domains:
+  invite-manager.scenarios-pbx.test:
+    reseller_id: 1
+customers:
+  "invite-manager.customerpbx.test":
+    contacts:
+      - email: "invite-manager.customerpbx.test@spce.test"
+        reseller_id: 1
+    details:
+      status: "active"
+      type: "pbxaccount"
+      billing_profile_id: 1
+      reseller_id: 1
+subscribers:
+  invite-manager.scenarios-pbx.test:
+    manager:
+      customer: "invite-manager.customerpbx.test"
+      password: testuser
+      cc: 43
+      ac: 1
+      sn: 1001
+      is_pbx_pilot: 1
+      pbx_extension: 1001
+    secretary:
+      customer: "invite-manager.customerpbx.test"
+      password: testuser
+      cc: 43
+      ac: 1
+      sn: 1002
+      is_pbx_pilot: 0
+      pbx_extension: 1002
+    testuser1003:
+      customer: "invite-manager.customerpbx.test"
+      password: testuser
+      cc: 43
+      ac: 1
+      sn: 1003
+      is_pbx_pilot: 0
+      pbx_extension: 1003
+scenarios:
+  - ip: 127.126.0.1
+    username: secretary
+    domain: invite-manager.scenarios-pbx.test
+    responders:
+      - ip: 127.1.0.1
+        username: manager
+        domain: invite-manager.scenarios-pbx.test
+        register: "yes"
+  - ip: 127.126.2.1
+    username: testuser1003
+    domain: invite-manager.scenarios-pbx.test
+    responders:
+      - ip: 127.2.0.2
+        username: manager
+        domain: invite-manager.scenarios-pbx.test
+        register: "yes"
+        active: "no"
+      - ip: 127.2.0.1
+        username: secretary
+        domain: invite-manager.scenarios-pbx.test
+        register: "yes"
