@@ -237,7 +237,7 @@ sip_out:
       'To: <sip:[% incoming_hih_scenarios_test.testuser1003.phone_number %]@',
       'Content-Type: application/sdp',
       'History-Info: <sip:anonymous@anonymous.invalid;user=phone\?privacy=history>;index=1',
-      'History-Info: <sip:\+[% incoming_hih_scenarios_test.testuser1003.phone_number %]@incoming-hih.scenarios.test;user=phone;cause=302\?[pP]rivacy=history>;index=1.1',
+      'History-Info: <sip:anonymous@anonymous.invalid;user=phone;cause=302\?Privacy=history>;index=1.1',
       'History-Info: <sip:\+[% incoming_hih_scenarios_test.testuser1002.phone_number %]@incoming-hih.scenarios.test:5060;user=phone;cause=302>;index=1.1.1',
       'P-Callee-UUID: \w+',
       'P-Asserted-Identity: <sip:[% scenarios.0.username %]@',
