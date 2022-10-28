@@ -6,4 +6,4 @@ messages:
   - 'To: <sip:[% scenarios.0.username %]@incoming-shared-line.scenarios-pbx.test>;tag=[\w-]+'
   - 'CSeq: \d+ OPTIONS'
   - 'Server: Sipwise NGCP Proxy'
-  - 'Content-Length: 0'
+  - 'Content-Length:\s+0'

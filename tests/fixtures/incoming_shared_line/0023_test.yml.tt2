@@ -24,7 +24,7 @@ sip_in:
  - 'From: <sip:[% incoming_shared_line_scenarios_pbx_test.testuser1003.pbx_phone_number %]@incoming-shared-line.scenarios-pbx.test>;tag=[\w-]+'
  - 'CSeq: \d+ CANCEL'
  - 'Contact: <sip:127.0.0.1:5080;transport=udp>'
- - 'P-LB-Uptime: \d+'
+ - 'P-LB-Uptime:\s+\d+'
  - 'P-Asserted-Identity: <sip:[% incoming_shared_line_scenarios_pbx_test.testuser1003.pbx_phone_number %]@incoming-shared-line.scenarios-pbx.test>'
  - 'P-Caller-UUID: [% incoming_shared_line_scenarios_pbx_test.testuser1003.uuid %]'
  - 'P-Callee-UUID: [% incoming_shared_line_scenarios_pbx_test.testuser1002.uuid %]'
@@ -35,7 +35,7 @@ sip_in:
  - 'P-NGCP-Presence-Callee: sip:[% scenarios.0.username %]@incoming-shared-line.scenarios-pbx.test'
  - 'P-D-Uri: sip:lb@127.0.0.1;lr;received=sip:[% scenarios.2.responders.0.ip %]:[% scenarios.2.responders.0.port %];socket=sip:[% server_ip %]:5060'
  - 'Reason: SIP;cause=200;text="Call completed elsewhere"'
- - 'Content-Length: 0'
+ - 'Content-Length:\s+0'
 sip_out:
   - [
       'SIP/2.0 100 Trying',
@@ -43,14 +43,14 @@ sip_out:
       'From: <sip:[% incoming_shared_line_scenarios_pbx_test.testuser1003.pbx_phone_number %]@incoming-shared-line.scenarios-pbx.test>;tag=[\w-]+',
       'CSeq: \d+ CANCEL',
       'Server: Sipwise NGCP Proxy',
-      'Content-Length: 0',
+      'Content-Length:\s+0',
     ]
   - [
       'CANCEL sip:[% scenarios.2.responders.0.username %]@[% scenarios.2.responders.0.ip %]:[% scenarios.2.responders.0.port %] SIP/2.0',
       'From: <sip:[% incoming_shared_line_scenarios_pbx_test.testuser1003.pbx_phone_number %]@incoming-shared-line.scenarios-pbx.test>;tag=[\w-]+',
       'To: <sip:[% scenarios.0.username %]@incoming-shared-line.scenarios-pbx.test>',
       'CSeq: \d+ CANCEL',
-      'Content-Length: 0',
+      'Content-Length:\s+0',
       'Reason: SIP;cause=200;text="Call completed elsewhere"',
     ]
   - [
@@ -59,5 +59,5 @@ sip_out:
       'From: <sip:[% incoming_shared_line_scenarios_pbx_test.testuser1003.pbx_phone_number %]@incoming-shared-line.scenarios-pbx.test>;tag=[\w-]+',
       'CSeq: \d+ CANCEL',
       'Server: Sipwise NGCP Proxy',
-      'Content-Length: 0',
+      'Content-Length:\s+0',
     ]

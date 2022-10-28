@@ -77,8 +77,8 @@ def load_json(filepath):
 
 def is_zero(matchobj):
     if matchobj.group(1) == "0":
-        return ": 0"
-    return r": \d+"
+        return r":\s+0"
+    return r":\s+\d+"
 
 
 class Generator:
@@ -141,6 +141,12 @@ class Generator:
                 (
                     r"alias={}([^0-9]+|$)".format(subs[field]),
                     r"alias=[% {}.{} %]\1".format(tt, field),
+                )
+            )
+            rules.append(
+                (
+                    r"P-First-Calle(e|r)-(U|N)PN: {}".format(subs[field]),
+                    r"P-First-Calle\1-\2PN: [% {}.{} %]".format(tt, field),
                 )
             )
 
@@ -247,6 +253,14 @@ class Generator:
             sip_rule(subs, f"{id_dom}.{key}", "phone_number")
             if "pbx_extension" in subs:
                 sip_rule(subs, f"{id_dom}.{key}", "pbx_extension")
+                rules.append(
+                    (
+                        r"^(P-.+-PBX-Ext): (.+)",
+                        r"\1: [% {} %]".format(
+                            f"{id_dom}.{key}.pbx_extension"
+                        ),
+                    )
+                )
             if "pbx_phone_number" in subs:
                 sip_rule(subs, f"{id_dom}.{key}", "pbx_phone_number")
             if "alias_numbers" in subs:
@@ -280,10 +294,19 @@ class Generator:
         if hdr is None:
             rules.append((r"^a=rtcp:\d+", r"a=rtcp:\\d+"))
             rules.append((r"^m=audio \d+ (.+)", r"m=audio \\d+ \1"))
+            rules.append(
+                (r"<\\\?xml version=\"[^\"]+\"\\\?><dialog-info .+", "")
+            )
         elif hdr in ["from", "to"]:
             rules.append((r";tag=[^;>]+", r";tag=[\\w-]+"))
-        elif hdr in ["www-authenticate", "proxy-authenticate"]:
+        elif hdr in [
+            "www-authenticate",
+            "authorization",
+            "proxy-authenticate",
+            "proxy-authorization",
+        ]:
             rules.append((r"nonce=\"[^\"]+", 'nonce="[^"]+'))
+            rules.append((r"response=\"[^\"]+", 'response="[^"]+'))
         elif hdr in ["server", "user-agent"]:
             rules.append(
                 (
@@ -302,10 +325,13 @@ class Generator:
         elif hdr == "contact":
             rules.append((r"expires=[1-9]\d*", r"expires=\\d+"))
             rules.append((r";ngcpct=[^;>]+", r";ngcpct=[^;]+"))
+            rules.append((r";alias=[^;>]+", r";alias=[^;]+"))
         elif hdr == "cseq":
             rules.append((r":\s+\d+", r": \\d+"))
         elif hdr == "subscription-state":
             rules.append((r";expires=[1-9]\d*", r";expires=\\d+"))
+        elif hdr == "sip-if-match":
+            rules.append((r": (.+)", ":"))
         return rules
 
     def subst_common(self, line: str, hdr: str) -> str:
@@ -398,8 +424,22 @@ class CFGTGenerator(Generator):
         def add_ngcp_info(subs, tt):
             rules.append(
                 (
-                    r"^P-Calle(r|e)-UUID: {}".format(subs["uuid"]),
-                    r"P-Calle\1-UUID: [% {0}.uuid %]".format(tt),
+                    r"^P(-Prev)?-Calle(r|e)-UUID: {}".format(subs["uuid"]),
+                    r"P\1-Calle\2-UUID: [% {0}.uuid %]".format(tt),
+                )
+            )
+
+        def add_customer_info(cust, tt):
+            rules.append(
+                (
+                    r"(a|b)_park_domain={}([^\d])?".format(cust["id"]),
+                    r"\1_park_domain=[% {0}.id %]\2".format(tt),
+                )
+            )
+            rules.append(
+                (
+                    r"^P-([^:]+): {}$".format(cust["id"]),
+                    r"P-\1: [% {0}.id %]".format(tt),
                 )
             )
 
@@ -410,7 +450,10 @@ class CFGTGenerator(Generator):
         for key in ids[id_dom]:
             subs = ids[id_dom][key]
             add_ngcp_info(subs, f"{id_dom}.{key}")
-
+        if "customers" in ids.keys():
+            for customer_key in ids["customers"]:
+                customer = ids[customer_key]
+                add_customer_info(customer, f"{customer_key}")
         return rules
 
     def generate_common_rules(self, hdr: str) -> list:

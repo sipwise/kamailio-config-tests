@@ -153,6 +153,7 @@ sub manage_domains
 sub manage_customers
 {
   my $data = shift;
+  $ids->{customers} = ();
   foreach my $customer (sort keys %{$data->{customers}})
   {
     my $customer_data = $data->{customers}->{$customer};
@@ -165,8 +166,9 @@ sub manage_customers
       $customer_data->{customer_id} = $api->create_customer($customer_data->{details});
       print "customer [$customer]: created [$customer_data->{customer_id}]\n";
     }
-    my $key = $customer =~ tr/\./_/r;
+    my $key = $customer =~ tr/\-\./_/r;
     $ids->{$key}->{id} = $customer_data->{customer_id};
+    push(@{$ids->{customers}}, $key);
   }
   return;
 }
@@ -176,8 +178,7 @@ sub create_subscriber
   my ($username, $domain , $data , $s) = @_;
   my $pbx_groups = $data->{pbx_groups};
   my $key = $username =~ tr/\./_/r;
-  my $key_dom = $domain =~ tr/\./_/r;
-  $key_dom = $key_dom =~ tr/\-/_/r;
+  my $key_dom = $domain =~ tr/\-\./_/r;
 
   $s->{pbx_group_ids} = [];
   $s->{username} = $username;

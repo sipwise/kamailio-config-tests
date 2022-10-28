@@ -64,3 +64,17 @@ def test_primary_numbers(generate_test_tt2_file, caplog):
 
         assert check_filecontent(TT2_FILE.format(scenario, id), res.out_file)
         assert res.returncode == 0
+
+
+def test_internal_headers(generate_test_tt2_file, caplog):
+    caplog.set_level(logging.DEBUG)
+    scenario = "invite_manager_2sec"
+    for id in ["0026"]:
+        res = generate_test_tt2_file(
+            "--type=cfgt",
+            IDS_FILE.format(scenario),
+            MSG_FILE.format(scenario, id),
+        )
+
+        assert check_filecontent(TT2_FILE.format(scenario, id), res.out_file)
+        assert res.returncode == 0

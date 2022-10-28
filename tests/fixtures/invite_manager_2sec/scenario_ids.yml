@@ -1,0 +1,85 @@
+---
+customers:
+- invite_manager_2sec_customerpbx_test
+domains:
+- invite_manager_2sec_scenarios_pbx_test
+extra_info: {}
+invite_manager_2sec_customerpbx_test:
+  id: '365'
+invite_manager_2sec_scenarios_pbx_test:
+  manager:
+    ac: '1'
+    cc: '43'
+    pbx_extension: 1001
+    pbx_phone_number: '43110001001'
+    phone_number: '4311000'
+    sn: 1000
+    uuid: 24eebc4c-7262-4cb6-8b9b-b1599c2117f3
+  secretary1:
+    ac: '1'
+    cc: '43'
+    pbx_extension: 1002
+    pbx_phone_number: '43110001002'
+    phone_number: '4311001'
+    sn: 1001
+    uuid: 523c0503-beda-400c-941d-7007c880591f
+  secretary2:
+    ac: '1'
+    cc: '43'
+    pbx_extension: 1004
+    pbx_phone_number: '43110001004'
+    phone_number: '4311002'
+    sn: 1002
+    uuid: 37a0c876-4c61-4544-801a-709818fc6d6f
+  testuser1003:
+    ac: '1'
+    cc: '43'
+    pbx_extension: 1003
+    pbx_phone_number: '43110001003'
+    phone_number: '4311003'
+    sn: 1003
+    uuid: 48073a4f-042f-4e5f-a4c2-3072f4927311
+scenarios:
+- devid: secretary2
+  domain: invite-manager-2sec.scenarios-pbx.test
+  ip: 10.20.29.2
+  mport: 45003
+  port: 51602
+  responders:
+  - domain: invite-manager-2sec.scenarios-pbx.test
+    ip: 10.20.29.2
+    mport: 45006
+    port: 51603
+    proto: udp
+    register: yes
+    username: manager
+  username: secretary2
+- devid: testuser1003
+  domain: invite-manager-2sec.scenarios-pbx.test
+  ip: 10.20.29.2
+  mport: 45009
+  port: 51604
+  responders:
+  - domain: invite-manager-2sec.scenarios-pbx.test
+    ip: 10.20.29.2
+    mport: 45012
+    port: 51605
+    proto: udp
+    register: yes
+    username: manager
+  - domain: invite-manager-2sec.scenarios-pbx.test
+    ip: 10.20.29.2
+    mport: 45015
+    port: 51606
+    proto: udp
+    register: yes
+    username: secretary2
+  - domain: invite-manager-2sec.scenarios-pbx.test
+    ip: 10.20.29.2
+    mport: 45018
+    port: 51607
+    proto: udp
+    register: yes
+    username: secretary1
+  username: testuser1003
+server_ip: 192.168.2.75

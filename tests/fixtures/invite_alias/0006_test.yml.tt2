@@ -19,7 +19,7 @@ sip_in:
  - 'From: <sip:[% invite_alias_scenarios_pbx_test.testuser1002.phone_number %]@invite-alias.scenarios-pbx.test>;tag=[\w-]+'
  - 'To: <sip:[% scenarios.0.responders.0.username %]@invite-alias.scenarios-pbx.test>'
  - 'CSeq: \d+ INVITE'
- - 'P-LB-Uptime: \d+'
+ - 'P-LB-Uptime:\s+\d+'
  - 'P-Asserted-Identity: <sip:[% invite_alias_scenarios_pbx_test.testuser1002.phone_number %]@invite-alias.scenarios-pbx.test>'
  - 'P-Caller-UUID: [% invite_alias_scenarios_pbx_test.testuser1002.uuid %]'
  - 'P-Callee-UUID: [% invite_alias_scenarios_pbx_test.testuser1003.uuid %]'
@@ -30,7 +30,7 @@ sip_in:
  - 'P-NGCP-Presence-Callee: sip:[% scenarios.0.responders.0.username %]@invite-alias.scenarios-pbx.test'
  - 'P-D-Uri: sip:lb@127.0.0.1;lr;received=sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];socket=sip:[% server_ip %]:5060'
  - 'Content-Type: application/sdp'
- - 'Content-Length: \d+'
+ - 'Content-Length:\s+\d+'
  - 'Contact: <sip:127.0.0.1:5080;transport=udp>'
  - 'v=0'
  - 'o=user1 \d+ \d+ IN IP4 [% server_ip %]'
@@ -50,7 +50,7 @@ sip_out:
       'To: <sip:[% scenarios.0.responders.0.username %]@invite-alias.scenarios-pbx.test>',
       'CSeq: \d+ INVITE',
       'Server: Sipwise NGCP Proxy',
-      'Content-Length: 0',
+      'Content-Length:\s+0',
     ]
   - [
       'INVITE sip:[% scenarios.0.responders.0.username %]@[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %] SIP/2.0',
@@ -58,7 +58,7 @@ sip_out:
       'From: <sip:[% invite_alias_scenarios_pbx_test.testuser1002.phone_number %]@invite-alias.scenarios-pbx.test>;tag=[\w-]+',
       'To: <sip:[% scenarios.0.responders.0.username %]@invite-alias.scenarios-pbx.test>',
       'CSeq: \d+ INVITE',
-      'P-LB-Uptime: \d+',
+      'P-LB-Uptime:\s+\d+',
       'P-Asserted-Identity: <sip:[% invite_alias_scenarios_pbx_test.testuser1002.phone_number %]@invite-alias.scenarios-pbx.test>',
       'P-Caller-UUID: [% invite_alias_scenarios_pbx_test.testuser1002.uuid %]',
       'P-Callee-UUID: [% invite_alias_scenarios_pbx_test.testuser1003.uuid %]',
@@ -67,7 +67,7 @@ sip_out:
       'P-NGCP-Callee-Info: <sip:[% invite_alias_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]@invite-alias.scenarios-pbx.test>;ip=[% scenarios.0.responders.0.ip %];port=[% scenarios.0.responders.0.port %];primary=[% invite_alias_scenarios_pbx_test.testuser1003.pbx_phone_number %];alias=[% invite_alias_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]',
       'P-D-Uri: sip:lb@127.0.0.1;lr;received=sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];socket=sip:[% server_ip %]:5060',
       'Content-Type: application/sdp',
-      'Content-Length: \d+',
+      'Content-Length:\s+\d+',
       'Contact: <sip:127.0.0.1:5080;transport=udp>',
       'v=0',
       'o=user1 \d+ \d+ IN IP4 [% server_ip %]',
