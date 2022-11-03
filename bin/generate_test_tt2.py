@@ -343,7 +343,7 @@ class Generator:
 
     def subst_ids(self, line: str, hdr: str) -> str:
         for rule in self.ids_rules:
-            line = re.sub(rule[0], rule[1], line)
+            line = re.sub(rule[0], rule[1], line, flags=re.IGNORECASE)
         return line
 
     @classmethod
