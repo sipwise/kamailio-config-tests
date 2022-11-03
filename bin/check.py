@@ -36,7 +36,7 @@ except ImportError:
 
 class XAvp:
 
-    """ Class to simulate the xavp """
+    """Class to simulate the xavp"""
 
     def __init__(self, name, data):
         result = re.match(r"\$xavp\((\w+)\)", name)
@@ -112,22 +112,22 @@ class Section(Flag):
 
 class Test:
 
-    """ Class to create TAP output """
+    """Class to create TAP output"""
 
     def __init__(self):
         self._step = []
         self._errflag = Section(0)
 
     def comment(self, msg):
-        """ Add a comment """
+        """Add a comment"""
         self._step.append({"result": None, "msg_ok": msg})
 
     def ok(self, msg=None):
-        """ Add a ok result """
+        """Add a ok result"""
         self._step.append({"result": True, "msg_ok": msg})
 
     def error(self, section, msg_err):
-        """ Add an error result"""
+        """Add an error result"""
         self._step.append({"result": False, "msg_err": msg_err})
         self._errflag |= section
 
@@ -163,7 +163,7 @@ class Test:
         return result
 
     def test(self, section, value_expected, value, msg_err, msg_ok=None):
-        """ Test two values and add the result"""
+        """Test two values and add the result"""
         result = Test.compare(value_expected, value)
         val = {"result": result, "msg_err": msg_err, "msg_ok": msg_ok}
         self._step.append(val)
@@ -201,7 +201,7 @@ class Test:
 
 
 def check_flow_vars(sk, sv, cv, test):
-    """ check the vars on a flow level"""
+    """check the vars on a flow level"""
     sec = Section.FLOW_VARS
     for k in sv.keys():
         logging.debug("check k:'%s'" % k)
@@ -247,7 +247,7 @@ def check_flow_vars(sk, sv, cv, test):
 
 
 def check_flow(scen, check, test):
-    """ checks the flow and the vars inside"""
+    """checks the flow and the vars inside"""
     sec = Section.FLOW
     for i in range(len(scen)):
         (sk, sv) = scen[i].popitem()
@@ -357,7 +357,6 @@ def main(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="generate TAP result")
-    grp = parser.add_mutually_exclusive_group()
     parser.add_argument("test_yaml_file", help="YAML file with checks")
     parser.add_argument("kam_file", help="JSON cfgt kamailio file")
     parser.add_argument("-d", "--debug", action="store_true")
