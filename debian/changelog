@@ -1,3 +1,20 @@
+kamailio-config-tests (9.5.7.0+0~mr9.5.7.0) unstable; urgency=medium
+
+  [ Alessio Garzi ]
+  * [457efc4] TT#179200 Fix incoming_hih scenario
+  * [aa29451] MT#55360 incoming hih with privacy=history
+
+  [ Victor Seva ]
+  * [9782c8d] TT#81700 fail if cdr_check don't pass
+  * [bef2597] TT#156100 fix flow after 1c3cbdb72d6a82a96e778873cd5e49918bca9da5
+  * [445d974] TT#81700 get_results.sh: show prove summary
+  * [6c5154b] TT#156100 fix flow after 1c3cbdb72d6a82a96e778873cd5e49918bca9da5, take two
+
+  [ Donat Zenichev ]
+  * [e3505ea] MT#55739 incoming_hih: actualize a regex for HIH headers
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 07 Nov 2022 14:59:14 +0100
+
 kamailio-config-tests (9.5.6.0+0~mr9.5.6.0) unstable; urgency=medium
 
   [ Marco Capetta ]
