@@ -297,6 +297,7 @@ class Generator:
             rules.append(
                 (r"<\\\?xml version=\"[^\"]+\"\\\?><dialog-info .+", "")
             )
+            rules.append((r";alias=[^; ]+", r";alias=[^; ]+"))
         elif hdr in ["from", "to"]:
             rules.append((r";tag=[^;>]+", r";tag=[\\w-]+"))
         elif hdr in [
