@@ -425,8 +425,8 @@ class CFGTGenerator(Generator):
         def add_ngcp_info(subs, tt):
             rules.append(
                 (
-                    r"^P(-Prev)?-Calle(r|e)-UUID: {}".format(subs["uuid"]),
-                    r"P\1-Calle\2-UUID: [% {0}.uuid %]".format(tt),
+                    r"^P(-Prev)?-Calle(r|e)-U(UID): {}".format(subs["uuid"]),
+                    r"P\1-Calle\2-U\3: [% {0}.uuid %]".format(tt),
                 )
             )
 
