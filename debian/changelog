@@ -1,3 +1,10 @@
+kamailio-config-tests (10.5.2.4+0~mr10.5.2.4) unstable; urgency=medium
+
+  [ Alessio Garzi ]
+  * [af4dede] MT#56015 no need to check sdp description
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 23 Nov 2022 08:33:10 +0100
+
 kamailio-config-tests (10.5.2.3+0~mr10.5.2.3) unstable; urgency=medium
 
   [ Donat Zenichev ]
