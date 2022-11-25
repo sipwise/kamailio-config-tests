@@ -1,0 +1,42 @@
+flow:
+  - start|DEFAULT_ROUTE:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_LEG_B:
+  - start|ROUTE_INITVARS:
+  - return|ROUTE_INITVARS:
+  - start|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+sip_in:
+  - 'INVITE sip:[% scenarios.0.responders.1.username %]@[% scenarios.0.responders.1.ip %]:[% scenarios.0.responders.1.port %];cause=302 SIP/2.0'
+  - 'From: <sip:[% invite_redirect_scenarios_test.testuser1002.phone_number %]@'
+  - 'To: <sip:[% scenarios.0.responders.1.username %]@'
+  - 'CSeq: \d+ INVITE'
+  - 'P-D-Uri: sip:lb@127.0.0.1;lr;(received=sip:[% scenarios.0.responders.1.ip %]:[% scenarios.0.responders.1.port %];)?socket=sip:[% server_ip %]:5060'
+  - 'Content-Type: application/sdp'
+  - 'Content-Length:\s+\d+'
+  - 'Contact: <sip:127.0.0.1:5080;transport=udp>'
+sip_out:
+  - [
+      'SIP/2.0 100 Trying',
+      'From: <sip:[% invite_redirect_scenarios_test.testuser1002.phone_number %]@',
+      'To: <sip:[% scenarios.0.responders.1.username %]@',
+      'CSeq: \d+ INVITE',
+      'Server: Sipwise NGCP Proxy',
+      'Content-Length:\s+0'
+    ]
+  - [
+      'INVITE sip:[% scenarios.0.responders.1.username %]@[% scenarios.0.responders.1.ip %]:[% scenarios.0.responders.1.port %];cause=302 SIP/2.0',
+      'From: <sip:[% invite_redirect_scenarios_test.testuser1002.phone_number %]@',
+      'To: <sip:[% scenarios.0.responders.1.username %]@',
+      'CSeq: \d+ INVITE',
+      'P-D-Uri: sip:lb@127.0.0.1;lr;(received=sip:[% scenarios.0.responders.1.ip %]:[% scenarios.0.responders.1.port %];)?socket=sip:[% server_ip %]:5060',
+      'Content-Type: application/sdp',
+      'Content-Length:\s+\d+',
+      'Contact: <sip:127.0.0.1:5080;transport=udp>'
+    ]

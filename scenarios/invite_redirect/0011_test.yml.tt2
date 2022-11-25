@@ -1,0 +1,38 @@
+flow:
+  - start|DEFAULT_ONREPLY:
+  - start|REPLY_ROUTE_LEG_B:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+  - start|FAILURE_ROUTE_LEG_B:
+  - start|FAILURE_ROUTE_LEG_B:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+  - start|dialog:failed:
+  - return|dialog:failed:
+  - return|dialog:failed:
+sip_in:
+  - 'SIP/2.0 302 Moved Temporarily'
+  - 'From: <sip:[% invite_redirect_scenarios_test.testuser1002.phone_number %]@'
+  - 'To: <sip:[% scenarios.0.responders.0.username %]@'
+  - 'CSeq: \d+ INVITE'
+sip_out:
+  - [
+      '^ACK sip:[% scenarios.0.responders.0.username %]@',
+      'From: <sip:[% invite_redirect_scenarios_test.testuser1002.phone_number %]@',
+      'To: <sip:[% scenarios.0.responders.0.username %]@',
+      'CSeq: \d+ ACK',
+      'Content-Length: 0'
+    ]
+  - [
+      'SIP/2.0 302 Moved Temporarily',
+      'From: <sip:[% invite_redirect_scenarios_test.testuser1002.phone_number %]@',
+      'To: <sip:[% scenarios.0.responders.0.username %]@',
+      'CSeq: \d+ INVITE',
+      'Contact: <sip:[% scenarios.0.responders.1.username %]@',
+      'Content-Length: 0'
+    ]

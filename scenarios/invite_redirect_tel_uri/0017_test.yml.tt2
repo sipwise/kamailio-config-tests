@@ -13,11 +13,10 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  # this part of the scenario is less interesting for us, so just make sure INVITE passes through from B2B
-  - '^INVITE sip:[% scenarios.0.responders.1.username %]@'
-  - 'From: <sip:[% invite_redirect_tel_uri_scenarios_test.testuser1000.phone_number %]@invite-redirect-tel-uri.scenarios.test>;tag=[\w-]+'
-  - 'To: <sip:[% scenarios.0.responders.1.username %]@invite-redirect-tel-uri.scenarios.test>'
-  - 'CSeq: \d+ INVITE'
+ - '^INVITE sip:[% scenarios.0.responders.1.username %]@'
+ - 'From: <sip:[% invite_redirect_tel_uri_scenarios_test.testuser1000.phone_number %]@invite-redirect-tel-uri.scenarios.test>;tag=[\w-]+'
+ - 'To: <sip:[% scenarios.0.responders.1.username %]@invite-redirect-tel-uri.scenarios.test>'
+ - 'CSeq: \d+ INVITE'
 sip_out:
   - [
       'SIP/2.0 100 Trying',
@@ -25,11 +24,11 @@ sip_out:
       'To: <sip:[% scenarios.0.responders.1.username %]@invite-redirect-tel-uri.scenarios.test>',
       'CSeq: \d+ INVITE',
       'Server: Sipwise NGCP Proxy',
-      'Content-Length: 0'
+      'Content-Length:\s+0',
     ]
   - [
-      '^INVITE sip:[% scenarios.0.responders.1.username %]@',
+      'INVITE sip:[% scenarios.0.responders.1.username %]@',
       'From: <sip:[% invite_redirect_tel_uri_scenarios_test.testuser1000.phone_number %]@invite-redirect-tel-uri.scenarios.test>;tag=[\w-]+',
       'To: <sip:[% scenarios.0.responders.1.username %]@invite-redirect-tel-uri.scenarios.test>',
-      'CSeq: \d+ INVITE'
+      'CSeq: \d+ INVITE',
     ]

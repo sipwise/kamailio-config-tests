@@ -21,11 +21,11 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^INVITE'
-  - 'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>'
+  - '^INVITE sip:[% scenarios.0.responders.0.username %]@'
+  - 'From: <sip:[% scenarios.0.username %]@'
   - 'To: <sip:[% scenarios.0.responders.0.username %]@'
   - 'CSeq: 1 INVITE'
-  - 'Max-Forwards: 69'
+  - 'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>'
   - 'Content-Type: application/sdp'
 sip_out:
   - [

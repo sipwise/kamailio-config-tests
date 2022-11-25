@@ -5,7 +5,7 @@ flow:
   - start|ROUTE_NET_INFO:
   - return|ROUTE_NET_INFO:
   - start|ROUTE_CHECK_TEL_URI:
-  - exit|ROUTE_CHECK_TEL_URI:
+  - return|ROUTE_CHECK_TEL_URI:
   - start|ROUTE_PRX_REQUEST:
   - start|ROUTE_INITVARS:
   - return|ROUTE_INITVARS:
@@ -15,14 +15,10 @@ flow:
   - return|ROUTE_CLEAR_CALLEE_DOMAIN_PREF:
   - return|ROUTE_LOAD_CALLEE_DOMAIN_PREF:
   - start|ROUTE_FIND_CALLER:
-  - start|ROUTE_AUTH:
-  - start|ROUTE_AUTH_HELPER:
-  - return|ROUTE_AUTH_HELPER:
-  - start|ROUTE_ADD_CALLINFO_REPLY:
-  - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
-  - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
-  - return|ROUTE_ADD_CALLINFO_REPLY:
-  - return|ROUTE_AUTH:
+  - start|ROUTE_CONSUME_CF_HDRS:
+  - start|ROUTE_RESTORE_DEVALIAS_HEADERS:
+  - return|ROUTE_RESTORE_DEVALIAS_HEADERS:
+  - return|ROUTE_CONSUME_CF_HDRS:
   - return|ROUTE_FIND_CALLER:
   - start|ROUTE_LOAD_CALLER_PREF:
   - start|ROUTE_CLEAR_CALLER_PREF:
@@ -32,18 +28,18 @@ flow:
   - start|ROUTE_LOAD_CALLER_CONTRACT_PREF:
   - return|ROUTE_LOAD_CALLER_CONTRACT_PREF:
   - return|ROUTE_LOAD_CALLER_PREF:
-  - start|ROUTE_DLG_MANAGE:
-  - return|ROUTE_DLG_MANAGE:
   - start|ROUTE_APPLY_HEADER_RULES:
   - return|ROUTE_APPLY_HEADER_RULES:
-  - start|ROUTE_GET_CALLER_CLI:
-  - return|ROUTE_GET_CALLER_CLI:
   - start|ROUTE_GET_FORWARDER_CLI:
   - return|ROUTE_GET_FORWARDER_CLI:
   - start|ROUTE_CLIR:
   - return|ROUTE_CLIR:
   - start|ROUTE_CALLER_BLOCK_CLI:
   - return|ROUTE_CALLER_BLOCK_CLI:
+  - start|ROUTE_CHECK_USERPROV_CLI:
+  - start|ROUTE_CHECK_CLI_ALLOWED:
+  - return|ROUTE_CHECK_CLI_ALLOWED:
+  - return|ROUTE_CHECK_USERPROV_CLI:
   - start|ROUTE_CHECK_USERPROV_CLI:
   - start|ROUTE_CHECK_CLI_ALLOWED:
   - return|ROUTE_CHECK_CLI_ALLOWED:
@@ -58,6 +54,8 @@ flow:
   - return|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
   - start|ROUTE_SET_CALLEE_DIALOG:
   - start|ROUTE_CNT_DLG_CHECK:
+  - start|ROUTE_DLG_MANAGE:
+  - return|ROUTE_DLG_MANAGE:
   - return|ROUTE_CNT_DLG_CHECK:
   - start|ROUTE_SET_CALLEE_DIALOG_BASE:
   - return|ROUTE_SET_CALLEE_DIALOG_BASE:
@@ -68,6 +66,8 @@ flow:
   - return|ROUTE_BLOCK_IN:
   - return|ROUTE_LOAD_CALLEE_PREF:
   - start|ROUTE_NCOS_CHECK:
+  - start|ROUTE_NCOS:
+  - return|ROUTE_NCOS:
   - start|ROUTE_NCOS:
   - return|ROUTE_NCOS:
   - start|ROUTE_NCOS:
@@ -109,8 +109,6 @@ flow:
   - start|ROUTE_SET_ACC_CALLEE_CALL_COUNTERS:
   - return|ROUTE_SET_ACC_CALLEE_CALL_COUNTERS:
   - return|ROUTE_ACC_CALLEE:
-  - start|ROUTE_ADD_AOC_HEADER:
-  - return|ROUTE_ADD_AOC_HEADER:
   - start|BRANCH_ROUTE_SBC:
   - start|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
   - return|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
@@ -171,49 +169,44 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  # INVITE sip:+590590779990@sip.dauphintelecom.com
-  # From: <tel:+33967451213>;tag=<something>
-  # To: <tel:+59099909590779990>
-  # Diversion: <tel:+33148381230>;reason=<something>;privacy=<something>;counter=<something>
-  # P-Asserted-Identity: tel:+33967451213  <-- no angles around tel value
-  - '^INVITE sip:[% scenarios.0.responders.0.username %]@'
-  - 'From: <tel:\+[% invite_redirect_tel_uri_scenarios_test.testuser1000.phone_number %]>;tag=[\w-]+'
-  - 'To: <tel:\+[% invite_redirect_tel_uri_scenarios_test.testuser1001.phone_number %]>'
-  - 'Diversion: <tel:\+43111222333'
-  - 'P-Asserted-Identity: <tel:\+[% invite_redirect_tel_uri_scenarios_test.testuser1000.phone_number %]>'
+  - 'INVITE sip:[% scenarios.0.responders.1.username %]@invite-redirect.scenarios.test SIP/2.0'
+  - 'From: <sip:[% scenarios.0.username %]@'
+  - 'To: <sip:[% scenarios.0.responders.0.username %]@'
   - 'CSeq: \d+ INVITE'
-  - 'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>'
-  - 'Max-Forwards: 69'
+  - 'P-HIH-Cause: 302'
+  - 'P-NGCP-Sems-Instance: sbc'
+  - 'P-Caller-UUID: [% invite_redirect_scenarios_test.testuser1003.uuid %]'
+  - 'P-First-Caller-UPN: [% invite_redirect_scenarios_test.testuser1002.phone_number %]'
+  - 'P-First-Caller-NPN: [% invite_redirect_scenarios_test.testuser1002.phone_number %]'
+  - 'P-Acc-State: cfb'
+  - 'P-CF-Depth: 1'
+  - 'P-Orig-Callee-Dialed: testuser1003'
+  - 'P-Prev-Caller-UUID: [% invite_redirect_scenarios_test.testuser1002.uuid %]'
   - 'Content-Type: application/sdp'
-  # PAI has no angles around tel value
+  - 'Content-Length:\s+\d+'
+  - 'Contact: <sip:127.0.0.1:5080;transport=udp>'
 sip_out:
-  # From: <tel:+33967451213>;tag=<something>
-  # To: <tel:+59099909590779990>
   - [
-      '^SIP/2.0 100 Trying',
-      'From: <tel:\+[% invite_redirect_tel_uri_scenarios_test.testuser1000.phone_number %]>;tag=[\w-]+',
-      'To: <tel:\+[% invite_redirect_tel_uri_scenarios_test.testuser1001.phone_number %]',
+      'SIP/2.0 100 Trying',
+      'From: <sip:[% scenarios.0.username %]@',
+      'To: <sip:[% scenarios.0.responders.0.username %]@',
       'CSeq: \d+ INVITE',
-      'Content-Length: 0'
+      'Server: Sipwise NGCP Proxy',
+      'Content-Length:\s+0',
     ]
   - [
-      'SIP/2.0 101 Connecting',
-      'From: <tel:\+[% invite_redirect_tel_uri_scenarios_test.testuser1000.phone_number %]>;tag=[\w-]+',
-      'To: <tel:\+[% invite_redirect_tel_uri_scenarios_test.testuser1001.phone_number %]',
+      'INVITE sip:[% scenarios.0.responders.1.username %]@[% scenarios.0.responders.1.ip %]:[% scenarios.0.responders.1.port %];cause=302 SIP/2.0',
+      'From: <sip:[% invite_redirect_scenarios_test.testuser1002.phone_number %]@',
+      'To: <sip:[% scenarios.0.responders.0.username %]@',
       'CSeq: \d+ INVITE',
-      'Content-Length: 0'
-    ]
-  # INVITE sip:590590779990@74.116.94.226:5060
-  # From: <sip:0967451213@gp.dauphintelecom.com;user=phone>;tag=<something>
-  # To: <sip:590590779990@74.116.94.226:5060>
-  # Diversion: <sip:+33148381230@sip.dauphintelecom.com;user=phone>
-  - [
-      '^INVITE sip:[% scenarios.0.responders.0.username %]@[% scenarios.0.ip %]',
-      'From: <sip:[% invite_redirect_tel_uri_scenarios_test.testuser1000.phone_number %]@invite-redirect-tel-uri.scenarios.test',
-      'To: <sip:\+[% invite_redirect_tel_uri_scenarios_test.testuser1001.phone_number %]@invite-redirect-tel-uri.scenarios.test',
-      '_:NOT:_Diversion: \w+',
-      'P-Asserted-Identity: <sip:[% invite_redirect_tel_uri_scenarios_test.testuser1000.phone_number %]@invite-redirect-tel-uri.scenarios.test',
-      'CSeq: \d+ INVITE',
-      'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>',
-      'Content-Type: application/sdp'
+      'P-Caller-UUID: [% invite_redirect_scenarios_test.testuser1003.uuid %]',
+      'P-CF-Depth: 1',
+      'Content-Type: application/sdp',
+      'Content-Length:\s+\d+',
+      'Contact: <sip:127.0.0.1:5080;transport=udp>',
+      'P-Callee-UUID: [% invite_redirect_scenarios_test.testuser1004.uuid %]',
+      'P-Called-Party-ID: <sip:[% scenarios.0.responders.1.username %]@invite-redirect.scenarios.test>',
+      'P-App-Name: sbc',
+      'P-D-Uri: sip:lb@127.0.0.1;lr;(received=sip:[% scenarios.0.responders.1.ip %]:[% scenarios.0.responders.1.port %];)?socket=sip:[% server_ip %]:5060',
+      'P-Proxy-Uri: sip:127.0.0.1:5062',
     ]

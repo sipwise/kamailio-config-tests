@@ -1,43 +1,26 @@
 flow:
-  - start|DEFAULT_ROUTE:
+  - start|DEFAULT_ONREPLY:
+  - start|REPLY_ROUTE_NAT:
   - start|ROUTE_ENTRY:
   - return|ROUTE_ENTRY:
-  - start|ROUTE_NET_INFO:
-  - return|ROUTE_NET_INFO:
-  - start|ROUTE_CHECK_TEL_URI:
-  - exit|ROUTE_CHECK_TEL_URI:
-  - start|ROUTE_PRX_REQUEST:
-  - start|ROUTE_INITVARS:
-  - return|ROUTE_INITVARS:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
   - start|ROUTE_PREPARE_UA:
   - return|ROUTE_PREPARE_UA:
-  - start|ROUTE_RESTORE_CLUSTERSET:
-  - return|ROUTE_RESTORE_CLUSTERSET:
-  - start|ROUTE_WITHINDLG_RTPENGINE:
-  - return|ROUTE_WITHINDLG_RTPENGINE:
-  - start|ROUTE_OUTBOUND:
-  - start|DEFAULT_SEND:
-  - exit|DEFAULT_SEND:
-  - exit|DEFAULT_SEND:
+  - start|REPLY_ROUTE_NAT_CONTINUE:
   - start|ROUTE_EXIT:
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^ACK sip:127.0.0.1:5080(;prxroute=1)? SIP/2.0'
-  - 'From: <tel:\+[% invite_redirect_tel_uri_scenarios_test.testuser1000.phone_number %]>;tag=[\w-]+'
-  - 'To: <tel:\+[% invite_redirect_tel_uri_scenarios_test.testuser1001.phone_number %]>;tag=[\w-]+'
-  - 'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>'
-  - 'CSeq: \d+ ACK'
-  - 'Max-Forwards: 69'
-  - 'Content-Length: 0'
+ - '^SIP/2.0 180 Ringing'
+ - 'From: <sip:\+[% invite_redirect_tel_uri_scenarios_test.testuser1000.phone_number %]@invite-redirect-tel-uri.scenarios.test;user=phone>;tag=[\w-]+'
+ - 'To: <sip:\+[% invite_redirect_tel_uri_scenarios_test.testuser1001.phone_number %]@invite-redirect-tel-uri.scenarios.test;user=phone>;tag=[\w-]+'
+ - 'CSeq: \d+ INVITE'
 sip_out:
   - [
-      '^ACK sip:127.0.0.1:5080(;prxroute=1)? SIP/2.0',
-      'From: <sip:[% invite_redirect_tel_uri_scenarios_test.testuser1000.phone_number %]@invite-redirect-tel-uri.scenarios.test>;tag=[\w-]+',
-      'To: <sip:\+[% invite_redirect_tel_uri_scenarios_test.testuser1001.phone_number %]@invite-redirect-tel-uri.scenarios.test',
-      'CSeq: \d+ ACK',
-      'Max-Forwards: 68',
-      'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>',
-      'Content-Length: 0'
+      '^SIP/2.0 180 Ringing',
+      'From: <tel:\+[% invite_redirect_tel_uri_scenarios_test.testuser1000.phone_number %]>;tag=[\w-]+',
+      'To: <tel:\+[% invite_redirect_tel_uri_scenarios_test.testuser1001.phone_number %]>;tag=[\w-]+',
+      'CSeq: \d+ INVITE',
     ]

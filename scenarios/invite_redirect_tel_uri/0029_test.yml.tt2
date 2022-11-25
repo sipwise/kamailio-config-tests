@@ -9,12 +9,15 @@ flow:
   - start|ROUTE_PRX_REQUEST:
   - start|ROUTE_INITVARS:
   - return|ROUTE_INITVARS:
-  - start|ROUTE_PREPARE_UA:
-  - return|ROUTE_PREPARE_UA:
+  - start|dialog:end:
+  - return|dialog:end:
+  - return|dialog:end:
+  - start|ROUTE_STOP_RTPPROXY:
   - start|ROUTE_RESTORE_CLUSTERSET:
   - return|ROUTE_RESTORE_CLUSTERSET:
-  - start|ROUTE_WITHINDLG_RTPENGINE:
-  - return|ROUTE_WITHINDLG_RTPENGINE:
+  - return|ROUTE_STOP_RTPPROXY:
+  - start|ROUTE_PREPARE_UA:
+  - return|ROUTE_PREPARE_UA:
   - start|ROUTE_OUTBOUND:
   - start|DEFAULT_SEND:
   - exit|DEFAULT_SEND:
@@ -24,18 +27,24 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
- - '^ACK sip:127.0.0.1:5080;transport=udp SIP/2.0'
+ - '^BYE sip:127.0.0.1:5080;transport=udp SIP/2.0'
  - 'From: <sip:\+[% invite_redirect_tel_uri_scenarios_test.testuser1000.phone_number %]@invite-redirect-tel-uri.scenarios.test;user=phone>;tag=[\w-]+'
  - 'To: <sip:\+[% invite_redirect_tel_uri_scenarios_test.testuser1001.phone_number %]@invite-redirect-tel-uri.scenarios.test;user=phone>;tag=[\w-]+'
- - 'CSeq: \d+ ACK'
+ - 'CSeq: \d+ BYE'
  - 'Content-Length:\s+0'
- - 'Contact: <sip:127.0.0.1:5080;transport=udp>'
 sip_out:
   - [
-      '^ACK sip:127.0.0.1:5080;transport=udp SIP/2.0',
+      'SIP/2.0 100 Trying',
+      'From: <sip:\+[% invite_redirect_tel_uri_scenarios_test.testuser1000.phone_number %]@invite-redirect-tel-uri.scenarios.test;user=phone>;tag=[\w-]+',
+      'To: <sip:\+[% invite_redirect_tel_uri_scenarios_test.testuser1001.phone_number %]@invite-redirect-tel-uri.scenarios.test;user=phone>;tag=[\w-]+',
+      'CSeq: \d+ BYE',
+      'Server: Sipwise NGCP Proxy',
+      'Content-Length:\s+0',
+    ]
+  - [
+      'BYE sip:127.0.0.1:5080;transport=udp SIP/2.0',
       'From: <sip:[% invite_redirect_tel_uri_scenarios_test.testuser1000.phone_number %]@invite-redirect-tel-uri.scenarios.test>;tag=[\w-]+',
       'To: <sip:\+[% invite_redirect_tel_uri_scenarios_test.testuser1001.phone_number %]@invite-redirect-tel-uri.scenarios.test;user=phone>;tag=[\w-]+',
-      'CSeq: \d+ ACK',
+      'CSeq: \d+ BYE',
       'Content-Length:\s+0',
-      'Contact: <sip:127.0.0.1:5080;transport=udp>',
     ]
