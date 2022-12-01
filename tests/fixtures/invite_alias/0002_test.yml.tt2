@@ -23,21 +23,21 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
- - 'REGISTER sip:[% scenarios.0.responders.0.username %]@invite-alias.scenarios-pbx.test SIP/2.0'
- - 'From: <sip:[% scenarios.0.responders.0.username %]@invite-alias.scenarios-pbx.test>;tag=[\w-]+'
- - 'To: <sip:[% scenarios.0.responders.0.username %]@invite-alias.scenarios-pbx.test>'
- - 'CSeq: \d+ REGISTER'
- - 'Authorization: Digest username="[% scenarios.0.responders.0.username %]",realm="invite-alias.scenarios-pbx.test",uri="sip:[% server_ip %]:5060",nonce="[^"]+",response="[^"]+",algorithm=MD5'
- - 'Contact: sip:[% scenarios.0.responders.0.username %]@[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];transport=UDP'
- - 'Content-Length:\s+0'
- - 'P-NGCP-Src-Ip: [% scenarios.0.ip %]'
- - 'P-NGCP-Src-Port: [% scenarios.0.responders.0.port %]'
- - 'P-NGCP-Src-Proto: udp'
- - 'P-NGCP-Src-Af: 4'
- - 'P-Sock-Info: udp:[% server_ip %]:5060'
- - 'P-LB-Uptime:\s+\d+'
- - 'P-NGCP-Src-Nat: 1'
- - 'Path: <sip:lb@127.0.0.1;lr;received=sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];socket=sip:[% server_ip %]:5060>'
+  - 'REGISTER sip:[% scenarios.0.responders.0.username %]@invite-alias.scenarios-pbx.test SIP/2.0'
+  - 'From: <sip:[% scenarios.0.responders.0.username %]@invite-alias.scenarios-pbx.test>;tag=[\w-]+'
+  - 'To: <sip:[% scenarios.0.responders.0.username %]@invite-alias.scenarios-pbx.test>'
+  - 'CSeq: \d+ REGISTER'
+  - 'Authorization: Digest username="[% scenarios.0.responders.0.username %]",realm="invite-alias.scenarios-pbx.test",uri="sip:[% server_ip %]:5060",nonce="[^"]+",response="[^"]+",algorithm=MD5'
+  - 'Contact: sip:[% scenarios.0.responders.0.username %]@[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];transport=UDP'
+  - 'Content-Length:\s+0'
+  - 'P-NGCP-Src-Ip: [% scenarios.0.ip %]'
+  - 'P-NGCP-Src-Port: [% scenarios.0.responders.0.port %]'
+  - 'P-NGCP-Src-Proto: udp'
+  - 'P-NGCP-Src-Af: 4'
+  - 'P-Sock-Info: udp:[% server_ip %]:5060'
+  - 'P-LB-Uptime:\s+\d+'
+  - 'P-NGCP-Src-Nat: 1'
+  - 'Path: <sip:lb@127.0.0.1;lr;received=sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];socket=sip:[% server_ip %]:5060>'
 sip_out:
   - [
       'SIP/2.0 100 Trying',

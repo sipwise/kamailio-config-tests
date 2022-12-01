@@ -476,7 +476,7 @@ def cfgt_process(args):
     msgs = get_msgs(info["sip_in"])
     for msg in gen.run(msgs):
         for line in msg:
-            print(f" - '{line}'")
+            print(f"  - '{line}'")
     if len(info["sip_out"]) > 0:
         print("sip_out:")
         msgs = get_msgs(info["sip_out"])
