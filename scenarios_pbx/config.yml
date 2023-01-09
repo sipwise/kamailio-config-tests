@@ -9,5 +9,6 @@ kamailio:
     allow_refer_method: yes
     presence:
       enable: yes
+    skip_cf_loop: 'yes'
 pbx:
   enable: yes

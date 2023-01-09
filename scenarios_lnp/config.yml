@@ -8,3 +8,4 @@ kamailio:
         server: localhost
       enable: yes
       type: local
+    skip_cf_loop: 'yes'
