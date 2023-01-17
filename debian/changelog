@@ -1,3 +1,35 @@
+kamailio-config-tests (11.3.0.0+0~mr11.3.0.0) unstable; urgency=medium
+
+  [ Alessio Garzi ]
+  * [223b792] MT#55360 incoming hih with privacy=history
+  * [03cea46] MT#56015 no need to check sdp description
+
+  [ Victor Seva ]
+  * [584a338] TT#81700 test: add missing tests
+  * [abcd66d] TT#81700 bin/generate_test_tt2.py: improve rules
+  * [6e3e77a] MT#33038 fix checks after 7581300369e10becda656441d7e9604cc8245f72
+  * [722e07c] TT#163700 scenarios_pbx: fix incoming_shared_line
+  * [710f8b7] TT#81700 bin/generate_test_tt2.py: support mr9.5
+  * [607a58e] TT#81700 bin/generate_test_tt2.py: improvements
+  * [c64c276] TT#81700 bin/check.py: fix error when --help command
+  * [f07e6df] TT#81700 bin/generate_test_tt2.py: add ignore case to id rules too
+  * [ecb94c0] Revert "TT#163700 scenarios_pbx: fix incoming_shared_line"
+  * [8909c64] TT#81700 bin/generate_test_tt2.py: alias in first line
+  * [760c9e3] TT#163700 scenarios_pbx: incoming_shared_line
+  * [57b3762] MT#33061 scenarios_pbx: secretary manager
+  * [b8342bc] TT#81700 bin/generate_test_tt2.py: fix UUID vs Uuid
+  * [7b6a1a0] TT#81700 bin/generate_test_tt2.py: fix sip_in indentation
+
+  [ Donat Zenichev ]
+  * [267d4a8] MT#55739 incoming_hih: actualize a regex for headers of responder01
+  * [1548f0a] MT#55739 incoming_hih: actualize a regex for HIH headers (cfgt)
+  * [f5dc538] MT#55258 Add the 'proxy.skip_cf_loop: yes' by default
+
+  [ Daniel Grotti ]
+  * [d058999] MT#56040 KCT: fixed invite_redirect and invite_redirect_tel_uri
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 17 Jan 2023 17:42:27 +0100
+
 kamailio-config-tests (11.2.0.0+0~mr11.2.0.0) unstable; urgency=medium
 
   * New release.
