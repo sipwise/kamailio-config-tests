@@ -35,7 +35,6 @@ not_ok = re.compile("^not ok.*", re.MULTILINE)
 
 
 class TestSection(unittest.TestCase):
-
     def setUp(self):
         self.sec = Section(0)
 
@@ -55,7 +54,9 @@ class TestXAvp(unittest.TestCase):
     def setUp(self):
         self.name = "test"
         self.data = [
-            {"koko": [1]}, {"koko": [1, 2]}, {"lolo": [3], "lola": [7]}
+            {"koko": [1]},
+            {"koko": [1, 2]},
+            {"lolo": [3], "lola": [7]},
         ]
         self.xavp = XAvp("$xavp(%s)" % self.name, self.data)
 
@@ -97,6 +98,31 @@ class TestXAvp(unittest.TestCase):
 
     def test_get_value_all(self):
         self.assertCountEqual(self.xavp.get("$xavp(test[1]=>koko[*])"), [1, 2])
+
+
+class TestXAvpName(unittest.TestCase):
+    def setUp(self):
+        self.name = "test:long"
+        self.data = [
+            {"koko:long": [1]},
+            {"koko:long": [1, 2]},
+            {"lolo": [3], "lola-1": [7]},
+        ]
+        self.xavp = XAvp("$xavp(%s)" % self.name, self.data)
+
+    def test_init(self):
+        self.assertEqual(self.name, self.xavp._name)
+        self.assertCountEqual(self.data, self.xavp._data)
+
+    def test_get_value(self):
+        self.assertEqual(self.xavp.get("$xavp(test:long=>koko:long)"), 1)
+        self.assertEqual(self.xavp.get("$xavp(test:long[1]=>koko:long[1])"), 2)
+        self.assertEqual(self.xavp.get("$xavp(test:long[2]=>lola-1[0])"), 7)
+
+    def test_get_value_all(self):
+        self.assertCountEqual(
+            self.xavp.get("$xavp(test:long[1]=>koko:long[*])"), [1, 2]
+        )
 
 
 class TestCheckFlowVars(unittest.TestCase):

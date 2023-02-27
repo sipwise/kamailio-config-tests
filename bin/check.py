@@ -39,7 +39,7 @@ class XAvp:
     """Class to simulate the xavp"""
 
     def __init__(self, name, data):
-        result = re.match(r"\$xavp\((\w+)\)", name)
+        result = re.match(r"\$xavp\(([\w\:-]+)\)", name)
         try:
             self._name = result.group(1)
         except Exception:
@@ -76,7 +76,7 @@ class XAvp:
     def parse(cls, str):
         pattern_nindx = r"(\[(?P<%s>\d+)\])?" % "nindx"
         pattern_kindx = r"(\[(?P<%s>\d+|\*+)\])?" % "kindx"
-        pattern = r"\$xavp\((?P<name>\w+)%s(=>(?P<key>\w+)%s)?\)" % (
+        pattern = r"\$xavp\((?P<name>[\w\:-]+)%s(=>(?P<key>[\w\:-]+)%s)?\)" % (
             pattern_nindx,
             pattern_kindx,
         )
