@@ -28,7 +28,7 @@ lib_path = os.path.abspath("bin")
 sys.path.append(lib_path)
 from check import Section  # noqa
 from check import check_sip, check_sip_out  # noqa
-from check import XAvp, Test, check_flow, check_flow_vars  # noqa
+from check import XAvp, CTest, check_flow, check_flow_vars  # noqa
 from check import load_json, load_yaml  # noqa
 
 not_ok = re.compile("^not ok.*", re.MULTILINE)
@@ -60,7 +60,7 @@ class TestXAvp(unittest.TestCase):
         ]
         self.xavp = XAvp("$xavp(%s)" % self.name, self.data)
 
-    def test_init(self):
+    def test_init_values(self):
         self.assertEqual(self.name, self.xavp._name)
         self.assertCountEqual(self.data, self.xavp._data)
 
@@ -110,7 +110,7 @@ class TestXAvpName(unittest.TestCase):
         ]
         self.xavp = XAvp("$xavp(%s)" % self.name, self.data)
 
-    def test_init(self):
+    def test_init_values(self):
         self.assertEqual(self.name, self.xavp._name)
         self.assertCountEqual(self.data, self.xavp._data)
 
@@ -127,7 +127,7 @@ class TestXAvpName(unittest.TestCase):
 
 class TestCheckFlowVars(unittest.TestCase):
     def setUp(self):
-        self.ctest = Test()
+        self.ctest = CTest()
         self.check_ok = [
             {
                 "R0": {
@@ -203,7 +203,7 @@ class TestCheckFlowVars(unittest.TestCase):
 
 class TestCheckSipIn(unittest.TestCase):
     def setUp(self):
-        self.ctest = Test()
+        self.ctest = CTest()
         self.msg = open("./tests/fixtures/sip_in.txt", "r").read()
 
     def testSipIn(self):
@@ -214,7 +214,7 @@ class TestCheckSipIn(unittest.TestCase):
 
 class TestCheckSipOut(unittest.TestCase):
     def setUp(self):
-        self.ctest = Test()
+        self.ctest = CTest()
         self.msg = load_yaml("./tests/fixtures/sip_out.yml")
 
     def testSipOut(self):
@@ -225,7 +225,7 @@ class TestCheckSipOut(unittest.TestCase):
 
 class TestJson(unittest.TestCase):
     def setUp(self):
-        self.ctest = Test()
+        self.ctest = CTest()
 
     def testFail(self):
         check = load_json("./tests/fixtures/fail.json")

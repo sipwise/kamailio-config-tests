@@ -110,7 +110,7 @@ class Section(Flag):
     SIP_OUT = 16
 
 
-class Test:
+class CTest:
 
     """Class to create TAP output"""
 
@@ -164,7 +164,7 @@ class Test:
 
     def test(self, section, value_expected, value, msg_err, msg_ok=None):
         """Test two values and add the result"""
-        result = Test.compare(value_expected, value)
+        result = CTest.compare(value_expected, value)
         val = {"result": result, "msg_err": msg_err, "msg_ok": msg_ok}
         self._step.append(val)
         if not result:
@@ -335,7 +335,7 @@ def main(args):
 
     scen = load_yaml(args.test_yaml_file)
 
-    test = Test()
+    test = CTest()
 
     try:
         check = load_json(args.kam_file)
