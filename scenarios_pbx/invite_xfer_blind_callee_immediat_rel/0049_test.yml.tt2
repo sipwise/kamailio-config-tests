@@ -1,0 +1,44 @@
+flow:
+  - start|DEFAULT_ROUTE:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_NET_INFO:
+  - return|ROUTE_NET_INFO:
+  - start|ROUTE_CHECK_TEL_URI:
+  - return|ROUTE_CHECK_TEL_URI:
+  - start|ROUTE_PRX_REQUEST:
+  - start|ROUTE_INITVARS:
+  - return|ROUTE_INITVARS:
+  - start|ROUTE_SCA_UPDATE:
+  - return|ROUTE_SCA_UPDATE:
+  - start|ROUTE_PREPARE_UA:
+  - return|ROUTE_PREPARE_UA:
+  - start|ROUTE_RESTORE_CLUSTERSET:
+  - return|ROUTE_RESTORE_CLUSTERSET:
+  - start|ROUTE_WITHINDLG_RTPENGINE:
+  - return|ROUTE_WITHINDLG_RTPENGINE:
+  - start|ROUTE_OUTBOUND:
+  - start|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+sip_in:
+  - 'ACK sip:127.0.0.1:5080;transport=udp SIP/2.0'
+  - 'From: <sip:[% invite_xfer_blind_callee_immediat_rel_scenarios_pbx_test.testuser1002.phone_number %]@invite-xfer-blind-callee-immediat-rel.scenarios-pbx.test>;tag=[\w-]+'
+  - 'To: <sip:[% scenarios.0.responders.0.username %]@invite-xfer-blind-callee-immediat-rel.scenarios-pbx.test>;tag=[\w-]+'
+  - 'CSeq: \d+ ACK'
+  - 'Content-Length:\s+0'
+  - 'Contact: <sip:127.0.0.1:5080;transport=udp>'
+sip_out:
+  - [
+      'ACK sip:127.0.0.1:5080;transport=udp SIP/2.0',
+      'Record-Route: <sip:127.0.0.1:5062;lr=on;ftag=[^;]+;did=[^;]+;rtpprx=yes;ice_callee=strip;ice_caller=strip;aset=\d+>',
+      'From: <sip:[% invite_xfer_blind_callee_immediat_rel_scenarios_pbx_test.testuser1002.phone_number %]@invite-xfer-blind-callee-immediat-rel.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.0.username %]@invite-xfer-blind-callee-immediat-rel.scenarios-pbx.test>;tag=[\w-]+',
+      'CSeq: \d+ ACK',
+      'Content-Length:\s+0',
+      'Contact: <sip:127.0.0.1:5080;transport=udp>',
+    ]
