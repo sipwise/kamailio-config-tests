@@ -25,6 +25,8 @@ flow:
   - return|ROUTE_LOAD_CF_MAP:
   - start|ROUTE_CHECK_CF:
   - return|ROUTE_CHECK_CF:
+  - start|ROUTE_PLAY_ANNOUNCE_BEFORE_CF:
+  - return|ROUTE_PLAY_ANNOUNCE_BEFORE_CF:
   - start|ROUTE_EXECUTE_CF_LOOP:
   - start|ROUTE_ADD_AOC_HEADER:
   - return|ROUTE_ADD_AOC_HEADER:

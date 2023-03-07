@@ -111,6 +111,8 @@ flow:
   - return|ROUTE_LOAD_CF_MAP:
   - start|ROUTE_CHECK_CF:
   - return|ROUTE_CHECK_CF:
+  - start|ROUTE_PLAY_ANNOUNCE_BEFORE_CF:
+  - return|ROUTE_PLAY_ANNOUNCE_BEFORE_CF:
   - start|ROUTE_ACC_CF:
   - start|ROUTE_ACC_CALLER:
   - start|ROUTE_SET_ACC_CALLER_CALL_COUNTERS:

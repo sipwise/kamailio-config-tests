@@ -16,10 +16,27 @@ flow:
   - return|ROUTE_STOP_RTPPROXY_BRANCH:
   - start|ROUTE_INITVARS:
   - return|ROUTE_INITVARS:
-  - return|FAILURE_ROUTE_HUNT:
+  - start|ROUTE_CF_EARLY_REJECT:
+  - start|ROUTE_CODES_ANNOUNCEMENTS_MAPPING:
+  - return|ROUTE_CODES_ANNOUNCEMENTS_MAPPING:
+  - start|ROUTE_EARLY_REJECT:
+  - start|ROUTE_ADD_CALLINFO_REPLY:
+  - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
+  - start|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_REPLY:
+  - start|ROUTE_LOCAL_REPLY:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
   - start|dialog:failed:
   - return|dialog:failed:
   - return|dialog:failed:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+  - exit|ROUTE_EXIT:
 sip_in:
   - 'SIP/2.0 403 Caller locked'
   - 'From: <sip:[% scenarios.0.username %]@invite-callforward-but-callee-locked-cfu.scenarios.test>;tag=[\w-]+'
