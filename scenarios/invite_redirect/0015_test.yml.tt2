@@ -68,14 +68,24 @@ flow:
   - start|ROUTE_NCOS_CHECK:
   - start|ROUTE_NCOS:
   - return|ROUTE_NCOS:
+  - start|ROUTE_NCOS_SET:
+  - return|ROUTE_NCOS_SET:
   - start|ROUTE_NCOS:
   - return|ROUTE_NCOS:
+  - start|ROUTE_NCOS_SET:
+  - return|ROUTE_NCOS_SET:
   - start|ROUTE_NCOS:
   - return|ROUTE_NCOS:
+  - start|ROUTE_NCOS_SET:
+  - return|ROUTE_NCOS_SET:
   - start|ROUTE_NCOS:
   - return|ROUTE_NCOS:
+  - start|ROUTE_NCOS_SET:
+  - return|ROUTE_NCOS_SET:
   - start|ROUTE_NCOS:
   - return|ROUTE_NCOS:
+  - start|ROUTE_NCOS_SET:
+  - return|ROUTE_NCOS_SET:
   - return|ROUTE_NCOS_CHECK:
   - start|ROUTE_BLOCK_OUT:
   - return|ROUTE_BLOCK_OUT:

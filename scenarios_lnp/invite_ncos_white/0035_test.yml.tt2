@@ -64,10 +64,16 @@ flow:
   - start|ROUTE_NCOS_CHECK:
   - start|ROUTE_NCOS:
   - return|ROUTE_NCOS:
+  - start|ROUTE_NCOS_SET:
+  - return|ROUTE_NCOS_SET:
   - start|ROUTE_NCOS:
   - return|ROUTE_NCOS:
+  - start|ROUTE_NCOS_SET:
+  - return|ROUTE_NCOS_SET:
   - start|ROUTE_NCOS:
   - return|ROUTE_NCOS:
+  - start|ROUTE_NCOS_SET:
+  - return|ROUTE_NCOS_SET:
   - start|ROUTE_NCOS:
   - start|ROUTE_FAILED_NCOS:
   - start|ROUTE_ACC_FAILURE:
