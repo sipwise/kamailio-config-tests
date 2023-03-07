@@ -35,11 +35,6 @@ ERR_FLAG=0
 RETRANS_SIZE=2
 SIP_SERVER=127.0.0.1
 
-rtpengine_ctl_ip=$(grep 'listen-cli' /etc/rtpengine/rtpengine.conf|\
-  awk '{print $3}')
-RTPENGINE_CTL="rtpengine-ctl -ip ${rtpengine_ctl_ip}"
-SIPP_VERSION=$(sipp -v | awk -F- '/SIPp/ { print $1 }' | awk '{print $2}')
-
 # $1 kamailio msg parsed to yml
 # $2 destination png filename
 graph() {
@@ -703,6 +698,11 @@ if ! "$SKIP" ; then
 fi
 
 if ! "$SKIP_RUNSIPP" ; then
+    rtpengine_ctl_ip=$(grep 'listen-cli' /etc/rtpengine/rtpengine.conf|\
+      awk '{print $3}')
+    RTPENGINE_CTL="rtpengine-ctl -ip ${rtpengine_ctl_ip}"
+    SIPP_VERSION=$(sipp -v | awk -F- '/SIPp/ { print $1 }' | awk '{print $2}')
+
     if [[ ${CHECK_TYPE} != sipp ]] ; then
       if ! [ -d "${KAM_DIR}" ] ; then
         echo "$(date) - dir and perms for ${KAM_DIR}"
