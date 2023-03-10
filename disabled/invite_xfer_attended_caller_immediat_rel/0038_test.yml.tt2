@@ -1,0 +1,33 @@
+flow:
+  - start|DEFAULT_ONREPLY:
+  - start|REPLY_ROUTE_NAT:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - start|ROUTE_PREPARE_UA:
+  - return|ROUTE_PREPARE_UA:
+  - start|REPLY_ROUTE_NAT_CONTINUE:
+      $dlg_var(xfer_leg_from_a): "1"
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+sip_in:
+  - 'SIP/2.0 202 Accepted'
+  - 'From: <sip:[% invite_xfer_attended_caller_immediat_rel_scenarios_pbx_test.testuser1002.phone_number %]@invite-xfer-attended-caller-immediat-rel.scenarios-pbx.test>;tag=[\w-]+'
+  - 'To: <sip:[% invite_xfer_attended_caller_immediat_rel_scenarios_pbx_test.testuser1003.pbx_extension %]@invite-xfer-attended-caller-immediat-rel.scenarios-pbx.test>;tag=[\w-]+'
+  - 'CSeq: \d+ REFER'
+  - 'P-NGCP-Trans-CID: NGCP'
+  - 'Content-Length:\s+0'
+sip_out:
+  - [
+      'SIP/2.0 202 Accepted',
+      'From: <sip:[% scenarios.0.username %]@invite-xfer-attended-caller-immediat-rel.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:[% invite_xfer_attended_caller_immediat_rel_scenarios_pbx_test.testuser1003.pbx_extension %]@invite-xfer-attended-caller-immediat-rel.scenarios-pbx.test>;tag=[\w-]+',
+      'CSeq: \d+ REFER',
+      'P-NGCP-Trans-CID: NGCP',
+      'Content-Length:\s+0',
+      'P-COLP-Identity: "[% invite_xfer_attended_caller_immediat_rel_scenarios_pbx_test.testuser1003.pbx_extension %]" <sip:[% invite_xfer_attended_caller_immediat_rel_scenarios_pbx_test.testuser1003.pbx_extension %]@invite-xfer-attended-caller-immediat-rel.scenarios-pbx.test>',
+      'P-Out-Socket: udp:[% server_ip %]:5060',
+    ]

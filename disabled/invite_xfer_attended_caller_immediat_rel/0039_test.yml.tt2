@@ -1,0 +1,76 @@
+flow:
+  - start|DEFAULT_ROUTE:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_NET_INFO:
+  - return|ROUTE_NET_INFO:
+  - start|ROUTE_CHECK_TEL_URI:
+  - return|ROUTE_CHECK_TEL_URI:
+  - start|ROUTE_PRX_REQUEST:
+  - start|ROUTE_INITVARS:
+  - return|ROUTE_INITVARS:
+  - start|dialog:end:
+  - return|dialog:end:
+      $avp(xfer_leg_from_a): ["1"]
+      $xavp(lua_dlgcnt_vals[0]=>total): 1
+      $xavp(lua_dlgcnt_vals[0]=>totaluser:[% invite_xfer_attended_caller_immediat_rel_scenarios_pbx_test.testuser1002.uuid %]): 1
+      $xavp(lua_dlgcnt_vals[0]=>totaluserout:[% invite_xfer_attended_caller_immediat_rel_scenarios_pbx_test.testuser1002.uuid %]): 1
+  - start|ROUTE_STOP_RTPPROXY:
+  - start|ROUTE_RESTORE_CLUSTERSET:
+  - return|ROUTE_RESTORE_CLUSTERSET:
+  - return|ROUTE_STOP_RTPPROXY:
+  - start|ROUTE_FIX_PBX_STOP_RECORDS:
+  - return|ROUTE_FIX_PBX_STOP_RECORDS:
+  - start|ROUTE_SCA_UPDATE:
+  - return|ROUTE_SCA_UPDATE:
+  - start|ROUTE_PREPARE_UA:
+  - return|ROUTE_PREPARE_UA:
+  - start|ROUTE_OUTBOUND:
+  - start|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+sip_in:
+  - 'BYE sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %];alias=[^; ]+ SIP/2.0'
+  - 'From: <sip:[% invite_xfer_attended_caller_immediat_rel_scenarios_pbx_test.testuser1004.pbx_extension %]@invite-xfer-attended-caller-immediat-rel.scenarios-pbx.test>;tag=[\w-]+'
+  - 'To: <sip:[% invite_xfer_attended_caller_immediat_rel_scenarios_pbx_test.testuser1002.phone_number %]@invite-xfer-attended-caller-immediat-rel.scenarios-pbx.test>;tag=[\w-]+'
+  - 'CSeq: \d+ BYE'
+  - 'P-NGCP-Attended-Transfer: 1'
+  - 'P-NGCP-Refer-Callid: .*'
+  - 'P-NGCP-Refer-From-Tag: .*'
+  - 'P-NGCP-Refer-To-Tag: .*'
+  - 'Content-Length:\s+0'
+sip_out:
+  - [
+      'SIP/2.0 100 Trying',
+      'From: <sip:[% invite_xfer_attended_caller_immediat_rel_scenarios_pbx_test.testuser1004.pbx_extension %]@invite-xfer-attended-caller-immediat-rel.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:[% invite_xfer_attended_caller_immediat_rel_scenarios_pbx_test.testuser1002.phone_number %]@invite-xfer-attended-caller-immediat-rel.scenarios-pbx.test>;tag=[\w-]+',
+      'CSeq: \d+ BYE',
+      'Server: Sipwise NGCP Proxy',
+      'Content-Length:\s+0',
+    ]
+  - [
+      'PUBLISH sip:[% scenarios.0.username %]@invite-xfer-attended-caller-immediat-rel.scenarios-pbx.test SIP/2.0',
+      'To: <sip:[% scenarios.0.username %]@invite-xfer-attended-caller-immediat-rel.scenarios-pbx.test>',
+      'From: <sip:[% scenarios.0.username %]@invite-xfer-attended-caller-immediat-rel.scenarios-pbx.test>;tag=[\w-]+',
+      'CSeq: \d+ PUBLISH',
+      'Content-Length:\s+\d+',
+      'User-Agent: Sipwise NGCP Proxy',
+      'Event: dialog',
+      'SIP-If-Match:',
+      'Content-Type: application/dialog-info\+xml',
+    ]
+  - [
+      'BYE sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %];alias=[^; ]+ SIP/2.0',
+      'From: <sip:[% invite_xfer_attended_caller_immediat_rel_scenarios_pbx_test.testuser1004.pbx_extension %]@invite-xfer-attended-caller-immediat-rel.scenarios-pbx.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.username %]@invite-xfer-attended-caller-immediat-rel.scenarios-pbx.test>;tag=[\w-]+',
+      'CSeq: \d+ BYE',
+      '_:NOT:_P-NGCP-Attended-Transfer: 1',
+      '_:NOT:_P-NGCP-Refer-Callid: .*',
+      '_:NOT:_P-NGCP-Refer-From-Tag: .*',
+      '_:NOT:_P-NGCP-Refer-To-Tag: .*',
+      'Content-Length:\s+0',
+      'P-Asserted-Identity: "[% invite_xfer_attended_caller_immediat_rel_scenarios_pbx_test.testuser1004.pbx_extension %]" <sip:[% invite_xfer_attended_caller_immediat_rel_scenarios_pbx_test.testuser1004.pbx_extension %]@invite-xfer-attended-caller-immediat-rel.scenarios-pbx.test>',
+    ]
