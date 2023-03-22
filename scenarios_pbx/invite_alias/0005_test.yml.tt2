@@ -95,6 +95,8 @@ flow:
   - start|ROUTE_INVITE_TO_INT:
   - start|ROUTE_APPLY_HEADER_RULES:
   - return|ROUTE_APPLY_HEADER_RULES:
+  - start|ROUTE_CHECK_APPSRV:
+  - return|ROUTE_CHECK_APPSRV:
   - start|ROUTE_CF_CFU:
   - return|ROUTE_CF_CFU:
   - start|ROUTE_CNT_DLG_CHECK:
