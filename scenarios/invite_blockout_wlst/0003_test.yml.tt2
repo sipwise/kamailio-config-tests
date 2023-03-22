@@ -113,7 +113,6 @@ flow:
   - return|ROUTE_APPLY_HEADER_RULES:
   - start|dialog:failed:
   - return|dialog:failed:
-  - return|dialog:failed:
   - start|ROUTE_EXIT:
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:

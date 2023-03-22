@@ -205,7 +205,6 @@ flow:
   # branch ??
   - start|DEFAULT_SEND:
   - exit|DEFAULT_SEND:
-  - exit|DEFAULT_SEND:
       $avp(lua_dlg_profile): [
         "accountout:[% customer_test.id %]",
         "userout:[% invite_ignore_allowip_scenarios_test.testuser1002.uuid %]",

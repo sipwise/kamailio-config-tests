@@ -104,7 +104,6 @@ flow:
   - start|dialog:failed:
   - return|dialog:failed:
       $avp(lua_dlg_profile): None
-  - return|dialog:failed:
   - start|ROUTE_EXIT:
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:

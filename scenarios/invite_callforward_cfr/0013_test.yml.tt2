@@ -55,7 +55,6 @@ flow:
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
-  - exit|ROUTE_EXIT:
 sip_in:
  - 'SIP/2.0 500 Service Unavailable'
  - 'From: <sip:[% invite_callforward_cfr_scenarios_test.testuser1001.phone_number %]@invite-callforward-cfr.scenarios.test>;tag=[\w-]+'

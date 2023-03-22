@@ -44,11 +44,9 @@ flow:
   - return|BRANCH_ROUTE_FWD_LOOP:
   - start|DEFAULT_SEND:
   - exit|DEFAULT_SEND:
-  - exit|DEFAULT_SEND:
   - start|ROUTE_EXIT:
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:
-  - exit|ROUTE_EXIT:
   - exit|ROUTE_EXIT:
 sip_in:
   - 'SIP/2.0 302 Moved Temporarily'

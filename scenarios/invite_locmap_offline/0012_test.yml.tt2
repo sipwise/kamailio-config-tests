@@ -17,7 +17,6 @@ flow:
   - return|ROUTE_RUNTIME:
   - start|dialog:start:
   - return|dialog:start:
-  - return|dialog:start:
 sip_in:
   - 'SIP/2.0 200 OK'
   - 'From: <sip:[% invite_locmap_offline_scenarios_test.testuser1000.phone_number %]@invite-locmap-offline.scenarios.test>;tag=[\w-]+'

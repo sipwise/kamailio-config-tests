@@ -33,7 +33,6 @@ flow:
         "account:[% customer_test.id %]",
         "user:[% invite_lateoam_scenarios_test.testuser1003.uuid %]"
       ]
-  - return|dialog:start:
 sip_in:
   - '^SIP/2.0 200 OK'
   - 'CSeq: 2 INVITE'

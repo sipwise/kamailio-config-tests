@@ -11,7 +11,6 @@ flow:
   - return|ROUTE_INITVARS:
   - start|dialog:end:
   - return|dialog:end:
-  - return|dialog:end:
   - start|ROUTE_STOP_RTPPROXY:
   - return|ROUTE_STOP_RTPPROXY:
   - start|ROUTE_FIX_PBX_STOP_RECORDS:
@@ -20,7 +19,6 @@ flow:
   - return|ROUTE_PREPARE_UA:
   - start|ROUTE_OUTBOUND:
   - start|DEFAULT_SEND:
-  - exit|DEFAULT_SEND:
   - exit|DEFAULT_SEND:
   - start|ROUTE_EXIT:
   - start|ROUTE_RUNTIME:

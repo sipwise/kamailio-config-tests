@@ -46,7 +46,6 @@ flow:
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
-  - exit|ROUTE_EXIT:
 sip_in:
  - 'SIP/2.0 486 Busy Here'
  - 'Record-Route: <sip:127.0.0.1:5062;lr=on;ftag=[^;]+;did=[^;]+>'

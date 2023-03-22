@@ -24,7 +24,6 @@ flow:
         "outgoing",
         "emergency"
       ]
-  - return|dialog:start:
 sip_in:
   - 'SIP/2.0 200 OK'
   - 'From: <sip:[% invite_emergency_scenarios_test.testuser1002.phone_number %]@invite-emergency.scenarios.test>;tag=[\w-]+'

@@ -17,7 +17,6 @@ flow:
   - return|ROUTE_RUNTIME:
   - start|dialog:start:
   - return|dialog:start:
-  - return|dialog:start:
 sip_in:
  - '^SIP/2.0 200 OK'
  - 'From: <sip:\+[% invite_redirect_tel_uri_scenarios_test.testuser1000.phone_number %]@invite-redirect-tel-uri.scenarios.test;user=phone>;tag=[\w-]+'

@@ -17,7 +17,6 @@ flow:
   - return|ROUTE_RUNTIME:
   - start|dialog:start:
   - return|dialog:start:
-  - return|dialog:start:
 sip_in:
   - 'SIP/2.0 200 OK'
   - 'From: <sip:[% invite_force_inbound_calls_to_peer_scenarios_test.testuser1002.phone_number %]@invite-force-inbound-calls-to-peer.scenarios.test>;tag=[\w-]+'

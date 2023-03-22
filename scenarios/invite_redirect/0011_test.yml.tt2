@@ -14,7 +14,6 @@ flow:
   - exit|ROUTE_EXIT:
   - start|dialog:failed:
   - return|dialog:failed:
-  - return|dialog:failed:
 sip_in:
   - 'SIP/2.0 302 Moved Temporarily'
   - 'From: <sip:[% invite_redirect_scenarios_test.testuser1002.phone_number %]@'

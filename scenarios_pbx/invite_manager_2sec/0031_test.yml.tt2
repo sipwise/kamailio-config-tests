@@ -18,7 +18,6 @@ flow:
   - exit|ROUTE_EXIT:
   - start|dialog:failed:
   - return|dialog:failed:
-  - return|dialog:failed:
 sip_in:
  - 'SIP/2.0 486 Busy Here'
  - 'From: <sip:[% invite_manager_2sec_scenarios_pbx_test.testuser1003.pbx_phone_number %]@invite-manager-2sec.scenarios-pbx.test>;tag=[\w-]+'

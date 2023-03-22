@@ -24,7 +24,6 @@ flow:
   - start|dialog:failed:
   - return|dialog:failed:
       $avp(lua_dlg_profile): None
-  - return|dialog:failed:
 sip_in:
   - '^SIP/2.0 403 Unauthorized IP detected'
   - 'From: <sip:testuser1002@invite-allowip-soundset.scenarios.test>;tag='

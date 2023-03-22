@@ -189,7 +189,6 @@ flow:
   # branch ??
   - start|DEFAULT_SEND:
   - exit|DEFAULT_SEND:
-  - exit|DEFAULT_SEND:
   - start|ROUTE_EXIT:
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:

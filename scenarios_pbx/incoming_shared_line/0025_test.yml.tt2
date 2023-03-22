@@ -18,7 +18,6 @@ flow:
   - exit|ROUTE_EXIT:
   - start|dialog:failed:
   - return|dialog:failed:
-  - return|dialog:failed:
 sip_in:
   - 'SIP/2.0 487 Request terminated'
   - 'From: <sip:[% incoming_shared_line_scenarios_pbx_test.testuser1003.pbx_phone_number %]@incoming-shared-line.scenarios-pbx.test>;tag=[\w-]+'

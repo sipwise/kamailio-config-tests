@@ -17,7 +17,6 @@ flow:
   - return|ROUTE_RUNTIME:
   - start|dialog:start:
   - return|dialog:start:
-  - return|dialog:start:
 sip_in:
  - 'SIP/2.0 200 OK'
  - 'Record-Route: <sip:127.0.0.1:5062;lr=on;ftag=[^;]+;did=[^;]+;ice_caller=strip;ice_callee=strip;aset=\d+;rtpprx=yes;vsf=[^;]+>'

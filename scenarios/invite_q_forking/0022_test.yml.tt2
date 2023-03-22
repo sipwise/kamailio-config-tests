@@ -34,11 +34,9 @@ flow:
   - return|ROUTE_APPLY_HEADER_RULES:
   - start|dialog:failed:
   - return|dialog:failed:
-  - return|dialog:failed:
   - start|ROUTE_EXIT:
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:
-  - exit|ROUTE_EXIT:
   - exit|ROUTE_EXIT:
 sip_in:
   - '^SIP/2.0 487 Request terminated'

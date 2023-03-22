@@ -30,11 +30,9 @@ flow:
   - start|ROUTE_LOCAL_REPLY:
   - start|dialog:failed:
   - return|dialog:failed:
-  - return|dialog:failed:
   - start|ROUTE_EXIT:
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:
-  - exit|ROUTE_EXIT:
   - exit|ROUTE_EXIT:
 sip_in:
  - 'SIP/2.0 486 Busy Here'
