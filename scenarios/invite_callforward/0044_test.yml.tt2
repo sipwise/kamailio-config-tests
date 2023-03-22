@@ -13,8 +13,10 @@ flow:
 sip_in:
   - '^SIP/2.0 180 Ringing'
   - 'CSeq: \d+ INVITE'
+  - 'Contact: <sip:127.0.0.1:508[08];transport=udp>'
 sip_out:
   - [
       '^SIP/2.0 180 Ringing',
       'CSeq: \d+ INVITE',
+      'Contact: <sip:127.0.0.1:508[08];transport=udp>',
     ]

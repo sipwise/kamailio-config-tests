@@ -19,4 +19,5 @@ sip_out:
   - [
       '^SIP/2.0 180 Ringing',
       'CSeq: 2 INVITE',
+      'P-Out-Socket: udp:[% server_ip %]:5060',
     ]
