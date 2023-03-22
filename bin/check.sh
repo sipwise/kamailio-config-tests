@@ -104,12 +104,28 @@ function str_check_error() {
   echo "${err_type[*]}"
 }
 
+check_error() {
+  out=${2:-false}
+  if [[ $1 -eq 4 ]] ; then
+    ${out} && echo " NOT ok[FLOW_VARS] ** stop"
+    return 0
+  elif [[ $1 -eq 2 ]] ; then
+    ${out} && echo " NOT ok[FLOW] ** stop"
+    return 0
+  elif [[ $1 -eq 6 ]] ; then
+    ${out} && echo " NOT ok[FLOW FLOW_VARS] ** stop"
+    return 0
+  fi
+  return 1
+}
+
 check_retrans_next() {
   # testing next json file, if exist. Necessary in case of retransmissions or wrong timing/order.
   local next_msg
   local next_tap
   local step
   local err_type
+  local res
 
   step=${3:-1}
   next_test_filepath "$1"  "${step}"
@@ -129,9 +145,21 @@ check_retrans_next() {
       mv "$2" "${2}_retrans"
       mv "${next_tap}" "$2"
       test_ok+=("${kam_msg}")
+      check_json=${next_msg}
+      echo " ok"
       return 0
     else
-      err_type=$(str_check_error $?)
+      res=$?
+      err_type=$(str_check_error "${res}")
+    fi
+
+    if check_error "${res}" true; then
+      check_json=${next_msg}
+      # Test using the next json file was fine. That means that, with high probability, there was a retransmission.
+      # Next step is to backup the failed tap test and overwrite it with the working one
+      mv "$2" "${2}_retrans"
+      mv "${next_tap}" "$2"
+      return 2
     fi
 
     if [ -a "${next_tap}" ] ; then
@@ -154,6 +182,7 @@ check_retrans_prev() {
   local step
   local err_type
   local kam_msg
+  local res
 
   step=${3:-1}
   prev_test_filepath "$1" "${step}"
@@ -173,9 +202,21 @@ check_retrans_prev() {
       mv "$2" "${2}_retrans"
       mv "${prev_tap}" "$2"
       test_ok+=("${kam_msg}")
+      check_json=${prev_msg}
+      echo " ok"
       return 0
     else
-      err_type=$(str_check_error $?)
+      res=$?
+      err_type=$(str_check_error "$res")
+    fi
+
+    if check_error "${res}" true; then
+      check_json=${prev_msg}
+      # Test using the previous json file was fine. That means that, with high probability, there was a wrong timing/order.
+      # Next step is to backup the failed tap test and overwrite it with the working one
+      mv "$2" "${2}_retrans"
+      mv "${prev_tap}" "$2"
+      return 2
     fi
 
     if [ -a "${prev_tap}" ] ; then
@@ -195,14 +236,17 @@ check_retrans_prev() {
 # $2 destination tap filename
 # $3 number of messages to check before and after
 check_retrans_block() {
+  local res
+
   for i in $(seq "${3:-2}") ; do
-    if check_retrans_next "$1" "$2" "$i" ; then
-      echo " ok"
-      return 0
-    elif check_retrans_prev "$1" "$2" "$i" ; then
-      echo " ok"
-      return 0
-    fi
+    check_retrans_next "$1" "$2" "$i"
+    res=$?
+    [[ ${res} -eq 2 ]] && break
+    [[ ${res} -eq 0 ]] && return 0
+    check_retrans_prev "$1" "$2" "$i"
+    res=$?
+    [[ ${res} -eq 2 ]] && break
+    [[ ${res} -eq 0 ]] && return 0
   done
   return 1
 }
@@ -247,8 +291,10 @@ check_test() {
   local dest
   local err_type
   local kam_msg
+  local res
 
   dest=${RESULT_DIR}/$(basename "$3" .tap)
+  check_json=$2
 
   if ! [ -f "$1" ]; then
     generate_error_tap "$3" "$1"
@@ -256,35 +302,37 @@ check_test() {
     return 1
   fi
   if ! [ -f "$2" ]; then
-    generate_error_tap "$3" "$2"
+    generate_error_tap "$3" "${check_json}"
     ERR_FLAG=1
     return 1
   fi
 
-  kam_msg=$(basename "$2")
+  kam_msg=$(basename "${check_json}")
   echo -n "$(date) - Testing $(basename "$1") against ${kam_msg} -> $(basename "$3")"
-  if "${BIN_DIR}/check.py" "$1" "$2" > "$3" ; then
+  if "${BIN_DIR}/check.py" "$1" "${check_json}" > "$3" ; then
     echo " ok"
     test_ok+=("${kam_msg}")
     return 0
   else
-    err_type=$(str_check_error $?)
+    res=$?
+    err_type=$(str_check_error "${res}")
   fi
 
   echo " NOT ok[${err_type}]"
 
-  if "${FIX_RETRANS}" ; then
+  if ! check_error "${res}" && "${FIX_RETRANS}" ; then
     check_retrans_block "$1" "$3" "${RETRANS_SIZE}" && return 0
+    echo "$(date) - using $(basename "${check_json}") instead"
   fi
 
   ERR_FLAG=1
   if [ -x "${BIN_DIR}/show_flow_diff.pl" ] ; then
     echo "$(date) - Generating flow diff: ${dest}.diff"
-    "${BIN_DIR}/show_flow_diff.pl" "$1" "$2" > "${dest}.diff"
+    "${BIN_DIR}/show_flow_diff.pl" "$1" "${check_json}" > "${dest}.diff"
   fi
   if [ -x "${BIN_DIR}/show_sip.pl" ] ; then
     echo "$(date) - Generating: ${dest}.sip"
-    "${BIN_DIR}/show_sip.pl" "$2" > "${dest}.sip"
+    "${BIN_DIR}/show_sip.pl" "${check_json}" > "${dest}.sip"
   fi
   if ( ! "${GRAPH}" ) && "${GRAPH_FAIL}" ; then
     echo "$(date) - Generating flow image: ${dest}.png"
