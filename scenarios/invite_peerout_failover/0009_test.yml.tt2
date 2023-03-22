@@ -157,7 +157,6 @@ flow:
         "total",
         "outgoing"
       ]
-  - exit|ROUTE_EXIT:
 "sip_in":
   - '^SIP/2.0 408 Timeout'
 "sip_out":

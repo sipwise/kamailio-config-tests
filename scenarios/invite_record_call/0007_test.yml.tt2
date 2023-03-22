@@ -116,7 +116,6 @@ flow:
           "account:[% customer_test.id %]",
           "user:[% invite_record_call_scenarios_test.testuser1003.uuid %]"
         ]
-  - exit|ROUTE_EXIT:
 sip_in:
   - '^SIP/2.0 301 Message Ended'
   - 'From: <sip:[% scenarios.0.username %]@'

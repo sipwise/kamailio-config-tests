@@ -13,7 +13,6 @@ flow:
   - return|ROUTE_RUNTIME:
   - start|tm:branch-failure:local:
   - return|tm:branch-failure:local:
-  - return|tm:branch-failure:local:
 sip_in:
   - '^SIP/2.0 486 Busy Here'
   - 'CSeq: 2 INVITE'
