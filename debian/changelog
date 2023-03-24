@@ -1,3 +1,28 @@
+kamailio-config-tests (11.4.0.0+0~mr11.4.0.0) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [1476848] MT#55258 invite_callforward_but_callee_locked_cf*: remove check
+  * [205b3dc] MT#56753 bin/check.py: xavp names can have ':' and '-'
+  * [c22da97] MT#56753 remove warning on test
+  * [09cf1d4] MT#55680 Introducing Time Set for NCOS and NCOS SET
+  * [9fc1894] MT#55258 PBX applications: improve internal flow to not use CF profile
+  * [9fe97f5] TT#131251 provide k-c-t-bullseye
+  * [95a0eec] MT#56753 bin/check.sh: rtpengine info not needed for results
+  * [ca3f057] MT#55258 PBX applications: improve internal flow to not use CF profile
+  * [a13c99c] TT#81700 show_value_flow helper
+  * [1f63c62] MT#56753 remove duplicate dump route
+  * [bfaba60] TT#81700 check.sh: stop on some check.py error type
+  * [747726c] MT#55680 Introducing Time Set for NCOS and NCOS SET, take two
+  * [ccf10c6] MT#56753 remove duplicate dump route, take two
+  * [1839ee0] TT#81700 fix ambiguous test
+  * [10e3faf] MT#55258 PBX applications: improve internal flow to not use CF profile, take two
+
+  [ Alessio Garzi ]
+  * [2452d7f] MT#56718 invite_xfer_blind_callee_immediat_rel implemented for call counters
+  * [ea2a4e2] MT#56718 invite_xfer_blind_caller_immediat_rel implemented for call counters
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 24 Mar 2023 13:03:27 +0100
+
 kamailio-config-tests (11.3.0.0+0~mr11.3.0.0) unstable; urgency=medium
 
   [ Alessio Garzi ]
