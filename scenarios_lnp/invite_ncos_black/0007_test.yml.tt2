@@ -74,6 +74,8 @@ flow:
   - start|ROUTE_NCOS_SET:
   - return|ROUTE_NCOS_SET:
   - start|ROUTE_NCOS:
+  - start|ROUTE_CHECK_NCOS_TIMESET:
+  - return|ROUTE_CHECK_NCOS_TIMESET:
   - start|ROUTE_NCOS_LNP_CHECK:
   - return|ROUTE_NCOS_LNP_CHECK:
       $avp(ncos_mode): ["blacklist"]
@@ -102,7 +104,6 @@ flow:
   - start|dialog:failed:
   - return|dialog:failed:
       $avp(dlg_lua_profile): None
-  - return|dialog:failed:
   - start|ROUTE_EXIT:
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:

@@ -74,6 +74,8 @@ flow:
   - start|ROUTE_NCOS_SET:
   - return|ROUTE_NCOS_SET:
   - start|ROUTE_NCOS:
+  - start|ROUTE_CHECK_NCOS_TIMESET:
+  - return|ROUTE_CHECK_NCOS_TIMESET:
   - start|ROUTE_NCOS_LNP_CHECK:
   - return|ROUTE_NCOS_LNP_CHECK:
   - return|ROUTE_NCOS:

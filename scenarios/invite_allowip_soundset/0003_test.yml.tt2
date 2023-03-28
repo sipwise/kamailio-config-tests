@@ -117,7 +117,7 @@ sip_out:
       'Max-Forwards: 68',
       'Content-Type: application/sdp',
       'Content-Length:   \d+',
-      'P-App-Param: force_early_announce=0;audio_id=\d+;play_looped=no;fr_code=403;fr_reason=Unauthorized IP detected',
+      'P-App-Param: reset_to_tag=0;force_early_announce=0;audio_id=\d+;play_looped=no;fr_code=403;fr_reason=Unauthorized IP detected',
       'P-App-Name: early_dbprompt',
       'P-Caller-UUID: [% invite_allowip_soundset_scenarios_test.testuser1002.uuid %]',
       'P-Callee-UUID: [% invite_allowip_soundset_scenarios_test.testuser1002.uuid %]',
