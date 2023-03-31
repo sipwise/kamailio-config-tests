@@ -96,10 +96,31 @@ flow:
   - start|ROUTE_CHECK_APPSRV:
   - start|ROUTE_LOAD_CF_MAP:
   - return|ROUTE_LOAD_CF_MAP:
+  - start|ROUTE_SET_APP_NAME:
+  - exit|ROUTE_SET_APP_NAME:
+  - start|ROUTE_CHECK_PBX:
+  - return|ROUTE_CHECK_PBX:
+  - start|ROUTE_ACC_APPSRV:
+  - start|ROUTE_ACC_CALLER:
+  - start|ROUTE_SET_ACC_CALLER_CALL_COUNTERS:
+  - return|ROUTE_SET_ACC_CALLER_CALL_COUNTERS:
+  - return|ROUTE_ACC_CALLER:
+  - start|ROUTE_ACC_CALLEE:
+  - start|ROUTE_SET_ACC_CALLEE_CALL_COUNTERS:
+  - return|ROUTE_SET_ACC_CALLEE_CALL_COUNTERS:
+  - return|ROUTE_ACC_CALLEE:
+  - return|ROUTE_ACC_APPSRV:
+  - start|ROUTE_CHECK_APP_SERVER_PARAMS:
+  - return|ROUTE_CHECK_APP_SERVER_PARAMS:
+  - start|ROUTE_SET_APP_SERVER_PARAMS:
+  - return|ROUTE_SET_APP_SERVER_PARAMS:
+  - start|ROUTE_TO_APPSRV_MS:
+  - start|ROUTE_CHECK_APPSRV:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - start|ROUTE_CHECK_APPSRV:
   - return|ROUTE_CHECK_APPSRV:
   - start|ROUTE_CF_CFU:
-  - start|ROUTE_LOAD_CF_MAP:
-  - return|ROUTE_LOAD_CF_MAP:
   - return|ROUTE_CF_CFU:
   - start|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_CNT_DLG_CHECK:
@@ -268,7 +289,7 @@ sip_out:
       'P-App-Param: ;calltimer=21600;aleg_sst_enable=no;sst_enable=no;hold_alter_b2b_bleg=no;hold_alter_b2b_aleg=no;fast_ack=no;a_park_domain=[% invite_manager_2sec_customerpbx_test.id %];b_park_domain=[% invite_manager_2sec_customerpbx_test.id %]',
       'P-App-Name: sbc',
       'P-NGCP-Caller-Info: <sip:[% scenarios.0.username %]@invite-manager-2sec.scenarios-pbx.test>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %];primary=[% invite_manager_2sec_scenarios_pbx_test.secretary2.pbx_phone_number %]',
-      'P-NGCP-Callee-Info: <sip:[% invite_manager_2sec_scenarios_pbx_test.manager.phone_number %]@invite-manager-2sec.scenarios-pbx.test>;ip=[% scenarios.0.responders.0.ip %];port=[% scenarios.0.responders.0.port %];primary=[% invite_manager_2sec_scenarios_pbx_test.manager.phone_number %]',
+      'P-NGCP-Callee-Info: <sip:[% scenarios.0.responders.0.username %]@invite-manager-2sec.scenarios-pbx.test>;ip=[% scenarios.0.responders.0.ip %];port=[% scenarios.0.responders.0.port %];primary=[% invite_manager_2sec_scenarios_pbx_test.manager.phone_number %]',
       'P-NGCP-Presence-Caller: sip:[% scenarios.0.username %]@invite-manager-2sec.scenarios-pbx.test',
       'P-NGCP-Presence-Callee: sip:[% scenarios.0.responders.0.username %]@invite-manager-2sec.scenarios-pbx.test',
       'P-D-Uri: sip:lb@127.0.0.1;lr;received=sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];socket=sip:[% server_ip %]:5060',
