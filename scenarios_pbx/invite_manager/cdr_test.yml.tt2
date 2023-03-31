@@ -25,7 +25,7 @@ cdr:
     destination_user: 'manager'
     destination_domain: 'invite-manager.scenarios-pbx.test'
     destination_user_dialed: '[% invite_manager_scenarios_pbx_test.manager.pbx_extension %]'
-    destination_user_in: '[% invite_manager_scenarios_pbx_test.manager.phone_number %]'
+    destination_user_in: 'manager'
     call_type: 'call'
     call_status: 'ok'
     call_code: '200'
