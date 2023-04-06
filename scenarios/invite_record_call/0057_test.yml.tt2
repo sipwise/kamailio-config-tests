@@ -1,0 +1,147 @@
+flow:
+  - start|DEFAULT_ONREPLY:
+  - start|REPLY_ROUTE_NAT:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - start|ROUTE_PREPARE_UA:
+  - return|ROUTE_PREPARE_UA:
+  - start|REPLY_ROUTE_NAT_CONTINUE:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+  - start|FAILURE_ROUTE_PRE_ANNOUNCE:
+  - start|ROUTE_INITVARS:
+  - return|ROUTE_INITVARS:
+  - start|ROUTE_STOP_RTPPROXY_BRANCH:
+  - start|ROUTE_RESTORE_CLUSTERSET:
+  - return|ROUTE_RESTORE_CLUSTERSET:
+  - return|ROUTE_STOP_RTPPROXY_BRANCH:
+      $var(rtpp_flags): "^((?!discard-recording).)*$"
+  - start|ROUTE_CALLEE_DISPATCH:
+  - start|ROUTE_INVITE_TO_INT:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - start|ROUTE_CF_CFU:
+  - return|ROUTE_CF_CFU:
+  - start|ROUTE_CNT_DLG_CHECK:
+  - return|ROUTE_CNT_DLG_CHECK:
+  - start|ROUTE_CHECK_LOCATIONS:
+  - start|ROUTE_LOOKUP_SUBSCRIBER_LOCATIONS:
+  - return|ROUTE_LOOKUP_SUBSCRIBER_LOCATIONS:
+  - start|ROUTE_OUTBOUND:
+  - start|ROUTE_ACC_CALLER:
+  - start|ROUTE_SET_ACC_CALLER_CALL_COUNTERS:
+  - return|ROUTE_SET_ACC_CALLER_CALL_COUNTERS:
+  - return|ROUTE_ACC_CALLER:
+  - start|ROUTE_ACC_CALLEE:
+  - start|ROUTE_SET_ACC_CALLEE_CALL_COUNTERS:
+  - return|ROUTE_SET_ACC_CALLEE_CALL_COUNTERS:
+  - return|ROUTE_ACC_CALLEE:
+  - start|ROUTE_ADD_AOC_HEADER:
+  - return|ROUTE_ADD_AOC_HEADER:
+  - start|BRANCH_ROUTE_SBC:
+  - start|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
+  - return|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
+  - start|ROUTE_SET_CALLEE_DIALOG:
+  - start|ROUTE_CNT_DLG_CHECK:
+  - return|ROUTE_CNT_DLG_CHECK:
+  - start|ROUTE_SET_CALLEE_DIALOG_BASE:
+  - return|ROUTE_SET_CALLEE_DIALOG_BASE:
+  - start|ROUTE_SET_CALLEE_DIALOG_TOTAL:
+  - return|ROUTE_SET_CALLEE_DIALOG_TOTAL:
+  - return|ROUTE_SET_CALLEE_DIALOG:
+  - start|ROUTE_SET_BRANCH_HDRS:
+  - start|ROUTE_PREPARE_UA:
+  - return|ROUTE_PREPARE_UA:
+  - return|ROUTE_SET_BRANCH_HDRS:
+  - start|ROUTE_SET_RUSER:
+  - return|ROUTE_SET_RUSER:
+  - start|ROUTE_BRANCH_ACC_RTP:
+  - return|ROUTE_BRANCH_ACC_RTP:
+      $var(rtpp_flags): "record-call"
+  - start|ROUTE_FILTER_PRACK:
+  - return|ROUTE_FILTER_PRACK:
+  - start|ROUTE_PREPARE_SST:
+  - start|ROUTE_REMOVE_TIMER_SUPP_REQ:
+  - return|ROUTE_REMOVE_TIMER_SUPP_REQ:
+  - return|ROUTE_PREPARE_SST:
+  - start|ROUTE_PREPARE_MOH:
+  - return|ROUTE_PREPARE_MOH:
+  - start|ROUTE_SET_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - return|ROUTE_PREPARE_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - return|ROUTE_PREPARE_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - return|ROUTE_PREPARE_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - return|ROUTE_PREPARE_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - return|ROUTE_PREPARE_CALLER_CLI:
+  - start|ROUTE_PREPARE_CALLER_CLI:
+  - return|ROUTE_PREPARE_CALLER_CLI:
+  - return|ROUTE_SET_CALLER_CLI:
+  - start|ROUTE_SET_CALLEE:
+  - return|ROUTE_SET_CALLEE:
+  - start|ROUTE_ADD_CALLINFO:
+  - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
+  - start|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - return|BRANCH_ROUTE_SBC:
+  - start|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+sip_in:
+  - 'SIP/2.0 301 Message Ended'
+  - 'From: <sip:[% scenarios.1.responders.0.username %]@invite-record-call.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:[% scenarios.3.responders.0.username %]@invite-record-call.scenarios.test>;tag=[\w-]+'
+  - 'CSeq: \d+ INVITE'
+  - 'Content-Length:\s+0'
+sip_out:
+  - [
+      'ACK sip:pre_announce@app.local SIP/2.0',
+      'From: <sip:[% scenarios.1.responders.0.username %]@invite-record-call.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.3.responders.0.username %]@invite-record-call.scenarios.test>;tag=[\w-]+',
+      'CSeq: \d+ ACK',
+      'Content-Length:\s+0',
+    ]
+  - [
+      'INVITE sip:[% scenarios.3.responders.0.username %]@[% scenarios.3.responders.0.ip %]:[% scenarios.3.responders.0.port %] SIP/2.0',
+      'From: <sip:[% invite_record_call_scenarios_test.testuser1004.phone_number %]@invite-record-call.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.3.responders.0.username %]@invite-record-call.scenarios.test>',
+      'CSeq: \d+ INVITE',
+      'Contact: <sip:[% scenarios.3.username %]@[% scenarios.3.ip %]:[% scenarios.3.port %];alias=[^;]+>',
+      'Content-Type: application/sdp',
+      'Content-Length:\s+\d+',
+      'P-LB-Uptime:\s+\d+',
+      'P-App-Param: ;calltimer=21600;aleg_sst_enable=no;sst_enable=no;hold_alter_b2b_bleg=no;hold_alter_b2b_aleg=no;fast_ack=no',
+      'P-App-Name: sbc',
+      'P-Asserted-Identity: <sip:[% invite_record_call_scenarios_test.testuser1004.phone_number %]@invite-record-call.scenarios.test>',
+      'P-Caller-UUID: [% invite_record_call_scenarios_test.testuser1004.uuid %]',
+      'P-Callee-UUID: [% invite_record_call_scenarios_test.testuser1006.uuid %]',
+      'P-Called-Party-ID: <sip:[% scenarios.3.responders.0.username %]@invite-record-call.scenarios.test>',
+      'P-NGCP-Caller-Info: <sip:[% scenarios.1.responders.0.username %]@invite-record-call.scenarios.test>;ip=[% scenarios.3.ip %];port=[% scenarios.3.port %];primary=[% invite_record_call_scenarios_test.testuser1004.phone_number %]',
+      'P-NGCP-Callee-Info: <sip:[% scenarios.3.responders.0.username %]@invite-record-call.scenarios.test>;ip=[% scenarios.3.responders.0.ip %];port=[% scenarios.3.responders.0.port %];primary=[% invite_record_call_scenarios_test.testuser1006.phone_number %]',
+      'P-D-Uri: sip:lb@[% server_ip %];lr;received=sip:[% scenarios.3.responders.0.ip %]:[% scenarios.3.responders.0.port %];socket=sip:[% server_ip %]:5060',
+      'P-Proxy-Uri: sip:[% server_ip %]:5062',
+      'v=0',
+      'o=user1 53655765 2353687637 IN IP4 192.168.8.180',
+      's=-',
+      'c=IN IP4 192.168.8.180',
+      't=0 0',
+      'm=audio \d+ RTP/AVP 8',
+      'a=rtpmap:8 PCMA/8000',
+      'a=sendrecv',
+      'a=rtcp:\d+',
+      'a=ptime:50',
+    ]

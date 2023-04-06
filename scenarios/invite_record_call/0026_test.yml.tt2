@@ -13,10 +13,16 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^SIP/2.0 180 Ringing'
-  - 'CSeq: 2 INVITE'
+  - '^SIP/2.0 200 OK'
+  - 'CSeq: 3 BYE'
+  - 'Content-Length: 0'
+  - 'From: <sip:[% invite_record_call_scenarios_test.testuser1002.phone_number %]@'
+  - 'To: <sip:[% scenarios.0.responders.0.username %]@'
 sip_out:
   - [
-      '^SIP/2.0 180 Ringing',
-      'CSeq: 2 INVITE',
+      '^SIP/2.0 200 OK',
+      'CSeq: 3 BYE',
+      'Content-Length: 0',
+      'From: <sip:[% scenarios.0.username %]@',
+      'To: <sip:[% scenarios.0.responders.0.username %]@'
     ]

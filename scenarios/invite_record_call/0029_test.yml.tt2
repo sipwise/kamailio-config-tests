@@ -17,12 +17,7 @@ flow:
   - start|ROUTE_FIND_CALLER:
   - start|ROUTE_AUTH:
   - start|ROUTE_AUTH_HELPER:
-      $x_hdr(From): invite-record-call.scenarios.test
-      $var(realm_user): [% scenarios.0.username %]
-      $var(realm_domain): invite-record-call.scenarios.test
   - return|ROUTE_AUTH_HELPER:
-      $avp(orig_acc_caller_user): ['[% scenarios.0.username %]']
-      $avp(orig_acc_caller_domain): ['invite-record-call.scenarios.test']
   - start|ROUTE_ADD_CALLINFO_REPLY:
   - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
   - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
@@ -69,13 +64,6 @@ flow:
   - start|ROUTE_SET_CALLEE_DIALOG_TOTAL:
   - return|ROUTE_SET_CALLEE_DIALOG_TOTAL:
   - return|ROUTE_SET_CALLEE_DIALOG:
-      $avp(lua_dlg_profile): [
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% invite_record_call_scenarios_test.testuser1003.uuid %]",
-        "total",
-        "account:[% customer_test.id %]",
-        "user:[% invite_record_call_scenarios_test.testuser1003.uuid %]"
-      ]
   - start|ROUTE_BLOCK_IN:
   - return|ROUTE_BLOCK_IN:
   - return|ROUTE_LOAD_CALLEE_PREF:
@@ -119,15 +107,6 @@ flow:
   - return|ROUTE_LOAD_APPSRV:
   - start|ROUTE_OUTBOUND:
   - start|ROUTE_SET_CALLER_DIALOG:
-      $avp(lua_dlg_profile): [
-        "peer:appsrv",
-        "local",
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% invite_record_call_scenarios_test.testuser1003.uuid %]",
-        "total",
-        "account:[% customer_test.id %]",
-        "user:[% invite_record_call_scenarios_test.testuser1003.uuid %]"
-      ]
   - start|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_CNT_DLG_CHECK:
   - start|ROUTE_SET_CALLER_DIALOG_TOTAL:
@@ -135,26 +114,10 @@ flow:
   - start|ROUTE_SET_CALLER_DIALOG_BASE:
   - return|ROUTE_SET_CALLER_DIALOG_BASE:
   - return|ROUTE_SET_CALLER_DIALOG:
-      $avp(lua_dlg_profile): [
-        "accountout:[% customer_test.id %]",
-        "userout:[% invite_record_call_scenarios_test.testuser1002.uuid %]",
-        "account:[% customer_test.id %]",
-        "user:[% invite_record_call_scenarios_test.testuser1002.uuid %]",
-        "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% invite_record_call_scenarios_test.testuser1002.uuid %]",
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% invite_record_call_scenarios_test.testuser1002.uuid %]",
-        "peer:appsrv",
-        "local",
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% invite_record_call_scenarios_test.testuser1003.uuid %]",
-        "total",
-        "account:[% customer_test.id %]",
-        "user:[% invite_record_call_scenarios_test.testuser1003.uuid %]"
-      ]
   - start|BRANCH_ROUTE_NO_SBC:
   - start|ROUTE_BRANCH_ACC_RTP:
   - return|ROUTE_BRANCH_ACC_RTP:
+      $var(rtpp_flags): "record-call"
   - start|ROUTE_SET_BRANCH_HDRS:
   - start|ROUTE_PREPARE_UA:
   - return|ROUTE_PREPARE_UA:
@@ -176,51 +139,78 @@ flow:
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
-      $avp(lua_dlg_profile): [
-        "accountout:[% customer_test.id %]",
-        "userout:[% invite_record_call_scenarios_test.testuser1002.uuid %]",
-        "account:[% customer_test.id %]",
-        "user:[% invite_record_call_scenarios_test.testuser1002.uuid %]",
-        "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% invite_record_call_scenarios_test.testuser1002.uuid %]",
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% invite_record_call_scenarios_test.testuser1002.uuid %]",
-        "peer:appsrv",
-        "local",
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% invite_record_call_scenarios_test.testuser1003.uuid %]",
-        "total",
-        "account:[% customer_test.id %]",
-        "user:[% invite_record_call_scenarios_test.testuser1003.uuid %]"
-      ]
 sip_in:
-  - '^INVITE'
-  - 'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %](;[^>]+)?>'
-  - 'CSeq: 2 INVITE'
-  - 'Max-Forwards: 69'
+  - 'INVITE sip:[% scenarios.1.responders.0.username %]@invite-record-call.scenarios.test SIP/2.0'
+  - 'From: <sip:[% scenarios.0.username %]@invite-record-call.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:[% scenarios.1.responders.0.username %]@invite-record-call.scenarios.test>'
+  - 'CSeq: \d+ INVITE'
+  - 'Contact: <sip:[% scenarios.1.username %]@[% scenarios.1.ip %]:[% scenarios.1.port %];alias=[^;]+>'
+  - 'Proxy-Authorization: Digest username="[% scenarios.0.username %]",realm="invite-record-call.scenarios.test",uri="sip:[% server_ip %]:5060",nonce="[^"]+",response="[^"]+",algorithm=MD5'
   - 'Content-Type: application/sdp'
-  - 'Proxy-Authorization: Digest username="[% scenarios.0.username %]"'
+  - 'Content-Length:\s+\d+'
+  - 'P-NGCP-Src-Ip: [% scenarios.0.ip %]'
+  - 'P-NGCP-Src-Port: [% scenarios.1.port %]'
+  - 'P-NGCP-Src-Proto: udp'
+  - 'P-NGCP-Src-Af: 4'
+  - 'P-Sock-Info: udp:[% server_ip %]:5060'
+  - 'P-LB-Uptime:\s+\d+'
+  - 'P-NGCP-Src-Nat: 1'
+  - 'v=0'
+  - 's=-'
+  - 't=0 0'
+  - 'm=audio [% scenarios.1.mport %] RTP/AVP 8'
+  - 'a=rtpmap:8 PCMA/8000'
+  - 'a=ptime:50'
 sip_out:
   - [
-      '^SIP/2.0 100 Trying',
-      'CSeq: 2 INVITE',
-      'From: <sip:[% scenarios.0.username %]@',
-      'To: <sip:[% scenarios.0.responders.0.username %]@'
+      'SIP/2.0 100 Trying',
+      'From: <sip:[% scenarios.0.username %]@invite-record-call.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.1.responders.0.username %]@invite-record-call.scenarios.test>',
+      'CSeq: \d+ INVITE',
+      'P-Out-Socket: udp:[% server_ip %]:5060',
+      'P-NGCP-Auth-IP: [% scenarios.0.ip %]',
+      'P-NGCP-Auth-UA: <null>',
+      'Server: Sipwise NGCP Proxy',
+      'Content-Length:\s+0',
     ]
   - [
-      '^SIP/2.0 101 Connecting',
-      'CSeq: 2 INVITE',
-      'From: <sip:[% scenarios.0.username %]@',
-      'To: <sip:[% scenarios.0.responders.0.username %]@'
-    ]
-  - [
-      '^INVITE sip:pre_announce@app.local',
-      'CSeq: 2 INVITE',
-      'From: <sip:[% scenarios.0.username %]@',
-      'To: <sip:[% scenarios.0.responders.0.username %]@',
-      'Content-Type: application/sdp',
+      'SIP/2.0 101 Connecting',
+      'From: <sip:[% scenarios.0.username %]@invite-record-call.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.1.responders.0.username %]@invite-record-call.scenarios.test>',
+      'CSeq: \d+ INVITE',
+      'P-Out-Socket: udp:[% server_ip %]:5060',
+      'P-NGCP-Auth-IP: [% scenarios.0.ip %]',
+      'P-NGCP-Auth-UA: <null>',
+      'P-NGCP-Authorization: testuser1002@invite-record-call.scenarios.test',
+      'P-NGCP-Authorized: 1',
+      'P-NGCP-Caller-Info: <sip:[% scenarios.0.username %]@invite-record-call.scenarios.test>;ip=[% scenarios.1.ip %];port=[% scenarios.1.port %];primary=[% invite_record_call_scenarios_test.testuser1002.phone_number %]',
       'P-Caller-UUID: [% invite_record_call_scenarios_test.testuser1002.uuid %]',
-      'P-Callee-UUID: [% invite_record_call_scenarios_test.testuser1003.uuid %]',
-      'P-App-Param: force_early_announce=0;audio_id=;audio2_id=;audio3_id=[0-9]+;reply_180=no',
-      'P-App-Name: pre_announce'
+      'Server: Sipwise NGCP Proxy',
+      'Content-Length:\s+0',
+    ]
+  - [
+      'INVITE sip:pre_announce@app.local SIP/2.0',
+      'From: <sip:[% scenarios.0.username %]@invite-record-call.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.1.responders.0.username %]@invite-record-call.scenarios.test>',
+      'CSeq: \d+ INVITE',
+      'Contact: <sip:[% scenarios.1.username %]@[% scenarios.1.ip %]:[% scenarios.1.port %];alias=[^;]+>',
+      'Content-Type: application/sdp',
+      'Content-Length:\s+\d+',
+      'P-LB-Uptime:\s+\d+',
+      'P-App-Param: force_early_announce=0;audio_id=\d*;audio2_id=\d*;audio3_id=\d*;reply_180=no',
+      'P-App-Name: pre_announce',
+      'P-Caller-UUID: [% invite_record_call_scenarios_test.testuser1002.uuid %]',
+      'P-Callee-UUID: [% invite_record_call_scenarios_test.testuser1004.uuid %]',
+      'P-NGCP-Caller-Info: <sip:[% scenarios.0.username %]@invite-record-call.scenarios.test>;ip=[% scenarios.1.ip %];port=[% scenarios.1.port %];primary=[% invite_record_call_scenarios_test.testuser1002.phone_number %]',
+      'P-NGCP-Callee-Info: <sip:[% scenarios.1.responders.0.username %]@invite-record-call.scenarios.test>;ip=127.0.0.1;port=5080;primary=[% invite_record_call_scenarios_test.testuser1004.phone_number %]',
+      'v=0',
+      's=-',
+      't=0 0',
+      'm=audio \d+ RTP/AVP 8 96',
+      'a=rtpmap:8 PCMA/8000',
+      'a=rtpmap:96 telephone-event/8000',
+      'a=fmtp:96 0-15',
+      'a=sendrecv',
+      'a=rtcp:\d+',
+      'a=ptime:50',
     ]

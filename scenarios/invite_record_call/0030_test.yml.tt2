@@ -1,0 +1,51 @@
+flow:
+  - start|DEFAULT_ONREPLY:
+  - start|REPLY_ROUTE_NAT:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - start|ROUTE_PREPARE_UA:
+  - return|ROUTE_PREPARE_UA:
+  - start|REPLY_ROUTE_RTPENGINE:
+  - return|REPLY_ROUTE_RTPENGINE:
+  - start|REPLY_ROUTE_NAT_CONTINUE:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+sip_in:
+  - 'SIP/2.0 183 Progress'
+  - 'From: <sip:[% scenarios.0.username %]@invite-record-call.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:[% scenarios.1.responders.0.username %]@invite-record-call.scenarios.test>;tag=[\w-]+'
+  - 'CSeq: \d+ INVITE'
+  - 'Contact: <sip:127.0.0.1:5080;transport=udp>'
+  - 'Content-Type: application/sdp'
+  - 'Content-Length:\s+\d+'
+  - 'v=0'
+  - 's=sems'
+  - 't=0 0'
+  - 'm=audio \d+ RTP/AVP 8 96'
+  - 'a=rtpmap:8 PCMA/8000'
+  - 'a=rtpmap:96 telephone-event/8000'
+  - 'a=fmtp:96 0-15'
+  - 'a=sendrecv'
+sip_out:
+  - [
+      'SIP/2.0 183 Progress',
+      'From: <sip:[% scenarios.0.username %]@invite-record-call.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.1.responders.0.username %]@invite-record-call.scenarios.test>;tag=[\w-]+',
+      'CSeq: \d+ INVITE',
+      'Contact: <sip:127.0.0.1:5080;transport=udp>',
+      'Content-Type: application/sdp',
+      'Content-Length:\s+\d+',
+      'P-Out-Socket: udp:[% server_ip %]:5060',
+      'v=0',
+      's=sems',
+      't=0 0',
+      'm=audio \d+ RTP/AVP 8',
+      'a=rtpmap:8 PCMA/8000',
+      'a=sendrecv',
+      'a=rtcp:\d+',
+      'a=ptime:50',
+    ]
