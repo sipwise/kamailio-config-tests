@@ -1,3 +1,10 @@
+kamailio-config-tests (9.5.6.2+0~mr9.5.6.2) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [805ad69] TT#170350 config_debug.pl: set kct option
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 14 Apr 2023 13:33:02 +0200
+
 kamailio-config-tests (9.5.6.1+0~mr9.5.6.1) unstable; urgency=medium
 
   [ Alessio Garzi ]
