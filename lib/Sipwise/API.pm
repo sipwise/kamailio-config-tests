@@ -283,6 +283,10 @@ sub _post_content {
 
 sub _exists {
 	my ($self, $data, $urldata, $collection_id) = @_;
+	# remove empty values
+	foreach (keys %{$data}) {
+		delete $data->{$_} unless $data->{$_};
+	}
 	my $collection = $self->_get_content($data, $urldata);
 
 	if (defined $collection && $collection->{total_count} == 1) {
