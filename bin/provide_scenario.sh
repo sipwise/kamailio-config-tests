@@ -130,7 +130,7 @@ delete_voip() {
     "${BIN_DIR}/create_registrations.pl" -delete "${SCEN_CHECK_DIR}/registration.yml"
   fi
 
-  ngcp-delete-domain "$1" >/dev/null 2>&1
+  ngcp-delete-domain "$1" >/dev/null 2>&1 || echo "$(date) - can't delete domain $1"
 
   if [ -f "${SCEN_CHECK_DIR}/peer.yml" ]; then
     echo "$(date) - Deleting peers"
