@@ -7,6 +7,7 @@ b2b:
 kamailio:
   proxy:
     allow_refer_method: yes
+    generate_responder_cdr_data: yes
     presence:
       enable: yes
     skip_cf_loop: 'yes'

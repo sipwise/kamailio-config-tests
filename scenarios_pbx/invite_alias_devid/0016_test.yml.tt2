@@ -15,6 +15,7 @@ flow:
   - return|REPLY_ROUTE_RTPENGINE:
   - start|REPLY_ROUTE_NAT_CONTINUE:
   - start|ROUTE_EXIT:
+      $avp(s:0-callee_rU): ["4311003"]
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:
   - start|dialog:start:
