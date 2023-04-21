@@ -1,0 +1,5 @@
+cdr:
+  - val: '[% invite_alias_devid_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]'
+    type: 'r_user'
+  - val: '<null>'
+    type: 'r_ua'

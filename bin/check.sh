@@ -31,6 +31,7 @@ GRAPH=false
 GRAPH_FAIL=false
 SKIP_MOVE_JSON_KAM=false
 CDR=false
+CDR_TAG_DATA=false
 ERR_FLAG=0
 RETRANS_SIZE=2
 SIP_SERVER=127.0.0.1
@@ -641,7 +642,7 @@ cdr_check() {
 }
 
 usage() {
-  echo "Usage: check.sh [-hCDRGgKmt] [-T <all|cfgt|sipp>] [-p PROFILE ] [-s GROUP] check_name"
+  echo "Usage: check.sh [-hCDRGgKmtd] [-T <all|cfgt|sipp>] [-p PROFILE ] [-s GROUP] check_name"
   echo "Options:"
   echo -e "\\t-I: SIP_SERVER IP, default:127.0.0.1"
   echo -e "\\t-C: skip creation of domain and subscribers"
@@ -659,11 +660,12 @@ usage() {
   echo -e "\\t-s: scenario group. Default: scenarios"
   echo -e "\\t-m: enable memdbg csv"
   echo -e "\\t-c: enable cdr validation"
+  echo -e "\\t-d: enable cdr tag data validation"
   echo "Arguments:"
   echo -e "\\tcheck_name. Scenario name to check. This is the name of the directory on GROUP dir."
 }
 
-while getopts 'hI:Cp:Rs:DtT:GgrcKMmw:' opt; do
+while getopts 'hI:Cp:Rs:DtT:GgrcdKMmw:' opt; do
   case $opt in
     h) usage; exit 0;;
     I) SIP_SERVER=${OPTARG};;
@@ -681,6 +683,7 @@ while getopts 'hI:Cp:Rs:DtT:GgrcKMmw:' opt; do
     M) SKIP_MOVE_JSON_KAM=true;;
     m) MEMDBG=true;;
     c) CDR=true;;
+    d) CDR_TAG_DATA=true;;
     w) RETRANS_SIZE=${OPTARG};;
     *) usage; exit 1;;
   esac
@@ -895,6 +898,23 @@ if ! ${SKIP_CHECK} ; then
     fi
     echo "$(date) - Done[${result}]"
   fi
+
+  if "${CDR_TAG_DATA}" ; then
+    t_cdr="${SCEN_CHECK_DIR}/cdr_tag_data_test.yml"
+    if [ -f "$t_cdr" ]; then
+      echo "$(date) - Validating CDRs tag data"
+      msg="${LOG_DIR}/cdr_tag_data.txt"
+      dest="${RESULT_DIR}/cdr_tag_data_test.tap"
+      echo "$(date) - Check test ${t_cdr} on ${msg}"
+      if cdr_check "${t_cdr}" "${msg}" "${dest}" ; then
+        result=OK
+      else
+        result=KO; ERR_FLAG=1
+      fi
+      echo "$(date) - Done[${result}]"
+    fi
+  fi
+
   echo "$(date) - ================================================================================="
 fi
 exit ${ERR_FLAG}

@@ -8,6 +8,7 @@ PROFILE="${PROFILE:-}"
 GROUP="${GROUP:-scenarios}"
 RETRANS=""
 CDR=""
+CDR_TAG_DATA=""
 CHECK_TYPE=sipp
 
 usage() {
@@ -51,7 +52,7 @@ while getopts 'hf:gGp:rR:cx:S:' opt; do
     g) GRAPH="-g";;
     r) RETRANS="-r";;
     R) RETRANS="-r -w ${OPTARG}";;
-    c) CDR="-c";;
+    c) CDR_TAG_DATA="-d"; CDR="-c";;
     p) PROFILE=${OPTARG};;
     x) GROUP=${OPTARG};;
     f) SCEN_FILE=${OPTARG};;
@@ -90,7 +91,7 @@ check_old() {
   echo "$(date) - ================================================================================="
   echo "$(date) - ----- ${CHECK_TYPE} checks ----- "
   echo "${SCEN[@]}" |  tr ' ' '\n' \
-     | parallel "${BIN_DIR}/check.sh ${GRAPH} -T${CHECK_TYPE} -C -R ${OPTS} ${RETRANS} ${CDR} -p ${PROFILE} -s ${GROUP}"
+     | parallel "${BIN_DIR}/check.sh ${GRAPH} -T${CHECK_TYPE} -C -R ${OPTS} ${RETRANS} ${CDR} ${CDR_TAG_DATA} -p ${PROFILE} -s ${GROUP}"
   status=$?
   echo "$(date) - All done[${status}]"
 }
@@ -99,7 +100,7 @@ check_sipp() {
   echo "$(date) - ================================================================================="
   echo "$(date) - ---- sipp checks ----- "
   echo "${SCEN[@]}" |  tr ' ' '\n' \
-     | parallel "${BIN_DIR}/check_sipp.sh ${CDR} -p ${PROFILE} -s ${GROUP}"
+     | parallel "${BIN_DIR}/check_sipp.sh ${CDR} ${CDR_TAG_DATA} -p ${PROFILE} -s ${GROUP}"
   status=$?
   echo "$(date) - All done[${status}]"
 }

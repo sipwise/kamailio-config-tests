@@ -21,6 +21,7 @@
 set -e
 ERR_FLAG=0
 CDR=false
+CDR_TAG_DATA=false
 
 # $1 destination tap file
 # $2 file path
@@ -81,16 +82,18 @@ usage() {
   echo "Usage: check_sipp.sh [-h] [-p PROFILE ] -s [GROUP] check_name"
   echo "Options:"
   echo -e "\\t-c enable cdr validation"
+  echo -e "\\t-d enable cdr tag data validation"
   echo -e "\\t-p: CE|PRO default is CE"
   echo -e "\\t-s: scenario group. Default: scenarios"
   echo "Arguments:"
   echo -e "\\tcheck_name. Scenario name to check. This is the name of the directory on GROUP dir."
 }
 
-while getopts 'hcp:s:' opt; do
+while getopts 'hcdp:s:' opt; do
   case $opt in
     h) usage; exit 0;;
     c) CDR=true;;
+    d) CDR_TAG_DATA=true;;
     p) PROFILE=${OPTARG};;
     s) GROUP=${OPTARG};;
     *) usage; exit 1;;
@@ -172,6 +175,17 @@ if ${CDR} ; then
   dest="${RESULT_DIR}/cdr_test.tap"
   echo "$(date) - Check test ${t_cdr} on ${msg}"
   cdr_check "${t_cdr}" "${msg}" "${dest}"
+fi
+
+if ${CDR_TAG_DATA} ; then
+  t_cdr="${SCEN_CHECK_DIR}/cdr_tag_data_test.yml"
+  if [ -f "$t_cdr" ]; then
+    echo "$(date) - Validating CDRs tag data"
+    msg="${LOG_DIR}/cdr_tag_data.txt"
+    dest="${RESULT_DIR}/cdr_tag_data_test.tap"
+    echo "$(date) - Check test ${t_cdr} on ${msg}"
+    cdr_check "${t_cdr}" "${msg}" "${dest}"
+  fi
 fi
 
 echo "$(date) - ================================================================================="

@@ -77,6 +77,8 @@ if ! "${MUTE}" ; then
 fi
 mysql --defaults-extra-file="${SIPWISE_EXTRA_CNF}" accounting \
       -e "select * from cdr where call_id like 'NGCP\%${NAME_CHECK}\%%' and start_time > ${START_TIME} order by id desc limit 10\G" > "${LOG_DIR}/cdr.txt" || true
+mysql --defaults-extra-file="${SIPWISE_EXTRA_CNF}" accounting \
+      -e "select * from cdr_tag_data left join cdr_tag on tag_id = cdr_tag.id,(select id from cdr where call_id like 'NGCP\%${NAME_CHECK}\%%' and start_time > ${START_TIME} order by id desc limit 10) as cdr where cdr_id = cdr.id limit 10\G" > "${LOG_DIR}/cdr_tag_data.txt" || true
 if ! "${MUTE}" ; then
 echo "$(date) - Done"
 fi
