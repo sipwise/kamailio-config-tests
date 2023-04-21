@@ -25,7 +25,7 @@ CHECK_TYPE=all
 
 function usage
 {
-  echo "Usage: generate_tests_tt2.sh [-h] [-x GROUP] scenario [id1] [id2]"
+  echo "Usage: generate_test_tt2.sh [-h] [-x GROUP] scenario [id1] [id2]"
   echo "Options:"
   echo -e "\\tx: group of scenarios. Default: scenarios"
   echo -e "\\t-S check type. Default: all (cfgt, sipp)"
@@ -37,8 +37,8 @@ function usage
   echo -e "\\t   More than one id can be used. No need to pass leading zeros."
   echo
   echo "Examples:"
-  echo -e "\\t\$ generate_tests_tt2.sh -x scenarios_pbx invite"
-  echo -e "\\t\$ generate_tests_tt2.sh incoming 1 7 12"
+  echo -e "\\t\$ generate_test_tt2.sh -x scenarios_pbx invite"
+  echo -e "\\t\$ generate_test_tt2.sh incoming 1 7 12"
 }
 
 while getopts 'hx:S:' opt; do
