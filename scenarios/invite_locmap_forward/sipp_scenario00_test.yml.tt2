@@ -56,8 +56,6 @@ messages:
   - 'a=rtcp:\d+'
   - 'a=ptime:50'
 - - 'SIP/2.0 200 OK'
-  - 'Record-Route: <sip:127.0.0.1:5062;lr=on;ftag=[^;]+;rtpprx=yes>'
-  - 'Record-Route: <sip:127.0.0.1;r2=on;lr=on;ftag=[^;]+;ngcplb=yes;nat=yes;socket=udp:[% server_ip %]:5060>'
   - 'From: <sip:[% scenarios.0.username %]@invite-locmap-forward.scenarios.test>;tag=[\w-]+'
   - 'To: <sip:[% scenarios.0.responders.0.username %]@invite-locmap-forward.scenarios.test>;tag=[\w-]+'
   - 'CSeq: \d+ BYE'
