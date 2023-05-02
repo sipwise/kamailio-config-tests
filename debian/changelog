@@ -1,3 +1,10 @@
+kamailio-config-tests (11.3.1.4+0~mr11.3.1.4) unstable; urgency=medium
+
+  [ Donat Zenichev ]
+  * [6e8366e] MT#57312 Fix regex for 'invite_locmap_forward'
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 02 May 2023 14:51:10 +0200
+
 kamailio-config-tests (11.3.1.3+0~mr11.3.1.3) unstable; urgency=medium
 
   [ Victor Seva ]
