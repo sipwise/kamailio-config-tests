@@ -9,7 +9,7 @@ flow:
       $x_hdr(Diversion): <tel:\+43111222333>;reason=unconditional;privacy=off;counter=1
       $x_hdr(P-Asserted-Identity): <tel:\+[% invite_redirect_tel_uri_scenarios_test.testuser1000.phone_number %]>
       $x_tu: tel:\+[% invite_redirect_tel_uri_scenarios_test.testuser1001.phone_number %]
-  - exit|ROUTE_CHECK_TEL_URI:
+  - return|ROUTE_CHECK_TEL_URI:
       $x_hdr(From): <sip:\+[% invite_redirect_tel_uri_scenarios_test.testuser1000.phone_number %]@invite-redirect-tel-uri.scenarios.test;user=phone>;tag=\w+
       $x_hdr(Diversion): <sip:\+43111222333@invite-redirect-tel-uri.scenarios.test;user=phone>;reason=unconditional;privacy=off;counter=1
       $x_hdr(P-Asserted-Identity): <sip:\+[% invite_redirect_tel_uri_scenarios_test.testuser1000.phone_number %]@invite-redirect-tel-uri.scenarios.test;user=phone>

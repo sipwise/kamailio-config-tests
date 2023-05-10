@@ -122,7 +122,7 @@ sip_out:
       'Content-Type: application/sdp',
       'Content-Length:\s+\d+',
       'P-LB-Uptime:\s+\d+',
-      'P-App-Param: ;calltimer=21600;aleg_sst_enable=no;sst_enable=no;hold_alter_b2b_bleg=no;hold_alter_b2b_aleg=no;fast_ack=no',
+      'P-App-Param: ;calltimer=21600;aleg_sst_enable=no;sst_enable=no;hold_alter_b2b_bleg=no;hold_alter_b2b_aleg=no',
       'P-App-Name: sbc',
       'P-Asserted-Identity: <sip:[% invite_record_call_scenarios_test.testuser1002.phone_number %]@invite-record-call.scenarios.test>',
       'P-Caller-UUID: [% invite_record_call_scenarios_test.testuser1002.uuid %]',
