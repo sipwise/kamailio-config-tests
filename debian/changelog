@@ -1,3 +1,26 @@
+kamailio-config-tests (11.4.1.0+0~mr11.4.1.0) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [c202336] TT#81700 update flows
+  * [9e09b03] MT#55258 Secretary Manager, update flow and checks
+  * [c3db5b2] MT#57227 API: fix query to check if entity exists
+  * [2efd0d5] TT#81700 update flows
+
+  [ Donat Zenichev ]
+  * [4bd826c] MT#57312 Fix regex for 'invite_locmap_forward'
+  * [39ec728] MT#57312 Fix regex for 'invite_locmap_forward'
+
+  [ Alessio Garzi ]
+  * [d22a88f] MT#57110 Check avp "s:" + branch_id + "callee_rU" in invite_alias_devid
+  * [459551f] MT#57110 Add checks for cdr_tag_data table
+  * [f90883f] MT#57076 Test also a recording of a call with 486 busy
+  * [b509e7f] MT#57110 typo on instructions inside generate_test_tt2.sh
+  * [6fb0cce] MT#57076 Clean invite_record_call tests from fixed ip address
+  * [a54886b] MT#56901 New scenario invite_xfer_attended_caller_immediat_rel
+  * [d599ac7] MT#33031 Invite scenario fixed for counters at reseller level
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 26 Jun 2023 14:10:02 +0200
+
 kamailio-config-tests (11.4.0.0+0~mr11.4.0.0) unstable; urgency=medium
 
   [ Victor Seva ]
