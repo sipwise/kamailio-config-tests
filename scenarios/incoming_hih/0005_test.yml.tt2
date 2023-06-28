@@ -27,6 +27,8 @@ flow:
   - return|ROUTE_CHECK_UA:
   - start|ROUTE_LOAD_CALLER_CONTRACT_PREF:
   - return|ROUTE_LOAD_CALLER_CONTRACT_PREF:
+  - start|ROUTE_LOAD_CALLER_RESELLER_PREF:
+  - return|ROUTE_LOAD_CALLER_RESELLER_PREF:
   - return|ROUTE_LOAD_CALLER_PREF:
   - start|ROUTE_APPLY_HEADER_RULES:
   - return|ROUTE_APPLY_HEADER_RULES:
@@ -54,6 +56,8 @@ flow:
   - start|ROUTE_LOAD_CALLEE_PREF:
   - start|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
   - return|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
+  - start|ROUTE_LOAD_CALLEE_RESELLER_PREF:
+  - return|ROUTE_LOAD_CALLEE_RESELLER_PREF:
   - start|ROUTE_SET_CALLEE_DIALOG:
   - start|ROUTE_CNT_DLG_CHECK:
   - start|ROUTE_DLG_MANAGE:
@@ -65,8 +69,10 @@ flow:
   - return|ROUTE_SET_CALLEE_DIALOG_TOTAL:
   - return|ROUTE_SET_CALLEE_DIALOG:
       $avp(lua_dlg_profile): [
+        "totalreseller:1",
         "totalaccount:[% customer_test.id %]",
         "totaluser:[% incoming_hih_scenarios_test.testuser1002.uuid %]",
+        "reseller:1",
         "account:[% customer_test.id %]",
         "user:[% incoming_hih_scenarios_test.testuser1002.uuid %]"
       ]
@@ -113,8 +119,10 @@ flow:
   - start|ROUTE_OUTBOUND:
       $avp(lua_dlg_profile): [
         "local",
+        "totalreseller:1",
         "totalaccount:[% customer_test.id %]",
         "totaluser:[% incoming_hih_scenarios_test.testuser1002.uuid %]",
+        "reseller:1",
         "account:[% customer_test.id %]",
         "user:[% incoming_hih_scenarios_test.testuser1002.uuid %]"
       ]
@@ -127,17 +135,23 @@ flow:
   - return|ROUTE_SET_CALLER_DIALOG_BASE:
   - return|ROUTE_SET_CALLER_DIALOG:
       $avp(lua_dlg_profile): [
+        "resellerout:1",
         "accountout:[% customer_test.id %]",
         "userout:[% incoming_hih_scenarios_test.testuser1003.uuid %]",
+        "reseller:1",
         "account:[% customer_test.id %]",
         "user:[% incoming_hih_scenarios_test.testuser1003.uuid %]",
+        "totalresellerout:1",
         "totalaccountout:[% customer_test.id %]",
         "totaluserout:[% incoming_hih_scenarios_test.testuser1003.uuid %]",
+        "totalreseller:1",
         "totalaccount:[% customer_test.id %]",
         "totaluser:[% incoming_hih_scenarios_test.testuser1003.uuid %]",
         "local",
+        "totalreseller:1",
         "totalaccount:[% customer_test.id %]",
         "totaluser:[% incoming_hih_scenarios_test.testuser1002.uuid %]",
+        "reseller:1",
         "account:[% customer_test.id %]",
         "user:[% incoming_hih_scenarios_test.testuser1002.uuid %]"
       ]
@@ -152,6 +166,8 @@ flow:
   - start|BRANCH_ROUTE_SBC:
   - start|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
   - return|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
+  - start|ROUTE_LOAD_CALLEE_RESELLER_PREF:
+  - return|ROUTE_LOAD_CALLEE_RESELLER_PREF:
   - start|ROUTE_SET_CALLEE_DIALOG:
   - start|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_CNT_DLG_CHECK:
@@ -208,17 +224,23 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
       $avp(lua_dlg_profile): [
+        "resellerout:1",
         "accountout:[% customer_test.id %]",
         "userout:[% incoming_hih_scenarios_test.testuser1003.uuid %]",
+        "reseller:1",
         "account:[% customer_test.id %]",
         "user:[% incoming_hih_scenarios_test.testuser1003.uuid %]",
+        "totalresellerout:1",
         "totalaccountout:[% customer_test.id %]",
         "totaluserout:[% incoming_hih_scenarios_test.testuser1003.uuid %]",
+        "totalreseller:1",
         "totalaccount:[% customer_test.id %]",
         "totaluser:[% incoming_hih_scenarios_test.testuser1003.uuid %]",
         "local",
+        "totalreseller:1",
         "totalaccount:[% customer_test.id %]",
         "totaluser:[% incoming_hih_scenarios_test.testuser1002.uuid %]",
+        "reseller:1",
         "account:[% customer_test.id %]",
         "user:[% incoming_hih_scenarios_test.testuser1002.uuid %]"
       ]

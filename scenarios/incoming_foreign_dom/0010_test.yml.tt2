@@ -15,19 +15,25 @@ flow:
   - return|ROUTE_RUNTIME:
   - start|dialog:start:
   - return|dialog:start:
-      $avp(lua_dlg_profile): [
+       $avp(lua_dlg_profile): [
+        "resellerout:0",
         "accountout:0",
         "userout:0",
+        "reseller:0",
         "account:0",
         "user:0",
+        "totalresellerout:0",
         "totalaccountout:0",
         "totaluserout:0",
+        "totalreseller:0",
         "totalaccount:0",
         "totaluser:0",
         "local",
+        "totalreseller:1",
         "totalaccount:[% customer_test.id %]",
         "totaluser:[% incoming_foreign_dom_scenarios_test.testuser1003.uuid %]",
         "total",
+        "reseller:1",
         "account:[% customer_test.id %]",
         "user:[% incoming_foreign_dom_scenarios_test.testuser1003.uuid %]"
       ]
