@@ -18,12 +18,16 @@ flow:
   - start|dialog:start:
   - return|dialog:start:
       $avp(lua_dlg_profile): [
+        "resellerout:1",
         "accountout:[% customer_test.id %]",
         "userout:[% invite_concurrent_max_out_scenarios_test.testuser1002.uuid %]",
+        "reseller:1",
         "account:[% customer_test.id %]",
         "user:[% invite_concurrent_max_out_scenarios_test.testuser1002.uuid %]",
+        "totalresellerout:1",
         "totalaccountout:[% customer_test.id %]",
         "totaluserout:[% invite_concurrent_max_out_scenarios_test.testuser1002.uuid %]",
+        "totalreseller:1",
         "totalaccount:[% customer_test.id %]",
         "totaluser:[% invite_concurrent_max_out_scenarios_test.testuser1002.uuid %]",
         "total",

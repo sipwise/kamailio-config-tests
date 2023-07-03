@@ -31,6 +31,8 @@ flow:
   - return|ROUTE_CHECK_UA:
   - start|ROUTE_LOAD_CALLER_CONTRACT_PREF:
   - return|ROUTE_LOAD_CALLER_CONTRACT_PREF:
+  - start|ROUTE_LOAD_CALLER_RESELLER_PREF:
+  - return|ROUTE_LOAD_CALLER_RESELLER_PREF:
   - return|ROUTE_LOAD_CALLER_PREF:
       $xavp(caller_real_prefs[0]=>concurrent_max_out_per_account[*]): [1]
   - start|ROUTE_DLG_MANAGE:
@@ -108,12 +110,16 @@ flow:
   - start|ROUTE_CNT_CALLER_REJECT:
       $avp(size): [2]
       $avp(lua_dlg_profile): [
+        "resellerout:1",
         "accountout:[% customer_test.id %]",
         "userout:[% invite_concurrent_max_out_per_account_scenarios_test.testuser1002.uuid %]",
+        "reseller:1",
         "account:[% customer_test.id %]",
         "user:[% invite_concurrent_max_out_per_account_scenarios_test.testuser1002.uuid %]",
+        "totalresellerout:1",
         "totalaccountout:[% customer_test.id %]",
         "totaluserout:[% invite_concurrent_max_out_per_account_scenarios_test.testuser1002.uuid %]",
+        "totalreseller:1",
         "totalaccount:[% customer_test.id %]",
         "totaluser:[% invite_concurrent_max_out_per_account_scenarios_test.testuser1002.uuid %]",
         "total",

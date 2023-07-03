@@ -36,6 +36,8 @@ flow:
   - return|ROUTE_CHECK_UA:
   - start|ROUTE_LOAD_CALLER_CONTRACT_PREF:
   - return|ROUTE_LOAD_CALLER_CONTRACT_PREF:
+  - start|ROUTE_LOAD_CALLER_RESELLER_PREF:
+  - return|ROUTE_LOAD_CALLER_RESELLER_PREF:
   - return|ROUTE_LOAD_CALLER_PREF:
   - start|ROUTE_DLG_MANAGE:
   - return|ROUTE_DLG_MANAGE:
@@ -61,6 +63,8 @@ flow:
   - start|ROUTE_LOAD_CALLEE_PREF:
   - start|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
   - return|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
+  - start|ROUTE_LOAD_CALLEE_RESELLER_PREF:
+  - return|ROUTE_LOAD_CALLEE_RESELLER_PREF:
   - start|ROUTE_SET_CALLEE_DIALOG:
   - start|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_CNT_DLG_CHECK:
@@ -70,9 +74,11 @@ flow:
   - return|ROUTE_SET_CALLEE_DIALOG_TOTAL:
   - return|ROUTE_SET_CALLEE_DIALOG:
       $avp(lua_dlg_profile): [
+        "totalreseller:1",
         "totalaccount:[% customer_test.id %]",
         "totaluser:[% invite_callforward_cfna_scenarios_test.testuser1002.uuid %]",
         "total",
+        "reseller:1",
         "account:[% customer_test.id %]",
         "user:[% invite_callforward_cfna_scenarios_test.testuser1002.uuid %]"
       ]
@@ -139,18 +145,24 @@ flow:
   - return|ROUTE_SET_CALLER_DIALOG_BASE:
   - return|ROUTE_SET_CALLER_DIALOG:
       $avp(lua_dlg_profile): [
+        "resellerout:1",
         "accountout:[% customer_test.id %]",
         "userout:[% invite_callforward_cfna_scenarios_test.testuser1001.uuid %]",
+        "reseller:1",
         "account:[% customer_test.id %]",
         "user:[% invite_callforward_cfna_scenarios_test.testuser1001.uuid %]",
+        "totalresellerout:1",
         "totalaccountout:[% customer_test.id %]",
         "totaluserout:[% invite_callforward_cfna_scenarios_test.testuser1001.uuid %]",
+        "totalreseller:1",
         "totalaccount:[% customer_test.id %]",
         "totaluser:[% invite_callforward_cfna_scenarios_test.testuser1001.uuid %]",
         "local",
+        "totalreseller:1",
         "totalaccount:[% customer_test.id %]",
         "totaluser:[% invite_callforward_cfna_scenarios_test.testuser1002.uuid %]",
         "total",
+        "reseller:1",
         "account:[% customer_test.id %]",
         "user:[% invite_callforward_cfna_scenarios_test.testuser1002.uuid %]"
       ]
