@@ -47,6 +47,8 @@ flow:
   - start|ROUTE_LOAD_CALLEE_PREF:
   - start|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
   - return|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
+  - start|ROUTE_LOAD_CALLEE_RESELLER_PREF:
+  - return|ROUTE_LOAD_CALLEE_RESELLER_PREF:
   - start|ROUTE_SET_CALLEE_DIALOG:
   - start|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_CNT_DLG_CHECK:
@@ -56,8 +58,10 @@ flow:
   - return|ROUTE_SET_CALLEE_DIALOG_TOTAL:
   - return|ROUTE_SET_CALLEE_DIALOG:
      $avp(lua_dlg_profile): [
+        "totalreseller:1",
         "totalaccount:[% customer_test.id %]",
         "totaluser:[% incoming_hih_scenarios_test.testuser1003.uuid %]",
+        "reseller:1",
         "account:[% customer_test.id %]",
         "user:[% incoming_hih_scenarios_test.testuser1003.uuid %]",
         "peer:[% peer_00_host0.id %]", "total"
@@ -114,8 +118,10 @@ flow:
   - return|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_SET_CALLER_DIALOG:
       $avp(lua_dlg_profile): [
+        "totalreseller:1",
         "totalaccount:[% customer_test.id %]",
         "totaluser:[% incoming_hih_scenarios_test.testuser1003.uuid %]",
+        "reseller:1",
         "account:[% customer_test.id %]",
         "user:[% incoming_hih_scenarios_test.testuser1003.uuid %]",
         "peer:[% peer_00_host0.id %]", "total"

@@ -19,8 +19,10 @@ flow:
   - return|dialog:start:
       $avp(lua_dlg_profile): [
         "incoming",
+        "totalreseller:1",
         "totalaccount:[% customer_test.id %]",
         "totaluser:[% incoming_peer_stir.scenarios.test.testuser1003.uuid %]",
+        "reseller:1",
         "account:[% customer_test.id %]",
         "user:[% incoming_peer_stir.scenarios.test.testuser1003.uuid %]",
         "peer:[% peer_00_host0.id %]",
