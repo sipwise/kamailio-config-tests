@@ -37,8 +37,6 @@ flow:
   - return|ROUTE_CHECK_UA:
   - start|ROUTE_LOAD_CALLER_CONTRACT_PREF:
   - return|ROUTE_LOAD_CALLER_CONTRACT_PREF:
-  - start|ROUTE_LOAD_CALLER_RESELLER_PREF:
-  - return|ROUTE_LOAD_CALLER_RESELLER_PREF:
   - return|ROUTE_LOAD_CALLER_PREF:
       $xavp(caller_usr_prefs[0]=>allowed_clis[*]): ['[% invite_allowedcli_match_alias_scenarios_test.testuser1002.phone_number %]1*', '[% invite_allowedcli_match_alias_scenarios_test.testuser1002.phone_number %]9*']
       $xavp(caller_real_prefs[0]=>allowed_clis[*]): ['[% invite_allowedcli_match_alias_scenarios_test.testuser1002.phone_number %]1*', '[% invite_allowedcli_match_alias_scenarios_test.testuser1002.phone_number %]9*']
@@ -70,8 +68,6 @@ flow:
   - start|ROUTE_LOAD_CALLEE_PREF:
   - start|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
   - return|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
-  - start|ROUTE_LOAD_CALLEE_RESELLER_PREF:
-  - return|ROUTE_LOAD_CALLEE_RESELLER_PREF:
   - start|ROUTE_SET_CALLEE_DIALOG:
   - start|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_CNT_DLG_CHECK:
@@ -81,11 +77,9 @@ flow:
   - return|ROUTE_SET_CALLEE_DIALOG_TOTAL:
   - return|ROUTE_SET_CALLEE_DIALOG:
       $avp(lua_dlg_profile): [
-        "totalreseller:1",
         "totalaccount:[% customer_test.id %]",
         "totaluser:[% invite_allowedcli_match_alias_scenarios_test.testuser1003.uuid %]",
         "total",
-        "reseller:1",
         "account:[% customer_test.id %]",
         "user:[% invite_allowedcli_match_alias_scenarios_test.testuser1003.uuid %]"
       ]
@@ -129,13 +123,11 @@ flow:
   - start|ROUTE_SET_CALLER_DIALOG:
       $avp(lua_dlg_profile): [
         "local",
-        "totalreseller:1",
         "totalaccount:[% customer_test.id %]",
         "totaluser:[% invite_allowedcli_match_alias_scenarios_test.testuser1003.uuid %]",
         "total",
-        "reseller:1",
         "account:[% customer_test.id %]",
-        "user:[% invite_allowedcli_match_alias_scenarios_test.testuser1003.uuid %]",
+        "user:[% invite_allowedcli_match_alias_scenarios_test.testuser1003.uuid %]"
       ]
   - start|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_CNT_DLG_CHECK:
@@ -145,24 +137,18 @@ flow:
   - return|ROUTE_SET_CALLER_DIALOG_BASE:
   - return|ROUTE_SET_CALLER_DIALOG:
       $avp(lua_dlg_profile): [
-        "resellerout:1",
-        "accountout:[% customer_test.id %]",
-        "userout:[% invite_allowedcli_match_alias_scenarios_test.testuser1002.uuid %]",
-        "reseller:1",
-        "account:[% customer_test.id %]",
-        "user:[% invite_allowedcli_match_alias_scenarios_test.testuser1002.uuid %]",
-        "totalresellerout:1",
-        "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% invite_allowedcli_match_alias_scenarios_test.testuser1002.uuid %]",
-        "totalreseller:1",
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% invite_allowedcli_match_alias_scenarios_test.testuser1002.uuid %]",
+        'accountout:[% customer_test.id %]',
+        'userout:[% invite_allowedcli_match_alias_scenarios_test.testuser1002.uuid %]',
+        'account:[% customer_test.id %]',
+        'user:[% invite_allowedcli_match_alias_scenarios_test.testuser1002.uuid %]',
+        'totalaccountout:[% customer_test.id %]',
+        'totaluserout:[% invite_allowedcli_match_alias_scenarios_test.testuser1002.uuid %]',
+        'totalaccount:[% customer_test.id %]',
+        'totaluser:[% invite_allowedcli_match_alias_scenarios_test.testuser1002.uuid %]',
         "local",
-        "totalreseller:1",
         "totalaccount:[% customer_test.id %]",
         "totaluser:[% invite_allowedcli_match_alias_scenarios_test.testuser1003.uuid %]",
         "total",
-        "reseller:1",
         "account:[% customer_test.id %]",
         "user:[% invite_allowedcli_match_alias_scenarios_test.testuser1003.uuid %]"
       ]
@@ -179,8 +165,6 @@ flow:
   - start|BRANCH_ROUTE_SBC:
   - start|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
   - return|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
-  - start|ROUTE_LOAD_CALLEE_RESELLER_PREF:
-  - return|ROUTE_LOAD_CALLEE_RESELLER_PREF:
   - start|ROUTE_SET_CALLEE_DIALOG:
   - start|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_CNT_DLG_CHECK:
@@ -238,24 +222,18 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
       $avp(lua_dlg_profile): [
-        "resellerout:1",
-        "accountout:[% customer_test.id %]",
-        "userout:[% invite_allowedcli_match_alias_scenarios_test.testuser1002.uuid %]",
-        "reseller:1",
-        "account:[% customer_test.id %]",
-        "user:[% invite_allowedcli_match_alias_scenarios_test.testuser1002.uuid %]",
-        "totalresellerout:1",
-        "totalaccountout:[% customer_test.id %]",
-        "totaluserout:[% invite_allowedcli_match_alias_scenarios_test.testuser1002.uuid %]",
-        "totalreseller:1",
-        "totalaccount:[% customer_test.id %]",
-        "totaluser:[% invite_allowedcli_match_alias_scenarios_test.testuser1002.uuid %]",
+        'accountout:[% customer_test.id %]',
+        'userout:[% invite_allowedcli_match_alias_scenarios_test.testuser1002.uuid %]',
+        'account:[% customer_test.id %]',
+        'user:[% invite_allowedcli_match_alias_scenarios_test.testuser1002.uuid %]',
+        'totalaccountout:[% customer_test.id %]',
+        'totaluserout:[% invite_allowedcli_match_alias_scenarios_test.testuser1002.uuid %]',
+        'totalaccount:[% customer_test.id %]',
+        'totaluser:[% invite_allowedcli_match_alias_scenarios_test.testuser1002.uuid %]',
         "local",
-        "totalreseller:1",
         "totalaccount:[% customer_test.id %]",
         "totaluser:[% invite_allowedcli_match_alias_scenarios_test.testuser1003.uuid %]",
         "total",
-        "reseller:1",
         "account:[% customer_test.id %]",
         "user:[% invite_allowedcli_match_alias_scenarios_test.testuser1003.uuid %]"
       ]
