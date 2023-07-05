@@ -44,6 +44,8 @@ flow:
   - start|BRANCH_ROUTE_SBC:
   - start|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
   - return|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
+  - start|ROUTE_LOAD_CALLEE_RESELLER_PREF:
+  - return|ROUTE_LOAD_CALLEE_RESELLER_PREF:
   - start|ROUTE_SET_CALLEE_DIALOG:
   - start|ROUTE_CNT_DLG_CHECK:
   - return|ROUTE_CNT_DLG_CHECK:
@@ -100,20 +102,26 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
       $avp(lua_dlg_profile): [
-          "accountout:[% customer_test.id %]",
+          "resellerout:1",
+        "accountout:[% customer_test.id %]",
           "userout:[% invite_record_call_scenarios_test.testuser1002.uuid %]",
-          "account:[% customer_test.id %]",
+          "reseller:1",
+        "account:[% customer_test.id %]",
           "user:[% invite_record_call_scenarios_test.testuser1002.uuid %]",
-          "totalaccountout:[% customer_test.id %]",
+          "totalresellerout:1",
+        "totalaccountout:[% customer_test.id %]",
           "totaluserout:[% invite_record_call_scenarios_test.testuser1002.uuid %]",
-          "totalaccount:[% customer_test.id %]",
+          "totalreseller:1",
+        "totalaccount:[% customer_test.id %]",
           "totaluser:[% invite_record_call_scenarios_test.testuser1002.uuid %]",
           "peer:appsrv",
           "local",
-          "totalaccount:[% customer_test.id %]",
+          "totalreseller:1",
+        "totalaccount:[% customer_test.id %]",
           "totaluser:[% invite_record_call_scenarios_test.testuser1003.uuid %]",
           "total",
-          "account:[% customer_test.id %]",
+          "reseller:1",
+        "account:[% customer_test.id %]",
           "user:[% invite_record_call_scenarios_test.testuser1003.uuid %]"
         ]
 sip_in:
