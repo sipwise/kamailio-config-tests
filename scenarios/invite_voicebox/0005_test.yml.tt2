@@ -27,6 +27,8 @@ flow:
   - return|ROUTE_CHECK_UA:
   - start|ROUTE_LOAD_CALLER_CONTRACT_PREF:
   - return|ROUTE_LOAD_CALLER_CONTRACT_PREF:
+  - start|ROUTE_LOAD_CALLER_RESELLER_PREF:
+  - return|ROUTE_LOAD_CALLER_RESELLER_PREF:
   - return|ROUTE_LOAD_CALLER_PREF:
   - start|ROUTE_APPLY_HEADER_RULES:
   - return|ROUTE_APPLY_HEADER_RULES:
@@ -63,8 +65,10 @@ flow:
   - return|ROUTE_SET_CALLER_DIALOG_TOTAL:
   - return|ROUTE_SET_CALLER_DIALOG:
       $avp(lua_dlg_profile): [
+        "totalresellerout:1",
         "totalaccountout:[% customer_test.id %]",
         "totaluserout:[% invite_voicebox_scenarios_test.testuser1001.uuid %]",
+        "totalreseller:1",
         "totalaccount:[% customer_test.id %]",
         "totaluser:[% invite_voicebox_scenarios_test.testuser1001.uuid %]",
         "peer:voicebox",
@@ -119,8 +123,10 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
       $avp(lua_dlg_profile): [
+        "totalresellerout:1",
         "totalaccountout:[% customer_test.id %]",
         "totaluserout:[% invite_voicebox_scenarios_test.testuser1001.uuid %]",
+        "totalreseller:1",
         "totalaccount:[% customer_test.id %]",
         "totaluser:[% invite_voicebox_scenarios_test.testuser1001.uuid %]",
         "peer:voicebox",

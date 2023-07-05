@@ -36,6 +36,8 @@ flow:
   - return|ROUTE_CHECK_UA:
   - start|ROUTE_LOAD_CALLER_CONTRACT_PREF:
   - return|ROUTE_LOAD_CALLER_CONTRACT_PREF:
+  - start|ROUTE_LOAD_CALLER_RESELLER_PREF:
+  - return|ROUTE_LOAD_CALLER_RESELLER_PREF:
   - return|ROUTE_LOAD_CALLER_PREF:
   - start|ROUTE_DLG_MANAGE:
   - return|ROUTE_DLG_MANAGE:
@@ -70,8 +72,10 @@ flow:
   - return|ROUTE_SET_CALLER_DIALOG_TOTAL:
   - return|ROUTE_SET_CALLER_DIALOG:
       $avp(lua_dlg_profile): [
+        "totalresellerout:1",
         "totalaccountout:[% customer_test.id %]",
         "totaluserout:[% reminder_scenarios_test.testuser1001.uuid %]",
+        "totalreseller:1",
         "totalaccount:[% customer_test.id %]",
         "totaluser:[% reminder_scenarios_test.testuser1001.uuid %]",
         "total",
@@ -128,8 +132,10 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
       $avp(lua_dlg_profile): [
+        "totalresellerout:1",
         "totalaccountout:[% customer_test.id %]",
         "totaluserout:[% reminder_scenarios_test.testuser1001.uuid %]",
+        "totalreseller:1",
         "totalaccount:[% customer_test.id %]",
         "totaluser:[% reminder_scenarios_test.testuser1001.uuid %]",
         "total",
