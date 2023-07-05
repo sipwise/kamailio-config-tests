@@ -36,6 +36,8 @@ flow:
   - return|ROUTE_CHECK_UA:
   - start|ROUTE_LOAD_CALLER_CONTRACT_PREF:
   - return|ROUTE_LOAD_CALLER_CONTRACT_PREF:
+  - start|ROUTE_LOAD_CALLER_RESELLER_PREF:
+  - return|ROUTE_LOAD_CALLER_RESELLER_PREF:
   - return|ROUTE_LOAD_CALLER_PREF:
       $xavp(caller_usr_prefs[0]=>allowed_ips_grp[*]): '\d+'
       $xavp(caller_real_prefs[0]=>allowed_ips_grp[*]): '\d+'

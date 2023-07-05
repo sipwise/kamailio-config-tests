@@ -6,18 +6,24 @@ flow:
   - start|ROUTE_APPLY_HEADER_RULES:
   - return|ROUTE_APPLY_HEADER_RULES:
       $avp(lua_dlg_profile): [
-        'accountout:[% customer_test.id %]',
+        "resellerout:1",
+        "accountout:[% customer_test.id %]",
         'userout:[% invite_blockout_pinoverride_scenarios_test.testuser1002.uuid %]',
-        'account:[% customer_test.id %]',
+        "reseller:1",
+        "account:[% customer_test.id %]",
         'user:[% invite_blockout_pinoverride_scenarios_test.testuser1002.uuid %]',
-        'totalaccountout:[% customer_test.id %]',
+        "totalresellerout:1",
+        "totalaccountout:[% customer_test.id %]",
         'totaluserout:[% invite_blockout_pinoverride_scenarios_test.testuser1002.uuid %]',
-        'totalaccount:[% customer_test.id %]',
+        "totalreseller:1",
+        "totalaccount:[% customer_test.id %]",
         'totaluser:[% invite_blockout_pinoverride_scenarios_test.testuser1002.uuid %]',
         "local",
+        "totalreseller:1",
         "totalaccount:[% customer_test.id %]",
         "totaluser:[% invite_blockout_pinoverride_scenarios_test.testuser1003.uuid %]",
         "total",
+        "reseller:1",
         "account:[% customer_test.id %]",
         "user:[% invite_blockout_pinoverride_scenarios_test.testuser1003.uuid %]"
       ]
