@@ -26,7 +26,7 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - '^BYE sip:vmu[% invite_voicebox_scenarios_test.testuser1001.phone_number %]@127.0.0.1:5070 SIP/2.0'
+  - '^BYE sip:127.0.0.1:5070 SIP/2.0'
   - 'CSeq: \d+ BYE'
   - 'Content-Length: 0'
   - 'From: <sip:[% scenarios.0.username %]@'
@@ -40,7 +40,7 @@ sip_out:
       'To: <sip:[% scenarios.0.responders.0.username %]@'
     ]
   - [
-      '^BYE sip:vmu[% invite_voicebox_scenarios_test.testuser1001.phone_number %]@127.0.0.1:5070 SIP/2.0',
+      '^BYE sip:127.0.0.1:5070 SIP/2.0',
       'CSeq: \d+ BYE',
       'Max-Forwards: 69',
       'Content-Length: 0',
