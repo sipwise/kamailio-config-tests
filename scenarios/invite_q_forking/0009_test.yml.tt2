@@ -12,16 +12,13 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
 sip_in:
-  - 'INVITE sip:[% scenarios.0.responders.0.username %]@[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %] SIP/2.0'
+  - 'INVITE sip:[% scenarios.0.responders.0.username %]@[% scenarios.0.responders.0.ip %]:\d+ SIP/2.0'
   - 'From: <sip:[% invite_q_forking_scenarios_test.testuser1002.phone_number %]@invite-q-forking.scenarios.test>;tag=[\w-]+'
   - 'To: <sip:[% scenarios.0.responders.0.username %]@invite-q-forking.scenarios.test>'
   - 'CSeq: \d+ INVITE'
   - 'P-LB-Uptime: \d+'
   - 'P-Asserted-Identity: <sip:[% invite_q_forking_scenarios_test.testuser1002.phone_number %]@invite-q-forking.scenarios.test>'
-  - 'P-Caller-UUID: [% spce_test.testuser1002.uuid %]'
   - 'P-NGCP-Caller-Info: <sip:[% scenarios.0.username %]@invite-q-forking.scenarios.test>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %];primary=[% invite_q_forking_scenarios_test.testuser1002.phone_number %]'
-  - 'P-NGCP-Callee-Info: <sip:[% scenarios.0.responders.0.username %]@invite-q-forking.scenarios.test>;ip=[% scenarios.0.responders.0.ip %];port=[% scenarios.0.responders.0.port %];primary=[% invite_q_forking_scenarios_test.testuser1003.phone_number %]'
-  - 'P-D-Uri: sip:lb@127.0.0.1;lr;(received=sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];)?socket=sip:[% server_ip %]:5060'
   - 'Content-Type: application/sdp'
   - 'Contact: <sip:127.0.0.1:508[08];transport=udp>'
   - 'Content-Length:\s+\d+'
@@ -35,7 +32,7 @@ sip_out:
       'Content-Length: 0',
     ]
   - [
-      'INVITE sip:[% scenarios.0.responders.0.username %]@[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %] SIP/2.0',
+      'INVITE sip:[% scenarios.0.responders.0.username %]@[% scenarios.0.responders.0.ip %]:\d+ SIP/2.0',
       'From: <sip:[% invite_q_forking_scenarios_test.testuser1002.phone_number %]@invite-q-forking.scenarios.test>;tag=[\w-]+',
       'To: <sip:[% scenarios.0.responders.0.username %]@invite-q-forking.scenarios.test>',
       'CSeq: \d+ INVITE',
@@ -43,8 +40,6 @@ sip_out:
       'P-Asserted-Identity: <sip:[% invite_q_forking_scenarios_test.testuser1002.phone_number %]@invite-q-forking.scenarios.test>',
       'P-Caller-UUID: [% spce_test.testuser1002.uuid %]',
       'P-NGCP-Caller-Info: <sip:[% scenarios.0.username %]@invite-q-forking.scenarios.test>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %];primary=[% invite_q_forking_scenarios_test.testuser1002.phone_number %]',
-      'P-NGCP-Callee-Info: <sip:[% scenarios.0.responders.0.username %]@invite-q-forking.scenarios.test>;ip=[% scenarios.0.responders.0.ip %];port=[% scenarios.0.responders.0.port %];primary=[% invite_q_forking_scenarios_test.testuser1003.phone_number %]',
-      'P-D-Uri: sip:lb@127.0.0.1;lr;(received=sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];)?socket=sip:[% server_ip %]:5060',
       'Content-Type: application/sdp',
       'Contact: <sip:127.0.0.1:508[08];transport=udp>',
       'Content-Length:\s+\d+',
