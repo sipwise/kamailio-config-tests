@@ -1,3 +1,13 @@
+kamailio-config-tests (11.4.1.1+0~mr11.4.1.1) unstable; urgency=medium
+
+  [ Mykola Malkov ]
+  * [4c43879] MT#57453 Switch docker image to bookworm
+
+  [ Alessio Garzi ]
+  * [d6a1c1b] MT#57731 Be less strict on messages from asterisk
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 11 Jul 2023 17:50:11 +0200
+
 kamailio-config-tests (11.4.1.0+0~mr11.4.1.0) unstable; urgency=medium
 
   [ Victor Seva ]
