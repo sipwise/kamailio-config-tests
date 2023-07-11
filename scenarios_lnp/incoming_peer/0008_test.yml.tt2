@@ -4,12 +4,16 @@ flow:
   - start|ROUTE_ENTRY:
   - return|ROUTE_ENTRY:
       $avp(lua_dlg_profile): [
+        "resellerout:1",
         "accountout:[% customer_test.id %]",
         "userout:[% incoming_peer_scenarios_lnp_test.testuser1003.uuid %]",
+        "reseller:1",
         "account:[% customer_test.id %]",
         "user:[% incoming_peer_scenarios_lnp_test.testuser1003.uuid %]",
+        "totalresellerout:1",
         "totalaccountout:[% customer_test.id %]",
         "totaluserout:[% incoming_peer_scenarios_lnp_test.testuser1003.uuid %]",
+        "totalreseller:1",
         "totalaccount:[% customer_test.id %]",
         "totaluser:[% incoming_peer_scenarios_lnp_test.testuser1003.uuid %]",
         "relay",

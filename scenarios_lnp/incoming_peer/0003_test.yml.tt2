@@ -27,6 +27,8 @@ flow:
   - return|ROUTE_CHECK_UA:
   - start|ROUTE_LOAD_CALLER_CONTRACT_PREF:
   - return|ROUTE_LOAD_CALLER_CONTRACT_PREF:
+  - start|ROUTE_LOAD_CALLER_RESELLER_PREF:
+  - return|ROUTE_LOAD_CALLER_RESELLER_PREF:
   - return|ROUTE_LOAD_CALLER_PREF:
   - start|ROUTE_APPLY_HEADER_RULES:
   - return|ROUTE_APPLY_HEADER_RULES:
@@ -117,12 +119,16 @@ flow:
   - return|ROUTE_SET_CALLER_DIALOG_BASE:
   - return|ROUTE_SET_CALLER_DIALOG:
       $avp(lua_dlg_profile): [
+        "resellerout:1",
         "accountout:[% customer_test.id %]",
         "userout:[% incoming_peer_scenarios_lnp_test.testuser1003.uuid %]",
+        "reseller:1",
         "account:[% customer_test.id %]",
         "user:[% incoming_peer_scenarios_lnp_test.testuser1003.uuid %]",
+        "totalresellerout:1",
         "totalaccountout:[% customer_test.id %]",
         "totaluserout:[% incoming_peer_scenarios_lnp_test.testuser1003.uuid %]",
+        "totalreseller:1",
         "totalaccount:[% customer_test.id %]",
         "totaluser:[% incoming_peer_scenarios_lnp_test.testuser1003.uuid %]",
         "relay",
@@ -194,12 +200,16 @@ flow:
   - return|ROUTE_RUNTIME:
   - exit|ROUTE_EXIT:
       $avp(lua_dlg_profile): [
+        "resellerout:1",
         "accountout:[% customer_test.id %]",
         "userout:[% incoming_peer_scenarios_lnp_test.testuser1003.uuid %]",
+        "reseller:1",
         "account:[% customer_test.id %]",
         "user:[% incoming_peer_scenarios_lnp_test.testuser1003.uuid %]",
+        "totalresellerout:1",
         "totalaccountout:[% customer_test.id %]",
         "totaluserout:[% incoming_peer_scenarios_lnp_test.testuser1003.uuid %]",
+        "totalreseller:1",
         "totalaccount:[% customer_test.id %]",
         "totaluser:[% incoming_peer_scenarios_lnp_test.testuser1003.uuid %]",
         "relay",
