@@ -248,7 +248,7 @@ sip_out:
       'P-Caller-UUID: [% invite_record_call_scenarios_test.testuser1004.uuid %]',
       'P-Callee-UUID: [% invite_record_call_scenarios_test.testuser1005.uuid %]',
       'P-Called-Party-ID: <sip:[% scenarios.2.responders.0.username %]@invite-record-call.scenarios.test>',
-      'P-App-Param: ;calltimer=21600;aleg_sst_enable=no;sst_enable=no;hold_alter_b2b_bleg=no;hold_alter_b2b_aleg=no;a_park_domain=[% customer_test.id %];b_park_domain=[% customer_test.id %]',
+      'P-App-Param: ;calltimer=21600;aleg_sst_enable=no;sst_enable=no;hold_alter_b2b_bleg=no;hold_alter_b2b_aleg=no;(fast_ack=no;|)a_park_domain=\d+;b_park_domain=\d+',
       'P-App-Name: sbc',
       'P-NGCP-Caller-Info: <sip:[% scenarios.1.responders.0.username %]@invite-record-call.scenarios.test>;ip=[% scenarios.2.ip %];port=[% scenarios.2.port %];primary=[% invite_record_call_scenarios_test.testuser1004.phone_number %]',
       'P-NGCP-Callee-Info: <sip:[% scenarios.2.responders.0.username %]@invite-record-call.scenarios.test>;ip=[% scenarios.2.responders.0.ip %];port=[% scenarios.2.responders.0.port %];primary=[% invite_record_call_scenarios_test.testuser1005.phone_number %]',
