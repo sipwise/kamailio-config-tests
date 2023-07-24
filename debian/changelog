@@ -1,3 +1,10 @@
+kamailio-config-tests (10.5.5.1+0~mr10.5.5.1) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [2f1df5e] MT#57227 API: fix query to check if entity exists
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 24 Jul 2023 12:19:50 +0200
+
 kamailio-config-tests (10.5.5.0+0~mr10.5.5.0) unstable; urgency=medium
 
   * New release.
