@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<scenario name="Sipwise NGCP Benchmark UAS Responder">
+
+  <recv request="INVITE" crlf="true" rtd="true">
+    <action>
+      <ereg regexp=".*" search_in="hdr" header="CSeq:" assign_to="1" occurence="1" />
+      <log message="Got INVITE with CSeq header [$1]"/>
+    </action>
+  </recv>
+
+    
+
+  <send>
+    <![CDATA[
+
+      SIP/2.0 180 Ringing
+      [last_Via:]
+      [last_From:]
+      [last_To:];tag=[pid]SIPpTag01[call_number]
+      [last_Call-ID:]
+      [last_CSeq:]
+      Contact: <sip:[local_ip]:[local_port];transport=[transport]>
+      Content-Length: 0
+    ]]>
+     <action>
+        <assignstr assign_to="invitevia" value="[last_Via:]" />
+        <log message="Via of first invite: [$invitevia]"/>
+     </action>
+  </send>
+
+  <recv request="CANCEL" optional="false">
+    <action>
+      <log message="Got CANCEL caused by Kamailio CFT"/>
+    </action>
+  </recv>
+
+   <send>
+    <![CDATA[
+
+      SIP/2.0 200 OK
+      [last_Via:]
+      [last_From:]
+      [last_To:]
+      [last_Call-ID:]
+      [last_CSeq:]
+      Content-Length: 0
+
+    ]]>
+  </send>
+
+  <send>
+    <![CDATA[
+
+      SIP/2.0 487 Request Terminated
+      [$invitevia]
+      [last_From:]
+      [last_To:];tag=[pid]SIPpTag01[call_number]
+      [last_Call-ID:]
+      CSeq: [$1]
+      Allow: ACK, BYE, CANCEL, INFO, INVITE, MESSAGE, NOTIFY, OPTIONS, PRACK, PUBLISH, REFER, REGISTER, SUBSCRIBE, UPDATE
+      Allow-Events: conference, refer, talk, hold
+      Supported: 100rel, eventlist, join, replaces, sdp-anat, tdialog
+      Content-Length: 0
+
+    ]]>
+  </send>
+
+  <recv request="ACK"
+        crlf="true">
+  </recv>
+
+  <ResponseTimeRepartition value="10, 20, 30, 40, 50, 100, 150, 200"/>
+  <CallLengthRepartition value="10, 50, 100, 500, 1000, 5000, 10000"/>
+
+</scenario>
+

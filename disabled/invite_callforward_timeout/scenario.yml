@@ -1,0 +1,60 @@
+test_uuid: invite_callforward_timeout
+domains:
+  invite-callforward-timeout.scenarios.test:
+    reseller_id: 1
+customers:
+  'customer.test':
+    contacts:
+      - email: "customer.test@spce.test"
+        reseller_id: 1
+    details:
+      status: 'active'
+      type: 'sipaccount'
+      billing_profile_id: 1
+      reseller_id: 1
+subscribers:
+  invite-callforward-timeout.scenarios.test:
+    testuser1003:
+      customer: 'customer.test'
+      password: testuser
+      cc: 43
+      ac: 1
+      sn: 1003
+    testuser1002:
+      customer: 'customer.test'
+      password: testuser
+      cc: 43
+      ac: 1
+      sn: 1002
+    testuser1001:
+      customer: 'customer.test'
+      password: testuser
+      cc: 43
+      ac: 1
+      sn: 1001
+    testuser1004:
+      customer: 'customer.test'
+      password: testuser
+      cc: 43
+      ac: 1
+      sn: 1004
+    testuser1005:
+      customer: 'customer.test'
+      password: testuser
+      cc: 43
+      ac: 1
+      sn: 1005
+scenarios:
+  - ip: 127.126.0.1
+    username: testuser1002
+    domain: invite-callforward-timeout.scenarios.test
+    responders:
+      - ip: 127.1.0.1
+        username: testuser1001
+        domain: invite-callforward-timeout.scenarios.test
+        register: yes
+        active: yes
+      - ip: 127.1.0.3
+        username: testuser1003
+        domain: invite-callforward-timeout.scenarios.test
+        register: yes

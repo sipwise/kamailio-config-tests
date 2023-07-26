@@ -1,0 +1,5 @@
+{
+    "@invite-callforward-timeout.scenarios.test": {
+        "nat_sipping": "no"
+    }
+}

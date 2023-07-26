@@ -1,0 +1,22 @@
+---
+testuser1001@invite-callforward-timeout.scenarios.test:
+  destinations:
+    destinations:
+      - destination: sip:testuser1003@invite-callforward-timeout.scenarios.test
+        priority: 0
+        timeout: 5
+    name: dest1001
+  mappings:
+    cft_ringtimeout: 3
+    cft:
+      - bnumberset: null
+        destinationset: dest1001
+        sourceset: null
+        timeset: null
+        enabled: true
+    cfb: []
+    cfna: []
+    cfu: []
+    cfs: []
+    cfr: []
+    cfo: []
