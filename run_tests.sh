@@ -33,6 +33,7 @@ START_TIME=$(date +%s)
 error_flag=0
 SCEN=()
 CFGT=false
+LOGTYPE="none"
 
 get_scenarios() {
   if [ -n "${SCEN_FILE}" ]; then
@@ -250,13 +251,14 @@ usage() {
   echo -e "\\t\\tnone: skip any provision"
   echo -e "\\t-f scenarios file"
   echo -e "\\t-T enable cfgt"
+  echo -e "\\t-L [caller|responder|all|none]: produce sipp logfile for <log> directive inside <action> (default none)"
   echo -e "\\t-h this help"
 
   echo "BASE_DIR:${BASE_DIR}"
   echo "BIN_DIR:${BIN_DIR}"
 }
 
-while getopts 'f:hlCcP:p:kKx:rTm' opt; do
+while getopts 'f:hlCcP:p:kKx:rTmL:' opt; do
   case $opt in
     h) usage; exit 0;;
     l) SHOW_SCENARIOS=true;;
@@ -271,6 +273,11 @@ while getopts 'f:hlCcP:p:kKx:rTm' opt; do
     m) MEMDBG=true;;
     f) SCEN_FILE=${OPTARG};;
     T) CFGT=true; CFG_OPTS+=(-T); OPTS+=(-Tall);;
+    L) case $OPTARG in "none" | "caller" | "responders" | "all")
+        LOGTYPE=${OPTARG};;
+        *) echo "unknown LOGTYPE '$OPTARG'"; usage; exit 0 ;;
+       esac
+       ;;
     *) usage; exit 1;;
   esac
 done
@@ -397,7 +404,7 @@ for t in "${SCEN[@]}"; do
       -f "${BASE_DIR}/config.yml" -x "${GROUP}" create
   fi
 
-  if ! "${BIN_DIR}/check.sh" "${OPTS[@]}" -p "${PROFILE}" -s "${GROUP}" "${t}" ; then
+  if ! "${BIN_DIR}/check.sh" "${OPTS[@]}" -L "${LOGTYPE}" -p "${PROFILE}" -s "${GROUP}" "${t}" ; then
     echo "ERROR: ${t}"
     failed+=( "${t}" )
     error_flag=1

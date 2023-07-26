@@ -35,6 +35,8 @@ CDR_TAG_DATA=false
 ERR_FLAG=0
 RETRANS_SIZE=2
 SIP_SERVER=127.0.0.1
+LOGTYPE="none"
+
 
 # $1 kamailio msg parsed to yml
 # $2 destination png filename
@@ -512,6 +514,7 @@ run_sipp() {
       -T "$transport" -i "${ip}" -p "${port}" \
       -l "${LOG_DIR}/${base}.msg" \
       -e "${LOG_DIR}/${base}_errors.log" \
+      -L "${LOGTYPE}" \
       -m "${mport}" -r "${SCEN_CHECK_DIR}/${base}.xml")
     echo "$(date) - Running ${base}[${pid}] ${ip}:${port}-${mport} => ${SIP_SERVER}"
     responder_pid="${responder_pid} ${base}:${pid}"
@@ -528,6 +531,7 @@ run_sipp() {
     get_ip "$(basename "${send}")"
     echo "$(date) - Running ${base} ${ip}:${port}-${mport} => ${SIP_SERVER}"
     if ! "${BIN_DIR}/sipp.sh" -I"${SIP_SERVER}" \
+        -L "${LOGTYPE}" \
         -e "${LOG_DIR}/${base}_errors.log" -l "${LOG_DIR}/${base}.msg" \
         -T "${transport}" -i "${ip}" -p "${port}" -m "${mport}" "${send}"
     then
@@ -661,11 +665,12 @@ usage() {
   echo -e "\\t-m: enable memdbg csv"
   echo -e "\\t-c: enable cdr validation"
   echo -e "\\t-d: enable cdr tag data validation"
+  echo -e "\\t-L [caller|responder|all|none]: produce sipp logfile for <log> directive inside <action> (default none)"
   echo "Arguments:"
   echo -e "\\tcheck_name. Scenario name to check. This is the name of the directory on GROUP dir."
 }
 
-while getopts 'hI:Cp:Rs:DtT:GgrcdKMmw:' opt; do
+while getopts 'hI:Cp:Rs:DtT:GgrcdKMmw:L:' opt; do
   case $opt in
     h) usage; exit 0;;
     I) SIP_SERVER=${OPTARG};;
@@ -685,6 +690,7 @@ while getopts 'hI:Cp:Rs:DtT:GgrcdKMmw:' opt; do
     c) CDR=true;;
     d) CDR_TAG_DATA=true;;
     w) RETRANS_SIZE=${OPTARG};;
+    L) LOGTYPE=${OPTARG};;
     *) usage; exit 1;;
   esac
 done

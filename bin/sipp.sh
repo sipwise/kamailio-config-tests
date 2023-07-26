@@ -19,7 +19,7 @@
 # Public License version 3 can be found in "/usr/share/common-licenses/GPL-3".
 #
 usage() {
-  echo "Usage: sipp.sh [-p PORT] [-m MPORT] [-t TIMEOUT] [-r] [-T TRANSPORT] scenario.xml"
+  echo "Usage: sipp.sh [-p PORT] [-m MPORT] [-t TIMEOUT] [-r] [-T TRANSPORT] [-L LOGTYPE] scenario.xml"
   echo "Options:"
   echo -e "\\t-p: sip port. default 50602/50603(responder)"
   echo -e "\\t-m: media port"
@@ -31,11 +31,13 @@ usage() {
   echo -e "\\t-b: run sipp in background (responder)"
   echo -e "\\t-l: log_message_file"
   echo -e "\\t-e: err_file"
+  echo -e "\\t-L [caller|responder|all|none]: produce sipp logfile for <log> directive inside <action> (default none)"
+
   echo "Arguments:"
   echo -e "\\t sipp_scenario.xml file"
 }
 
-while getopts 'hrp:m:t:I:i:T:bl:e:' opt; do
+while getopts 'hrp:m:t:I:i:T:bl:e:L:' opt; do
   case $opt in
     h) usage; exit 0;;
     r) RESP=1;;
@@ -48,6 +50,14 @@ while getopts 'hrp:m:t:I:i:T:bl:e:' opt; do
     b) BACK="-bg";;
     l) LOG_FILE=${OPTARG};;
     e) ERR_FILE=${OPTARG};;
+    L) case $OPTARG in
+        "none") ;;
+        "responders") TRACE_LOGS_RESPONDER=" -trace_logs" ;;
+        "caller") TRACE_LOGS_CALLER=" -trace_logs";;
+        "all") TRACE_LOGS_RESPONDER=" -trace_logs" ; TRACE_LOGS_CALLER=" -trace_logs" ;;
+        *) echo "unknown LOGTYPE '$OPTARG'"; usage; exit 0 ;;
+       esac
+       ;;
     *) usage; exit 0;;
   esac
 done
@@ -92,11 +102,19 @@ if [ -z "${RESP}" ]; then
   PORT=${PORT:-"50602"}
   TIMEOUT=${TIMEOUT:-"15"}
 
+  TRACE_LOGS_CMS=""
+  if [ -n "$TRACE_LOGS_CALLER" ] && [ -n "$LOG_FILE" ]; then
+    LOGDIR=$(dirname "$LOG_FILE")
+    TRACE_LOGFILE=$(basename "$LOG_FILE")
+    TRACE_LOGFILE_NOEXT="${TRACE_LOGFILE%.*}"
+    TRACE_LOGS_CMS="$TRACE_LOGS_CALLER -log_file $LOGDIR/$TRACE_LOGFILE_NOEXT.log"
+  fi
+
   sipp -max_socket $MAX ${TRANSPORT_ARG} ${MSG_LOG} ${ERR_LOG} \
     -inf "${BASE_DIR}/callee.csv" -inf "${BASE_DIR}/caller.csv" \
     -sf "$1" -i "$IP" -p "$PORT" \
     -nr -nd -m 1 ${MPORT_ARG} \
-    -timeout "${TIMEOUT}" -timeout_error \
+    -timeout "${TIMEOUT}" -timeout_error${TRACE_LOGS_CMS} \
     "$IP_SERVER" &> /dev/null
   status=$?
 else
@@ -115,11 +133,18 @@ else
       "$IP_SERVER" &> /dev/null
     status=$?
   else
+    TRACE_LOGS_CMS=""
+    if [ -n "$TRACE_LOGS_RESPONDER" ] && [ -n "$LOG_FILE" ]; then
+    LOGDIR=$(dirname "$LOG_FILE")
+    TRACE_LOGFILE=$(basename "$LOG_FILE")
+    TRACE_LOGFILE_NOEXT="${TRACE_LOGFILE%.*}"
+    TRACE_LOGS_CMS="$TRACE_LOGS_RESPONDER -log_file $LOGDIR/$TRACE_LOGFILE_NOEXT.log"
+    fi
     tmp=$(sipp $BACK -max_socket $MAX ${TRANSPORT_ARG} ${MSG_LOG} ${ERR_LOG} \
       -inf "${BASE_DIR}/callee.csv" -inf "${BASE_DIR}/caller.csv" \
       -sf "$1" -i "$IP" -p "$PORT" \
       -nr -nd -m 1 ${MPORT_ARG} \
-      -timeout "${TIMEOUT}" -timeout_error \
+      -timeout "${TIMEOUT}" -timeout_error${TRACE_LOGS_CMS} \
       "$IP_SERVER")
     # shellcheck disable=SC2046
     echo "$tmp" | cut -d= -f2 | sed -e 's_\[__' -e 's_\]__'
