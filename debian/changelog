@@ -1,3 +1,30 @@
+kamailio-config-tests (12.0.1.0+0~mr12.0.1.0) unstable; urgency=medium
+
+  [ Alessio Garzi ]
+  * [bbbad12] MT#57731 Be less strict on messages from asterisk
+  * [44395a5] MT#57778 Fix scenarios for routes ROUTE_LOAD_CALLEE_RESELLER_PREF and ROUTE_LOAD_CALLER_RESELLER_PREF
+  * [dac78d2] Revert "MT#57778 Fix scenarios for routes ROUTE_LOAD_CALLEE_RESELLER_PREF and ROUTE_LOAD_CALLER_RESELLER_PREF"
+  * [773d10b] MT#57778 Fix scenarios for routes ROUTE_LOAD_CALLEE_RESELLER_PREF and ROUTE_LOAD_CALLER_RESELLER_PREF
+  * [e9bdd7d] MT#57778 Fix scenarios for routes ROUTE_LOAD_CALLEE_RESELLER_PREF and ROUTE_LOAD_CALLER_RESELLER_PREF part 2
+  * [b34cbc7] MT#57778 Fix scenarios for routes ROUTE_LOAD_CALLEE_RESELLER_PREF and ROUTE_LOAD_CALLER_RESELLER_PREF part 3
+  * [198186a] MT#57778 Fix scenarios for routes ROUTE_LOAD_CALLEE_RESELLER_PREF and ROUTE_LOAD_CALLER_RESELLER_PREF part 4
+  * [233b6dc] MT#57778 Fix scenarios for routes ROUTE_LOAD_CALLEE_RESELLER_PREF and ROUTE_LOAD_CALLER_RESELLER_PREF part 5
+  * [a49f017] MT#57778 Fix scenarios for routes ROUTE_LOAD_CALLEE_RESELLER_PREF and ROUTE_LOAD_CALLER_RESELLER_PREF part 6
+  * [11c7e03] MT#57778 Fix scenarios for routes ROUTE_LOAD_CALLEE_RESELLER_PREF and ROUTE_LOAD_CALLER_RESELLER_PREF part 7
+  * [abfd6ce] MT#57778 Fix scenarios for routes ROUTE_LOAD_CALLEE_RESELLER_PREF and ROUTE_LOAD_CALLER_RESELLER_PREF part 8
+  * [2521da5] MT#57778 Fix scenarios for routes ROUTE_LOAD_CALLEE_RESELLER_PREF and ROUTE_LOAD_CALLER_RESELLER_PREF part 9
+  * [579f0bd] MT#57778 Fix scenarios for routes ROUTE_LOAD_CALLEE_RESELLER_PREF and ROUTE_LOAD_CALLER_RESELLER_PREF part 10
+  * [69305aa] MT#57076 Fix P-App-Param in invite_record_call_test
+  * [40e4564] MT#56944 Add support for sipp -trace_logs
+
+  [ Mykola Malkov ]
+  * [a6ecccf] MT#57453 Switch docker image to bookworm
+
+  [ Daniel Grotti ]
+  * [7e97e56] MT#57846 Replace $var(to_pstn) with $avp(to_pstn)
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 30 Aug 2023 18:03:50 +0200
+
 kamailio-config-tests (11.5.0.0+0~mr11.5.0.0) unstable; urgency=medium
 
   [ Victor Seva ]
