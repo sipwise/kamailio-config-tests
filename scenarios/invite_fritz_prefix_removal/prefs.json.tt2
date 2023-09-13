@@ -1,0 +1,5 @@
+{
+    "@invite-fritz-prefix-removal.scenarios.test": {
+        "nat_sipping": "no"
+    }
+}

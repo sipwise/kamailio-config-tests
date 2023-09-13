@@ -13,6 +13,7 @@ kamailio:
     presence:
       enable: 'yes'
     fritzbox:
+      enable: yes
       prefixes:
         - '112'
         - '110'
