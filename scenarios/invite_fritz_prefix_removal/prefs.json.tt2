@@ -1,5 +1,13 @@
 {
     "@invite-fritz-prefix-removal.scenarios.test": {
-        "nat_sipping": "no"
+        "nat_sipping": "no",
+        "emergency_prefix": "emergency_",
+        "rewrite_rule_set": "rw_invite_emergency_00",
+        "emergency_mapping_container_id": [% emergencymapping.emc_test.id %]
+    },
+    "peer_invite_emergency_host0": {
+        "rewrite_rule_set": "rw_invite_emergency_01",
+        "concurrent_max": 0
     }
 }
+

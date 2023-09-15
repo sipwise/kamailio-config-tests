@@ -1,0 +1,27 @@
+---
+peer_invite_emergency:
+  contact:
+    company: peer_invite_emergency
+    email: peer_invite_emergency@host0.not
+  contract:
+    billing_profile_id: 1
+    status: active
+    type: sippeering
+  groups:
+    - name: peer_invite_emergency_group
+      priority: 1
+      description:
+  rules:
+    - group_id: peer_invite_emergency_group
+      callee_prefix: ""
+      callee_pattern: ''
+      caller_pattern: '^sip:.+@invite-fritz-prefix-removal.scenarios.test'
+      description: ""
+  hosts:
+    - group_id: peer_invite_emergency_group
+      name: peer_invite_emergency_host0
+      ip: 127.0.2.1
+      port: 51602
+      host:
+      transport: 1
+      weight: 1

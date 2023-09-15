@@ -26,4 +26,11 @@ cdr:
     call_type: 'call'
     call_status: 'noanswer'
     call_code: '480'
-
+  - source_user: 'testuser1002'
+    source_domain: 'invite-fritz-prefix-removal.scenarios.test'
+    source_cli: '[% invite_fritz_prefix_removal_scenarios_test.testuser1002.phone_number %]'
+    destination_user: 'emergency_110'
+    destination_user_dialed: '00431110'
+    call_type: 'call'
+    call_status: 'ok'
+    call_code: '200'

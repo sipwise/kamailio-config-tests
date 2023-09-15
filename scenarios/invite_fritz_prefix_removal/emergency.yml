@@ -1,0 +1,6 @@
+emc_test:
+  reseller_id: 1
+  mappings:
+    - suffix: emcsuffix
+      code: 110
+      prefix: emcprefix
