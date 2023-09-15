@@ -6,6 +6,7 @@ PERL_SCRIPTS = bin/*.pl
 SHELL_SCRIPTS = tests/do_test_yaml_format.sh
 
 RESULTS ?= reports
+CACHE_DIR ?= $(RESULTS)/.pytest_cache
 
 # do nothing as default
 all:
@@ -72,19 +73,19 @@ test_check: tests/test_check.py
 
 test_detect_network: tests/test_detect_network.py
 	mkdir -p $(RESULTS)
-	pytest-3 --junitxml=${RESULTS}/$(@).xml $(<)
+	pytest-3 -o cache_dir=$(CACHE_DIR) --junitxml=${RESULTS}/$(@).xml $(<)
 
 test_generate_test_tt2: tests/test_generate_test_tt2.py
 	mkdir -p $(RESULTS)
-	pytest-3 --junitxml=${RESULTS}/$(@).xml $(<)
+	pytest-3 -o cache_dir=$(CACHE_DIR) --junitxml=${RESULTS}/$(@).xml $(<)
 
 test_generate_test_tt2_sipp: tests/test_generate_test_tt2_sipp.py
 	mkdir -p $(RESULTS)
-	pytest-3 --junitxml=${RESULTS}/$(@).xml $(<)
+	pytest-3 -o cache_dir=$(CACHE_DIR) --junitxml=${RESULTS}/$(@).xml $(<)
 
 test_generate_test_tt2_cfgt: tests/test_generate_test_tt2_cfgt.py
 	mkdir -p $(RESULTS)
-	pytest-3 --junitxml=${RESULTS}/$(@).xml $(<)
+	pytest-3 -o cache_dir=$(CACHE_DIR) --junitxml=${RESULTS}/$(@).xml $(<)
 
 # run this in parallel!! -j is your friend
 test: $(TESTS) test_check test_detect_network test_generate_test_tt2 test_generate_test_tt2_sipp test_generate_test_tt2_cfgt
