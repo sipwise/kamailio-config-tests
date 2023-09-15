@@ -121,6 +121,12 @@ create_voip_prefs() {
     echo "$(date) - Setting location mappings"
     "${BIN_DIR}/set_subscribers_location_map.pl" "${SCEN_CHECK_DIR}/locmap.yml"
   fi
+
+  if [ -f "${SCEN_CHECK_DIR}/emergency.yml" ]; then
+    echo "$(date) - Setting emergency mappings"
+    "${BIN_DIR}/create_emergencymapping.pl" \
+      "${SCEN_CHECK_DIR}/emergency.yml"  "${SCEN_CHECK_DIR}/scenario_ids.yml"
+  fi
 }
 
 # $1 domain
@@ -177,6 +183,11 @@ delete_voip() {
   if [ -f "${SCEN_CHECK_DIR}/soundsets.yml" ]; then
     echo "$(date) - Deleting soundsets"
     "${BIN_DIR}/create_soundsets.pl" -delete "${SCEN_CHECK_DIR}/soundsets.yml"
+  fi
+
+  if [ -f "${SCEN_CHECK_DIR}/emergency.yml" ]; then
+    echo "$(date) - Deleting emergency mappings"
+    "${BIN_DIR}/create_emergencymapping.pl" -delete "${SCEN_CHECK_DIR}/emergency.yml"
   fi
 }
 

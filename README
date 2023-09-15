@@ -429,6 +429,16 @@ testuser1003@spce.test:
     location: sip:testuser1004@spce.test
     mode: add
 
+emergency.yml file syntax:
+-----------------------------
+
+emc_test:
+  reseller_id: 1
+  mappings:
+    - suffix: emc
+      code: 112
+      prefix: kaka
+
 
 prefs.json file syntax:
 ----------------------

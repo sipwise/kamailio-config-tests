@@ -1050,4 +1050,72 @@ sub create_locationmapping {
 	return $self->_create($data, $urldata);
 }
 
+sub check_emergencymappingcontainer_exists {
+	my ($self, $data) = @_;
+	my $urldata = '/api/emergencymappingcontainers/';
+	my $collection_id = 'ngcp:emergencymappingcontainers';
+
+	return $self->_exists($data, $urldata, $collection_id);
+}
+
+sub create_emergencymappingcontainer {
+	my ($self, $data) = @_;
+	my $urldata = '/api/emergencymappingcontainers/';
+
+	return $self->_create($data, $urldata);
+}
+
+sub set_emergencymappingcontainer {
+	my ($self, $id, $data) = @_;
+	my $urldata = "/api/emergencymappingcontainers/${id}";
+	my $collection_id = 'ngcp:emergencymappingcontainers';
+
+	return $self->_set_content($data, $urldata);
+}
+
+sub get_emergencymappingcontainer {
+	my ($self, $id) = @_;
+	my $urldata = "/api/emergencymappingcontainers/${id}";
+	my $collection_id = 'ngcp:emergencymappingcontainers';
+
+	return $self->_get_content(undef, $urldata);
+}
+
+sub delete_emergencymappingcontainer {
+	my ($self, $id) = @_;
+	my $urldata = "/api/emergencymappingcontainers/${id}";
+
+	my $data = {"emergency_container_id" => $id};
+	my $mappings = $self->get_emergencymappings($data);
+
+	foreach my $map (@{$mappings}) {
+		$self->delete_emergencymapping($map->{id});
+	};
+
+	return $self->_delete($urldata);
+}
+
+sub create_emergencymapping {
+	my ($self, $data) = @_;
+	my $urldata = '/api/emergencymappings/';
+
+	return $self->_create($data, $urldata);
+}
+
+sub get_emergencymappings {
+	my ($self, $data) = @_;
+	my $urldata = "/api/emergencymappings/";
+	my $collection_id = 'ngcp:emergencymappings';
+
+	my $collection = $self->_get_content($data, $urldata);
+	return $collection->{_embedded}->{$collection_id};
+}
+
+sub delete_emergencymapping {
+	my ($self, $id) = @_;
+	my $urldata = "/api/emergencymappings/${id}";
+
+	return $self->_delete($urldata);
+}
+
 1;
