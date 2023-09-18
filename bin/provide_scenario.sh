@@ -112,11 +112,6 @@ create_voip_prefs() {
     "${BIN_DIR}/create_header_manipulation.pl" "${SCEN_CHECK_DIR}/header.yml"
   fi
 
-  if [ -f "${SCEN_CHECK_DIR}/prefs.json" ]; then
-    echo "$(date) - Setting preferences"
-    "${BIN_DIR}/set_preferences.pl" "${SCEN_CHECK_DIR}/prefs.json"
-  fi
-
   if [ -f "${SCEN_CHECK_DIR}/locmap.yml" ]; then
     echo "$(date) - Setting location mappings"
     "${BIN_DIR}/set_subscribers_location_map.pl" "${SCEN_CHECK_DIR}/locmap.yml"
@@ -126,6 +121,12 @@ create_voip_prefs() {
     echo "$(date) - Setting emergency mappings"
     "${BIN_DIR}/create_emergencymapping.pl" \
       "${SCEN_CHECK_DIR}/emergency.yml"  "${SCEN_CHECK_DIR}/scenario_ids.yml"
+  fi
+
+  # keep this one on the last step in order to be able to reference any of the above
+  if [ -f "${SCEN_CHECK_DIR}/prefs.json" ]; then
+    echo "$(date) - Setting preferences"
+    "${BIN_DIR}/set_preferences.pl" "${SCEN_CHECK_DIR}/prefs.json"
   fi
 }
 
