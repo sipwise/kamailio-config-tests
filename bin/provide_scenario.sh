@@ -124,7 +124,9 @@ create_voip_prefs() {
   fi
 
   # keep this one on the last step in order to be able to reference any of the above
-  if [ -f "${SCEN_CHECK_DIR}/prefs.json" ]; then
+  if [ -f "${SCEN_CHECK_DIR}/prefs.json.tt2" ]; then
+    # we need to generate it with all the info
+    generate_template prefs.json
     echo "$(date) - Setting preferences"
     "${BIN_DIR}/set_preferences.pl" "${SCEN_CHECK_DIR}/prefs.json"
   fi
@@ -208,8 +210,8 @@ generate_template() {
 }
 
 generate_templates() {
-  local prefs=( "prefs.json" )
-  prefs+=( "callforward.yml" )
+  # prefs.json needs to be generated on the last step
+  local prefs=( "callforward.yml" )
   prefs+=( "trusted.yml" )
   prefs+=( "lnp.yml" )
 
