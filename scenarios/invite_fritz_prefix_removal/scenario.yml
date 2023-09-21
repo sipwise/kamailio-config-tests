@@ -84,5 +84,5 @@ scenarios:
         number: 911
         username: 911
         domain: invite-fritz-prefix-removal.scenarios.test
-        peer_host: peer_invite_emergency_host0
+        peer_host: peer_invite_fritz_prefix_removal_host0
         register: 'no'
