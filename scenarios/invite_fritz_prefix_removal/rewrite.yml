@@ -1,12 +1,12 @@
 ---
-rw_invite_emergency_00:
+rw_invite_fritz_emergency_00:
   - direction: in
     field: callee
     match_pattern: '^(911|118|110)$'
     replace_pattern: 'emergency_\1'
     priority: 1
     description: Tag Emergency Numbers
-rw_invite_emergency_01:
+rw_invite_fritz_emergency_01:
   - direction: out
     field: callee
     match_pattern: '^emergency_(.+)$'
