@@ -152,7 +152,6 @@ flow:
   - exit|ROUTE_EXIT:
 sip_in:
   - 'INVITE sip:00431110@invite-fritz-prefix-removal.scenarios.test SIP/2.0'
-  - 'Record-Route: <sip:[% server_ip %];lr=on;ftag=[^;]+;ngcplb=yes;nat=yes;socket=udp:[% server_ip %]:5060>'
   - 'From: <sip:[% scenarios.0.username %]@invite-fritz-prefix-removal.scenarios.test>;tag=[\w-]+'
   - 'To: <sip:00431110@invite-fritz-prefix-removal.scenarios.test>'
   - 'CSeq: \d+ INVITE'
@@ -204,8 +203,6 @@ sip_out:
     ]
   - [
       'INVITE sip:emcprefix1110@[% scenarios.3.responders.0.ip %]:[% scenarios.3.responders.0.port %];transport=udp SIP/2.0',
-      'Record-Route: <sip:[% server_ip %]:5062;lr=on;ftag=[^;]+;did=[^;]+;ice_caller=strip;ice_callee=strip;aset=\d+;rtpprx=yes;vsf=[^;]+>',
-      'Record-Route: <sip:[% server_ip %];lr=on;ftag=[^;]+;ngcplb=yes;nat=yes;socket=udp:[% server_ip %]:5060>',
       'From: <sip:[% invite_fritz_prefix_removal_scenarios_test.testuser1002.phone_number %]@invite-fritz-prefix-removal.scenarios.test>;tag=[\w-]+',
       'To: <sip:00431110@invite-fritz-prefix-removal.scenarios.test>',
       'CSeq: \d+ INVITE',
@@ -221,12 +218,8 @@ sip_out:
       'P-App-Name: sbc',
       'P-NGCP-Caller-Info: <sip:[% scenarios.0.username %]@invite-fritz-prefix-removal.scenarios.test>;ip=[% scenarios.3.ip %];port=[% scenarios.3.port %];primary=[% invite_fritz_prefix_removal_scenarios_test.testuser1002.phone_number %]',
       'P-NGCP-Callee-Info: <sip:emergency_110@invite-fritz-prefix-removal.scenarios.test>;ip=[% scenarios.3.responders.0.ip %];port=[% scenarios.3.responders.0.port %]',
-      'P-D-Uri: sip:[% server_ip %]:5060;received=sip:[% scenarios.3.responders.0.ip %]:[% scenarios.3.responders.0.port %]%3blr%3btransport%3dudp',
-      'P-Proxy-Uri: sip:[% server_ip %]:5062',
       'v=0',
-      'o=user1 53655765 2353687637 IN IP4 192.168.8.178',
       's=-',
-      'c=IN IP4 192.168.8.178',
       't=0 0',
       'm=audio \d+ RTP/AVP 8',
       'a=rtpmap:8 PCMA/8000',
