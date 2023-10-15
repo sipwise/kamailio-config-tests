@@ -1,3 +1,26 @@
+kamailio-config-tests (12.0.2.0+0~mr12.0.2.0) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [787d04b] TT#81700 fix warning errors in jenkins
+  * [4eef4f5] MT#58294 support emergency mappings
+  * [1b163e5] MT#58294 provide_scenario: settings preferences as last step
+  * [562894f] MT#58294 provide_scenario: prefs.json generation as last step
+
+  [ Alessio Garzi ]
+  * [38aee7f] MT#56949 New scenario to check fritz prefix removal feature
+  * [71244e6] MT#56949 Scenario check fritz prefix removal for emergency
+  * [aa62408] MT#56949 Do not reuse peer emergency to test emergency on fritz prefix removal scenario
+  * [1e988cb] MT#56949 Remove record routes and sdp from test 3 of fritz_prefix_removal_scenario
+  * [80c6d6c] MT#56949 Do not reuse emergency rules in invite_fritz_prefix_removal scenario
+  * [e9caeac] MT#56949 Remove ips from tests on invite_fritz_prefix_removal
+  * [0c1d4e5] MT#56944 New scenario to test CFT
+
+  [ Guillem Jover ]
+  * [0d07aa1] MT#58381 Use short name for GPL-3 in debian/copyright
+  * [e26b0ca] MT#58356 Update packaging for bookworm
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Sun, 15 Oct 2023 08:23:10 +0200
+
 kamailio-config-tests (12.0.1.0+0~mr12.0.1.0) unstable; urgency=medium
 
   [ Alessio Garzi ]
