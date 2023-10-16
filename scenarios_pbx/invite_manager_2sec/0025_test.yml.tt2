@@ -127,8 +127,6 @@ flow:
   - start|ROUTE_CHECK_APPSRV:
   - return|ROUTE_CHECK_APPSRV:
   - start|ROUTE_CF_CFU:
-  - start|ROUTE_LOAD_CF_MAP:
-  - return|ROUTE_LOAD_CF_MAP:
   - start|ROUTE_CHECK_CF:
   - return|ROUTE_CHECK_CF:
   - start|ROUTE_PLAY_ANNOUNCE_BEFORE_CF:

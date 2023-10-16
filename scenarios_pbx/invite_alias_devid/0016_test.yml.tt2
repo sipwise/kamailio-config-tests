@@ -15,7 +15,7 @@ flow:
   - return|REPLY_ROUTE_RTPENGINE:
   - start|REPLY_ROUTE_NAT_CONTINUE:
   - start|ROUTE_EXIT:
-      $avp(s:0-callee_rU): ["4311003"]
+      $avp(s:0-callee_rU): ["[% invite_alias_devid_scenarios_pbx_test.testuser1003.alias_numbers.0.phone_number %]"]
   - start|ROUTE_RUNTIME:
   - return|ROUTE_RUNTIME:
   - start|dialog:start:
