@@ -1,3 +1,10 @@
+kamailio-config-tests (12.2.0.0+0~mr12.2.0.0) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [b576765] MT#57778 scenarios_pbx: fix flow issues
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 29 Nov 2023 13:36:17 +0100
+
 kamailio-config-tests (12.1.0.0+0~mr12.1.0.0) unstable; urgency=medium
 
   [ Victor Seva ]
