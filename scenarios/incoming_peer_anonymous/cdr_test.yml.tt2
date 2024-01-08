@@ -1,0 +1,10 @@
+cdr:
+  - source_user: '[% scenarios.0.username %]'
+    source_domain: '[% scenarios.0.ip %]'
+    source_cli: '[% scenarios.0.username %]'
+    destination_user: 'testuser1003'
+    destination_domain: 'incoming-peer-anonymous.scenarios.test'
+    destination_user_dialed: '[% incoming_peer_anonymous_scenarios_test.testuser1003.phone_number %]'
+    call_type: 'call'
+    call_status: 'ok'
+    call_code: '200'
