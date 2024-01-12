@@ -1,17 +1,6 @@
 flow:
   - start|DEFAULT_ONREPLY:
-  - start|REPLY_ROUTE_NAT:
-  - start|ROUTE_ENTRY:
-  - return|ROUTE_ENTRY:
-  - start|ROUTE_APPLY_HEADER_RULES:
-  - return|ROUTE_APPLY_HEADER_RULES:
-  - start|ROUTE_PREPARE_UA:
-  - return|ROUTE_PREPARE_UA:
-  - start|REPLY_ROUTE_NAT_CONTINUE:
-  - start|ROUTE_EXIT:
-  - start|ROUTE_RUNTIME:
-  - return|ROUTE_RUNTIME:
-  - exit|ROUTE_EXIT:
+  - return|DEFAULT_ONREPLY:
 sip_in:
   - 'SIP/2.0 200 OK'
   - 'From: <sip:[% incoming_shared_line_scenarios_pbx_test.testuser1003.pbx_phone_number %]@incoming-shared-line.scenarios-pbx.test>;tag=[\w-]+'
