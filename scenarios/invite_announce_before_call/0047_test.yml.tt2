@@ -36,14 +36,14 @@ flow:
   - return|ROUTE_LOAD_CALLER_PREF:
   - start|ROUTE_DLG_MANAGE:
   - return|ROUTE_DLG_MANAGE:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
   - start|ROUTE_PARSE_P_EARLY_MEDIA:
   - start|ROUTE_DISABLE_SEMS_EARLY_MEDIA:
   - return|ROUTE_DISABLE_SEMS_EARLY_MEDIA:
   - return|ROUTE_PARSE_P_EARLY_MEDIA:
       $var(pem_flags): 9
       $var(sems_early_media_disabled): 1
-  - start|ROUTE_APPLY_HEADER_RULES:
-  - return|ROUTE_APPLY_HEADER_RULES:
   - start|ROUTE_GET_CALLER_CLI:
   - return|ROUTE_GET_CALLER_CLI:
   - start|ROUTE_GET_FORWARDER_CLI:
