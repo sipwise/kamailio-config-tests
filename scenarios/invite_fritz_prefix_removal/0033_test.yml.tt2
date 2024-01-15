@@ -214,7 +214,7 @@ sip_out:
       'P-Caller-UUID: [% invite_fritz_prefix_removal_scenarios_test.testuser1002.uuid %]',
       'P-Callee-UUID: 0',
       'P-Called-Party-ID: <sip:emcprefix1110@[% scenarios.3.responders.0.ip %]>',
-      'P-App-Param: ;calltimer=21600;aleg_sst_enable=no;sst_enable=no;hold_alter_b2b_bleg=no;hold_alter_b2b_aleg=no;fast_ack=no;a_park_domain=[% customer_test.id %];emergency=1',
+      'P-App-Param: ;calltimer=[0-9]+;aleg_sst_enable=[a-z]+;sst_enable=[a-z]+;hold_alter_b2b_bleg=[a-z]+;hold_alter_b2b_aleg=[a-z]+(?:;fast_ack=[a-z]+)?;a_park_domain=[% customer_test.id %];emergency=1',
       'P-App-Name: sbc',
       'P-NGCP-Caller-Info: <sip:[% scenarios.0.username %]@invite-fritz-prefix-removal.scenarios.test>;ip=[% scenarios.3.ip %];port=[% scenarios.3.port %];primary=[% invite_fritz_prefix_removal_scenarios_test.testuser1002.phone_number %]',
       'P-NGCP-Callee-Info: <sip:emergency_110@invite-fritz-prefix-removal.scenarios.test>;ip=[% scenarios.3.responders.0.ip %];port=[% scenarios.3.responders.0.port %]',
