@@ -1,3 +1,13 @@
+kamailio-config-tests (12.3.0.0+0~mr12.3.0.0) unstable; urgency=medium
+
+  [ Alessio Garzi ]
+  * [2e02361] MT#58994 Rework replies test without route nat countinue
+  * [a0a2637] MT#58643 ROUTE_PARSE_P_EARLY_MEDIA must be checked after ROUTE_APPLY_HEADER_RULES
+  * [94123dd] MT#58994 Rework replies test without route nat countinue for scenarios_pbx
+  * [d69d7e3] MT#58590 New scenario incoming_peer_anonymous
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 15 Jan 2024 14:46:39 +0100
+
 kamailio-config-tests (12.2.0.0+0~mr12.2.0.0) unstable; urgency=medium
 
   [ Victor Seva ]
