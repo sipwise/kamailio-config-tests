@@ -1,6 +1,19 @@
 flow:
   - start|DEFAULT_ONREPLY:
-  - return|DEFAULT_ONREPLY:
+  - start|REPLY_ROUTE_NAT:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - start|ROUTE_PREPARE_UA:
+  - return|ROUTE_PREPARE_UA:
+  - start|REPLY_ROUTE_RTPENGINE:
+  - return|REPLY_ROUTE_RTPENGINE:
+  - start|REPLY_ROUTE_NAT_CONTINUE:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
 sip_in:
   - 'SIP/2.0 200 OK'
   - 'From: <sip:[% scenarios.0.responders.0.username %]@invite-reinvite-transcoding.scenarios.test>;tag=[\w-]+'
@@ -21,6 +34,7 @@ sip_out:
       'Contact: <sip:127.0.0.1:508[08];transport=udp>',
       'Content-Type: application/sdp',
       'Content-Length:\s+\d+',
+      'P-Out-Socket: udp:[% server_ip %]:5060',
       'a=rtpmap:18 G729/8000',
       '_:NOT:_a=rtpmap:8 PCMA/8000',
       '_:NOT:_a=rtpmap:0 PCMU/8000',
