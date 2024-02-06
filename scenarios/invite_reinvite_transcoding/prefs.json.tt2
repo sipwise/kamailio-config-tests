@@ -2,5 +2,8 @@
     "@invite-reinvite-transcoding.scenarios.test": {
         "nat_sipping": "no",
         "transcode_PCMA": true
+    },
+    "peer_invite_reinvite_transcoding_host0": {
+        "transcode_PCMA": true
     }
 }
