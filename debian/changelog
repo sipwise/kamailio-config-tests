@@ -1,3 +1,10 @@
+kamailio-config-tests (12.2.1.2+0~mr12.2.1.2) unstable; urgency=medium
+
+  [ Donat Zenichev ]
+  * [c779090] MT#59249 invite_reinvite_transcoding: set transcode prefs for peer
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 08 Feb 2024 09:24:40 +0100
+
 kamailio-config-tests (12.2.1.1+0~mr12.2.1.1) unstable; urgency=medium
 
   * New release.
