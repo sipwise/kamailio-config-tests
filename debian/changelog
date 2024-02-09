@@ -1,3 +1,10 @@
+kamailio-config-tests (11.5.1.3+0~mr11.5.1.3) unstable; urgency=medium
+
+  [ Alessio Garzi ]
+  * [11b73d8] MT#58590 Fix invite_xfer_blind_caller_immediat_rel invite_xfer_blind_callee_immediat_rel cdr
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 09 Feb 2024 10:08:14 +0100
+
 kamailio-config-tests (11.5.1.2+0~mr11.5.1.2) unstable; urgency=medium
 
   [ Donat Zenichev ]
