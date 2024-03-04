@@ -10,12 +10,12 @@
     },
     "[% scenarios.1.responders.0.username %]@invite-record-call.scenarios.test": {
         "play_announce_before_recording": "always",
-        "record_call": true,
+        "record_call": 1,
         "sound_set":"invite_record_call"
     },
     "[% scenarios.3.responders.0.username %]@invite-record-call.scenarios.test": {
         "play_announce_before_recording": "always",
-        "record_call": true,
+        "record_call": 1,
         "sound_set":"invite_record_call"
     }
 }
