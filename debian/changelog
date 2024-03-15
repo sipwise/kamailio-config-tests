@@ -1,3 +1,23 @@
+kamailio-config-tests (12.4.0.0+0~mr12.4.0.0) unstable; urgency=medium
+
+  [ Alessio Garzi ]
+  * [76f2740] MT#56949 Better P-App param regexp for scenario invite_friz_prefix_removal
+  * [8dcfa9e] Revert "MT#58994 Rework replies test without route nat countinue for scenarios_pbx"
+  * [0d38396] Revert "MT#58994 Rework replies test without route nat countinue"
+  * [03f4fd2] MT#58590 Fix invite_xfer_blind_caller_immediat_rel invite_xfer_blind_callee_immediat_rel cdr
+
+  [ Donat Zenichev ]
+  * [c95ad27] MT#59249 invite_reinvite_transcoding: set transcode prefs for peer
+
+  [ Victor Seva ]
+  * [d3ce001] MT#59470 fix REGISTER template
+  * [ddaaf13] MT#59363 scenarios/invite_record_call: rework record_call preference
+
+  [ Kirill Solomko ]
+  * [b343f0a] MT#59363 change invite_record_call scenario record_call pref
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 15 Mar 2024 08:47:40 +0100
+
 kamailio-config-tests (12.3.0.0+0~mr12.3.0.0) unstable; urgency=medium
 
   [ Alessio Garzi ]
