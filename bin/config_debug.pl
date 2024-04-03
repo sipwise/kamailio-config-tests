@@ -101,6 +101,7 @@ sub change_config
   $yaml->{security}->{ngcp_panel}->{scripts}->{restapi}->{sslverify} = 'no';
   $yaml->{mediator}{interval} = '1';      # Necessary to speedup the creation of the CDRs
   $yaml->{rtpengine}{delete_delay} = '1';  # Necessary to speedup the deletetion of the used ports in rtpengine
+  $yaml->{rtpengine}{recording}{enable} = 'yes';
   $yaml->{rtpengine}{log_level} = '7';
   $yaml->{modules}[0]->{enable} = 'yes'; # dummy module should be the first one
 
