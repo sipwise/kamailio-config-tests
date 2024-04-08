@@ -1,0 +1,169 @@
+flow:
+  - start|DEFAULT_ROUTE:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_NET_INFO:
+  - return|ROUTE_NET_INFO:
+  - start|ROUTE_CHECK_TEL_URI:
+  - return|ROUTE_CHECK_TEL_URI:
+  - start|ROUTE_PRX_REQUEST:
+  - start|ROUTE_INITVARS:
+  - return|ROUTE_INITVARS:
+  - start|ROUTE_INVITE:
+  - start|ROUTE_LOAD_CALLEE_DOMAIN_PREF:
+  - start|ROUTE_CLEAR_CALLEE_DOMAIN_PREF:
+  - return|ROUTE_CLEAR_CALLEE_DOMAIN_PREF:
+  - return|ROUTE_LOAD_CALLEE_DOMAIN_PREF:
+  - start|ROUTE_FIND_CALLER:
+  - start|ROUTE_PSTN_SELECT_INBOUND_PEER:
+  - return|ROUTE_PSTN_SELECT_INBOUND_PEER:
+  - start|ROUTE_CLEAR_PEER_IN_PREF:
+  - return|ROUTE_CLEAR_PEER_IN_PREF:
+  - start|ROUTE_LOAD_PEER_IN_PREF:
+  - start|ROUTE_DLG_MANAGE:
+  - return|ROUTE_DLG_MANAGE:
+  - return|ROUTE_LOAD_PEER_IN_PREF:
+  - return|ROUTE_FIND_CALLER:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - start|ROUTE_GET_CALLER_CLI:
+  - return|ROUTE_GET_CALLER_CLI:
+  - start|ROUTE_GET_CALLER_CLI:
+  - return|ROUTE_GET_CALLER_CLI:
+  - start|ROUTE_GET_FORWARDER_CLI:
+  - return|ROUTE_GET_FORWARDER_CLI:
+  - start|ROUTE_CLIR:
+  - return|ROUTE_CLIR:
+  - start|ROUTE_CALLER_BLOCK_CLI:
+  - return|ROUTE_CALLER_BLOCK_CLI:
+  - start|ROUTE_FIND_CALLEE:
+  - start|ROUTE_DETECT_LOOP:
+  - return|ROUTE_DETECT_LOOP:
+  - start|ROUTE_CALLEE_PROCESS_SPEEDDIALS:
+  - return|ROUTE_CALLEE_PROCESS_SPEEDDIALS:
+  - start|ROUTE_CLEAR_CALLEE_PREF:
+  - return|ROUTE_CLEAR_CALLEE_PREF:
+  - start|ROUTE_LOAD_CALLEE_PREF:
+  - start|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
+  - return|ROUTE_LOAD_CALLEE_CONTRACT_PREF:
+  - start|ROUTE_LOAD_CALLEE_RESELLER_PREF:
+  - return|ROUTE_LOAD_CALLEE_RESELLER_PREF:
+  - start|ROUTE_SET_CALLEE_DIALOG:
+  - start|ROUTE_CNT_DLG_CHECK:
+  - return|ROUTE_CNT_DLG_CHECK:
+  - start|ROUTE_SET_CALLEE_DIALOG_BASE:
+  - return|ROUTE_SET_CALLEE_DIALOG_BASE:
+  - start|ROUTE_SET_CALLEE_DIALOG_TOTAL:
+  - return|ROUTE_SET_CALLEE_DIALOG_TOTAL:
+  - return|ROUTE_SET_CALLEE_DIALOG:
+  - start|ROUTE_BLOCK_IN:
+  - return|ROUTE_BLOCK_IN:
+  - return|ROUTE_LOAD_CALLEE_PREF:
+  - start|ROUTE_NCOS_CHECK:
+  - start|ROUTE_NCOS:
+  - return|ROUTE_NCOS:
+  - start|ROUTE_NCOS_SET:
+  - return|ROUTE_NCOS_SET:
+  - start|ROUTE_NCOS:
+  - return|ROUTE_NCOS:
+  - start|ROUTE_NCOS_SET:
+  - return|ROUTE_NCOS_SET:
+  - start|ROUTE_NCOS:
+  - return|ROUTE_NCOS:
+  - start|ROUTE_NCOS_SET:
+  - return|ROUTE_NCOS_SET:
+  - start|ROUTE_NCOS:
+  - return|ROUTE_NCOS:
+  - start|ROUTE_NCOS_SET:
+  - return|ROUTE_NCOS_SET:
+  - return|ROUTE_NCOS_CHECK:
+  - start|ROUTE_BLOCK_OUT:
+  - return|ROUTE_BLOCK_OUT:
+  - start|ROUTE_CHECK_PBX:
+  - return|ROUTE_CHECK_PBX:
+  - start|ROUTE_CALLEE_DISPATCH:
+  - start|ROUTE_INVITE_TO_INT:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - start|ROUTE_CF_CFU:
+  - start|ROUTE_LOAD_CF_MAP:
+  - return|ROUTE_LOAD_CF_MAP:
+  - start|ROUTE_CHECK_CF:
+  - return|ROUTE_CHECK_CF:
+  - start|ROUTE_CF_WITH_REDIRECTION:
+  - start|ROUTE_ACC_CALLER:
+  - start|ROUTE_SET_ACC_CALLER_CALL_COUNTERS:
+  - return|ROUTE_SET_ACC_CALLER_CALL_COUNTERS:
+  - return|ROUTE_ACC_CALLER:
+  - start|ROUTE_ACC_CALLEE:
+  - start|ROUTE_SET_ACC_CALLEE_CALL_COUNTERS:
+  - return|ROUTE_SET_ACC_CALLEE_CALL_COUNTERS:
+  - return|ROUTE_ACC_CALLEE:
+  - start|ROUTE_ADD_CALLINFO_REPLY:
+  - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
+  - start|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_REPLY:
+  - start|ROUTE_LOCAL_REPLY:
+      $avp(announce_code): [302]
+      $avp(announce_reason): ["Moved Temporarily"]
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - start|dialog:failed:
+  - return|dialog:failed:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+sip_in:
+  - 'INVITE sip:[% scenarios.0.responders.0.username %]@invite-callforward-use-redirection.scenarios.test SIP/2.0'
+  - 'From: <sip:[% scenarios.0.username %]@invite-callforward-use-redirection.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:[% scenarios.0.responders.0.username %]@invite-callforward-use-redirection.scenarios.test>'
+  - 'CSeq: \d+ INVITE'
+  - 'Contact: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]:[% scenarios.0.port %];alias=[^;]+>'
+  - 'User-Agent: KCT SIPP'
+  - 'Content-Type: application/sdp'
+  - 'Content-Length:\s+\d+'
+  - 'P-NGCP-Src-Ip: [% scenarios.0.ip %]'
+  - 'P-NGCP-Src-Port: [% scenarios.0.port %]'
+  - 'P-NGCP-Src-Proto: udp'
+  - 'P-NGCP-Src-Af: 4'
+  - 'P-Sock-Info: udp:[% server_ip %]:5060'
+  - 'P-LB-Uptime:\s+\d+'
+  - 'P-NGCP-Src-Nat: 1'
+  - 'v=0'
+  - 'o=user1 \d+ \d+ IN IP4 [% scenarios.0.ip %]'
+  - 's=-'
+  - 'c=IN IP4 [% scenarios.0.ip %]'
+  - 't=0 0'
+  - 'm=audio [% scenarios.0.mport %] RTP/AVP 8'
+  - 'a=rtpmap:8 PCMA/8000'
+  - 'a=ptime:50'
+sip_out:
+  - [
+      'SIP/2.0 100 Trying',
+      'From: <sip:[% scenarios.0.username %]@invite-callforward-use-redirection.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.0.username %]@invite-callforward-use-redirection.scenarios.test>',
+      'CSeq: \d+ INVITE',
+      'P-Out-Socket: udp:[% server_ip %]:5060',
+      'P-NGCP-Auth-IP: [% scenarios.0.ip %]',
+      'P-NGCP-Auth-UA: KCT SIPP',
+      'Server: Sipwise NGCP Proxy',
+      'Content-Length:\s+0',
+    ]
+  - [
+      'SIP/2.0 302 Moved Temporarily',
+      'From: <sip:[% scenarios.0.username %]@invite-callforward-use-redirection.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.0.responders.0.username %]@invite-callforward-use-redirection.scenarios.test>;tag=[\w-]+',
+      'CSeq: \d+ INVITE',
+      'P-Out-Socket: udp:[% server_ip %]:5060',
+      'P-NGCP-Auth-IP: [% scenarios.0.ip %]',
+      'P-NGCP-Auth-UA: KCT SIPP',
+      'P-Callee-Uuid: [% invite_callforward_use_redirection_scenarios_test.testuser1001.uuid %]',
+      'P-NGCP-Caller-Info: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %]',
+      'P-NGCP-Callee-Info: <sip:[% scenarios.0.responders.0.username %]@invite-callforward-use-redirection.scenarios.test>;ip=invite-callforward-use-redirection.scenarios.test;port=5060;primary=[% invite_callforward_use_redirection_scenarios_test.testuser1001.phone_number %]',
+      'Contact: <sip:[% invite_callforward_use_redirection_scenarios_test.testuser1003.phone_number %]@callerpeerdomainexample>',
+      'Server: Sipwise NGCP Proxy',
+      'Content-Length:\s+0',
+    ]

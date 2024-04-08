@@ -1,0 +1,27 @@
+flow:
+  - start|DEFAULT_ROUTE:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_NET_INFO:
+  - return|ROUTE_NET_INFO:
+  - start|ROUTE_CHECK_TEL_URI:
+  - return|ROUTE_CHECK_TEL_URI:
+  - start|ROUTE_PRX_REQUEST:
+  - start|ROUTE_INITVARS:
+  - return|ROUTE_INITVARS:
+  - start|ROUTE_PREPARE_UA:
+  - return|ROUTE_PREPARE_UA:
+  - start|FILTER_CODECS:
+  - return|FILTER_CODECS:
+  - start|ROUTE_OUTBOUND:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+sip_in:
+  - 'ACK sip:[% scenarios.1.responders.0.username %]@[% scenarios.1.responders.0.ip %]:[% scenarios.1.responders.0.port %] SIP/2.0'
+  - 'From: <sip:[% scenarios.0.username %]@invite-callforward-use-redirection.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:[% scenarios.1.responders.0.username %]@invite-callforward-use-redirection.scenarios.test>;tag=[\w-]+'
+  - 'CSeq: \d+ ACK'
+  - 'Content-Length:\s+0'
+sip_out: []

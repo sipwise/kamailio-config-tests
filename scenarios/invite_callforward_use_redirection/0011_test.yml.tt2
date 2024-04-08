@@ -1,0 +1,82 @@
+flow:
+  - start|DEFAULT_ONREPLY:
+  - start|REPLY_ROUTE_NAT:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - start|ROUTE_PREPARE_UA:
+  - return|ROUTE_PREPARE_UA:
+  - start|REPLY_ROUTE_NAT_CONTINUE:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - start|tm:branch-failure:local:
+  - return|tm:branch-failure:local:
+  - start|FAILURE_ROUTE_LOCAL:
+  - start|ROUTE_INITVARS:
+  - return|ROUTE_INITVARS:
+  - start|ROUTE_STOP_RTPPROXY_BRANCH:
+  - start|ROUTE_RESTORE_CLUSTERSET:
+  - return|ROUTE_RESTORE_CLUSTERSET:
+  - return|ROUTE_STOP_RTPPROXY_BRANCH:
+  - start|ROUTE_CF_CFB:
+  - start|ROUTE_LOAD_CF_MAP:
+  - return|ROUTE_LOAD_CF_MAP:
+  - start|ROUTE_CHECK_CF:
+  - return|ROUTE_CHECK_CF:
+  - start|ROUTE_CF_WITH_REDIRECTION:
+  - start|ROUTE_ACC_CALLER:
+  - start|ROUTE_SET_ACC_CALLER_CALL_COUNTERS:
+  - return|ROUTE_SET_ACC_CALLER_CALL_COUNTERS:
+  - return|ROUTE_ACC_CALLER:
+  - start|ROUTE_ACC_CALLEE:
+  - start|ROUTE_SET_ACC_CALLEE_CALL_COUNTERS:
+  - return|ROUTE_SET_ACC_CALLEE_CALL_COUNTERS:
+  - return|ROUTE_ACC_CALLEE:
+  - start|ROUTE_ADD_CALLINFO_REPLY:
+  - start|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_CALLER_PRIMARY:
+  - start|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_CALLEE_PRIMARY:
+  - return|ROUTE_ADD_CALLINFO_REPLY:
+  - start|ROUTE_LOCAL_REPLY:
+      $avp(announce_code): [302]
+      $avp(announce_reason): ["Moved Temporarily"]
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - start|dialog:failed:
+  - return|dialog:failed:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+sip_in:
+  - 'SIP/2.0 486 Busy'
+  - 'From: <sip:[% scenarios.0.username %]@invite-callforward-use-redirection.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:[% scenarios.1.responders.0.username %]@invite-callforward-use-redirection.scenarios.test>;tag=[\w-]+'
+  - 'CSeq: \d+ INVITE'
+  - 'Content-Length:\s+0'
+sip_out:
+  - [
+      'ACK sip:[% scenarios.1.responders.0.username %]@[% scenarios.1.responders.0.ip %]:[% scenarios.1.responders.0.port %] SIP/2.0',
+      'From: <sip:[% scenarios.0.username %]@invite-callforward-use-redirection.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.1.responders.0.username %]@invite-callforward-use-redirection.scenarios.test>;tag=[\w-]+',
+      'CSeq: \d+ ACK',
+      'Content-Length:\s+0',
+    ]
+  - [
+      'SIP/2.0 302 Moved Temporarily',
+      'From: <sip:[% scenarios.0.username %]@invite-callforward-use-redirection.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% scenarios.1.responders.0.username %]@invite-callforward-use-redirection.scenarios.test>;tag=[\w-]+',
+      'CSeq: \d+ INVITE',
+      'P-Out-Socket: udp:[% server_ip %]:5060',
+      'P-NGCP-Auth-IP: [% scenarios.0.ip %]',
+      'P-NGCP-Auth-UA: KCT SIPP',
+      'P-Callee-Uuid: [% invite_callforward_use_redirection_scenarios_test.testuser1004.uuid %]',
+      'P-NGCP-Caller-Info: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %]',
+      'P-NGCP-Callee-Info: <sip:[% scenarios.1.responders.0.username %]@invite-callforward-use-redirection.scenarios.test>;ip=invite-callforward-use-redirection.scenarios.test;port=5060;primary=[% invite_callforward_use_redirection_scenarios_test.testuser1004.phone_number %]',
+      'Contact: <sip:[% invite_callforward_use_redirection_scenarios_test.testuser1005.phone_number %]@callerpeerdomainexample>',
+      'Server: Sipwise NGCP Proxy',
+      'Content-Length:\s+0',
+    ]
