@@ -1,3 +1,18 @@
+kamailio-config-tests (10.5.7.1+0~mr10.5.7.1) unstable; urgency=medium
+
+  [ Alessio Garzi ]
+  * [a792c0a] TT#181350 Fix routes loop detection for scenarios folder
+  * [30c3462] TT#181350 Fix routes loop detection for scenarios_pbx folder part 3
+  * [d88cf50] TT#181350 Fix routes loop detection for scenarios_lnp folder
+
+  [ Donat Zenichev ]
+  * [12e0b54] MT#55739 incoming_hih: actualize a regex for HIH headers (cfgt)
+
+  [ Victor Seva ]
+  * [84c5f4c] MT#33038 fix checks after 7581300369e10becda656441d7e9604cc8245f72
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 06 May 2024 14:03:47 +0200
+
 kamailio-config-tests (10.5.7.0+0~mr10.5.7.0) unstable; urgency=medium
 
   * New release.
