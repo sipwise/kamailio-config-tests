@@ -1,3 +1,20 @@
+kamailio-config-tests (12.5.0.0+0~mr12.5.0.0) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [7526433] MT#59753 Enabled call recording feature by default
+
+  [ Alessio Garzi ]
+  * [dbbb7bb] MT#59187 new kct scenario "invite_callforward_use_redirection"
+  * [212f36c] MT#59187 Remove SDP from sip responder 2 tests on scenario "invite_callforward_use_redirection"
+  * [c8a5593] Revert "MT#59187 Remove SDP from sip responder 2 tests on scenario "invite_callforward_use_redirection""
+  * [41fe93b] MT#59187 Templatize responder02 into call_forward_user_redirection
+  * [4ad2f1a] MT#57764 Wrong caller.csv line number on invite_callforward_use_redirection
+
+  [ Donat Zenichev ]
+  * [5dc3b8b] MT#57764 Deprecate the `invite_wrong_reg` scenario
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 22 May 2024 14:30:58 +0200
+
 kamailio-config-tests (12.4.0.0+0~mr12.4.0.0) unstable; urgency=medium
 
   [ Alessio Garzi ]
