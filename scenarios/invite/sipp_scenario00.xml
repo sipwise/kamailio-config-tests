@@ -11,6 +11,7 @@
       Call-ID: NGCP%[field4 file="callee.csv" line=0]%///[call_id]
       CSeq: 1 INVITE
       Contact: <sip:[field0 file="caller.csv"]@[local_ip]:[local_port]>
+      P-Preferred-Identity: <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>
       Max-Forwards: 70
       Content-Type: application/sdp
       Content-Length: [len]
@@ -60,6 +61,7 @@
       Call-ID: NGCP%[field4 file="callee.csv" line=0]%///[call_id]
       CSeq: 2 INVITE
       Contact: <sip:[field0 file="caller.csv"]@[local_ip]:[local_port]>
+      P-Preferred-Identity: <sip:[field0 file="caller.csv"]@[field2 file="caller.csv"]>
       Max-Forwards: 70
       [field1 file="caller.csv"]
       Content-Type: application/sdp
