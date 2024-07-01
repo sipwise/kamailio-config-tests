@@ -1,5 +1,11 @@
 ---
 test_uuid: invite_blockout_ncos
+description: |
+  this scenario checks ncos feature.
+  Fist call gets blocked by ncos because callee matches pattern ^431.
+  Second call also matches pattern ^431 but 
+  it is allowed because destination is listed into 
+  adm_ncos_exceptions preference
 domains:
   invite-blockout-ncos.scenarios.test:
     reseller_id: 1
@@ -15,6 +21,12 @@ customers:
       reseller_id: 1
 subscribers:
   invite-blockout-ncos.scenarios.test:
+    testuser1004:
+      customer: 'customer.test'
+      password: testuser
+      cc: 43
+      ac: 1
+      sn: 1003
     testuser1003:
       customer: 'customer.test'
       password: testuser
@@ -34,6 +46,15 @@ scenarios:
     responders:
       - ip: 127.1.0.1
         username: testuser1003
+        domain: invite-blockout-ncos.scenarios.test
+        register: 'no'
+        active: 'no'
+  - ip: 127.126.0.1
+    username: testuser1002
+    domain: invite-blockout-ncos.scenarios.test
+    responders:
+      - ip: 127.1.0.2
+        username: testuser1004
         domain: invite-blockout-ncos.scenarios.test
         register: 'no'
         active: 'no'
