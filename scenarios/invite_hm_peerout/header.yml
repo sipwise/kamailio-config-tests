@@ -2,7 +2,7 @@
 hm_invite_hm_peerout_00:
   header_rules:
   - data:
-      direction: inbound
+      direction: a_inbound
       description: Empty Manipulation
       name: hm_invite_hm_peerout_00_00
       stopper: 0
@@ -11,7 +11,7 @@ hm_invite_hm_peerout_00:
       conditions: []
       actions: []
   - data:
-      direction: inbound
+      direction: a_inbound
       description: Add TestTest Header
       name: hm_invite_hm_peerout_00_01
       stopper: 0
@@ -91,7 +91,7 @@ hm_invite_hm_peerout_00:
 hm_invite_hm_peerout_01:
   header_rules:
   - data:
-      direction: outbound
+      direction: a_outbound
       description: Add OutboundHeader as AVP
       name: hm_invite_hm_peerout_01_00
       stopper: 1
@@ -117,7 +117,7 @@ hm_invite_hm_peerout_01:
       value_part: full
       rwr_set_id:
   - data:
-      direction: outbound
+      direction: a_outbound
       description: Should not be executed
       name: hm_invite_hm_peerout_01_01
       stopper: 0

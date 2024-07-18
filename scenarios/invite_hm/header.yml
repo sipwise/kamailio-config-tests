@@ -2,7 +2,7 @@
 hm_invite_hm_00:
   header_rules:
   - data:
-      direction: inbound
+      direction: a_inbound
       description: Empty Manipulation
       name: hm_invite_hm_00_00
       stopper: 0
@@ -11,7 +11,7 @@ hm_invite_hm_00:
       conditions: []
       actions: []
   - data:
-      direction: inbound
+      direction: a_inbound
       description: Add TestTest Header
       name: hm_invite_hm_00_01
       stopper: 0
@@ -124,7 +124,7 @@ hm_invite_hm_00:
 hm_invite_hm_01:
   header_rules:
   - data:
-      direction: outbound
+      direction: a_outbound
       description: Edit P-Asserted-Identity
       name: hm_invite_hm_01_00
       stopper: 1
@@ -150,7 +150,7 @@ hm_invite_hm_01:
       value_part: full
       rwr_set_id:
   - data:
-      direction: outbound
+      direction: a_outbound
       description: Should not be executed
       name: hm_invite_hm_01_01
       stopper: 0
