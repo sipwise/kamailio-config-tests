@@ -215,6 +215,32 @@ hm_invite_hm_01:
       value: no this_is_second_reply
       value_part: full
       rwr_set_id:
+  - data:
+      direction: b_outbound
+      description: Add header testlegb
+      name: hm_invite_hm_03_00
+      stopper: 0
+      enabled: 1
+      priority: 1
+    conditions:
+    - enabled: 1
+      match_name: To
+      match_part: username
+      match_type: header
+      expression: is
+      expression_negation: 0
+      value_type: input
+      values:
+      - value: 'testuser1003'
+      rwr_set_id:
+    actions:
+    - enabled: 1
+      action_type: add
+      header: OutboundBlegHeader
+      header_part: full
+      value: blegvvalue
+      value_part: full
+      rwr_set_id:
 hm_invite_hm_02:
   header_rules:
   - data:

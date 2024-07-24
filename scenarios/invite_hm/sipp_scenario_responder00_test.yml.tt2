@@ -7,6 +7,7 @@ messages:
   - 'To: <sip:[% scenarios.0.responders.0.username %]@invite-hm.scenarios.test>'
   - 'CSeq: \d+ INVITE'
   - 'P-Asserted-Identity: <sip:11111111@invite-hm.scenarios.test>'
+  - 'OutboundBlegHeader: blegvvalue'
   - 'Content-Type: application/sdp'
   - 'Content-Length: \d+'
   - 'Contact: <sip:ngcp-lb@[% server_ip %]:5060;ngcpct=[^;]+>'
