@@ -1,3 +1,14 @@
+kamailio-config-tests (13.0.0.0+0~mr13.0.0.0) unstable; urgency=medium
+
+  [ Alessio Garzi ]
+  * [0a7353c] MT#59993 Add P-Preferred-Identity checks in invite scenario
+  * [083c97d] MT#60035 Scenario invite_blockout_ncos extended for adm_ncos_exceptions
+
+  [ Marco Capetta ]
+  * [ea4b4c8] MT#60515 rename hm inbound/outbound directions to a_inbound/a_outbound
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Sun, 28 Jul 2024 12:02:07 +0200
+
 kamailio-config-tests (12.5.0.0+0~mr12.5.0.0) unstable; urgency=medium
 
   [ Marco Capetta ]
