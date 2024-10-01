@@ -1,3 +1,11 @@
+kamailio-config-tests (13.0.1.0+0~mr13.0.1.0) unstable; urgency=medium
+
+  [ Alessio Garzi ]
+  * [8be7577] MT#56358 Test  new HM reject possibility
+  * [e0dc755]  MT#56358 Test new b_outbound direction in invite_hm
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 01 Oct 2024 09:59:16 +0200
+
 kamailio-config-tests (13.0.0.0+0~mr13.0.0.0) unstable; urgency=medium
 
   [ Alessio Garzi ]
