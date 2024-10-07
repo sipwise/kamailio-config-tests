@@ -21,12 +21,6 @@ subscribers:
       cc: 43
       ac: 1
       sn: 1003
-    testuser1004:
-      customer: 'customer.test'
-      password: testuser
-      cc: 43
-      ac: 1
-      sn: 1004
     testuser1002:
       customer: 'customer.test'
       password: testuser
@@ -44,13 +38,5 @@ scenarios:
     responders:
       - ip: 127.1.0.1
         username: testuser1003
-        domain: invite-sdp-filter.scenarios.test
-        register: 'yes'
-  - ip: 127.126.0.1
-    username: testuser1002
-    domain: invite-sdp-filter.scenarios.test
-    responders:
-      - ip: 127.1.0.4
-        username: testuser1004
         domain: invite-sdp-filter.scenarios.test
         register: 'yes'

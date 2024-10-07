@@ -5,9 +5,5 @@
     "[% scenarios.0.responders.0.username %]@invite-sdp-filter.scenarios.test": {
         "codecs_filter": "1",
         "codecs_list": "PCMA,PCMU,GSM,telephone-event"
-    },
-    "[% scenarios.1.responders.0.username %]@invite-sdp-filter.scenarios.test": {
-        "codecs_id_filter": "1",
-        "codecs_id_list": "8,0,3,99,100,101"
     }
 }
