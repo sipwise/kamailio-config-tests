@@ -11,5 +11,7 @@ kamailio:
     presence:
       enable: yes
     skip_cf_loop: 'yes'
+    lnp:
+      enable: no
 pbx:
   enable: yes

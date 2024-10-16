@@ -1,4 +1,9 @@
 ---
+b2b:
+  sbc:
+    xfer:
+      blind_immediate_release: no
+      enable: no
 kamailio:
   lb:
     block_useragents:
@@ -28,3 +33,9 @@ kamailio:
         - name: invite-stir.scenarios.test
           private_key: /etc/kamailio/stir/invite-peerout-stir.scenarios.test.key
     skip_cf_loop: 'yes'
+    lnp:
+      enable: no
+    allow_refer_method: no
+    generate_responder_cdr_data: no
+pbx:
+  enable: no

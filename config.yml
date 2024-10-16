@@ -1,12 +1,10 @@
 ---
-sip:
-  ip: 10.20.29.2
-  port: 51602
-  mport: 45003
-peer:
-  ip: 172.30.1.2
-  port: 52602
-  mport: 46003
+b2b:
+  prepaid:
+    enable: no
+intercept:
+  enable: no
+  type: none
 kamailio:
   lb:
     ip: 127.0.0.1
@@ -19,13 +17,33 @@ kamailio:
         transport: tcp
         ip: 127.3.0.1
         port: 5074
+    security:
+      topos:
+        enable: no
+    tcp_children: '1'
+    udp_children: '1'
+  proxy:
+    children: '1'
+    tcp_children: '1'
 rtpengine:
   rtp_flag:
     - ip: 172.30.1.2
       netmask: 255.255.255.252
     - ip: 10.20.29.2
       netmask: 255.255.255.252
+sip:
+  ip: 10.20.29.2
+  port: 51602
+  mport: 45003
+peer:
+  ip: 172.30.1.2
+  port: 52602
+  mport: 46003
 phone:
   cc: 43
   ac: 1
   sn: 1000
+tpcc:
+  enable: no
+websocket:
+  enable: no

@@ -1,3 +1,8 @@
+b2b:
+  sbc:
+    xfer:
+      blind_immediate_release: no
+      enable: no
 kamailio:
   proxy:
     lnp:
@@ -9,3 +14,7 @@ kamailio:
       enable: yes
       type: local
     skip_cf_loop: 'yes'
+    allow_refer_method: no
+    generate_responder_cdr_data: no
+pbx:
+  enable: no
