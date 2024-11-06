@@ -328,11 +328,11 @@ sub generate
     my $res_id = 0;
     my ($data) = @_;
     my $csv = { callee => new_csv(), caller => new_csv(), scenario => new_csv() };
-    my $io_caller = new IO::File(File::Spec->catfile($base_check_dir, "caller.csv"), "w")
+    my $io_caller = IO::File->new(File::Spec->catfile($base_check_dir, "caller.csv"), "w")
         or die("Cannot create file caller.csv");
-    my $io_callee = new IO::File(File::Spec->catfile($base_check_dir, "callee.csv"), "w")
+    my $io_callee = IO::File->new(File::Spec->catfile($base_check_dir, "callee.csv"), "w")
         or die("Cannot create file callee.csv");
-    my $io_scenario = new IO::File(File::Spec->catfile($base_check_dir, "scenario.csv"), "w")
+    my $io_scenario = IO::File->new(File::Spec->catfile($base_check_dir, "scenario.csv"), "w")
         or die("Cannot create file scenario.csv");
     my $seq = ["SEQUENTIAL"];
     my $test_uuid = $data->{test_uuid};
