@@ -4,5 +4,8 @@
     },
     "peer_incoming_peer_host0": {
         "concurrent_max": 1
+    },
+    "[% scenarios.3.responders.0.username %]@incoming-peer.scenarios.test": {
+        "adm_block_in_list": ["0043*"]
     }
 }

@@ -1,0 +1,11 @@
+messages:
+- - 'SIP/2.0 100 Trying'
+  - 'From: <sip:[% scenarios.3.username %]@incoming-peer.host0.peer.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:[% incoming_peer_scenarios_test.testuser1006.phone_number %]@incoming-peer.scenarios.test>'
+  - 'CSeq: \d+ INVITE'
+  - 'Server: Sipwise NGCP LB'
+  - 'Content-Length: 0'
+- - 'SIP/2.0 403 Blocked by Admin'
+  - 'To: <sip:[% incoming_peer_scenarios_test.testuser1006.phone_number %]@incoming-peer.scenarios.test>;tag=[\w-]+'
+  - 'CSeq: \d+ INVITE'
+  - 'Content-Length: 0'
