@@ -152,6 +152,9 @@ config() {
     "${BIN_DIR}/detect_network.py" --verbose "${BASE_DIR}/config.yml" /etc/ngcp-config/network.yml
   fi
   opts="-c 5 -g ${GROUP}"
+  if [ "${PROFILE}" == "PRO" ]; then
+    opts+=" -p"
+  fi
   if ${CFGT} ; then
     opts+=" -t"
   fi

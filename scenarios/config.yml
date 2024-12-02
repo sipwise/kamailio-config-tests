@@ -37,5 +37,3 @@ kamailio:
       enable: no
     allow_refer_method: no
     generate_responder_cdr_data: no
-pbx:
-  enable: no

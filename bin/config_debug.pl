@@ -35,6 +35,7 @@ sub usage
   $output .= "\t-g: scenarios group\n";
   $output .= "\t-c: number of kamailio.proxy.children\n";
   $output .= "\t-t: enable cfgt\n";
+  $output .= "\t-p: PRO configs\n";
   $output .= "\tkct_config.yml: config file for k-c-t environment\n";
   $output .= "\tMODE: on|off\tdefault: off\n";
   return $output
@@ -43,6 +44,7 @@ sub usage
 my $help = 0;
 my $children = 0;
 my $group;
+my $PRO = 0;
 my $cfgt = 0;
 
 if (exists $ENV{'GROUP'})
@@ -57,6 +59,7 @@ GetOptions (
   "h|help" => \$help,
   "g|group=s" => \$group,
   "c|children=i" => \$children,
+  "p|pro" => \$PRO,
   "t" => \$cfgt,
 ) or die("Error in command line arguments\n".usage());
 
@@ -105,6 +108,16 @@ sub change_config
   $yaml->{rtpengine}{log_level} = '7';
   $yaml->{modules}[0]->{enable} = 'yes'; # dummy module should be the first one
 
+  (my $pro_yml_file = $file_yaml) =~ s/\.yml/_pro.yml/;
+  if ( -e  $pro_yml_file && $PRO)
+  {
+    print "load $pro_yml_file config file\n";
+    my $pro_yml = LoadFile($pro_yml_file);
+    my $hm = Hash::Merge->new('RIGHT_PRECEDENT');
+    my $config = $hm->merge( {}, $yaml);
+    $yaml = $hm->merge( $config, $pro_yml);
+  }
+
   my $group_yml_file = $base_dir."/".$group."/config.yml";
   if ( -e  $group_yml_file )
   {
@@ -115,6 +128,15 @@ sub change_config
     $yaml = $hm->merge( $config, $group_yml);
   } else {
     print "$group_yml_file not found\n";
+  }
+  $group_yml_file = $base_dir."/".$group."/config_pro.yml";
+  if ( -e  $group_yml_file && $PRO)
+  {
+    print "load $group_yml_file config file\n";
+    my $group_yml = LoadFile($group_yml_file);
+    my $hm = Hash::Merge->new('RIGHT_PRECEDENT');
+    my $config = $hm->merge( {}, $yaml);
+    $yaml = $hm->merge( $config, $group_yml);
   }
   DumpFile($file_yaml, $yaml);
 }
