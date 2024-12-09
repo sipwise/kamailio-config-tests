@@ -1,3 +1,22 @@
+kamailio-config-tests (13.1.1.0+0~mr13.1.1.0) unstable; urgency=medium
+
+  [ Alessio Garzi ]
+  * [93f2971] MT#60765 Remove codec filtering by id tests
+
+  [ Fabricio Santolin da Silva ]
+  * [fb5afc8] MT#61288 Fix configuration for running on different environments
+
+  [ Donat Zenichev ]
+  * [9d72573] MT#61353 invite_sdp_filter: fix actual codecs list
+
+  [ Guillem Jover ]
+  * [5e4f911] MT#61459 Do not use Perl indirect object syntax
+
+  [ Victor Seva ]
+  * [193d782] MT#61288 support config_pro.yml configs
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 09 Dec 2024 11:26:05 +0100
+
 kamailio-config-tests (13.1.0.0+0~mr13.1.0.0) unstable; urgency=medium
 
   [ Alessio Garzi ]
