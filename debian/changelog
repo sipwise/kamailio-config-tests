@@ -1,3 +1,10 @@
+kamailio-config-tests (13.1.1.3+0~mr13.1.1.3) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [ce188e9] MT#61353 Fix invite_sdp_filter_blacklist scenario
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 27 Dec 2024 15:09:49 +0100
+
 kamailio-config-tests (13.1.1.2+0~mr13.1.1.2) unstable; urgency=medium
 
   [ Marco Capetta ]
