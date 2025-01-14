@@ -1,3 +1,10 @@
+kamailio-config-tests (11.5.1.4+0~mr11.5.1.4) unstable; urgency=medium
+
+  [ Donat Zenichev ]
+  * [f26f9f5] MT#57764 Deprecate the `invite_wrong_reg` scenario
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 14 Jan 2025 08:27:33 +0100
+
 kamailio-config-tests (11.5.1.3+0~mr11.5.1.3) unstable; urgency=medium
 
   [ Alessio Garzi ]
