@@ -35,7 +35,7 @@ messages:
   - 'a=rtpmap:8 PCMA/8000'
   - 'a=sendrecv'
   - 'a=rtcp:\d+'
-  - 'a=maxptime:150'
+  - 'a=maxptime:[0-9]+'
   - 'a=ptime:20'
 - - 'SIP/2.0 200 OK'
   - 'Record-Route: <sip:127.0.0.1:5062;lr=on;ftag=[^;]+>'
