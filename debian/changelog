@@ -1,3 +1,15 @@
+kamailio-config-tests (13.2.1.0+0~mr13.2.1.0) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [a0ac7be] Revert "MT#61353 invite_sdp_filter: fix actual codecs list"
+  * [2976698] MT#61353 Fix invite_sdp_filter_blacklist scenario
+
+  [ Alessio Garzi ]
+  * [4cde7fb] MT#61650 Test feature adm_block_in_list
+  * [b953e28] MT#61978 Fix invite_voicebox test
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 28 Jan 2025 15:14:11 +0100
+
 kamailio-config-tests (13.2.0.0+0~mr13.2.0.0) unstable; urgency=medium
 
   [ Alessio Garzi ]
