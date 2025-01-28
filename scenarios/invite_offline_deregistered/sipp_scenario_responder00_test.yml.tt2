@@ -1,0 +1,8 @@
+messages:
+- - 'SIP/2.0 401 Unauthorized'
+  - 'From: <sip:[% scenarios.0.responders.0.username %]@invite-offline-deregistered.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:[% scenarios.0.responders.0.username %]@invite-offline-deregistered.scenarios.test>;tag=[\w-]+'
+  - 'CSeq: \d+ REGISTER'
+  - 'WWW-Authenticate: Digest realm="invite-offline-deregistered.scenarios.test", nonce="[^"]+"'
+  - 'Server: Sipwise NGCP Proxy'
+  - 'Content-Length:\s+0'

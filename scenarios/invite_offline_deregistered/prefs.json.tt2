@@ -1,0 +1,5 @@
+{
+    "@invite-offline-deregistered.scenarios.test": {
+        "nat_sipping": "no"
+    }
+}

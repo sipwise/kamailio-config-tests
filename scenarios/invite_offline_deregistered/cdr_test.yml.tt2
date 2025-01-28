@@ -1,0 +1,10 @@
+cdr:
+  - source_user: '[% scenarios.0.username %]'
+    source_domain: 'invite-offline-deregistered.scenarios.test'
+    source_cli: '[% invite_offline_deregistered_scenarios_test.testuser1002.phone_number %]'
+    destination_user: 'testuser1003'
+    destination_domain: 'invite-offline-deregistered.scenarios.test'
+    destination_user_dialed: 'testuser1003'
+    call_type: 'call'
+    call_status: 'noanswer'
+    call_code: '480'

@@ -1,0 +1,3 @@
+cdr:
+  - val: '[% scenarios.0.username %]'
+    type: 'header=P-Preferred-Identity'
