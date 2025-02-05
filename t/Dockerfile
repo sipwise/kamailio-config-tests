@@ -8,7 +8,7 @@ FROM docker.mgm.sipwise.com/sipwise-bookworm:latest
 ENV REFRESHED_AT 2023-06-26
 
 RUN apt-get update && apt-get install --assume-yes python3-yaml python3-junitxml \
-  make libtemplate-perl libyaml-perl python3-pytest \
+  make libtemplate-perl libyaml-perl python3-pytest parallel \
   && rm -rf /var/lib/apt/lists/*
 
 RUN echo './t/testrunner' >>/root/.bash_history
