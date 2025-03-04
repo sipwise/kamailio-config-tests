@@ -1,3 +1,10 @@
+kamailio-config-tests (12.5.1.2+0~mr12.5.1.2) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [3078e2c] MT#61969 fix invite_perm_reg
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 04 Mar 2025 14:04:17 +0100
+
 kamailio-config-tests (12.5.1.1+0~mr12.5.1.1) unstable; urgency=medium
 
   * New release.
