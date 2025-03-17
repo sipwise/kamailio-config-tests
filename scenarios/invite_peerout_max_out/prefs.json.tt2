@@ -3,9 +3,9 @@
         "nat_sipping": "no"
     },
     "peer_00_invite_peerout_max_out_host0": {
-        "concurrent_max_out": 0
+        "concurrent_max_out": 1
     },
     "peer_01_invite_peerout_max_out_host0": {
-        "concurrent_max_out": -1
+        "concurrent_max_out": 0
     }
 }
