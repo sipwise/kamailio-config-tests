@@ -1,0 +1,46 @@
+---
+test_uuid: sanity
+description: Test 1 - register with broken auth header\
+             Test 2 -  register with broken from header
+             Test 3 -  register with broken to header
+domains:
+  sanity.scenarios.test:
+    reseller_id: 1
+customers:
+  'customer.test':
+    contacts:
+      - email: customer.test@spce.test
+        reseller_id: 1
+    details:
+      status: 'active'
+      type: 'sipaccount'
+      billing_profile_id: 1
+      reseller_id: 1
+subscribers:
+  sanity.scenarios.test:
+    testuser1003:
+      customer: 'customer.test'
+      password: testuser
+      cc: 43
+      ac: 1
+      sn: 1003
+    testuser1002:
+      customer: 'customer.test'
+      password: testuser
+      cc: 43
+      ac: 1
+      sn: 1002
+      alias_numbers:
+        - cc: 34
+          ac: 96
+          sn: 5711941
+scenarios:
+  - ip: 127.126.0.1
+    username: testuser1002
+    domain: sanity.scenarios.test
+    responders:
+      - ip: 127.3.0.5
+        username: testuser1003
+        domain: sanity.scenarios.test
+        register: no
+        active: no
