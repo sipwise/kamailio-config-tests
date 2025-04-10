@@ -1,3 +1,22 @@
+kamailio-config-tests (13.3.1.0+0~mr13.3.1.0) unstable; urgency=medium
+
+  [ Alessio Garzi ]
+  * [a552bc1] MT#61969 New scenario invite_offline_deregistered
+  * [627a9ae] MT#62341 Add sanity new scenario
+  * [56024bc] MT#62341 Typo on sanity scenario
+
+  [ Victor Seva ]
+  * [1e4c5f9] MT#61969 invite_offline_deregistered: fix register
+  * [212e6d3] MT#61969 invite_offline_deregistered: add missing 200 OK for REGISTER
+  * [a0ad8c7] MT#61910 LB is now responding directly to OPTIONS
+  * [fc168bd] TT#131251 Dockerfile: add missing parallel package
+  * [99a10e4] MT#61969 fix invite_perm_reg
+
+  [ Marco Capetta ]
+  * [a872835] MT#62220 Fix counters in invite_peerout_max_out test
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 10 Apr 2025 08:27:10 +0200
+
 kamailio-config-tests (13.3.0.0+0~mr13.3.0.0) unstable; urgency=medium
 
   [ Marco Capetta ]
