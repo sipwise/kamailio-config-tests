@@ -164,7 +164,7 @@ sip_in:
   - 'P-NGCP-Orig-Domain: spce.test'
   - 'P-NGCP-Orig-Dialed: 1003'
   - 'P-NGCP-Orig-PBX-Ext: 1003'
-  - 'P-First-Caller-Cloud-PBX: [% customerpbx_test.id %]'
+  - 'P-NGCP-First-Caller-Cloud-PBX: [% customerpbx_test.id %]'
   - 'P-AA-Caller-CLIR: 0'
   - 'P-NGCP-Lookup-Type: ext'
   - 'P-NGCP-BlockOut-Override: 0'

@@ -140,7 +140,7 @@ sip_in:
   - 'From: <sip:testuser1002@spce.test>;tag=[\w-]+'
   - 'To: <sip:testuser1001@spce.test>'
   - 'CSeq: \d+ INVITE'
-  - 'P-First-Caller-Cloud-PBX: [% customerpbx_test.id %]'
+  - 'P-NGCP-First-Caller-Cloud-PBX: [% customerpbx_test.id %]'
   - 'P-Caller-UUID: [% spce_test.testuser1001.uuid %]'
   - 'P-NGCP-Caller-Info: <sip:testuser1002@spce.test>;ip=127.126.0.1;port=\d+;primary=43110011002'
   - 'P-NGCP-Callee-Info: <sip:43110011003@spce.test>;ip=127.0.0.1;port=5080'
@@ -183,7 +183,7 @@ sip_out:
       'From: <sip:testuser1002@spce.test>;tag=[\w-]+',
       'To: <sip:testuser1001@spce.test>',
       'CSeq: \d+ INVITE',
-      'P-First-Caller-Cloud-PBX: [% customerpbx_test.id %]',
+      'P-NGCP-First-Caller-Cloud-PBX: [% customerpbx_test.id %]',
       'P-Caller-UUID: [% spce_test.testuser1001.uuid %]',
       'P-NGCP-Caller-Info: <sip:testuser1001@spce.test>;ip=127.0.0.1;port=5080;primary=4311001',
       'P-NGCP-Callee-Info: <sip:43110011003@spce.test>;ip=127.0.0.1;port=5080;primary=43110011003',
