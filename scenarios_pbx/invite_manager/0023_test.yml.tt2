@@ -275,7 +275,7 @@ sip_out:
       'P-First-Caller-CLIR: 0',
       'P-CF-Depth: 1',
       'P-First-Caller-UA-Mode: strip',
-      'P-First-Caller-Cloud-PBX: [% invite_manager_customerpbx_test.id %]',
+      'P-NGCP-First-Caller-Cloud-PBX: [% invite_manager_customerpbx_test.id %]',
       'P-First-Caller-PBX-Ext: [% invite_manager_scenarios_pbx_test.testuser1003.pbx_extension %]',
       'P-Callee-Ext-Subs-ID: ',
       'P-Callee-Ext-Contr-ID: ',
