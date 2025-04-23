@@ -1,3 +1,11 @@
+kamailio-config-tests (13.3.1.1+0~mr13.3.1.1) unstable; urgency=medium
+
+  [ Alessio Garzi ]
+  * [60b67ce] MT#61668 Adapt HIH test
+  * [856393c] MT#61668 Adapt HIH test part 2
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 23 Apr 2025 10:37:03 +0200
+
 kamailio-config-tests (13.3.1.0+0~mr13.3.1.0) unstable; urgency=medium
 
   [ Alessio Garzi ]
