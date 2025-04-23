@@ -76,7 +76,7 @@ sip_out:
       'CSeq: \d+ INVITE',
       'P-LB-Uptime: \d+',
       'P-NGCP-Orig-PBX-Ext: 1004',
-      'P-First-Caller-Cloud-PBX: [% customerpbx_test.id %]',
+      'P-NGCP-First-Caller-Cloud-PBX: [% customerpbx_test.id %]',
       'P-Caller-UUID: [% spce_test.testuser1004.uuid %]',
       'P-Callee-UUID: [% spce_test.testuser1004.uuid %]',
       'P-NGCP-Acc-Src-Leg: .+',

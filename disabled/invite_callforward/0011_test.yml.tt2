@@ -138,7 +138,7 @@ sip_in:
   - 'P-NGCP-Orig-Domain: spce.test'
   - 'P-NGCP-Orig-Dialed: testuser1001'
   - 'P-NGCP-Orig-PBX-Ext: 1001'
-  - 'P-First-Caller-Cloud-PBX: [% customerpbx_test.id %]'
+  - 'P-NGCP-First-Caller-Cloud-PBX: [% customerpbx_test.id %]'
   - 'P-AA-Caller-CLIR: 0'
   - 'P-NGCP-Lookup-Type: uri'
   - 'P-NGCP-BlockOut-Override: 0'
@@ -173,7 +173,7 @@ sip_out:
       'CSeq: \d+ INVITE',
       'P-LB-Uptime: \d+',
       'P-NGCP-Orig-PBX-Ext: 1001',
-      'P-First-Caller-Cloud-PBX: [% customerpbx_test.id %]',
+      'P-NGCP-First-Caller-Cloud-PBX: [% customerpbx_test.id %]',
       'P-Caller-UUID: [% spce_test.testuser1001.uuid %]',
       'P-Callee-UUID: [% spce_test.testuser1001.uuid %]',
       'P-NGCP-Acc-Src-Leg: .+',
