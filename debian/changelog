@@ -1,3 +1,10 @@
+kamailio-config-tests (13.3.1.2+0~mr13.3.1.2) unstable; urgency=medium
+
+  [ Alessio Garzi ]
+  * [acf1a47] MT#58817 Rename P-First-Caller-Cloud-PBX -> P-NGCP-First-Caller-Cloud-PBX
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 06 May 2025 09:51:31 +0200
+
 kamailio-config-tests (13.3.1.1+0~mr13.3.1.1) unstable; urgency=medium
 
   [ Alessio Garzi ]
