@@ -1,3 +1,10 @@
+kamailio-config-tests (13.3.1.3+0~mr13.3.1.3) unstable; urgency=medium
+
+  [ Alessio Garzi ]
+  * [f84a9a0] MT#58817 Rename P-AA-Caller-CLIR -> P-NGCP-AA-Caller-CLIR
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 15 May 2025 11:44:18 +0200
+
 kamailio-config-tests (13.3.1.2+0~mr13.3.1.2) unstable; urgency=medium
 
   [ Alessio Garzi ]
