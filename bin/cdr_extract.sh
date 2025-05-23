@@ -44,11 +44,15 @@ usage() {
 }
 
 while getopts 'ht:s:m' opt; do
-  case $opt in
+  case "$opt" in
     h) usage; exit 0;;
     t) START_TIME=$OPTARG;;
     s) GROUP=$OPTARG;;
     m) MUTE=true;;
+    *)
+      echo "Error: unknown option -$opt." >&2
+      exit 2
+      ;;
   esac
 done
 shift $((OPTIND - 1))

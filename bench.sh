@@ -25,7 +25,7 @@ CAPTURE=false
 SINGLE_CAPTURE=false
 PROV_TYPE=step
 CHECK_TYPE=sipp
-CFGT_OPTS=()
+CFG_OPTS=()
 
 usage() {
   echo "Usage: bench.sh [-hCkK] [-p PROFILE] [-x GROUP] [-P <none|all|step>] [-S <all|cfgt|sipp>] num_runs"
@@ -102,7 +102,7 @@ esac
 if ! "${SKIP_CONFIG}" ; then
   CFG_OPTS+=(-x "${GROUP}" -p "${PROFILE}")
   # shellcheck disable=SC2086
-  "${BASE_DIR}/set_config.sh" ${CFG_OPTS[*]}
+  "${BASE_DIR}/set_config.sh" "${CFG_OPTS[@]}"
 fi
 
 echo "$(date) - Starting $NUM tests"
@@ -129,5 +129,5 @@ set +o pipefail
 
 if ! "${SKIP_CONFIG}" ; then
   # shellcheck disable=SC2086
-  "${BASE_DIR}/set_config.sh" -c ${CFG_OPTS[*]}
+  "${BASE_DIR}/set_config.sh" -c "${CFG_OPTS[@]}"
 fi

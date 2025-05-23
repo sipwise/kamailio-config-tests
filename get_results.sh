@@ -2,7 +2,8 @@
 RUN_DIR="$(dirname "$0")"
 BASE_DIR=${BASE_DIR:-$RUN_DIR}
 # absolute path
-export BASE_DIR=$(readlink -f "${BASE_DIR}")
+BASE_DIR=$(readlink -f "${BASE_DIR}")
+export BASE_DIR
 BIN_DIR="${BASE_DIR}/bin"
 PROFILE="${PROFILE:-}"
 GROUP="${GROUP:-scenarios}"

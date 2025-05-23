@@ -36,10 +36,14 @@ usage() {
 }
 
 while getopts 'hcd:' opt; do
-  case $opt in
+  case "$opt" in
     h) usage; exit 0;;
     c) clean; exit 0;;
     d) DIR=$OPTARG;;
+    *)
+      echo "Error: unknown option -$opt." >&2
+      exit 2
+      ;;
   esac
 done
 shift $((OPTIND - 1))

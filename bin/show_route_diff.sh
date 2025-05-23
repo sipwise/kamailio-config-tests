@@ -19,16 +19,6 @@
 # Public License version 3 can be found in "/usr/share/common-licenses/GPL-3".
 #
 BIN_DIR=$(dirname "$0")
-die()
-{
-  echo "ERROR: $1" >&2
-  exit "${2:-1}"
-}
-
-log_info()
-{
-  echo "INFO: $*"
-}
 
 usage() {
   echo "Usage: ${0} [-h] [-g GROUP] fileA.json fileB.json route_name"

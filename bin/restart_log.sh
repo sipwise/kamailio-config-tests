@@ -27,8 +27,10 @@ LOGS+=( "sems-b2b.log" )
 LOGS+=( "kamailio-lb.log" )
 LOGS+=( "rtp.log" )
 
-# shellcheck disable=SC2086
-(cd ${BASE_LOG} || exit 2; rm -rf ${LOGS[*]})
+(
+  cd ${BASE_LOG} || exit 2
+  rm -rf "${LOGS[@]}"
+)
 service rsyslog restart
 
 log_ref="panel.log"
@@ -36,6 +38,6 @@ if ! [ -f "${BASE_LOG}/${log_ref}" ] ; then
   log_ref="panel-fcgi.log"
 fi
 
-for l in ${LOGS[*]} ; do
+for l in "${LOGS[@]}" ; do
   touch --reference="${BASE_LOG}/${log_ref}" "${BASE_LOG}/$l"
 done

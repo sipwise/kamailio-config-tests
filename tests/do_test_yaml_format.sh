@@ -1,5 +1,8 @@
 #!/bin/sh
-export BASE_DIR=$(pwd) DEST_DIR=${RESULTS}
+
+BASE_DIR=$(pwd)
+DEST_DIR=${RESULTS}
+export BASE_DIR DEST_DIR
 
 ./bin/generate_tests.sh -d "$1" tests/fixtures/scenario_ids.yml PRO
 find "${RESULTS}/$1" -type f -name '[0-9][0-9][0-9][0-9]_test.yml' | while read -r i; do

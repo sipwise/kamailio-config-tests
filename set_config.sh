@@ -22,7 +22,8 @@ set -e
 RUN_DIR="$(dirname "$0")"
 BASE_DIR=${BASE_DIR:-$RUN_DIR}
 # absolute path
-export BASE_DIR=$(readlink -f "${BASE_DIR}")
+BASE_DIR=$(readlink -f "${BASE_DIR}")
+export BASE_DIR
 # Set up the environment, to use local perl modules
 export PERL5LIB="${BASE_DIR}/lib"
 BIN_DIR="${BASE_DIR}/bin"
@@ -166,8 +167,7 @@ config() {
   if [ "${PROFILE}" == "PRO" ]; then
     mkdir -p "${BASE_DIR}/log"
     echo "$(date) - Exec pid_watcher with timeout[${TIMEOUT}]"
-    # shellcheck disable=SC2086
-    ( timeout "${TIMEOUT}" "${BIN_DIR}/pid_watcher.py" ${PIDWATCH_OPTS[*]} )&
+    ( timeout "${TIMEOUT}" "${BIN_DIR}/pid_watcher.py" "${PIDWATCH_OPTS[@]}" )&
   fi
   echo "$(date) - Config files"
   "${BIN_DIR}/config_files.sh" "${GROUP}"

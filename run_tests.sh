@@ -2,7 +2,8 @@
 RUN_DIR="$(dirname "$0")"
 BASE_DIR=${BASE_DIR:-$RUN_DIR}
 # absolute path
-export BASE_DIR=$(readlink -f "${BASE_DIR}")
+BASE_DIR=$(readlink -f "${BASE_DIR}")
+export BASE_DIR
 # Set up the environment, to use local perl modules
 export PERL5LIB="${BASE_DIR}/lib"
 BIN_DIR="${BASE_DIR}/bin"
@@ -431,7 +432,7 @@ for t in "${SCEN[@]}"; do
 done
 
 rm -f "${LOG_DIR}/run_failed.txt"
-for t in ${failed[*]}; do
+for t in "${failed[@]}"; do
   echo "$t" >> "${LOG_DIR}/run_failed.txt"
 done
 
