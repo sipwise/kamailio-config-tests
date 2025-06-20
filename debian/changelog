@@ -1,3 +1,16 @@
+kamailio-config-tests (13.5.0.0+0~mr13.5.0.0) unstable; urgency=medium
+
+  [ Alessio Garzi ]
+  * [dc65a1e] MT#61668 Adapt HIH test
+  * [1f78efa] MT#61668 Adapt HIH test part 2
+  * [c3f132b] MT#58817 Rename P-First-Caller-Cloud-PBX -> P-NGCP-First-Caller-Cloud-PBX
+  * [dbfbe68] MT#58817 Rename P-AA-Caller-CLIR -> P-NGCP-AA-Caller-CLIR
+
+  [ Guillem Jover ]
+  * [4747bce] MT#62763 Fix shellcheck issues
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 20 Jun 2025 10:43:04 +0200
+
 kamailio-config-tests (13.4.0.0+0~mr13.4.0.0) unstable; urgency=medium
 
   [ Alessio Garzi ]
