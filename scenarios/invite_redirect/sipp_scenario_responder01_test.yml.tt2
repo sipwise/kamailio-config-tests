@@ -7,7 +7,7 @@ messages:
   - 'To: <sip:[% scenarios.0.responders.1.username %]@invite-redirect.scenarios.test>'
   - 'CSeq: \d+ INVITE'
   - 'History-Info: <sip:[% scenarios.0.responders.0.username %]@invite-redirect.scenarios.test:5060;user=phone\?Reason=SIP%3bcause%3d302>;index=1'
-  - 'History-Info: <sip:[% scenarios.0.responders.1.username %]@invite-redirect.scenarios.test:5060;user=phone;Reason=SIP%3bcause%3d302>;index=1.1'
+  - 'History-Info: <sip:[% scenarios.0.responders.1.username %]@invite-redirect.scenarios.test:5060;user=phone\?Reason=SIP%3bcause%3d302>;index=1.1'
   - 'P-Asserted-Identity: <sip:[% invite_redirect_scenarios_test.testuser1002.phone_number %]@invite-redirect.scenarios.test>'
   - 'Diversion: <sip:[% invite_redirect_scenarios_test.testuser1003.phone_number %]@invite-redirect.scenarios.test>;reason=unconditional;privacy=off;counter=1'
   - 'Content-Type: application/sdp'
