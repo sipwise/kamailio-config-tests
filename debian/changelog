@@ -1,3 +1,10 @@
+kamailio-config-tests (13.4.1.2+0~mr13.4.1.2) unstable; urgency=medium
+
+  [ Donat Zenichev ]
+  * [e6b5bec] MT#63223 Fix HIH parameters
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 18 Jul 2025 14:39:48 +0200
+
 kamailio-config-tests (13.4.1.1+0~mr13.4.1.1) unstable; urgency=medium
 
   * New release.
