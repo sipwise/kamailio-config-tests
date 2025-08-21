@@ -29,7 +29,7 @@ use Capture::Tiny qw(capture);
 use YAML::XS;
 use List::MoreUtils qw(uniq);
 use DBI qw(:sql_types);
-use Sipwise::API qw(all);
+use Sipwise::API;
 
 my $CONSTANTS = YAML::XS::LoadFile('/etc/ngcp-config/constants.yml');
 my $config = Config::Tiny->read('/etc/default/ngcp-api');
