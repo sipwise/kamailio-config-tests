@@ -26,7 +26,7 @@ use JSON qw();
 use Getopt::Long;
 use List::Util qw(none);
 use Config::Tiny;
-use Sipwise::API qw(all);
+use Sipwise::API;
 use Storable 'dclone';
 use Data::Dumper;
 
