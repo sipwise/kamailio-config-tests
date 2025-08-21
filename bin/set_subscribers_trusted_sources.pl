@@ -26,7 +26,7 @@ use YAML::XS;
 use Getopt::Long;
 use Cwd 'abs_path';
 use Config::Tiny;
-use Sipwise::API qw(all);
+use Sipwise::API;
 use Data::Dumper;
 use JSON qw();
 
