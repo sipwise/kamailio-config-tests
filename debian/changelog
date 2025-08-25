@@ -1,3 +1,10 @@
+kamailio-config-tests (13.0.1.2+0~mr13.0.1.2) unstable; urgency=medium
+
+  [ Alessio Garzi ]
+  * [da92eb0] MT#63332 Remove qw(all) from Sipwise::API usage
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 25 Aug 2025 10:52:19 +0200
+
 kamailio-config-tests (13.0.1.1+0~mr13.0.1.1) unstable; urgency=medium
 
   * New release.
