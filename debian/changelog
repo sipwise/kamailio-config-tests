@@ -1,3 +1,13 @@
+kamailio-config-tests (13.5.1.0+0~mr13.5.1.0) unstable; urgency=medium
+
+  [ Donat Zenichev ]
+  * [665b8b8] MT#63223 Fix HIH parameters
+
+  [ Alessio Garzi ]
+  * [2e728bb] MT#63332 Remove qw(all) from Sipwise::API usage
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 08 Sep 2025 11:43:59 +0200
+
 kamailio-config-tests (13.5.0.0+0~mr13.5.0.0) unstable; urgency=medium
 
   [ Alessio Garzi ]
