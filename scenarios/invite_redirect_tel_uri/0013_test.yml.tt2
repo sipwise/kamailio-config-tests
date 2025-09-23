@@ -86,7 +86,7 @@ sip_out:
       'P-Acc-State: cfb',
       'P-CF-Depth: 1',
       'P-Orig-Callee-Dialed: testuser1001',
-      'P-Prev-Caller-UUID: [% invite_redirect_tel_uri_scenarios_test.testuser1000.uuid %]',
+      'P-NGCP-Prev-Caller-UUID: [% invite_redirect_tel_uri_scenarios_test.testuser1000.uuid %]',
       'P-NGCP-Caller-Info: <sip:\+[% invite_redirect_tel_uri_scenarios_test.testuser1000.phone_number %]@invite-redirect-tel-uri.scenarios.test>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %];primary=[% invite_redirect_tel_uri_scenarios_test.testuser1000.phone_number %]',
       'P-NGCP-Forward-Info: <sip:[% scenarios.0.responders.0.username %]@invite-redirect-tel-uri.scenarios.test>;ip=127.0.0.1;port=5080;primary=[% invite_redirect_tel_uri_scenarios_test.testuser1001.phone_number %]',
       'P-NGCP-Callee-Info: <sip:[% scenarios.0.responders.1.username %]@invite-redirect-tel-uri.scenarios.test>;ip=127.0.0.1;port=5080',
