@@ -210,7 +210,7 @@ sip_in:
   - 'P-First-Caller-UA-Mode: strip'
   - 'P-Callee-Account-ID: 0'
   - 'P-Orig-Callee-Dialed: testuser1001'
-  - 'P-Prev-Caller-UUID: [% invite_callforward_timeout_scenarios_test.testuser1002.uuid %]'
+  - 'P-NGCP-Prev-Caller-UUID: [% invite_callforward_timeout_scenarios_test.testuser1002.uuid %]'
   - 'P-First-Caller-RTP-Interface: ext'
   - 'P-First-Caller-RTP-Interface-Source: default'
   - 'P-NGCP-Caller-Info: <sip:[% scenarios.0.username %]@invite-callforward-timeout.scenarios.test>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %];primary=[% invite_callforward_timeout_scenarios_test.testuser1002.phone_number %]'

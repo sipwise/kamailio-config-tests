@@ -162,7 +162,7 @@ sip_in:
   - 'P-First-Caller-PBX-Ext: 1002'
   - 'P-Callee-Account-ID: [% customerpbx_test.id %]'
   - 'P-Orig-Callee-Dialed: testuser1001'
-  - 'P-Prev-Caller-UUID: [% spce_test.testuser1002.uuid %]'
+  - 'P-NGCP-Prev-Caller-UUID: [% spce_test.testuser1002.uuid %]'
   - 'P-First-Caller-RTP-Interface: ext'
   - 'P-First-Caller-RTP-Interface-Source: default'
   - 'P-NGCP-Forward-Info: <sip:testuser1001@spce.test>;ip=127.0.0.1;port=5080;primary=4311001'
@@ -204,7 +204,7 @@ sip_out:
       'P-First-Caller-PBX-Ext: 1002',
       'P-Callee-Account-ID: [% customerpbx_test.id %]',
       'P-Orig-Callee-Dialed: 43110011003',
-      'P-Prev-Caller-UUID: [% spce_test.testuser1001.uuid %]',
+      'P-NGCP-Prev-Caller-UUID: [% spce_test.testuser1001.uuid %]',
       'P-First-Caller-RTP-Interface: ext',
       'P-First-Caller-RTP-Interface-Source: default',
       'P-NGCP-Forward-Info: <sip:testuser1001@spce.test>;ip=127.0.0.1;port=5080;primary=4311001',
