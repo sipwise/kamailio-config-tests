@@ -106,7 +106,7 @@ sip_out:
       'P-Callee-Ext-Contr-ID: ',
       'P-Callee-Account-ID: 0',
       'P-Orig-Callee-Dialed: manager',
-      'P-Prev-Caller-UUID: [% invite_manager_2sec_scenarios_pbx_test.testuser1003.uuid %]',
+      'P-NGCP-Prev-Caller-UUID: [% invite_manager_2sec_scenarios_pbx_test.testuser1003.uuid %]',
       'P-First-Caller-RTP-Interface: ext',
       'P-First-Caller-RTP-Interface-Source: default',
       'P-NGCP-Presence-Caller: sip:[% scenarios.1.username %]@invite-manager-2sec.scenarios-pbx.test',

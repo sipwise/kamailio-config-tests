@@ -196,7 +196,7 @@ sip_in:
   - 'P-Acc-State: cfb'
   - 'P-CF-Depth: 1'
   - 'P-Orig-Callee-Dialed: testuser1003'
-  - 'P-Prev-Caller-UUID: [% invite_redirect_scenarios_test.testuser1002.uuid %]'
+  - 'P-NGCP-Prev-Caller-UUID: [% invite_redirect_scenarios_test.testuser1002.uuid %]'
   - 'Content-Type: application/sdp'
   - 'Content-Length:\s+\d+'
   - 'Contact: <sip:127.0.0.1:5080;transport=udp>'
