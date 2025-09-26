@@ -1,3 +1,10 @@
+kamailio-config-tests (12.5.1.7+0~mr12.5.1.7) unstable; urgency=medium
+
+  [ Alessio Garzi ]
+  * [eca6f95] MT#63566 Change P-Prev-Caller-UUID -> P-NGCP-Prev-Caller-UUID
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 26 Sep 2025 16:35:46 +0200
+
 kamailio-config-tests (12.5.1.6+0~mr12.5.1.6) unstable; urgency=medium
 
   [ Donat Zenichev ]
