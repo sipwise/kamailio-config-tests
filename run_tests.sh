@@ -159,11 +159,11 @@ fix_retransmissions() {
     mapfile -t file_find < <(find "${LOG_DIR}/${t}" -maxdepth 1 -name '*.json' | sort)
     for json_file in "${file_find[@]}" ; do
       file_find=("${file_find[@]:1}")
-      if ! [ -a "${json_file}" ] ; then
+      if ! [ -e "${json_file}" ] ; then
         continue
       fi
       for next_json_file in "${file_find[@]}" ; do
-        if ! [ -a "${next_json_file}" ] ; then
+        if ! [ -e "${next_json_file}" ] ; then
           continue
         fi
         # Check if both sip_in and Sip_out are equals

@@ -136,7 +136,7 @@ check_retrans_next() {
   echo "$(date) - Fix retransmissions enabled: try to test the next[+${step}] json file"
   kam_msg=$(basename "${next_msg}")
 
-  if [ -a "${next_msg}" ] ; then
+  if [ -e "${next_msg}" ] ; then
     if [[ "${test_ok[*]}" =~ ${kam_msg} ]] ; then
       echo "$(date) - ** skip ${kam_msg} already processed"
       return 1
@@ -165,7 +165,7 @@ check_retrans_next() {
       return 2
     fi
 
-    if [ -a "${next_tap}" ] ; then
+    if [ -e "${next_tap}" ] ; then
       # Test using the next json file was a failure.
       # Next step is remove $next_tap file to don't create confusion during the additional checks
       rm "${next_tap}"
@@ -193,7 +193,7 @@ check_retrans_prev() {
   echo "$(date) - Fix retransmissions enabled: try to test the previous[-${step}] json file"
   kam_msg=$(basename "${prev_msg}")
 
-  if [ -a "${prev_msg}" ] ; then
+  if [ -e "${prev_msg}" ] ; then
     if [[ "${test_ok[*]}" =~ ${kam_msg} ]] ; then
       echo "$(date) - ** skip ${kam_msg} already processed"
       return 1
@@ -222,7 +222,7 @@ check_retrans_prev() {
       return 2
     fi
 
-    if [ -a "${prev_tap}" ] ; then
+    if [ -e "${prev_tap}" ] ; then
       # Test using the previous json file was a failure.
       # Next step is remove $prev_tap file to don't create confusion during the additional checks
       rm "${prev_tap}"
@@ -806,11 +806,11 @@ if ! "$SKIP_RUNSIPP" ; then
       mapfile -t file_find < <(find "${LOG_DIR}" -maxdepth 1 -name '*.json' | sort)
       for json_file in "${file_find[@]}" ; do
         file_find=("${file_find[@]:1}")
-        if ! [ -a "${json_file}" ] ; then
+        if ! [ -e "${json_file}" ] ; then
           continue
         fi
         for next_json_file in "${file_find[@]}" ; do
-          if ! [ -a "${next_json_file}" ] ; then
+          if ! [ -e "${next_json_file}" ] ; then
             continue
           fi
           if ( diff -q -u <(tail -n3 "${json_file}") <(tail -n3 "${next_json_file}") &> /dev/null ) ; then
