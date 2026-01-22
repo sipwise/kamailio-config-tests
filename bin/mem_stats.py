@@ -30,9 +30,9 @@ KAM_LINES = 10
 proxy = xmlrpc.client.ServerProxy(KAM_URL)
 
 
-def get_headers(l, prefix):
+def get_headers(line, prefix):
     res = []
-    for i in l:
+    for i in line:
         res.append("%s%s" % (prefix, i))
     return res
 
@@ -115,6 +115,7 @@ def main():
 
     get_pvm(args.private_file)
     get_shm(args.share_file)
+
 
 if __name__ == "__main__":
     main()

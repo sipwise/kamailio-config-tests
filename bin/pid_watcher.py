@@ -98,6 +98,7 @@ class Handler(pyinotify.ProcessEvent):
 #        if watched.has_key(event.pathname):
 #            print event
 
+
 # catch SIGTERM signal
 signal.signal(signal.SIGTERM, sigterm_handler)
 

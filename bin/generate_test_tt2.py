@@ -364,13 +364,13 @@ class Generator:
             ok, hdr = self.filter_hdr(line)
             if ok:
                 continue
-            l_ids = self.subst_ids(line, hdr)
-            l = self.subst_common(l_ids, hdr)
+            line_subst_ids = self.subst_ids(line, hdr)
+            line_subst = self.subst_common(line_subst_ids, hdr)
             # remove empty lines
-            if len(l) > 0:
-                if line != l:
-                    logging.info("line:{} => {}".format(line, l))
-                res.append(l)
+            if len(line_subst) > 0:
+                if line != line_subst:
+                    logging.info("line:{} => {}".format(line, line_subst))
+                res.append(line_subst)
         return res
 
     def run(self, info: list):

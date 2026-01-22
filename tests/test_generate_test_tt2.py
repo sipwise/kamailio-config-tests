@@ -63,7 +63,7 @@ def test_get_header():
         ";rport=51602;branch=z9hG4bK-29092-1-6"
     )
     assert hdr == "via"
-    assert Generator.get_header("not a header...no no via:") == None
+    assert Generator.get_header("not a header...no no via:") is None
 
 
 def test_sipp_filter_hdr():
