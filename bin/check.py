@@ -35,7 +35,6 @@ except ImportError:
 
 
 class XAvp:
-
     """Class to simulate the xavp"""
 
     def __init__(self, name, data):
@@ -111,7 +110,6 @@ class Section(Flag):
 
 
 class CTest:
-
     """Class to create TAP output"""
 
     def __init__(self):

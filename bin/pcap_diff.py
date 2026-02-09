@@ -28,7 +28,6 @@ import sys
 import getopt
 from scapy.all import PcapReader, wrpcap, Packet, NoPayload
 
-
 output_file = None
 input_files = []
 complete_diff = False
@@ -52,7 +51,8 @@ show_diffs = False
 
 def usage():
     print(sys.argv[0])
-    print("""
+    print(
+        """
     -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
     Diff two or more pcap files
     Programmed by Bastian Ballmann <bastian.ballmann@inf.ethz.ch>
@@ -83,7 +83,8 @@ def usage():
     Example usage with ignore mac addresses
     pcap_diff.py -i client.dump -i server.dump -o diff.pcap -f m
 
-    """)
+    """
+    )
     sys.exit(1)
 
 
@@ -143,7 +144,7 @@ if len(input_files) < 2:
     sys.exit(1)
 
 
-def flatten(d, parent_key=''):
+def flatten(d, parent_key=""):
     """
     Flatten a packet to a dict
     Remove checksums (can be different due to calculation in netdev firmware)
@@ -151,17 +152,26 @@ def flatten(d, parent_key=''):
     items = []
 
     # skip scapy internal fields
-    skip_fields = ['fieldtype', 'underlayer', 'initialized', 'fieldtype',
-                   'default_fields', 'aliastypes', 'post_transforms',
-                   'packetfields', 'overloaded_fields', 'sent_time']
+    skip_fields = [
+        "fieldtype",
+        "underlayer",
+        "initialized",
+        "fieldtype",
+        "default_fields",
+        "aliastypes",
+        "post_transforms",
+        "packetfields",
+        "overloaded_fields",
+        "sent_time",
+    ]
 
-    hasPayload = 'payload' in d
+    hasPayload = "payload" in d
 
     for k, v in d.items():
         fullk = "%s_%s" % (parent_key, k)
 
         # ignore the original if we have payload.The payload will be expanded
-        if hasPayload and k == 'original':
+        if hasPayload and k == "original":
             continue
 
         # No complete diff? Ignore checksum, ttl and time
@@ -204,7 +214,7 @@ def flatten(d, parent_key=''):
         if fullk in ignore_headers:
             continue
 
-        new_key = parent_key + '_' + k if parent_key else k
+        new_key = parent_key + "_" + k if parent_key else k
 
         # payload is Packet or str
         # stop at NoPayload payload

@@ -1,2 +1,3 @@
 import pytest
-pytest_plugins = ['fixtures.programs']
+
+pytest_plugins = ["fixtures.programs"]

@@ -40,23 +40,22 @@ class Section(Flag):
 
 
 class Test:
-
-    """ Class to create TAP output """
+    """Class to create TAP output"""
 
     def __init__(self):
         self._step = []
         self._errflag = Section(0)
 
     def comment(self, msg):
-        """ Add a comment """
+        """Add a comment"""
         self._step.append({"result": None, "msg_ok": msg})
 
     def ok(self, msg=None):
-        """ Add a ok result """
+        """Add a ok result"""
         self._step.append({"result": True, "msg_ok": msg})
 
     def error(self, section, msg_err):
-        """ Add an error result"""
+        """Add an error result"""
         self._step.append({"result": False, "msg_err": msg_err})
         self._errflag |= section
 
@@ -92,7 +91,7 @@ class Test:
         return result
 
     def test(self, section, value_expected, value, msg_err, msg_ok=None):
-        """ Test two values and add the result"""
+        """Test two values and add the result"""
         result = Test.compare(value_expected, value)
         val = {"result": result, "msg_err": msg_err, "msg_ok": msg_ok}
         self._step.append(val)

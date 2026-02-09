@@ -32,11 +32,10 @@ except ImportError:
 
 
 class ParametrizedTestCase(unittest.TestCase):
-
-    """ TestCase classes that want to be parametrized should
-        inherit from this class.
-        http://eli.thegreenplace.net/
-        2011/08/02/python-unit-testing-parametrized-test-cases
+    """TestCase classes that want to be parametrized should
+    inherit from this class.
+    http://eli.thegreenplace.net/
+    2011/08/02/python-unit-testing-parametrized-test-cases
     """
 
     def __init__(self, methodName="runTest", param=None):
@@ -52,8 +51,8 @@ class ParametrizedTestCase(unittest.TestCase):
 
     @staticmethod
     def parametrize(testcase_klass, param=None):
-        """ Create a suite containing all tests taken from the given
-            subclass, passing them the parameter 'param'.
+        """Create a suite containing all tests taken from the given
+        subclass, passing them the parameter 'param'.
         """
         testloader = unittest.TestLoader()
         testnames = testloader.getTestCaseNames(testcase_klass)

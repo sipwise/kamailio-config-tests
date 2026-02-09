@@ -24,7 +24,7 @@ import os
 import sys
 import xmlrpc.client
 
-KAM_URL = 'http://127.0.0.1:5062'
+KAM_URL = "http://127.0.0.1:5062"
 KAM_LINES = 10
 
 proxy = xmlrpc.client.ServerProxy(KAM_URL)
@@ -38,25 +38,26 @@ def get_headers(line, prefix):
 
 
 def sum_row(s, r):
-    for i in ['used', 'real_used', 'free']:
+    for i in ["used", "real_used", "free"]:
         s[i] = s[i] + r[i]
 
 
 def save_data(datafile, headers, prefix, res):
     show_headers = get_headers(headers, prefix)
-    with open(datafile, 'w+') as csvfile:
+    with open(datafile, "w+") as csvfile:
         spamwriter = csv.writer(csvfile)
         spamwriter.writerow(show_headers)
-        spamwriter = csv.DictWriter(csvfile,
-                                    headers, extrasaction='ignore')
+        spamwriter = csv.DictWriter(csvfile, headers, extrasaction="ignore")
         for row in res:
             spamwriter.writerow(row)
 
 
 def get_pvm(private_file):
-    res = [{'pid': 'SUM', 'used': 0, 'real_used': 0, 'free': 0}, ]
-    headers = ['pid', 'used', 'real_used', 'free']
-    prefix = 'rss_'
+    res = [
+        {"pid": "SUM", "used": 0, "real_used": 0, "free": 0},
+    ]
+    headers = ["pid", "used", "real_used", "free"]
+    prefix = "rss_"
     try:
         for i in range(KAM_LINES):
             row = proxy.pkg.stats("index", i)[0]
@@ -76,17 +77,15 @@ def get_pvm(private_file):
         sys.exit(-2)
     save_data(private_file, headers, prefix, res[:1])
     fileName, fileExtension = os.path.splitext(private_file)
-    private_file_pp = '%s_per_pid%s' % (fileName, fileExtension)
+    private_file_pp = "%s_per_pid%s" % (fileName, fileExtension)
     save_data(private_file_pp, headers, prefix, res[2:])
 
 
 def get_shm(share_file):
-    headers = ['used', 'real_used', 'max_used',
-               'free', 'fragments', 'total'
-               ]
-    prefix = 'shared_'
+    headers = ["used", "real_used", "max_used", "free", "fragments", "total"]
+    prefix = "shared_"
     try:
-        res = proxy.core.shmmem('b')
+        res = proxy.core.shmmem("b")
     except xmlrpc.client.Fault as err:
         print("A fault occurred")
         print("Fault code: %d" % err.faultCode)
@@ -99,18 +98,40 @@ def get_shm(share_file):
         print("Error code: %d" % err.errcode)
         print("Error message: %s" % err.errmsg)
         sys.exit(-2)
-    save_data(share_file, headers, prefix, [res, ])
+    save_data(
+        share_file,
+        headers,
+        prefix,
+        [
+            res,
+        ],
+    )
 
 
 def main():
     parser = argparse.ArgumentParser(
-        description='export to csv kamailio proxy stats.')
-    parser.add_argument('--private_file', '-P', nargs='?', default='pvm.csv',
-                        help='path to the private csv file')
-    parser.add_argument('--share_file', '-S', nargs='?', default='shm.csv',
-                        help='path to the share csv file')
-    parser.add_argument('--rpc_url', nargs='?', default=KAM_URL,
-                        help='rpc URL of kamailio. Default:%s' % KAM_URL)
+        description="export to csv kamailio proxy stats."
+    )
+    parser.add_argument(
+        "--private_file",
+        "-P",
+        nargs="?",
+        default="pvm.csv",
+        help="path to the private csv file",
+    )
+    parser.add_argument(
+        "--share_file",
+        "-S",
+        nargs="?",
+        default="shm.csv",
+        help="path to the share csv file",
+    )
+    parser.add_argument(
+        "--rpc_url",
+        nargs="?",
+        default=KAM_URL,
+        help="rpc URL of kamailio. Default:%s" % KAM_URL,
+    )
     args = parser.parse_args()
 
     get_pvm(args.private_file)

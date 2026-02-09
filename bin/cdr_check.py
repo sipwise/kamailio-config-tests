@@ -34,23 +34,22 @@ except ImportError:
 
 
 class Test:
-
-    """ Class to create TAP output """
+    """Class to create TAP output"""
 
     def __init__(self):
         self._step = []
         self._errflag = False
 
     def comment(self, msg):
-        """ Add a comment """
+        """Add a comment"""
         self._step.append({"result": None, "msg_ok": msg})
 
     def ok(self, msg=None):
-        """ Add a ok result """
+        """Add a ok result"""
         self._step.append({"result": True, "msg_ok": msg})
 
     def error(self, msg_err):
-        """ Add an error result"""
+        """Add an error result"""
         self._step.append({"result": False, "msg_err": msg_err})
         self._errflag = True
 
@@ -87,7 +86,7 @@ class Test:
         return result
 
     def test(self, value_expected, value, msg_err, msg_ok=None):
-        """ Test two values and add the result"""
+        """Test two values and add the result"""
         result = Test.compare(value_expected, value)
         self._step.append(
             {"result": result, "msg_err": msg_err, "msg_ok": msg_ok}
@@ -165,9 +164,7 @@ def check_cdr_recursive(scen, msgs, test):
         found = False
         for message in msgs:
             test.comment("comparing with cdr id {}".format(message["id"]))
-            valid, comments, oks = check_single_cdr_recursive(
-                scen[i], message
-            )
+            valid, comments, oks = check_single_cdr_recursive(scen[i], message)
             for msg in comments:
                 test.comment(msg)
             # if expected and result CDRs fully matches -> exit loop
@@ -256,19 +253,11 @@ def main(args):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(
-        description="generate TAP result for CDR"
-    )
+    parser = argparse.ArgumentParser(description="generate TAP result for CDR")
     grp = parser.add_mutually_exclusive_group()
-    grp.add_argument(
-        "-y", "--yaml", action="store_true", help="YAML cdr_file"
-    )
-    grp.add_argument(
-        "-j", "--json", action="store_true", help="JSON cdr_file"
-    )
-    grp.add_argument(
-        "-t", "--text", action="store_true", help="TEXT cdr_file"
-    )
+    grp.add_argument("-y", "--yaml", action="store_true", help="YAML cdr_file")
+    grp.add_argument("-j", "--json", action="store_true", help="JSON cdr_file")
+    grp.add_argument("-t", "--text", action="store_true", help="TEXT cdr_file")
     parser.add_argument("yml_file", help="YAML file with checks")
     parser.add_argument("cdr_file", help="CDR file")
     parser.add_argument("-d", "--debug", action="store_true")

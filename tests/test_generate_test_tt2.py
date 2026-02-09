@@ -23,7 +23,6 @@ import sys
 import logging
 from collections import namedtuple
 
-
 lib_path = os.path.abspath("bin")
 sys.path.append(lib_path)
 

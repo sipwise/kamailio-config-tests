@@ -1,6 +1,10 @@
 [tool.black]
-target-version = ['py37']
+# Match line-length expected by pycodestyle.
 line-length = 79
+# Current version in Debian trixie.
+target-version = ['py313']
+# Enable preview features, expected by pycodestyle.
+preview = true
 include = '\.pyi?$'
 exclude = '''
 /(
