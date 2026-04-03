@@ -1,3 +1,10 @@
+kamailio-config-tests (12.5.1.8+0~mr12.5.1.8) unstable; urgency=medium
+
+  [ Talha Omair ]
+  * [c81b01c] MT#64789 Content-ID value format compliance
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 03 Apr 2026 12:12:04 +0200
+
 kamailio-config-tests (12.5.1.7+0~mr12.5.1.7) unstable; urgency=medium
 
   [ Alessio Garzi ]
