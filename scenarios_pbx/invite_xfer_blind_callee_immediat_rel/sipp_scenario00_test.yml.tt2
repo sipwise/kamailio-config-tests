@@ -117,4 +117,4 @@ messages:
   - 'To: <sip:[% invite_xfer_blind_callee_immediat_rel_scenarios_pbx_test.testuser1003.pbx_extension %]@invite-xfer-blind-callee-immediat-rel.scenarios-pbx.test>;tag=[\w-]+'
   - 'CSeq: \d+ BYE'
   - 'Content-Length: 0'
-  - 'P-Asserted-Identity: "[% invite_xfer_blind_callee_immediat_rel_scenarios_pbx_test.testuser1003.pbx_extension %]" <sip:[% invite_xfer_blind_callee_immediat_rel_scenarios_pbx_test.testuser1003.pbx_extension %]@invite-xfer-blind-callee-immediat-rel.scenarios-pbx.test>'
+  - 'P-Asserted-Identity: "[% invite_xfer_blind_callee_immediat_rel_scenarios_pbx_test.testuser1004.pbx_extension %]" <sip:[% invite_xfer_blind_callee_immediat_rel_scenarios_pbx_test.testuser1004.pbx_extension %]@invite-xfer-blind-callee-immediat-rel.scenarios-pbx.test>'
