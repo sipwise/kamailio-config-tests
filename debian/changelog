@@ -1,3 +1,10 @@
+kamailio-config-tests (26.0.1.3+0~mr26.0.1.3) unstable; urgency=medium
+
+  [ Talha Omair ]
+  * [9a7a2eb] MT#64991 scenarios_pbx: Updates P-Asserted-Identity
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 07 May 2026 10:38:56 +0200
+
 kamailio-config-tests (26.0.1.2+0~mr26.0.1.2) unstable; urgency=medium
 
   * New release.
