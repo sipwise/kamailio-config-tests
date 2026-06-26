@@ -23,7 +23,7 @@ messages:
   - 'a=rtcp:\d+'
   - 'a=rtcp-fb:\* trr-int 1000'
   - 'a=rtcp-fb:\* ccm tmmbr'
-  - 'm=video 0 RTP/AVPF 0'
+  - 'm=video 0 RTP/AVPF 96 97'
   - 'a=sendrecv'
   - 'a=rtcp-fb:\* trr-int 1000'
   - 'a=rtcp-fb:\* ccm tmmbr'
