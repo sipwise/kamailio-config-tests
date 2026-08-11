@@ -1,3 +1,10 @@
+kamailio-config-tests (26.3.0.0+0~mr26.3.0.0) unstable; urgency=medium
+
+  [ Jose Su ]
+  * [2fc4137] MT#65402 Update invite_sdp_filter in k-c-t for responder test
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 11 Aug 2026 14:19:20 +0200
+
 kamailio-config-tests (26.2.0.0+0~mr26.2.0.0) unstable; urgency=medium
 
   [ Talha Omair ]
