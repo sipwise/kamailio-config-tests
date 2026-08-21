@@ -1,3 +1,9 @@
+kamailio-config-tests (26.2.2.0+0~mr26.2.2.0) unstable; urgency=medium
+
+  * New release.
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 21 Aug 2026 08:50:32 +0200
+
 kamailio-config-tests (26.2.1.0+0~mr26.2.1.0) unstable; urgency=medium
 
   [ Jose Su ]
