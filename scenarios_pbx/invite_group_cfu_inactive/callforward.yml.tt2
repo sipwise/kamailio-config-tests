@@ -1,0 +1,33 @@
+---
+# The group member has a CFU that is provisioned but never active: its time set
+# only covers the year 1990. Calling the group must still ring the member, the
+# inactive CFU must neither be executed nor reject the branch with 480.
+[% scenarios.0.responders.1.username %]@invite-group-cfu-inactive.scenarios-pbx.test:
+  destinations:
+    destinations:
+      - destination: sip:testuser1005@invite-group-cfu-inactive.scenarios-pbx.test
+        priority: 1
+        timeout: 60
+    name: dest1005
+  times:
+    times:
+      - year: '1990-1990'
+        month: ~
+        mday: ~
+        wday: ~
+        hour: ~
+        minute: ~
+    name: never
+  mappings:
+    cfu:
+      - bnumberset: null
+        destinationset: dest1005
+        sourceset: null
+        timeset: never
+        enabled: true
+    cfb: []
+    cfna: []
+    cft: []
+    cfs: []
+    cfr: []
+    cfo: []

@@ -1,0 +1,5 @@
+{
+  "@invite-group-cfu-inactive.scenarios-pbx.test": {
+    "nat_sipping": "no"
+  }
+}
