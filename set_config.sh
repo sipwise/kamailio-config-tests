@@ -80,16 +80,6 @@ if [ "${PROFILE}" != "CE" ] && [ "${PROFILE}" != "PRO" ]; then
   exit 2
 fi
 
-if [ "${GROUP}" = "scenarios_pbx" ] ; then
-  PIDWATCH_OPTS=('--pbx')
-  # hack for pid_watcher ( sems-pbx was not active )
-  mkdir -p /run/sems-pbx/
-  touch /run/sems-pbx/sems-pbx.pid
-  chown -R sems-pbx:sems-pbx /run/sems-pbx/
-else
-  PIDWATCH_OPTS=()
-fi
-
 error_flag=0
 
 dummy_up() {
@@ -167,7 +157,7 @@ config() {
   if [ "${PROFILE}" == "PRO" ]; then
     mkdir -p "${BASE_DIR}/log"
     echo "$(date) - Exec pid_watcher with timeout[${TIMEOUT}]"
-    ( timeout "${TIMEOUT}" "${BIN_DIR}/pid_watcher.py" "${PIDWATCH_OPTS[@]}" )&
+    ( timeout "${TIMEOUT}" "${BIN_DIR}/pid_watcher.py" )&
   fi
   echo "$(date) - Config files"
   "${BIN_DIR}/config_files.sh" "${GROUP}"

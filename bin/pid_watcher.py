@@ -23,7 +23,6 @@ import os
 import os.path
 import pyinotify
 import sys
-import argparse
 import signal
 
 BASE_DIR = "/usr/share/kamailio-config-tests"
@@ -100,23 +99,6 @@ class Handler(pyinotify.ProcessEvent):
 
 # catch SIGTERM signal
 signal.signal(signal.SIGTERM, sigterm_handler)
-
-parser = argparse.ArgumentParser(
-    description="watch some pids to detect restarts"
-)
-parser.add_argument(
-    "--pbx", dest="pbx", action="store_true", help="pbx is enabled"
-)
-
-args = parser.parse_args()
-
-if args.pbx:
-    watched_dirs += [
-        "/run/fastcgi",
-    ]
-    services += [
-        "fastcgi/ngcp-panel.pid",
-    ]
 
 logging.info("PID watcher started")
 wm = pyinotify.WatchManager()
