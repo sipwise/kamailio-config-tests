@@ -1,0 +1,9 @@
+{
+    "@invite-pre-announce-keep-codec.scenarios-pre-announcement.test": {
+        "nat_sipping": "no",
+        "sound_set": "invite_pre_announce_keep_codec"
+    },
+    "[% scenarios.0.responders.0.username %]@invite-pre-announce-keep-codec.scenarios-pre-announcement.test": {
+        "play_announce_before_call_setup": true
+    }
+}

@@ -7,5 +7,6 @@ run_tests.sh /usr/share/kamailio-config-tests/
 scenarios/ /usr/share/kamailio-config-tests/
 scenarios_lnp /usr/share/kamailio-config-tests/
 scenarios_pbx /usr/share/kamailio-config-tests/
+scenarios_pre_announcement /usr/share/kamailio-config-tests/
 set_config.sh /usr/share/kamailio-config-tests/
 sounds /usr/share/kamailio-config-tests/
