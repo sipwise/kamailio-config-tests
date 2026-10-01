@@ -1,0 +1,9 @@
+{
+    "@invite-pre-announce-reinvite.scenarios-pre-announcement.test": {
+        "nat_sipping": "no",
+        "sound_set": "invite_pre_announce_reinvite"
+    },
+    "[% scenarios.0.responders.0.username %]@invite-pre-announce-reinvite.scenarios-pre-announcement.test": {
+        "play_announce_before_call_setup": true
+    }
+}
