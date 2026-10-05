@@ -1,3 +1,11 @@
+kamailio-config-tests (27.0.0.0+0~mr27.0.0.0) unstable; urgency=medium
+
+  [ Donat Zenichev ]
+  * [79d7d68] MT#66139 introduce scenarios_pre_announcement
+  * [5af9711] MT#66052 Introduce invite_pre_announce_reinvite
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 05 Oct 2026 12:34:11 +0200
+
 kamailio-config-tests (26.3.0.0+0~mr26.3.0.0) unstable; urgency=medium
 
   [ Jose Su ]
