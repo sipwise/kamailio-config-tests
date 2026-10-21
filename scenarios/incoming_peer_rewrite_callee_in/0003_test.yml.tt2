@@ -1,0 +1,81 @@
+flow:
+  - start|DEFAULT_ROUTE:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_INIT_LOG_LEVEL:
+  - return|ROUTE_INIT_LOG_LEVEL:
+  - start|ROUTE_LEG_B:
+  - start|ROUTE_INITVARS:
+  - return|ROUTE_INITVARS:
+  - start|ROUTE_APPLY_HEADER_RULES:
+  - return|ROUTE_APPLY_HEADER_RULES:
+  - start|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+sip_in:
+  - 'INVITE sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];transport=tcp SIP/2.0'
+  - 'From: <sip:[% scenarios.0.username %]@incoming-peer-rewrite-callee-in.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:[% incoming_peer_rewrite_callee_in_scenarios_test.testuser1003.phone_number %]@incoming-peer-rewrite-callee-in.scenarios.test>'
+  - 'CSeq: \d+ INVITE'
+  - 'P-LB-Uptime:\s+\d+'
+  - 'P-Caller-Peer: 21'
+  - 'P-Asserted-Identity: <sip:[% scenarios.0.username %]@incoming-peer-rewrite-callee-in.scenarios.test>'
+  - 'P-Caller-UUID: 0'
+  - 'P-Callee-UUID: [% incoming_peer_rewrite_callee_in_scenarios_test.testuser1003.uuid %]'
+  - 'P-NGCP-Leg-A-Info: TkdDUCVpbmNvbWluZ19wZWVyX3Jld3JpdGVfY2FsbGVlX2luJS8vLzEtMTcyOTUwQDE3Mi4zMC4xLjIgMTcyOTUwU0lQcFRhZzAwMSBjYWxsZXI6MDA0MzIxMDAxIGNhbGxlZTo0MzExMDAwIHI6'
+  - 'P-NGCP-Caller-Info: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %]'
+  - 'P-NGCP-Callee-Info: <sip:[% incoming_peer_rewrite_callee_in_scenarios_test.testuser1003.phone_number %]@incoming-peer-rewrite-callee-in.scenarios.test>;ip=127.0.0.1;port=5060;primary=[% incoming_peer_rewrite_callee_in_scenarios_test.testuser1003.phone_number %]'
+  - 'P-D-Uri: sip:lb@127.0.0.1:5060;lr;socket=tcp:127.3.0.1:5074'
+  - 'Content-Type: application/sdp'
+  - 'Content-Length:\s+\d+'
+  - 'Contact: <sip:127.0.0.1:5080;transport=udp>'
+  - 'v=0'
+  - 'o=user1 \d+ \d+ IN IP4 [% server_ip %]'
+  - 's=-'
+  - 't=0 0'
+  - 'm=audio \d+ RTP/AVP 8'
+  - 'c=IN IP4 [% server_ip %]'
+  - 'a=rtpmap:8 PCMA/8000'
+  - 'a=sendrecv'
+  - 'a=rtcp:\d+'
+  - 'a=ptime:50'
+sip_out:
+  - [
+      'SIP/2.0 100 Trying',
+      'From: <sip:[% scenarios.0.username %]@incoming-peer-rewrite-callee-in.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% incoming_peer_rewrite_callee_in_scenarios_test.testuser1003.phone_number %]@incoming-peer-rewrite-callee-in.scenarios.test>',
+      'CSeq: \d+ INVITE',
+      'Server: Sipwise NGCP Proxy',
+      'Content-Length:\s+0',
+    ]
+  - [
+      'INVITE sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];transport=tcp SIP/2.0',
+      'Record-Route: <sip:127.0.0.1:5062;lr=on;ftag=[^;]+;leg_b=1;did=[^;]+>',
+      'From: <sip:[% scenarios.0.username %]@incoming-peer-rewrite-callee-in.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% incoming_peer_rewrite_callee_in_scenarios_test.testuser1003.phone_number %]@incoming-peer-rewrite-callee-in.scenarios.test>',
+      'CSeq: \d+ INVITE',
+      'P-LB-Uptime:\s+\d+',
+      'P-Caller-Peer: 21',
+      'P-Asserted-Identity: <sip:[% scenarios.0.username %]@incoming-peer-rewrite-callee-in.scenarios.test>',
+      'P-Caller-UUID: 0',
+      'P-Callee-UUID: [% incoming_peer_rewrite_callee_in_scenarios_test.testuser1003.uuid %]',
+      'P-NGCP-Caller-Info: <sip:[% scenarios.0.username %]@[% scenarios.0.ip %]>;ip=[% scenarios.0.ip %];port=[% scenarios.0.port %]',
+      'P-NGCP-Callee-Info: <sip:[% incoming_peer_rewrite_callee_in_scenarios_test.testuser1003.phone_number %]@incoming-peer-rewrite-callee-in.scenarios.test>;ip=127.0.0.1;port=5060;primary=[% incoming_peer_rewrite_callee_in_scenarios_test.testuser1003.phone_number %]',
+      'P-D-Uri: sip:lb@127.0.0.1:5060;lr;socket=tcp:127.3.0.1:5074',
+      'Content-Type: application/sdp',
+      'Content-Length:\s+\d+',
+      'Contact: <sip:127.0.0.1:5080;transport=udp>',
+      'v=0',
+      'o=user1 \d+ \d+ IN IP4 [% server_ip %]',
+      's=-',
+      't=0 0',
+      'm=audio \d+ RTP/AVP 8',
+      'c=IN IP4 [% server_ip %]',
+      'a=rtpmap:8 PCMA/8000',
+      'a=sendrecv',
+      'a=rtcp:\d+',
+      'a=ptime:50',
+    ]

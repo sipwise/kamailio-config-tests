@@ -1,0 +1,49 @@
+flow:
+  - start|DEFAULT_ROUTE:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_INIT_LOG_LEVEL:
+  - return|ROUTE_INIT_LOG_LEVEL:
+  - start|ROUTE_NET_INFO:
+  - return|ROUTE_NET_INFO:
+  - start|ROUTE_PRX_REQUEST:
+  - start|ROUTE_INITVARS:
+  - return|ROUTE_INITVARS:
+  - start|dialog:end:
+  - return|dialog:end:
+  - start|ROUTE_PREPARE_UA:
+  - return|ROUTE_PREPARE_UA:
+  - start|ROUTE_OUTBOUND:
+  - start|DEFAULT_SEND:
+  - exit|DEFAULT_SEND:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+sip_in:
+  - 'BYE sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];transport=TCP SIP/2.0'
+  - 'From: <sip:[% scenarios.0.username %]@incoming-peer-rewrite-callee-in.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:[% incoming_peer_rewrite_callee_in_scenarios_test.testuser1003.phone_number %]@incoming-peer-rewrite-callee-in.scenarios.test>;tag=[\w-]+'
+  - 'CSeq: \d+ BYE'
+  - 'P-LB-Uptime:\s+\d+'
+  - 'P-Asserted-Identity: <sip:[% scenarios.0.username %]@incoming-peer-rewrite-callee-in.scenarios.test>'
+  - 'Content-Length:\s+0'
+sip_out:
+  - [
+      'SIP/2.0 100 Trying',
+      'From: <sip:[% scenarios.0.username %]@incoming-peer-rewrite-callee-in.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% incoming_peer_rewrite_callee_in_scenarios_test.testuser1003.phone_number %]@incoming-peer-rewrite-callee-in.scenarios.test>;tag=[\w-]+',
+      'CSeq: \d+ BYE',
+      'Server: Sipwise NGCP Proxy',
+      'Content-Length:\s+0',
+    ]
+  - [
+      'BYE sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];transport=TCP SIP/2.0',
+      'Record-Route: <sip:127.0.0.1:5062;lr=on;ftag=[^;]+>',
+      'From: <sip:[% scenarios.0.username %]@incoming-peer-rewrite-callee-in.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% incoming_peer_rewrite_callee_in_scenarios_test.testuser1003.phone_number %]@incoming-peer-rewrite-callee-in.scenarios.test>;tag=[\w-]+',
+      'CSeq: \d+ BYE',
+      'P-LB-Uptime:\s+\d+',
+      'P-Asserted-Identity: <sip:[% scenarios.0.username %]@incoming-peer-rewrite-callee-in.scenarios.test>',
+      'Content-Length:\s+0',
+    ]

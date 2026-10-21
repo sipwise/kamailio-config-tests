@@ -1,0 +1,41 @@
+---
+test_uuid: incoming_peer_rewrite_callee_in
+kamailio:
+  proxy:
+    debugger:
+      - name: dialplan
+        level: 3
+domains:
+  incoming-peer-rewrite-callee-in.scenarios.test:
+    reseller_id: 1
+customers:
+  "customer.test":
+    contacts:
+      - email: "customer.test@spce.test"
+        reseller_id: 1
+    details:
+      status: "active"
+      type: "sipaccount"
+      billing_profile_id: 1
+      reseller_id: 1
+subscribers:
+  incoming-peer-rewrite-callee-in.scenarios.test:
+    testuser1003:
+      customer: "customer.test"
+      password: testuser
+      cc: 43
+      ac: 1
+      sn: 1003
+scenarios:
+  - ip: 127.0.2.1
+    username: "004321001"
+    domain: incoming-peer-rewrite-callee-in.host0.peer.scenarios.test
+    peer_host: peer_incoming_peer_rewrite_callee_in_host0
+    responders:
+      - ip: 127.3.0.5
+        port: 8008
+        mport: 1808
+        username: testuser1003
+        domain: incoming-peer-rewrite-callee-in.scenarios.test
+        register: permanent
+        proto: tcp

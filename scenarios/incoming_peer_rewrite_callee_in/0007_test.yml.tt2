@@ -1,0 +1,54 @@
+flow:
+  - start|DEFAULT_ONREPLY:
+  - start|REPLY_ROUTE_LEG_B:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - start|dialog:start:
+  - return|dialog:start:
+sip_in:
+  - 'SIP/2.0 200 OK'
+  - 'From: <sip:[% scenarios.0.username %]@incoming-peer-rewrite-callee-in.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:[% incoming_peer_rewrite_callee_in_scenarios_test.testuser1003.phone_number %]@incoming-peer-rewrite-callee-in.scenarios.test>;tag=[\w-]+'
+  - 'CSeq: \d+ INVITE'
+  - 'Record-Route: <sip:[% server_ip %];transport=tcp;r2=on;lr=on;ftag=[^;]+;ngcplb=yes;socket=tcp:127.3.0.1:5074>, <sip:127.0.0.1;r2=on;lr=on;ftag=[^;]+;ngcplb=yes;socket=tcp:127.3.0.1:5074>, <sip:127.0.0.1:5062;lr=on;ftag=[^;]+;leg_b=1;did=[^;]+>'
+  - 'Contact: <sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];transport=TCP>'
+  - 'Content-Type: application/sdp'
+  - 'Content-Length:\s+\d+'
+  - 'P-NGCP-Src-Ip: [% scenarios.0.responders.0.ip %]'
+  - 'P-NGCP-Src-Port: [% scenarios.0.responders.0.port %]'
+  - 'P-NGCP-Src-Proto: tcp'
+  - 'P-NGCP-Src-Af: 4'
+  - 'v=0'
+  - 'o=user1 \d+ \d+ IN IP4 [% scenarios.0.responders.0.ip %]'
+  - 's=-'
+  - 'c=IN IP4 [% scenarios.0.responders.0.ip %]'
+  - 't=0 0'
+  - 'm=audio [% scenarios.0.responders.0.mport %] RTP/AVP 8'
+  - 'a=rtpmap:8 PCMA/8000'
+  - 'a=ptime:50'
+sip_out:
+  - [
+      'SIP/2.0 200 OK',
+      'From: <sip:[% scenarios.0.username %]@incoming-peer-rewrite-callee-in.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% incoming_peer_rewrite_callee_in_scenarios_test.testuser1003.phone_number %]@incoming-peer-rewrite-callee-in.scenarios.test>;tag=[\w-]+',
+      'CSeq: \d+ INVITE',
+      'Record-Route: <sip:[% server_ip %];transport=tcp;r2=on;lr=on;ftag=[^;]+;ngcplb=yes;socket=tcp:127.3.0.1:5074>, <sip:127.0.0.1;r2=on;lr=on;ftag=[^;]+;ngcplb=yes;socket=tcp:127.3.0.1:5074>, <sip:127.0.0.1:5062;lr=on;ftag=[^;]+;leg_b=1;did=[^;]+>',
+      'Contact: <sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];transport=TCP>',
+      'Content-Type: application/sdp',
+      'Content-Length:\s+\d+',
+      'P-NGCP-Src-Ip: [% scenarios.0.responders.0.ip %]',
+      'P-NGCP-Src-Port: [% scenarios.0.responders.0.port %]',
+      'P-NGCP-Src-Proto: tcp',
+      'P-NGCP-Src-Af: 4',
+      'v=0',
+      'o=user1 \d+ \d+ IN IP4 [% scenarios.0.responders.0.ip %]',
+      's=-',
+      'c=IN IP4 [% scenarios.0.responders.0.ip %]',
+      't=0 0',
+      'm=audio [% scenarios.0.responders.0.mport %] RTP/AVP 8',
+      'a=rtpmap:8 PCMA/8000',
+      'a=ptime:50',
+    ]

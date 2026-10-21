@@ -1,0 +1,9 @@
+{
+    "@incoming-peer-rewrite-callee-in.scenarios.test": {
+        "nat_sipping": "no"
+    },
+    "peer_incoming_peer_rewrite_callee_in_host0": {
+        "rewrite_rule_set": "rw_in_peer_rwr_callee_in",
+        "concurrent_max": 1
+    }
+}

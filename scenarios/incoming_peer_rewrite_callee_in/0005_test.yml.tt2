@@ -1,0 +1,33 @@
+flow:
+  - start|DEFAULT_ONREPLY:
+  - start|REPLY_ROUTE_LEG_B:
+  - start|ROUTE_ENTRY:
+  - return|ROUTE_ENTRY:
+  - start|ROUTE_EXIT:
+  - start|ROUTE_RUNTIME:
+  - return|ROUTE_RUNTIME:
+  - exit|ROUTE_EXIT:
+sip_in:
+  - 'SIP/2.0 180 Ringing'
+  - 'From: <sip:[% scenarios.0.username %]@incoming-peer-rewrite-callee-in.scenarios.test>;tag=[\w-]+'
+  - 'To: <sip:[% incoming_peer_rewrite_callee_in_scenarios_test.testuser1003.phone_number %]@incoming-peer-rewrite-callee-in.scenarios.test>;tag=[\w-]+'
+  - 'CSeq: \d+ INVITE'
+  - 'Contact: <sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];transport=TCP>'
+  - 'Content-Length:\s+0'
+  - 'P-NGCP-Src-Ip: [% scenarios.0.responders.0.ip %]'
+  - 'P-NGCP-Src-Port: [% scenarios.0.responders.0.port %]'
+  - 'P-NGCP-Src-Proto: tcp'
+  - 'P-NGCP-Src-Af: 4'
+sip_out:
+  - [
+      'SIP/2.0 180 Ringing',
+      'From: <sip:[% scenarios.0.username %]@incoming-peer-rewrite-callee-in.scenarios.test>;tag=[\w-]+',
+      'To: <sip:[% incoming_peer_rewrite_callee_in_scenarios_test.testuser1003.phone_number %]@incoming-peer-rewrite-callee-in.scenarios.test>;tag=[\w-]+',
+      'CSeq: \d+ INVITE',
+      'Contact: <sip:[% scenarios.0.responders.0.ip %]:[% scenarios.0.responders.0.port %];transport=TCP>',
+      'Content-Length:\s+0',
+      'P-NGCP-Src-Ip: [% scenarios.0.responders.0.ip %]',
+      'P-NGCP-Src-Port: [% scenarios.0.responders.0.port %]',
+      'P-NGCP-Src-Proto: tcp',
+      'P-NGCP-Src-Af: 4',
+    ]
