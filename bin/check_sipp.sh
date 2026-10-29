@@ -67,6 +67,27 @@ check_sip_test() {
   fi
 }
 
+# check the RTP received by the end-points with a 'rtp_check', if any
+check_rtp_streams() {
+  local dest="${RESULT_DIR}/rtp_check_test.tap"
+  local res=0
+
+  "${BIN_DIR}/check_rtp.py" "${SCEN_CHECK_DIR}/scenario.yml" \
+    "${LOG_DIR}/scenario_ids.yml" "${LOG_DIR}/rtp_check.pcap" > "${dest}" \
+    || res=$?
+  if ! [ -s "${dest}" ] && [[ ${res} -eq 0 ]] ; then
+    # nothing to check
+    rm -f "${dest}"
+    return 0
+  fi
+  if [[ ${res} -eq 0 ]] ; then
+    echo "$(date) - RTP: Check $(basename "${dest}") ok"
+  else
+    echo "$(date) - RTP: Check $(basename "${dest}") NOT ok[RTP]"
+    ERR_FLAG=1
+  fi
+}
+
 cdr_check() {
   if [ -f "$1" ] ; then
     echo -n "$(date) - Testing $(basename "$1") against $(basename "$2") -> $(basename "$3")"
@@ -167,6 +188,8 @@ while read -r t; do
     dest=${RESULT_DIR}/${dest/.msg/.tap}
     check_sip_test "${t}" "$msg" "${dest}"
 done < <(find "${SCEN_CHECK_DIR}" -maxdepth 1 -name 'sipp_scenario*_test.yml'|sort)
+
+check_rtp_streams
 
 if ${CDR} ; then
   echo "$(date) - Validating CDRs"

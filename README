@@ -204,6 +204,27 @@ scenario.yml file syntax:
   If devid: 1 (it must be an alias_number of the subscriber) then that value will be
   used as username part of SIP and for auth
 
+  If rtp_check is defined for a scenario or a responder, the RTP received on its
+  media port is captured and checked into rtp_check_test.tap. Streams are told apart
+  by their SSRC, only the RTP is counted (not the RTCP). Any of:
+    streams: number of RTP streams received, 0 for none
+    min_packets: minimum number of packets of every RTP stream received
+  Example, the caller gets the announcement and the ringback tone, the callee nothing:
+    scenarios:
+      - ip: 127.126.0.1
+        username: testuser1002
+        domain: spce.test
+        rtp_check:
+          streams: 2
+          min_packets: 10
+        responders:
+          - ip: 127.1.0.1
+            username: testuser1003
+            domain: spce.test
+            register: yes
+            rtp_check:
+              streams: 0
+
   If defined, we can set kamailio's modules level debug as desired.
 
   Example:

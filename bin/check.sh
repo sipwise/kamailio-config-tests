@@ -370,8 +370,59 @@ error_helper() {
     "${BIN_DIR}/provide_scenario.sh" "${SCEN_CHECK_DIR}" delete
   fi
   stop_capture
+  stop_capture_rtp
   check_rtp
   exit "$2"
+}
+
+# capture the RTP towards the end-points with a 'rtp_check', if any
+capture_rtp() {
+  local filter
+
+  if ! filter=$("${BIN_DIR}/check_rtp.py" --filter \
+      "${SCEN_CHECK_DIR}/scenario.yml" "${SCEN_CHECK_DIR}/scenario_ids.yml")
+  then
+    error_helper "error getting the rtp_check end-points" 18
+  fi
+  [ -z "${filter}" ] && return
+
+  echo "$(date) - Start RTP capture: ${filter}"
+  # only incoming, otherwise the packets over loopback are captured twice
+  tcpdump -i any -Q in -U -n -s 65535 -w "${LOG_DIR}/rtp_check.pcap" \
+    "${filter}" &> "${LOG_DIR}/rtp_check_tcpdump.log" &
+  capture_rtp_pid=$!
+  # give tcpdump the time to start capturing
+  sleep 1
+}
+
+stop_capture_rtp() {
+  if [ -n "${capture_rtp_pid}" ]; then
+    echo "$(date) - Stop RTP capture"
+    kill -15 "${capture_rtp_pid}"
+    wait "${capture_rtp_pid}" || true
+    capture_rtp_pid=""
+  fi
+}
+
+# check the RTP received by the end-points with a 'rtp_check', if any
+check_rtp_streams() {
+  local dest="${RESULT_DIR}/rtp_check_test.tap"
+  local res=0
+
+  "${BIN_DIR}/check_rtp.py" "${SCEN_CHECK_DIR}/scenario.yml" \
+    "${LOG_DIR}/scenario_ids.yml" "${LOG_DIR}/rtp_check.pcap" > "${dest}" \
+    || res=$?
+  if ! [ -s "${dest}" ] && [[ ${res} -eq 0 ]] ; then
+    # nothing to check
+    rm -f "${dest}"
+    return 0
+  fi
+  if [[ ${res} -eq 0 ]] ; then
+    echo "$(date) - RTP: Check $(basename "${dest}") ok"
+  else
+    echo "$(date) - RTP: Check $(basename "${dest}") NOT ok[RTP]"
+    ERR_FLAG=1
+  fi
 }
 
 capture() {
@@ -484,6 +535,7 @@ run_sipp() {
   if "${CAPTURE}" ; then
     capture
   fi
+  capture_rtp
 
   echo "$(date) - kamailio debugger level"
   "${BIN_DIR}/kam_dbg.pl" "${SCEN_CHECK_DIR}/scenario.yml"
@@ -557,6 +609,7 @@ run_sipp() {
   if "${CAPTURE}" ; then
     stop_capture
   fi
+  stop_capture_rtp
   if "${MEMDBG}" ; then
     memdbg
   fi
@@ -889,6 +942,7 @@ if ! ${SKIP_CHECK} ; then
         check_sip_test "${t}" "$sip_msg" "${dest}"
       done < <(find "${SCEN_CHECK_DIR}" -maxdepth 1 -name 'sipp_scenario*_test.yml'|sort)
       echo "$(date) - ~~~~~"
+      check_rtp_streams
   fi
 
   if "${CDR}" ; then
