@@ -1,0 +1,13 @@
+---
+b2b:
+  sbc:
+    xfer:
+      blind_immediate_release: no
+      enable: no
+kamailio:
+  proxy:
+    allow_refer_method: no
+    generate_responder_cdr_data: no
+    lnp:
+      enable: no
+    skip_cf_loop: 'yes'

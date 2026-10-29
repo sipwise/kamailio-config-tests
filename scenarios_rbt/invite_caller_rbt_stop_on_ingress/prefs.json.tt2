@@ -1,0 +1,13 @@
+{
+    "@invite-caller-rbt-stop-on-ingress.scenarios-rbt.test": {
+        "nat_sipping": "no",
+        "sound_set": "invite_caller_rbt_stop_on_ingress"
+    },
+    "[% scenarios.0.username %]@invite-caller-rbt-stop-on-ingress.scenarios-rbt.test": {
+        "play_emulated_ringback_tone": true,
+        "emulated_rbt_stop_on_ingress": true
+    },
+    "[% scenarios.0.responders.0.username %]@invite-caller-rbt-stop-on-ingress.scenarios-rbt.test": {
+        "play_announce_before_call_setup": true
+    }
+}
