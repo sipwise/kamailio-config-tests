@@ -27,6 +27,12 @@ subscribers:
       cc: 43
       ac: 1
       sn: 1003
+    testuser1004:
+      customer: "customer.test"
+      password: testuser
+      cc: 43
+      ac: 1
+      sn: 1004
 scenarios:
   - ip: 127.0.2.1
     username: "004321001"
@@ -42,3 +48,19 @@ scenarios:
         username: testuser1002
         domain: incoming-hih.scenarios.test
         register: "yes"
+  - ip: 127.0.2.1
+    username: "004321001"
+    domain: incoming-hih.host0.peer.scenarios.test
+    peer_host: peer_incoming_hih_host0
+    responders:
+      - ip: 127.1.0.3
+        username: testuser1004
+        domain: incoming-hih.scenarios.test
+        register: "no"
+        active: "no"
+      - ip: 127.0.2.2
+        number: "004321003"
+        username: "004321003"
+        domain: incoming-hih.scenarios.test
+        peer_host: peer_incoming_hih_out_host1
+        register: "no"

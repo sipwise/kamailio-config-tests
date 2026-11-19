@@ -19,3 +19,23 @@ testuser1003@incoming-hih.scenarios.test:
     cfs: []
     cfr: []
     cfo: []
+testuser1004@incoming-hih.scenarios.test:
+  destinations:
+    destinations:
+      - destination: sip:[% scenarios.1.responders.1.username %]@incoming-hih.scenarios.test
+        priority: 0
+        timeout: 25
+    name: dest1004
+  mappings:
+    cfu:
+      - bnumberset: null
+        destinationset: dest1004
+        sourceset: null
+        timeset: null
+        enabled: true
+    cfb: []
+    cfna: []
+    cft: []
+    cfs: []
+    cfr: []
+    cfo: []

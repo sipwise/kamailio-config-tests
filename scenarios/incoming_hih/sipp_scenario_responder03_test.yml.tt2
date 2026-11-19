@@ -1,0 +1,22 @@
+messages:
+- - 'INVITE sip:[% scenarios.1.responders.1.username %]@[% scenarios.1.responders.1.ip %]:[% scenarios.1.responders.1.port %];transport=udp'
+  - 'From: <sip:[% scenarios.1.username %]@incoming-hih.scenarios.test>;tag=[\w-]+'
+  - 'CSeq: \d+ INVITE'
+  # History-Info received from the peer, untouched
+  - 'History-Info: <sip:\+4311111111@telekom.de;user=phone\?Reason=Diversion%22text%3D%22unknown%22>;index=1\s'
+  - 'History-Info: <sip:\+4322222222@telekom.de;user=phone;cause=404>;index=1\.1\s'
+  # CFU of testuser1004 must chain to the received index, not restart from 1
+  - 'History-Info: <sip:\+[% incoming_hih_scenarios_test.testuser1004.phone_number %]@incoming-hih.scenarios.test:5060;user=phone\?Reason=SIP%3bcause%3d302>;index=1\.1\.1\s'
+  # History-Info of the CF target towards the peer
+  - 'History-Info: <sip:[^@>]*[% scenarios.1.responders.1.username %]@[^>]+\?Reason=SIP%3bcause%3d302[^>]*>;index=1\.1\.1\.1\s'
+  - '_:NOT:_History-Info: <sip:\+[% incoming_hih_scenarios_test.testuser1004.phone_number %]@[^>]+>;index=1\s'
+  - '_:NOT:_History-Info: <sip:[^>]*004321003@[^>]+>;index=1\.1\s'
+  - 'Content-Type: application/sdp'
+  - 'Content-Length: \d+'
+  - 'm=audio \d+ RTP/AVP 8'
+- - 'ACK sip:[% scenarios.1.responders.1.ip %]:[% scenarios.1.responders.1.port %];transport=UDP SIP/2.0'
+  - 'CSeq: \d+ ACK'
+  - 'Content-Length: 0'
+- - 'BYE sip:[% scenarios.1.responders.1.ip %]:[% scenarios.1.responders.1.port %];transport=UDP SIP/2.0'
+  - 'CSeq: \d+ BYE'
+  - 'Content-Length: 0'

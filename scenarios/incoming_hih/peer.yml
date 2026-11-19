@@ -25,3 +25,29 @@ peer_incoming_hih:
       host:
       transport: 1
       weight: 1
+peer_incoming_hih_out:
+  contact:
+    company: peer_incoming_hih_out
+    email: peer_incoming_hih_out@host1.not
+  contract:
+    billing_profile_id: 1
+    status: active
+    type: sippeering
+  groups:
+    - name: peer_incoming_hih_out_group
+      priority: 1
+      description:
+  rules:
+    - group_id: peer_incoming_hih_out_group
+      callee_prefix: "004321003"
+      callee_pattern: ''
+      caller_pattern: '^sip:.+@incoming-hih.scenarios.test'
+      description: ""
+  hosts:
+    - group_id: peer_incoming_hih_out_group
+      name: peer_incoming_hih_out_host1
+      ip: 127.0.2.2
+      port: 51602
+      host:
+      transport: 1
+      weight: 1
